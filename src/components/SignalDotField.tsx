@@ -76,8 +76,6 @@ const TOTAL = ROWS * COLS_PER_ROW;
 
 function buildDots(): Dot[] {
   const dots: Dot[] = [];
-  const allSignals = [...CONNECTION_SIGNALS, ...TRUST_SIGNALS, ...LOYALTY_SIGNALS];
-
   // Build interleaved pool
   const pool: Signal[] = [];
   let ci = 0, ti = 0, li = 0;
