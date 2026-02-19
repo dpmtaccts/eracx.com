@@ -45,7 +45,7 @@ export default function CTAFooter() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              The companies that win aren't outworking anyone.
+              The pipeline doesn't build itself.
             </motion.h2>
 
             <motion.p
@@ -55,7 +55,7 @@ export default function CTAFooter() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              They're already in the room. Era builds the infrastructure that puts you there.
+              Era builds the system that does.
             </motion.p>
 
             <motion.div
