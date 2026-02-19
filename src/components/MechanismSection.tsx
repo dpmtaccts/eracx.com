@@ -54,7 +54,7 @@ export default function MechanismSection() {
       </div>
 
       {/* Full-width signal dot field */}
-      <div className="mt-16 md:mt-24">
+      <div className="mt-16 md:mt-12 md:pb-[48px]">
         <SignalDotField />
       </div>
 

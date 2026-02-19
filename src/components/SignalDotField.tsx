@@ -74,8 +74,8 @@ interface Dot {
 
 const ROWS = 3;
 const H_SPACING = 80;
-const V_SPACING = 80;
-const FIELD_H = 280;
+const V_SPACING = 90;
+const FIELD_H = 300;
 const ROW_TOP = (FIELD_H - (ROWS - 1) * V_SPACING) / 2;
 
 const VB_W = 2800;
@@ -109,9 +109,9 @@ function buildDots(): Dot[] {
 }
 
 const DOTS = buildDots();
-const BASE_R = 3.5;
-const BASE_DOT_OP = 0.4;
-const BASE_LABEL_OP = 0.55;
+const BASE_R = 5;
+const BASE_DOT_OP = 0.8;
+const BASE_LABEL_OP = 0.85;
 
 const CARD_H = 56;
 const FEED_COUNT = FEED_SIGNALS.length;
@@ -202,7 +202,7 @@ export default function SignalDotField() {
     if (hoveredIdx !== null) {
       if (i === hoveredIdx) return 1;
       if (dist(i, hoveredIdx) < 120) return 0.65;
-      return 0.18;
+      return 0.35;
     }
     if (pulsingIdx === i) return 0.9;
     return BASE_DOT_OP;
@@ -213,7 +213,7 @@ export default function SignalDotField() {
     if (hoveredIdx !== null) {
       if (i === hoveredIdx) return 1;
       if (dist(i, hoveredIdx) < 120) return 0.65;
-      return 0.18;
+      return 0.35;
     }
     if (pulsingIdx === i) return 0.8;
     return BASE_LABEL_OP;
@@ -375,9 +375,9 @@ export default function SignalDotField() {
                   y={dot.py + 14}
                   textAnchor="middle"
                   fill={color}
-                  fontSize="6.5"
-                  fontWeight="500"
-                  letterSpacing="0.08em"
+                  fontSize="11"
+                  fontWeight="700"
+                  letterSpacing="0.1em"
                   style={{
                     opacity: getLabelOp(i),
                     transition: "opacity 0.15s ease-out",
