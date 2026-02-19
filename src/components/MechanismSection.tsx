@@ -53,8 +53,8 @@ export default function MechanismSection() {
         </motion.h2>
       </div>
 
-      {/* Full-width signal dot field */}
-      <div className="mt-16 md:mt-12 md:pb-[48px]">
+      {/* Signal ticker */}
+      <div className="mt-16 md:mt-12">
         <SignalDotField />
       </div>
 

@@ -1,442 +1,334 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useState, useRef } from "react";
 
-// --- Signal data ---
+// --- Types & Colors ---
 
-interface Signal {
-  name: string;
+type Loop = "connection" | "trust" | "loyalty";
+
+interface SignalItem {
   label: string;
+  name: string;
   description: string;
-  loop: "connection" | "trust" | "loyalty";
+  loop: Loop;
 }
 
-const CONNECTION_SIGNALS: Signal[] = [
-  { name: "Job Change", label: "JOB CHANGE", description: "Contact changes roles. High-intent window, new budget authority.", loop: "connection" },
-  { name: "New Executive Hire", label: "EXEC HIRE", description: "New VP joins target account. 90-day window before priorities lock.", loop: "connection" },
-  { name: "Funding Event", label: "FUNDING", description: "Series A/B/C closes. Growth mode triggers new infrastructure spend.", loop: "connection" },
-  { name: "Hiring Signal", label: "HIRING", description: "Job postings in sales or RevOps. Indicates GTM investment and pain.", loop: "connection" },
-  { name: "Tech Install", label: "TECH INSTALL", description: "Target adopts a tool in your category. Active evaluation window.", loop: "connection" },
-  { name: "Web Intent", label: "WEB INTENT", description: "Account visits pricing pages. Invisible buying signal.", loop: "connection" },
-  { name: "ICP Goes Quiet", label: "GONE QUIET", description: "No touchpoint in 60 days. CRM flags for re-engagement.", loop: "connection" },
-];
-
-const TRUST_SIGNALS: Signal[] = [
-  { name: "Email Open Pattern", label: "EMAIL OPEN", description: "Repeated opens on specific content. Signals topic relevance.", loop: "trust" },
-  { name: "Deal Stall 30 Days", label: "DEAL STALL", description: "Opportunity stagnant 30 days. Triggers stakeholder check-in.", loop: "trust" },
-  { name: "Champion Role Change", label: "CHAMPION", description: "Internal advocate changes title. Buying process at risk.", loop: "trust" },
-  { name: "Multi-stakeholder Engagement", label: "MULTI-THREAD", description: "Multiple contacts from same account engage simultaneously.", loop: "trust" },
-  { name: "Proposal Viewed", label: "PROPOSAL", description: "Deck opened multiple times without reply. Objection signal.", loop: "trust" },
-  { name: "Content Download", label: "CONTENT", description: "Specific asset downloaded. Intent mapped to buying stage.", loop: "trust" },
-];
-
-const LOYALTY_SIGNALS: Signal[] = [
-  { name: "90-Day Post-Close", label: "90-DAY", description: "Standard expansion window. ROI is forming, ask is timely.", loop: "loyalty" },
-  { name: "Renewal 90 Days Out", label: "RENEWAL", description: "90 days out. Triggers value review and upsell conversation.", loop: "loyalty" },
-  { name: "Team Growth at Account", label: "TEAM GROWTH", description: "Headcount increase signals expanded use case opportunity.", loop: "loyalty" },
-  { name: "Customer Job Change", label: "CUST. MOVE", description: "Champion moves to new company. Highest-conversion new logo.", loop: "loyalty" },
-  { name: "Low Engagement", label: "LOW ENGAGE", description: "Underutilization detected. Churn risk triggers proactive outreach.", loop: "loyalty" },
-  { name: "Referral Trigger", label: "REFERRAL", description: "6-month mark. Structured referral ask activates in the loop.", loop: "loyalty" },
-];
-
-const LOOP_COLORS: Record<string, string> = {
+const LOOP_COLORS: Record<Loop, string> = {
   connection: "#C8A96E",
   trust: "#2BBFAA",
   loyalty: "#D4367A",
 };
 
-const LOOP_LABELS: Record<string, string> = {
+const LOOP_LABELS: Record<Loop, string> = {
   connection: "CONNECTION LOOP",
   trust: "TRUST LOOP",
   loyalty: "LOYALTY LOOP",
 };
 
-// --- Mobile feed data ---
+// --- Signal rows ---
 
-const FEED_SIGNALS: { label: string; loop: "connection" | "trust" | "loyalty"; action: string }[] = [
-  { label: "JOB CHANGE", loop: "connection", action: "Outreach sequence fires" },
-  { label: "DEAL STALL", loop: "trust", action: "Re-engagement activates" },
-  { label: "90-DAY", loop: "loyalty", action: "Expansion ask triggers" },
-  { label: "FUNDING", loop: "connection", action: "Account flagged + targeted" },
-  { label: "CHAMPION", loop: "trust", action: "Stakeholder check-in sent" },
-  { label: "REFERRAL", loop: "loyalty", action: "Referral sequence starts" },
-  { label: "EXEC HIRE", loop: "connection", action: "New contact added to loop" },
-  { label: "LOW ENGAGE", loop: "loyalty", action: "Risk alert generated" },
+const ROW_CONNECTION: SignalItem[] = [
+  { label: "JOB CHANGE", name: "Job Change", description: "Contact changes roles. High-intent window, new budget authority.", loop: "connection" },
+  { label: "EXEC HIRE", name: "Exec Hire", description: "New VP joins target account. 90-day window before priorities lock.", loop: "connection" },
+  { label: "FUNDING ROUND", name: "Funding Round", description: "Series A/B/C closes. Growth mode triggers new infrastructure spend.", loop: "connection" },
+  { label: "NEW HIRE", name: "New Hire", description: "Job postings in sales or RevOps. Indicates GTM investment and pain.", loop: "connection" },
+  { label: "TECH INSTALL", name: "Tech Install", description: "Target adopts a tool in your category. Active evaluation window.", loop: "connection" },
+  { label: "WEB INTENT", name: "Web Intent", description: "Account visits pricing pages. Invisible buying signal.", loop: "connection" },
+  { label: "GONE QUIET", name: "Gone Quiet", description: "No touchpoint in 60 days. CRM flags for re-engagement.", loop: "connection" },
+  { label: "SERIES A", name: "Series A", description: "Early-stage funding closes. New budget unlocks infrastructure spend.", loop: "connection" },
+  { label: "BOARD CHANGE", name: "Board Change", description: "New board member signals strategic shift. Priorities may realign.", loop: "connection" },
+  { label: "OFFICE EXPANSION", name: "Office Expansion", description: "New office opened. Headcount growth signals expanded opportunity.", loop: "connection" },
 ];
 
-// --- Build dots across 200vw field (desktop) ---
+const ROW_TRUST: SignalItem[] = [
+  { label: "EMAIL OPEN", name: "Email Open", description: "Repeated opens on specific content. Signals topic relevance.", loop: "trust" },
+  { label: "DEAL STALL", name: "Deal Stall", description: "Opportunity stagnant 30 days. Triggers stakeholder check-in.", loop: "trust" },
+  { label: "CHAMPION ID", name: "Champion ID", description: "Internal advocate identified. Buying process gains momentum.", loop: "trust" },
+  { label: "MULTI-THREAD", name: "Multi-Thread", description: "Multiple contacts from same account engage simultaneously.", loop: "trust" },
+  { label: "PROPOSAL SENT", name: "Proposal Sent", description: "Deck opened multiple times without reply. Objection signal.", loop: "trust" },
+  { label: "CONTENT ENGAGE", name: "Content Engage", description: "Specific asset downloaded. Intent mapped to buying stage.", loop: "trust" },
+  { label: "NO REPLY", name: "No Reply", description: "Stakeholder goes silent after engagement. Re-entry play activates.", loop: "trust" },
+  { label: "DEMO REQUEST", name: "Demo Request", description: "Inbound demo request from target account. High-intent moment.", loop: "trust" },
+  { label: "PRICING VIEW", name: "Pricing View", description: "Pricing page visited multiple times. Active evaluation underway.", loop: "trust" },
+  { label: "SLACK CONNECT", name: "Slack Connect", description: "Shared channel requested. Relationship deepening signal.", loop: "trust" },
+];
 
-interface Dot {
-  row: number;
-  col: number;
-  signal: Signal;
-  px: number;
-  py: number;
+const ROW_LOYALTY: SignalItem[] = [
+  { label: "90-DAY CHECK", name: "90-Day Check", description: "Standard expansion window. ROI is forming, ask is timely.", loop: "loyalty" },
+  { label: "RENEWAL WINDOW", name: "Renewal Window", description: "90 days out. Triggers value review and upsell conversation.", loop: "loyalty" },
+  { label: "TEAM GROWTH", name: "Team Growth", description: "Headcount increase signals expanded use case opportunity.", loop: "loyalty" },
+  { label: "CHAMPION MOVE", name: "Champion Move", description: "Champion moves to new company. Highest-conversion new logo.", loop: "loyalty" },
+  { label: "LOW ENGAGE", name: "Low Engage", description: "Underutilization detected. Churn risk triggers proactive outreach.", loop: "loyalty" },
+  { label: "REFERRAL SIGNAL", name: "Referral Signal", description: "6-month mark. Structured referral ask activates in the loop.", loop: "loyalty" },
+  { label: "NPS RESPONSE", name: "NPS Response", description: "Survey response received. Sentiment data routes to account owner.", loop: "loyalty" },
+  { label: "SEAT EXPANSION", name: "Seat Expansion", description: "New users added to account. Usage growth signals upsell timing.", loop: "loyalty" },
+  { label: "USAGE DROP", name: "Usage Drop", description: "Activity decline detected. Churn prevention sequence activates.", loop: "loyalty" },
+  { label: "EXEC SPONSOR", name: "Executive Sponsor", description: "Executive engagement confirmed. Strategic account status elevated.", loop: "loyalty" },
+];
+
+// --- Row config ---
+
+interface RowConfig {
+  signals: SignalItem[];
+  duration: number;
+  reverse: boolean;
+  hideOnMobile?: boolean;
 }
 
-const ROWS = 3;
-const H_SPACING = 80;
-const V_SPACING = 90;
-const FIELD_H = 300;
-const ROW_TOP = (FIELD_H - (ROWS - 1) * V_SPACING) / 2;
+const ROWS: RowConfig[] = [
+  { signals: ROW_CONNECTION, duration: 35, reverse: false },
+  { signals: ROW_TRUST, duration: 40, reverse: true },
+  { signals: ROW_LOYALTY, duration: 30, reverse: false, hideOnMobile: true },
+];
 
-const VB_W = 2800;
-const VB_H = FIELD_H;
-const COLS_PER_ROW = Math.floor(VB_W / H_SPACING);
-const TOTAL = ROWS * COLS_PER_ROW;
+// --- Pill component ---
 
-function buildDots(): Dot[] {
-  const dots: Dot[] = [];
-  const pool: Signal[] = [];
-  let ci = 0, ti = 0, li = 0;
-  for (let i = 0; i < TOTAL; i++) {
-    const pick = i % 3;
-    if (pick === 0) { pool.push(CONNECTION_SIGNALS[ci % CONNECTION_SIGNALS.length]); ci++; }
-    else if (pick === 1) { pool.push(TRUST_SIGNALS[ti % TRUST_SIGNALS.length]); ti++; }
-    else { pool.push(LOYALTY_SIGNALS[li % LOYALTY_SIGNALS.length]); li++; }
-  }
-
-  for (let i = 0; i < TOTAL; i++) {
-    const row = Math.floor(i / COLS_PER_ROW);
-    const col = i % COLS_PER_ROW;
-    dots.push({
-      row,
-      col,
-      signal: pool[i],
-      px: (col + 0.5) * H_SPACING,
-      py: ROW_TOP + row * V_SPACING,
-    });
-  }
-  return dots;
-}
-
-const DOTS = buildDots();
-const BASE_R = 5;
-const BASE_DOT_OP = 0.8;
-const BASE_LABEL_OP = 0.85;
-
-const CARD_H = 56;
-const FEED_COUNT = FEED_SIGNALS.length;
-const TOTAL_SCROLL_H = CARD_H * FEED_COUNT;
-const SCROLL_DURATION = 2.5 * FEED_COUNT; // 2.5s per card
-
-// --- Component ---
-
-export default function SignalDotField() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
-  const [visible, setVisible] = useState(false);
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
-  const [pulsingIdx, setPulsingIdx] = useState<number | null>(null);
-  const pulseTimer = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
-      { threshold: 0.05 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  // Pulse every 2s (desktop only, but harmless to run)
-  useEffect(() => {
-    if (!visible) return;
-    const tick = () => {
-      setPulsingIdx(Math.floor(Math.random() * DOTS.length));
-      setTimeout(() => setPulsingIdx(null), 900);
-    };
-    pulseTimer.current = setInterval(tick, 2000);
-    return () => { if (pulseTimer.current) clearInterval(pulseTimer.current); };
-  }, [visible]);
-
-  const handlePointerMove = useCallback((e: React.PointerEvent<SVGSVGElement>) => {
-    const svg = svgRef.current;
-    if (!svg) return;
-    const rect = svg.getBoundingClientRect();
-    const vx = ((e.clientX - rect.left) / rect.width) * VB_W;
-    const vy = ((e.clientY - rect.top) / rect.height) * VB_H;
-
-    let closest = -1;
-    let closestDist = Infinity;
-    for (let i = 0; i < DOTS.length; i++) {
-      const dx = DOTS[i].px - vx;
-      const dy = DOTS[i].py - vy;
-      const d = dx * dx + dy * dy;
-      if (d < closestDist) { closestDist = d; closest = i; }
-    }
-
-    if (closestDist < 40 * 40) {
-      setHoveredIdx(closest);
-      const dot = DOTS[closest];
-      setTooltipPos({
-        x: rect.left + (dot.px / VB_W) * rect.width,
-        y: rect.top + (dot.py / VB_H) * rect.height,
-      });
-    } else {
-      setHoveredIdx(null);
-    }
-  }, []);
-
-  const handlePointerLeave = useCallback(() => { setHoveredIdx(null); }, []);
-
-  const dist = (i: number, j: number): number => {
-    const dx = DOTS[i].px - DOTS[j].px;
-    const dy = DOTS[i].py - DOTS[j].py;
-    return Math.sqrt(dx * dx + dy * dy);
-  };
-
-  const getR = (i: number): number => {
-    if (hoveredIdx !== null) {
-      if (i === hoveredIdx) return 5.5;
-      if (dist(i, hoveredIdx) < 120) return 4.5;
-      return BASE_R;
-    }
-    if (pulsingIdx === i) return 5;
-    return BASE_R;
-  };
-
-  const getDotOp = (i: number): number => {
-    if (!visible) return 0;
-    if (hoveredIdx !== null) {
-      if (i === hoveredIdx) return 1;
-      if (dist(i, hoveredIdx) < 120) return 0.65;
-      return 0.35;
-    }
-    if (pulsingIdx === i) return 0.9;
-    return BASE_DOT_OP;
-  };
-
-  const getLabelOp = (i: number): number => {
-    if (!visible) return 0;
-    if (hoveredIdx !== null) {
-      if (i === hoveredIdx) return 1;
-      if (dist(i, hoveredIdx) < 120) return 0.65;
-      return 0.35;
-    }
-    if (pulsingIdx === i) return 0.8;
-    return BASE_LABEL_OP;
-  };
-
-  const hoveredDot = hoveredIdx !== null ? DOTS[hoveredIdx] : null;
-
-  // Duplicate feed for seamless loop
-  const feedItems = [...FEED_SIGNALS, ...FEED_SIGNALS];
+function SignalPill({
+  signal,
+  isMobile,
+  onHover,
+  onLeave,
+}: {
+  signal: SignalItem;
+  isMobile: boolean;
+  onHover: (e: React.MouseEvent, signal: SignalItem) => void;
+  onLeave: () => void;
+}) {
+  const color = LOOP_COLORS[signal.loop];
+  const h = isMobile ? 32 : 36;
+  const fs = isMobile ? 10 : 11;
 
   return (
-    <div ref={containerRef}>
-      {/* Mobile: signal feed */}
-      <div className="md:hidden">
-        <p
-          className="uppercase"
-          style={{
-            fontSize: 9,
-            letterSpacing: "0.12em",
-            color: "#C4522A",
-            marginBottom: 16,
-          }}
-        >
-          Signals Firing Now
-        </p>
+    <span
+      className="sdf-pill"
+      style={{
+        height: h,
+        padding: "0 14px",
+        borderRadius: h / 2,
+        border: `1px solid ${color}59`,
+        background: `${color}14`,
+        marginRight: 10,
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 8,
+        flexShrink: 0,
+        cursor: "default",
+        transition: "border-color 0.15s, background 0.15s, transform 0.15s",
+      }}
+      onMouseEnter={(e) => onHover(e, signal)}
+      onMouseLeave={onLeave}
+    >
+      <span
+        style={{
+          width: 7,
+          height: 7,
+          borderRadius: "50%",
+          backgroundColor: color,
+          opacity: 0.9,
+          flexShrink: 0,
+        }}
+      />
+      <span
+        style={{
+          fontSize: fs,
+          fontWeight: 600,
+          letterSpacing: "0.08em",
+          textTransform: "uppercase" as const,
+          color: "#F5F0E8",
+          opacity: 0.85,
+          whiteSpace: "nowrap",
+        }}
+      >
+        {signal.label}
+      </span>
+    </span>
+  );
+}
+
+// --- Marquee row ---
+
+function MarqueeRow({
+  config,
+  rowIndex,
+  isMobile,
+  onPillHover,
+  onPillLeave,
+}: {
+  config: RowConfig;
+  rowIndex: number;
+  isMobile: boolean;
+  onPillHover: (e: React.MouseEvent, signal: SignalItem) => void;
+  onPillLeave: () => void;
+}) {
+  const [paused, setPaused] = useState(false);
+  const animName = `sdf-marquee-${rowIndex}`;
+  const dir = config.reverse ? "reverse" : "normal";
+
+  const handleRowEnter = () => setPaused(true);
+  const handleRowLeave = () => {
+    setPaused(false);
+    onPillLeave();
+  };
+
+  const pills = config.signals;
+
+  return (
+    <div
+      className="overflow-hidden"
+      onMouseEnter={handleRowEnter}
+      onMouseLeave={handleRowLeave}
+    >
+      <style>{`
+        @keyframes ${animName} {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+      `}</style>
+      <div
+        style={{
+          display: "flex",
+          width: "max-content",
+          animation: `${animName} ${config.duration}s linear infinite`,
+          animationDirection: dir,
+          animationPlayState: paused ? "paused" : "running",
+        }}
+      >
+        {/* First copy */}
+        {pills.map((s, i) => (
+          <SignalPill
+            key={`a-${i}`}
+            signal={s}
+            isMobile={isMobile}
+            onHover={onPillHover}
+            onLeave={onPillLeave}
+          />
+        ))}
+        {/* Second copy for seamless loop */}
+        {pills.map((s, i) => (
+          <SignalPill
+            key={`b-${i}`}
+            signal={s}
+            isMobile={isMobile}
+            onHover={onPillHover}
+            onLeave={onPillLeave}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// --- Main component ---
+
+export default function SignalDotField() {
+  const [tooltip, setTooltip] = useState<{
+    signal: SignalItem;
+    x: number;
+    y: number;
+  } | null>(null);
+  const tooltipTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handlePillHover = (e: React.MouseEvent, signal: SignalItem) => {
+    if (tooltipTimeout.current) clearTimeout(tooltipTimeout.current);
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    setTooltip({
+      signal,
+      x: rect.left + rect.width / 2,
+      y: rect.top,
+    });
+  };
+
+  const handlePillLeave = () => {
+    tooltipTimeout.current = setTimeout(() => setTooltip(null), 80);
+  };
+
+  return (
+    <div
+      className="relative overflow-hidden"
+      style={{
+        width: "100vw",
+        marginLeft: "calc(-50vw + 50%)",
+        padding: "48px 0",
+        maskImage: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+        WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+      }}
+    >
+      <style>{`
+        .sdf-pill:hover {
+          border-color: color-mix(in srgb, currentColor 80%, transparent) !important;
+          transform: scale(1.04);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .sdf-marquee { animation: none !important; }
+        }
+      `}</style>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {ROWS.map((row, i) => (
+          <div
+            key={i}
+            className={row.hideOnMobile ? "hidden md:block" : ""}
+          >
+            <MarqueeRow
+              config={row}
+              rowIndex={i}
+              isMobile={false}
+              onPillHover={handlePillHover}
+              onPillLeave={handlePillLeave}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Tooltip */}
+      {tooltip && (
         <div
-          className="relative overflow-hidden"
+          className="pointer-events-none fixed z-50"
           style={{
-            width: "100%",
-            height: 280,
-            maskImage: "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+            left: tooltip.x,
+            top: tooltip.y - 12,
+            transform: "translate(-50%, -100%)",
+            animation: "sdf-tip-in 0.12s ease-out",
           }}
         >
           <style>{`
-            @keyframes sdf-scroll {
-              from { transform: translateY(0); }
-              to { transform: translateY(-${TOTAL_SCROLL_H}px); }
-            }
-            @media (prefers-reduced-motion: reduce) {
-              .sdf-feed { animation: none !important; }
+            @keyframes sdf-tip-in {
+              from { opacity: 0; transform: translate(-50%, -100%) translateY(5px); }
+              to { opacity: 1; transform: translate(-50%, -100%) translateY(0); }
             }
           `}</style>
           <div
-            className="sdf-feed"
+            className="rounded-sm border"
             style={{
-              animation: `sdf-scroll ${SCROLL_DURATION}s linear infinite`,
+              backgroundColor: "#111111",
+              borderColor: LOOP_COLORS[tooltip.signal.loop],
+              padding: "12px 16px",
+              width: 220,
             }}
           >
-            {feedItems.map((item, i) => (
-              <div
-                key={i}
-                style={{
-                  height: CARD_H,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  borderBottom: "1px solid rgba(245,240,232,0.08)",
-                }}
-              >
-                <span
-                  style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: "50%",
-                    backgroundColor: LOOP_COLORS[item.loop],
-                    flexShrink: 0,
-                  }}
-                />
-                <span
-                  style={{
-                    color: "#F5F0E8",
-                    fontSize: 12,
-                    fontWeight: 600,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.08em",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {item.label}
-                </span>
-                <span style={{ flex: 1 }} />
-                <span
-                  style={{
-                    color: "rgba(245,240,232,0.5)",
-                    fontSize: 11,
-                    fontStyle: "italic",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {item.action}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Desktop: dot field */}
-      <div
-        className="relative hidden overflow-visible md:block"
-        style={{
-          width: "200vw",
-          marginLeft: "-50vw",
-          height: FIELD_H,
-          maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-        }}
-      >
-        <style>{`
-          @keyframes sdf-fade {
-            from { opacity: 0; }
-            to { opacity: 1; }
-          }
-          @keyframes sdf-tip-in {
-            from { opacity: 0; transform: translate(-50%, -100%) translateY(5px); }
-            to { opacity: 1; transform: translate(-50%, -100%) translateY(0); }
-          }
-          @media (prefers-reduced-motion: reduce) {
-            .sdf-g { animation: none !important; opacity: 1 !important; }
-            .sdf-g circle, .sdf-g text { transition: none !important; }
-          }
-        `}</style>
-
-        <svg
-          ref={svgRef}
-          viewBox={`0 0 ${VB_W} ${VB_H}`}
-          preserveAspectRatio="xMidYMid meet"
-          className="block h-full w-full"
-          style={{ cursor: hoveredIdx !== null ? "crosshair" : "default" }}
-          onPointerMove={handlePointerMove}
-          onPointerLeave={handlePointerLeave}
-        >
-          {DOTS.map((dot, i) => {
-            const color = LOOP_COLORS[dot.signal.loop];
-            const delay = i * 6;
-
-            return (
-              <g
-                key={i}
-                className="sdf-g"
-                style={{
-                  opacity: visible ? 1 : 0,
-                  animation: visible ? `sdf-fade 0.15s ease-out ${delay}ms forwards` : "none",
-                }}
-              >
-                <circle
-                  cx={dot.px}
-                  cy={dot.py}
-                  r={getR(i)}
-                  fill={color}
-                  style={{
-                    opacity: getDotOp(i),
-                    transition: "opacity 0.15s ease-out, r 0.15s ease-out",
-                  }}
-                />
-                <text
-                  x={dot.px}
-                  y={dot.py + 14}
-                  textAnchor="middle"
-                  fill={color}
-                  fontSize="11"
-                  fontWeight="700"
-                  letterSpacing="0.1em"
-                  style={{
-                    opacity: getLabelOp(i),
-                    transition: "opacity 0.15s ease-out",
-                    fontFamily: "var(--font-sans)",
-                  }}
-                >
-                  {dot.signal.label}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
-
-        {/* Tooltip */}
-        {hoveredDot && (
-          <div
-            className="pointer-events-none fixed z-50"
-            style={{
-              left: tooltipPos.x,
-              top: tooltipPos.y - 16,
-              transform: "translate(-50%, -100%)",
-              animation: "sdf-tip-in 0.12s ease-out",
-            }}
-          >
-            <div
-              className="rounded-sm border"
+            <p
+              className="uppercase tracking-[0.12em]"
               style={{
-                backgroundColor: "#111111",
-                borderColor: LOOP_COLORS[hoveredDot.signal.loop],
-                padding: "12px 16px",
-                width: 220,
+                color: LOOP_COLORS[tooltip.signal.loop],
+                fontSize: 9,
+                marginBottom: 4,
               }}
             >
-              <p
-                className="uppercase tracking-[0.12em]"
-                style={{
-                  color: LOOP_COLORS[hoveredDot.signal.loop],
-                  fontSize: 9,
-                  marginBottom: 4,
-                }}
-              >
-                {LOOP_LABELS[hoveredDot.signal.loop]}
-              </p>
-              <p
-                className="font-semibold text-[#F5F0E8]"
-                style={{ fontSize: 13, marginBottom: 6 }}
-              >
-                {hoveredDot.signal.name}
-              </p>
-              <p
-                className="text-[#F5F0E8]/65"
-                style={{ fontSize: 11, lineHeight: 1.5 }}
-              >
-                {hoveredDot.signal.description}
-              </p>
-            </div>
+              {LOOP_LABELS[tooltip.signal.loop]}
+            </p>
+            <p
+              className="font-semibold text-[#F5F0E8]"
+              style={{ fontSize: 13, marginBottom: 6 }}
+            >
+              {tooltip.signal.name}
+            </p>
+            <p
+              className="text-[#F5F0E8]/65"
+              style={{ fontSize: 11, lineHeight: 1.5 }}
+            >
+              {tooltip.signal.description}
+            </p>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
