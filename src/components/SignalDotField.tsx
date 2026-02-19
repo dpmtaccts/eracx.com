@@ -49,34 +49,42 @@ const LOOP_LABELS: Record<string, string> = {
   loyalty: "LOYALTY LOOP",
 };
 
-// --- Build dots across 200vw field ---
+// --- Mobile feed data ---
+
+const FEED_SIGNALS: { label: string; loop: "connection" | "trust" | "loyalty"; action: string }[] = [
+  { label: "JOB CHANGE", loop: "connection", action: "Outreach sequence fires" },
+  { label: "DEAL STALL", loop: "trust", action: "Re-engagement activates" },
+  { label: "90-DAY", loop: "loyalty", action: "Expansion ask triggers" },
+  { label: "FUNDING", loop: "connection", action: "Account flagged + targeted" },
+  { label: "CHAMPION", loop: "trust", action: "Stakeholder check-in sent" },
+  { label: "REFERRAL", loop: "loyalty", action: "Referral sequence starts" },
+  { label: "EXEC HIRE", loop: "connection", action: "New contact added to loop" },
+  { label: "LOW ENGAGE", loop: "loyalty", action: "Risk alert generated" },
+];
+
+// --- Build dots across 200vw field (desktop) ---
 
 interface Dot {
   row: number;
   col: number;
   signal: Signal;
-  // pixel position relative to the 200vw container
   px: number;
   py: number;
 }
 
 const ROWS = 3;
-const H_SPACING = 80; // px between dots horizontally
-const V_SPACING = 80; // px between row centers
+const H_SPACING = 80;
+const V_SPACING = 80;
 const FIELD_H = 280;
-const ROW_TOP = (FIELD_H - (ROWS - 1) * V_SPACING) / 2; // center rows
+const ROW_TOP = (FIELD_H - (ROWS - 1) * V_SPACING) / 2;
 
-// We compute cols to fill 200vw at build time using a reference width.
-// At runtime the SVG scales. We'll use a viewBox approach:
-// viewBox width = 200vw equivalent. We pick 2800 (200% of ~1400px reference).
 const VB_W = 2800;
 const VB_H = FIELD_H;
-const COLS_PER_ROW = Math.floor(VB_W / H_SPACING); // ~35
+const COLS_PER_ROW = Math.floor(VB_W / H_SPACING);
 const TOTAL = ROWS * COLS_PER_ROW;
 
 function buildDots(): Dot[] {
   const dots: Dot[] = [];
-  // Build interleaved pool
   const pool: Signal[] = [];
   let ci = 0, ti = 0, li = 0;
   for (let i = 0; i < TOTAL; i++) {
@@ -105,6 +113,11 @@ const BASE_R = 3.5;
 const BASE_DOT_OP = 0.4;
 const BASE_LABEL_OP = 0.55;
 
+const CARD_H = 56;
+const FEED_COUNT = FEED_SIGNALS.length;
+const TOTAL_SCROLL_H = CARD_H * FEED_COUNT;
+const SCROLL_DURATION = 2.5 * FEED_COUNT; // 2.5s per card
+
 // --- Component ---
 
 export default function SignalDotField() {
@@ -127,7 +140,7 @@ export default function SignalDotField() {
     return () => observer.disconnect();
   }, []);
 
-  // Pulse every 2s
+  // Pulse every 2s (desktop only, but harmless to run)
   useEffect(() => {
     if (!visible) return;
     const tick = () => {
@@ -154,7 +167,6 @@ export default function SignalDotField() {
       if (d < closestDist) { closestDist = d; closest = i; }
     }
 
-    // Hit area ~40px in viewBox units (covers 72×50 target)
     if (closestDist < 40 * 40) {
       setHoveredIdx(closest);
       const dot = DOTS[closest];
@@ -209,131 +221,222 @@ export default function SignalDotField() {
 
   const hoveredDot = hoveredIdx !== null ? DOTS[hoveredIdx] : null;
 
+  // Duplicate feed for seamless loop
+  const feedItems = [...FEED_SIGNALS, ...FEED_SIGNALS];
+
   return (
-    <div
-      ref={containerRef}
-      className="relative overflow-visible"
-      style={{
-        width: "200vw",
-        marginLeft: "-50vw",
-        height: FIELD_H,
-        maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-        WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-      }}
-    >
-      <style>{`
-        @keyframes sdf-fade {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes sdf-tip-in {
-          from { opacity: 0; transform: translate(-50%, -100%) translateY(5px); }
-          to { opacity: 1; transform: translate(-50%, -100%) translateY(0); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .sdf-g { animation: none !important; opacity: 1 !important; }
-          .sdf-g circle, .sdf-g text { transition: none !important; }
-        }
-      `}</style>
-
-      <svg
-        ref={svgRef}
-        viewBox={`0 0 ${VB_W} ${VB_H}`}
-        preserveAspectRatio="xMidYMid meet"
-        className="block h-full w-full"
-        style={{ cursor: hoveredIdx !== null ? "crosshair" : "default" }}
-        onPointerMove={handlePointerMove}
-        onPointerLeave={handlePointerLeave}
-      >
-        {DOTS.map((dot, i) => {
-          const color = LOOP_COLORS[dot.signal.loop];
-          const delay = i * 6;
-
-          return (
-            <g
-              key={i}
-              className="sdf-g"
-              style={{
-                opacity: visible ? 1 : 0,
-                animation: visible ? `sdf-fade 0.15s ease-out ${delay}ms forwards` : "none",
-              }}
-            >
-              <circle
-                cx={dot.px}
-                cy={dot.py}
-                r={getR(i)}
-                fill={color}
-                style={{
-                  opacity: getDotOp(i),
-                  transition: "opacity 0.15s ease-out, r 0.15s ease-out",
-                }}
-              />
-              <text
-                x={dot.px}
-                y={dot.py + 14}
-                textAnchor="middle"
-                fill={color}
-                fontSize="6.5"
-                fontWeight="500"
-                letterSpacing="0.08em"
-                style={{
-                  opacity: getLabelOp(i),
-                  transition: "opacity 0.15s ease-out",
-                  fontFamily: "var(--font-sans)",
-                }}
-              >
-                {dot.signal.label}
-              </text>
-            </g>
-          );
-        })}
-      </svg>
-
-      {/* Tooltip */}
-      {hoveredDot && (
-        <div
-          className="pointer-events-none fixed z-50"
+    <div ref={containerRef}>
+      {/* Mobile: signal feed */}
+      <div className="md:hidden">
+        <p
+          className="uppercase"
           style={{
-            left: tooltipPos.x,
-            top: tooltipPos.y - 16,
-            transform: "translate(-50%, -100%)",
-            animation: "sdf-tip-in 0.12s ease-out",
+            fontSize: 9,
+            letterSpacing: "0.12em",
+            color: "#C4522A",
+            marginBottom: 16,
           }}
         >
+          Signals Firing Now
+        </p>
+        <div
+          className="relative overflow-hidden"
+          style={{
+            width: "100%",
+            height: 280,
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+          }}
+        >
+          <style>{`
+            @keyframes sdf-scroll {
+              from { transform: translateY(0); }
+              to { transform: translateY(-${TOTAL_SCROLL_H}px); }
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .sdf-feed { animation: none !important; }
+            }
+          `}</style>
           <div
-            className="rounded-sm border"
+            className="sdf-feed"
             style={{
-              backgroundColor: "#111111",
-              borderColor: LOOP_COLORS[hoveredDot.signal.loop],
-              padding: "12px 16px",
-              width: 220,
+              animation: `sdf-scroll ${SCROLL_DURATION}s linear infinite`,
             }}
           >
-            <p
-              className="uppercase tracking-[0.12em]"
-              style={{
-                color: LOOP_COLORS[hoveredDot.signal.loop],
-                fontSize: 9,
-                marginBottom: 4,
-              }}
-            >
-              {LOOP_LABELS[hoveredDot.signal.loop]}
-            </p>
-            <p
-              className="font-semibold text-[#F5F0E8]"
-              style={{ fontSize: 13, marginBottom: 6 }}
-            >
-              {hoveredDot.signal.name}
-            </p>
-            <p
-              className="text-[#F5F0E8]/65"
-              style={{ fontSize: 11, lineHeight: 1.5 }}
-            >
-              {hoveredDot.signal.description}
-            </p>
+            {feedItems.map((item, i) => (
+              <div
+                key={i}
+                style={{
+                  height: CARD_H,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  borderBottom: "1px solid rgba(245,240,232,0.08)",
+                }}
+              >
+                <span
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: "50%",
+                    backgroundColor: LOOP_COLORS[item.loop],
+                    flexShrink: 0,
+                  }}
+                />
+                <span
+                  style={{
+                    color: "#F5F0E8",
+                    fontSize: 12,
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {item.label}
+                </span>
+                <span style={{ flex: 1 }} />
+                <span
+                  style={{
+                    color: "rgba(245,240,232,0.5)",
+                    fontSize: 11,
+                    fontStyle: "italic",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {item.action}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
-      )}
+      </div>
+
+      {/* Desktop: dot field */}
+      <div
+        className="relative hidden overflow-visible md:block"
+        style={{
+          width: "200vw",
+          marginLeft: "-50vw",
+          height: FIELD_H,
+          maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+        }}
+      >
+        <style>{`
+          @keyframes sdf-fade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
+          @keyframes sdf-tip-in {
+            from { opacity: 0; transform: translate(-50%, -100%) translateY(5px); }
+            to { opacity: 1; transform: translate(-50%, -100%) translateY(0); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .sdf-g { animation: none !important; opacity: 1 !important; }
+            .sdf-g circle, .sdf-g text { transition: none !important; }
+          }
+        `}</style>
+
+        <svg
+          ref={svgRef}
+          viewBox={`0 0 ${VB_W} ${VB_H}`}
+          preserveAspectRatio="xMidYMid meet"
+          className="block h-full w-full"
+          style={{ cursor: hoveredIdx !== null ? "crosshair" : "default" }}
+          onPointerMove={handlePointerMove}
+          onPointerLeave={handlePointerLeave}
+        >
+          {DOTS.map((dot, i) => {
+            const color = LOOP_COLORS[dot.signal.loop];
+            const delay = i * 6;
+
+            return (
+              <g
+                key={i}
+                className="sdf-g"
+                style={{
+                  opacity: visible ? 1 : 0,
+                  animation: visible ? `sdf-fade 0.15s ease-out ${delay}ms forwards` : "none",
+                }}
+              >
+                <circle
+                  cx={dot.px}
+                  cy={dot.py}
+                  r={getR(i)}
+                  fill={color}
+                  style={{
+                    opacity: getDotOp(i),
+                    transition: "opacity 0.15s ease-out, r 0.15s ease-out",
+                  }}
+                />
+                <text
+                  x={dot.px}
+                  y={dot.py + 14}
+                  textAnchor="middle"
+                  fill={color}
+                  fontSize="6.5"
+                  fontWeight="500"
+                  letterSpacing="0.08em"
+                  style={{
+                    opacity: getLabelOp(i),
+                    transition: "opacity 0.15s ease-out",
+                    fontFamily: "var(--font-sans)",
+                  }}
+                >
+                  {dot.signal.label}
+                </text>
+              </g>
+            );
+          })}
+        </svg>
+
+        {/* Tooltip */}
+        {hoveredDot && (
+          <div
+            className="pointer-events-none fixed z-50"
+            style={{
+              left: tooltipPos.x,
+              top: tooltipPos.y - 16,
+              transform: "translate(-50%, -100%)",
+              animation: "sdf-tip-in 0.12s ease-out",
+            }}
+          >
+            <div
+              className="rounded-sm border"
+              style={{
+                backgroundColor: "#111111",
+                borderColor: LOOP_COLORS[hoveredDot.signal.loop],
+                padding: "12px 16px",
+                width: 220,
+              }}
+            >
+              <p
+                className="uppercase tracking-[0.12em]"
+                style={{
+                  color: LOOP_COLORS[hoveredDot.signal.loop],
+                  fontSize: 9,
+                  marginBottom: 4,
+                }}
+              >
+                {LOOP_LABELS[hoveredDot.signal.loop]}
+              </p>
+              <p
+                className="font-semibold text-[#F5F0E8]"
+                style={{ fontSize: 13, marginBottom: 6 }}
+              >
+                {hoveredDot.signal.name}
+              </p>
+              <p
+                className="text-[#F5F0E8]/65"
+                style={{ fontSize: 11, lineHeight: 1.5 }}
+              >
+                {hoveredDot.signal.description}
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
