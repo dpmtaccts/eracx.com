@@ -30,39 +30,45 @@ const triggers = [
 
 export default function MechanismSection() {
   return (
-    <section className="bg-[#111111] px-6 py-[120px] md:px-10 md:py-[180px]">
-      <div className="mx-auto max-w-7xl">
-        <motion.p
-          className="mb-4 text-[11px] uppercase tracking-[0.2em] text-[#C4522A]"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          How It Works
-        </motion.p>
+    <section className="bg-[#111111]">
+      {/* Signal ticker band */}
+      <div
+        style={{
+          backgroundColor: "#1A1A1A",
+          borderTop: "1px solid rgba(245,240,232,0.06)",
+          borderBottom: "1px solid rgba(245,240,232,0.06)",
+          padding: "120px 0",
+        }}
+      >
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
+          <motion.p
+            className="mb-4 text-[11px] uppercase tracking-[0.2em] text-[#C4522A]"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            How It Works
+          </motion.p>
 
-        <motion.h2
-          className="max-w-4xl text-3xl font-semibold leading-[1.1] text-[#F5F0E8] md:text-5xl"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-        >
-          Every signal becomes a move. Every move feeds the loop.
-        </motion.h2>
+          <motion.h2
+            className="max-w-4xl text-3xl font-semibold leading-[1.1] text-[#F5F0E8] md:text-5xl"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            Every signal becomes a move. Every move feeds the loop.
+          </motion.h2>
+        </div>
+
+        <div className="mt-16 md:mt-12">
+          <SignalDotField />
+        </div>
       </div>
 
-      {/* Signal ticker */}
-      <div className="mt-16 md:mt-12">
-        <SignalDotField />
-      </div>
-
-      {/* Separator */}
-      <div className="mx-auto max-w-7xl">
-        <div className="pt-20" />
-        <div className="h-px w-full bg-[#F5F0E8]/12" />
-        <div className="pt-[60px]" />
+      {/* Live examples */}
+      <div className="mx-auto max-w-7xl px-6 py-[120px] md:px-10 md:py-[180px]">
 
         {/* Live examples header */}
         <motion.div
