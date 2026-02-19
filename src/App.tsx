@@ -5,6 +5,7 @@ import LoopsVsCampaignsSection from './components/LoopsVsCampaignsSection'
 import SystemOverviewSection from './components/SystemOverviewSection'
 import LoopDetailSection from './components/LoopDetailSection'
 import MechanismSection from './components/MechanismSection'
+import FAQSection from './components/FAQSection'
 import TimelineSection from './components/TimelineSection'
 import CTAFooter from './components/CTAFooter'
 
@@ -128,6 +129,8 @@ function App() {
       <div id="how-it-works">
         <MechanismSection />
       </div>
+
+      <FAQSection />
 
       <TimelineSection />
 
