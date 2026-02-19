@@ -8,6 +8,7 @@ import MechanismSection from './components/MechanismSection'
 import FAQSection from './components/FAQSection'
 import TimelineSection from './components/TimelineSection'
 import CTAFooter from './components/CTAFooter'
+import CookieConsent from './components/CookieConsent'
 
 function App() {
   return (
@@ -135,6 +136,7 @@ function App() {
       <FAQSection />
 
       <CTAFooter />
+      <CookieConsent />
     </div>
   )
 }
