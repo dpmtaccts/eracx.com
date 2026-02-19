@@ -72,7 +72,7 @@ export default function CTAFooter() {
                 Start a conversation
               </a>
               <span className="mx-4 text-[#F5F0E8]/15">|</span>
-              <span className="text-base text-[#F5F0E8]/30">hello@dpmt.co</span>
+              <span className="text-base text-[#F5F0E8]/30">hello@eracx.com</span>
             </motion.div>
           </div>
 
@@ -91,8 +91,8 @@ export default function CTAFooter() {
               <div className="pt-8">
                 <p className="text-lg text-[#F5F0E8]">
                   Something went wrong. Email us at{" "}
-                  <a href="mailto:hello@dpmt.co" className="underline underline-offset-4">
-                    hello@dpmt.co
+                  <a href="mailto:hello@eracx.com" className="underline underline-offset-4">
+                    hello@eracx.com
                   </a>
                 </p>
                 <button
@@ -155,7 +155,7 @@ export default function CTAFooter() {
             style={{ filter: "brightness(0) invert(1) sepia(1) saturate(0.1) brightness(0.93)" }}
           />
           <p className="text-sm text-[#F5F0E8]/30">
-            hello@dpmt.co
+            hello@eracx.com
           </p>
         </div>
       </div>

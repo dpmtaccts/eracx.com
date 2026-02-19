@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           from: "onboarding@resend.dev",
-          to: "hello@dpmt.co",
+          to: "hello@eracx.com",
           subject: `New Era inquiry from ${name} at ${company}`,
           text: `Name: ${name}\nCompany: ${company}\nEmail: ${email}\nMessage: ${message || "(none)"}`,
         }),
