@@ -2,15 +2,38 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function CTAFooter() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setStatus("sending");
+
+    const form = e.currentTarget;
+    const data = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      company: (form.elements.namedItem("company") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      message: (form.elements.namedItem("message") as HTMLInputElement).value,
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
-    <footer className="bg-[#111111]">
+    <footer id="contact" className="bg-[#111111]">
       <div className="px-6 py-[120px] md:px-10 md:py-[180px]">
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-16 md:grid-cols-2 md:gap-12">
           {/* Left column: CTA copy */}
@@ -43,13 +66,13 @@ export default function CTAFooter() {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <a
-                href="mailto:hello@eracx.com"
+                href="#contact"
                 className="text-base text-[#F5F0E8] underline underline-offset-4 transition-colors hover:text-[#F5F0E8]/70"
               >
                 Start a conversation
               </a>
               <span className="mx-4 text-[#F5F0E8]/15">|</span>
-              <span className="text-base text-[#F5F0E8]/30">hello@eracx.com</span>
+              <span className="text-base text-[#F5F0E8]/30">hello@dpmt.co</span>
             </motion.div>
           </div>
 
@@ -60,10 +83,25 @@ export default function CTAFooter() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
           >
-            {submitted ? (
+            {status === "success" ? (
               <p className="pt-8 text-lg text-[#F5F0E8]">
                 Got it. We'll be in touch.
               </p>
+            ) : status === "error" ? (
+              <div className="pt-8">
+                <p className="text-lg text-[#F5F0E8]">
+                  Something went wrong. Email us at{" "}
+                  <a href="mailto:hello@dpmt.co" className="underline underline-offset-4">
+                    hello@dpmt.co
+                  </a>
+                </p>
+                <button
+                  onClick={() => setStatus("idle")}
+                  className="mt-4 text-sm text-[#F5F0E8]/50 underline underline-offset-4"
+                >
+                  Try again
+                </button>
+              </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <input
@@ -95,9 +133,10 @@ export default function CTAFooter() {
                 />
                 <button
                   type="submit"
-                  className="mt-2 self-start rounded-[4px] bg-[#C4522A] px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-[#a8431f]"
+                  disabled={status === "sending"}
+                  className="mt-2 self-start rounded-[4px] bg-[#C4522A] px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-[#a8431f] disabled:opacity-50"
                 >
-                  Send
+                  {status === "sending" ? "Sending..." : "Send"}
                 </button>
               </form>
             )}
@@ -116,7 +155,7 @@ export default function CTAFooter() {
             style={{ filter: "brightness(0) invert(1) sepia(1) saturate(0.1) brightness(0.93)" }}
           />
           <p className="text-sm text-[#F5F0E8]/30">
-            hello@eracx.com
+            hello@dpmt.co
           </p>
         </div>
       </div>

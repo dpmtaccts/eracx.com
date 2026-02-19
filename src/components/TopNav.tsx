@@ -140,7 +140,7 @@ export default function TopNav() {
             </a>
           ))}
           <a
-            href="mailto:hello@eracx.com"
+            href="#contact"
             className="text-[11px] uppercase tracking-[0.2em] transition-colors duration-300"
             style={{ color: textMuted }}
           >
@@ -188,7 +188,7 @@ export default function TopNav() {
             </a>
           ))}
           <a
-            href="mailto:hello@eracx.com"
+            href="#contact"
             className="text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/50 transition-colors hover:text-[#F5F0E8]"
             onClick={() => setMobileOpen(false)}
           >
