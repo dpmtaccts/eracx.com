@@ -130,9 +130,9 @@ function App() {
         <MechanismSection />
       </div>
 
-      <FAQSection />
-
       <TimelineSection />
+
+      <FAQSection />
 
       <CTAFooter />
     </div>
