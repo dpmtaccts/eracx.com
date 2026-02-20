@@ -3,6 +3,9 @@ type Loop = "connection" | "trust" | "loyalty";
 interface SignalItem {
   label: string;
   loop: Loop;
+  loopTag: string;
+  source: string;
+  informs: string;
 }
 
 const LOOP_COLORS: Record<Loop, string> = {
@@ -11,43 +14,79 @@ const LOOP_COLORS: Record<Loop, string> = {
   loyalty: "#D4367A",
 };
 
-function s(label: string, loop: Loop): SignalItem {
-  return { label, loop };
+const LOOP_LABELS: Record<Loop, string> = {
+  connection: "CONNECTION",
+  trust: "TRUST",
+  loyalty: "LOYALTY",
+};
+
+function s(label: string, loop: Loop, source: string, informs: string): SignalItem {
+  return { label, loop, loopTag: LOOP_LABELS[loop], source, informs };
 }
 
 const ROW_1: SignalItem[] = [
-  s("JOB CHANGE", "connection"), s("EXEC HIRE", "connection"), s("FUNDING ROUND", "connection"),
-  s("NEW HIRE", "connection"), s("TECH INSTALL", "connection"), s("WEB INTENT", "connection"),
-  s("GONE QUIET", "connection"), s("SERIES A", "connection"), s("BOARD CHANGE", "connection"),
-  s("OFFICE EXPANSION", "connection"),
+  s("JOB CHANGE", "connection", "Clay / LinkedIn", "Outreach sequence trigger"),
+  s("EXEC HIRE", "connection", "Clay / Crunchbase", "Account re-prioritization"),
+  s("FUNDING ROUND", "connection", "Crunchbase / Apollo", "ICP scoring update"),
+  s("NEW HIRE", "connection", "LinkedIn / Clay", "Hiring signal sequence"),
+  s("TECH INSTALL", "connection", "BuiltWith / Clay", "Competitor displacement play"),
+  s("WEB INTENT", "connection", "RB2B / HockeyStack", "Warm outreach trigger"),
+  s("GONE QUIET", "connection", "CRM / Apollo", "Re-engagement sequence"),
+  s("SERIES A", "connection", "Crunchbase / Clay", "New ICP account flag"),
+  s("BOARD CHANGE", "connection", "LinkedIn / Clay", "Relationship map update"),
+  s("OFFICE EXPANSION", "connection", "Clay / LinkedIn", "Growth signal sequence"),
 ];
 
 const ROW_2: SignalItem[] = [
-  s("EMAIL OPEN", "trust"), s("DEAL STALL", "trust"), s("CHAMPION ID", "trust"),
-  s("MULTI-THREAD", "trust"), s("PROPOSAL SENT", "trust"), s("CONTENT ENGAGE", "trust"),
-  s("NO REPLY", "trust"), s("DEMO REQUEST", "trust"), s("PRICING VIEW", "trust"),
-  s("SLACK CONNECT", "trust"),
+  s("EMAIL OPEN", "trust", "Apollo / HockeyStack", "Follow-up timing"),
+  s("DEAL STALL", "trust", "CRM / Apollo", "Re-engagement play"),
+  s("CHAMPION ID", "trust", "LinkedIn / Clay", "Multi-thread expansion"),
+  s("MULTI-THREAD", "trust", "CRM / Clay", "Stakeholder map update"),
+  s("PROPOSAL SENT", "trust", "CRM / Apollo", "Committee sequence start"),
+  s("CONTENT ENGAGE", "trust", "HockeyStack / RB2B", "Intent scoring update"),
+  s("NO REPLY", "trust", "Apollo / CRM", "Silence detection play"),
+  s("DEMO REQUEST", "trust", "HubSpot / Apollo", "High-intent sequence"),
+  s("PRICING VIEW", "trust", "RB2B / HockeyStack", "Urgency sequence trigger"),
+  s("SLACK CONNECT", "trust", "Clay / LinkedIn", "Champion warmth signal"),
 ];
 
 const ROW_3: SignalItem[] = [
-  s("90-DAY CHECK", "loyalty"), s("RENEWAL WINDOW", "loyalty"), s("TEAM GROWTH", "loyalty"),
-  s("CHAMPION MOVE", "loyalty"), s("LOW ENGAGE", "loyalty"), s("REFERRAL SIGNAL", "loyalty"),
-  s("NPS RESPONSE", "loyalty"), s("SEAT EXPANSION", "loyalty"), s("USAGE DROP", "loyalty"),
-  s("EXEC SPONSOR", "loyalty"),
+  s("90-DAY CHECK", "loyalty", "CRM / HubSpot", "Expansion conversation"),
+  s("RENEWAL WINDOW", "loyalty", "CRM / HubSpot", "Renewal sequence start"),
+  s("TEAM GROWTH", "loyalty", "LinkedIn / Clay", "Seat expansion trigger"),
+  s("CHAMPION MOVE", "loyalty", "LinkedIn / Clay", "Relationship re-anchor"),
+  s("LOW ENGAGE", "loyalty", "HubSpot / CRM", "Risk alert sequence"),
+  s("REFERRAL SIGNAL", "loyalty", "CRM / HubSpot", "Referral ask trigger"),
+  s("NPS RESPONSE", "loyalty", "HubSpot / Clay", "Advocate sequence"),
+  s("SEAT EXPANSION", "loyalty", "CRM / HubSpot", "Upsell conversation"),
+  s("USAGE DROP", "loyalty", "HubSpot / CRM", "Churn risk alert"),
+  s("EXEC SPONSOR", "loyalty", "LinkedIn / CRM", "Executive alignment play"),
 ];
 
 const ROW_4: SignalItem[] = [
-  s("GONE QUIET", "connection"), s("PRICING VIEW", "trust"), s("CHAMPION MOVE", "loyalty"),
-  s("SERIES A", "connection"), s("NO REPLY", "trust"), s("USAGE DROP", "loyalty"),
-  s("DEMO REQUEST", "trust"), s("OFFICE EXPANSION", "connection"), s("EXEC SPONSOR", "loyalty"),
-  s("WEB INTENT", "connection"),
+  s("GONE QUIET", "connection", "CRM / Apollo", "Re-engagement sequence"),
+  s("PRICING VIEW", "trust", "RB2B / HockeyStack", "Urgency sequence trigger"),
+  s("CHAMPION MOVE", "loyalty", "LinkedIn / Clay", "Relationship re-anchor"),
+  s("SERIES A", "connection", "Crunchbase / Clay", "New ICP account flag"),
+  s("NO REPLY", "trust", "Apollo / CRM", "Silence detection play"),
+  s("USAGE DROP", "loyalty", "HubSpot / CRM", "Churn risk alert"),
+  s("DEMO REQUEST", "trust", "HubSpot / Apollo", "High-intent sequence"),
+  s("OFFICE EXPANSION", "connection", "Clay / LinkedIn", "Growth signal sequence"),
+  s("EXEC SPONSOR", "loyalty", "LinkedIn / CRM", "Executive alignment play"),
+  s("WEB INTENT", "connection", "RB2B / HockeyStack", "Warm outreach trigger"),
 ];
 
 const ROW_5: SignalItem[] = [
-  s("BOARD CHANGE", "connection"), s("SLACK CONNECT", "trust"), s("LOW ENGAGE", "loyalty"),
-  s("FUNDING ROUND", "connection"), s("CONTENT ENGAGE", "trust"), s("NPS RESPONSE", "loyalty"),
-  s("NEW HIRE", "connection"), s("MULTI-THREAD", "trust"), s("RENEWAL WINDOW", "loyalty"),
-  s("TECH INSTALL", "connection"),
+  s("BOARD CHANGE", "connection", "LinkedIn / Clay", "Relationship map update"),
+  s("SLACK CONNECT", "trust", "Clay / LinkedIn", "Champion warmth signal"),
+  s("LOW ENGAGE", "loyalty", "HubSpot / CRM", "Risk alert sequence"),
+  s("FUNDING ROUND", "connection", "Crunchbase / Apollo", "ICP scoring update"),
+  s("CONTENT ENGAGE", "trust", "HockeyStack / RB2B", "Intent scoring update"),
+  s("NPS RESPONSE", "loyalty", "HubSpot / Clay", "Advocate sequence"),
+  s("NEW HIRE", "connection", "LinkedIn / Clay", "Hiring signal sequence"),
+  s("MULTI-THREAD", "trust", "CRM / Clay", "Stakeholder map update"),
+  s("RENEWAL WINDOW", "loyalty", "CRM / HubSpot", "Renewal sequence start"),
+  s("TECH INSTALL", "connection", "BuiltWith / Clay", "Competitor displacement play"),
 ];
 
 const ROWS = [
@@ -63,31 +102,23 @@ function Pill({ signal }: { signal: SignalItem }) {
   return (
     <span
       style={{
-        height: 44,
-        padding: "0 20px",
+        padding: "12px 18px",
         borderRadius: 22,
         border: `1px solid ${color}66`,
         background: `${color}1A`,
         display: "inline-flex",
-        alignItems: "center",
-        gap: 8,
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: 4,
         flexShrink: 0,
+        minWidth: 160,
       }}
     >
       <span
         style={{
-          width: 8,
-          height: 8,
-          borderRadius: "50%",
-          backgroundColor: color,
-          flexShrink: 0,
-        }}
-      />
-      <span
-        style={{
           fontSize: 12,
           fontWeight: 700,
-          letterSpacing: "0.1em",
+          letterSpacing: "0.08em",
           textTransform: "uppercase" as const,
           color: "#F5F0E8",
           opacity: 0.9,
@@ -95,6 +126,28 @@ function Pill({ signal }: { signal: SignalItem }) {
         }}
       >
         {signal.label}
+      </span>
+      <span
+        style={{
+          fontSize: 10,
+          fontWeight: 500,
+          color: color,
+          opacity: 0.8,
+          whiteSpace: "nowrap",
+        }}
+      >
+        {signal.loopTag} · {signal.source}
+      </span>
+      <span
+        style={{
+          fontSize: 10,
+          fontWeight: 400,
+          color: "#F5F0E8",
+          opacity: 0.5,
+          whiteSpace: "nowrap",
+        }}
+      >
+        {signal.informs}
       </span>
     </span>
   );
@@ -109,6 +162,8 @@ export default function SignalDotField() {
         overflow: "hidden",
         backgroundColor: "#1A1A1A",
         padding: "80px 0",
+        mask: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+        WebkitMask: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
