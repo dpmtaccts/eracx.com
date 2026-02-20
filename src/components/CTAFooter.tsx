@@ -149,7 +149,7 @@ export default function CTAFooter() {
           href="/our-story"
           className="text-[13px] text-[#F5F0E8]/40 transition-colors hover:text-[#F5F0E8]/60"
         >
-          Learn why we built this →
+          Learn why we built this
         </a>
       </div>
 

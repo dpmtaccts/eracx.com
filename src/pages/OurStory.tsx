@@ -60,8 +60,8 @@ export default function OurStory() {
 
           <p style={{ marginBottom: 32 }}>
             No to the meeting that could be an email. No to the introduction
-            that goes nowhere. No to the conference, the panel, the offsite —
-            unless it serves one thing: the objective. They raise their floor
+            that goes nowhere. No to the conference, the panel, the offsite.
+            Unless it serves one thing: the objective. They raise their floor
             constantly. And because they say no to almost everything, when they
             say yes, it means something.
           </p>
@@ -70,7 +70,7 @@ export default function OurStory() {
             We built Era to work alongside those people. Founders who know
             exactly what they're building and who they're building it for.
             Executives who wake up thinking about their product, their team,
-            their customers — not their inbox.
+            their customers. Not their inbox.
           </p>
 
           <p
@@ -100,7 +100,7 @@ export default function OurStory() {
             spend your time evaluating GTM tools, interviewing BDR candidates,
             or managing agencies who report on activity instead of outcomes.
             You need a system that builds and maintains the relationships that
-            matter — and runs without pulling you into it.
+            matter. One that runs without pulling you into it.
           </p>
 
           <p
@@ -118,7 +118,7 @@ export default function OurStory() {
             We don't get your calendar full. We don't blast messages to
             everyone who fits a vague ICP. We focus. Real people, in real
             companies, with real problems that your product actually solves. We
-            build toward that relationship deliberately — from unknown to
+            build toward that relationship deliberately: from unknown to
             known, from known to trusted, from trusted to the kind of
             relationship that generates referrals, expansions, and renewals
             without anyone having to remember to follow up.
@@ -139,9 +139,9 @@ export default function OurStory() {
 
           <p style={{ marginBottom: 32 }}>
             We use the best in AI and automation to make that discipline
-            scalable. Growth is hard enough. We're not here to make it harder
-            — we're here to make sure the hard work you've already done
-            compounds into something that keeps working.
+            scalable. Growth is hard enough. We're not here to make it harder.
+            We're here to make sure the hard work you've already done compounds
+            into something that keeps working.
           </p>
 
           <p
@@ -172,7 +172,7 @@ export default function OurStory() {
               fontStyle: "italic",
             }}
           >
-            — Justin Marshall, Founder
+            Justin Marshall, Founder
           </p>
         </div>
 
@@ -198,7 +198,7 @@ export default function OurStory() {
               textDecoration: "none",
             }}
           >
-            Start a conversation →
+            Start a conversation
           </a>
         </div>
       </div>
