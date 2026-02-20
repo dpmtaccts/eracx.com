@@ -54,23 +54,24 @@ export default function OurStory() {
           }}
         >
           <p style={{ marginBottom: 32 }}>
-            The best leaders we've ever worked with share one trait. They are
-            ruthless about what they don't do.
+            The best leaders I've ever worked with share one trait: ruthless
+            about what they don't do.
           </p>
 
           <p style={{ marginBottom: 32 }}>
-            No to the meeting that could be an email. No to the introduction
-            that goes nowhere. No to the conference, the panel, the offsite.
-            Unless it serves one thing: the objective. They raise their floor
-            constantly. And because they say no to almost everything, when they
-            say yes, it means something.
+            It's infuriating how they say "No," to the meeting that could be an
+            email. "No," to the introduction that goes nowhere. "No," to the
+            conference, the panel, the offsite that everyone else wants an
+            invite to, unless it serves one thing: the objective. They say
+            "No," because they've raised their floor. And because they say no
+            to almost everything, when they say, "Yes," it means something.
           </p>
 
           <p style={{ marginBottom: 32 }}>
-            We built Era to work alongside those people. Founders who know
+            We built Era to work alongside those people. Leaders who know
             exactly what they're building and who they're building it for.
             Executives who wake up thinking about their product, their team,
-            their customers. Not their inbox.
+            their customers.
           </p>
 
           <p
@@ -96,11 +97,12 @@ export default function OurStory() {
           </p>
 
           <p style={{ marginBottom: 32 }}>
-            If you have a good product and a strong team, you don't need to
-            spend your time evaluating GTM tools, interviewing BDR candidates,
-            or managing agencies who report on activity instead of outcomes.
-            You need a system that builds and maintains the relationships that
-            matter. One that runs without pulling you into it.
+            If you have a good product and a strong sales team, you don't need
+            to spend your time evaluating GTM tools, interviewing BDR
+            candidates, managing CRM workflows, or managing agencies who report
+            on vanity metrics. You need a system that builds and maintains the
+            relationships that matter. One that runs without pulling you into
+            it.
           </p>
 
           <p
@@ -115,21 +117,19 @@ export default function OurStory() {
           </p>
 
           <p style={{ marginBottom: 32 }}>
-            We don't get your calendar full. We don't blast messages to
-            everyone who fits a vague ICP. We focus. Real people, in real
-            companies, with real problems that your product actually solves. We
-            build toward that relationship deliberately: from unknown to
-            known, from known to trusted, from trusted to the kind of
-            relationship that generates referrals, expansions, and renewals
-            without anyone having to remember to follow up.
+            We are built on focus. Our playbook is built to connect with real
+            people, in real companies, with real problems that your product
+            actually solves. We build toward that relationship deliberately:
+            from unknown to known, from known to trusted, from trusted to the
+            kind of relationship that generates referrals, expansions, and
+            renewals without anyone having to remember to follow up.
           </p>
 
           <p style={{ marginBottom: 32 }}>
             We also believe the best companies know exactly who they serve.
-            Not all people. The right people. Every system we build is designed
-            around that principle. Who are we trying to reach? Who are we
-            building trust with? Who do we want to still be talking to in
-            three years?
+            Every system we build is designed around that principle. Who are we
+            trying to reach? Who are we building trust with? Who do we want to
+            still be talking to in three years?
           </p>
 
           <p style={{ marginBottom: 32 }}>
