@@ -48,6 +48,7 @@ function App() {
         ]}
         caseStudy={{
           client: "Publicist",
+          clientLogo: "/assets/clients/publicist.png",
           loopTag: "CONNECTION LOOP",
           headline: "2x qualified pipeline in 90 days.",
           body: "Publicist needed to reach enterprise accounts they'd never penetrated through traditional outreach. Era built a signal-based acquisition system targeting funding events, executive hires, and tech changes across their ICP. The loop ran continuously. In 90 days, qualified pipeline doubled, with no new hires and no increase in ad spend.",
@@ -81,6 +82,7 @@ function App() {
         ]}
         caseStudy={{
           client: "Lorikeet",
+          clientLogo: "/assets/clients/lorikeet.png",
           loopTag: "TRUST LOOP",
           headline: "250 buyers. One coordinated system.",
           body: "Lorikeet operates in complex global accounts where the buying committee spans functions, geographies, and seniority levels. Era built a nurture infrastructure reaching 250 champions and economic buyers, each receiving content and touchpoints mapped to their role and stage. Deals that previously stalled at evaluation began to move.",
@@ -114,6 +116,7 @@ function App() {
         ]}
         caseStudy={{
           client: "Netrush",
+          clientLogo: "/assets/clients/netrush.webp",
           loopTag: "LOYALTY LOOP",
           headline: "Expansion revenue from signals, not guesswork.",
           body: "Netrush had strong customer relationships but no system to convert them into expansion revenue. Era built a post-close signal infrastructure tracking confidence and satisfaction indicators across their customer base. Cross-sell and upsell conversations triggered automatically when signals aligned, not when a rep remembered to check in.",

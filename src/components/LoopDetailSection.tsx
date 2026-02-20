@@ -5,10 +5,12 @@ interface CaseStudyQuote {
   text: string;
   name: string;
   title: string;
+  photo?: string;
 }
 
 interface CaseStudy {
   client: string;
+  clientLogo?: string;
   loopTag: string;
   headline: string;
   body: string;
@@ -193,12 +195,24 @@ export default function LoopDetailSection({
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <p className="mb-1 text-[11px] uppercase tracking-[0.2em]" style={{ color: loopColor }}>
-              Client Result, {caseStudy.client}
-            </p>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/40">
-              {caseStudy.loopTag}
-            </p>
+            <div className="mb-8 flex items-start justify-between">
+              <div>
+                <p className="mb-1 text-[11px] uppercase tracking-[0.2em]" style={{ color: loopColor }}>
+                  Client Result, {caseStudy.client}
+                </p>
+                <p className="text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/40">
+                  {caseStudy.loopTag}
+                </p>
+              </div>
+              {caseStudy.clientLogo && (
+                <img
+                  src={caseStudy.clientLogo}
+                  alt={caseStudy.client}
+                  className="h-6 w-auto flex-shrink-0 opacity-60"
+                  style={{ filter: "brightness(0) invert(1)" }}
+                />
+              )}
+            </div>
 
             <h3 className="text-2xl font-semibold leading-[1.1] text-[#F5F0E8] md:text-3xl">
               {caseStudy.headline}
@@ -223,16 +237,25 @@ export default function LoopDetailSection({
                   {caseStudy.quote.text}
                 </p>
                 <div className="mt-4 h-px w-full bg-[#F5F0E8]/15" />
-                <div className="mt-4">
-                  <p className="text-[14px] text-[#F5F0E8]">
-                    {caseStudy.quote.name}
-                  </p>
-                  <p className="mt-0.5 text-[12px] text-[#F5F0E8]/60">
-                    {caseStudy.quote.title}
-                  </p>
-                  <p className="mt-2 text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/60">
-                    {caseStudy.client}
-                  </p>
+                <div className="mt-4 flex items-center gap-4">
+                  {caseStudy.quote.photo && (
+                    <img
+                      src={caseStudy.quote.photo}
+                      alt={caseStudy.quote.name}
+                      className="h-11 w-11 flex-shrink-0 rounded-full object-cover"
+                    />
+                  )}
+                  <div>
+                    <p className="text-[14px] text-[#F5F0E8]">
+                      {caseStudy.quote.name}
+                    </p>
+                    <p className="mt-0.5 text-[12px] text-[#F5F0E8]/60">
+                      {caseStudy.quote.title}
+                    </p>
+                    <p className="mt-2 text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/60">
+                      {caseStudy.client}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
