@@ -70,37 +70,59 @@ export default function ProblemSection() {
 
         <motion.div
           style={{
-            maxWidth: 600,
-            margin: "64px auto",
-            display: "flex",
-            borderLeft: "3px solid #C4522A",
-            paddingLeft: 28,
+            maxWidth: 720,
+            margin: "72px auto",
+            display: "grid",
+            gridTemplateColumns: "200px 1fr",
+            gap: 48,
+            alignItems: "center",
+            padding: "48px 0",
+            borderTop: "1px solid rgba(196, 82, 42, 0.2)",
+            borderBottom: "1px solid rgba(196, 82, 42, 0.2)",
           }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p
-            style={{
-              fontSize: 22,
-              fontWeight: 500,
-              fontStyle: "italic",
-              color: "rgba(17, 17, 17, 0.85)",
-              lineHeight: 1.6,
-            }}
-          >
-            Does your sales team run on SOPs and prompt libraries? If not,
-            that's worth a{" "}
+          <div>
+            <span
+              style={{
+                display: "block",
+                fontSize: 28,
+                fontWeight: 800,
+                color: "#C4522A",
+                lineHeight: 1.2,
+              }}
+            >
+              Ask yourself:
+            </span>
             <a
               href="#contact"
-              style={{ color: "#C4522A", textDecoration: "none" }}
+              style={{
+                display: "block",
+                fontSize: 18,
+                fontWeight: 600,
+                color: "rgba(196, 82, 42, 0.7)",
+                marginTop: 8,
+                textDecoration: "none",
+              }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.textDecoration = "underline"; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.textDecoration = "none"; }}
             >
-              conversation
+              If not, let's talk.
             </a>
-            .
+          </div>
+          <p
+            style={{
+              fontSize: 20,
+              fontWeight: 500,
+              fontStyle: "italic",
+              color: "rgba(17, 17, 17, 0.8)",
+              lineHeight: 1.6,
+            }}
+          >
+            Does your sales team run on SOPs and prompt libraries?
           </p>
         </motion.div>
 
