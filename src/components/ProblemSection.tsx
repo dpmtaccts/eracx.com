@@ -135,18 +135,6 @@ export default function ProblemSection() {
           </div>
         </motion.div>
 
-        <motion.p
-          className="mt-24 max-w-3xl text-base leading-[1.7] text-[#3C3C3C] md:mt-28 md:text-lg"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          Most teams know this. The ones that fix it don't hire harder, they
-          build differently. They create systems that maintain presence, track
-          signals, and move automatically when a buyer gets close. That's what
-          Era builds.
-        </motion.p>
       </div>
     </section>
   );
