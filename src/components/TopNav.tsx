@@ -83,10 +83,12 @@ export default function TopNav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const isHome = window.location.pathname === "/";
+
   const navLinks = [
-    { label: "Why Era", href: "#why-era", id: "why-era" },
-    { label: "The System", href: "#the-system", id: "the-system" },
-    { label: "How It Works", href: "#how-it-works", id: "how-it-works" },
+    { label: "Why Era", href: isHome ? "#why-era" : "/#why-era", id: "why-era" },
+    { label: "The System", href: isHome ? "#the-system" : "/#the-system", id: "the-system" },
+    { label: "How It Works", href: isHome ? "#how-it-works" : "/#how-it-works", id: "how-it-works" },
   ];
 
   const logoFilter = overLight
@@ -140,7 +142,14 @@ export default function TopNav() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="/our-story"
+            className="text-[11px] uppercase tracking-[0.2em] transition-colors duration-300"
+            style={{ color: textMuted }}
+          >
+            Our Story
+          </a>
+          <a
+            href={isHome ? "#contact" : "/#contact"}
             className="text-[11px] uppercase tracking-[0.2em] transition-colors duration-300"
             style={{ color: textMuted }}
           >
@@ -188,7 +197,14 @@ export default function TopNav() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="/our-story"
+            className="text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/50 transition-colors hover:text-[#F5F0E8]"
+            onClick={() => setMobileOpen(false)}
+          >
+            Our Story
+          </a>
+          <a
+            href={isHome ? "#contact" : "/#contact"}
             className="text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/50 transition-colors hover:text-[#F5F0E8]"
             onClick={() => setMobileOpen(false)}
           >

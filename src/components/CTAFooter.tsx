@@ -144,6 +144,15 @@ export default function CTAFooter() {
         </div>
       </div>
 
+      <div className="px-6 pb-4 text-center md:px-10">
+        <a
+          href="/our-story"
+          className="text-[13px] text-[#F5F0E8]/40 transition-colors hover:text-[#F5F0E8]/60"
+        >
+          Learn why we built this →
+        </a>
+      </div>
+
       <div className="mx-6 h-px bg-[#F5F0E8]/8 md:mx-10" />
 
       <div className="px-6 py-8 md:px-10">
