@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import ToolsLogoBar from "./ToolsLogoBar";
 
 const rows = [
   ["Fires once", "Runs continuously"],
@@ -29,8 +30,6 @@ export default function LoopsVsCampaignsSection() {
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
-
-  const totalRowTime = rows.length * 0.18;
 
   return (
     <section className="bg-[#111111] px-6 py-[120px] md:px-10 md:py-[180px]">
@@ -178,22 +177,10 @@ export default function LoopsVsCampaignsSection() {
           </div>
         </div>
 
-        {/* Closing paragraph */}
-        <p
-          className="mx-auto mt-16 max-w-[600px] text-center text-base leading-[1.8] text-[#F5F0E8]/80"
-          style={{
-            opacity: revealed ? 1 : 0,
-            transition: `opacity 0.4s ease-out ${totalRowTime + 0.4}s`,
-          }}
-        >
-          The first execution won't move the needle. It never does. The loop is
-          designed for that. Every underperformance is a signal. Every signal
-          changes what happens next. Over time, the system builds a detailed
-          picture of every account, what they respond to, when they go quiet,
-          where they are in their decision. By the time a buyer raises a hand,
-          you've been in their peripheral vision for months. You didn't get lucky.
-          You never left.
-        </p>
+        {/* Tools logo bar */}
+        <div className="mt-20 md:mt-28">
+          <ToolsLogoBar />
+        </div>
       </div>
     </section>
   );

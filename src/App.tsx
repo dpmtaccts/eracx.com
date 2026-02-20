@@ -3,7 +3,6 @@ import HeroSection from './components/HeroSection'
 import ProblemSection from './components/ProblemSection'
 import LoopsVsCampaignsSection from './components/LoopsVsCampaignsSection'
 import SystemOverviewSection from './components/SystemOverviewSection'
-import ToolsLogoBar from './components/ToolsLogoBar'
 import LoopDetailSection from './components/LoopDetailSection'
 import MechanismSection from './components/MechanismSection'
 import FAQSection from './components/FAQSection'
@@ -23,8 +22,6 @@ function App() {
       </div>
 
       <LoopsVsCampaignsSection />
-
-      <ToolsLogoBar />
 
       <div id="the-system">
         <SystemOverviewSection />
