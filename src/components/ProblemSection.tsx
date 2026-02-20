@@ -70,12 +70,11 @@ export default function ProblemSection() {
 
         <motion.div
           style={{
-            maxWidth: 680,
-            margin: "48px auto",
-            background: "rgba(196, 82, 42, 0.06)",
-            border: "1px solid rgba(196, 82, 42, 0.25)",
-            borderRadius: 4,
-            padding: "28px 32px",
+            maxWidth: 600,
+            margin: "64px auto",
+            display: "flex",
+            borderLeft: "3px solid #C4522A",
+            paddingLeft: 28,
           }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -84,9 +83,10 @@ export default function ProblemSection() {
         >
           <p
             style={{
-              fontSize: 16,
-              fontWeight: 600,
-              color: "rgba(17, 17, 17, 0.9)",
+              fontSize: 22,
+              fontWeight: 500,
+              fontStyle: "italic",
+              color: "rgba(17, 17, 17, 0.85)",
               lineHeight: 1.6,
             }}
           >
