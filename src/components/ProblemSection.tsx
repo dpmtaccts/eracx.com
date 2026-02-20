@@ -89,22 +89,37 @@ export default function ProblemSection() {
             <span
               style={{
                 display: "block",
-                fontSize: 28,
+                fontSize: 40,
                 fontWeight: 800,
                 color: "#C4522A",
-                lineHeight: 1.2,
+                lineHeight: 1.1,
               }}
             >
-              Ask yourself:
+              Ask
+              <br />
+              yourself:
             </span>
+          </div>
+          <div>
+            <p
+              style={{
+                fontSize: 20,
+                fontWeight: 500,
+                fontStyle: "italic",
+                color: "rgba(17, 17, 17, 0.8)",
+                lineHeight: 1.6,
+              }}
+            >
+              Does your sales team run on SOPs and prompt libraries?
+            </p>
             <a
               href="#contact"
               style={{
-                display: "block",
-                fontSize: 18,
+                display: "inline-block",
+                fontSize: 16,
                 fontWeight: 600,
                 color: "rgba(196, 82, 42, 0.7)",
-                marginTop: 8,
+                marginTop: 12,
                 textDecoration: "none",
               }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.textDecoration = "underline"; }}
@@ -113,17 +128,6 @@ export default function ProblemSection() {
               If not, let's talk.
             </a>
           </div>
-          <p
-            style={{
-              fontSize: 20,
-              fontWeight: 500,
-              fontStyle: "italic",
-              color: "rgba(17, 17, 17, 0.8)",
-              lineHeight: 1.6,
-            }}
-          >
-            Does your sales team run on SOPs and prompt libraries?
-          </p>
         </motion.div>
 
         <motion.p
