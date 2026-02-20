@@ -56,6 +56,7 @@ function App() {
             text: "Era is an asset to any high-growth company, impacting every aspect of revenue, marketing, and customer success.",
             name: "Lara Vandenberg",
             title: "Founder, Publicist",
+            photo: "/assets/clients/lara-vandenberg.jpeg",
           },
           metricValue: "2×",
           metricLabel: "qualified pipeline growth, 90 days",
