@@ -102,7 +102,7 @@ function Pill({ signal }: { signal: SignalItem }) {
   return (
     <span
       style={{
-        padding: "12px 18px",
+        padding: "12px 20px",
         borderRadius: 22,
         border: `1px solid ${color}66`,
         background: `${color}1A`,
@@ -162,8 +162,8 @@ export default function SignalDotField() {
         overflow: "hidden",
         backgroundColor: "#1A1A1A",
         padding: "80px 0",
-        mask: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
-        WebkitMask: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+        mask: "linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)",
+        WebkitMask: "linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)",
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -173,13 +173,15 @@ export default function SignalDotField() {
             className={i >= 2 ? "hidden md:flex" : "flex"}
             style={{
               marginLeft: row.offset,
-              gap: 12,
+              gap: 14,
               flexWrap: "nowrap",
             }}
           >
-            {row.signals.map((sig, j) => (
-              <Pill key={j} signal={sig} />
-            ))}
+            {[0, 1, 2].map((rep) =>
+              row.signals.map((sig, j) => (
+                <Pill key={`${rep}-${j}`} signal={sig} />
+              ))
+            )}
           </div>
         ))}
       </div>
