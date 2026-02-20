@@ -68,6 +68,42 @@ export default function ProblemSection() {
           ))}
         </div>
 
+        <motion.div
+          style={{
+            maxWidth: 680,
+            margin: "48px auto",
+            background: "rgba(196, 82, 42, 0.06)",
+            border: "1px solid rgba(196, 82, 42, 0.25)",
+            borderRadius: 4,
+            padding: "28px 32px",
+          }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <p
+            style={{
+              fontSize: 16,
+              fontWeight: 600,
+              color: "rgba(17, 17, 17, 0.9)",
+              lineHeight: 1.6,
+            }}
+          >
+            Does your sales team run on SOPs and prompt libraries? If not,
+            that's worth a{" "}
+            <a
+              href="#contact"
+              style={{ color: "#C4522A", textDecoration: "none" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.textDecoration = "underline"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.textDecoration = "none"; }}
+            >
+              conversation
+            </a>
+            .
+          </p>
+        </motion.div>
+
         <motion.p
           className="mt-24 max-w-3xl text-base leading-[1.7] text-[#3C3C3C] md:mt-28 md:text-lg"
           initial={{ opacity: 0, y: 20 }}
