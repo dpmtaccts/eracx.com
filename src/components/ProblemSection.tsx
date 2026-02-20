@@ -75,7 +75,7 @@ export default function ProblemSection() {
             display: "grid",
             gridTemplateColumns: "200px 1fr",
             gap: 48,
-            alignItems: "center",
+            alignItems: "stretch",
             padding: "48px 0",
             borderTop: "1px solid rgba(196, 82, 42, 0.2)",
             borderBottom: "1px solid rgba(196, 82, 42, 0.2)",
@@ -85,7 +85,12 @@ export default function ProblemSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <span
               style={{
                 display: "block",
