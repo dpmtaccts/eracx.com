@@ -9,7 +9,7 @@ const stats = [
 
 export default function ProblemSection() {
   return (
-    <section className="bg-[#F5F0E8] px-6 py-[120px] md:px-10 md:py-[180px]">
+    <section className="bg-[#F5F0E8] px-6 pt-[120px] pb-[60px] md:px-10 md:pt-[180px] md:pb-[80px]">
       <div className="mx-auto max-w-6xl">
         <motion.p
           className="mb-4 text-[11px] uppercase tracking-[0.2em] text-[#C4522A]"
