@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const LOOP_SECTIONS = [
   { id: "loop-connection", color: "#C8A96E" },
@@ -16,6 +17,17 @@ export default function TopNav() {
   const [activeColor, setActiveColor] = useState<string | null>(null);
   const [overLight, setOverLight] = useState(false);
   const logoRef = useRef<HTMLImageElement>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleContactClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    if (location.pathname === "/") {
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/#contact");
+    }
+  }, [location.pathname, navigate]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,7 +95,7 @@ export default function TopNav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isHome = window.location.pathname === "/";
+  const isHome = location.pathname === "/";
 
   const navLinks = [
     { label: "Why Era", href: isHome ? "#why-era" : "/#why-era", id: "why-era" },
@@ -149,7 +161,8 @@ export default function TopNav() {
             Our Story
           </a>
           <a
-            href={isHome ? "#contact" : "/#contact"}
+            href="#contact"
+            onClick={handleContactClick}
             className="text-[11px] uppercase tracking-[0.2em] transition-colors duration-300"
             style={{ color: textMuted }}
           >
@@ -204,9 +217,9 @@ export default function TopNav() {
             Our Story
           </a>
           <a
-            href={isHome ? "#contact" : "/#contact"}
+            href="#contact"
+            onClick={(e) => { handleContactClick(e); setMobileOpen(false); }}
             className="text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/50 transition-colors hover:text-[#F5F0E8]"
-            onClick={() => setMobileOpen(false)}
           >
             Contact
           </a>

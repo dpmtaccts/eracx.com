@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import TopNav from "../components/TopNav";
 
 export default function OurStory() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-[#111111]">
       <TopNav />
@@ -190,7 +192,8 @@ export default function OurStory() {
             Ready to Focus?
           </p>
           <a
-            href="/#contact"
+            href="#contact"
+            onClick={(e) => { e.preventDefault(); navigate("/#contact"); }}
             style={{
               color: "#F5F0E8",
               fontSize: 16,

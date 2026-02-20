@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import TopNav from './components/TopNav'
 import HeroSection from './components/HeroSection'
 import ProblemSection from './components/ProblemSection'
@@ -11,6 +12,14 @@ import CTAFooter from './components/CTAFooter'
 import CookieConsent from './components/CookieConsent'
 
 function App() {
+  useEffect(() => {
+    if (window.location.hash === '#contact') {
+      setTimeout(() => {
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen">
       <TopNav />
