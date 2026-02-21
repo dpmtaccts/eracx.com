@@ -91,15 +91,14 @@ function App() {
           "Every stakeholder interaction updates the account record",
         ]}
         caseStudy={{
-          client: "Lorikeet",
-          clientLogo: "/assets/clients/lorikeet.png",
+          client: "Enterprise Software Co.",
           loopTag: "TRUST LOOP",
           headline: "250 buyers. One coordinated system.",
-          body: "Lorikeet operates in complex global accounts where the buying committee spans functions, geographies, and seniority levels. Era built a nurture infrastructure reaching 250 champions and economic buyers, each receiving content and touchpoints mapped to their role and stage. Deals that previously stalled at evaluation began to move.",
+          body: "A global enterprise software company operates in complex global accounts where the buying committee spans functions, geographies, and seniority levels. Era built a nurture infrastructure reaching 250 champions and economic buyers, each receiving content and touchpoints mapped to their role and stage. Deals that previously stalled at evaluation began to move.",
           quote: {
             text: "Era built something we didn't know we needed, a way to stay present with 250 buyers across our global accounts without adding headcount.",
             name: "Senior Leader",
-            title: "Lorikeet",
+            title: "Enterprise Software",
           },
           metricValue: "250",
           metricLabel: "stakeholders in active loop, across global accounts",
@@ -125,15 +124,14 @@ function App() {
           "Renewal intelligence tied to relationship health score",
         ]}
         caseStudy={{
-          client: "Netrush",
-          clientLogo: "/assets/clients/netrush.webp",
+          client: "Ecommerce Operator",
           loopTag: "LOYALTY LOOP",
           headline: "Expansion revenue from signals, not guesswork.",
-          body: "Netrush had strong customer relationships but no system to convert them into expansion revenue. Era built a post-close signal infrastructure tracking confidence and satisfaction indicators across their customer base. Cross-sell and upsell conversations triggered automatically when signals aligned, not when a rep remembered to check in.",
+          body: "A mid-market ecommerce operator had strong customer relationships but no system to convert them into expansion revenue. Era built a post-close signal infrastructure tracking confidence and satisfaction indicators across their customer base. Cross-sell and upsell conversations triggered automatically when signals aligned, not when a rep remembered to check in.",
           quote: {
             text: "For the first time, our expansion conversations were triggered by the system, not by someone remembering to follow up.",
             name: "Senior Leader",
-            title: "Netrush",
+            title: "Ecommerce",
           },
           metricValue: "0",
           metricLabel: "cold upsell calls, every expansion conversation was signal-triggered",
