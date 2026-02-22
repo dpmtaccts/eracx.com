@@ -72,10 +72,6 @@ export default function ProblemSection() {
           style={{
             maxWidth: 720,
             margin: "72px auto",
-            display: "grid",
-            gridTemplateColumns: "200px 1fr",
-            gap: 48,
-            alignItems: "stretch",
             padding: "48px 0",
             borderTop: "1px solid rgba(196, 82, 42, 0.2)",
             borderBottom: "1px solid rgba(196, 82, 42, 0.2)",
@@ -85,54 +81,32 @@ export default function ProblemSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div
+          <p
             style={{
-              display: "flex",
-              alignItems: "center",
+              fontSize: 28,
+              fontWeight: 600,
+              fontStyle: "italic",
+              color: "rgba(17, 17, 17, 0.8)",
+              lineHeight: 1.5,
             }}
           >
-            <span
-              style={{
-                display: "block",
-                fontSize: 40,
-                fontWeight: 800,
-                color: "#C4522A",
-                lineHeight: 1.1,
-              }}
-            >
-              Ask
-              <br />
-              yourself:
-            </span>
-          </div>
-          <div>
-            <p
-              style={{
-                fontSize: 20,
-                fontWeight: 500,
-                fontStyle: "italic",
-                color: "rgba(17, 17, 17, 0.8)",
-                lineHeight: 1.6,
-              }}
-            >
-              Does your sales team run on SOPs and prompt libraries?
-            </p>
-            <a
-              href="#contact"
-              style={{
-                display: "inline-block",
-                fontSize: 16,
-                fontWeight: 600,
-                color: "rgba(196, 82, 42, 0.7)",
-                marginTop: 12,
-                textDecoration: "none",
-              }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.textDecoration = "underline"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.textDecoration = "none"; }}
-            >
-              If not, let's talk.
-            </a>
-          </div>
+            Does your sales team run on SOPs and a prompt garden?
+          </p>
+          <a
+            href="#contact"
+            style={{
+              display: "inline-block",
+              fontSize: 16,
+              fontWeight: 600,
+              color: "rgba(196, 82, 42, 0.7)",
+              marginTop: 16,
+              textDecoration: "none",
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.textDecoration = "underline"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.textDecoration = "none"; }}
+          >
+            If not, let's talk.
+          </a>
         </motion.div>
 
       </div>
