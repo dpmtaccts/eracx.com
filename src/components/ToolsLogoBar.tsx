@@ -9,9 +9,7 @@ const logos = [
   { name: "Anthropic", src: "/logos/anthropic.svg" },
   { name: "Salesforge", src: "/logos/salesforge.svg" },
   { name: "Cursor", src: "/logos/cursor.svg" },
-  { name: "Dripify", src: "/logos/dripify.svg" },
   { name: "HubSpot", src: "/logos/hubspot.png" },
-  { name: "Copper", src: "/logos/copper.png" },
 ];
 
 export default function ToolsLogoBar() {
@@ -57,7 +55,7 @@ export default function ToolsLogoBar() {
           flexWrap: "wrap",
           justifyContent: "center",
           alignItems: "center",
-          gap: "24px 44px",
+          gap: "20px 24px",
         }}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -68,7 +66,7 @@ export default function ToolsLogoBar() {
           <div
             key={logo.name}
             style={{
-              height: 20,
+              height: 17,
               display: "flex",
               alignItems: "center",
             }}
@@ -77,9 +75,9 @@ export default function ToolsLogoBar() {
               src={logo.src}
               alt={logo.name}
               style={{
-                height: 20,
+                height: 17,
                 width: "auto",
-                maxWidth: 100,
+                maxWidth: 85,
                 objectFit: "contain",
                 filter: "brightness(0) invert(1)",
                 opacity: 0.45,
