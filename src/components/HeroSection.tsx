@@ -58,7 +58,7 @@ export default function HeroSection() {
               marginBottom: 48,
             }}
           >
-            The companies that win don't just sell better. They build the system that makes selling repeatable.
+            We design, install, and operate signal-based, automated growth systems for B2B companies.
           </p>
 
           <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
@@ -112,7 +112,7 @@ export default function HeroSection() {
               marginBottom: 20,
             }}
           >
-            What We Do
+            Do What You Do Best
           </p>
 
           <p
@@ -124,7 +124,7 @@ export default function HeroSection() {
               marginBottom: 16,
             }}
           >
-            We design, install, and operate growth systems for B2B companies.
+            The companies that win don't just sell better. They build the system that makes selling repeatable.
           </p>
 
           <p
@@ -135,7 +135,7 @@ export default function HeroSection() {
               lineHeight: 1.65,
             }}
           >
-            Signal-based pipeline, buying committee engagement, and expansion: built and run for you.
+            Focus on what makes you excellent. We'll do the rest.
           </p>
         </div>
       </div>
