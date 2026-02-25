@@ -45,7 +45,7 @@ export default function HeroSection() {
               marginBottom: 32,
             }}
           >
-            Relationship system for growth teams.
+            Relationship systems for growth teams.
           </h1>
 
           <p
@@ -112,7 +112,7 @@ export default function HeroSection() {
               marginBottom: 20,
             }}
           >
-            Who We Work With
+            What We Do
           </p>
 
           <p
@@ -124,7 +124,7 @@ export default function HeroSection() {
               marginBottom: 16,
             }}
           >
-            Teams who've built something worth selling.
+            We design, install, and operate growth systems for B2B companies.
           </p>
 
           <p
@@ -135,7 +135,7 @@ export default function HeroSection() {
               lineHeight: 1.65,
             }}
           >
-            Era designs, installs, and operates the growth system for B2B companies. Signal-based pipeline, buying committee engagement, and expansion: built and run for you.
+            Signal-based pipeline, buying committee engagement, and expansion: built and run for you.
           </p>
         </div>
       </div>
