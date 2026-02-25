@@ -7,21 +7,21 @@ const loops = [
     name: "CONNECTION LOOP",
     color: "#C8A96E",
     motif: "connection" as const,
-    description: "From unknown to pipeline. Signal-based acquisition for the 97% window.",
+    description: "\"We need more pipeline but outbound isn't working.\" Era builds signal-based acquisition that finds accounts before they're looking — the Connection Loop.",
   },
   {
     number: "02",
     name: "TRUST LOOP",
     color: "#2BBFAA",
     motif: "trust" as const,
-    description: "From pipeline to decision. Presence across the full buying committee.",
+    description: "\"Our deals keep stalling and we can't figure out why.\" Era builds presence across the full buying committee so deals don't die in committee — the Trust Loop.",
   },
   {
     number: "03",
     name: "LOYALTY LOOP",
     color: "#D4367A",
     motif: "loyalty" as const,
-    description: "From customer to growth engine. Expansion, referral, and renewal infrastructure.",
+    description: "\"We have happy customers but no expansion revenue.\" Era turns post-close relationships into referrals, renewals, and upsells — the Loyalty Loop.",
   },
 ];
 
@@ -46,7 +46,7 @@ export default function SystemOverviewSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.1 }}
         >
-          Three loops. Designed for where your business needs it most.
+          Three problems. Three systems built to fix them.
         </motion.h2>
 
         <motion.p
@@ -56,12 +56,10 @@ export default function SystemOverviewSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          Not every company has the same gap. Some need to build a pipeline from
-          scratch. Some are stuck in the middle of long buying cycles with no way
-          to stay present. Some have strong customer relationships they've never
-          converted into expansion revenue. Era diagnoses where the relationship
-          breaks down and builds the loop that fixes it, or all three, sequenced
-          and integrated.
+          Every mid-market team hits one of three walls: not enough pipeline,
+          deals that stall before the close, or customers who never expand. Era
+          diagnoses which wall you're hitting, builds the system that breaks
+          through it, and runs it — or builds all three, sequenced and integrated.
         </motion.p>
 
         <div className="mt-20 grid grid-cols-1 gap-12 md:mt-28 md:grid-cols-3 md:gap-8">

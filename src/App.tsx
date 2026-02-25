@@ -10,6 +10,7 @@ import FAQSection from './components/FAQSection'
 import TimelineSection from './components/TimelineSection'
 import CTAFooter from './components/CTAFooter'
 import CookieConsent from './components/CookieConsent'
+import QualifierBlock from './components/QualifierBlock'
 
 function App() {
   useEffect(() => {
@@ -25,6 +26,8 @@ function App() {
       <TopNav />
 
       <HeroSection />
+
+      <QualifierBlock />
 
       <div id="why-era">
         <ProblemSection />
@@ -44,10 +47,10 @@ function App() {
         diagramLabels={["SIGNAL", "OUTREACH", "RECORD"]}
         variant="dark"
         purposeLine="Fill the pipeline."
-        question="How do I build a pipeline for next quarter?"
+        question={'"We\'re doing outbound but nothing is converting. What are we missing?"'}
         label="01 Connection Loop"
-        headline="Find the right accounts before they're looking."
-        body="Signal-based pipeline generation built for the 97% window, the period before a buyer raises a hand. Job changes, funding events, hiring signals, tech installs: every one is a trigger. Every trigger becomes a touchpoint. The loop runs without a human initiating it."
+        headline="Your buyers are already in-market. You're just not finding them in time."
+        body="97% of your market isn't buying today — but the ones who will be are already sending signals. Job changes, funding events, hiring patterns, tech installs. Era's Connection Loop captures those signals and turns them into targeted outreach before a competitor gets the first meeting. It runs continuously, without a human initiating it."
         mechanics={[
           "Signal-based account targeting matched to ICP",
           "Multi-channel outreach triggered by behavioral data",
@@ -79,10 +82,10 @@ function App() {
         diagramLabels={["STAKEHOLDER", "TOUCHPOINT", "STAGE"]}
         variant="light"
         purposeLine="Win the room."
-        question="Why do our deals keep stalling before the close?"
+        question={'"We had a great first meeting. Then it went silent for six weeks."'}
         label="02 Trust Loop"
-        headline="Build presence across the full buying committee."
-        body="The average B2B purchase involves 13+ stakeholders. Most outreach reaches one. The Trust Loop builds relationships across champions, economic buyers, and influencers simultaneously, mapping every touchpoint to a stakeholder, a stage, and a next move. When deals stall, the loop re-engages. When new stakeholders appear, they get added to the map."
+        headline="Your champion said yes. But they're not the only one deciding."
+        body="The average mid-market deal has 10+ people involved in the decision. Your rep is talking to one of them. The rest are evaluating you in conversations you're not part of. Era's Trust Loop builds presence across the full buying committee — champions, economic buyers, influencers — mapping every touchpoint to a stakeholder and a stage. When deals go quiet, the system re-engages. When new stakeholders appear, they get added automatically."
         mechanics={[
           "Behavior-triggered nurture sequences by role and stage",
           "Multi-thread engagement across the buying committee",
@@ -112,10 +115,10 @@ function App() {
         diagramLabels={["CLOSE", "SIGNAL", "EXPAND"]}
         variant="dark"
         purposeLine="Grow what you have."
-        question="We have great customer relationships. Why aren't they generating more revenue?"
+        question={'"Our customers love us but we have no idea when they\'re ready to buy more."'}
         label="03 Loyalty Loop"
-        headline="Turn closed customers into your highest-converting pipeline source."
-        body="The relationship doesn't end at the close. Era tracks post-close signals, engagement patterns, product usage, satisfaction indicators, team growth, and converts them into expansion conversations, referrals, and renewals at the right moment. Your best new logos are already customers. The loop finds them."
+        headline="Your best new pipeline source is the customers you've already closed."
+        body="You have happy customers who would expand, refer, and renew — if someone asked at the right time. But nobody has a system for knowing when that is. Era's Loyalty Loop tracks post-close signals — engagement patterns, satisfaction indicators, team growth — and converts them into expansion conversations, referrals, and renewals automatically. No cold upsell calls. Every conversation is signal-triggered."
         mechanics={[
           "90-day post-close onboarding and expansion sequence",
           "Satisfaction and confidence signal tracking",

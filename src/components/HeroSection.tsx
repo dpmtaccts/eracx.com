@@ -10,7 +10,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          Most companies are excellent at what they do.
+          Relationship infrastructure for growth teams.
         </motion.h1>
 
         <motion.p
@@ -19,16 +19,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          Few are built to stay connected to the people who need it.
-        </motion.p>
-
-        <motion.p
-          className="mt-5 max-w-2xl text-base text-[#F5F0E8]/35 md:text-lg"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          Let our system close the gap.
+          The companies that win don't just sell better. They build the system that makes selling repeatable.
         </motion.p>
 
         <motion.div
