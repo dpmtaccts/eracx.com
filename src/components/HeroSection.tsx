@@ -45,7 +45,7 @@ export default function HeroSection() {
               marginBottom: 32,
             }}
           >
-            growth teams.
+            Relationship system for growth teams.
           </h1>
 
           <p
