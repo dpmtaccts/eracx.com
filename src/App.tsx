@@ -26,6 +26,46 @@ function App() {
 
       <HeroSection />
 
+      {/* Who We Work With — moved below the hero fold */}
+      <section className="bg-[#111111] px-6 py-20 md:px-10 md:py-28">
+        <div className="mx-auto" style={{ maxWidth: 680 }}>
+          <p
+            style={{
+              fontSize: 9,
+              textTransform: "uppercase",
+              letterSpacing: "0.12em",
+              color: "#C4522A",
+              fontWeight: 600,
+              marginBottom: 20,
+            }}
+          >
+            Who We Work With
+          </p>
+          <p
+            style={{
+              fontSize: 22,
+              fontWeight: 600,
+              color: "rgba(245, 240, 232, 0.9)",
+              lineHeight: 1.35,
+              marginBottom: 16,
+            }}
+          >
+            Teams who've built something worth selling.
+          </p>
+          <p
+            style={{
+              fontSize: 14,
+              fontWeight: 400,
+              color: "rgba(245, 240, 232, 0.5)",
+              lineHeight: 1.65,
+              marginBottom: 0,
+            }}
+          >
+            We operate the growth system that builds the connections, trust, and loyalty that compound over time.
+          </p>
+        </div>
+      </section>
+
       <div id="why-era">
         <ProblemSection />
       </div>
