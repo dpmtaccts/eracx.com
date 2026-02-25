@@ -28,7 +28,7 @@ export default function HeroSection() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "66fr 33fr",
+          gridTemplateColumns: "95fr 5fr",
           alignItems: "center",
           width: "100%",
         }}
@@ -95,49 +95,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN */}
-        <div
-          style={{
-            paddingLeft: 48,
-            borderLeft: "1px solid rgba(245, 240, 232, 0.1)",
-          }}
-        >
-          <p
-            style={{
-              fontSize: 9,
-              textTransform: "uppercase",
-              letterSpacing: "0.12em",
-              color: "#C4522A",
-              fontWeight: 600,
-              marginBottom: 20,
-            }}
-          >
-            Do What You Do Best
-          </p>
-
-          <p
-            style={{
-              fontSize: 22,
-              fontWeight: 600,
-              color: "rgba(245, 240, 232, 0.9)",
-              lineHeight: 1.35,
-              marginBottom: 16,
-            }}
-          >
-            The companies that win don't just sell better. They build the system that makes selling repeatable.
-          </p>
-
-          <p
-            style={{
-              fontSize: 14,
-              fontWeight: 400,
-              color: "rgba(245, 240, 232, 0.5)",
-              lineHeight: 1.65,
-            }}
-          >
-            Focus on what makes you excellent. We'll do the rest.
-          </p>
-        </div>
+      
       </div>
     </section>
   );
