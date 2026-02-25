@@ -10,7 +10,6 @@ import FAQSection from './components/FAQSection'
 import TimelineSection from './components/TimelineSection'
 import CTAFooter from './components/CTAFooter'
 import CookieConsent from './components/CookieConsent'
-import QualifierBlock from './components/QualifierBlock'
 
 function App() {
   useEffect(() => {
@@ -26,8 +25,6 @@ function App() {
       <TopNav />
 
       <HeroSection />
-
-      <QualifierBlock />
 
       <div id="why-era">
         <ProblemSection />
