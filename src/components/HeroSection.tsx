@@ -1,44 +1,189 @@
-import { motion } from "framer-motion";
-
 export default function HeroSection() {
   return (
-    <section className="relative flex min-h-screen items-end bg-[#111111] px-6 pb-32 pt-40 md:px-10">
-      <div className="mx-auto w-full max-w-7xl">
-        <motion.h1
-          className="font-black text-5xl leading-[0.9] text-[#F5F0E8] md:text-7xl lg:text-[7rem]"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          Relationship infrastructure for growth teams.
-        </motion.h1>
+    <section
+      className="relative min-h-screen bg-[#111111]"
+      style={{
+        display: "grid",
+        gridTemplateColumns: "55fr 45fr",
+        alignContent: "end",
+        padding: "0 80px 100px",
+      }}
+    >
+      {/* Ghost background text */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: -20,
+          fontSize: "18vw",
+          fontWeight: 800,
+          color: "rgba(245, 240, 232, 0.04)",
+          lineHeight: 1,
+          pointerEvents: "none",
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          userSelect: "none",
+        }}
+      >
+        Infrastructure for
+      </div>
 
-        <motion.p
-          className="mt-8 max-w-3xl text-lg text-[#F5F0E8]/50 md:text-2xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+      {/* Bottom gradient fade */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 120,
+          background: "linear-gradient(to bottom, transparent 80%, #F5F0E8 100%)",
+          pointerEvents: "none",
+          zIndex: 10,
+        }}
+      />
+
+      {/* LEFT COLUMN */}
+      <div style={{ position: "relative", zIndex: 1 }}>
+        <h1
+          style={{
+            fontSize: "clamp(64px, 8vw, 120px)",
+            fontWeight: 800,
+            color: "#F5F0E8",
+            lineHeight: 0.95,
+            letterSpacing: "-0.03em",
+            marginBottom: 32,
+          }}
+        >
+          growth teams.
+        </h1>
+
+        <p
+          style={{
+            fontSize: 17,
+            fontWeight: 400,
+            color: "rgba(245, 240, 232, 0.55)",
+            lineHeight: 1.7,
+            maxWidth: 440,
+            marginBottom: 48,
+          }}
         >
           The companies that win don't just sell better. They build the system that makes selling repeatable.
-        </motion.p>
+        </p>
 
-        <motion.div
-          className="my-14 h-px w-full bg-[#F5F0E8]/10"
-          initial={{ opacity: 0, scaleX: 0 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 0.8, delay: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
-          style={{ originX: 0 }}
-        />
+        <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+          <a
+            href="#the-system"
+            style={{
+              fontSize: 13,
+              fontWeight: 600,
+              color: "rgba(245, 240, 232, 0.9)",
+              textDecoration: "underline",
+              textUnderlineOffset: 4,
+              transition: "opacity 0.2s",
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = ""; }}
+          >
+            See the system
+          </a>
+          <a
+            href="#contact"
+            style={{
+              fontSize: 13,
+              fontWeight: 600,
+              color: "rgba(245, 240, 232, 0.4)",
+              textDecoration: "underline",
+              textUnderlineOffset: 4,
+              transition: "opacity 0.2s",
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = ""; }}
+          >
+            Talk to us
+          </a>
+        </div>
+      </div>
 
-        <motion.a
-          href="#the-system"
-          className="text-sm text-[#F5F0E8]/50 underline underline-offset-4 transition-colors hover:text-[#F5F0E8]"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.45 }}
+      {/* RIGHT COLUMN */}
+      <div
+        style={{
+          alignSelf: "end",
+          paddingLeft: 48,
+          borderLeft: "1px solid rgba(245, 240, 232, 0.1)",
+          paddingBottom: 8,
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        <p
+          style={{
+            fontSize: 9,
+            textTransform: "uppercase",
+            letterSpacing: "0.12em",
+            color: "#C4522A",
+            fontWeight: 600,
+            marginBottom: 20,
+          }}
         >
-          See the system
-        </motion.a>
+          Who We Work With
+        </p>
+
+        <p
+          style={{
+            fontSize: 22,
+            fontWeight: 600,
+            color: "rgba(245, 240, 232, 0.9)",
+            lineHeight: 1.35,
+            marginBottom: 16,
+          }}
+        >
+          Teams who've built something worth selling.
+        </p>
+
+        <p
+          style={{
+            fontSize: 14,
+            fontWeight: 400,
+            color: "rgba(245, 240, 232, 0.5)",
+            lineHeight: 1.65,
+          }}
+        >
+          We operate the growth system that builds the connections, trust, and loyalty that compound over time.
+        </p>
+
+        <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
+          {[
+            { label: "CONNECTION", color: "#C8A96E" },
+            { label: "TRUST", color: "#2BBFAA" },
+            { label: "LOYALTY", color: "#D4367A" },
+          ].map((loop) => (
+            <span
+              key={loop.label}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 5,
+                fontSize: 9,
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                color: loop.color,
+              }}
+            >
+              <span
+                style={{
+                  width: 4,
+                  height: 4,
+                  borderRadius: "50%",
+                  backgroundColor: loop.color,
+                  flexShrink: 0,
+                }}
+              />
+              {loop.label}
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   );
