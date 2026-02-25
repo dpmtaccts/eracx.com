@@ -28,7 +28,7 @@ export default function HeroSection() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "55fr 45fr",
+          gridTemplateColumns: "66fr 33fr",
           alignItems: "center",
           width: "100%",
         }}
