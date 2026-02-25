@@ -26,6 +26,19 @@ function App() {
 
       <HeroSection />
 
+      <section className="bg-[#111111] px-6 pt-12 pb-12 md:px-10">
+        <div className="mx-auto w-full max-w-7xl" style={{ maxWidth: 680 }}>
+          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: 17, lineHeight: 1.7 }}>
+            <span className="text-[#F5F0E8]" style={{ fontWeight: 700 }}>
+              We work with teams who've built something special and know how to close.
+            </span>{" "}
+            <span className="text-[#F5F0E8]/70" style={{ fontWeight: 300 }}>
+              Our team operates the growth system that fosters connection, trust, and customers who stay for years.
+            </span>
+          </p>
+        </div>
+      </section>
+
       <div id="why-era">
         <ProblemSection />
       </div>
