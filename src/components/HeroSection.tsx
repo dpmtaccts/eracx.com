@@ -135,40 +135,8 @@ export default function HeroSection() {
               lineHeight: 1.65,
             }}
           >
-            We operate the growth system that builds the connections, trust, and loyalty that compound over time.
+            Era designs, installs, and operates the growth system for B2B companies. Signal-based pipeline, buying committee engagement, and expansion: built and run for you.
           </p>
-
-          <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
-            {[
-              { label: "CONNECTION", color: "#C8A96E" },
-              { label: "TRUST", color: "#2BBFAA" },
-              { label: "LOYALTY", color: "#D4367A" },
-            ].map((loop) => (
-              <span
-                key={loop.label}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 5,
-                  fontSize: 9,
-                  fontWeight: 600,
-                  letterSpacing: "0.1em",
-                  color: loop.color,
-                }}
-              >
-                <span
-                  style={{
-                    width: 4,
-                    height: 4,
-                    borderRadius: "50%",
-                    backgroundColor: loop.color,
-                    flexShrink: 0,
-                  }}
-                />
-                {loop.label}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
     </section>
