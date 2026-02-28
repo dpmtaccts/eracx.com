@@ -66,53 +66,10 @@ export default function ProblemSection() {
           >
             You've hired good people. You've tried the tools. But your pipeline
             still depends on whoever remembers to follow up, and your best
-            prospects go dark between the first meeting and the close. The issue
-            isn't effort — it's that you don't have a system designed for how
-            mid-market deals actually work: long cycles, multiple stakeholders,
-            and buyers who've made up their mind before you get the call.
+            prospects go dark between the first meeting and the close.
           </motion.p>
         </div>
 
-        <motion.div
-          style={{
-            maxWidth: 720,
-            margin: "72px auto",
-            padding: "48px 0",
-            borderTop: "1px solid rgba(196, 82, 42, 0.2)",
-            borderBottom: "1px solid rgba(196, 82, 42, 0.2)",
-          }}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <p
-            style={{
-              fontSize: 28,
-              fontWeight: 600,
-              fontStyle: "italic",
-              color: "rgba(17, 17, 17, 0.8)",
-              lineHeight: 1.5,
-            }}
-          >
-            Does your sales team run on SOPs and a prompt garden?
-          </p>
-          <a
-            href="#contact"
-            style={{
-              display: "inline-block",
-              fontSize: 16,
-              fontWeight: 600,
-              color: "rgba(196, 82, 42, 0.7)",
-              marginTop: 16,
-              textDecoration: "none",
-            }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.textDecoration = "underline"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.textDecoration = "none"; }}
-          >
-            If not, let's talk.
-          </a>
-        </motion.div>
 
       </div>
     </section>
