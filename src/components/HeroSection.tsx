@@ -211,7 +211,7 @@ export default function HeroSection() {
           }}
         >
           <a
-            href="#"
+            href="#system"
             style={{
               background: "#C4522A",
               color: "#F5F0E8",

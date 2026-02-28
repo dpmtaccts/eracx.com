@@ -27,7 +27,7 @@ const loops = [
 
 export default function SystemOverviewSection() {
   return (
-    <section className="bg-[#F5F0E8] px-6 py-[120px] md:px-10 md:py-[180px]">
+    <section id="system" className="bg-[#F5F0E8] px-6 py-[120px] md:px-10 md:py-[180px]">
       <div className="mx-auto max-w-7xl">
         <motion.p
           className="mb-4 text-[11px] uppercase tracking-[0.2em] text-[#C4522A]"
