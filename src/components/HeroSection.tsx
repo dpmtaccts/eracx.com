@@ -258,7 +258,7 @@ export default function HeroSection() {
           <div
             key={i}
             style={{
-              padding: "28px 24px",
+              padding: "36px 28px",
               textAlign: "center",
               borderRight:
                 i < COLUMNS.length - 1
@@ -270,19 +270,19 @@ export default function HeroSection() {
               style={{
                 display: "block",
                 color: "#C4522A",
-                fontSize: "16px",
-                fontWeight: 600,
-                marginBottom: "8px",
+                fontSize: "28px",
+                fontWeight: 700,
+                marginBottom: "12px",
               }}
             >
               +
             </span>
             <span
               style={{
-                fontSize: "12px",
+                fontSize: "16px",
                 fontWeight: 500,
-                color: "rgba(245, 240, 232, 0.45)",
-                lineHeight: 1.5,
+                color: "rgba(245, 240, 232, 0.65)",
+                lineHeight: 1.6,
               }}
             >
               {label}
