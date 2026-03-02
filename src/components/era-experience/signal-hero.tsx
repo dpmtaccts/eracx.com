@@ -298,15 +298,15 @@ export default function SignalHero() {
         .signal-bottom-icon {
           display: block;
           color: #C4522A;
-          font-size: 20px;
-          font-weight: 600;
-          margin-bottom: 10px;
+          font-size: 28px;
+          font-weight: 700;
+          margin-bottom: 12px;
         }
 
         .signal-bottom-label {
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 500;
-          color: rgba(245, 240, 232, 0.45);
+          color: rgba(245, 240, 232, 0.65);
           line-height: 1.6;
         }
 
