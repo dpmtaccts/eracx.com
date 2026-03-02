@@ -75,11 +75,11 @@ export default function HeroSection() {
 
           let alpha: number;
           if (dist < 0.02) {
-            alpha = 0.9;
+            alpha = 0.45;
           } else if (dist < 0.15) {
-            alpha = 0.9 * (1 - (dist - 0.02) / 0.13);
+            alpha = 0.45 * (1 - (dist - 0.02) / 0.13);
           } else {
-            alpha = 0.06;
+            alpha = 0.03;
           }
 
           const edgeFade = Math.min(xNorm / 0.1, (1 - xNorm) / 0.1, 1);
