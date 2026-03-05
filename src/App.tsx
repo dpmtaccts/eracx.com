@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import TopNav from './components/TopNav'
 import HeroSection from './components/HeroSection'
 import ProblemSection from './components/ProblemSection'
@@ -148,6 +149,7 @@ function App() {
 
       <CTAFooter />
       <CookieConsent />
+      <Analytics />
     </div>
   )
 }
