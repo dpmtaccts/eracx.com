@@ -10,8 +10,8 @@ export const ATLAS_PASSWORD = "dontsweatthejourney";
 export const ERA_LOGO_URL = "/images/era_final.png";
 export const DPMT_LOGO_URL = "/images/dpmt_logo.png";
 
-export const PLAYBOOK_SCREENSHOT_URL = "";
-export const ATLAS_SCREENSHOT_URL = "";
+export const PLAYBOOK_SCREENSHOT_URL = "/images/playbook-screenshot.png";
+export const ATLAS_SCREENSHOT_URL = "/images/atlas-screenshot.png";
 
 export interface Reviewer {
   name: string;
