@@ -1,6 +1,6 @@
 export const LOOM_EMBED_URL = "https://www.loom.com/embed/d325144edc8042b8a4e15426888ba6ac";
 export const WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/PLACEHOLDER/PLACEHOLDER/";
-export const PITCH_DECK_EMBED_URL = "https://docs.google.com/presentation/d/e/2PACX-1vRI0K744Uun8myV7XDPuxvzW_1WFwEh9epNEWZXmFGvZ2iLjLb2sIzy_ADurXJla2zBgAWZ_YN2qSiL/pub?start=false&loop=false&delayms=3000";
+export const PITCH_DECK_EMBED_URL = "https://docs.google.com/presentation/d/e/2PACX-1vRI0K744Uun8myV7XDPuxvzW_1WFwEh9epNEWZXmFGvZ2iLjLb2sIzy_ADurXJla2zBgAWZ_YN2qSiL/embed?start=false&loop=false&delayms=3000";
 export const PITCH_DECK_COMMENT_URL = "#";
 export const OPERATOR_PLAYBOOK_URL = "#";
 export const PODCAST_URL = "https://drive.google.com/file/d/160xPft9XdWPXoQeF2NSEUXjV8gnWoQal/view?usp=drive_link";
