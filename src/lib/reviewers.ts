@@ -3,7 +3,7 @@ export const WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/PLACEHOLDER/PLA
 export const PITCH_DECK_EMBED_URL = "https://docs.google.com/presentation/d/e/2PACX-1vRI0K744Uun8myV7XDPuxvzW_1WFwEh9epNEWZXmFGvZ2iLjLb2sIzy_ADurXJla2zBgAWZ_YN2qSiL/embed?start=false&loop=false&delayms=3000";
 export const PITCH_DECK_COMMENT_URL = "#";
 export const OPERATOR_PLAYBOOK_URL = "#";
-export const PODCAST_URL = "https://drive.google.com/file/d/160xPft9XdWPXoQeF2NSEUXjV8gnWoQal/view?usp=drive_link";
+export const PODCAST_URL = "https://drive.google.com/file/d/1f30txT6nFEEIJHLez8shxNvSDYUv6rUk/view?usp=drive_link";
 export const ATLAS_URL = "https://app.eracx.com";
 export const ATLAS_PASSWORD = "dontsweatthejourney";
 
