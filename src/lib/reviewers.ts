@@ -2,7 +2,7 @@ export const LOOM_EMBED_URL = "https://www.loom.com/embed/d325144edc8042b8a4e154
 export const WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/PLACEHOLDER/PLACEHOLDER/";
 export const PITCH_DECK_EMBED_URL = "https://docs.google.com/presentation/d/e/2PACX-1vRI0K744Uun8myV7XDPuxvzW_1WFwEh9epNEWZXmFGvZ2iLjLb2sIzy_ADurXJla2zBgAWZ_YN2qSiL/embed?start=false&loop=false&delayms=3000";
 export const PITCH_DECK_COMMENT_URL = "#";
-export const OPERATOR_PLAYBOOK_URL = "#";
+export const OPERATOR_PLAYBOOK_URL = "https://docs.google.com/document/d/1rDhsnzxF7-mVMHtiSLtcJLCliKeyfRy_ssBTjUz6gCU/edit?tab=t.0";
 export const PODCAST_URL = "https://drive.google.com/file/d/1f30txT6nFEEIJHLez8shxNvSDYUv6rUk/view?usp=drive_link";
 export const ATLAS_URL = "https://app.eracx.com";
 export const ATLAS_PASSWORD = "dontsweatthejourney";
