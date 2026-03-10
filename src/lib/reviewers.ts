@@ -4,8 +4,8 @@ export const PITCH_DECK_EMBED_URL = "https://docs.google.com/presentation/d/e/2P
 export const PITCH_DECK_COMMENT_URL = "#";
 export const OPERATOR_PLAYBOOK_URL = "https://docs.google.com/document/d/1rDhsnzxF7-mVMHtiSLtcJLCliKeyfRy_ssBTjUz6gCU/edit?tab=t.0";
 export const PODCAST_URL = "https://drive.google.com/file/d/1f30txT6nFEEIJHLez8shxNvSDYUv6rUk/view?usp=drive_link";
-export const ATLAS_URL = "https://app.eracx.com/client/the-good-life/audience";
-export const ATLAS_PASSWORD = "dontsweatthejourney";
+export const ATLAS_URL = "https://app.eracx.com/client/sensay";
+export const ATLAS_PASSWORD = "sensay2025";
 
 export const ERA_LOGO_URL = "/images/era_final.png";
 export const DPMT_LOGO_URL = "/images/dpmt_logo.png";
