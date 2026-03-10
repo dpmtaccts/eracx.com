@@ -138,6 +138,10 @@ function AudioRecorder({
 
   const startRecording = async () => {
     try {
+      if (typeof window === "undefined" || !navigator.mediaDevices) {
+        setState("error");
+        return;
+      }
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const recorder = new MediaRecorder(stream);
       mediaRecorderRef.current = recorder;
@@ -197,7 +201,7 @@ function AudioRecorder({
       {state === "idle" && (
         <button onClick={startRecording} style={recordBtn}>
           <span style={{ width: 10, height: 10, borderRadius: "50%", background: accent }} />
-          Start recording
+          Record Feedback
         </button>
       )}
 
@@ -510,7 +514,7 @@ export default function Review() {
               <div style={{ background: "#2C2C2C", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)", overflow: "hidden" }}>
                 <div style={{ height: 3, background: "linear-gradient(to right, #1FA7A2, #D43D8D)" }} />
                 <div style={{ padding: "40px 36px" }}>
-                  <img src={ERA_LOGO_URL} alt="Era" style={{ height: 28, opacity: 0.9, marginBottom: 16 }} />
+                  <img src={ERA_LOGO_URL} alt="Era" style={{ height: 24, width: "auto", objectFit: "contain", opacity: 0.9, marginBottom: 16 }} />
                   <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#1FA7A2", marginBottom: 16 }}>
                     THE SYSTEM
                   </p>
@@ -548,7 +552,7 @@ export default function Review() {
                 <div style={{ padding: "40px 36px", position: "relative" }}>
                   <img src={DPMT_LOGO_URL} alt="DPMT" style={{ height: 22, opacity: 0.85, marginBottom: 16 }} />
                   <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#B85C4A", marginBottom: 16 }}>
-                    THE OPERATOR
+                    FRACTIONAL CONSULTING
                   </p>
                   <p style={{ fontSize: 14, lineHeight: 1.7, color: "#383838", opacity: 0.7, marginBottom: 24 }}>
                     Justin's fractional CRO consulting practice. Embedded with leadership teams to diagnose revenue
