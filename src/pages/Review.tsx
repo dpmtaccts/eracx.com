@@ -336,7 +336,7 @@ export default function Review() {
       <div
         style={{
           minHeight: "100vh",
-          background: "#383838",
+          background: "#0d0d0d",
           color: "#F6F5F2",
           fontFamily: "'Source Sans 3', 'Source Sans Pro', system-ui, sans-serif",
           WebkitFontSmoothing: "antialiased",
