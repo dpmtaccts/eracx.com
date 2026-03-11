@@ -358,7 +358,7 @@ export default function Review() {
 
         {/* Header */}
         <header style={{ ...container, display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 28, paddingBottom: 28 }}>
-          <img src={ERA_LOGO_URL} alt="Era" style={{ height: 20, opacity: 0.85 }} />
+          <img src={ERA_LOGO_URL} alt="Era" style={{ height: 20, opacity: 0.85, filter: "invert(1)" }} />
           <div style={{ textAlign: "right" }}>
             <p style={{ fontSize: 12, opacity: 0.5, margin: 0, lineHeight: 1.4 }}>Prepared for {name}</p>
             <p style={{ fontSize: 11, opacity: 0.3, letterSpacing: "0.12em", textTransform: "uppercase", margin: 0, lineHeight: 1.4 }}>
@@ -476,13 +476,13 @@ export default function Review() {
             </div>
           </section>
 
-          {/* ── Atlas Platform (reversed) ── */}
+          {/* ── Aux Platform (reversed) ── */}
           <section style={{ marginBottom: sectionGap }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center" }}>
               {/* Text left */}
               <div>
                 <p style={{ ...kicker, marginBottom: 12 }}>THE PLATFORM</p>
-                <h2 style={{ fontSize: 28, fontWeight: 600, marginBottom: 16 }}>Atlas</h2>
+                <h2 style={{ fontSize: 28, fontWeight: 600, marginBottom: 16 }}>Aux</h2>
                 <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.7, opacity: 0.6, marginBottom: 24 }}>
                   The closed-loop system that connects Discovery, Intelligence, and Warmth scoring. See how signals
                   flow from first touch to revenue.
@@ -494,7 +494,7 @@ export default function Review() {
                     rel="noopener noreferrer"
                     style={{ fontSize: 13, color: accent, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}
                   >
-                    <ExternalIcon /> Open Atlas demo
+                    <ExternalIcon /> Open Aux demo
                   </a>
                   <div>
                     <p style={{ fontSize: 12, opacity: 0.35, marginBottom: 8 }}>Password:</p>
@@ -510,10 +510,10 @@ export default function Review() {
                     onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-4px)")}
                     onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
                   >
-                    <img src={ATLAS_SCREENSHOT_URL} alt="Atlas Platform" style={{ width: "100%", borderRadius: 10 }} />
+                    <img src={ATLAS_SCREENSHOT_URL} alt="Aux Platform" style={{ width: "100%", borderRadius: 10 }} />
                   </a>
                 ) : (
-                  <ScreenshotPlaceholder label="Atlas Platform preview" />
+                  <ScreenshotPlaceholder label="Aux Platform preview" />
                 )}
               </div>
             </div>
@@ -539,7 +539,7 @@ export default function Review() {
                     repeatable across multiple clients and teams.
                   </p>
                   <ul style={{ listStyle: "none", padding: 0, margin: "0 0 28px 0" }}>
-                    {["Signal-based pipeline engine", "Atlas platform (Discovery, Intelligence, Warmth)", "Operator pod model", "Cross-client pattern recognition"].map((b) => (
+                    {["Signal-based pipeline engine", "Aux platform (Discovery, Intelligence, Warmth)", "Operator pod model", "Cross-client pattern recognition"].map((b) => (
                       <li key={b} style={{ fontSize: 13, opacity: 0.55, lineHeight: 1.8, paddingLeft: 16, position: "relative" }}>
                         <span style={{ position: "absolute", left: 0, top: "0.65em", width: 5, height: 5, borderRadius: "50%", background: "#1FA7A2" }} />
                         {b}
