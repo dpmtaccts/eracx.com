@@ -135,6 +135,8 @@ function AudioRecorder({
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const durationRef = useRef(0);
+  const recordingCountRef = useRef(0);
 
   const startRecording = async () => {
     try {
@@ -146,29 +148,42 @@ function AudioRecorder({
       const recorder = new MediaRecorder(stream);
       mediaRecorderRef.current = recorder;
       chunksRef.current = [];
+      durationRef.current = 0;
+      recordingCountRef.current += 1;
+      const recordingNumber = recordingCountRef.current;
 
       recorder.ondataavailable = (e) => {
         if (e.data.size > 0) chunksRef.current.push(e.data);
       };
 
-      recorder.onstop = async () => {
+      recorder.onstop = () => {
         stream.getTracks().forEach((t) => t.stop());
         if (timerRef.current) clearInterval(timerRef.current);
         setState("sending");
 
-        const blob = new Blob(chunksRef.current, { type: "audio/webm" });
+        const blob = new Blob(chunksRef.current, { type: recorder.mimeType || "audio/webm" });
+        const audioType = blob.type || "audio/webm";
+        const finalDuration = durationRef.current;
+
         const reader = new FileReader();
         reader.onloadend = async () => {
+          if (reader.readyState !== 2 || typeof reader.result !== "string") {
+            setState("error");
+            return;
+          }
           try {
+            const base64 = reader.result.split(",")[1] || reader.result;
             await fetch(webhookUrl, {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                reviewer: reviewerName,
+                name: reviewerName,
                 slug,
-                audio: reader.result,
-                duration,
+                recording_number: recordingNumber,
+                duration_seconds: finalDuration,
                 timestamp: new Date().toISOString(),
+                audio_base64: base64,
+                audio_type: audioType,
+                filename: `${slug}-${recordingNumber}.webm`,
               }),
             });
             setState("sent");
@@ -176,12 +191,18 @@ function AudioRecorder({
             setState("error");
           }
         };
+        reader.onerror = () => setState("error");
         reader.readAsDataURL(blob);
       };
 
-      recorder.start();
+      // Use timeslice to ensure ondataavailable fires during recording
+      recorder.start(1000);
       setDuration(0);
-      timerRef.current = setInterval(() => setDuration((d) => d + 1), 1000);
+      durationRef.current = 0;
+      timerRef.current = setInterval(() => {
+        durationRef.current += 1;
+        setDuration((d) => d + 1);
+      }, 1000);
       setState("recording");
     } catch {
       setState("error");
