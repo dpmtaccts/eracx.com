@@ -504,9 +504,6 @@ export default function Review() {
           <section style={{ marginBottom: sectionGap }}>
             <div style={{ textAlign: "center", marginBottom: 48 }}>
               <p style={{ ...kicker, opacity: 0.4, marginBottom: 12 }}>TWO BRANDS, ONE MISSION</p>
-              <p style={{ fontSize: 15, fontWeight: 300, opacity: 0.5, maxWidth: 520, margin: "0 auto", lineHeight: 1.6 }}>
-                Era is the operating system. DPMT is the operator. Here's how they fit together.
-              </p>
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
@@ -514,7 +511,7 @@ export default function Review() {
               <div style={{ background: "#2C2C2C", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)", overflow: "hidden" }}>
                 <div style={{ height: 3, background: "linear-gradient(to right, #1FA7A2, #D43D8D)" }} />
                 <div style={{ padding: "40px 36px" }}>
-                  <img src={ERA_LOGO_URL} alt="Era" style={{ height: 24, width: "auto", objectFit: "contain", opacity: 0.9, marginBottom: 16 }} />
+                  <img src={ERA_LOGO_URL} alt="Era" style={{ height: 24, width: "auto", objectFit: "contain", opacity: 0.9, marginBottom: 16, filter: "invert(1)" }} />
                   <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#1FA7A2", marginBottom: 16 }}>
                     THE SYSTEM
                   </p>
@@ -575,8 +572,7 @@ export default function Review() {
             </div>
 
             <p style={{ textAlign: "center", fontSize: 14, fontWeight: 300, opacity: 0.4, maxWidth: 640, margin: "36px auto 0", lineHeight: 1.7 }}>
-              DPMT is how Justin engages today. Era is the system that makes it scale. The business plan you're
-              reviewing is the thesis for turning the operator into an operating system.
+              Era is designed to scale operations across teams, using the best growth technology and an ever-growing playbook for B2B companies.
             </p>
           </section>
 
