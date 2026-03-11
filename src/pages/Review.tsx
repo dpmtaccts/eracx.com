@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import {
   REVIEWERS,
   LOOM_EMBED_URL,
-  WEBHOOK_URL,
   PITCH_DECK_EMBED_URL,
   PITCH_DECK_COMMENT_URL,
   OPERATOR_PLAYBOOK_URL,
@@ -120,12 +119,10 @@ function PasswordCopy({ password }: { password: string }) {
 }
 
 function AudioRecorder({
-  webhookUrl,
   slug,
   reviewerName,
   accent,
 }: {
-  webhookUrl: string;
   slug: string;
   reviewerName: string;
   accent: string;
@@ -173,8 +170,9 @@ function AudioRecorder({
           }
           try {
             const base64 = reader.result.split(",")[1] || reader.result;
-            await fetch(webhookUrl, {
+            await fetch("/api/voice-feedback", {
               method: "POST",
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 name: reviewerName,
                 slug,
@@ -599,7 +597,7 @@ export default function Review() {
 
           {/* ── Voice Feedback ── */}
           <section style={{ marginBottom: sectionGap }}>
-            <AudioRecorder webhookUrl={WEBHOOK_URL} slug={slug ?? ""} reviewerName={name} accent={accent} />
+            <AudioRecorder slug={slug ?? ""} reviewerName={name} accent={accent} />
           </section>
         </main>
 
