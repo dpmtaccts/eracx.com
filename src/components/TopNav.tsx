@@ -8,7 +8,7 @@ const LOOP_SECTIONS = [
 ];
 
 // IDs of sections with light (cream) backgrounds
-const LIGHT_SECTIONS = ["why-era", "the-system", "loop-trust"];
+const LIGHT_SECTIONS = ["why-era", "the-system", "loop-trust", "gtm-hero"];
 
 export default function TopNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -100,6 +100,7 @@ export default function TopNav() {
   const navLinks = [
     { label: "Why Era", href: isHome ? "#why-era" : "/#why-era", id: "why-era" },
     { label: "The System", href: isHome ? "#the-system" : "/#the-system", id: "the-system" },
+    { label: "GTM Design", href: "/gtm-design", id: "gtm-design" },
     { label: "How It Works", href: isHome ? "#how-it-works" : "/#how-it-works", id: "how-it-works" },
   ];
 
