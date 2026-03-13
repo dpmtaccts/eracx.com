@@ -39,4 +39,6 @@ export const REVIEWERS: Record<string, Reviewer> = {
   "bill-pritchard": { name: "Bill Pritchard", firstName: "Bill", greeting: "Bill, thanks for reviewing these. Your perspective on the business and go-to-market strategy would be incredibly valuable.", accent: "#D6B26D" },
   "eddie-ibarra": { name: "Eddie Ibarra", firstName: "Eddie", greeting: "Eddie, appreciate you digging into these. Would love your take on the operator model and how it all fits together.", accent: "#D43D8D" },
   "michael-reeder": { name: "Michael Reeder", firstName: "Michael", greeting: "Michael, thanks for taking the time to review these. Your perspective here would be really valuable.", accent: "#1FA7A2" },
+  "lindsey-marshall": { name: "Lindsey Marshall", firstName: "Lindsey", greeting: "Lindsey, thanks for taking the time to look through these. Would love your honest take on everything.", accent: "#B85C4A" },
+  "morgen-marshall": { name: "Morgen Marshall", firstName: "Morgen", greeting: "Morgen, really appreciate you checking these out. Would love to hear what you think.", accent: "#D6B26D" },
 };
