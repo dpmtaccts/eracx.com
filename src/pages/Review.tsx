@@ -13,6 +13,9 @@ import {
   DPMT_LOGO_URL,
   PLAYBOOK_SCREENSHOT_URL,
   ATLAS_SCREENSHOT_URL,
+  SIGNALS_SCREENSHOT_URL,
+  MAP_SCREENSHOT_URL,
+  GTM_DESIGN_SCREENSHOT_URL,
 } from "../lib/reviewers";
 
 // ── Inline keyframes ──
@@ -412,20 +415,28 @@ export default function Review() {
             </div>
             <div
               style={{
-                position: "relative",
-                paddingBottom: "58.26%",
-                height: 0,
-                borderRadius: 10,
-                overflow: "hidden",
-                border: "1px solid rgba(255,255,255,0.06)",
+                background: "#2C2C2C",
+                padding: 16,
+                borderRadius: 14,
+                border: "1px solid rgba(255,255,255,0.10)",
               }}
             >
-              <iframe
-                src={PITCH_DECK_EMBED_URL}
-                frameBorder="0"
-                allowFullScreen
-                style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-              />
+              <div
+                style={{
+                  position: "relative",
+                  paddingBottom: "58.26%",
+                  height: 0,
+                  borderRadius: 8,
+                  overflow: "hidden",
+                }}
+              >
+                <iframe
+                  src={PITCH_DECK_EMBED_URL}
+                  frameBorder="0"
+                  allowFullScreen
+                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                />
+              </div>
             </div>
           </section>
 
@@ -515,6 +526,105 @@ export default function Review() {
                 ) : (
                   <ScreenshotPlaceholder label="Aux Platform preview" />
                 )}
+              </div>
+            </div>
+          </section>
+
+          {/* ── Our Go-To-Market ── */}
+          <section style={{ marginBottom: sectionGap }}>
+            <div style={{ textAlign: "center", marginBottom: 56 }}>
+              <p style={{ ...kicker, opacity: 0.4, marginBottom: 12 }}>OUR GO-TO-MARKET</p>
+              <h2 style={{ fontSize: 32, fontWeight: 300, marginBottom: 16 }}>
+                Tools for buyers, influencers, and growth leaders
+              </h2>
+              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.7, opacity: 0.5, maxWidth: 600, margin: "0 auto" }}>
+                We're building signal-driven products that help revenue teams find, understand, and engage the right people at the right time.
+              </p>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 28 }}>
+              {/* Signals */}
+              <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", overflow: "hidden" }}>
+                <a href="https://signals.eracx.com" target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>
+                  {SIGNALS_SCREENSHOT_URL ? (
+                    <img src={SIGNALS_SCREENSHOT_URL} alt="Signals" style={{ width: "100%", display: "block" }} />
+                  ) : (
+                    <ScreenshotPlaceholder label="Signals preview" />
+                  )}
+                </a>
+                <div style={{ padding: "24px 24px 28px" }}>
+                  <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, marginBottom: 8 }}>
+                    signals.eracx.com
+                  </p>
+                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Signals</h3>
+                  <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.55, marginBottom: 16 }}>
+                    Real-time buying signals aggregated from intent data, engagement patterns, and market activity — surfaced so sales teams act on what matters.
+                  </p>
+                  <a
+                    href="https://signals.eracx.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ fontSize: 13, color: accent, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}
+                  >
+                    Explore Signals <ExternalIcon />
+                  </a>
+                </div>
+              </div>
+
+              {/* Map */}
+              <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", overflow: "hidden" }}>
+                <a href="https://map.eracx.com" target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>
+                  {MAP_SCREENSHOT_URL ? (
+                    <img src={MAP_SCREENSHOT_URL} alt="Map" style={{ width: "100%", display: "block" }} />
+                  ) : (
+                    <ScreenshotPlaceholder label="Map preview" />
+                  )}
+                </a>
+                <div style={{ padding: "24px 24px 28px" }}>
+                  <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, marginBottom: 8 }}>
+                    map.eracx.com
+                  </p>
+                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Map</h3>
+                  <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.55, marginBottom: 16 }}>
+                    Visual account and stakeholder mapping that reveals influence networks, buying committees, and relationship pathways inside target organizations.
+                  </p>
+                  <a
+                    href="https://map.eracx.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ fontSize: 13, color: accent, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}
+                  >
+                    Explore Map <ExternalIcon />
+                  </a>
+                </div>
+              </div>
+
+              {/* GTM Design */}
+              <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", overflow: "hidden" }}>
+                <a href="https://eracx.com/gtm-design" target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>
+                  {GTM_DESIGN_SCREENSHOT_URL ? (
+                    <img src={GTM_DESIGN_SCREENSHOT_URL} alt="GTM Design" style={{ width: "100%", display: "block" }} />
+                  ) : (
+                    <ScreenshotPlaceholder label="GTM Design preview" />
+                  )}
+                </a>
+                <div style={{ padding: "24px 24px 28px" }}>
+                  <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, marginBottom: 8 }}>
+                    eracx.com/gtm-design
+                  </p>
+                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>GTM Design</h3>
+                  <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.55, marginBottom: 16 }}>
+                    Interactive go-to-market architecture tool that helps growth leaders design, pressure-test, and align their revenue strategy in one place.
+                  </p>
+                  <a
+                    href="https://eracx.com/gtm-design"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ fontSize: 13, color: accent, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}
+                  >
+                    Explore GTM Design <ExternalIcon />
+                  </a>
+                </div>
               </div>
             </div>
           </section>

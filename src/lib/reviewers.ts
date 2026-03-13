@@ -12,6 +12,10 @@ export const DPMT_LOGO_URL = "/images/dpmt_logo.png";
 export const PLAYBOOK_SCREENSHOT_URL = "/images/playbook-screenshot.png";
 export const ATLAS_SCREENSHOT_URL = "/images/atlas-screenshot.png";
 
+export const SIGNALS_SCREENSHOT_URL = "/images/signals-screenshot.png";
+export const MAP_SCREENSHOT_URL = "/images/map-screenshot.png";
+export const GTM_DESIGN_SCREENSHOT_URL = "/images/gtm-design-screenshot.png";
+
 export interface Reviewer {
   name: string;
   firstName: string;
