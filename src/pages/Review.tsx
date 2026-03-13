@@ -20,7 +20,7 @@ import {
   GTM_DESIGN_SCREENSHOT_URL,
 } from "../lib/reviewers";
 
-// ── Inline keyframes ──
+// ── Inline keyframes + responsive ──
 const keyframes = `
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
@@ -36,6 +36,20 @@ const keyframes = `
 }
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+.rv-container { max-width: 1060px; margin: 0 auto; padding: 0 32px; }
+.rv-grid-hero { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: center; }
+.rv-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.rv-grid-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.rv-grid-brands { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media (max-width: 768px) {
+  .rv-container { padding: 0 20px; }
+  .rv-grid-hero,
+  .rv-grid-2col,
+  .rv-grid-tools,
+  .rv-grid-brands { grid-template-columns: 1fr; gap: 32px; }
+  .rv-hero-title { font-size: 32px !important; }
+  .rv-section-title { font-size: 24px !important; }
 }
 `;
 
@@ -333,7 +347,6 @@ export default function Review() {
   const accent = reviewer?.accent ?? "#1FA7A2";
 
   const sectionGap = 96;
-  const container: React.CSSProperties = { maxWidth: 1060, margin: "0 auto", padding: "0 32px" };
 
   return (
     <>
@@ -362,7 +375,7 @@ export default function Review() {
         />
 
         {/* Header */}
-        <header style={{ ...container, display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 28, paddingBottom: 28 }}>
+        <header className="rv-container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 28, paddingBottom: 28 }}>
           <img src={ERA_LOGO_URL} alt="Era" style={{ height: 20, opacity: 0.85, filter: "invert(1)" }} />
           <div style={{ textAlign: "right" }}>
             <p style={{ fontSize: 12, opacity: 0.5, margin: 0, lineHeight: 1.4 }}>Prepared for {name}</p>
@@ -372,13 +385,13 @@ export default function Review() {
           </div>
         </header>
 
-        <main style={container}>
+        <main className="rv-container">
           {/* ── Hero: Greeting + Loom ── */}
           <section style={{ marginBottom: sectionGap, animation: "fadeUp 0.8s ease both" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 48, alignItems: "center" }}>
+            <div className="rv-grid-hero">
               <div>
                 <p style={{ ...kicker, marginBottom: 16 }}>ERA REVIEW</p>
-                <h1 style={{ fontSize: 40, fontWeight: 300, lineHeight: 1.2, marginBottom: 20 }}>
+                <h1 className="rv-hero-title" style={{ fontSize: 40, fontWeight: 300, lineHeight: 1.2, marginBottom: 20 }}>
                   Hey {firstName || "there"}<span style={{ color: accent }}>.</span>
                 </h1>
                 <p style={{ fontSize: 17, fontWeight: 300, lineHeight: 1.7, opacity: 0.7, marginBottom: 20 }}>
@@ -444,7 +457,7 @@ export default function Review() {
 
           {/* ── Operator Playbook + Podcast ── */}
           <section style={{ marginBottom: sectionGap, animation: "fadeUp 0.8s ease 0.3s both" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center" }}>
+            <div className="rv-grid-2col">
               {/* Screenshot left */}
               <div>
                 {PLAYBOOK_SCREENSHOT_URL ? (
@@ -491,7 +504,7 @@ export default function Review() {
 
           {/* ── Aux Platform (reversed) ── */}
           <section style={{ marginBottom: sectionGap }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center" }}>
+            <div className="rv-grid-2col">
               {/* Text left */}
               <div>
                 <p style={{ ...kicker, marginBottom: 12 }}>THE PLATFORM</p>
@@ -536,7 +549,7 @@ export default function Review() {
           <section style={{ marginBottom: sectionGap }}>
             <div style={{ textAlign: "center", marginBottom: 56 }}>
               <p style={{ ...kicker, opacity: 0.4, marginBottom: 12 }}>OUR GO-TO-MARKET</p>
-              <h2 style={{ fontSize: 32, fontWeight: 300, marginBottom: 16 }}>
+              <h2 className="rv-section-title" style={{ fontSize: 32, fontWeight: 300, marginBottom: 16 }}>
                 Tools for buyers, influencers, and growth leaders
               </h2>
               <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.7, opacity: 0.5, maxWidth: 600, margin: "0 auto" }}>
@@ -544,7 +557,7 @@ export default function Review() {
               </p>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28 }}>
+            <div className="rv-grid-tools">
               {/* Signal Feed */}
               <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", overflow: "hidden" }}>
                 <a href="https://signals.eracx.com" target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>
@@ -665,7 +678,7 @@ export default function Review() {
               <p style={{ ...kicker, opacity: 0.4, marginBottom: 12 }}>TWO BRANDS, ONE MISSION</p>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+            <div className="rv-grid-brands">
               {/* ERA card */}
               <div style={{ background: "#2C2C2C", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)", overflow: "hidden" }}>
                 <div style={{ height: 3, background: "linear-gradient(to right, #1FA7A2, #D43D8D)" }} />
@@ -743,8 +756,8 @@ export default function Review() {
 
         {/* Footer */}
         <footer
+          className="rv-container"
           style={{
-            ...container,
             paddingTop: 32,
             paddingBottom: 48,
             borderTop: "1px solid rgba(255,255,255,0.06)",
