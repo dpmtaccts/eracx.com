@@ -1,4 +1,4 @@
-export const LOOM_EMBED_URL = "https://www.loom.com/embed/d325144edc8042b8a4e15426888ba6ac";
+export const LOOM_EMBED_URL = "https://www.loom.com/embed/9761acde24dd4b82a1e0d5dcf9a6ef5a";
 export const PITCH_DECK_EMBED_URL = "https://docs.google.com/presentation/d/e/2PACX-1vRI0K744Uun8myV7XDPuxvzW_1WFwEh9epNEWZXmFGvZ2iLjLb2sIzy_ADurXJla2zBgAWZ_YN2qSiL/embed?start=false&loop=false&delayms=3000";
 export const PITCH_DECK_COMMENT_URL = "#";
 export const OPERATOR_PLAYBOOK_URL = "https://docs.google.com/document/d/1rDhsnzxF7-mVMHtiSLtcJLCliKeyfRy_ssBTjUz6gCU/edit?tab=t.0";

@@ -388,7 +388,7 @@ export default function Review() {
                   bottom if you want to talk through your thoughts: it comes straight to me.
                 </p>
               </div>
-              <div style={{ position: "relative", paddingBottom: "64.86%", height: 0, borderRadius: 10, overflow: "hidden" }}>
+              <div style={{ position: "relative", paddingBottom: "94.74%", height: 0, borderRadius: 10, overflow: "hidden" }}>
                 <iframe
                   src={LOOM_EMBED_URL}
                   frameBorder="0"
