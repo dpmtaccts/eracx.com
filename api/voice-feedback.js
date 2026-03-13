@@ -1,3 +1,7 @@
+import { getSupabase } from "./lib/supabase-server.js";
+
+const STORAGE_BUCKET = "voice-feedback";
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -9,13 +13,37 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
-  // Decode base64 audio to buffer
   const audioBuffer = Buffer.from(audio_base64, "base64");
   const mimeType = audio_type || "audio/webm";
   const safeName = filename || `feedback-${slug || "unknown"}-${recording_number || 1}.webm`;
+  const storagePath = `${slug || "unknown"}/${Date.now()}-${safeName}`;
 
-  // Transcribe with OpenAI Whisper
-  let transcript = "Transcription failed. Please check the audio manually.";
+  // 1. Store audio in Supabase Storage (do this first so nothing is lost)
+  let fileUrl = null;
+  const supabase = getSupabase();
+
+  try {
+    const { error: uploadError } = await supabase.storage
+      .from(STORAGE_BUCKET)
+      .upload(storagePath, audioBuffer, {
+        contentType: mimeType,
+        upsert: false,
+      });
+
+    if (uploadError) {
+      console.error("Supabase upload error:", uploadError.message);
+    } else {
+      const { data: urlData } = supabase.storage
+        .from(STORAGE_BUCKET)
+        .getPublicUrl(storagePath);
+      fileUrl = urlData?.publicUrl || null;
+    }
+  } catch (err) {
+    console.error("Supabase storage failed:", err.message);
+  }
+
+  // 2. Transcribe with OpenAI Whisper
+  let transcript = "";
 
   if (process.env.OPENAI_API_KEY) {
     try {
@@ -36,15 +64,34 @@ export default async function handler(req, res) {
       } else {
         const errText = await whisperRes.text();
         console.error("Whisper API error:", whisperRes.status, errText);
+        transcript = "[Transcription failed — listen to audio]";
       }
     } catch (err) {
       console.error("Whisper transcription failed:", err.message);
+      transcript = "[Transcription failed — listen to audio]";
     }
   } else {
     console.warn("OPENAI_API_KEY not set, skipping transcription");
+    transcript = "[No API key — listen to audio]";
   }
 
-  // Forward transcript + metadata to Zapier webhook
+  // 3. Save metadata to Supabase table
+  try {
+    await supabase.from("voice_feedback").insert({
+      reviewer_name: name,
+      slug,
+      recording_number,
+      duration_seconds,
+      transcript,
+      file_url: fileUrl,
+      storage_path: storagePath,
+      created_at: timestamp || new Date().toISOString(),
+    });
+  } catch (err) {
+    console.error("Supabase insert failed:", err.message);
+  }
+
+  // 4. Forward to Zapier webhook
   const zapierUrl = process.env.ZAPIER_WEBHOOK_URL;
   if (zapierUrl) {
     try {
@@ -58,6 +105,7 @@ export default async function handler(req, res) {
           timestamp,
           filename: safeName,
           transcript,
+          audio_url: fileUrl,
         }),
       });
 
@@ -67,9 +115,7 @@ export default async function handler(req, res) {
     } catch (err) {
       console.error("Zapier webhook failed:", err.message);
     }
-  } else {
-    console.warn("ZAPIER_WEBHOOK_URL not set, skipping webhook");
   }
 
-  return res.status(200).json({ ok: true, transcript });
+  return res.status(200).json({ ok: true, transcript, audio_url: fileUrl });
 }

@@ -146,8 +146,8 @@ function AudioRecorder({
   reviewerName: string;
   accent: string;
 }) {
-  const MAX_DURATION = 600; // 10 minutes
-  const WARN_AT = 540; // warn at 9 minutes
+  const MAX_DURATION = 1200; // 20 minutes
+  const WARN_AT = 1140; // warn at 19 minutes
   const [state, setState] = useState<"idle" | "recording" | "sending" | "sent" | "error">("idle");
   const [duration, setDuration] = useState(0);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
