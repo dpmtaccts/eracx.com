@@ -146,6 +146,8 @@ function AudioRecorder({
   reviewerName: string;
   accent: string;
 }) {
+  const MAX_DURATION = 600; // 10 minutes
+  const WARN_AT = 540; // warn at 9 minutes
   const [state, setState] = useState<"idle" | "recording" | "sending" | "sent" | "error">("idle");
   const [duration, setDuration] = useState(0);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -219,6 +221,9 @@ function AudioRecorder({
       timerRef.current = setInterval(() => {
         durationRef.current += 1;
         setDuration((d) => d + 1);
+        if (durationRef.current >= MAX_DURATION) {
+          recorder.stop();
+        }
       }, 1000);
       setState("recording");
     } catch {
@@ -245,9 +250,17 @@ function AudioRecorder({
 
       {state === "recording" && (
         <div>
-          <p style={{ fontSize: 32, fontWeight: 300, fontFamily: "monospace", opacity: 0.7, marginBottom: 20 }}>
+          <p style={{ fontSize: 32, fontWeight: 300, fontFamily: "monospace", opacity: 0.7, marginBottom: 8 }}>
             {formatTime(duration)}
           </p>
+          {duration >= WARN_AT && (
+            <p style={{ fontSize: 12, color: "#e85d4a", marginBottom: 12 }}>
+              Auto-stop in {formatTime(MAX_DURATION - duration)}
+            </p>
+          )}
+          {duration < WARN_AT && (
+            <p style={{ fontSize: 12, opacity: 0.3, marginBottom: 12 }}>{formatTime(MAX_DURATION)} max</p>
+          )}
           <button
             onClick={stopRecording}
             style={{ ...recordBtn, borderColor: accent, color: accent }}
