@@ -13,7 +13,8 @@ import {
   DPMT_LOGO_URL,
   PLAYBOOK_SCREENSHOT_URL,
   ATLAS_SCREENSHOT_URL,
-  SIGNALS_SCREENSHOT_URL,
+  SIGNALS_FEED_SCREENSHOT_URL,
+  SIGNALS_COMPANIES_SCREENSHOT_URL,
   MAP_SCREENSHOT_URL,
   GTM_DESIGN_SCREENSHOT_URL,
 } from "../lib/reviewers";
@@ -542,23 +543,23 @@ export default function Review() {
               </p>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 28 }}>
-              {/* Signals */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28 }}>
+              {/* Signal Feed */}
               <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", overflow: "hidden" }}>
                 <a href="https://signals.eracx.com" target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>
-                  {SIGNALS_SCREENSHOT_URL ? (
-                    <img src={SIGNALS_SCREENSHOT_URL} alt="Signals" style={{ width: "100%", display: "block" }} />
+                  {SIGNALS_FEED_SCREENSHOT_URL ? (
+                    <img src={SIGNALS_FEED_SCREENSHOT_URL} alt="Signal Feed" style={{ width: "100%", display: "block" }} />
                   ) : (
-                    <ScreenshotPlaceholder label="Signals preview" />
+                    <ScreenshotPlaceholder label="Signal Feed preview" />
                   )}
                 </a>
                 <div style={{ padding: "24px 24px 28px" }}>
                   <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, marginBottom: 8 }}>
                     signals.eracx.com
                   </p>
-                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Signals</h3>
+                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Signal Feed</h3>
                   <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.55, marginBottom: 16 }}>
-                    Real-time buying signals aggregated from intent data, engagement patterns, and market activity — surfaced so sales teams act on what matters.
+                    Real-time buying signals scored and surfaced as they happen — engagement events, demo requests, pricing page visits, and content downloads ranked by intent strength.
                   </p>
                   <a
                     href="https://signals.eracx.com"
@@ -567,6 +568,34 @@ export default function Review() {
                     style={{ fontSize: 13, color: accent, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}
                   >
                     Explore Signals <ExternalIcon />
+                  </a>
+                </div>
+              </div>
+
+              {/* Signal Companies */}
+              <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.06)", overflow: "hidden" }}>
+                <a href="https://signals.eracx.com" target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>
+                  {SIGNALS_COMPANIES_SCREENSHOT_URL ? (
+                    <img src={SIGNALS_COMPANIES_SCREENSHOT_URL} alt="Signal Companies" style={{ width: "100%", display: "block" }} />
+                  ) : (
+                    <ScreenshotPlaceholder label="Signal Companies preview" />
+                  )}
+                </a>
+                <div style={{ padding: "24px 24px 28px" }}>
+                  <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, marginBottom: 8 }}>
+                    signals.eracx.com
+                  </p>
+                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Company Scoring</h3>
+                  <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.55, marginBottom: 16 }}>
+                    Every account scored and ranked by warmth stage, signal count, and latest activity — so your team knows exactly which companies to prioritize right now.
+                  </p>
+                  <a
+                    href="https://signals.eracx.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ fontSize: 13, color: accent, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}
+                  >
+                    Explore Companies <ExternalIcon />
                   </a>
                 </div>
               </div>
