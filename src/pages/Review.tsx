@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import {
   REVIEWERS,
   LOOM_EMBED_URL,
@@ -763,6 +764,7 @@ export default function Review() {
           </a>
         </footer>
       </div>
+      <Analytics />
     </>
   );
 }
