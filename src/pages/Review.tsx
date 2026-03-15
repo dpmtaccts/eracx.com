@@ -42,12 +42,16 @@ const keyframes = `
 .rv-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
 .rv-grid-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
 .rv-grid-brands { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.rv-stat-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+.rv-signal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 768px) {
   .rv-container { padding: 0 20px; }
   .rv-grid-hero,
   .rv-grid-2col,
   .rv-grid-tools,
-  .rv-grid-brands { grid-template-columns: 1fr; gap: 32px; }
+  .rv-grid-brands,
+  .rv-stat-row,
+  .rv-signal-grid { grid-template-columns: 1fr; gap: 32px; }
   .rv-hero-title { font-size: 32px !important; }
   .rv-section-title { font-size: 24px !important; }
 }
@@ -692,6 +696,153 @@ export default function Review() {
                 </div>
               </div>
             </div>
+          </section>
+
+          {/* ── Who We Built This For ── */}
+          <section id="who-we-serve" style={{ marginBottom: sectionGap, animation: "fadeUp 0.8s ease 0.45s both" }}>
+            {/* Section divider */}
+            <div style={{ width: 40, height: 1, background: accent, marginBottom: 48 }} />
+            <p style={{ ...kicker, color: accent, opacity: 1, letterSpacing: "0.25em", marginBottom: 56 }}>WHO WE BUILT THIS FOR</p>
+
+            {/* Block A: The ICP */}
+            <div style={{ marginBottom: 64 }}>
+              <p style={{ ...kicker, marginBottom: 16 }}>THE COMPANY</p>
+              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.8, opacity: 0.65, maxWidth: 720 }}>
+                Era's ideal client is a B2B company with $10M to $100M in revenue and 50 to 500 employees. They sell deals averaging $50K or more annually. They have a sales team but no dedicated outbound infrastructure: no SDRs, no demand gen function, no signal stack.
+              </p>
+              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.8, opacity: 0.65, maxWidth: 720, marginTop: 16 }}>
+                The verticals where this lands hardest: SaaS and software, IT services and cybersecurity, staffing and recruiting, healthcare IT, fintech, logistics and supply chain, and professional services. These industries share three traits: identifiable buyers reachable via email and LinkedIn, deal sizes that justify the investment, and competitive intensity where speed to contact matters.
+              </p>
+              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.8, opacity: 0.65, maxWidth: 720, marginTop: 16 }}>
+                The common thread isn't industry. It's a company that's outgrown founder-led sales but hasn't yet built the pipeline machine to replace it.
+              </p>
+            </div>
+
+            {/* Block B: Market size */}
+            <div style={{ marginBottom: 64 }}>
+              <div style={{ width: 40, height: 1, background: accent, marginBottom: 48 }} />
+              <p style={{ ...kicker, marginBottom: 32 }}>THE MARKET</p>
+              <div className="rv-stat-row">
+                {[
+                  { number: "~85,000", label: "B2B companies in the US with $10M to $100M revenue and 50 to 500 employees across Era's target verticals" },
+                  { number: "~34,000", label: "Estimated companies in the \"ready but uncommitted\" segment: experiencing GTM pain, haven't yet committed budget to solve it" },
+                  { number: "$2.66B", label: "Current US outsourced B2B lead generation market (2024), projected to reach $7.33B by 2033" },
+                ].map((stat) => (
+                  <div key={stat.number}>
+                    <p style={{ fontSize: 48, fontWeight: 700, color: accent, lineHeight: 1, marginBottom: 12, fontFamily: "'Source Sans 3', system-ui, sans-serif" }}>
+                      {stat.number}
+                    </p>
+                    <div style={{ width: 24, height: 1, background: accent, opacity: 0.4, marginBottom: 12 }} />
+                    <p style={{ fontSize: 12, fontWeight: 400, lineHeight: 1.6, color: "#5B6670" }}>
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Block C: Inflection point */}
+            <div style={{ marginBottom: 64 }}>
+              <div style={{ width: 40, height: 1, background: accent, marginBottom: 48 }} />
+              <p style={{ ...kicker, marginBottom: 16 }}>THE INFLECTION POINT</p>
+              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.8, opacity: 0.65, maxWidth: 720, marginBottom: 32 }}>
+                Revenue range narrows the field, but it doesn't define the buyer. Era's real ICP filter is a company at a specific growth inflection: they've found product-market fit, they're growing, and the pipeline infrastructure hasn't kept up.
+              </p>
+              <p style={{ fontSize: 14, fontWeight: 300, opacity: 0.45, marginBottom: 24 }}>
+                The signals that matter:
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                {[
+                  { title: "Founder is still the top seller.", desc: "Product-market fit is proven but pipeline is inconsistent because one person can't do everything." },
+                  { title: "First VP of Sales just started.", desc: "New sales leader needs pipeline now, not in two quarters. They don't have time to hire and ramp an SDR team." },
+                  { title: "AEs are doing their own prospecting.", desc: "When closers are also sourcing, top-of-funnel gets deprioritized every busy quarter. Feast or famine pipeline." },
+                  { title: "Marketing team is brand and content only.", desc: "Marketing produces blog posts and manages the website but owns zero pipeline metrics." },
+                  { title: "Recently raised Series A or B.", desc: "Board pressure to accelerate growth, but can't wait 3 to 6 months to build outbound from scratch." },
+                ].map((item) => (
+                  <div key={item.title} style={{ borderLeft: `2px solid ${accent}`, paddingLeft: 20 }}>
+                    <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 4, opacity: 0.85 }}>
+                      {item.title}
+                    </p>
+                    <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.5 }}>
+                      {item.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Block D: Signals */}
+            <div style={{ marginBottom: 64 }}>
+              <div style={{ width: 40, height: 1, background: accent, marginBottom: 48 }} />
+              <p style={{ ...kicker, marginBottom: 16 }}>THE SIGNALS</p>
+              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.8, opacity: 0.65, maxWidth: 720, marginBottom: 32 }}>
+                Era uses signal-based prospecting to identify companies at the inflection point before they start shopping for solutions. These are the public data points we monitor:
+              </p>
+              <div className="rv-signal-grid">
+                {[
+                  { signal: "Sales department headcount: 3 to 15", desc: "Big enough to have a team, small enough that no one owns outbound" },
+                  { signal: "Marketing department: 1 to 5 people", desc: "Content and brand focus only, no demand gen or marketing ops" },
+                  { signal: "No SDR or BDR titles on staff", desc: "Outbound function doesn't exist yet" },
+                  { signal: "No marketing automation detected", desc: "No HubSpot, Marketo, or Pardot: they're running email and prayer" },
+                  { signal: "VP Sales hired in last 6 months", desc: "New leader needs pipeline immediately, will be receptive to outside help" },
+                  { signal: "Recent funding (Series A/B)", desc: "Growth pressure from the board, budget unlocked" },
+                  { signal: "Active AE job postings, no SDR postings", desc: "Expanding the closing team but not building top-of-funnel" },
+                  { signal: "Headcount growth 10%+ in 6 months", desc: "Company is scaling fast, infrastructure is lagging" },
+                ].map((item) => (
+                  <div
+                    key={item.signal}
+                    style={{
+                      background: "rgba(255,255,255,0.03)",
+                      borderRadius: 8,
+                      border: "1px solid rgba(255,255,255,0.06)",
+                      borderTop: `2px solid ${accent}`,
+                      padding: "16px 18px",
+                    }}
+                  >
+                    <p style={{ fontSize: 13, fontWeight: 600, marginBottom: 6, opacity: 0.85 }}>
+                      {item.signal}
+                    </p>
+                    <p style={{ fontSize: 12, fontWeight: 300, lineHeight: 1.6, color: "#5B6670" }}>
+                      {item.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Block E: Budget potential */}
+            <div style={{ marginBottom: 0 }}>
+              <div style={{ width: 40, height: 1, background: accent, marginBottom: 48 }} />
+              <p style={{ ...kicker, marginBottom: 16 }}>THE OPPORTUNITY</p>
+              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.8, opacity: 0.65, maxWidth: 720, marginBottom: 32 }}>
+                Most companies in Era's ICP are spending money on pipeline generation today. They're just spending it badly.
+              </p>
+              <div className="rv-stat-row" style={{ marginBottom: 32 }}>
+                {[
+                  { number: "$150K to $275K/yr", label: "What a single in-house SDR actually costs when you include salary, benefits, tools, management overhead, recruiting, and ramp-time productivity loss" },
+                  { number: "34 to 40%", label: "Annual SDR turnover rate, meaning most companies replace their outbound person every 14 to 16 months" },
+                  { number: "3 to 6 months", label: "Time from SDR hire to first productive meeting, during which the company pays full cost for partial output" },
+                ].map((stat) => (
+                  <div key={stat.number}>
+                    <p style={{ fontSize: 48, fontWeight: 700, color: accent, lineHeight: 1, marginBottom: 12, fontFamily: "'Source Sans 3', system-ui, sans-serif" }}>
+                      {stat.number}
+                    </p>
+                    <div style={{ width: 24, height: 1, background: accent, opacity: 0.4, marginBottom: 12 }} />
+                    <p style={{ fontSize: 12, fontWeight: 400, lineHeight: 1.6, color: "#5B6670" }}>
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.8, opacity: 0.65, maxWidth: 720 }}>
+                Era's engagement costs $15K per month: roughly equivalent to a single fully-loaded SDR, but operational in 2 to 4 weeks instead of 3 to 6 months, with zero turnover risk, and the signal infrastructure included. For companies already spending $150K+ on underperforming outbound, the budget isn't new. It's reallocated.
+              </p>
+            </div>
+
+            {/* Footnote */}
+            <p style={{ fontSize: 9, fontWeight: 300, fontStyle: "italic", color: "#5B6670", marginTop: 48, lineHeight: 1.6 }}>
+              Market sizing: SaaS Capital 2025, Gartner CMO Spend Survey 2025, Bridge Group SDR Metrics 2024. Company counts estimated from Apollo.io and Census Bureau data.
+            </p>
           </section>
 
           {/* ── Era vs DPMT ── */}
