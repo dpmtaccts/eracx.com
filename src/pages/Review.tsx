@@ -591,7 +591,7 @@ export default function Review() {
                   How Era operator pods work: the diagnostic framework, compensation structure, IP protection model,
                   and how engagements are scoped and delivered.
                 </p>
-                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
                   <a
                     href={OPERATOR_PLAYBOOK_URL}
                     target="_blank"
@@ -604,9 +604,24 @@ export default function Review() {
                     href={PODCAST_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}
+                    style={{
+                      fontSize: 12,
+                      color: "#fff",
+                      textDecoration: "none",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "8px 16px",
+                      borderRadius: 6,
+                      background: "rgba(255,255,255,0.08)",
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      fontWeight: 500,
+                      transition: "background 0.15s ease",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.14)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
                   >
-                    <HeadphonesIcon /> Listen to a podcast about how we work internally
+                    <HeadphonesIcon /> TL;DR? Listen instead
                   </a>
                 </div>
               </div>
