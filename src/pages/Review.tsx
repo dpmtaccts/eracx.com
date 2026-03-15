@@ -331,7 +331,7 @@ const kicker: React.CSSProperties = {
   fontWeight: 600,
   letterSpacing: "0.15em",
   textTransform: "uppercase",
-  opacity: 0.35,
+  opacity: 0.5,
 };
 
 const recordBtn: React.CSSProperties = {
@@ -413,8 +413,8 @@ export default function Review() {
         <header className="rv-container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 28, paddingBottom: 28 }}>
           <img src={ERA_LOGO_URL} alt="Era" style={{ height: 20, opacity: 0.85, filter: "invert(1)" }} />
           <div style={{ textAlign: "right" }}>
-            <p style={{ fontSize: 12, opacity: 0.5, margin: 0, lineHeight: 1.4 }}>Prepared for {name}</p>
-            <p style={{ fontSize: 11, opacity: 0.3, letterSpacing: "0.12em", textTransform: "uppercase", margin: 0, lineHeight: 1.4 }}>
+            <p style={{ fontSize: 12, opacity: 0.65, margin: 0, lineHeight: 1.4 }}>Prepared for {name}</p>
+            <p style={{ fontSize: 11, opacity: 0.45, letterSpacing: "0.12em", textTransform: "uppercase", margin: 0, lineHeight: 1.4 }}>
               CONFIDENTIAL
             </p>
           </div>
@@ -429,10 +429,10 @@ export default function Review() {
                 <h1 className="rv-hero-title" style={{ fontSize: 40, fontWeight: 300, lineHeight: 1.2, marginBottom: 20 }}>
                   Hey {firstName || "there"}<span style={{ color: accent }}>.</span>
                 </h1>
-                <p style={{ fontSize: 17, fontWeight: 300, lineHeight: 1.7, opacity: 0.7, marginBottom: 20 }}>
+                <p style={{ fontSize: 17, fontWeight: 300, lineHeight: 1.7, opacity: 0.85, marginBottom: 20 }}>
                   {greeting}
                 </p>
-                <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.8, opacity: 0.4 }}>
+                <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.8, opacity: 0.6 }}>
                   Start with the walkthrough, then dig into the materials at your own pace. Voice recorder at the
                   bottom if you want to talk through your thoughts: it comes straight to me.
                 </p>
@@ -451,7 +451,7 @@ export default function Review() {
           {/* ── Era vs DPMT ── */}
           <section style={{ marginBottom: sectionGap }}>
             <div style={{ textAlign: "center", marginBottom: 48 }}>
-              <p style={{ ...kicker, opacity: 0.4, marginBottom: 12 }}>TWO BRANDS, ONE MISSION</p>
+              <p style={{ ...kicker, opacity: 0.55, marginBottom: 12 }}>TWO BRANDS, ONE MISSION</p>
             </div>
 
             <div className="rv-grid-brands">
@@ -463,13 +463,13 @@ export default function Review() {
                   <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#1FA7A2", marginBottom: 16 }}>
                     THE SYSTEM
                   </p>
-                  <p style={{ fontSize: 14, lineHeight: 1.7, opacity: 0.6, marginBottom: 24 }}>
+                  <p style={{ fontSize: 14, lineHeight: 1.7, opacity: 0.75, marginBottom: 24 }}>
                     The scalable infrastructure: methodology, platform, and operator network that makes revenue growth
                     repeatable across multiple clients and teams.
                   </p>
                   <ul style={{ listStyle: "none", padding: 0, margin: "0 0 28px 0" }}>
                     {["Signal-based pipeline engine", "Aux platform (Discovery, Intelligence, Warmth)", "Operator pod model", "Cross-client pattern recognition"].map((b) => (
-                      <li key={b} style={{ fontSize: 13, opacity: 0.55, lineHeight: 1.8, paddingLeft: 16, position: "relative" }}>
+                      <li key={b} style={{ fontSize: 13, opacity: 0.7, lineHeight: 1.8, paddingLeft: 16, position: "relative" }}>
                         <span style={{ position: "absolute", left: 0, top: "0.65em", width: 5, height: 5, borderRadius: "50%", background: "#1FA7A2" }} />
                         {b}
                       </li>
@@ -519,7 +519,7 @@ export default function Review() {
               </div>
             </div>
 
-            <p style={{ textAlign: "center", fontSize: 14, fontWeight: 300, opacity: 0.4, maxWidth: 640, margin: "36px auto 0", lineHeight: 1.7 }}>
+            <p style={{ textAlign: "center", fontSize: 14, fontWeight: 300, opacity: 0.55, maxWidth: 640, margin: "36px auto 0", lineHeight: 1.7 }}>
               Era is designed to scale operations across teams, using the best growth technology and an ever-growing playbook for B2B companies.
             </p>
           </section>
@@ -587,7 +587,7 @@ export default function Review() {
               <div>
                 <p style={{ ...kicker, marginBottom: 12 }}>HOW WE OPERATE</p>
                 <h2 style={{ fontSize: 28, fontWeight: 600, marginBottom: 16 }}>Operator Playbook</h2>
-                <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.7, opacity: 0.6, marginBottom: 24 }}>
+                <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.7, opacity: 0.75, marginBottom: 24 }}>
                   How Era operator pods work: the diagnostic framework, compensation structure, IP protection model,
                   and how engagements are scoped and delivered.
                 </p>
@@ -604,7 +604,7 @@ export default function Review() {
                     href={PODCAST_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}
+                    style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}
                   >
                     <HeadphonesIcon /> Listen to a podcast about how we work internally
                   </a>
@@ -620,7 +620,7 @@ export default function Review() {
               <div>
                 <p style={{ ...kicker, marginBottom: 12 }}>THE PLATFORM</p>
                 <h2 style={{ fontSize: 28, fontWeight: 600, marginBottom: 16 }}>Aux</h2>
-                <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.7, opacity: 0.6, marginBottom: 24 }}>
+                <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.7, opacity: 0.75, marginBottom: 24 }}>
                   The closed-loop system that connects Discovery, Intelligence, and Warmth scoring. See how signals
                   flow from first touch to revenue.
                 </p>
@@ -634,7 +634,7 @@ export default function Review() {
                     <ExternalIcon /> Open Aux demo
                   </a>
                   <div>
-                    <p style={{ fontSize: 12, opacity: 0.35, marginBottom: 8 }}>Password:</p>
+                    <p style={{ fontSize: 12, opacity: 0.5, marginBottom: 8 }}>Password:</p>
                     <PasswordCopy password={ATLAS_PASSWORD} />
                   </div>
                 </div>
@@ -805,11 +805,11 @@ export default function Review() {
           {/* ── Our Go-To-Market ── */}
           <section style={{ marginBottom: sectionGap }}>
             <div style={{ textAlign: "center", marginBottom: 56 }}>
-              <p style={{ ...kicker, opacity: 0.4, marginBottom: 12 }}>OUR GO-TO-MARKET</p>
+              <p style={{ ...kicker, opacity: 0.55, marginBottom: 12 }}>OUR GO-TO-MARKET</p>
               <h2 className="rv-section-title" style={{ fontSize: 32, fontWeight: 300, marginBottom: 16 }}>
                 Tools for buyers, influencers, and growth leaders
               </h2>
-              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.7, opacity: 0.5, maxWidth: 600, margin: "0 auto" }}>
+              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.7, opacity: 0.65, maxWidth: 600, margin: "0 auto" }}>
                 We're building signal-driven products that help revenue teams find, understand, and engage the right people at the right time.
               </p>
             </div>
@@ -829,7 +829,7 @@ export default function Review() {
                     signals.eracx.com
                   </p>
                   <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Signal Feed</h3>
-                  <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.55, marginBottom: 16 }}>
+                  <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.7, marginBottom: 16 }}>
                     Real-time buying signals scored and surfaced as they happen — engagement events, demo requests, pricing page visits, and content downloads ranked by intent strength.
                   </p>
                   <a
@@ -857,7 +857,7 @@ export default function Review() {
                     signals.eracx.com
                   </p>
                   <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Company Scoring</h3>
-                  <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.55, marginBottom: 16 }}>
+                  <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.7, marginBottom: 16 }}>
                     Every account scored and ranked by warmth stage, signal count, and latest activity — so your team knows exactly which companies to prioritize right now.
                   </p>
                   <a
@@ -885,7 +885,7 @@ export default function Review() {
                     map.eracx.com
                   </p>
                   <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Map</h3>
-                  <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.55, marginBottom: 16 }}>
+                  <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.7, marginBottom: 16 }}>
                     Visual account and stakeholder mapping that reveals influence networks, buying committees, and relationship pathways inside target organizations.
                   </p>
                   <a
@@ -913,7 +913,7 @@ export default function Review() {
                     eracx.com/gtm-design
                   </p>
                   <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>GTM Design</h3>
-                  <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.55, marginBottom: 16 }}>
+                  <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.7, marginBottom: 16 }}>
                     Interactive go-to-market architecture tool that helps growth leaders design, pressure-test, and align their revenue strategy in one place.
                   </p>
                   <a
@@ -947,7 +947,7 @@ export default function Review() {
             alignItems: "center",
           }}
         >
-          <p style={{ fontSize: 13, opacity: 0.3, margin: 0, fontWeight: 300, letterSpacing: "0.04em" }}>
+          <p style={{ fontSize: 13, opacity: 0.5, margin: 0, fontWeight: 300, letterSpacing: "0.04em" }}>
             Connection · Trust · Loyalty
           </p>
           <a
