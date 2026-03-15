@@ -783,18 +783,18 @@ export default function Review() {
                     { number: "3-6mo", sub: "to first meeting" },
                   ].map((s) => (
                     <div key={s.number} style={{ textAlign: "center" }}>
-                      <p style={{ fontSize: 32, fontWeight: 200, color: accent, lineHeight: 1, marginBottom: 4, fontFamily: "'Source Sans 3', system-ui, sans-serif" }}>{s.number}</p>
-                      <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", color: "#777" }}>{s.sub}</p>
+                      <p style={{ fontSize: 32, fontWeight: 400, color: accent, lineHeight: 1, marginBottom: 4, fontFamily: "'Source Sans 3', system-ui, sans-serif" }}>{s.number}</p>
+                      <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", color: "#B0B0B0" }}>{s.sub}</p>
                     </div>
                   ))}
                 </div>
               </div>
-              <div style={{ marginTop: 32, borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 24 }}>
-                <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: "#aaa", maxWidth: 680 }}>
+              <div style={{ marginTop: 32, borderTop: "1px solid rgba(255,255,255,0.12)", paddingTop: 24 }}>
+                <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: "#ccc", maxWidth: 680 }}>
                   Era costs $15K/month: equivalent to one SDR, live in 2 to 4 weeks, zero turnover, signal infrastructure included. For companies already spending $150K+ on underperforming outbound, the budget isn't new. <span style={{ color: accent, fontWeight: 600 }}>It's reallocated.</span>
                 </p>
               </div>
-              <p style={{ fontSize: 9, fontWeight: 300, fontStyle: "italic", color: "#555", marginTop: 32, lineHeight: 1.6 }}>
+              <p style={{ fontSize: 9, fontWeight: 300, fontStyle: "italic", color: "#888", marginTop: 32, lineHeight: 1.6 }}>
                 Market sizing: SaaS Capital 2025, Gartner CMO Spend Survey 2025, Bridge Group SDR Metrics 2024. Company counts estimated from Apollo.io and Census Bureau data.
               </p>
             </div>
