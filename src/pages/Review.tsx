@@ -44,6 +44,10 @@ const keyframes = `
 .rv-grid-brands { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .rv-stat-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
 .rv-signal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.rv-ed-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.rv-ed-aside { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; align-items: start; }
+.rv-ed-signals { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+.rv-ed-stat-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
 @media (max-width: 768px) {
   .rv-container { padding: 0 20px; }
   .rv-grid-hero,
@@ -51,9 +55,14 @@ const keyframes = `
   .rv-grid-tools,
   .rv-grid-brands,
   .rv-stat-row,
-  .rv-signal-grid { grid-template-columns: 1fr; gap: 32px; }
+  .rv-signal-grid,
+  .rv-ed-2col,
+  .rv-ed-aside { grid-template-columns: 1fr; gap: 32px; }
+  .rv-ed-signals { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .rv-ed-stat-strip { grid-template-columns: 1fr; }
   .rv-hero-title { font-size: 32px !important; }
   .rv-section-title { font-size: 24px !important; }
+  .rv-ed-headline { font-size: 32px !important; }
 }
 `;
 
@@ -652,176 +661,148 @@ export default function Review() {
         <section
           id="who-we-serve"
           style={{
-            background: "linear-gradient(180deg, #F6F5F2 0%, #EDE9E4 100%)",
-            color: "#383838",
+            background: "#F6F5F2",
+            color: "#2A2A2A",
             position: "relative",
             overflow: "hidden",
             animation: "fadeUp 0.8s ease 0.45s both",
           }}
         >
-          {/* Decorative background elements */}
-          <div style={{ position: "absolute", top: -120, right: -120, width: 400, height: 400, borderRadius: "50%", background: `radial-gradient(circle, ${accent}12 0%, transparent 70%)`, pointerEvents: "none" }} />
-          <div style={{ position: "absolute", bottom: -80, left: -80, width: 300, height: 300, borderRadius: "50%", background: `radial-gradient(circle, ${accent}10 0%, transparent 70%)`, pointerEvents: "none" }} />
+          {/* Top accent line */}
+          <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }} />
 
-          {/* Top edge: accent gradient bar */}
-          <div style={{ height: 3, background: `linear-gradient(90deg, ${accent}, ${accent}44)` }} />
-
-          <div className="rv-container" style={{ paddingTop: 64, paddingBottom: 64 }}>
-            {/* Section header */}
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: accent, marginBottom: 16 }}>WHO WE BUILT THIS FOR</p>
-            <h2 style={{ fontSize: 36, fontWeight: 300, lineHeight: 1.3, color: "#2A2A2A", maxWidth: 560, marginBottom: 48 }}>
-              Built for B2B companies that have outgrown founder-led sales<span style={{ color: accent }}>.</span>
-            </h2>
-
-            {/* Block A: The ICP */}
-            <div style={{ marginBottom: 48 }}>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: accent, marginBottom: 16 }}>THE COMPANY</p>
-              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.8, color: "#4A4A4A", maxWidth: 720 }}>
-                Era's ideal client is a B2B company with $10M to $100M in revenue and 50 to 500 employees. They sell deals averaging $50K or more annually. They have a sales team but no dedicated outbound infrastructure: no SDRs, no demand gen function, no signal stack.
-              </p>
-              <div style={{ borderLeft: `3px solid ${accent}`, paddingLeft: 24, marginTop: 24 }}>
-                <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.5, color: "#2A2A2A" }}>
-                  The common thread isn't industry. It's a company that's outgrown founder-led sales but hasn't yet built the pipeline machine to replace it.
+          {/* ── Editorial Header ── */}
+          <div className="rv-container" style={{ paddingTop: 72, paddingBottom: 0 }}>
+            <div className="rv-ed-2col">
+              <div>
+                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: accent, marginBottom: 20 }}>WHO WE BUILT THIS FOR</p>
+                <h2 className="rv-ed-headline" style={{ fontSize: 44, fontWeight: 300, lineHeight: 1.2, color: "#1A1A1A", margin: 0 }}>
+                  The company that's outgrown founder-led sales<span style={{ color: accent }}>.</span>
+                </h2>
+              </div>
+              <div style={{ paddingTop: 8 }}>
+                <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.9, color: "#555" }}>
+                  B2B, $10M to $100M revenue, 50 to 500 employees, $50K+ deal sizes. They have a sales team but no outbound infrastructure: no SDRs, no demand gen, no signal stack. The verticals where this lands hardest: SaaS, cybersecurity, staffing, healthcare IT, fintech, logistics, and professional services.
                 </p>
               </div>
             </div>
+          </div>
 
-            {/* Block B: Market size */}
-            <div style={{ marginBottom: 48 }}>
-              <div style={{ width: 40, height: 1, background: accent, opacity: 0.4, marginBottom: 36 }} />
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: accent, marginBottom: 28 }}>THE MARKET</p>
-              <div className="rv-stat-row">
-                {[
-                  { number: "~85,000", label: "B2B companies in the US matching Era's ICP across target verticals" },
-                  { number: "~34,000", label: "Companies in the \"ready but uncommitted\" segment: GTM pain, no budget allocated yet" },
-                  { number: "$2.66B", label: "US outsourced B2B lead gen market (2024), projected $7.33B by 2033" },
-                ].map((stat) => (
-                  <div key={stat.number} style={{ background: "rgba(255,255,255,0.6)", borderRadius: 12, padding: "24px 20px", border: "1px solid rgba(0,0,0,0.04)" }}>
-                    <p style={{ fontSize: 40, fontWeight: 700, color: accent, lineHeight: 1, marginBottom: 12, fontFamily: "'Source Sans 3', system-ui, sans-serif" }}>
-                      {stat.number}
-                    </p>
-                    <div style={{ width: 24, height: 2, background: accent, opacity: 0.3, marginBottom: 10 }} />
-                    <p style={{ fontSize: 12, fontWeight: 400, lineHeight: 1.5, color: "#6B7280" }}>
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
+          {/* ── Stat Strip ── */}
+          <div className="rv-container" style={{ paddingTop: 56, paddingBottom: 56 }}>
+            <div className="rv-ed-stat-strip" style={{ borderTop: `1px solid rgba(0,0,0,0.08)`, borderBottom: `1px solid rgba(0,0,0,0.08)` }}>
+              {[
+                { number: "85K", label: "Companies matching Era's ICP in the US" },
+                { number: "34K", label: "In the \"ready but uncommitted\" segment" },
+                { number: "$2.66B", label: "US outsourced B2B lead gen market" },
+              ].map((stat, i) => (
+                <div key={stat.number} style={{ padding: "32px 0", textAlign: "center", borderLeft: i > 0 ? "1px solid rgba(0,0,0,0.08)" : "none" }}>
+                  <p style={{ fontSize: 48, fontWeight: 200, color: accent, lineHeight: 1, marginBottom: 8, fontFamily: "'Source Sans 3', system-ui, sans-serif", letterSpacing: "-0.02em" }}>
+                    {stat.number}
+                  </p>
+                  <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.05em", color: "#888", textTransform: "uppercase" }}>
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
             </div>
+          </div>
 
-            {/* Block C: Inflection point */}
-            <div style={{ marginBottom: 48 }}>
-              <div style={{ width: 40, height: 1, background: accent, opacity: 0.4, marginBottom: 36 }} />
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: accent, marginBottom: 16 }}>THE INFLECTION POINT</p>
-              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.8, color: "#4A4A4A", maxWidth: 720, marginBottom: 20 }}>
-                Era's real filter is a company at a specific growth inflection: product-market fit proven, growing, pipeline infrastructure hasn't kept up.
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+          {/* ── Inflection + Signals ── */}
+          <div className="rv-container" style={{ paddingBottom: 56 }}>
+            <div className="rv-ed-aside">
+              {/* Left: Inflection */}
+              <div>
+                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: accent, marginBottom: 20 }}>THE INFLECTION POINT</p>
+                <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: "#555", marginBottom: 28 }}>
+                  Era's real filter is a company at a specific growth inflection: product-market fit proven, growing, pipeline infrastructure hasn't kept up. These are the patterns we look for:
+                </p>
                 {[
-                  { title: "Founder is still the top seller", desc: "Pipeline is inconsistent because one person can't do everything." },
-                  { title: "First VP of Sales just started", desc: "Needs pipeline now, not in two quarters." },
-                  { title: "AEs are doing their own prospecting", desc: "Feast or famine pipeline every busy quarter." },
-                  { title: "Marketing is brand and content only", desc: "Zero pipeline metrics owned by marketing." },
-                  { title: "Recently raised Series A or B", desc: "Board pressure to grow, can't wait 3 to 6 months to build outbound." },
+                  "Founder is still the top seller",
+                  "First VP of Sales just started",
+                  "AEs sourcing their own pipeline",
+                  "Marketing owns zero pipeline metrics",
+                  "Recently raised Series A or B",
                 ].map((item, i) => (
-                  <div key={item.title} style={{ display: "flex", gap: 16, padding: "14px 0", borderBottom: i < 4 ? "1px solid rgba(0,0,0,0.06)" : "none" }}>
-                    <div style={{ width: 28, height: 28, minWidth: 28, borderRadius: "50%", background: accent, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 12, fontWeight: 700, marginTop: 1 }}>
-                      {i + 1}
-                    </div>
-                    <div>
-                      <p style={{ fontSize: 14, fontWeight: 600, color: "#2A2A2A", marginBottom: 2 }}>
-                        {item.title}
-                      </p>
-                      <p style={{ fontSize: 13, fontWeight: 300, lineHeight: 1.6, color: "#6B7280" }}>
-                        {item.desc}
-                      </p>
-                    </div>
+                  <div key={item} style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 14 }}>
+                    <span style={{ fontSize: 28, fontWeight: 200, color: accent, lineHeight: 1, fontFamily: "'Source Sans 3', system-ui, sans-serif", minWidth: 24 }}>{i + 1}</span>
+                    <p style={{ fontSize: 14, fontWeight: 400, color: "#333", lineHeight: 1.5 }}>{item}</p>
                   </div>
                 ))}
+              </div>
+              {/* Right: Signal tags */}
+              <div style={{ background: "#fff", borderRadius: 12, padding: "28px 24px", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
+                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: accent, marginBottom: 16 }}>SIGNALS WE TRACK</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {[
+                    "Sales: 3 to 15 people",
+                    "Marketing: 1 to 5 people",
+                    "No SDR/BDR titles",
+                    "No marketing automation",
+                    "New VP Sales (< 6mo)",
+                    "Recent funding (A/B)",
+                    "AE hiring, no SDR hiring",
+                    "10%+ headcount growth",
+                  ].map((tag) => (
+                    <span
+                      key={tag}
+                      style={{
+                        display: "inline-block",
+                        padding: "7px 14px",
+                        fontSize: 12,
+                        fontWeight: 500,
+                        color: "#333",
+                        background: "#F6F5F2",
+                        border: `1px solid rgba(0,0,0,0.08)`,
+                        borderRadius: 20,
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
+          </div>
 
-            {/* Block D: Signals (concise) */}
-            <div style={{ marginBottom: 48 }}>
-              <div style={{ width: 40, height: 1, background: accent, opacity: 0.4, marginBottom: 36 }} />
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: accent, marginBottom: 16 }}>THE SIGNALS</p>
-              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.8, color: "#4A4A4A", maxWidth: 720, marginBottom: 24 }}>
-                Public data points we monitor to identify companies at the inflection point before they start shopping:
-              </p>
-              <div className="rv-signal-grid">
-                {[
-                  { signal: "Sales team: 3 to 15", desc: "Team exists, but no one owns outbound" },
-                  { signal: "Marketing: 1 to 5 people", desc: "Brand/content only, no demand gen" },
-                  { signal: "No SDR/BDR titles", desc: "Outbound function doesn't exist" },
-                  { signal: "No marketing automation", desc: "No HubSpot, Marketo, or Pardot" },
-                  { signal: "VP Sales hired < 6 months", desc: "New leader, needs pipeline immediately" },
-                  { signal: "Recent funding (A/B)", desc: "Growth pressure, budget unlocked" },
-                  { signal: "AE postings, no SDR postings", desc: "Expanding closers, not top-of-funnel" },
-                  { signal: "10%+ headcount growth", desc: "Scaling fast, infrastructure lagging" },
-                ].map((item) => (
-                  <div
-                    key={item.signal}
-                    style={{
-                      background: "#fff",
-                      borderRadius: 8,
-                      border: "1px solid rgba(0,0,0,0.06)",
-                      borderLeft: `3px solid ${accent}`,
-                      padding: "12px 16px",
-                      boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
-                    }}
-                  >
-                    <p style={{ fontSize: 13, fontWeight: 600, color: "#2A2A2A" }}>
-                      {item.signal}
-                    </p>
-                    <p style={{ fontSize: 12, fontWeight: 300, lineHeight: 1.5, color: "#6B7280", marginTop: 2 }}>
-                      {item.desc}
-                    </p>
-                  </div>
-                ))}
+          {/* ── Market Opportunity (dark inset) ── */}
+          <div style={{ background: "#1A1A1A", color: "#F6F5F2", position: "relative" }}>
+            <div className="rv-container" style={{ paddingTop: 48, paddingBottom: 48 }}>
+              <div className="rv-ed-2col" style={{ alignItems: "center" }}>
+                <div>
+                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: accent, marginBottom: 16 }}>MARKET OPPORTUNITY</p>
+                  <p style={{ fontSize: 22, fontWeight: 300, lineHeight: 1.5, color: "#ddd" }}>
+                    They're already spending. <span style={{ color: "#fff", fontWeight: 500 }}>Just spending it badly.</span>
+                  </p>
+                </div>
+                <div style={{ display: "flex", gap: 24 }}>
+                  {[
+                    { number: "$150K+", sub: "/yr per SDR" },
+                    { number: "40%", sub: "annual turnover" },
+                    { number: "3-6mo", sub: "to first meeting" },
+                  ].map((s) => (
+                    <div key={s.number} style={{ textAlign: "center" }}>
+                      <p style={{ fontSize: 32, fontWeight: 200, color: accent, lineHeight: 1, marginBottom: 4, fontFamily: "'Source Sans 3', system-ui, sans-serif" }}>{s.number}</p>
+                      <p style={{ fontSize: 10, fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", color: "#777" }}>{s.sub}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-
-            {/* Block E: Market Opportunity */}
-            <div>
-              <div style={{ width: 40, height: 1, background: accent, opacity: 0.4, marginBottom: 36 }} />
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: accent, marginBottom: 16 }}>MARKET OPPORTUNITY</p>
-              <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.8, color: "#4A4A4A", maxWidth: 720, marginBottom: 28 }}>
-                Most companies in Era's ICP are spending money on pipeline generation today. They're just spending it badly.
-              </p>
-              <div className="rv-stat-row" style={{ marginBottom: 28 }}>
-                {[
-                  { number: "$150K to $275K/yr", label: "Fully-loaded cost of a single in-house SDR" },
-                  { number: "34 to 40%", label: "Annual SDR turnover rate" },
-                  { number: "3 to 6 months", label: "Time to first productive meeting" },
-                ].map((stat) => (
-                  <div key={stat.number} style={{ background: "rgba(255,255,255,0.6)", borderRadius: 12, padding: "24px 20px", border: "1px solid rgba(0,0,0,0.04)" }}>
-                    <p style={{ fontSize: 40, fontWeight: 700, color: accent, lineHeight: 1, marginBottom: 12, fontFamily: "'Source Sans 3', system-ui, sans-serif" }}>
-                      {stat.number}
-                    </p>
-                    <div style={{ width: 24, height: 2, background: accent, opacity: 0.3, marginBottom: 10 }} />
-                    <p style={{ fontSize: 12, fontWeight: 400, lineHeight: 1.5, color: "#6B7280" }}>
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-              {/* Closing highlight */}
-              <div style={{ background: "#2A2A2A", borderRadius: 12, padding: "28px 32px", maxWidth: 720, position: "relative", overflow: "hidden" }}>
-                <div style={{ position: "absolute", top: 0, left: 0, width: 3, height: "100%", background: accent }} />
-                <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.8, color: "#F6F5F2" }}>
-                  Era costs $15K/month: equivalent to one SDR, but live in 2 to 4 weeks, zero turnover, signal infrastructure included. The budget isn't new. <span style={{ fontWeight: 600, color: accent }}>It's reallocated.</span>
+              <div style={{ marginTop: 32, borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 24 }}>
+                <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: "#aaa", maxWidth: 680 }}>
+                  Era costs $15K/month: equivalent to one SDR, live in 2 to 4 weeks, zero turnover, signal infrastructure included. For companies already spending $150K+ on underperforming outbound, the budget isn't new. <span style={{ color: accent, fontWeight: 600 }}>It's reallocated.</span>
                 </p>
               </div>
             </div>
+          </div>
 
-            {/* Footnote */}
-            <p style={{ fontSize: 9, fontWeight: 300, fontStyle: "italic", color: "#9CA3AF", marginTop: 40, lineHeight: 1.6 }}>
+          {/* Footnote */}
+          <div className="rv-container" style={{ paddingTop: 16, paddingBottom: 16 }}>
+            <p style={{ fontSize: 9, fontWeight: 300, fontStyle: "italic", color: "#aaa", lineHeight: 1.6 }}>
               Market sizing: SaaS Capital 2025, Gartner CMO Spend Survey 2025, Bridge Group SDR Metrics 2024. Company counts estimated from Apollo.io and Census Bureau data.
             </p>
           </div>
-
-          {/* Bottom edge: accent gradient bar */}
-          <div style={{ height: 3, background: `linear-gradient(90deg, ${accent}44, ${accent})` }} />
         </section>
         <main className="rv-container" style={{ paddingTop: sectionGap }}>
 
