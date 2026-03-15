@@ -773,7 +773,7 @@ export default function Review() {
                 <div>
                   <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: accent, marginBottom: 16 }}>MARKET OPPORTUNITY</p>
                   <p style={{ fontSize: 22, fontWeight: 300, lineHeight: 1.5, color: "#ddd" }}>
-                    They're already spending. <span style={{ color: "#fff", fontWeight: 500 }}>Just spending it badly.</span>
+                    Businesses are already investing in growth, <span style={{ color: "#fff", fontWeight: 500 }}>but using an old playbook.</span>
                   </p>
                 </div>
                 <div style={{ display: "flex", gap: 24 }}>
@@ -794,14 +794,10 @@ export default function Review() {
                   Era costs $15K/month: equivalent to one SDR, live in 2 to 4 weeks, zero turnover, signal infrastructure included. For companies already spending $150K+ on underperforming outbound, the budget isn't new. <span style={{ color: accent, fontWeight: 600 }}>It's reallocated.</span>
                 </p>
               </div>
+              <p style={{ fontSize: 9, fontWeight: 300, fontStyle: "italic", color: "#555", marginTop: 32, lineHeight: 1.6 }}>
+                Market sizing: SaaS Capital 2025, Gartner CMO Spend Survey 2025, Bridge Group SDR Metrics 2024. Company counts estimated from Apollo.io and Census Bureau data.
+              </p>
             </div>
-          </div>
-
-          {/* Footnote */}
-          <div className="rv-container" style={{ paddingTop: 16, paddingBottom: 16 }}>
-            <p style={{ fontSize: 9, fontWeight: 300, fontStyle: "italic", color: "#aaa", lineHeight: 1.6 }}>
-              Market sizing: SaaS Capital 2025, Gartner CMO Spend Survey 2025, Bridge Group SDR Metrics 2024. Company counts estimated from Apollo.io and Census Bureau data.
-            </p>
           </div>
         </section>
         <main className="rv-container" style={{ paddingTop: sectionGap }}>
