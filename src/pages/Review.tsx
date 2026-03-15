@@ -191,7 +191,7 @@ function AudioRecorder({
           }
           try {
             const base64 = reader.result.split(",")[1] || reader.result;
-            await fetch("/api/voice-feedback", {
+            const res = await fetch("/api/voice-feedback", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -205,6 +205,15 @@ function AudioRecorder({
                 filename: `${slug}-${recordingNumber}.webm`,
               }),
             });
+            if (!res.ok) {
+              setState("error");
+              return;
+            }
+            const data = await res.json();
+            if (!data.ok) {
+              setState("error");
+              return;
+            }
             setState("sent");
           } catch {
             setState("error");

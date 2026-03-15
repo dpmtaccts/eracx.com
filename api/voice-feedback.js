@@ -2,6 +2,10 @@ import { getSupabase } from "./lib/supabase-server.js";
 
 const STORAGE_BUCKET = "voice-feedback";
 
+export const config = {
+  api: { bodyParser: { sizeLimit: "8mb" } },
+};
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -18,7 +22,7 @@ export default async function handler(req, res) {
   const safeName = filename || `feedback-${slug || "unknown"}-${recording_number || 1}.webm`;
   const storagePath = `${slug || "unknown"}/${Date.now()}-${safeName}`;
 
-  // 1. Store audio in Supabase Storage (do this first so nothing is lost)
+  // 1. Store audio in Supabase Storage — this is critical, fail if it doesn't work
   let fileUrl = null;
   const supabase = getSupabase();
 
@@ -32,17 +36,19 @@ export default async function handler(req, res) {
 
     if (uploadError) {
       console.error("Supabase upload error:", uploadError.message);
-    } else {
-      const { data: urlData } = supabase.storage
-        .from(STORAGE_BUCKET)
-        .getPublicUrl(storagePath);
-      fileUrl = urlData?.publicUrl || null;
+      return res.status(500).json({ ok: false, error: "Failed to save audio recording. Please try again." });
     }
+
+    const { data: urlData } = supabase.storage
+      .from(STORAGE_BUCKET)
+      .getPublicUrl(storagePath);
+    fileUrl = urlData?.publicUrl || null;
   } catch (err) {
     console.error("Supabase storage failed:", err.message);
+    return res.status(500).json({ ok: false, error: "Failed to save audio recording. Please try again." });
   }
 
-  // 2. Transcribe with OpenAI Whisper
+  // 2. Transcribe with OpenAI Whisper (non-critical — audio is already saved)
   let transcript = "";
 
   if (process.env.OPENAI_API_KEY) {
@@ -75,9 +81,9 @@ export default async function handler(req, res) {
     transcript = "[No API key — listen to audio]";
   }
 
-  // 3. Save metadata to Supabase table
+  // 3. Save metadata to Supabase table (non-critical — audio is already saved)
   try {
-    await supabase.from("voice_feedback").insert({
+    const { error: insertError } = await supabase.from("voice_feedback").insert({
       reviewer_name: name,
       slug,
       recording_number,
@@ -87,11 +93,14 @@ export default async function handler(req, res) {
       storage_path: storagePath,
       created_at: timestamp || new Date().toISOString(),
     });
+    if (insertError) {
+      console.error("Supabase insert error:", insertError.message);
+    }
   } catch (err) {
     console.error("Supabase insert failed:", err.message);
   }
 
-  // 4. Forward to Zapier webhook
+  // 4. Forward to Zapier webhook (non-critical)
   const zapierUrl = process.env.ZAPIER_WEBHOOK_URL;
   if (zapierUrl) {
     try {
