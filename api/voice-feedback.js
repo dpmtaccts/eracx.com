@@ -6,52 +6,75 @@ export const config = {
   api: { bodyParser: { sizeLimit: "8mb" } },
 };
 
+export const maxDuration = 60;
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { name, slug, recording_number, duration_seconds, timestamp, audio_base64, audio_type, filename } = req.body || {};
+  const {
+    name, slug, recording_number, duration_seconds, timestamp,
+    audio_base64, audio_url, audio_type, filename, storage_path,
+  } = req.body || {};
 
-  if (!audio_base64 || !name) {
+  if (!name || (!audio_base64 && !audio_url)) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
-  const audioBuffer = Buffer.from(audio_base64, "base64");
   const mimeType = audio_type || "audio/webm";
   const safeName = filename || `feedback-${slug || "unknown"}-${recording_number || 1}.webm`;
-  const storagePath = `${slug || "unknown"}/${Date.now()}-${safeName}`;
-
-  // 1. Store audio in Supabase Storage — this is critical, fail if it doesn't work
-  let fileUrl = null;
   const supabase = getSupabase();
 
-  try {
-    const { error: uploadError } = await supabase.storage
-      .from(STORAGE_BUCKET)
-      .upload(storagePath, audioBuffer, {
-        contentType: mimeType,
-        upsert: false,
-      });
+  let fileUrl = audio_url || null;
+  let audioBuffer = null;
 
-    if (uploadError) {
-      console.error("Supabase upload error:", uploadError.message);
+  // Path A: Browser already uploaded to Supabase — just download for transcription
+  if (audio_url) {
+    try {
+      const audioRes = await fetch(audio_url);
+      if (audioRes.ok) {
+        audioBuffer = Buffer.from(await audioRes.arrayBuffer());
+      } else {
+        console.error("Failed to download audio from Supabase:", audioRes.status);
+      }
+    } catch (err) {
+      console.error("Failed to download audio for transcription:", err.message);
+    }
+  }
+
+  // Path B: Browser sent base64 — upload to Supabase Storage
+  if (audio_base64 && !fileUrl) {
+    audioBuffer = Buffer.from(audio_base64, "base64");
+    const uploadPath = storage_path || `${slug || "unknown"}/${Date.now()}-${safeName}`;
+
+    try {
+      const { error: uploadError } = await supabase.storage
+        .from(STORAGE_BUCKET)
+        .upload(uploadPath, audioBuffer, {
+          contentType: mimeType,
+          upsert: false,
+        });
+
+      if (uploadError) {
+        console.error("Supabase upload error:", uploadError.message);
+        return res.status(500).json({ ok: false, error: "Failed to save audio recording. Please try again." });
+      }
+
+      const { data: urlData } = supabase.storage
+        .from(STORAGE_BUCKET)
+        .getPublicUrl(uploadPath);
+      fileUrl = urlData?.publicUrl || null;
+    } catch (err) {
+      console.error("Supabase storage failed:", err.message);
       return res.status(500).json({ ok: false, error: "Failed to save audio recording. Please try again." });
     }
-
-    const { data: urlData } = supabase.storage
-      .from(STORAGE_BUCKET)
-      .getPublicUrl(storagePath);
-    fileUrl = urlData?.publicUrl || null;
-  } catch (err) {
-    console.error("Supabase storage failed:", err.message);
-    return res.status(500).json({ ok: false, error: "Failed to save audio recording. Please try again." });
   }
 
   // 2. Transcribe with OpenAI Whisper (non-critical — audio is already saved)
   let transcript = "";
 
-  if (process.env.OPENAI_API_KEY) {
+  if (process.env.OPENAI_API_KEY && audioBuffer) {
     try {
       const formData = new FormData();
       formData.append("file", new Blob([audioBuffer], { type: mimeType }), safeName);
@@ -76,9 +99,11 @@ export default async function handler(req, res) {
       console.error("Whisper transcription failed:", err.message);
       transcript = "[Transcription failed — listen to audio]";
     }
-  } else {
+  } else if (!process.env.OPENAI_API_KEY) {
     console.warn("OPENAI_API_KEY not set, skipping transcription");
     transcript = "[No API key — listen to audio]";
+  } else {
+    transcript = "[Audio not available for transcription]";
   }
 
   // 3. Save metadata to Supabase table (non-critical — audio is already saved)
@@ -90,7 +115,7 @@ export default async function handler(req, res) {
       duration_seconds,
       transcript,
       file_url: fileUrl,
-      storage_path: storagePath,
+      storage_path: storage_path || `${slug || "unknown"}/${safeName}`,
       created_at: timestamp || new Date().toISOString(),
     });
     if (insertError) {

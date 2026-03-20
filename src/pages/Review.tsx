@@ -187,7 +187,7 @@ function AudioRecorder({
         if (e.data.size > 0) chunksRef.current.push(e.data);
       };
 
-      recorder.onstop = () => {
+      recorder.onstop = async () => {
         stream.getTracks().forEach((t) => t.stop());
         if (timerRef.current) clearInterval(timerRef.current);
         setState("sending");
@@ -195,45 +195,109 @@ function AudioRecorder({
         const blob = new Blob(chunksRef.current, { type: recorder.mimeType || "audio/webm" });
         const audioType = blob.type || "audio/webm";
         const finalDuration = durationRef.current;
+        const safeName = `${slug}-${recordingNumber}.webm`;
+        const storagePath = `${slug}/${Date.now()}-${safeName}`;
 
-        const reader = new FileReader();
-        reader.onloadend = async () => {
-          if (reader.readyState !== 2 || typeof reader.result !== "string") {
+        try {
+          // Upload blob directly to Supabase Storage (no base64, no body limit)
+          const { getSupabase } = await import("../lib/supabase");
+          const supabase = getSupabase();
+
+          if (!supabase) {
+            console.error("Supabase client not available — falling back to API upload");
+            await sendViaApi(blob, audioType, safeName, recordingNumber, finalDuration);
+            return;
+          }
+
+          const { error: uploadError } = await supabase.storage
+            .from("voice-feedback")
+            .upload(storagePath, blob, { contentType: audioType, upsert: false });
+
+          if (uploadError) {
+            console.error("Supabase upload error:", uploadError.message);
+            // Fall back to API upload if direct upload fails (e.g. RLS)
+            await sendViaApi(blob, audioType, safeName, recordingNumber, finalDuration);
+            return;
+          }
+
+          const { data: urlData } = supabase.storage
+            .from("voice-feedback")
+            .getPublicUrl(storagePath);
+          const audioUrl = urlData?.publicUrl || null;
+
+          // Send small JSON metadata to API for transcription + webhook
+          const res = await fetch("/api/voice-feedback", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: reviewerName,
+              slug,
+              recording_number: recordingNumber,
+              duration_seconds: finalDuration,
+              timestamp: new Date().toISOString(),
+              audio_url: audioUrl,
+              audio_type: audioType,
+              filename: safeName,
+              storage_path: storagePath,
+            }),
+          });
+
+          if (!res.ok) {
+            // Audio is saved in Supabase even if API fails — treat as success
+            console.error("API metadata call failed:", res.status);
+          }
+
+          setState("sent");
+        } catch (err) {
+          console.error("Upload failed:", err);
+          setState("error");
+        }
+      };
+
+      // Fall back: send base64 through API (for small recordings or if Supabase client unavailable)
+      const sendViaApi = async (blob: Blob, audioType: string, safeName: string, recNum: number, dur: number) => {
+        try {
+          const reader = new FileReader();
+          const base64 = await new Promise<string>((resolve, reject) => {
+            reader.onloadend = () => {
+              if (reader.readyState !== 2 || typeof reader.result !== "string") {
+                reject(new Error("FileReader failed"));
+                return;
+              }
+              resolve(reader.result.split(",")[1] || reader.result);
+            };
+            reader.onerror = () => reject(new Error("FileReader error"));
+            reader.readAsDataURL(blob);
+          });
+
+          const res = await fetch("/api/voice-feedback", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: reviewerName,
+              slug,
+              recording_number: recNum,
+              duration_seconds: dur,
+              timestamp: new Date().toISOString(),
+              audio_base64: base64,
+              audio_type: audioType,
+              filename: safeName,
+            }),
+          });
+
+          if (!res.ok) {
             setState("error");
             return;
           }
-          try {
-            const base64 = reader.result.split(",")[1] || reader.result;
-            const res = await fetch("/api/voice-feedback", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                name: reviewerName,
-                slug,
-                recording_number: recordingNumber,
-                duration_seconds: finalDuration,
-                timestamp: new Date().toISOString(),
-                audio_base64: base64,
-                audio_type: audioType,
-                filename: `${slug}-${recordingNumber}.webm`,
-              }),
-            });
-            if (!res.ok) {
-              setState("error");
-              return;
-            }
-            const data = await res.json();
-            if (!data.ok) {
-              setState("error");
-              return;
-            }
-            setState("sent");
-          } catch {
+          const data = await res.json();
+          if (!data.ok) {
             setState("error");
+            return;
           }
-        };
-        reader.onerror = () => setState("error");
-        reader.readAsDataURL(blob);
+          setState("sent");
+        } catch {
+          setState("error");
+        }
       };
 
       // Use timeslice to ensure ondataavailable fires during recording
