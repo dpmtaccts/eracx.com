@@ -17,13 +17,37 @@ export default function HeroSection() {
     return () => cancelAnimationFrame(id);
   }, []);
 
-  // Force-play the background video on mount (some browsers ignore the autoPlay attribute)
+  // Force-play the background video on mount
+  // Safari requires the muted DOM *property* to be set (React's JSX attribute alone is not enough)
   useEffect(() => {
     const v = videoRef.current;
-    if (v) {
+    if (!v) return;
+
+    // Explicitly set DOM properties Safari needs
+    v.muted = true;
+    v.playsInline = true;
+    v.setAttribute("playsinline", "");
+    v.setAttribute("webkit-playsinline", "");
+
+    const tryPlay = () => {
       v.play().catch(() => {
-        // Autoplay was blocked — silent fail is fine for a background video
+        // Autoplay still blocked — attach a one-time interaction listener as last resort
+        const start = () => {
+          v.muted = true;
+          v.play().catch(() => {});
+          document.removeEventListener("touchstart", start);
+          document.removeEventListener("click", start);
+        };
+        document.addEventListener("touchstart", start, { once: true });
+        document.addEventListener("click", start, { once: true });
       });
+    };
+
+    // Try playing immediately; if not ready, wait for loadeddata event
+    if (v.readyState >= 2) {
+      tryPlay();
+    } else {
+      v.addEventListener("loadeddata", tryPlay, { once: true });
     }
   }, []);
 
@@ -45,6 +69,7 @@ export default function HeroSection() {
         muted
         loop
         playsInline
+        preload="auto"
         style={{
           position: "absolute",
           top: 0,
