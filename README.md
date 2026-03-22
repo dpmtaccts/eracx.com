@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ERA Website
 
-## Getting Started
+> The main ERA website at eracx.com. Built with Next.js and Tailwind CSS, deployed on Vercel. This is the public-facing site for ERA's B2B revenue operations consultancy.
 
-First, run the development server:
+**Status:** In Development
+**Last Updated:** 2026-03-17
+**Deployed At:** [URL or "not yet deployed"]
+
+---
+
+## What This Is
+
+The main ERA website at eracx.com. Built with Next.js and Tailwind CSS, deployed on Vercel. This is the public-facing site for ERA's B2B revenue operations consultancy.
+
+---
+
+## Tech Stack
+
+- Vite + React 19 + TypeScript
+- Tailwind CSS v4
+- Framer Motion
+- react-router-dom for SPA routing
+- Deployed on Vercel
+
+---
+
+## How to Run Locally
 
 ```bash
+# Clone and install
+git clone [repo-url]
+cd era-website
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Fill in values (see Environment Variables section below)
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Open http://localhost:5173
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Description | Where to Get It |
+|----------|-------------|-----------------|
+| `EXAMPLE_API_KEY` | Description | Source |
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+/src/pages        — SPA page components (App, Benchmark, GtmPlanner, etc.)
+/src/components   — Shared UI components
+/src/lib          — Utilities, calculation engines, helpers
+/public           — Static assets (logos, images)
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Current State
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [x] Main marketing site with Loop detail sections, case studies, FAQ
+- [x] Mid-Market Pipeline Benchmark tool (`/benchmark`)
+- [x] GTM Investment Planner tool (`/gtm-planner`)
+- [x] GTM Design sprint page (`/gtm-design`)
+- [x] Our Story page (`/our-story`)
+- [x] Client review pages (`/review/:slug`)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Key Decisions
+
+[Document any architectural or strategic decisions that affect how this project works. These are the things someone would need to know to not break something.]
+
+1. **[Date] — [Decision]:** [Why and what it means]
+
+---
+
+<!-- 
+INSTRUCTIONS FOR CLAUDE CODE:
+- Update "Last Updated" date whenever you modify this file
+- Keep "Current State" accurate with checkboxes
+- Add new Key Decisions when architectural choices are made
+- Update "How to Run Locally" if setup steps change
+- Update Environment Variables table when new env vars are added
+- Keep the description current if the project scope changes
+-->
