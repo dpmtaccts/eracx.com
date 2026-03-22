@@ -1,73 +1,92 @@
-# React + TypeScript + Vite
+# ERA Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> The main ERA website at eracx.com. Built with Next.js and Tailwind CSS, deployed on Vercel. This is the public-facing site for ERA's B2B revenue operations consultancy.
 
-Currently, two official plugins are available:
+**Status:** In Development
+**Last Updated:** 2026-03-17
+**Deployed At:** [URL or "not yet deployed"]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## What This Is
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The main ERA website at eracx.com. Built with Next.js and Tailwind CSS, deployed on Vercel. This is the public-facing site for ERA's B2B revenue operations consultancy.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Vite + React 19 + TypeScript
+- Tailwind CSS v4
+- Framer Motion
+- react-router-dom for SPA routing
+- Deployed on Vercel
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## How to Run Locally
+
+```bash
+# Clone and install
+git clone [repo-url]
+cd era-website
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Fill in values (see Environment Variables section below)
+
+# Run development server
+npm run dev
+# Open http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Environment Variables
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Variable | Description | Where to Get It |
+|----------|-------------|-----------------|
+| `EXAMPLE_API_KEY` | Description | Source |
+
+---
+
+## Project Structure
+
 ```
+/src/pages        — SPA page components (App, Benchmark, GtmPlanner, etc.)
+/src/components   — Shared UI components
+/src/lib          — Utilities, calculation engines, helpers
+/public           — Static assets (logos, images)
+```
+
+---
+
+## Current State
+
+- [x] Main marketing site with Loop detail sections, case studies, FAQ
+- [x] Mid-Market Pipeline Benchmark tool (`/benchmark`)
+- [x] GTM Investment Planner tool (`/gtm-planner`)
+- [x] GTM Design sprint page (`/gtm-design`)
+- [x] Our Story page (`/our-story`)
+- [x] Client review pages (`/review/:slug`)
+
+---
+
+## Key Decisions
+
+[Document any architectural or strategic decisions that affect how this project works. These are the things someone would need to know to not break something.]
+
+1. **[Date] — [Decision]:** [Why and what it means]
+
+---
+
+<!-- 
+INSTRUCTIONS FOR CLAUDE CODE:
+- Update "Last Updated" date whenever you modify this file
+- Keep "Current State" accurate with checkboxes
+- Add new Key Decisions when architectural choices are made
+- Update "How to Run Locally" if setup steps change
+- Update Environment Variables table when new env vars are added
+- Keep the description current if the project scope changes
+-->

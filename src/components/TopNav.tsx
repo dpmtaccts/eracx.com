@@ -20,12 +20,12 @@ export default function TopNav() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleContactClick = useCallback((e: React.MouseEvent) => {
+  const handleHashClick = useCallback((e: React.MouseEvent, hash: string) => {
     e.preventDefault();
     if (location.pathname === "/") {
-      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+      document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
     } else {
-      navigate("/#contact");
+      navigate(`/#${hash}`);
     }
   }, [location.pathname, navigate]);
 
@@ -85,6 +85,10 @@ export default function TopNav() {
         }
       }
 
+      // Route-based active states
+      if (location.pathname === "/our-story") currentSection = "our-story";
+      if (location.pathname === "/gtm-design") currentSection = "gtm-design";
+
       setActiveSection(currentSection);
       setActiveColor(currentColor);
       setOverLight(isOverLight);
@@ -93,15 +97,16 @@ export default function TopNav() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   const isHome = location.pathname === "/";
 
-  const navLinks = [
-    { label: "Why Era", href: isHome ? "#why-era" : "/#why-era", id: "why-era" },
-    { label: "The System", href: isHome ? "#the-system" : "/#the-system", id: "the-system" },
+  const navLinks: { label: string; href: string; id: string; hash?: string }[] = [
+    { label: "Why Era", href: isHome ? "#why-era" : "/#why-era", id: "why-era", hash: "why-era" },
+    { label: "The System", href: isHome ? "#the-system" : "/#the-system", id: "the-system", hash: "the-system" },
     { label: "GTM Design", href: "/gtm-design", id: "gtm-design" },
-    { label: "How It Works", href: isHome ? "#how-it-works" : "/#how-it-works", id: "how-it-works" },
+    { label: "How It Works", href: isHome ? "#how-it-works" : "/#how-it-works", id: "how-it-works", hash: "how-it-works" },
+    { label: "Our Story", href: "/our-story", id: "our-story" },
   ];
 
   const logoFilter = overLight
@@ -138,6 +143,7 @@ export default function TopNav() {
             <a
               key={link.label}
               href={link.href}
+              onClick={link.hash && !isHome ? (e) => handleHashClick(e, link.hash!) : undefined}
               className="relative pb-1 text-[11px] uppercase tracking-[0.2em] transition-colors duration-300"
               style={{
                 color: activeSection === link.id
@@ -155,15 +161,8 @@ export default function TopNav() {
             </a>
           ))}
           <a
-            href="/our-story"
-            className="text-[11px] uppercase tracking-[0.2em] transition-colors duration-300"
-            style={{ color: textMuted }}
-          >
-            Our Story
-          </a>
-          <a
             href="#contact"
-            onClick={handleContactClick}
+            onClick={(e) => handleHashClick(e, "contact")}
             className="text-[11px] uppercase tracking-[0.2em] transition-colors duration-300"
             style={{ color: textMuted }}
           >
@@ -205,21 +204,17 @@ export default function TopNav() {
               key={link.label}
               href={link.href}
               className="text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/50 transition-colors hover:text-[#F5F0E8]"
-              onClick={() => setMobileOpen(false)}
+              onClick={(e) => {
+                if (link.hash && !isHome) handleHashClick(e, link.hash);
+                setMobileOpen(false);
+              }}
             >
               {link.label}
             </a>
           ))}
           <a
-            href="/our-story"
-            className="text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/50 transition-colors hover:text-[#F5F0E8]"
-            onClick={() => setMobileOpen(false)}
-          >
-            Our Story
-          </a>
-          <a
             href="#contact"
-            onClick={(e) => { handleContactClick(e); setMobileOpen(false); }}
+            onClick={(e) => { handleHashClick(e, "contact"); setMobileOpen(false); }}
             className="text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/50 transition-colors hover:text-[#F5F0E8]"
           >
             Contact
