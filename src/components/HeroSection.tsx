@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 
 const COLUMNS = [
   "AI-driven signals and buying intent data",
@@ -8,47 +8,99 @@ const COLUMNS = [
   "A team of operators running all of it",
 ];
 
-export default function HeroSection() {
-  const [visible, setVisible] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+/* ── Sweep configuration ── */
+const SWEEP_ROWS = [0.28, 0.35, 0.45, 0.62, 0.72];
+const SWEEP_SPEEDS = [0.9, 1.3, 0.7, 1.1, 0.55];
+const SWEEP_OFFSETS = [0, 0.35, 0.6, 0.15, 0.8];
+const DOT_SPACING = 18;
+const DOT_RADIUS = 1.4;
 
+export default function HeroSection() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animRef = useRef<number>(0);
+  const [visible, setVisible] = useState(false);
+
+  /* entrance animation trigger */
   useEffect(() => {
     const id = requestAnimationFrame(() => setVisible(true));
     return () => cancelAnimationFrame(id);
   }, []);
 
-  // Force-play the background video on mount
-  // Safari requires the muted DOM *property* to be set (React's JSX attribute alone is not enough)
+  /* ── Canvas animation ── */
   useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    // Explicitly set DOM properties Safari needs
-    v.muted = true;
-    v.playsInline = true;
-    v.setAttribute("playsinline", "");
-    v.setAttribute("webkit-playsinline", "");
+    let w = 0;
+    let h = 0;
 
-    const tryPlay = () => {
-      v.play().catch(() => {
-        // Autoplay still blocked — attach a one-time interaction listener as last resort
-        const start = () => {
-          v.muted = true;
-          v.play().catch(() => {});
-          document.removeEventListener("touchstart", start);
-          document.removeEventListener("click", start);
-        };
-        document.addEventListener("touchstart", start, { once: true });
-        document.addEventListener("click", start, { once: true });
-      });
-    };
-
-    // Try playing immediately; if not ready, wait for loadeddata event
-    if (v.readyState >= 2) {
-      tryPlay();
-    } else {
-      v.addEventListener("loadeddata", tryPlay, { once: true });
+    function resize() {
+      if (!canvas) return;
+      const dpr = window.devicePixelRatio || 1;
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    const sweeps = SWEEP_ROWS.map((_, i) => SWEEP_OFFSETS[i]);
+
+    function draw() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, w, h);
+
+      for (let s = 0; s < SWEEP_ROWS.length; s++) {
+        const y = SWEEP_ROWS[s] * h;
+        const speed = SWEEP_SPEEDS[s];
+
+        sweeps[s] = (sweeps[s] + speed / w) % 1;
+        const head = sweeps[s];
+
+        const cols = Math.ceil(w / DOT_SPACING);
+
+        for (let c = 0; c < cols; c++) {
+          const x = c * DOT_SPACING;
+          const xNorm = x / w;
+
+          let dist = head - xNorm;
+          if (dist < 0) dist += 1;
+
+          let alpha: number;
+          if (dist < 0.02) {
+            alpha = 0.45;
+          } else if (dist < 0.15) {
+            alpha = 0.45 * (1 - (dist - 0.02) / 0.13);
+          } else {
+            alpha = 0.03;
+          }
+
+          const edgeFade = Math.min(xNorm / 0.1, (1 - xNorm) / 0.1, 1);
+          alpha *= edgeFade;
+
+          ctx.beginPath();
+          ctx.arc(x, y, DOT_RADIUS, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(196, 82, 42, ${alpha})`;
+          ctx.fill();
+        }
+      }
+
+      animRef.current = requestAnimationFrame(draw);
+    }
+
+    animRef.current = requestAnimationFrame(draw);
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      cancelAnimationFrame(animRef.current);
+    };
   }, []);
 
   return (
@@ -62,45 +114,50 @@ export default function HeroSection() {
         flexDirection: "column",
       }}
     >
-      {/* ── Background video ── */}
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
+      {/* ── Animated canvas background ── */}
+      <canvas
+        ref={canvasRef}
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
+          inset: 0,
           width: "100%",
           height: "100%",
-          objectFit: "cover",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* ── Ghost word ── */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           pointerEvents: "none",
           zIndex: 0,
         }}
       >
-        <source src="/hero-bg-video.mp4" type="video/mp4" />
-      </video>
-
-      {/* ── Gradient overlay — fades to solid black at bottom to hide VEO watermark ── */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          pointerEvents: "none",
-          background:
-            "linear-gradient(to bottom, rgba(13,13,13,0.8) 0%, rgba(13,13,13,0.83) 20%, rgba(13,13,13,0.87) 50%, rgba(13,13,13,0.93) 72%, rgba(13,13,13,1) 88%)",
-        }}
-      />
+        <span
+          style={{
+            fontSize: "clamp(160px, 22vw, 320px)",
+            fontWeight: 900,
+            color: "transparent",
+            WebkitTextStroke: "1px rgba(245, 240, 232, 0.04)",
+            userSelect: "none",
+            animation: "ghostPulse 8s ease-in-out infinite",
+          }}
+        >
+          SYSTEM
+        </span>
+      </div>
 
       {/* ── Centred hero content ── */}
       <div
         style={{
           position: "relative",
-          zIndex: 2,
+          zIndex: 1,
           flex: 1,
           display: "flex",
           flexDirection: "column",
@@ -113,6 +170,7 @@ export default function HeroSection() {
           transition: "opacity 1s ease, transform 1s ease",
         }}
       >
+        {/* Headline */}
         <h1
           style={{
             fontSize: "clamp(52px, 7.5vw, 108px)",
@@ -127,6 +185,7 @@ export default function HeroSection() {
           The system behind your best quarter.
         </h1>
 
+        {/* Subhead */}
         <p
           style={{
             fontSize: "17px",
@@ -141,6 +200,7 @@ export default function HeroSection() {
           pipeline.
         </p>
 
+        {/* CTAs */}
         <div
           style={{
             display: "flex",
@@ -185,7 +245,7 @@ export default function HeroSection() {
       <div
         style={{
           position: "relative",
-          zIndex: 2,
+          zIndex: 1,
           display: "grid",
           gridTemplateColumns: "repeat(5, 1fr)",
           borderTop: "1px solid rgba(245, 240, 232, 0.07)",
@@ -230,6 +290,14 @@ export default function HeroSection() {
           </div>
         ))}
       </div>
+
+      {/* ── Keyframes ── */}
+      <style>{`
+        @keyframes ghostPulse {
+          0%, 100% { -webkit-text-stroke-color: rgba(245, 240, 232, 0.04); }
+          50%      { -webkit-text-stroke-color: rgba(245, 240, 232, 0.07); }
+        }
+      `}</style>
     </section>
   );
 }
