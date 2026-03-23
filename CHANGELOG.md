@@ -5,6 +5,16 @@ Format: `[YYYY-MM-DD] — Summary of what changed`
 
 ---
 
+## [2026-03-23] — Hero revert & codebase cleanup
+
+- Reverted hero background from video (`hero-bg-video.mp4`) back to canvas dot-sweep animation for better cross-browser compatibility (Safari autoplay issues)
+- Removed ~40 leftover Next.js files (`src/app/`, `postcss.config.mjs`, `next-env.d.ts`, old lowercase components) that were merged in from an older branch and broke the Vercel build
+- Removed unused files: `contact-form.tsx`, `faq-section.tsx`, `metadata.ts`, `footer.tsx`, `nav.tsx`, `horizontal-programs.tsx`, `loop-diagram.tsx`, `scroll-hero.tsx`, `service-card.tsx`, `service-detail-page.tsx`, `cta-section.tsx`, `results-grid.tsx`, `cost-comparison.tsx`, `scroll-loop-diagram.tsx`, `era-experience/`, `src/lib/content.ts`
+- **DECISION:** Canvas dot animation hero preferred over video background due to Safari autoplay restrictions
+- Verified `tsc -b && vite build` passes cleanly before deploy
+
+---
+
 ## [2026-03-17] — GTM Investment Planner v4 (complete rewrite)
 
 - Rewrote `src/lib/gtmEngine.ts`: benchmark staffing model by vertical and revenue stage, replacing v3 pipeline math

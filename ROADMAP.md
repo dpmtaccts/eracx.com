@@ -36,7 +36,7 @@ Updated at the end of every Claude Code session.
 
 > Bugs or problems discovered but not yet fixed. Include date found.
 
-- [2026-03-13] [Description of issue and where it surfaces]
+- ~~[2026-03-23] Vercel build failing due to leftover Next.js files merged from old branch~~ — **FIXED**
 
 ---
 
@@ -52,6 +52,8 @@ Updated at the end of every Claude Code session.
 
 > Moved here from "Now" when shipped. Keeps a record of momentum.
 
+- [x] [2026-03-23] Reverted hero from video background to canvas dot-sweep animation (Safari autoplay issues)
+- [x] [2026-03-23] Cleaned up ~40 leftover Next.js files breaking Vercel build (`src/app/`, old components, `postcss.config.mjs`, `metadata.ts`, etc.)
 - [x] [2026-03-17] GTM Investment Planner at `/gtm-planner`: compound growth model, diverging chart, inflection roadmap, Era nudge card
 - [x] [2026-03-13] Project initialized with scaffold and templates
 
