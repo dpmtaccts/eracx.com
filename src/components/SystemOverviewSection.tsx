@@ -112,7 +112,7 @@ export default function SystemOverviewSection() {
           transition={{ duration: 0.6, delay: 0.1 }}
         >
           <a
-            href="#loop-connection"
+            href="#how-it-works-radial"
             className="inline-block rounded bg-[#C4522A] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#a8431f]"
           >
             See how each loop works &rarr;

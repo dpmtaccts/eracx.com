@@ -52,6 +52,7 @@ Updated at the end of every Claude Code session.
 
 > Moved here from "Now" when shipped. Keeps a record of momentum.
 
+- [x] [2026-03-23] "How It Works" radial section — interactive loop-stage diagram with auto-rotation (desktop) and stacked cards (mobile)
 - [x] [2026-03-23] Reverted hero from video background to canvas dot-sweep animation (Safari autoplay issues)
 - [x] [2026-03-23] Cleaned up ~40 leftover Next.js files breaking Vercel build (`src/app/`, old components, `postcss.config.mjs`, `metadata.ts`, etc.)
 - [x] [2026-03-17] GTM Investment Planner at `/gtm-planner`: compound growth model, diverging chart, inflection roadmap, Era nudge card

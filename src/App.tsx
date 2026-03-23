@@ -5,6 +5,7 @@ import HeroSection from './components/HeroSection'
 import ProblemSection from './components/ProblemSection'
 import LoopsVsCampaignsSection from './components/LoopsVsCampaignsSection'
 import SystemOverviewSection from './components/SystemOverviewSection'
+import HowItWorksRadial from './components/HowItWorksRadial'
 import LoopDetailSection from './components/LoopDetailSection'
 import MechanismSection from './components/MechanismSection'
 import FAQSection from './components/FAQSection'
@@ -36,6 +37,8 @@ function App() {
       <div id="the-system">
         <SystemOverviewSection />
       </div>
+
+      <HowItWorksRadial />
 
       {/* Loop detail sections */}
       <LoopDetailSection

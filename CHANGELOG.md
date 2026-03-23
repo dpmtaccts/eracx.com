@@ -5,6 +5,21 @@ Format: `[YYYY-MM-DD] — Summary of what changed`
 
 ---
 
+## [2026-03-23] — How It Works Radial Section
+
+- Added interactive radial diagram showing all three loops (Connection, Trust, Loyalty) with three stages each
+- Auto-rotating animation cycles through stages with 3-second intervals, triggered by IntersectionObserver
+- Desktop: two-column layout with SVG diagram + detail panel
+- Mobile: stacked card layout with loop sections and stage cards
+- Tool tags toggle (show/hide third-party tool names)
+- Progress dots for direct navigation to any stage
+- Play/Pause control for auto-rotation
+- CTA: "Operational in 2 to 4 weeks" + "See pricing →" button
+- Updated "See how each loop works →" CTA to smooth-scroll to this section
+- **DECISION:** Used prompt-specified colors (Teal `#1FA7A2`, Oxide `#B85C4A`, Magenta `#D43D8D`) rather than existing loop colors for visual differentiation
+
+---
+
 ## [2026-03-23] — Hero revert & codebase cleanup
 
 - Reverted hero background from video (`hero-bg-video.mp4`) back to canvas dot-sweep animation for better cross-browser compatibility (Safari autoplay issues)
