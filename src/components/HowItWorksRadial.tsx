@@ -119,7 +119,7 @@ const ALL_STAGES = LOOPS.flatMap((loop, li) =>
    CONSTANTS
    ═══════════════════════════════════════════════════════════════════════════ */
 
-const FONT = "'Source Sans 3', sans-serif";
+const FONT = "'DM Sans', 'Inter', system-ui, sans-serif";
 const C = {
   charcoal: "#383838",
   offWhite: "#F6F5F2",
@@ -196,13 +196,17 @@ function ToolTag({ name, small }: { name: string; small?: boolean }) {
   );
 }
 
-/* ── Progress dots ── */
+/* ── Progress dots + play/pause icon ── */
 function ProgressDots({
   activeIndex,
   onDotClick,
+  playing,
+  onTogglePlay,
 }: {
   activeIndex: number;
   onDotClick: (idx: number) => void;
+  playing: boolean;
+  onTogglePlay: () => void;
 }) {
   const activeLoopIdx = Math.floor(activeIndex / 3);
   return (
@@ -245,18 +249,37 @@ function ProgressDots({
           </span>
         );
       })}
+      {/* Play / Pause icon */}
+      <span style={{ width: 12 }} />
+      <button
+        onClick={onTogglePlay}
+        aria-label={playing ? "Pause" : "Play"}
+        style={{
+          width: 28,
+          height: 28,
+          borderRadius: "50%",
+          border: `1px solid ${C.divider}`,
+          background: C.white,
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 0,
+          flexShrink: 0,
+          color: C.secondary,
+          fontSize: 11,
+          lineHeight: 1,
+          transition: "border-color 0.2s ease",
+        }}
+      >
+        {playing ? "⏸" : "▶"}
+      </button>
     </div>
   );
 }
 
 /* ── Detail panel (desktop) ── */
-function StageDetail({
-  activeIndex,
-  showTools,
-}: {
-  activeIndex: number;
-  showTools: boolean;
-}) {
+function StageDetail({ activeIndex }: { activeIndex: number }) {
   const { loop, stage } = ALL_STAGES[activeIndex];
   return (
     <div
@@ -322,26 +345,18 @@ function StageDetail({
         {stage.description}
       </p>
 
-      {/* Tool tags */}
-      {showTools && (
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-          {stage.tools.map((t) => (
-            <ToolTag key={t} name={t} />
-          ))}
-        </div>
-      )}
+      {/* Tool tags — always visible */}
+      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+        {stage.tools.map((t) => (
+          <ToolTag key={t} name={t} />
+        ))}
+      </div>
     </div>
   );
 }
 
 /* ── Mobile loop section ── */
-function MobileLoopSection({
-  loop,
-  showTools,
-}: {
-  loop: LoopData;
-  showTools: boolean;
-}) {
+function MobileLoopSection({ loop }: { loop: LoopData }) {
   return (
     <div>
       {/* Number */}
@@ -437,20 +452,18 @@ function MobileLoopSection({
             >
               {stage.description}
             </p>
-            {showTools && (
-              <div
-                style={{
-                  display: "flex",
-                  gap: 5,
-                  flexWrap: "wrap",
-                  marginTop: 10,
-                }}
-              >
-                {stage.tools.map((t) => (
-                  <ToolTag key={t} name={t} small />
-                ))}
-              </div>
-            )}
+            <div
+              style={{
+                display: "flex",
+                gap: 5,
+                flexWrap: "wrap",
+                marginTop: 10,
+              }}
+            >
+              {stage.tools.map((t) => (
+                <ToolTag key={t} name={t} small />
+              ))}
+            </div>
           </div>
         ))}
       </div>
@@ -657,7 +670,6 @@ function RadialDiagram({ activeIndex }: { activeIndex: number }) {
 export default function HowItWorksRadial() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
-  const [showTools, setShowTools] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [inView, setInView] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -720,19 +732,6 @@ export default function HowItWorksRadial() {
     setPlaying((p) => !p);
   }, []);
 
-  /* ── Control button style ── */
-  const controlStyle: React.CSSProperties = {
-    fontFamily: FONT,
-    fontSize: 11,
-    fontWeight: 600,
-    color: C.secondary,
-    background: C.white,
-    border: `1px solid ${C.divider}`,
-    borderRadius: 4,
-    padding: "6px 14px",
-    cursor: "pointer",
-    lineHeight: 1,
-  };
 
   return (
     <section
@@ -768,15 +767,10 @@ export default function HowItWorksRadial() {
               HOW IT WORKS
             </p>
             <h2
-              style={{
-                fontSize: 32,
-                fontWeight: 700,
-                color: C.charcoal,
-                margin: "0 0 48px",
-                lineHeight: 1.2,
-              }}
+              className="text-4xl font-black leading-[0.95] text-[#111111] md:text-6xl lg:text-7xl"
+              style={{ margin: "0 0 48px" }}
             >
-              See how each loop works.
+              Each loop compounds.
             </h2>
 
             {/* Two-column layout */}
@@ -794,34 +788,14 @@ export default function HowItWorksRadial() {
 
               {/* Right: Detail panel */}
               <div style={{ flex: 1, minWidth: 300, paddingTop: 40 }}>
-                <StageDetail
-                  activeIndex={activeIndex}
-                  showTools={showTools}
-                />
+                <StageDetail activeIndex={activeIndex} />
 
                 <ProgressDots
                   activeIndex={activeIndex}
                   onDotClick={handleDotClick}
+                  playing={playing}
+                  onTogglePlay={togglePlay}
                 />
-
-                {/* Controls */}
-                <div
-                  style={{
-                    display: "flex",
-                    gap: 8,
-                    marginTop: 16,
-                  }}
-                >
-                  <button onClick={togglePlay} style={controlStyle}>
-                    {playing ? "Pause" : "Play"}
-                  </button>
-                  <button
-                    onClick={() => setShowTools((s) => !s)}
-                    style={controlStyle}
-                  >
-                    {showTools ? "Hide tools" : "Show tools"}
-                  </button>
-                </div>
               </div>
             </div>
           </>
@@ -844,14 +818,10 @@ export default function HowItWorksRadial() {
               HOW IT WORKS
             </p>
             <h2
-              style={{
-                fontSize: 24,
-                fontWeight: 700,
-                color: C.charcoal,
-                margin: "0 0 10px",
-              }}
+              className="text-3xl font-black leading-[0.95] text-[#111111]"
+              style={{ margin: "0 0 10px" }}
             >
-              See how each loop works.
+              Each loop compounds.
             </h2>
             <p
               style={{
@@ -859,19 +829,13 @@ export default function HowItWorksRadial() {
                 fontWeight: 300,
                 color: C.secondary,
                 maxWidth: 440,
-                margin: "0 0 20px",
+                margin: "0 0 32px",
                 lineHeight: 1.5,
               }}
             >
               Each loop is designed independently and operates as part of one
               connected system.
             </p>
-            <button
-              onClick={() => setShowTools((s) => !s)}
-              style={{ ...controlStyle, marginBottom: 32 }}
-            >
-              {showTools ? "Hide tools" : "Show tools"}
-            </button>
 
             {/* Loop sections */}
             <div
@@ -885,7 +849,6 @@ export default function HowItWorksRadial() {
                 <MobileLoopSection
                   key={loop.key}
                   loop={loop}
-                  showTools={showTools}
                 />
               ))}
             </div>

@@ -45,7 +45,7 @@ function App() {
         id="loop-connection"
         loopNumber="01"
         loopColor="#C8A96E"
-        diagramLabels={["SIGNAL", "OUTREACH", "RECORD"]}
+        diagramLabels={["DETECT", "ENRICH", "REACH"]}
         variant="dark"
         purposeLine="Fill the pipeline."
         question={'"We\'re doing outbound but nothing is converting. What are we missing?"'}
@@ -80,7 +80,7 @@ function App() {
         id="loop-trust"
         loopNumber="02"
         loopColor="#2BBFAA"
-        diagramLabels={["STAKEHOLDER", "TOUCHPOINT", "STAGE"]}
+        diagramLabels={["MAP", "NURTURE", "CLOSE"]}
         variant="light"
         purposeLine="Win the room."
         question={'"We had a great first meeting. Then it went silent for six weeks."'}
@@ -113,7 +113,7 @@ function App() {
         id="loop-loyalty"
         loopNumber="03"
         loopColor="#D4367A"
-        diagramLabels={["CLOSE", "SIGNAL", "EXPAND"]}
+        diagramLabels={["MEASURE", "GROW", "REFER"]}
         variant="dark"
         purposeLine="Grow what you have."
         question={'"Our customers love us but we have no idea when they\'re ready to buy more."'}
