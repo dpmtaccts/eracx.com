@@ -444,6 +444,7 @@ export default function Review() {
   const firstName = reviewer?.firstName ?? "";
   const greeting = reviewer?.greeting ?? "Thanks for taking the time to review these materials.";
   const accent = reviewer?.accent ?? "#1FA7A2";
+  const heroImage = reviewer?.heroImage;
 
   const sectionGap = 96;
 
@@ -497,18 +498,29 @@ export default function Review() {
                   {greeting}
                 </p>
                 <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.8, opacity: 0.6 }}>
-                  Start with the walkthrough, then dig into the materials at your own pace. Voice recorder at the
-                  bottom if you want to talk through your thoughts: it comes straight to me.
+                  {heroImage
+                    ? "Dig into the materials at your own pace. Voice recorder at the bottom if you want to talk through your thoughts: it comes straight to me."
+                    : "Start with the walkthrough, then dig into the materials at your own pace. Voice recorder at the bottom if you want to talk through your thoughts: it comes straight to me."}
                 </p>
               </div>
-              <div style={{ position: "relative", paddingBottom: "94.74%", height: 0, borderRadius: 10, overflow: "hidden" }}>
-                <iframe
-                  src={LOOM_EMBED_URL}
-                  frameBorder="0"
-                  allowFullScreen
-                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-                />
-              </div>
+              {heroImage ? (
+                <a href={heroImage.href} target="_blank" rel="noopener noreferrer" style={{ display: "block", borderRadius: 10, overflow: "hidden", border: "1px solid rgba(255,255,255,0.08)" }}>
+                  <img
+                    src={heroImage.src}
+                    alt={heroImage.alt}
+                    style={{ width: "100%", height: "auto", display: "block" }}
+                  />
+                </a>
+              ) : (
+                <div style={{ position: "relative", paddingBottom: "94.74%", height: 0, borderRadius: 10, overflow: "hidden" }}>
+                  <iframe
+                    src={LOOM_EMBED_URL}
+                    frameBorder="0"
+                    allowFullScreen
+                    style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                  />
+                </div>
+              )}
             </div>
           </section>
 

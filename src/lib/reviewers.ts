@@ -23,6 +23,8 @@ export interface Reviewer {
   firstName: string;
   greeting: string;
   accent: string;
+  /** When set, replaces the Loom video with a linked screenshot */
+  heroImage?: { src: string; href: string; alt: string };
 }
 
 export const REVIEWERS: Record<string, Reviewer> = {
@@ -46,4 +48,6 @@ export const REVIEWERS: Record<string, Reviewer> = {
   "brad-scandrett": { name: "Brad Scandrett", firstName: "Brad", greeting: "Brad, appreciate you looking through these. Would love your honest take on the model and where you see the opportunity.", accent: "#B85C4A" },
   "kip-beelman": { name: "Kip Beelman", firstName: "Kip", greeting: "Kip, really appreciate you taking the time to look through these. Would love to hear your thoughts.", accent: "#D6B26D" },
   "nate-houghton": { name: "Nate Houghton", firstName: "Nate", greeting: "Nate, thanks for taking the time to look through these. Would really value your perspective on the model.", accent: "#D43D8D" },
+  "justin-hayashi": { name: "Justin Hayashi", firstName: "Justin", greeting: "Justin, really appreciate you taking the time to look through these. Would love to hear your honest take on the model.", accent: "#1FA7A2", heroImage: { src: "/images/eracx-homepage.png", href: "https://eracx.com", alt: "ERA homepage" } },
+  "todd-anthony": { name: "Todd Anthony", firstName: "Todd", greeting: "Todd, thanks for digging into these. Would really value your perspective on the overall approach and where you see the opportunity.", accent: "#B85C4A", heroImage: { src: "/images/eracx-homepage.png", href: "https://eracx.com", alt: "ERA homepage" } },
 };
