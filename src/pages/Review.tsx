@@ -490,7 +490,7 @@ export default function Review() {
           <section style={{ marginBottom: sectionGap, animation: "fadeUp 0.8s ease both" }}>
             <div className="rv-grid-hero">
               <div>
-                <p style={{ ...kicker, marginBottom: 16 }}>ERA REVIEW</p>
+                <p style={{ ...kicker, marginBottom: 16 }}>ERA PRE-LAUNCH REVIEW</p>
                 <h1 className="rv-hero-title" style={{ fontSize: 40, fontWeight: 300, lineHeight: 1.2, marginBottom: 20 }}>
                   Hey {firstName || "there"}<span style={{ color: accent }}>.</span>
                 </h1>
@@ -504,12 +504,43 @@ export default function Review() {
                 </p>
               </div>
               {heroImage ? (
-                <a href={heroImage.href} target="_blank" rel="noopener noreferrer" style={{ display: "block", borderRadius: 10, overflow: "hidden", border: "1px solid rgba(255,255,255,0.08)" }}>
-                  <img
-                    src={heroImage.src}
-                    alt={heroImage.alt}
-                    style={{ width: "100%", height: "auto", display: "block" }}
-                  />
+                <a href={heroImage.href} target="_blank" rel="noopener noreferrer" style={{ display: "block", textDecoration: "none" }}>
+                  <div style={{
+                    background: "#1A1A1A",
+                    borderRadius: 12,
+                    overflow: "hidden",
+                    border: "1px solid rgba(255,255,255,0.10)",
+                    boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+                  }}>
+                    {/* Mac-style title bar */}
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 7,
+                      padding: "10px 14px",
+                      background: "#2A2A2A",
+                      borderBottom: "1px solid rgba(255,255,255,0.06)",
+                    }}>
+                      <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#FF5F57" }} />
+                      <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#FEBC2E" }} />
+                      <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#28C840" }} />
+                      <span style={{
+                        flex: 1,
+                        textAlign: "center",
+                        fontSize: 11,
+                        color: "rgba(255,255,255,0.35)",
+                        fontWeight: 400,
+                      }}>
+                        eracx.com
+                      </span>
+                      <span style={{ width: 40 }} />
+                    </div>
+                    <img
+                      src={heroImage.src}
+                      alt={heroImage.alt}
+                      style={{ width: "100%", height: "auto", display: "block" }}
+                    />
+                  </div>
                 </a>
               ) : (
                 <div style={{ position: "relative", paddingBottom: "94.74%", height: 0, borderRadius: 10, overflow: "hidden" }}>
@@ -603,7 +634,7 @@ export default function Review() {
           {/* ── Pitch Deck ── */}
           <section style={{ marginBottom: sectionGap, animation: "fadeUp 0.8s ease 0.15s both" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 20 }}>
-              <p style={{ ...kicker, margin: 0 }}>PITCH DECK</p>
+              <p style={{ ...kicker, margin: 0 }}>OVERVIEW DECK</p>
               {PITCH_DECK_COMMENT_URL && PITCH_DECK_COMMENT_URL !== "#" && (
                 <a
                   href={PITCH_DECK_COMMENT_URL}
@@ -661,7 +692,7 @@ export default function Review() {
               </div>
               {/* Text right */}
               <div>
-                <p style={{ ...kicker, marginBottom: 12 }}>HOW WE OPERATE</p>
+                <p style={{ ...kicker, marginBottom: 12 }}>INTERNAL — TRAINING MATERIAL</p>
                 <h2 style={{ fontSize: 28, fontWeight: 600, marginBottom: 16 }}>Operator Playbook</h2>
                 <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.7, opacity: 0.75, marginBottom: 24 }}>
                   How Era operator pods work: the diagnostic framework, compensation structure, IP protection model,
@@ -710,7 +741,7 @@ export default function Review() {
               {/* Text left */}
               <div>
                 <p style={{ ...kicker, marginBottom: 12 }}>THE PLATFORM</p>
-                <h2 style={{ fontSize: 28, fontWeight: 600, marginBottom: 16 }}>Aux</h2>
+                <h2 style={{ fontSize: 28, fontWeight: 600, marginBottom: 16 }}>Aux Platform</h2>
                 <p style={{ fontSize: 15, fontWeight: 300, lineHeight: 1.7, opacity: 0.75, marginBottom: 24 }}>
                   The closed-loop system that connects Discovery, Intelligence, and Warmth scoring. See how signals
                   flow from first touch to revenue.
@@ -766,6 +797,7 @@ export default function Review() {
           <div className="rv-container" style={{ paddingTop: 72, paddingBottom: 0 }}>
             <div className="rv-ed-2col">
               <div>
+                <img src={ERA_LOGO_URL} alt="ERA" style={{ height: 28, marginBottom: 20, opacity: 0.85 }} />
                 <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: accent, marginBottom: 20 }}>WHO WE BUILT THIS FOR</p>
                 <h2 className="rv-ed-headline" style={{ fontSize: 44, fontWeight: 300, lineHeight: 1.2, color: "#1A1A1A", margin: 0 }}>
                   The company that's outgrown founder-led sales<span style={{ color: accent }}>.</span>
@@ -896,7 +928,7 @@ export default function Review() {
           {/* ── Our Go-To-Market ── */}
           <section style={{ marginBottom: sectionGap }}>
             <div style={{ textAlign: "center", marginBottom: 56 }}>
-              <p style={{ ...kicker, opacity: 0.55, marginBottom: 12 }}>OUR GO-TO-MARKET</p>
+              <p style={{ ...kicker, opacity: 0.55, marginBottom: 12 }}>GO-TO-MARKET TOOLS</p>
               <h2 className="rv-section-title" style={{ fontSize: 32, fontWeight: 300, marginBottom: 16 }}>
                 Tools for buyers, influencers, and growth leaders
               </h2>
@@ -919,7 +951,7 @@ export default function Review() {
                   <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, marginBottom: 8 }}>
                     signals.eracx.com
                   </p>
-                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Signal Feed</h3>
+                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Preview: Explore Buying Signals</h3>
                   <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.7, marginBottom: 16 }}>
                     Real-time buying signals scored and surfaced as they happen — engagement events, demo requests, pricing page visits, and content downloads ranked by intent strength.
                   </p>
@@ -947,7 +979,7 @@ export default function Review() {
                   <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, marginBottom: 8 }}>
                     signals.eracx.com
                   </p>
-                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Company Scoring</h3>
+                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Demo: How We Score Accounts</h3>
                   <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.7, marginBottom: 16 }}>
                     Every account scored and ranked by warmth stage, signal count, and latest activity — so your team knows exactly which companies to prioritize right now.
                   </p>
@@ -975,7 +1007,7 @@ export default function Review() {
                   <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, marginBottom: 8 }}>
                     map.eracx.com
                   </p>
-                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Map</h3>
+                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Free: Build a Relationship Map</h3>
                   <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.7, marginBottom: 16 }}>
                     Visual account and stakeholder mapping that reveals influence networks, buying committees, and relationship pathways inside target organizations.
                   </p>
@@ -1003,7 +1035,7 @@ export default function Review() {
                   <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: accent, marginBottom: 8 }}>
                     eracx.com/gtm-design
                   </p>
-                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>GTM Design</h3>
+                  <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 10 }}>Entry: Go-to-Market Strategy for B2B Companies</h3>
                   <p style={{ fontSize: 14, fontWeight: 300, lineHeight: 1.7, opacity: 0.7, marginBottom: 16 }}>
                     Interactive go-to-market architecture tool that helps growth leaders design, pressure-test, and align their revenue strategy in one place.
                   </p>
@@ -1013,7 +1045,7 @@ export default function Review() {
                     rel="noopener noreferrer"
                     style={{ fontSize: 13, color: accent, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}
                   >
-                    Explore GTM Design <ExternalIcon />
+                    Explore GTM Strategy <ExternalIcon />
                   </a>
                 </div>
               </div>
@@ -1038,9 +1070,7 @@ export default function Review() {
             alignItems: "center",
           }}
         >
-          <p style={{ fontSize: 13, opacity: 0.5, margin: 0, fontWeight: 300, letterSpacing: "0.04em" }}>
-            Connection · Trust · Loyalty
-          </p>
+          <img src={ERA_LOGO_URL} alt="ERA" style={{ height: 20, opacity: 0.5 }} />
           <a
             href="https://eracx.com"
             style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", textDecoration: "none" }}
