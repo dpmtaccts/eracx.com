@@ -538,11 +538,12 @@ export function TransformationTable({
     <div
       style={{
         maxWidth: 720,
-        margin: '32px 0',
+        margin: '40px 0',
         border: `1px solid ${COLORS.divider}`,
         borderRadius: 8,
         overflow: 'hidden',
-        background: COLORS.offWhite,
+        background: '#fff',
+        boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
       }}
     >
       {/* Header row */}
