@@ -535,120 +535,189 @@ export function TransformationTable({
   rows: { today: string; future: string }[]
 }) {
   return (
-    <div
-      style={{
-        maxWidth: 720,
-        margin: '40px 0',
-        border: `1px solid ${COLORS.divider}`,
-        borderRadius: 8,
-        overflow: 'hidden',
-        background: '#fff',
-        boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
-      }}
-    >
-      {/* Header row */}
+    <div style={{ margin: '48px 0' }}>
+      {/* Column headers — desktop */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.4 }}
-        style={{ display: 'flex', alignItems: 'center' }}
+        className="hidden md:flex"
+        style={{ alignItems: 'center', marginBottom: 16 }}
       >
-        <div style={{ flex: 1, padding: '16px 20px', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
           <div
             style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
               background: COLORS.oxide,
-              color: '#fff',
-              fontFamily: FONT.body,
-              fontWeight: 700,
-              fontSize: 11,
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-              padding: '6px 16px',
+              padding: '6px 18px',
               borderRadius: 20,
             }}
           >
-            Today
+            <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgba(255,255,255,0.5)' }} />
+            <span style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#fff' }}>
+              Today
+            </span>
           </div>
         </div>
-        <motion.div
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.2, delay: 0.4 }}
-          style={{ flexShrink: 0, color: COLORS.divider, fontSize: 16, lineHeight: 1 }}
-        >
-          ›
-        </motion.div>
-        <div style={{ flex: 1, padding: '16px 20px', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ width: 72, flexShrink: 0 }} />
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
           <div
             style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
               background: COLORS.teal,
-              color: '#fff',
-              fontFamily: FONT.body,
-              fontWeight: 700,
-              fontSize: 11,
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-              padding: '6px 16px',
+              padding: '6px 18px',
               borderRadius: 20,
             }}
           >
-            With Infrastructure
+            <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgba(255,255,255,0.5)' }} />
+            <span style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 11, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#fff' }}>
+              With Infrastructure
+            </span>
           </div>
         </div>
       </motion.div>
 
-      {/* Data rows */}
-      {rows.map((row, i) => (
-        <div key={i} style={{ borderTop: `1px solid ${COLORS.divider}` }}>
-          {/* Desktop: side by side */}
-          <div className="hidden md:flex">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
+      {/* Rows */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {rows.map((row, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, delay: i * 0.08 }}
+          >
+            {/* Desktop: left — animated arrow — right */}
+            <div className="hidden md:flex" style={{ alignItems: 'stretch' }}>
+              {/* Today (left) */}
+              <div
+                style={{
+                  flex: 1,
+                  padding: '16px 20px',
+                  background: '#fff',
+                  border: `1px solid ${COLORS.divider}`,
+                  borderRadius: '8px 0 0 8px',
+                  borderRight: 'none',
+                  fontFamily: FONT.body,
+                  fontWeight: 300,
+                  fontSize: 14,
+                  lineHeight: 1.55,
+                  color: COLORS.secondary,
+                  position: 'relative',
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: FONT.display,
+                    fontWeight: 900,
+                    fontSize: 28,
+                    lineHeight: 1,
+                    color: 'rgba(56,56,56,0.05)',
+                    position: 'absolute',
+                    top: 8,
+                    right: 10,
+                  }}
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                {row.today}
+              </div>
+
+              {/* Animated connector */}
+              <div
+                style={{
+                  width: 72,
+                  flexShrink: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'relative',
+                }}
+              >
+                {/* Line that draws in */}
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.15 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  style={{
+                    width: '100%',
+                    height: 2,
+                    background: `linear-gradient(90deg, ${COLORS.oxide}, ${COLORS.teal})`,
+                    transformOrigin: 'left center',
+                    borderRadius: 1,
+                  }}
+                />
+                {/* Arrow head */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.2, delay: 0.5 + i * 0.08 }}
+                  style={{
+                    position: 'absolute',
+                    right: -1,
+                    width: 0,
+                    height: 0,
+                    borderTop: '5px solid transparent',
+                    borderBottom: '5px solid transparent',
+                    borderLeft: `7px solid ${COLORS.teal}`,
+                  }}
+                />
+              </div>
+
+              {/* Future (right) */}
+              <div
+                style={{
+                  flex: 1,
+                  padding: '16px 20px',
+                  background: '#fff',
+                  border: `1px solid ${COLORS.divider}`,
+                  borderRadius: '0 8px 8px 0',
+                  borderLeft: 'none',
+                  fontFamily: FONT.body,
+                  fontWeight: 400,
+                  fontSize: 14,
+                  lineHeight: 1.55,
+                  color: COLORS.charcoal,
+                }}
+              >
+                {row.future}
+              </div>
+            </div>
+
+            {/* Mobile: stacked with arrow between */}
+            <div
+              className="md:hidden"
               style={{
-                flex: 1,
-                padding: '16px 20px',
-                fontFamily: FONT.body,
-                fontWeight: 300,
-                fontSize: 15,
-                color: COLORS.charcoal,
-                lineHeight: 1.5,
+                background: '#fff',
+                border: `1px solid ${COLORS.divider}`,
+                borderRadius: 8,
+                overflow: 'hidden',
               }}
             >
-              {row.today}
-            </motion.div>
-            <div style={{ width: 1, background: COLORS.divider, flexShrink: 0 }} />
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
-              style={{
-                flex: 1,
-                padding: '16px 20px',
-                fontFamily: FONT.body,
-                fontWeight: 300,
-                fontSize: 15,
-                color: COLORS.charcoal,
-                lineHeight: 1.5,
-              }}
-            >
-              {row.future}
-            </motion.div>
-          </div>
-          {/* Mobile: stacked */}
-          <div className="md:hidden" style={{ padding: '12px 20px' }}>
-            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: COLORS.oxide, marginBottom: 4 }}>Today</div>
-            <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 15, color: COLORS.charcoal, lineHeight: 1.5, marginBottom: 12 }}>{row.today}</div>
-            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: COLORS.teal, marginBottom: 4 }}>With Infrastructure</div>
-            <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 15, color: COLORS.charcoal, lineHeight: 1.5 }}>{row.future}</div>
-          </div>
-        </div>
-      ))}
+              <div style={{ padding: '14px 16px', borderBottom: `1px solid ${COLORS.divider}` }}>
+                <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: COLORS.oxide, marginBottom: 4 }}>Today</div>
+                <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 14, color: COLORS.secondary, lineHeight: 1.5 }}>{row.today}</div>
+              </div>
+              <div style={{ padding: '6px 16px', display: 'flex', justifyContent: 'center' }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M8 3v10M8 13l3-3M8 13l-3-3" stroke={COLORS.teal} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <div style={{ padding: '14px 16px' }}>
+                <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase' as const, color: COLORS.teal, marginBottom: 4 }}>With Infrastructure</div>
+                <div style={{ fontFamily: FONT.body, fontWeight: 400, fontSize: 14, color: COLORS.charcoal, lineHeight: 1.5 }}>{row.future}</div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </div>
   )
 }
