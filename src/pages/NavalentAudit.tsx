@@ -1497,7 +1497,7 @@ function EditorialSection() {
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 40 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <img
-              src="/images/navalent/justin-marshall.jpg"
+              src="/images/justinmarshall_image.png"
               alt="Justin Marshall"
               style={{ width: 48, height: 48, borderRadius: '50%', objectFit: 'cover', objectPosition: 'center top', border: `2px solid ${COLORS.oxide}` }}
               onError={(e) => {
