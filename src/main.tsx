@@ -11,6 +11,7 @@ import Benchmark from './pages/Benchmark.tsx'
 import GtmPlanner from './pages/GtmPlanner.tsx'
 import GrowthSimulator from './pages/GrowthSimulator.tsx'
 import NavalentAudit from './pages/NavalentAudit.tsx'
+import SampleAssessment from './pages/SampleAssessment.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/gtm-planner" element={<GtmPlanner />} />
         <Route path="/growth-simulator" element={<GrowthSimulator />} />
         <Route path="/audit/navalent" element={<NavalentAudit />} />
+        <Route path="/sample/assessment" element={<SampleAssessment />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

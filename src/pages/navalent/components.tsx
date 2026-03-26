@@ -528,6 +528,130 @@ export function BodyWithMargin({
   )
 }
 
+/* ─── From / To transformation table ─── */
+export function TransformationTable({
+  rows,
+}: {
+  rows: { today: string; future: string }[]
+}) {
+  return (
+    <div
+      style={{
+        maxWidth: 720,
+        margin: '32px 0',
+        border: `1px solid ${COLORS.divider}`,
+        borderRadius: 8,
+        overflow: 'hidden',
+        background: COLORS.offWhite,
+      }}
+    >
+      {/* Header row */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4 }}
+        style={{ display: 'flex', alignItems: 'center' }}
+      >
+        <div style={{ flex: 1, padding: '16px 20px', display: 'flex', justifyContent: 'center' }}>
+          <div
+            style={{
+              background: COLORS.oxide,
+              color: '#fff',
+              fontFamily: FONT.body,
+              fontWeight: 700,
+              fontSize: 11,
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              padding: '6px 16px',
+              borderRadius: 20,
+            }}
+          >
+            Today
+          </div>
+        </div>
+        <motion.div
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.2, delay: 0.4 }}
+          style={{ flexShrink: 0, color: COLORS.divider, fontSize: 16, lineHeight: 1 }}
+        >
+          ›
+        </motion.div>
+        <div style={{ flex: 1, padding: '16px 20px', display: 'flex', justifyContent: 'center' }}>
+          <div
+            style={{
+              background: COLORS.teal,
+              color: '#fff',
+              fontFamily: FONT.body,
+              fontWeight: 700,
+              fontSize: 11,
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              padding: '6px 16px',
+              borderRadius: 20,
+            }}
+          >
+            With Infrastructure
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Data rows */}
+      {rows.map((row, i) => (
+        <div key={i} style={{ borderTop: `1px solid ${COLORS.divider}` }}>
+          {/* Desktop: side by side */}
+          <div className="hidden md:flex">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.1 }}
+              style={{
+                flex: 1,
+                padding: '16px 20px',
+                fontFamily: FONT.body,
+                fontWeight: 300,
+                fontSize: 15,
+                color: COLORS.charcoal,
+                lineHeight: 1.5,
+              }}
+            >
+              {row.today}
+            </motion.div>
+            <div style={{ width: 1, background: COLORS.divider, flexShrink: 0 }} />
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
+              style={{
+                flex: 1,
+                padding: '16px 20px',
+                fontFamily: FONT.body,
+                fontWeight: 300,
+                fontSize: 15,
+                color: COLORS.charcoal,
+                lineHeight: 1.5,
+              }}
+            >
+              {row.future}
+            </motion.div>
+          </div>
+          {/* Mobile: stacked */}
+          <div className="md:hidden" style={{ padding: '12px 20px' }}>
+            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: COLORS.oxide, marginBottom: 4 }}>Today</div>
+            <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 15, color: COLORS.charcoal, lineHeight: 1.5, marginBottom: 12 }}>{row.today}</div>
+            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: COLORS.teal, marginBottom: 4 }}>With Infrastructure</div>
+            <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 15, color: COLORS.charcoal, lineHeight: 1.5 }}>{row.future}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 /* ─── Horizontal bar chart ─── */
 export function HorizontalBar({
   label,
