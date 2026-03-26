@@ -1187,56 +1187,102 @@ export function SideNav() {
     )
   })
 
+  const textColor = onDark ? COLORS.offWhite : COLORS.charcoal
+  const borderColor = onDark ? 'rgba(246,245,242,0.25)' : COLORS.divider
+
   return (
     <>
-      {/* Trigger — appears after scrolling past cover */}
-      <button
-        ref={btnRef}
+      {/* Top-right controls — appears after scrolling past cover */}
+      <div
         className="no-print"
-        onClick={() => setOpen(!open)}
         style={{
           position: 'fixed',
           top: 20,
           right: 24,
           zIndex: 1001,
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',
-          gap: 6,
-          padding: '6px 0',
+          gap: 16,
           opacity: scrolled ? 1 : 0,
           pointerEvents: scrolled ? 'auto' : 'none',
-          transition: 'opacity 0.3s ease, color 0.3s ease',
+          transition: 'opacity 0.3s ease',
         }}
       >
-        <span
+        {/* Download PDF button */}
+        <button
+          onClick={() => window.print()}
           style={{
-            fontFamily: FONT.body,
-            fontSize: 11,
-            fontWeight: 600,
-            color: onDark ? COLORS.offWhite : COLORS.charcoal,
-            letterSpacing: '2px',
-            textTransform: 'uppercase',
-            transition: 'color 0.3s ease',
+            background: 'none',
+            border: `1px solid ${borderColor}`,
+            borderRadius: 6,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            padding: '5px 12px',
+            transition: 'border-color 0.3s ease, color 0.3s ease',
           }}
         >
-          Contents
-        </span>
-        <svg
-          width="10"
-          height="10"
-          viewBox="0 0 10 10"
-          fill="none"
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M6 1v7M6 8L3 5.5M6 8l3-2.5" stroke={textColor} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M2 10h8" stroke={textColor} strokeWidth="1.2" strokeLinecap="round" />
+          </svg>
+          <span
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 11,
+              fontWeight: 600,
+              color: textColor,
+              letterSpacing: '1.5px',
+              textTransform: 'uppercase',
+              transition: 'color 0.3s ease',
+            }}
+          >
+            PDF
+          </span>
+        </button>
+
+        {/* Contents button */}
+        <button
+          ref={btnRef}
+          onClick={() => setOpen(!open)}
           style={{
-            transition: 'transform 0.3s ease',
-            transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            padding: '6px 0',
           }}
         >
-          <path d="M2 3.5L5 6.5L8 3.5" stroke={onDark ? COLORS.offWhite : COLORS.charcoal} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
+          <span
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 11,
+              fontWeight: 600,
+              color: textColor,
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              transition: 'color 0.3s ease',
+            }}
+          >
+            Contents
+          </span>
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+            fill="none"
+            style={{
+              transition: 'transform 0.3s ease',
+              transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+            }}
+          >
+            <path d="M2 3.5L5 6.5L8 3.5" stroke={textColor} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      </div>
 
       {/* Dropdown */}
       {open && scrolled && (

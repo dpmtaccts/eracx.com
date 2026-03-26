@@ -1928,6 +1928,42 @@ function CloseSection() {
             You've been building Navalent with 1:1, thoughtful relationships for the last 21 years. Now is the time to scale those relationships, sustainably, for another 21 years of growth.
           </div>
         </ScrollReveal>
+        <ScrollReveal>
+          <button
+            className="no-print"
+            onClick={() => window.print()}
+            style={{
+              marginTop: 32,
+              background: 'none',
+              border: `1px solid ${COLORS.divider}`,
+              borderRadius: 8,
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 10,
+              padding: '12px 24px',
+              transition: 'border-color 0.2s ease',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = COLORS.offWhite)}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = COLORS.divider)}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1v10M8 11L4 7.5M8 11l4-3.5" stroke={COLORS.offWhite} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M2 14h12" stroke={COLORS.offWhite} strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+            <span
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 14,
+                fontWeight: 600,
+                color: COLORS.offWhite,
+                letterSpacing: '0.08em',
+              }}
+            >
+              Download PDF
+            </span>
+          </button>
+        </ScrollReveal>
       </div>
       <div
         style={{
@@ -1964,15 +2000,108 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 @media print {
-  * { animation: none !important; transition: none !important; }
-  section { break-inside: avoid; min-height: auto !important; display: block !important; }
+  /* Reset animations and transitions */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Hide interactive/nav elements */
   .no-print { display: none !important; }
-  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
-  section { padding: 32px 0 !important; }
-  section > div { max-width: 100% !important; padding: 0 24px !important; }
-  img { max-width: 100% !important; }
-  a { text-decoration: underline; color: #000 !important; }
-  @page { margin: 2cm; size: A4; }
+
+  /* Page setup — US Letter with 0.75in margins */
+  @page {
+    size: letter;
+    margin: 0.75in;
+  }
+
+  /* Body reset */
+  body {
+    background: #fff !important;
+    color: #383838 !important;
+    font-size: 11pt;
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Section layout */
+  section {
+    min-height: auto !important;
+    display: block !important;
+    padding: 24px 0 !important;
+    background: #fff !important;
+    color: #383838 !important;
+    position: relative !important;
+  }
+
+  section > div {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Force dark sections to print light */
+  section[style*="background"] {
+    background: #fff !important;
+    color: #383838 !important;
+  }
+
+  /* Section dividers → simple styled headings */
+  section[style*="min-height: 100vh"] {
+    min-height: auto !important;
+    padding: 32px 0 16px !important;
+    page-break-before: always;
+  }
+
+  /* Page breaks before hypothesis sections */
+  #h1, #h2, #h3, #h4, #h5, #editorial, #next {
+    page-break-before: always;
+  }
+
+  /* Keep content together */
+  .grid { break-inside: avoid; }
+  svg { break-inside: avoid; }
+
+  /* Images */
+  img {
+    max-width: 100% !important;
+    break-inside: avoid;
+  }
+
+  /* Links */
+  a { text-decoration: underline; color: #383838 !important; }
+
+  /* Text colors for dark-mode elements */
+  [style*="color: rgb(246, 245, 242)"],
+  [style*="color: #F6F5F2"] {
+    color: #383838 !important;
+  }
+
+  /* All text within sections */
+  section * {
+    color: #383838 !important;
+  }
+
+  /* Preserve accent colors on key elements */
+  section [style*="border-left"] {
+    border-left-color: #B85C4A !important;
+  }
+
+  /* Running footer on each page */
+  body::after {
+    content: "Confidential — Prepared by ERA (eracx.com) for Navalent";
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 8pt;
+    color: #A0A0A0 !important;
+    font-family: 'Source Sans 3', sans-serif;
+    padding: 8px 0;
+  }
 }
 `
 
