@@ -10,7 +10,6 @@ import {
   AnimatedCounter,
   Kicker,
   Headline,
-  DisplayType,
   Callout,
   VerdictBox,
   Body,
@@ -18,7 +17,6 @@ import {
   DonutChart,
   MiniBarChart,
   ProfileCard,
-  RecommendationCard,
   CommenterIcon,
   LinkedInReactions,
   TimelineItem,
@@ -1696,34 +1694,6 @@ function SystemFlowDiagram() {
    ═══════════════════════════════════════════════════════════════ */
 
 function RecommendationsSection() {
-  const recs = [
-    {
-      title: 'Enrich every corporate contact',
-      description:
-        'The 787 contacts at revenue client companies are the priority: append current title, current company, seniority, LinkedIn URL, and last role change date. This turns a flat list into a living map. Then conduct a full enrichment pull for 7,676 contacts.',
-    },
-    {
-      title: 'Build champion tracking as permanent capability',
-      description:
-        'Role changes at known contacts are the highest-intent signal in the business. When a champion moves from a client company to a new organization, that should surface within 48 hours, not whenever someone happens to remember their name.',
-    },
-    {
-      title: "Connect the founder's content to the CRM",
-      description:
-        "When an ICP-matching executive engages with a post, that signal needs to flow into the CRM. Not as a vanity metric. As a relationship signal. The goal is to see who's paying attention, so that when a partner reaches out, they have context.",
-    },
-    {
-      title: 'Create a post-engagement nurture system',
-      description:
-        'Every person touched during discovery and delivery enters a quarterly nurture path. Not a newsletter. A warm, relevant, human-feeling touch that says "we remember you, we\'re still here, and we\'re still thinking about the kind of problems you face."',
-    },
-    {
-      title: 'Measure warmth, not pipeline',
-      description:
-        'Stop measuring success by leads generated. Start measuring it by relationship depth across the top 100 accounts. How many contacts do you know? How recently have you touched them? Which accounts are getting warmer and which are cooling?',
-    },
-  ]
-
   return (
     <Section dark>
       <ScrollReveal>

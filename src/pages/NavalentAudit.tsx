@@ -18,7 +18,6 @@ import {
   DonutChart,
   MiniBarChart,
   ProfileCard,
-  RecommendationCard,
   NavalentLogo,
   CommenterIcon,
   LinkedInReactions,
