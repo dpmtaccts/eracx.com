@@ -170,6 +170,7 @@ export function Section({
   children,
   id,
   fullHeight = false,
+  narrow = false,
   className = '',
 }: {
   dark?: boolean
@@ -177,6 +178,7 @@ export function Section({
   children: ReactNode
   id?: string
   fullHeight?: boolean
+  narrow?: boolean
   className?: string
 }) {
   return (
@@ -206,10 +208,132 @@ export function Section({
           }}
         />
       )}
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '96px 32px', width: '100%' }}>
+      <div style={{ maxWidth: narrow ? 900 : 1280, margin: '0 auto', padding: narrow ? '48px 32px' : '96px 32px', width: '100%' }}>
         {children}
       </div>
     </section>
+  )
+}
+
+/* ─── Editorial two-column layout ─── */
+export function TwoCol({
+  children,
+  dark = false,
+  className = '',
+}: {
+  children: ReactNode
+  dark?: boolean
+  className?: string
+}) {
+  const ruleColor = dark ? 'rgba(246,245,242,0.1)' : COLORS.divider
+  return (
+    <div
+      className={`two-col ${className}`}
+      style={{
+        columns: 2,
+        columnGap: 48,
+        columnRule: `0.5px solid ${ruleColor}`,
+        maxWidth: 900,
+        margin: '0 auto',
+      }}
+    >
+      <style>{`
+        @media (max-width: 768px) {
+          .two-col { columns: 1 !important; column-rule: none !important; }
+        }
+      `}</style>
+      {children}
+    </div>
+  )
+}
+
+/* ─── Hero breakout (spans both columns) ─── */
+export function HeroBreakout({
+  children,
+  accent,
+  background,
+  className = '',
+}: {
+  children: ReactNode
+  accent?: string
+  background?: string
+  className?: string
+}) {
+  return (
+    <div
+      className={className}
+      style={{
+        columnSpan: 'all' as const,
+        background: background || COLORS.offWhite,
+        borderRadius: 12,
+        padding: '36px',
+        textAlign: 'center',
+        borderLeft: accent ? `4px solid ${accent}` : undefined,
+        margin: '32px 0',
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
+/* ─── Inset visual (stays inside column, won't break across) ─── */
+export function InsetVisual({
+  children,
+  background,
+  padding = '16px',
+  className = '',
+}: {
+  children: ReactNode
+  background?: string
+  padding?: string
+  className?: string
+}) {
+  return (
+    <div
+      className={className}
+      style={{
+        breakInside: 'avoid' as const,
+        background: background || 'transparent',
+        borderRadius: 8,
+        padding,
+        margin: '18px 0',
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
+/* ─── Compact inline stat row ─── */
+export function InsetStats({
+  stats,
+  dark = false,
+}: {
+  stats: { value: string; label: string; color: string }[]
+  dark?: boolean
+}) {
+  return (
+    <div style={{ breakInside: 'avoid' as const, display: 'flex', gap: 10, margin: '18px 0', flexWrap: 'wrap' }}>
+      {stats.map((s, i) => (
+        <div
+          key={i}
+          style={{
+            flex: 1,
+            minWidth: 100,
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: 8,
+            padding: '12px 16px',
+            background: dark ? 'rgba(255,255,255,0.04)' : COLORS.offWhite,
+            borderRadius: 8,
+          }}
+        >
+          <span style={{ fontSize: 20, fontWeight: 700, color: s.color, fontFamily: FONT.body }}>{s.value}</span>
+          <span style={{ fontSize: 11, color: dark ? 'rgba(246,245,242,0.6)' : COLORS.secondary, fontFamily: FONT.body }}>{s.label}</span>
+        </div>
+      ))}
+    </div>
   )
 }
 
@@ -420,10 +544,9 @@ export function Body({
       style={{
         fontFamily: FONT.body,
         fontWeight: 300,
-        fontSize: 18,
-        lineHeight: 1.65,
+        fontSize: 17,
+        lineHeight: 1.7,
         color: dark ? COLORS.offWhite : COLORS.charcoal,
-        maxWidth: 720,
       }}
     >
       {children}

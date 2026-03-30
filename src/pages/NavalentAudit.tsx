@@ -5,6 +5,10 @@ import {
   FONT,
   loadFonts,
   Section,
+  TwoCol,
+  HeroBreakout,
+  InsetVisual,
+  InsetStats,
   ScrollReveal,
   StaggerGroup,
   AnimatedCounter,
@@ -214,80 +218,74 @@ function FramingSection() {
   ]
 
   return (
-    <Section id="framing">
-      <div style={{ minHeight: '70vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        <ScrollReveal>
-          <Kicker color={COLORS.teal}>ASSESSMENT FRAMING</Kicker>
-          <Headline color={COLORS.charcoal}>Five Hypotheses</Headline>
+    <Section narrow id="framing">
+      <ScrollReveal>
+        <Kicker color={COLORS.teal}>ASSESSMENT FRAMING</Kicker>
+        <Headline color={COLORS.charcoal}>Five Hypotheses</Headline>
+      </ScrollReveal>
+
+      <TwoCol>
+        <ScrollReveal delay={0.1}>
+          <Body>
+            <p style={{ marginBottom: 20 }}>
+              This assessment is organized around five hypotheses that surfaced across our conversations in January, February, and March. Each hypothesis is a testable statement about how Navalent's business actually works. The data either confirms or challenges it.
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              The goal is not a comprehensive audit of everything. It is a focused diagnostic that answers the questions Ron and Jarrod have been asking for 21 years: where does our business actually come from, what are we missing, and what would a system look like that makes the good patterns repeatable without adding more work to the partners.
+            </p>
+          </Body>
+        </ScrollReveal>
+        <ScrollReveal delay={0.25}>
+          <Callout color={COLORS.teal} textColor={COLORS.charcoal}>
+            Where the data confirms, we build infrastructure to protect and amplify the pattern. Where it challenges, we have a decision to make.
+          </Callout>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-8">
-          {/* Left: body text */}
-          <div>
-            <ScrollReveal delay={0.1}>
-              <Body>
-                <p style={{ marginBottom: 20 }}>
-                  This assessment is organized around five hypotheses that surfaced across our conversations in January, February, and March. Each hypothesis is a testable statement about how Navalent's business actually works. The data either confirms or challenges it.
-                </p>
-                <p style={{ marginBottom: 20 }}>
-                  The goal is not a comprehensive audit of everything. It is a focused diagnostic that answers the questions Ron and Jarrod have been asking for 21 years: where does our business actually come from, what are we missing, and what would a system look like that makes the good patterns repeatable without adding more work to the partners.
-                </p>
-              </Body>
-            </ScrollReveal>
-            <ScrollReveal delay={0.25}>
-              <Callout color={COLORS.teal} textColor={COLORS.charcoal}>
-                Where the data confirms, we build infrastructure to protect and amplify the pattern. Where it challenges, we have a decision to make.
-              </Callout>
-            </ScrollReveal>
-          </div>
-
-          {/* Right: Five hypotheses list */}
-          <div>
-            <StaggerGroup stagger={0.15} className="flex flex-col gap-4">
-              {hypotheses.map((h) => (
+        <HeroBreakout accent={COLORS.teal} background="rgba(31,167,162,0.06)">
+          <StaggerGroup stagger={0.15} className="flex flex-col gap-4">
+            {hypotheses.map((h) => (
+              <div
+                key={h.num}
+                style={{
+                  display: 'flex',
+                  gap: 14,
+                  alignItems: 'flex-start',
+                  padding: '16px 20px',
+                  background: '#fff',
+                  border: `1px solid ${COLORS.divider}`,
+                  borderLeft: `4px solid ${h.color}`,
+                  borderRadius: '0 6px 6px 0',
+                }}
+              >
                 <div
-                  key={h.num}
                   style={{
-                    display: 'flex',
-                    gap: 14,
-                    alignItems: 'flex-start',
-                    padding: '16px 20px',
-                    background: '#fff',
-                    border: `1px solid ${COLORS.divider}`,
-                    borderLeft: `4px solid ${h.color}`,
-                    borderRadius: '0 6px 6px 0',
+                    fontFamily: FONT.display,
+                    fontWeight: 900,
+                    fontSize: 22,
+                    color: h.color,
+                    lineHeight: 1,
+                    flexShrink: 0,
+                    marginTop: 1,
                   }}
                 >
-                  <div
-                    style={{
-                      fontFamily: FONT.display,
-                      fontWeight: 900,
-                      fontSize: 22,
-                      color: h.color,
-                      lineHeight: 1,
-                      flexShrink: 0,
-                      marginTop: 1,
-                    }}
-                  >
-                    {h.num}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: FONT.body,
-                      fontWeight: 400,
-                      fontSize: 15,
-                      color: COLORS.charcoal,
-                      lineHeight: 1.4,
-                    }}
-                  >
-                    {h.title}
-                  </div>
+                  {h.num}
                 </div>
-              ))}
-            </StaggerGroup>
-          </div>
-        </div>
-      </div>
+                <div
+                  style={{
+                    fontFamily: FONT.body,
+                    fontWeight: 400,
+                    fontSize: 15,
+                    color: COLORS.charcoal,
+                    lineHeight: 1.4,
+                  }}
+                >
+                  {h.title}
+                </div>
+              </div>
+            ))}
+          </StaggerGroup>
+        </HeroBreakout>
+      </TwoCol>
     </Section>
   )
 }
@@ -313,67 +311,71 @@ function Hypothesis1Divider() {
 
 function Hypothesis1Section() {
   return (
-    <Section dark>
+    <Section dark narrow>
       <ScrollReveal>
         <Kicker color={COLORS.oxide}>WHAT THE DATA SAYS</Kicker>
-        <Body dark>
-          <p>Ron said it in our first call: 21 years without a reliable demand creation engine, and the business is approaching $6M. Previous partners delivered content, SEO, and campaigns. None of it connected to revenue. The hypothesis is that the business runs on relationships, and the infrastructure gap is not marketing. It is a system to maintain and activate those relationships over time.</p>
-        </Body>
       </ScrollReveal>
 
-      {/* Big stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-16">
-        <ScrollReveal delay={0}>
-          <AnimatedCounter value={79} suffix="%" color={COLORS.oxide} label="Win rate on returning client deals" />
-        </ScrollReveal>
-        <ScrollReveal delay={0.15}>
-          <AnimatedCounter value={6} suffix="%" color={COLORS.oxide} label="Win rate on website-originated deals" />
-        </ScrollReveal>
-        <ScrollReveal delay={0.3}>
-          <AnimatedCounter value={5.5} prefix="$" suffix="M" decimals={1} color={COLORS.oxide} label="Closed-won from existing business (71.4% of total)" />
-        </ScrollReveal>
-      </div>
-
-      <ScrollReveal>
-        <div className="columns-1 md:columns-2 gap-12">
+      <TwoCol dark>
+        <ScrollReveal>
           <Body dark>
-            <p style={{ marginBottom: 16 }}>
-              Of 93 deals in HubSpot, returning clients close at 79% with an average deal size of $239K. Website-originated leads close at 6%. Of the 20 website deals in the CRM, exactly 1 has closed won, and it had no revenue recorded. Referrals close at 22%.
-            </p>
-            <p>
-              The repeat client pattern is even sharper in the lifetime data. Across 101 clients and $56.9M in total revenue, 13 clients ($1M+ each) account for 78.8% of all revenue. The top 5 alone: ConAgra, Scoular, Lamb Weston, Hershey, and Abbvie, represent 55% of lifetime billings.
-            </p>
+            <p>Ron said it in our first call: 21 years without a reliable demand creation engine, and the business is approaching $6M. Previous partners delivered content, SEO, and campaigns. None of it connected to revenue. The hypothesis is that the business runs on relationships, and the infrastructure gap is not marketing. It is a system to maintain and activate those relationships over time.</p>
           </Body>
-        </div>
-      </ScrollReveal>
+        </ScrollReveal>
 
-      {/* Deal source comparison */}
-      <ScrollReveal>
-        <div style={{ marginTop: 40, marginBottom: 48 }}>
-          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 20 }}>
-            Deal source performance
-          </div>
-          <HorizontalBar label="Returning clients" value={79} maxValue={100} color={COLORS.oxide} dark />
-          <HorizontalBar label="Referrals" value={22} maxValue={100} color={COLORS.oxide} suffix="%" dark />
-          <HorizontalBar label="Website / Inbound" value={6} maxValue={100} color="rgba(184,92,74,0.4)" suffix="%" dark />
-        </div>
-      </ScrollReveal>
+        <ScrollReveal>
+          <InsetVisual>
+            <InsetStats
+              dark
+              stats={[
+                { value: '6%', label: 'Website win rate', color: 'rgba(184,92,74,0.5)' },
+                { value: '$5.5M', label: 'From existing clients (71.4%)', color: COLORS.oxide },
+              ]}
+            />
+          </InsetVisual>
+        </ScrollReveal>
 
-      <ScrollReveal>
-        <Callout color={COLORS.oxide} textColor="rgba(246,245,242,0.85)">
-          Every dollar invested in relationship infrastructure compounds at 13x the rate of inbound lead generation.
-        </Callout>
-      </ScrollReveal>
+        <ScrollReveal>
+          <HeroBreakout accent={COLORS.oxide} background="rgba(184,92,74,0.08)">
+            <AnimatedCounter value={79} suffix="%" color={COLORS.oxide} label="Win rate on returning client deals" />
+          </HeroBreakout>
+        </ScrollReveal>
 
-      {/* Top clients treemap */}
-      <ScrollReveal>
-        <div style={{ marginTop: 40 }}>
-          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 16 }}>
-            Revenue concentration: Top 13 clients ($1M+ each) account for 78.8% of total revenue
-          </div>
-          <TopClientsViz />
-        </div>
-      </ScrollReveal>
+        <ScrollReveal>
+          <Body dark>
+            <p>Of 93 deals in HubSpot, returning clients close at 79% with an average deal size of $239K. Website-originated leads close at 6%. Of the 20 website deals in the CRM, exactly 1 has closed won, and it had no revenue recorded. Referrals close at 22%.</p>
+            <p>The repeat client pattern is even sharper in the lifetime data. Across 101 clients and $56.9M in total revenue, 13 clients ($1M+ each) account for 78.8% of all revenue. The top 5 alone: ConAgra, Scoular, Lamb Weston, Hershey, and Abbvie, represent 55% of lifetime billings.</p>
+          </Body>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <InsetVisual>
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 14, color: COLORS.offWhite, marginBottom: 12 }}>
+                Deal source performance
+              </div>
+              <HorizontalBar label="Returning clients" value={79} maxValue={100} color={COLORS.oxide} dark />
+              <HorizontalBar label="Referrals" value={22} maxValue={100} color={COLORS.oxide} suffix="%" dark />
+              <HorizontalBar label="Website / Inbound" value={6} maxValue={100} color="rgba(184,92,74,0.4)" suffix="%" dark />
+            </div>
+          </InsetVisual>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <Callout color={COLORS.oxide} textColor="rgba(246,245,242,0.85)">
+            Every dollar invested in relationship infrastructure compounds at 13x the rate of inbound lead generation.
+          </Callout>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <InsetVisual>
+            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 14, color: COLORS.offWhite, marginBottom: 12 }}>
+              Revenue concentration: Top 13 clients ($1M+ each) = 78.8% of total revenue
+            </div>
+            <TopClientsViz />
+          </InsetVisual>
+        </ScrollReveal>
+      </TwoCol>
 
       <VerdictBox
         verdict="Confirmed"
@@ -483,29 +485,36 @@ function Hypothesis2Section() {
   ]
 
   return (
-    <Section>
+    <Section narrow>
       <ScrollReveal>
         <Kicker color={COLORS.teal}>WHAT THE DATA SAYS</Kicker>
-        <Body>
-          <p>The team got the CRM stood up and populated with a broad contact base, which was the right first step. The challenge now is one that every growing firm faces: normalizing the data, ensuring accuracy and consistency, and layering in the intelligence needed to turn a contact database into a true relationship management system. The path forward is not more hands on keyboards but greater automation and enrichment.</p>
-        </Body>
       </ScrollReveal>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-12">
-        <ScrollReveal delay={0}>
-          <AnimatedCounter value={93.1} suffix="%" decimals={1} color={COLORS.teal} dark={false} label="of 13,647 contacts ready for activity tracking" />
+      <TwoCol>
+        <ScrollReveal>
+          <Body>
+            <p>The team got the CRM stood up and populated with a broad contact base, which was the right first step. The challenge now is one that every growing firm faces: normalizing the data, ensuring accuracy and consistency, and layering in the intelligence needed to turn a contact database into a true relationship management system. The path forward is not more hands on keyboards but greater automation and enrichment.</p>
+          </Body>
         </ScrollReveal>
-        <ScrollReveal delay={0.15}>
-          <AnimatedCounter value={38.8} suffix="%" decimals={1} color={COLORS.teal} dark={false} label="use personal email addresses (opportunity for corporate matching)" />
-        </ScrollReveal>
-        <ScrollReveal delay={0.3}>
-          <AnimatedCounter value={0.1} suffix="%" decimals={1} color={COLORS.teal} dark={false} label="have lead status assigned (14 of 13,647 contacts)" />
-        </ScrollReveal>
-      </div>
 
-      <ScrollReveal>
-        <div className="columns-1 md:columns-2 gap-12">
+        <ScrollReveal>
+          <InsetVisual>
+            <InsetStats
+              stats={[
+                { value: '93.1%', label: 'of 13,647 contacts ready for activity tracking', color: COLORS.teal },
+                { value: '38.8%', label: 'use personal email addresses (opportunity for corporate matching)', color: COLORS.teal },
+              ]}
+            />
+          </InsetVisual>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <HeroBreakout accent={COLORS.teal} background="rgba(31,167,162,0.06)">
+            <AnimatedCounter value={0.1} suffix="%" decimals={1} color={COLORS.teal} dark={false} label="have lead status assigned (14 of 13,647 contacts)" />
+          </HeroBreakout>
+        </ScrollReveal>
+
+        <ScrollReveal>
           <Body>
             <p style={{ marginBottom: 16 }}>
               The database holds 13,647 contacts with known email addresses. Currently 43.5% are personal emails, 42.7% have a company name, and only 95 have a job title. The lifecycle stage field defaults to 'Lead' for 96% of contacts, meaning it has not yet been configured to distinguish between segments.
@@ -514,35 +523,35 @@ function Hypothesis2Section() {
               Activity tracking is the next frontier: 708 contacts (5.2%) currently show recorded activity, 116 (0.9%) are linked to deals, and 267 (2.0%) have web tracking. Marketing email engagement has not yet been activated.
             </p>
           </Body>
-        </div>
-      </ScrollReveal>
+        </ScrollReveal>
 
-      {/* Contact source donut */}
-      <ScrollReveal>
-        <div style={{ marginTop: 40, marginBottom: 48 }}>
-          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.charcoal, marginBottom: 20 }}>
-            Contact source breakdown
-          </div>
-          <DonutChart segments={contactSources} />
-        </div>
-      </ScrollReveal>
+        {/* Contact source donut */}
+        <ScrollReveal>
+          <InsetVisual>
+            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.charcoal, marginBottom: 20 }}>
+              Contact source breakdown
+            </div>
+            <DonutChart segments={contactSources} />
+          </InsetVisual>
+        </ScrollReveal>
 
-      {/* Field enrichment gaps */}
-      <ScrollReveal>
-        <div>
-          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.charcoal, marginBottom: 20 }}>
-            Data enrichment opportunity (% of contacts with field populated)
-          </div>
-          <HorizontalBar label="Phone number" value={10.7} maxValue={100} color={COLORS.teal} />
-          <HorizontalBar label="Job title" value={6.8} maxValue={100} color={COLORS.teal} />
-          <HorizontalBar label="LinkedIn URL" value={4.3} maxValue={100} color={COLORS.teal} />
-          <HorizontalBar label="Industry" value={0} maxValue={100} color={COLORS.teal} suffix="% populated" />
-          <HorizontalBar label="Seniority" value={0} maxValue={100} color={COLORS.teal} suffix="% populated" />
-          <div style={{ marginTop: 12, fontFamily: FONT.body, fontSize: 13, color: COLORS.secondary, fontWeight: 300 }}>
-            The gap between each bar and 100% represents the enrichment opportunity. Automated enrichment tools can close these gaps without manual data entry.
-          </div>
-        </div>
-      </ScrollReveal>
+        {/* Field enrichment gaps */}
+        <ScrollReveal>
+          <InsetVisual>
+            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.charcoal, marginBottom: 20 }}>
+              Data enrichment opportunity (% of contacts with field populated)
+            </div>
+            <HorizontalBar label="Phone number" value={10.7} maxValue={100} color={COLORS.teal} />
+            <HorizontalBar label="Job title" value={6.8} maxValue={100} color={COLORS.teal} />
+            <HorizontalBar label="LinkedIn URL" value={4.3} maxValue={100} color={COLORS.teal} />
+            <HorizontalBar label="Industry" value={0} maxValue={100} color={COLORS.teal} suffix="% populated" />
+            <HorizontalBar label="Seniority" value={0} maxValue={100} color={COLORS.teal} suffix="% populated" />
+            <div style={{ marginTop: 12, fontFamily: FONT.body, fontSize: 13, color: COLORS.secondary, fontWeight: 300 }}>
+              The gap between each bar and 100% represents the enrichment opportunity. Automated enrichment tools can close these gaps without manual data entry.
+            </div>
+          </InsetVisual>
+        </ScrollReveal>
+      </TwoCol>
 
       <VerdictBox
         verdict="Confirmed"
@@ -574,74 +583,82 @@ function Hypothesis3Divider() {
 
 function Hypothesis3Section() {
   return (
-    <Section dark>
-      {/* 50 vs 3 visualization */}
-      <ScrollReveal>
-        <div style={{ margin: '48px 0' }}>
-          <DotVisualization />
-        </div>
-      </ScrollReveal>
+    <Section dark narrow>
+      <TwoCol dark>
+        {/* 50 vs 3 visualization */}
+        <ScrollReveal>
+          <InsetVisual>
+            <DotVisualization />
+          </InsetVisual>
+        </ScrollReveal>
 
-      <ScrollReveal>
-        <Body dark>
-          <p style={{ marginBottom: 16 }}>
-            The math is simple but the implication is significant. If 101 client engagements each touch roughly 50 people, that is 5,000+ executives with firsthand Navalent experience. Today, the CRM retains contact information for only 2-3 stakeholders per account. The rest go dark after the engagement ends.
-          </p>
-          <p>
-            These are not cold contacts. They are people who sat in the room, experienced the work, and saw the results. Many of them have since moved to new organizations, carrying their experience of Navalent with them. The question is whether the system knows they exist.
-          </p>
-        </Body>
-      </ScrollReveal>
+        <ScrollReveal>
+          <Body dark>
+            <p style={{ marginBottom: 16 }}>
+              The math is simple but the implication is significant. If 101 client engagements each touch roughly 50 people, that is 5,000+ executives with firsthand Navalent experience. Today, the CRM retains contact information for only 2-3 stakeholders per account. The rest go dark after the engagement ends.
+            </p>
+            <p>
+              These are not cold contacts. They are people who sat in the room, experienced the work, and saw the results. Many of them have since moved to new organizations, carrying their experience of Navalent with them. The question is whether the system knows they exist.
+            </p>
+          </Body>
+        </ScrollReveal>
 
-      {/* Client cluster comparison with logos */}
-      <ScrollReveal>
-        <div style={{ marginBottom: 40 }}>
-          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 20 }}>
-            Client data quality comparison
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ClusterCard
-              title="Scoular"
-              subtitle="Gold Standard"
-              contacts={74}
-              titles={71}
-              linkedIn={59}
-              accent={COLORS.teal}
-              quality="high"
-              logo="S"
-              logoSrc="/images/navalent/scoular-logo.png"
-              logoColor="#2D6A4F"
-            />
-            <ClusterCard
-              title="ConAgra"
-              subtitle="High Volume, Low Quality"
-              contacts={141}
-              titles={18}
-              linkedIn={0}
-              accent={COLORS.oxide}
-              quality="low"
-              logo="C"
-              logoSrc="/images/navalent/CAG_BIG.D-85d710b2.png"
-              logoColor="#C92A2A"
-            />
-          </div>
-        </div>
-      </ScrollReveal>
+        <ScrollReveal>
+          <HeroBreakout accent={COLORS.teal} background="rgba(31,167,162,0.08)">
+            <AnimatedCounter value={0} color={COLORS.teal} label="contacts in systematic nurture — out of 5,000+ executives touched" />
+          </HeroBreakout>
+        </ScrollReveal>
 
-      {/* Additional cluster data */}
-      <ScrollReveal>
-        <Body dark>
-          <p style={{ marginBottom: 16 }}>
-            The cluster analysis extends across major accounts: Cargill (80 contacts, 50 with titles), Chick-fil-A (97 contacts across three name variants, 7 with titles), Experian (39 contacts, 36 with titles), Lamb Weston (35 contacts, 1 title). These are $5M to $11M lifetime accounts where the CRM knows almost nothing about the people.
-          </p>
-        </Body>
-      </ScrollReveal>
+        {/* Client cluster comparison with logos */}
+        <ScrollReveal>
+          <InsetVisual>
+            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 20 }}>
+              Client data quality comparison
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <ClusterCard
+                title="Scoular"
+                subtitle="Gold Standard"
+                contacts={74}
+                titles={71}
+                linkedIn={59}
+                accent={COLORS.teal}
+                quality="high"
+                logo="S"
+                logoSrc="/images/navalent/scoular-logo.png"
+                logoColor="#2D6A4F"
+              />
+              <ClusterCard
+                title="ConAgra"
+                subtitle="High Volume, Low Quality"
+                contacts={141}
+                titles={18}
+                linkedIn={0}
+                accent={COLORS.oxide}
+                quality="low"
+                logo="C"
+                logoSrc="/images/navalent/CAG_BIG.D-85d710b2.png"
+                logoColor="#C92A2A"
+              />
+            </div>
+          </InsetVisual>
+        </ScrollReveal>
 
-      <ScrollReveal>
-        <Callout color={COLORS.teal} textColor="rgba(246,245,242,0.85)">
-          If 101 clients x 50 discovery contacts = 5,000+ executives with firsthand Navalent experience, today zero are systematically nurtured. The 787 contacts at known revenue client companies are the highest-priority enrichment target.
-        </Callout>
-      </ScrollReveal>
+        {/* Additional cluster data */}
+        <ScrollReveal>
+          <Body dark>
+            <p style={{ marginBottom: 16 }}>
+              The cluster analysis extends across major accounts: Cargill (80 contacts, 50 with titles), Chick-fil-A (97 contacts across three name variants, 7 with titles), Experian (39 contacts, 36 with titles), Lamb Weston (35 contacts, 1 title). These are $5M to $11M lifetime accounts where the CRM knows almost nothing about the people.
+            </p>
+          </Body>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <Callout color={COLORS.teal} textColor="rgba(246,245,242,0.85)">
+            If 101 clients x 50 discovery contacts = 5,000+ executives with firsthand Navalent experience, today zero are systematically nurtured. The 787 contacts at known revenue client companies are the highest-priority enrichment target.
+          </Callout>
+        </ScrollReveal>
+      </TwoCol>
 
       <VerdictBox
         verdict="Confirmed"
@@ -919,74 +936,88 @@ function Hypothesis4Section() {
   ]
 
   return (
-    <Section>
-      <ScrollReveal>
-        <Body>
-          <p>This was implicit in every conversation: the executives who move companies and bring Navalent with them are the highest-value leads in the business. We enriched a sample of 200 corporate-email contacts through Apollo. 114 matched (57% match rate). The results validated the hypothesis immediately.</p>
-        </Body>
-      </ScrollReveal>
+    <Section narrow>
+      <TwoCol>
+        <ScrollReveal>
+          <Body>
+            <p>This was implicit in every conversation: the executives who move companies and bring Navalent with them are the highest-value leads in the business. We enriched a sample of 200 corporate-email contacts through Apollo. 114 matched (57% match rate). The results validated the hypothesis immediately.</p>
+          </Body>
+        </ScrollReveal>
 
-      {/* Signal stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-12">
-        <ScrollReveal delay={0}>
-          <AnimatedCounter value={5} color={COLORS.oxide} dark={false} label="HOT: New role + buyer seat + non-client ICP company" />
+        <ScrollReveal>
+          <HeroBreakout accent={COLORS.oxide} background="rgba(184,92,74,0.08)">
+            <AnimatedCounter value={5} color={COLORS.oxide} dark={false} label="HOT opportunities from a 2.5% sample — new role + buyer seat + non-client ICP company" />
+          </HeroBreakout>
         </ScrollReveal>
-        <ScrollReveal delay={0.15}>
-          <AnimatedCounter value={5} color={COLORS.sand} dark={false} label="Champions who left a Navalent client for a new company" />
-        </ScrollReveal>
-        <ScrollReveal delay={0.3}>
-          <AnimatedCounter value={10} color={COLORS.teal} dark={false} label="WARM: Buyer-level contacts at non-client ICP companies" />
-        </ScrollReveal>
-      </div>
 
-      {/* Champions who moved */}
-      <ScrollReveal>
-        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.charcoal, marginBottom: 4 }}>
-          Champions who moved (highest-value signals)
-        </div>
-        <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 14, color: COLORS.secondary, marginBottom: 16 }}>
-          Five contacts who were at Navalent client companies have moved to new organizations in buyer-level roles.
-        </div>
-      </ScrollReveal>
+        <ScrollReveal>
+          <InsetVisual>
+            <InsetStats
+              stats={[
+                { value: '5', label: 'Champions who left a Navalent client for a new company', color: COLORS.sand },
+                { value: '10', label: 'WARM: Buyer-level contacts at non-client ICP companies', color: COLORS.teal },
+              ]}
+            />
+          </InsetVisual>
+        </ScrollReveal>
+
+        {/* Champions who moved */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.charcoal, marginBottom: 4 }}>
+            Champions who moved (highest-value signals)
+          </div>
+          <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 14, color: COLORS.secondary, marginBottom: 16 }}>
+            Five contacts who were at Navalent client companies have moved to new organizations in buyer-level roles.
+          </div>
+        </ScrollReveal>
+      </TwoCol>
+
       <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
         {champions.map((c, i) => (
           <ProfileCard key={i} {...c} accent={COLORS.oxide} />
         ))}
       </StaggerGroup>
 
-      <ScrollReveal>
-        <Body>
-          <p>
-            Each of these individuals has direct experience with Navalent's work and is now in a decision-making role at a new organization. In a system with champion tracking, these signals would have surfaced within 48 hours of the role change — not months later during a manual review.
-          </p>
-        </Body>
-      </ScrollReveal>
+      <TwoCol>
+        <ScrollReveal>
+          <Body>
+            <p>
+              Each of these individuals has direct experience with Navalent's work and is now in a decision-making role at a new organization. In a system with champion tracking, these signals would have surfaced within 48 hours of the role change — not months later during a manual review.
+            </p>
+          </Body>
+        </ScrollReveal>
 
-      {/* Net-new HOT */}
-      <ScrollReveal>
-        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.charcoal, marginBottom: 4, marginTop: 32 }}>
-          Net-new HOT opportunities
-        </div>
-        <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 14, color: COLORS.secondary, marginBottom: 16 }}>
-          Five contacts in new buyer-level roles at ICP-sized companies that are not existing Navalent clients.
-        </div>
-      </ScrollReveal>
+        {/* Net-new HOT */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.charcoal, marginBottom: 4, marginTop: 32 }}>
+            Net-new HOT opportunities
+          </div>
+          <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 14, color: COLORS.secondary, marginBottom: 16 }}>
+            Five contacts in new buyer-level roles at ICP-sized companies that are not existing Navalent clients.
+          </div>
+        </ScrollReveal>
+      </TwoCol>
+
       <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
         {hotSignals.map((c, i) => (
           <ProfileCard key={i} {...c} accent={COLORS.magenta} />
         ))}
       </StaggerGroup>
 
-      {/* Extrapolation */}
-      <ScrollReveal>
-        <ExtrapolationViz />
-      </ScrollReveal>
+      <TwoCol>
+        {/* Extrapolation */}
+        <ScrollReveal>
+          <InsetVisual>
+            <ExtrapolationViz />
+          </InsetVisual>
+        </ScrollReveal>
 
-      <ScrollReveal>
-        <Callout color={COLORS.oxide} textColor={COLORS.charcoal}>
-          23.7% started a new role in the last 365 days. 31.5% are now at a different company than what is in the CRM.
-        </Callout>
-      </ScrollReveal>
+        <ScrollReveal>
+          <Callout color={COLORS.oxide} textColor={COLORS.charcoal}>
+            23.7% started a new role in the last 365 days. 31.5% are now at a different company than what is in the CRM.
+          </Callout>
+        </ScrollReveal>
+      </TwoCol>
 
       <VerdictBox
         verdict="Confirmed with live data"
@@ -1107,82 +1138,86 @@ function Hypothesis5Section() {
   ]
 
   return (
-    <Section dark>
-      <ScrollReveal>
-        <Body dark>
-          <p>Ron's LinkedIn presence is substantial: 3,000+ posts, HBR contributor, Forbes contributor, 2x TEDx speaker, Amazon bestseller. His latest post hit 50K impressions, created two service requests, and neither was a good fit. The hypothesis is that his content reaches a large audience, and that audience likely contains buyers. But there is no system to identify, qualify, or nurture the people who engage.</p>
-        </Body>
-      </ScrollReveal>
+    <Section dark narrow>
+      <TwoCol dark>
+        <ScrollReveal>
+          <Body dark>
+            <p>Ron's LinkedIn presence is substantial: 3,000+ posts, HBR contributor, Forbes contributor, 2x TEDx speaker, Amazon bestseller. His latest post hit 50K impressions, created two service requests, and neither was a good fit. The hypothesis is that his content reaches a large audience, and that audience likely contains buyers. But there is no system to identify, qualify, or nurture the people who engage.</p>
+          </Body>
+        </ScrollReveal>
 
-      {/* Ron's LinkedIn screenshot */}
-      <ScrollReveal>
-        <div style={{ margin: '32px 0', display: 'flex', justifyContent: 'center' }}>
-          <div
-            style={{
-              maxWidth: 480,
-              width: '100%',
-              borderRadius: 12,
-              overflow: 'hidden',
-              border: '1px solid rgba(255,255,255,0.1)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-            }}
-          >
-            <img
-              src="/images/navalent/ron-linkedin.png"
-              alt="Ron Carucci's LinkedIn profile"
-              style={{ width: '100%', height: 'auto', display: 'block' }}
-              onError={(e) => {
-                const t = e.target as HTMLImageElement
-                t.style.display = 'none'
-                t.parentElement!.innerHTML = '<div style="padding:40px;text-align:center;color:rgba(246,245,242,0.4);font-family:Source Sans 3,sans-serif;font-size:14px">Save Ron\'s LinkedIn screenshot to<br/>/public/images/navalent/ron-linkedin.png</div>'
-              }}
+        {/* Ron's LinkedIn screenshot */}
+        <ScrollReveal>
+          <InsetVisual>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div
+                style={{
+                  maxWidth: 480,
+                  width: '100%',
+                  borderRadius: 12,
+                  overflow: 'hidden',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+                }}
+              >
+                <img
+                  src="/images/navalent/ron-linkedin.png"
+                  alt="Ron Carucci's LinkedIn profile"
+                  style={{ width: '100%', height: 'auto', display: 'block' }}
+                  onError={(e) => {
+                    const t = e.target as HTMLImageElement
+                    t.style.display = 'none'
+                    t.parentElement!.innerHTML = '<div style="padding:40px;text-align:center;color:rgba(246,245,242,0.4);font-family:Source Sans 3,sans-serif;font-size:14px">Save Ron\'s LinkedIn screenshot to<br/>/public/images/navalent/ron-linkedin.png</div>'
+                  }}
+                />
+              </div>
+            </div>
+          </InsetVisual>
+        </ScrollReveal>
+
+        {/* LinkedIn stats */}
+        <ScrollReveal>
+          <Kicker color={COLORS.teal}>90-DAY LINKEDIN PERFORMANCE (DEC 2025 - FEB 2026)</Kicker>
+          <Body dark>
+            <p>
+              We analyzed 90 days of Ron's LinkedIn activity to understand the reach, engagement patterns, and audience composition. The numbers tell a story about scale without infrastructure.
+            </p>
+          </Body>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <InsetVisual>
+            <InsetStats
+              dark
+              stats={[
+                { value: '101,399', label: 'Total views across 3 months', color: COLORS.teal },
+                { value: '2,295', label: 'Reactions across the portfolio', color: COLORS.teal },
+                { value: '484', label: 'Comments on LinkedIn', color: COLORS.teal },
+              ]}
             />
-          </div>
-        </div>
-      </ScrollReveal>
-
-      {/* LinkedIn stats */}
-      <ScrollReveal>
-        <Kicker color={COLORS.teal}>90-DAY LINKEDIN PERFORMANCE (DEC 2025 - FEB 2026)</Kicker>
-        <Body dark>
-          <p>
-            We analyzed 90 days of Ron's LinkedIn activity to understand the reach, engagement patterns, and audience composition. The numbers tell a story about scale without infrastructure.
-          </p>
-        </Body>
-      </ScrollReveal>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-12">
-        <ScrollReveal delay={0}>
-          <AnimatedCounter value={101399} color={COLORS.teal} label="Total views across 3 months" />
+          </InsetVisual>
         </ScrollReveal>
-        <ScrollReveal delay={0.15}>
-          <AnimatedCounter value={2295} color={COLORS.teal} label="Reactions across the portfolio" />
-        </ScrollReveal>
-        <ScrollReveal delay={0.3}>
-          <AnimatedCounter value={484} color={COLORS.teal} label="Comments on LinkedIn" />
-        </ScrollReveal>
-      </div>
 
-      {/* Monthly trend */}
-      <ScrollReveal>
-        <div style={{ marginBottom: 48 }}>
-          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 20 }}>
-            Monthly views trend
-          </div>
-          <MiniBarChart
-            data={[
-              { label: 'Dec', value: 41000 },
-              { label: 'Jan', value: 27000 },
-              { label: 'Feb', value: 33000 },
-            ]}
-            color={COLORS.teal}
-            dark
-          />
-        </div>
-      </ScrollReveal>
+        {/* Monthly trend */}
+        <ScrollReveal>
+          <InsetVisual>
+            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 20 }}>
+              Monthly views trend
+            </div>
+            <MiniBarChart
+              data={[
+                { label: 'Dec', value: 41000 },
+                { label: 'Jan', value: 27000 },
+                { label: 'Feb', value: 33000 },
+              ]}
+              color={COLORS.teal}
+              dark
+            />
+          </InsetVisual>
+        </ScrollReveal>
 
-      {/* 12-month content analysis */}
-      <ScrollReveal>
-        <div style={{ marginTop: 48 }}>
+        {/* 12-month content analysis */}
+        <ScrollReveal>
           <Kicker color={COLORS.oxide}>12-MONTH CONTENT ANALYSIS (333 POSTS)</Kicker>
           <Body dark>
             <p style={{ marginBottom: 16 }}>
@@ -1192,53 +1227,53 @@ function Hypothesis5Section() {
               Total engagement across 12 months: 10,024 reactions (30.1 average per post), 2,391 comments (7.2 average). Post type breakdown: 179 article shares (54%), 74 images (22%), 42 videos (13%), 38 text posts (11%).
             </p>
           </Body>
-        </div>
-      </ScrollReveal>
+        </ScrollReveal>
 
-      <ScrollReveal>
-        <ContentThemeBarChart />
-      </ScrollReveal>
+        <ScrollReveal>
+          <InsetVisual>
+            <ContentThemeBarChart />
+          </InsetVisual>
+        </ScrollReveal>
 
-      <ScrollReveal>
-        <Body dark>
-          <p>
-            The content that goes viral is not the content that converts. The posts that earn the most views tend to be personal, emotional, or contrarian. The posts most relevant to Navalent's ICP — leadership team design, executive transitions, organizational transformation — reach a smaller but far more valuable audience. The gap between reach and relevance is where the system needs to focus.
-          </p>
-        </Body>
-      </ScrollReveal>
+        <ScrollReveal>
+          <Body dark>
+            <p>
+              The content that goes viral is not the content that converts. The posts that earn the most views tend to be personal, emotional, or contrarian. The posts most relevant to Navalent's ICP — leadership team design, executive transitions, organizational transformation — reach a smaller but far more valuable audience. The gap between reach and relevance is where the system needs to focus.
+            </p>
+          </Body>
+        </ScrollReveal>
 
-      {/* Reach vs ICP comparison */}
-      <ScrollReveal>
-        <div style={{ marginBottom: 48 }}>
-          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 20 }}>
-            What gets reach vs. what maps to the buyer
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div style={{ padding: 24, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, textAlign: 'center' }}>
-              <div style={{ fontSize: 13, fontFamily: FONT.body, fontWeight: 700, letterSpacing: '0.12em', color: COLORS.teal, marginBottom: 12 }}>
-                VIRAL CONTENT
-              </div>
-              <div style={{ fontSize: 36, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite }}>12,674</div>
-              <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>views (historical echoes / political blog)</div>
-              <div style={{ fontSize: 28, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite, marginTop: 8 }}>7,760</div>
-              <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>views (unsolicited sales tactic rant)</div>
+        {/* Reach vs ICP comparison */}
+        <ScrollReveal>
+          <InsetVisual>
+            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 20 }}>
+              What gets reach vs. what maps to the buyer
             </div>
-            <div style={{ padding: 24, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, textAlign: 'center' }}>
-              <div style={{ fontSize: 13, fontFamily: FONT.body, fontWeight: 700, letterSpacing: '0.12em', color: COLORS.oxide, marginBottom: 12 }}>
-                ICP-RELEVANT CONTENT
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div style={{ padding: 24, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, textAlign: 'center' }}>
+                <div style={{ fontSize: 13, fontFamily: FONT.body, fontWeight: 700, letterSpacing: '0.12em', color: COLORS.teal, marginBottom: 12 }}>
+                  VIRAL CONTENT
+                </div>
+                <div style={{ fontSize: 36, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite }}>12,674</div>
+                <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>views (historical echoes / political blog)</div>
+                <div style={{ fontSize: 28, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite, marginTop: 8 }}>7,760</div>
+                <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>views (unsolicited sales tactic rant)</div>
               </div>
-              <div style={{ fontSize: 36, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite }}>2,174</div>
-              <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>views ("Resolve Cross-Dept Rivalries" HBR)</div>
-              <div style={{ fontSize: 28, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite, marginTop: 8 }}>2,866</div>
-              <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>views ("Tell Your Boss to Stop Doing Your Job" HBR)</div>
+              <div style={{ padding: 24, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, textAlign: 'center' }}>
+                <div style={{ fontSize: 13, fontFamily: FONT.body, fontWeight: 700, letterSpacing: '0.12em', color: COLORS.oxide, marginBottom: 12 }}>
+                  ICP-RELEVANT CONTENT
+                </div>
+                <div style={{ fontSize: 36, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite }}>2,174</div>
+                <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>views ("Resolve Cross-Dept Rivalries" HBR)</div>
+                <div style={{ fontSize: 28, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite, marginTop: 8 }}>2,866</div>
+                <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>views ("Tell Your Boss to Stop Doing Your Job" HBR)</div>
+              </div>
             </div>
-          </div>
-        </div>
-      </ScrollReveal>
+          </InsetVisual>
+        </ScrollReveal>
 
-      {/* Commenter breakdown with icons */}
-      <ScrollReveal>
-        <div style={{ marginBottom: 48 }}>
+        {/* Commenter breakdown with icons */}
+        <ScrollReveal>
           <Kicker color={COLORS.magenta}>COMMENTER ROLE ANALYSIS (12 MONTHS)</Kicker>
           <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 8 }}>
             198 unique commenters analyzed across 12 months
@@ -1280,59 +1315,66 @@ function Hypothesis5Section() {
           <div style={{ marginTop: 16, fontFamily: FONT.body, fontSize: 14, fontWeight: 300, color: 'rgba(246,245,242,0.75)' }}>
             <strong style={{ color: COLORS.magenta }}>2.0%</strong> of commenters are VP/Director of HR/People/OD at any company (4 of 198 over 12 months). <strong style={{ color: COLORS.magenta }}>1</strong> commenter in 12 months works at a known Navalent client company.
           </div>
-        </div>
-      </ScrollReveal>
+        </ScrollReveal>
 
-      {/* Commenter donut chart */}
-      <ScrollReveal>
-        <CommenterDonutViz data={commenterData} />
-      </ScrollReveal>
+        {/* Commenter donut chart */}
+        <ScrollReveal>
+          <InsetVisual>
+            <CommenterDonutViz data={commenterData} />
+          </InsetVisual>
+        </ScrollReveal>
 
-      <ScrollReveal>
-        <Callout color={COLORS.magenta} textColor={COLORS.offWhite}>
-          We matched all 198 commenters against Navalent's full client company list. One match: Kim Cupelli at Lamb Weston. The visible engagement layer and the buying layer are almost completely separate populations.
-        </Callout>
-      </ScrollReveal>
-
-      <ScrollReveal>
-        <Body dark>
-          <p>
-            The commenter data reveals a pattern common in thought leadership: the people who engage publicly are peers, not buyers. Enterprise CHROs, COOs, and CEOs consume content silently. They do not like, comment, or share. They read, remember, and call when they are ready. The challenge is not getting them to engage — it is knowing they are there.
-          </p>
-        </Body>
-      </ScrollReveal>
-
-      {/* Invisible buyer concept - redesigned */}
-      <ScrollReveal>
-        <InvisibleBuyerViz />
-      </ScrollReveal>
-
-      {/* Post performance contrast */}
-      <ScrollReveal>
-        <div style={{ marginTop: 40, marginBottom: 16 }}>
-          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 20 }}>
-            The engagement gap
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div style={{ padding: 20, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8 }}>
-              <div style={{ fontSize: 48, fontWeight: 800, fontFamily: FONT.body, color: COLORS.teal }}>374</div>
-              <div style={{ fontSize: 14, fontFamily: FONT.body, color: 'rgba(246,245,242,0.75)' }}>
-                reactions on "It's no secret you're facing things for the first time" (personal vulnerability)
+        <ScrollReveal>
+          <HeroBreakout accent={COLORS.magenta} background="rgba(212,61,141,0.08)">
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontFamily: FONT.display, fontWeight: 900, fontSize: 'clamp(48px, 8vw, 80px)', color: COLORS.magenta, lineHeight: 1 }}>1</div>
+              <div style={{ fontFamily: FONT.body, fontWeight: 400, fontSize: 16, color: 'rgba(246,245,242,0.85)', marginTop: 12 }}>
+                commenter in 12 months at a client company — Kim Cupelli at Lamb Weston. The visible engagement layer and the buying layer are almost completely separate populations.
               </div>
             </div>
-            <div style={{ padding: 20, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8 }}>
-              <div style={{ fontSize: 48, fontWeight: 800, fontFamily: FONT.body, color: COLORS.oxide }}>1</div>
-              <div style={{ fontSize: 14, fontFamily: FONT.body, color: 'rgba(246,245,242,0.75)' }}>
-                reaction on "We've worked with hundreds of executive teams over two decades at Navalent"
+          </HeroBreakout>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <Body dark>
+            <p>
+              The commenter data reveals a pattern common in thought leadership: the people who engage publicly are peers, not buyers. Enterprise CHROs, COOs, and CEOs consume content silently. They do not like, comment, or share. They read, remember, and call when they are ready. The challenge is not getting them to engage — it is knowing they are there.
+            </p>
+          </Body>
+        </ScrollReveal>
+
+        {/* Invisible buyer concept - redesigned */}
+        <ScrollReveal>
+          <InsetVisual>
+            <InvisibleBuyerViz />
+          </InsetVisual>
+        </ScrollReveal>
+
+        {/* Post performance contrast */}
+        <ScrollReveal>
+          <InsetVisual>
+            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 20 }}>
+              The engagement gap
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div style={{ padding: 20, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8 }}>
+                <div style={{ fontSize: 48, fontWeight: 800, fontFamily: FONT.body, color: COLORS.teal }}>374</div>
+                <div style={{ fontSize: 14, fontFamily: FONT.body, color: 'rgba(246,245,242,0.75)' }}>
+                  reactions on "It's no secret you're facing things for the first time" (personal vulnerability)
+                </div>
+              </div>
+              <div style={{ padding: 20, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8 }}>
+                <div style={{ fontSize: 48, fontWeight: 800, fontFamily: FONT.body, color: COLORS.oxide }}>1</div>
+                <div style={{ fontSize: 14, fontFamily: FONT.body, color: 'rgba(246,245,242,0.75)' }}>
+                  reaction on "We've worked with hundreds of executive teams over two decades at Navalent"
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </ScrollReveal>
+          </InsetVisual>
+        </ScrollReveal>
 
-      {/* Partner data finding */}
-      <ScrollReveal>
-        <div style={{ marginTop: 48 }}>
+        {/* Partner data finding */}
+        <ScrollReveal>
           <Kicker color={COLORS.sand}>THE PARTNER DATA TELLS THE OTHER HALF OF THE STORY</Kicker>
           <Body dark>
             <p style={{ marginBottom: 20 }}>
@@ -1345,12 +1387,10 @@ function Hypothesis5Section() {
               This is the strongest argument for relationship infrastructure over content marketing. Content is one input to the system. Relationships are the system.
             </p>
           </Body>
-        </div>
-      </ScrollReveal>
+        </ScrollReveal>
 
-      {/* Partner visibility and content concentration */}
-      <ScrollReveal>
-        <div style={{ marginTop: 48 }}>
+        {/* Partner visibility and content concentration */}
+        <ScrollReveal>
           <Kicker color={COLORS.sand}>PARTNER VISIBILITY AND THE CONTENT CONCENTRATION</Kicker>
           <Body dark>
             <p style={{ marginBottom: 20 }}>
@@ -1372,35 +1412,35 @@ function Hypothesis5Section() {
               Ron's personal brand is approximately 20x more visible than the firm brand and 50x more visible than any other partner. This is both an asset and a liability.
             </p>
           </Body>
-        </div>
-      </ScrollReveal>
+        </ScrollReveal>
 
-      <ScrollReveal>
-        <PartnerVisibilityScorecard partners={[
-          { name: 'Ron Carucci', followers: '30,892', posts: '508 in 3 years', hbr: '9+ bylines', podcasts: '42+', independence: 5, color: COLORS.teal },
-          { name: 'Jarrod Shappell', followers: '1,454', posts: '23 in 2 years', hbr: '3 bylines', podcasts: '1', independence: 2, color: COLORS.sand },
-          { name: 'Mindy Millward', followers: '~1,000', posts: '0 in 12 months', hbr: 'None', podcasts: 'None', independence: 0, color: COLORS.oxide },
-          { name: 'Eric Hansen', followers: '~500', posts: '12 in a decade', hbr: 'None', podcasts: 'None', independence: 0, color: COLORS.magenta },
-        ]} dark />
-      </ScrollReveal>
+        <ScrollReveal>
+          <InsetVisual>
+            <PartnerVisibilityScorecard partners={[
+              { name: 'Ron Carucci', followers: '30,892', posts: '508 in 3 years', hbr: '9+ bylines', podcasts: '42+', independence: 5, color: COLORS.teal },
+              { name: 'Jarrod Shappell', followers: '1,454', posts: '23 in 2 years', hbr: '3 bylines', podcasts: '1', independence: 2, color: COLORS.sand },
+              { name: 'Mindy Millward', followers: '~1,000', posts: '0 in 12 months', hbr: 'None', podcasts: 'None', independence: 0, color: COLORS.oxide },
+              { name: 'Eric Hansen', followers: '~500', posts: '12 in a decade', hbr: 'None', podcasts: 'None', independence: 0, color: COLORS.magenta },
+            ]} dark />
+          </InsetVisual>
+        </ScrollReveal>
 
-      {/* The website gap */}
-      <ScrollReveal>
-        <div style={{ marginTop: 32 }}>
+        {/* The website gap */}
+        <ScrollReveal>
           <Kicker color={COLORS.oxide}>THE WEBSITE GAP</Kicker>
           <Body dark>
             <p>
               The navalent.com resource center contains an estimated 280+ blog posts. However, the website functions as a brochure: no gated content, no downloadable lead magnets, no assessment tools, no visible email nurture triggers. Blog posts have no visible CTA directing to contact or assessment. Every reader who doesn't proactively call (855) 949-1880 is lost.
             </p>
           </Body>
-        </div>
-      </ScrollReveal>
+        </ScrollReveal>
 
-      <ScrollReveal>
-        <Callout color={COLORS.sand} textColor={COLORS.offWhite}>
-          The succession question: If Ron stepped back from content tomorrow, what happens to Navalent's public presence? Right now, the answer is that it largely disappears. Building partner-independent visibility is not optional — it is an existential priority.
-        </Callout>
-      </ScrollReveal>
+        <ScrollReveal>
+          <Callout color={COLORS.sand} textColor={COLORS.offWhite}>
+            The succession question: If Ron stepped back from content tomorrow, what happens to Navalent's public presence? Right now, the answer is that it largely disappears. Building partner-independent visibility is not optional — it is an existential priority.
+          </Callout>
+        </ScrollReveal>
+      </TwoCol>
 
       <VerdictBox
         verdict="Confirmed, but the problem is different than expected"
@@ -2047,7 +2087,7 @@ function AppendicesSection() {
   const tdStyle = { padding: '8px 12px', borderBottom: `1px solid ${COLORS.divider}`, color: COLORS.secondary }
 
   return (
-    <Section id="appendices">
+    <Section narrow id="appendices">
       <ScrollReveal>
         <Kicker color={COLORS.secondary}>APPENDICES</Kicker>
         <Headline color={COLORS.charcoal}>Supporting data and methodology</Headline>
@@ -2281,7 +2321,7 @@ function EditorialDivider() {
 
 function EditorialSection() {
   return (
-    <Section>
+    <Section narrow>
       {/* Byline — right-aligned */}
       <ScrollReveal>
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 40 }}>
@@ -2311,197 +2351,207 @@ function EditorialSection() {
         </div>
       </ScrollReveal>
 
-      {/* Lead pull quote */}
-      <ScrollReveal>
-        <Callout color={COLORS.oxide} textColor={COLORS.charcoal}>
-          Navalent is not a firm with a marketing problem. Navalent is a firm that has built one of the most valuable relationship assets in the consulting industry and didn't know it.
-        </Callout>
-      </ScrollReveal>
+      <TwoCol>
+        {/* Lead pull quote */}
+        <ScrollReveal>
+          <Callout color={COLORS.oxide} textColor={COLORS.charcoal}>
+            Navalent is not a firm with a marketing problem. Navalent is a firm that has built one of the most valuable relationship assets in the consulting industry and didn't know it.
+          </Callout>
+        </ScrollReveal>
 
-      <ScrollReveal>
-        <BodyWithMargin
-          stat="$56.9M"
-          statLabel="Lifetime Revenue"
-          statSublabel="79% win rate on returning clients"
-          statColor={COLORS.sand}
-        >
-          <p style={{ marginBottom: 20 }}>
-            $56.9 million in lifetime revenue. 79% win rate on returning clients. Thirteen organizations that account for nearly 80% of all billings. A founder whose content reaches 100,000 people a quarter. A client roster that includes some of the most recognizable logos in American business. And a CEO in Denmark who, after hearing Ron answer six hard questions honestly, said "just go do it" without asking for a proposal.
-          </p>
-          <p style={{ marginBottom: 20 }}>
-            Navalent doesn't win on credentials, methodologies, or marketing. It wins because when people experience what Navalent does in a room, they don't want to hire anyone else. Impact begets impact.
-          </p>
-        </BodyWithMargin>
-      </ScrollReveal>
+        <ScrollReveal>
+          <BodyWithMargin
+            stat="$56.9M"
+            statLabel="Lifetime Revenue"
+            statSublabel="79% win rate on returning clients"
+            statColor={COLORS.sand}
+          >
+            <p style={{ marginBottom: 20 }}>
+              $56.9 million in lifetime revenue. 79% win rate on returning clients. Thirteen organizations that account for nearly 80% of all billings. A founder whose content reaches 100,000 people a quarter. A client roster that includes some of the most recognizable logos in American business. And a CEO in Denmark who, after hearing Ron answer six hard questions honestly, said "just go do it" without asking for a proposal.
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              Navalent doesn't win on credentials, methodologies, or marketing. It wins because when people experience what Navalent does in a room, they don't want to hire anyone else. Impact begets impact.
+            </p>
+          </BodyWithMargin>
+        </ScrollReveal>
 
-      {/* The Two Growth Levers */}
-      <ScrollReveal>
-        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
-          Two growth levers. No repeatable system connecting them.
-        </div>
-        <Body>
-          <p style={{ marginBottom: 20 }}>
-            This firm runs two powerful demand creation engines.
-          </p>
-          <p style={{ marginBottom: 20 }}>
-            Engine one is Ron's content: 30,892 followers, 508 posts in 3 years, 42+ podcasts, 101K views per quarter. Broad reach, strong brand, zero capture infrastructure.
-          </p>
-          <p style={{ marginBottom: 20 }}>
-            Engine two is the partner relationship network: Mindy alone has $4.8M in pipeline and $3.99M in closed-won revenue, sourced entirely through past clients and referrals. Zero LinkedIn posts in 12 months.
-          </p>
-          <p>
-            There is no repeatable, scalable system that brings these two powerful growth levers together. The infrastructure we build creates the system that makes this connection consistent, visible, and scalable.
-          </p>
-        </Body>
-      </ScrollReveal>
-
-      <ScrollReveal>
-        <TwoEngineViz />
-      </ScrollReveal>
-
-      <ScrollReveal>
-        <PartnerComparisonTable />
-      </ScrollReveal>
-
-      {/* Transition to From/To */}
-      <ScrollReveal>
-        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.charcoal, marginTop: 32, marginBottom: 16 }}>
-          Here is what that looks like, specifically:
-        </div>
-      </ScrollReveal>
-
-      {/* From / To transformation */}
-      <ScrollReveal>
-        <TransformationTable
-          rows={[
-            { today: "Relationships live in partners' heads and personal networks", future: 'Relationships are visible, mapped, and enriched in the CRM' },
-            { today: 'Champions leave and nobody notices', future: 'Role changes surface within 48 hours as actionable signals' },
-            { today: '50 people experience the work; 3 stay in touch', future: 'Every discovery contact enters a structured nurture path' },
-            { today: "Ron's content reaches 100K per quarter with no capture layer", future: 'Content engagement by ICP contacts flows into HubSpot as relationship signals' },
-            { today: 'Pipeline meetings ask "what deals are live?"', future: 'Relationship reviews ask "which accounts are getting warmer?"' },
-            { today: 'The Greg Story happens by accident', future: 'The Greg Story happens by design, across thousands of contacts' },
-          ]}
-        />
-      </ScrollReveal>
-
-      {/* Making your impact sticky */}
-      <ScrollReveal>
-        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
-          Making your impact sticky
-        </div>
-        <BodyWithMargin
-          stat="~5,000"
-          statLabel="Executives Touched"
-          statSublabel="101 engagements × ~50 contacts"
-          statColor={COLORS.teal}
-        >
-          <p style={{ marginBottom: 20 }}>
-            If you have 101 client engagements, and each one touches roughly 50 people during discovery and delivery, you have somewhere around 5,000 executives who know what it feels like to be on the other side of Navalent's work. Some of them are still at those companies, some have moved, some are now CHROs at organizations twice the size, some are sitting in buyer seats at companies you've never heard of, but all remember their experience of Navalent.
-          </p>
-          <p style={{ marginBottom: 20 }}>
-            Today, zero of them are in a systematic nurture program. They live in Ron's memory, in Mindy's phone, in email threads nobody will search, and a CRM that knows their name but not their current title, their current company, or whether they changed jobs six months ago.
-          </p>
-          <p>
-            The 200-contact sample proved what this looks like when you actually look. Shauna Nylund left Scoular and is now running HR at nVent. Matt Klitus left Lyra Health and is now CFO at Honor. These are people who know Navalent's work intimately, leading in new seats with new budgets at new companies, and nobody has reached out.
-          </p>
-        </BodyWithMargin>
-      </ScrollReveal>
-
-      {/* Where the real leverage is */}
-      <ScrollReveal>
-        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
-          Where the real leverage is
-        </div>
-        <BodyWithMargin
-          stat="21"
-          statLabel="Years of Trust"
-          statSublabel="Built by Ron, owned by the firm"
-          statColor={COLORS.oxide}
-        >
-          <p style={{ marginBottom: 20 }}>
-            Ron's LinkedIn presence is not a marketing channel. It's a trust engine. The reach, engagement, and overall halo it creates makes Navalent synonymous with a particular kind of honest, rigorous, uncomfortable-in-the-best-way leadership consulting.
-          </p>
-          <p style={{ marginBottom: 20 }}>
-            And let me speak to the 800lb elephant in the room: Ron will not be doing this forever. It's a fact partners at the firm have named openly, and as such, our engine needs to respect the trust he has built over 21 years and make it something the firm can see, measure, and maintain in the future.
-          </p>
-          <p style={{ marginBottom: 20 }}>
-            The leverage is in making the relationships Navalent has already built visible, maintainable, and scalable without bloating weekly schedules with tedious tasks. Today, zero of the roughly 5,000 executives Navalent has touched are in a systematic nurture program. The infrastructure changes that.
-          </p>
-        </BodyWithMargin>
-      </ScrollReveal>
-
-      {/* The Greg Story */}
-      <ScrollReveal>
-        <div
-          style={{
-            margin: '32px 0',
-            padding: '24px 28px',
-            background: 'rgba(214,178,109,0.08)',
-            borderLeft: `4px solid ${COLORS.sand}`,
-            borderRadius: '0 8px 8px 0',
-          }}
-        >
-          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 14, color: COLORS.sand, letterSpacing: '0.1em', marginBottom: 12 }}>
-            THE GREG STORY
+        {/* The Two Growth Levers */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
+            Two growth levers. No repeatable system connecting them.
           </div>
-          <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 15, lineHeight: 1.7, color: COLORS.secondary }}>
-            <p style={{ marginBottom: 12 }}>
-              Nine years ago, Greg read an HBR article, describing his situation perfectly. He read Ron's book that weekend, his company offered him a coach, and said, "I want him." That one relationship, originating from a single piece of content, became a multi-million dollar client for Navalent. And when Greg moved to a new company, he brought the firm with him.
+          <Body>
+            <p style={{ marginBottom: 20 }}>
+              This firm runs two powerful demand creation engines.
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              Engine one is Ron's content: 30,892 followers, 508 posts in 3 years, 42+ podcasts, 101K views per quarter. Broad reach, strong brand, zero capture infrastructure.
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              Engine two is the partner relationship network: Mindy alone has $4.8M in pipeline and $3.99M in closed-won revenue, sourced entirely through past clients and referrals. Zero LinkedIn posts in 12 months.
             </p>
             <p>
-              I know Mindy, Jarrod, and other partners have "Greg Stories" as well, filled with a decade of compounding value. The question is whether these happen by accident or by design. Right now, it is entirely by accident.
+              There is no repeatable, scalable system that brings these two powerful growth levers together. The infrastructure we build creates the system that makes this connection consistent, visible, and scalable.
             </p>
+          </Body>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <HeroBreakout accent={COLORS.sand} background="rgba(214,178,109,0.06)">
+            <TwoEngineViz />
+          </HeroBreakout>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <InsetVisual>
+            <PartnerComparisonTable />
+          </InsetVisual>
+        </ScrollReveal>
+
+        {/* Transition to From/To */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.charcoal, marginTop: 32, marginBottom: 16 }}>
+            Here is what that looks like, specifically:
           </div>
-        </div>
-      </ScrollReveal>
+        </ScrollReveal>
 
-      {/* System vision flow */}
-      <ScrollReveal>
-        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
-          If we use "The Greg Story" as a model:
-        </div>
-        <SystemFlowDiagram />
-      </ScrollReveal>
+        {/* From / To transformation */}
+        <ScrollReveal>
+          <InsetVisual>
+            <TransformationTable
+              rows={[
+                { today: "Relationships live in partners' heads and personal networks", future: 'Relationships are visible, mapped, and enriched in the CRM' },
+                { today: 'Champions leave and nobody notices', future: 'Role changes surface within 48 hours as actionable signals' },
+                { today: '50 people experience the work; 3 stay in touch', future: 'Every discovery contact enters a structured nurture path' },
+                { today: "Ron's content reaches 100K per quarter with no capture layer", future: 'Content engagement by ICP contacts flows into HubSpot as relationship signals' },
+                { today: 'Pipeline meetings ask "what deals are live?"', future: 'Relationship reviews ask "which accounts are getting warmer?"' },
+                { today: 'The Greg Story happens by accident', future: 'The Greg Story happens by design, across thousands of contacts' },
+              ]}
+            />
+          </InsetVisual>
+        </ScrollReveal>
 
-      <ScrollReveal>
-        <Body>
-          <p style={{ marginTop: 24 }}>
-            Our system can use content to deepen a relationship with someone. The math we will create moving forward is not something that happens by accident, but as something that's intentional, tracked, nurtured, and activated systematically across thousands of contacts.
-          </p>
-        </Body>
-      </ScrollReveal>
+        {/* Making your impact sticky */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
+            Making your impact sticky
+          </div>
+          <BodyWithMargin
+            stat="~5,000"
+            statLabel="Executives Touched"
+            statSublabel="101 engagements × ~50 contacts"
+            statColor={COLORS.teal}
+          >
+            <p style={{ marginBottom: 20 }}>
+              If you have 101 client engagements, and each one touches roughly 50 people during discovery and delivery, you have somewhere around 5,000 executives who know what it feels like to be on the other side of Navalent's work. Some of them are still at those companies, some have moved, some are now CHROs at organizations twice the size, some are sitting in buyer seats at companies you've never heard of, but all remember their experience of Navalent.
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              Today, zero of them are in a systematic nurture program. They live in Ron's memory, in Mindy's phone, in email threads nobody will search, and a CRM that knows their name but not their current title, their current company, or whether they changed jobs six months ago.
+            </p>
+            <p>
+              The 200-contact sample proved what this looks like when you actually look. Shauna Nylund left Scoular and is now running HR at nVent. Matt Klitus left Lyra Health and is now CFO at Honor. These are people who know Navalent's work intimately, leading in new seats with new budgets at new companies, and nobody has reached out.
+            </p>
+          </BodyWithMargin>
+        </ScrollReveal>
 
-      {/* The bigger picture */}
-      <ScrollReveal>
-        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
-          The bigger picture
-        </div>
-        <BodyWithMargin
-          stat="$3-4M"
-          statLabel="Nationwide Engagement"
-          statSublabel="From one dinner conversation"
-          statColor={COLORS.sand}
-        >
-          <p style={{ marginBottom: 20 }}>
-            The partners at Navalent have built a thriving firm with the potential to maintain that scale or leave destiny to chance. (Or an email inbox or a chance meeting in a hallway ...)
-          </p>
-          <p style={{ marginBottom: 20 }}>
-            My goal is to create an infrastructure: not a marketing strategy or an SEO/GEO play or a campaign. Relationship infrastructure that takes the patterns that produced $56.9 million in revenue, patterns that currently live in people's heads and personal networks, and makes them visible, measurable, and repeatable.
-          </p>
-          <p style={{ marginBottom: 20 }}>
-            The Nationwide pitch tells you everything you need to know about what Navalent is capable of. Ron and Jarrod walked into a private dinner, answered hard questions honestly, and walked out with an invitation to build a $3-4 million engagement. The white paper they sent was gorgeous. The last page said, "We've earned your trust. We've changed your culture. Let us join you."
-          </p>
-          <p>
-            That's the truth. And the infrastructure we build needs to make that truth available to every relationship in the system, not just the ones we happen to remember at 3 a.m.
-          </p>
-        </BodyWithMargin>
-      </ScrollReveal>
+        {/* Where the real leverage is */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
+            Where the real leverage is
+          </div>
+          <BodyWithMargin
+            stat="21"
+            statLabel="Years of Trust"
+            statSublabel="Built by Ron, owned by the firm"
+            statColor={COLORS.oxide}
+          >
+            <p style={{ marginBottom: 20 }}>
+              Ron's LinkedIn presence is not a marketing channel. It's a trust engine. The reach, engagement, and overall halo it creates makes Navalent synonymous with a particular kind of honest, rigorous, uncomfortable-in-the-best-way leadership consulting.
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              And let me speak to the 800lb elephant in the room: Ron will not be doing this forever. It's a fact partners at the firm have named openly, and as such, our engine needs to respect the trust he has built over 21 years and make it something the firm can see, measure, and maintain in the future.
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              The leverage is in making the relationships Navalent has already built visible, maintainable, and scalable without bloating weekly schedules with tedious tasks. Today, zero of the roughly 5,000 executives Navalent has touched are in a systematic nurture program. The infrastructure changes that.
+            </p>
+          </BodyWithMargin>
+        </ScrollReveal>
 
-      <ScrollReveal>
-        <Callout color={COLORS.sand} textColor={COLORS.charcoal}>
-          The data says you've been doing this right for 21 years. The opportunity is to make it sustainable for the next 21.
-        </Callout>
-      </ScrollReveal>
+        {/* The Greg Story */}
+        <ScrollReveal>
+          <div
+            style={{
+              margin: '32px 0',
+              padding: '24px 28px',
+              background: 'rgba(214,178,109,0.08)',
+              borderLeft: `4px solid ${COLORS.sand}`,
+              borderRadius: '0 8px 8px 0',
+            }}
+          >
+            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 14, color: COLORS.sand, letterSpacing: '0.1em', marginBottom: 12 }}>
+              THE GREG STORY
+            </div>
+            <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 15, lineHeight: 1.7, color: COLORS.secondary }}>
+              <p style={{ marginBottom: 12 }}>
+                Nine years ago, Greg read an HBR article, describing his situation perfectly. He read Ron's book that weekend, his company offered him a coach, and said, "I want him." That one relationship, originating from a single piece of content, became a multi-million dollar client for Navalent. And when Greg moved to a new company, he brought the firm with him.
+              </p>
+              <p>
+                I know Mindy, Jarrod, and other partners have "Greg Stories" as well, filled with a decade of compounding value. The question is whether these happen by accident or by design. Right now, it is entirely by accident.
+              </p>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* System vision flow */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
+            If we use "The Greg Story" as a model:
+          </div>
+          <InsetVisual>
+            <SystemFlowDiagram />
+          </InsetVisual>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <Body>
+            <p style={{ marginTop: 24 }}>
+              Our system can use content to deepen a relationship with someone. The math we will create moving forward is not something that happens by accident, but as something that's intentional, tracked, nurtured, and activated systematically across thousands of contacts.
+            </p>
+          </Body>
+        </ScrollReveal>
+
+        {/* The bigger picture */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
+            The bigger picture
+          </div>
+          <BodyWithMargin
+            stat="$3-4M"
+            statLabel="Nationwide Engagement"
+            statSublabel="From one dinner conversation"
+            statColor={COLORS.sand}
+          >
+            <p style={{ marginBottom: 20 }}>
+              The partners at Navalent have built a thriving firm with the potential to maintain that scale or leave destiny to chance. (Or an email inbox or a chance meeting in a hallway ...)
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              My goal is to create an infrastructure: not a marketing strategy or an SEO/GEO play or a campaign. Relationship infrastructure that takes the patterns that produced $56.9 million in revenue, patterns that currently live in people's heads and personal networks, and makes them visible, measurable, and repeatable.
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              The Nationwide pitch tells you everything you need to know about what Navalent is capable of. Ron and Jarrod walked into a private dinner, answered hard questions honestly, and walked out with an invitation to build a $3-4 million engagement. The white paper they sent was gorgeous. The last page said, "We've earned your trust. We've changed your culture. Let us join you."
+            </p>
+            <p>
+              That's the truth. And the infrastructure we build needs to make that truth available to every relationship in the system, not just the ones we happen to remember at 3 a.m.
+            </p>
+          </BodyWithMargin>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <Callout color={COLORS.sand} textColor={COLORS.charcoal}>
+            The data says you've been doing this right for 21 years. The opportunity is to make it sustainable for the next 21.
+          </Callout>
+        </ScrollReveal>
+      </TwoCol>
     </Section>
   )
 }
@@ -2647,7 +2697,7 @@ function RecommendationsSection() {
   ]
 
   return (
-    <Section dark>
+    <Section dark narrow>
       <ScrollReveal>
         <DisplayType
           eyebrow="THE PLAY"
@@ -2658,6 +2708,7 @@ function RecommendationsSection() {
         </DisplayType>
       </ScrollReveal>
 
+      <HeroBreakout accent={COLORS.teal} background="rgba(31,167,162,0.06)">
       <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
         {recs.map((r, i) => (
           <div
@@ -2717,6 +2768,7 @@ function RecommendationsSection() {
           </div>
         ))}
       </StaggerGroup>
+      </HeroBreakout>
     </Section>
   )
 }
@@ -2739,16 +2791,19 @@ function TimelineDivider() {
 
 function TimelineSection() {
   return (
-    <Section>
+    <Section narrow>
       <ScrollReveal>
         <Kicker color={COLORS.sand}>WHAT COMES NEXT</Kicker>
         <Headline color={COLORS.charcoal}>From assessment to action</Headline>
-        <Body>
-          <p>If we believe in the direction, here is what next steps look like:</p>
-        </Body>
       </ScrollReveal>
 
-      <div style={{ marginTop: 40 }}>
+      <TwoCol>
+        <ScrollReveal>
+          <Body>
+            <p>If we believe in the direction, here is what next steps look like:</p>
+          </Body>
+        </ScrollReveal>
+
         <ScrollReveal>
           <TimelineItem
             label="Immediate"
@@ -2776,7 +2831,7 @@ function TimelineSection() {
             ]}
           />
         </ScrollReveal>
-      </div>
+      </TwoCol>
     </Section>
   )
 }
@@ -2877,6 +2932,12 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 @media print {
+  /* Collapse two-column layout for print */
+  .two-col {
+    columns: 1 !important;
+    column-rule: none !important;
+  }
+
   /* Reset animations and transitions */
   *, *::before, *::after {
     animation: none !important;
