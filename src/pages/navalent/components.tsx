@@ -922,6 +922,7 @@ export function ProfileCard({
   newCompany,
   employees,
   startDate,
+  note,
   accent,
   dark = false,
 }: {
@@ -932,6 +933,7 @@ export function ProfileCard({
   newCompany: string
   employees?: string
   startDate?: string
+  note?: string
   accent: string
   dark?: boolean
 }) {
@@ -971,6 +973,11 @@ export function ProfileCard({
         {startDate && (
           <div>
             <span style={{ fontWeight: 700, color: accent }}>Started:</span> {startDate}
+          </div>
+        )}
+        {note && (
+          <div style={{ marginTop: 8, fontStyle: 'italic', fontSize: 12, lineHeight: 1.5, color: dark ? 'rgba(246,245,242,0.6)' : COLORS.secondary }}>
+            {note}
           </div>
         )}
       </div>
@@ -1275,6 +1282,7 @@ const NAV_ITEMS = [
   { id: 'h5', label: 'Hypothesis 5: Content' },
   { id: 'editorial', label: "What's Happening Here" },
   { id: 'next', label: 'What Comes Next' },
+  { id: 'appendices', label: 'Appendices' },
 ]
 
 export function SideNav() {

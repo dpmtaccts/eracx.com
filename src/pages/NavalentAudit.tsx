@@ -131,11 +131,11 @@ function CoverSection() {
           </div>
         </ScrollReveal>
         <ScrollReveal delay={0.1}>
-          <Kicker color={COLORS.oxide}>PHASE 1 ASSESSMENT</Kicker>
+          <Kicker color={COLORS.oxide}>ERA</Kicker>
         </ScrollReveal>
         <ScrollReveal delay={0.2}>
           <Headline color={COLORS.offWhite} size="h1">
-            Infrastructure for a Relationship-Driven Firm
+            Making the Invisible Visible
           </Headline>
         </ScrollReveal>
         <ScrollReveal delay={0.35}>
@@ -162,9 +162,7 @@ function CoverSection() {
               lineHeight: 1.8,
             }}
           >
-            Draft for Ron Carucci and Jarrod Shappell
-            <br />
-            March 2026 · Confidential
+            Phase 1 Relationship Infrastructure Assessment · March 2026 · Confidential
           </div>
         </ScrollReveal>
       </div>
@@ -213,7 +211,7 @@ function FramingSection() {
     { num: 2, title: 'HubSpot has a strong foundation; now it needs to determine next best action', color: COLORS.teal },
     { num: 3, title: 'You are underleveraged on your existing network', color: COLORS.teal },
     { num: 4, title: 'The biggest missed signal is when a champion changes companies', color: COLORS.oxide },
-    { num: 5, title: "Ron's content builds brand, but the firm has no way to capture the demand it creates", color: COLORS.teal },
+    { num: 5, title: "The firm's content builds brand, but there is no way to capture the demand it creates", color: COLORS.teal },
   ]
 
   return (
@@ -221,7 +219,7 @@ function FramingSection() {
       <div style={{ minHeight: '70vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <ScrollReveal>
           <Kicker color={COLORS.teal}>ASSESSMENT FRAMING</Kicker>
-          <Headline color={COLORS.charcoal}>What we are testing</Headline>
+          <Headline color={COLORS.charcoal}>Five Hypotheses</Headline>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-8">
@@ -841,9 +839,10 @@ function Hypothesis4Section() {
       name: 'Jennifer Hudson',
       previousRole: 'HR Director',
       previousCompany: 'Climatec (Navalent client)',
-      newRole: 'HR Director',
-      newCompany: 'Bosch Building Technologies NA',
+      newRole: 'HR Director (via Bosch acquisition of Climatec)',
+      newCompany: 'Bosch Building Technologies North America',
       employees: '2,100',
+      note: 'Corporate acquisition rather than personal move — places a Navalent champion inside a significantly larger organization with broader transformation needs.',
     },
     {
       name: 'Matt Klitus',
@@ -1081,7 +1080,7 @@ function Hypothesis5Divider() {
   return (
     <SectionDivider
       number="HYPOTHESIS 05"
-      title="Content builds brand, but no way to capture the demand it creates."
+      title="The firm's content builds brand, but there is no way to capture the demand it creates."
       subtitle="101K impressions per quarter with zero visibility into which came from ICP contacts."
       color={COLORS.oxide}
       id="h5"
@@ -1094,15 +1093,18 @@ function Hypothesis5Divider() {
 
 function Hypothesis5Section() {
   const commenterData = [
-    { type: 'other', label: 'Other (ICs, managers, mixed)', value: 42.7, color: COLORS.secondary, icon: 'other' as const },
-    { type: 'coach', label: 'Coaches', value: 18.7, color: '#7C3AED', icon: 'coach' as const },
-    { type: 'csuite', label: 'C-suite (coaches/fractional)', value: 17.3, color: COLORS.sand, icon: 'csuite' as const },
-    { type: 'consultant', label: 'Consultants & advisors', value: 8.0, color: '#3bc9c4', icon: 'consultant' as const },
-    { type: 'founder', label: 'Founders & entrepreneurs', value: 5.3, color: COLORS.teal, icon: 'founder' as const },
-    { type: 'author', label: 'Authors & speakers', value: 2.7, color: COLORS.oxide, icon: 'author' as const },
-    { type: 'hr', label: 'HR practitioners', value: 2.7, color: COLORS.magenta, icon: 'hr' as const },
-    { type: 'vp', label: 'VP or Director level', value: 1.3, color: '#059669', icon: 'vp' as const },
-    { type: 'academic', label: 'Academic/student', value: 1.3, color: '#6B7280', icon: 'academic' as const },
+    { type: 'coach', label: 'Coach', value: 24.2, count: 48, color: '#7C3AED', icon: 'coach' as const },
+    { type: 'csuite', label: 'C-Suite (unknown size)', value: 15.2, count: 30, color: COLORS.sand, icon: 'csuite' as const },
+    { type: 'other', label: 'Other', value: 13.6, count: 27, color: COLORS.secondary, icon: 'other' as const },
+    { type: 'consultant', label: 'Consultant/Advisor', value: 13.1, count: 26, color: '#3bc9c4', icon: 'consultant' as const },
+    { type: 'author', label: 'Author/Speaker', value: 11.1, count: 22, color: COLORS.oxide, icon: 'author' as const },
+    { type: 'csuite-small', label: 'C-Suite (small firm)', value: 6.1, count: 12, color: '#D6985A', icon: 'csuite' as const },
+    { type: 'vp-other', label: 'VP/Director Other', value: 4.5, count: 9, color: '#059669', icon: 'vp' as const },
+    { type: 'academic', label: 'Academic/Student', value: 3.0, count: 6, color: '#6B7280', icon: 'academic' as const },
+    { type: 'hr', label: 'HR Practitioner', value: 3.0, count: 6, color: '#4A90D9', icon: 'hr' as const },
+    { type: 'founder', label: 'Founder/Entrepreneur', value: 2.0, count: 4, color: COLORS.teal, icon: 'founder' as const },
+    { type: 'vp-hr', label: 'VP/Director HR/People/OD', value: 2.0, count: 4, color: COLORS.magenta, icon: 'hr' as const },
+    { type: 'manager', label: 'Manager/IC', value: 2.0, count: 4, color: '#8B8B8B', icon: 'other' as const },
   ]
 
   return (
@@ -1179,6 +1181,25 @@ function Hypothesis5Section() {
         </div>
       </ScrollReveal>
 
+      {/* 12-month content analysis */}
+      <ScrollReveal>
+        <div style={{ marginTop: 48 }}>
+          <Kicker color={COLORS.oxide}>12-MONTH CONTENT ANALYSIS (333 POSTS)</Kicker>
+          <Body dark>
+            <p style={{ marginBottom: 16 }}>
+              Across 333 posts captured over 12 months, the theme distribution reveals what Ron's content engine actually produces. The themes that map directly to what Navalent sells — Org Design and Structure (2 posts, 0.6%), Cross-Functional Alignment (3 posts, 0.9%), and Leadership Team Effectiveness (7 posts, 2.1%) — account for just 3.6% of Ron's LinkedIn content.
+            </p>
+            <p>
+              Total engagement across 12 months: 10,024 reactions (30.1 average per post), 2,391 comments (7.2 average). Post type breakdown: 179 article shares (54%), 74 images (22%), 42 videos (13%), 38 text posts (11%).
+            </p>
+          </Body>
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <ContentThemeBarChart />
+      </ScrollReveal>
+
       <ScrollReveal>
         <Body dark>
           <p>
@@ -1219,11 +1240,12 @@ function Hypothesis5Section() {
       {/* Commenter breakdown with icons */}
       <ScrollReveal>
         <div style={{ marginBottom: 48 }}>
+          <Kicker color={COLORS.magenta}>COMMENTER ROLE ANALYSIS (12 MONTHS)</Kicker>
           <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 8 }}>
-            Who is commenting? 75 unique commenters analyzed
+            198 unique commenters analyzed across 12 months
           </div>
           <div style={{ fontFamily: FONT.body, fontSize: 14, color: 'rgba(246,245,242,0.7)', marginBottom: 20 }}>
-            182 total comments across last 30 posts. Role breakdown:
+            Role breakdown of Ron's highest-engagement post commenters:
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {commenterData.map((d, i) => (
@@ -1257,9 +1279,20 @@ function Hypothesis5Section() {
             ))}
           </div>
           <div style={{ marginTop: 16, fontFamily: FONT.body, fontSize: 14, fontWeight: 300, color: 'rgba(246,245,242,0.75)' }}>
-            0% of commenters are VP/Director of HR at a 500+ employee enterprise. But that does not mean they are not watching.
+            <strong style={{ color: COLORS.magenta }}>2.0%</strong> of commenters are VP/Director of HR/People/OD at any company (4 of 198 over 12 months). <strong style={{ color: COLORS.magenta }}>1</strong> commenter in 12 months works at a known Navalent client company.
           </div>
         </div>
+      </ScrollReveal>
+
+      {/* Commenter donut chart */}
+      <ScrollReveal>
+        <CommenterDonutViz data={commenterData} />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Callout color={COLORS.magenta} textColor={COLORS.offWhite}>
+          We matched all 198 commenters against Navalent's full client company list. One match: Kim Cupelli at Lamb Weston. The visible engagement layer and the buying layer are almost completely separate populations.
+        </Callout>
       </ScrollReveal>
 
       <ScrollReveal>
@@ -1296,6 +1329,78 @@ function Hypothesis5Section() {
             </div>
           </div>
         </div>
+      </ScrollReveal>
+
+      {/* Partner data finding */}
+      <ScrollReveal>
+        <div style={{ marginTop: 48 }}>
+          <Kicker color={COLORS.sand}>THE PARTNER DATA TELLS THE OTHER HALF OF THE STORY</Kicker>
+          <Body dark>
+            <p style={{ marginBottom: 20 }}>
+              The partner with the most new-business revenue in the firm, $2.06M across 15 deals, has zero LinkedIn posts in the last 12 months. Mindy Millward's deals source entirely from past clients and referrals. Her latest traffic source on every deal is "Offline Sources." Only 1 of her 24 deals originated from the website.
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              Meanwhile, Ron, who generates 101K views per quarter and has 30,892 followers, sources 9 of his 20 new business deals from the website. His content generates deal flow for him. Mindy's relationships generate deal flow without any content at all.
+            </p>
+            <p>
+              This is the strongest argument for relationship infrastructure over content marketing. Content is one input to the system. Relationships are the system.
+            </p>
+          </Body>
+        </div>
+      </ScrollReveal>
+
+      {/* Partner visibility and content concentration */}
+      <ScrollReveal>
+        <div style={{ marginTop: 48 }}>
+          <Kicker color={COLORS.sand}>PARTNER VISIBILITY AND THE CONTENT CONCENTRATION</Kicker>
+          <Body dark>
+            <p style={{ marginBottom: 20 }}>
+              <strong style={{ color: COLORS.offWhite }}>Ron Carucci:</strong> 30,892 LinkedIn followers. 508 posts in 3 years (4–5 per week). 9+ HBR bylines (2024–2026). 4+ Fast Company articles. Active Forbes contributor. 42+ podcast appearances. 2 TEDx talks (including one with 1.3M views). 3 LinkedIn Learning courses. 3 books (including an Amazon bestselling study of 2,600+ executives).
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              <strong style={{ color: COLORS.offWhite }}>Jarrod Shappell:</strong> 1,454 LinkedIn followers. 23 posts in 2 years. 3 HBR bylines. 1 podcast appearance. His personal storytelling posts outperform his article shares, with his top post generating 41 reactions vs. an average of 13. There is a foundation to build on.
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              <strong style={{ color: COLORS.offWhite }}>Mindy Millward:</strong> 261 posts over 11 years, zero in the last 12 months. Average engagement: 3.0 reactions per post. 40% of her content shares Ron's articles. She functions as an occasional amplifier of Ron's content, not an independent thought leader. And yet: she has the highest new-business revenue of any partner ($2.06M from 15 deals, 100% sourced from past clients and referrals, zero from content).
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              <strong style={{ color: COLORS.offWhite }}>Eric Hansen:</strong> 12 posts in a decade. Complete 7-year silence between 2018 and 2024. Zero original thought leadership.
+            </p>
+            <p style={{ marginBottom: 20 }}>
+              <strong style={{ color: COLORS.offWhite }}>Navalent company page:</strong> 1,586 followers. Only 2 posts in 11 months. Functionally dormant.
+            </p>
+            <p>
+              Ron's personal brand is approximately 20x more visible than the firm brand and 50x more visible than any other partner. This is both an asset and a liability.
+            </p>
+          </Body>
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <PartnerVisibilityScorecard partners={[
+          { name: 'Ron Carucci', followers: '30,892', posts: '508 in 3 years', hbr: '9+ bylines', podcasts: '42+', independence: 5, color: COLORS.teal },
+          { name: 'Jarrod Shappell', followers: '1,454', posts: '23 in 2 years', hbr: '3 bylines', podcasts: '1', independence: 2, color: COLORS.sand },
+          { name: 'Mindy Millward', followers: '~1,000', posts: '0 in 12 months', hbr: 'None', podcasts: 'None', independence: 0, color: COLORS.oxide },
+          { name: 'Eric Hansen', followers: '~500', posts: '12 in a decade', hbr: 'None', podcasts: 'None', independence: 0, color: COLORS.magenta },
+        ]} dark />
+      </ScrollReveal>
+
+      {/* The website gap */}
+      <ScrollReveal>
+        <div style={{ marginTop: 32 }}>
+          <Kicker color={COLORS.oxide}>THE WEBSITE GAP</Kicker>
+          <Body dark>
+            <p>
+              The navalent.com resource center contains an estimated 280+ blog posts. However, the website functions as a brochure: no gated content, no downloadable lead magnets, no assessment tools, no visible email nurture triggers. Blog posts have no visible CTA directing to contact or assessment. Every reader who doesn't proactively call (855) 949-1880 is lost.
+            </p>
+          </Body>
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Callout color={COLORS.sand} textColor={COLORS.offWhite}>
+          The succession question: If Ron stepped back from content tomorrow, what happens to Navalent's public presence? Right now, the answer is that it largely disappears. Building partner-independent visibility is not optional — it is an existential priority.
+        </Callout>
       </ScrollReveal>
 
       <VerdictBox
@@ -1408,6 +1513,691 @@ function InvisibleBuyerViz() {
         </div>
       </div>
     </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTENT THEME BAR CHART (12-MONTH ANALYSIS)
+   ═══════════════════════════════════════════════════════════════ */
+
+function ContentThemeBarChart() {
+  const themes = [
+    { label: 'Executive Coaching & Personal Development', posts: 119, pct: 35.7, core: false },
+    { label: 'Culture & Employee Experience', posts: 47, pct: 14.1, core: false },
+    { label: 'Ethical Leadership & Trust', posts: 44, pct: 13.2, core: false },
+    { label: 'Personal Vulnerability & Storytelling', posts: 28, pct: 8.4, core: false },
+    { label: 'Change Management', posts: 28, pct: 8.4, core: false },
+    { label: 'Political/Social Commentary', posts: 12, pct: 3.6, core: false },
+    { label: 'Strategic Decision-Making', posts: 11, pct: 3.3, core: false },
+    { label: 'Workplace Relationships & Communication', posts: 10, pct: 3.0, core: false },
+    { label: 'Power & Influence Dynamics', posts: 9, pct: 2.7, core: false },
+    { label: 'Career Transitions & Growth', posts: 8, pct: 2.4, core: false },
+    { label: 'Leadership Team Effectiveness', posts: 7, pct: 2.1, core: true },
+    { label: 'Cross-Functional Alignment', posts: 3, pct: 0.9, core: true },
+    { label: 'Org Design & Structure', posts: 2, pct: 0.6, core: true },
+    { label: 'Other', posts: 5, pct: 1.5, core: false },
+  ]
+
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.15 })
+
+  return (
+    <div ref={ref} style={{ margin: '32px 0', padding: '28px 24px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12 }}>
+      <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 8 }}>
+        Content theme distribution (333 posts, 12 months)
+      </div>
+      <div style={{ fontFamily: FONT.body, fontSize: 13, color: 'rgba(246,245,242,0.6)', marginBottom: 24 }}>
+        <span style={{ display: 'inline-block', width: 12, height: 12, borderRadius: 2, background: COLORS.oxide, marginRight: 6, verticalAlign: 'middle' }} /> General themes
+        <span style={{ display: 'inline-block', width: 12, height: 12, borderRadius: 2, background: COLORS.magenta, marginRight: 6, marginLeft: 16, verticalAlign: 'middle' }} /> Core Navalent service themes (3.6% combined)
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {themes.map((t, i) => (
+          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ fontFamily: FONT.body, fontSize: 13, color: t.core ? COLORS.magenta : COLORS.offWhite, fontWeight: t.core ? 700 : 400, minWidth: 260, textAlign: 'right', flexShrink: 0 }}>
+              {t.label}
+            </div>
+            <div style={{ flex: 1, height: 20, background: 'rgba(255,255,255,0.04)', borderRadius: 4, overflow: 'hidden' }}>
+              <motion.div
+                initial={{ width: 0 }}
+                animate={inView ? { width: `${(t.pct / 36) * 100}%` } : { width: 0 }}
+                transition={{ duration: 0.8, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                style={{ height: '100%', background: t.core ? COLORS.magenta : COLORS.oxide, borderRadius: 4 }}
+              />
+            </div>
+            <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: t.core ? COLORS.magenta : 'rgba(246,245,242,0.7)', minWidth: 70, textAlign: 'right' }}>
+              {t.posts} ({t.pct}%)
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COMMENTER DONUT VISUALIZATION
+   ═══════════════════════════════════════════════════════════════ */
+
+function CommenterDonutViz({ data }: { data: { type: string; label: string; value: number; count: number; color: string }[] }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.3 })
+  const size = 240
+  const strokeWidth = 36
+  const radius = (size - strokeWidth) / 2
+  const circumference = 2 * Math.PI * radius
+
+  let cumulativePercent = 0
+
+  return (
+    <div ref={ref} style={{ margin: '32px 0', padding: '28px 24px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12 }}>
+      <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 24, textAlign: 'center' }}>
+        Commenter role distribution (198 unique, 12 months)
+      </div>
+      <div className="flex flex-col md:flex-row items-center gap-8" style={{ justifyContent: 'center' }}>
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ transform: 'rotate(-90deg)', flexShrink: 0 }}>
+          {data.map((d, i) => {
+            const dashLength = (d.value / 100) * circumference
+            const dashOffset = -(cumulativePercent / 100) * circumference
+            cumulativePercent += d.value
+            return (
+              <motion.circle
+                key={i}
+                cx={size / 2}
+                cy={size / 2}
+                r={radius}
+                fill="none"
+                stroke={d.color}
+                strokeWidth={strokeWidth}
+                strokeDasharray={`${dashLength} ${circumference - dashLength}`}
+                strokeDashoffset={dashOffset}
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 0.6, delay: i * 0.05 }}
+              />
+            )
+          })}
+          <text
+            x={size / 2}
+            y={size / 2 - 8}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            style={{ transform: 'rotate(90deg)', transformOrigin: 'center', fontFamily: FONT.body, fontWeight: 800, fontSize: 28, fill: COLORS.offWhite }}
+          >
+            198
+          </text>
+          <text
+            x={size / 2}
+            y={size / 2 + 16}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            style={{ transform: 'rotate(90deg)', transformOrigin: 'center', fontFamily: FONT.body, fontWeight: 400, fontSize: 11, fill: 'rgba(246,245,242,0.6)' }}
+          >
+            commenters
+          </text>
+        </svg>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          {data.map((d, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: 10 }}
+              animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 10 }}
+              transition={{ delay: i * 0.04 + 0.3 }}
+              style={{ display: 'flex', alignItems: 'center', gap: 8 }}
+            >
+              <div style={{ width: 10, height: 10, borderRadius: 2, background: d.color, flexShrink: 0 }} />
+              <div style={{ fontFamily: FONT.body, fontSize: 13, color: d.type === 'vp-hr' ? COLORS.magenta : COLORS.offWhite, fontWeight: d.type === 'vp-hr' ? 700 : 400, whiteSpace: 'nowrap' }}>
+                {d.label}: {d.count} ({d.value}%)
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+      <div style={{ marginTop: 20, textAlign: 'center', fontFamily: FONT.body, fontSize: 14, color: COLORS.magenta, fontWeight: 700 }}>
+        ICP buyer segment (VP/Director HR/People/OD): 2.0%
+      </div>
+    </div>
+  )
+}
+
+
+function PartnerVisibilityScorecard({ partners, dark = false }: { partners: { name: string; followers: string; posts: string; hbr: string; podcasts: string; independence: number; color: string }[]; dark?: boolean }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.2 })
+
+  const metrics = ['LinkedIn Followers', 'Posts', 'HBR Bylines', 'Podcast Appearances', 'Content Independence']
+  const textColor = dark ? COLORS.offWhite : COLORS.charcoal
+  const subtextColor = dark ? 'rgba(246,245,242,0.7)' : COLORS.secondary
+  const stripeBg = dark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)'
+  const emptyDot = dark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)'
+
+  const getMetricValue = (p: typeof partners[0], metric: string) => {
+    switch (metric) {
+      case 'LinkedIn Followers': return p.followers
+      case 'Posts': return p.posts
+      case 'HBR Bylines': return p.hbr
+      case 'Podcast Appearances': return p.podcasts
+      case 'Content Independence': return null
+      default: return ''
+    }
+  }
+
+  return (
+    <div ref={ref} style={{ margin: '32px 0', overflowX: 'auto' }}>
+      <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: textColor, marginBottom: 20 }}>
+        Partner visibility comparison
+      </div>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: FONT.body, fontSize: 14 }}>
+        <thead>
+          <tr>
+            <th style={{ textAlign: 'left', padding: '12px 16px', borderBottom: `2px solid ${textColor}`, fontWeight: 700, color: textColor }} />
+            {partners.map((p, i) => (
+              <motion.th
+                key={i}
+                initial={{ opacity: 0, y: -10 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
+                transition={{ delay: i * 0.15 }}
+                style={{ textAlign: 'center', padding: '12px 16px', borderBottom: `3px solid ${p.color}`, fontWeight: 700, color: p.color, minWidth: 140 }}
+              >
+                {p.name}
+              </motion.th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {metrics.map((metric, mi) => (
+            <tr key={mi} style={{ background: mi % 2 === 0 ? stripeBg : 'transparent' }}>
+              <td style={{ padding: '10px 16px', fontWeight: 600, color: subtextColor, fontSize: 13 }}>{metric}</td>
+              {partners.map((p, pi) => (
+                <motion.td
+                  key={pi}
+                  initial={{ opacity: 0 }}
+                  animate={inView ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{ delay: pi * 0.15 + mi * 0.05 + 0.2 }}
+                  style={{ textAlign: 'center', padding: '10px 16px', color: textColor, fontSize: 13 }}
+                >
+                  {metric === 'Content Independence' ? (
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: 4 }}>
+                      {[1, 2, 3, 4, 5].map((dot) => (
+                        <div
+                          key={dot}
+                          style={{
+                            width: 10,
+                            height: 10,
+                            borderRadius: '50%',
+                            background: dot <= p.independence ? p.color : emptyDot,
+                            transition: 'background 0.3s',
+                          }}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    getMetricValue(p, metric)
+                  )}
+                </motion.td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TWO-ENGINE ANIMATED VISUAL
+   ═══════════════════════════════════════════════════════════════ */
+
+function TwoEngineViz() {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.25 })
+  const [phase, setPhase] = useState(0)
+
+  useEffect(() => {
+    if (!inView) return
+    const t1 = setTimeout(() => setPhase(1), 1000)
+    const t2 = setTimeout(() => setPhase(2), 2500)
+    return () => { clearTimeout(t1); clearTimeout(t2) }
+  }, [inView])
+
+  return (
+    <div ref={ref} style={{ margin: '48px 0', padding: '40px 24px', maxWidth: 720, marginLeft: 'auto', marginRight: 'auto' }}>
+      <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 13, letterSpacing: '0.12em', color: COLORS.sand, marginBottom: 8, textAlign: 'center' }}>
+        {phase < 1 ? 'TODAY' : phase < 2 ? 'WITH INFRASTRUCTURE' : 'THE MULTIPLIER'}
+      </div>
+
+      <div className="two-engine-container" style={{ position: 'relative' }}>
+        {/* Desktop: side-by-side / Mobile: stacked */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12" style={{ position: 'relative' }}>
+
+          {/* Content Engine */}
+          <motion.div
+            animate={{
+              x: phase >= 2 ? 20 : 0,
+              scale: phase >= 2 ? 0.95 : 1,
+            }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              width: 280,
+              padding: '28px 24px',
+              background: `rgba(184,92,74,0.08)`,
+              border: `2px solid ${COLORS.oxide}`,
+              borderRadius: 16,
+              boxShadow: '0 4px 24px rgba(0,0,0,0.1)',
+              position: 'relative',
+              zIndex: 2,
+            }}
+          >
+            <div style={{ fontFamily: FONT.body, fontWeight: 800, fontSize: 13, letterSpacing: '0.12em', color: COLORS.oxide, marginBottom: 16, textAlign: 'center' }}>
+              CONTENT ENGINE
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontFamily: FONT.body, fontSize: 13, color: COLORS.charcoal }}>
+              <div><strong>30,892</strong> followers</div>
+              <div><strong>508</strong> posts</div>
+              <div><strong>101K</strong> views/quarter</div>
+              <div style={{ marginTop: 8, fontSize: 12, fontStyle: 'italic', color: COLORS.secondary }}>Reaches buyers who are invisible</div>
+            </div>
+          </motion.div>
+
+          {/* Connection area */}
+          <div style={{ position: 'relative', width: 160, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            {/* Phase 0: faint dashed line */}
+            {phase < 1 && (
+              <svg width="160" height="80" viewBox="0 0 160 80" style={{ position: 'absolute', inset: 0 }}>
+                <line x1="0" y1="40" x2="160" y2="40" stroke={COLORS.secondary} strokeWidth="1" strokeDasharray="6 4" opacity="0.4" />
+                <text x="80" y="30" textAnchor="middle" style={{ fontFamily: FONT.body, fontSize: 8, fontWeight: 600, letterSpacing: '0.08em', fill: COLORS.secondary, opacity: 0.6 }}>
+                  INFORMAL, INCONSISTENT
+                </text>
+                <text x="80" y="58" textAnchor="middle" style={{ fontFamily: FONT.body, fontSize: 8, fontWeight: 600, letterSpacing: '0.08em', fill: COLORS.secondary, opacity: 0.6 }}>
+                  PERSON-DEPENDENT
+                </text>
+              </svg>
+            )}
+
+            {/* Phase 1+: solid glowing line with diamond */}
+            {phase >= 1 && (
+              <>
+                <svg width="160" height="80" viewBox="0 0 160 80" style={{ position: 'absolute', inset: 0 }}>
+                  <motion.line
+                    x1="0" y1="40" x2="160" y2="40"
+                    stroke={COLORS.sand}
+                    strokeWidth="2"
+                    strokeDasharray="160"
+                    initial={{ strokeDashoffset: 160 }}
+                    animate={{ strokeDashoffset: 0 }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  />
+                  <motion.line
+                    x1="0" y1="40" x2="160" y2="40"
+                    stroke={COLORS.sand}
+                    strokeWidth="4"
+                    strokeDasharray="160"
+                    initial={{ strokeDashoffset: 160, opacity: 0.4 }}
+                    animate={{ strokeDashoffset: 0, opacity: [0.4, 0.8, 0.4] }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ filter: 'blur(4px)' }}
+                  />
+                </svg>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                  style={{
+                    width: 14,
+                    height: 14,
+                    background: COLORS.sand,
+                    transform: 'rotate(45deg)',
+                    position: 'relative',
+                    zIndex: 1,
+                    boxShadow: `0 0 12px ${COLORS.sand}`,
+                  }}
+                />
+              </>
+            )}
+          </div>
+
+          {/* Relationship Engine */}
+          <motion.div
+            animate={{
+              x: phase >= 2 ? -20 : 0,
+              scale: phase >= 2 ? 0.95 : 1,
+            }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              width: 280,
+              padding: '28px 24px',
+              background: `rgba(31,167,162,0.08)`,
+              border: `2px solid ${COLORS.teal}`,
+              borderRadius: 16,
+              boxShadow: '0 4px 24px rgba(0,0,0,0.1)',
+              position: 'relative',
+              zIndex: 2,
+            }}
+          >
+            <div style={{ fontFamily: FONT.body, fontWeight: 800, fontSize: 13, letterSpacing: '0.12em', color: COLORS.teal, marginBottom: 16, textAlign: 'center' }}>
+              RELATIONSHIP ENGINE
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontFamily: FONT.body, fontSize: 13, color: COLORS.charcoal }}>
+              <div><strong>$4.8M</strong> pipeline (Mindy)</div>
+              <div><strong>$3.99M</strong> closed-won</div>
+              <div><strong>100%</strong> offline sourcing</div>
+              <div style={{ marginTop: 8, fontSize: 12, fontStyle: 'italic', color: COLORS.secondary }}>Closes deals no content touches</div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Infrastructure label (phase 1+) */}
+        {phase >= 1 && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+            style={{ textAlign: 'center', marginTop: 24, fontFamily: FONT.body, fontSize: 13, fontWeight: 700, letterSpacing: '0.08em', color: COLORS.sand }}
+          >
+            RELATIONSHIP INFRASTRUCTURE
+          </motion.div>
+        )}
+        {phase >= 1 && phase < 2 && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.5 }}
+            style={{ textAlign: 'center', marginTop: 12, fontFamily: FONT.body, fontSize: 14, fontWeight: 300, color: COLORS.secondary, maxWidth: 500, marginLeft: 'auto', marginRight: 'auto' }}
+          >
+            What changes when you add infrastructure:
+          </motion.div>
+        )}
+
+        {/* Multiplier (phase 2) */}
+        {phase >= 2 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            style={{ textAlign: 'center', marginTop: 16 }}
+          >
+            <div style={{ fontFamily: FONT.display, fontWeight: 900, fontSize: 48, color: COLORS.sand, marginBottom: 8 }}>
+              1 + 1 = 3
+            </div>
+            <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 300, color: COLORS.secondary, maxWidth: 520, marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.6 }}>
+              Content creates air cover. The enriched CRM tells you who's underneath it. The partner who owns the relationship gets the signal. The system makes the connection repeatable.
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PARTNER COMPARISON TABLE
+   ═══════════════════════════════════════════════════════════════ */
+
+function PartnerComparisonTable() {
+  const partners = [
+    { name: 'Ron Carucci', content: '30,892 followers, 508 posts, 42+ podcasts', relationship: '33 deals, $4.6M pipeline, $2.65M won' },
+    { name: 'Jarrod Shappell', content: '1,454 followers, 23 posts, emerging', relationship: '27 deals, $1.9M pipeline, $785K won' },
+    { name: 'Mindy Millward', content: 'Zero posts in 12 months, dormant', relationship: '24 deals, $4.8M pipeline, $3.99M won' },
+    { name: 'Eric Hansen', content: '12 posts in a decade, invisible', relationship: '9 deals, $355K pipeline, $205K won' },
+  ]
+
+  return (
+    <div style={{ margin: '32px 0' }}>
+      <div style={{ overflowX: 'auto' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: FONT.body, fontSize: 14 }}>
+          <thead>
+            <tr>
+              <th style={{ textAlign: 'left', padding: '12px 16px', borderBottom: `2px solid ${COLORS.charcoal}`, fontWeight: 700, color: COLORS.charcoal }}>Partner</th>
+              <th style={{ textAlign: 'left', padding: '12px 16px', borderBottom: `2px solid ${COLORS.oxide}`, fontWeight: 700, color: COLORS.oxide }}>Content Engine</th>
+              <th style={{ textAlign: 'left', padding: '12px 16px', borderBottom: `2px solid ${COLORS.teal}`, fontWeight: 700, color: COLORS.teal }}>Relationship Engine</th>
+              <th style={{ textAlign: 'center', padding: '12px 16px', borderBottom: `2px solid ${COLORS.magenta}`, fontWeight: 700, color: COLORS.magenta }}>Systematic connection?</th>
+            </tr>
+          </thead>
+          <tbody>
+            {partners.map((p, i) => (
+              <tr key={i} style={{ background: i % 2 === 0 ? 'rgba(0,0,0,0.02)' : 'transparent' }}>
+                <td style={{ padding: '10px 16px', fontWeight: 700, color: COLORS.charcoal }}>{p.name}</td>
+                <td style={{ padding: '10px 16px', color: COLORS.secondary, fontSize: 13 }}>{p.content}</td>
+                <td style={{ padding: '10px 16px', color: COLORS.secondary, fontSize: 13 }}>{p.relationship}</td>
+                <td style={{ padding: '10px 16px', textAlign: 'center', fontWeight: 800, color: COLORS.magenta }}>None</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div style={{ marginTop: 16, fontFamily: FONT.body, fontSize: 15, fontWeight: 300, fontStyle: 'italic', color: COLORS.secondary, textAlign: 'center' }}>
+        Four partners. Two growth levers. No system bringing them together.
+      </div>
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   APPENDICES
+   ═══════════════════════════════════════════════════════════════ */
+
+function AppendicesSection() {
+  const auditItems = [
+    { item: 'HubSpot contact export & schema review', status: 'Complete' },
+    { item: 'Revenue client identification (13 companies)', status: 'Complete' },
+    { item: '200-contact enrichment via Apollo', status: 'Complete' },
+    { item: 'Role change detection across enriched sample', status: 'Complete' },
+    { item: 'Champion movement tracking (5 confirmed)', status: 'Complete' },
+    { item: 'Net-new HOT opportunity identification (5 confirmed)', status: 'Complete' },
+    { item: 'LinkedIn 90-day performance analysis', status: 'Complete' },
+    { item: 'LinkedIn 12-month content theme analysis (333 posts)', status: 'Complete' },
+    { item: 'Commenter role analysis (198 unique, 12 months)', status: 'Complete' },
+    { item: 'Commenter-to-client crosswalk', status: 'Complete' },
+    { item: 'HubSpot deal pipeline extraction', status: 'Complete' },
+    { item: 'Partner deal attribution by source', status: 'Complete' },
+    { item: 'Partner revenue comparison (all 4 partners)', status: 'Complete' },
+    { item: 'Contact source distribution analysis', status: 'Complete' },
+    { item: 'Returning vs. new client revenue split', status: 'Complete' },
+    { item: 'Client concentration analysis (top 13)', status: 'Complete' },
+    { item: 'Thought leadership audit (all 4 partners)', status: 'Complete' },
+    { item: 'Company page & website content audit', status: 'Complete' },
+    { item: 'Post-type distribution analysis', status: 'Complete' },
+    { item: 'Navalent company LinkedIn page review', status: 'Complete' },
+    { item: 'Website conversion path analysis', status: 'Complete' },
+    { item: 'Full engagement theme-to-service mapping', status: 'Complete' },
+    { item: "Marie's analytics integration (website visitor → content attribution)", status: 'Partial' },
+    { item: 'Full 7,876 contact enrichment', status: 'Partial' },
+    { item: 'ICP contact identification within LinkedIn viewers', status: 'Partial' },
+  ]
+
+  const dealSummary = [
+    { partner: 'Ron Carucci', deals: 33, pipeline: '$4.6M', won: '$2.65M', newBiz: 20, returning: 13, webSource: 9 },
+    { partner: 'Jarrod Shappell', deals: 27, pipeline: '$1.9M', won: '$785K', newBiz: 12, returning: 15, webSource: 3 },
+    { partner: 'Mindy Millward', deals: 24, pipeline: '$4.8M', won: '$3.99M', newBiz: 15, returning: 9, webSource: 1 },
+    { partner: 'Eric Hansen', deals: 9, pipeline: '$355K', won: '$205K', newBiz: 5, returning: 4, webSource: 0 },
+  ]
+
+  const themeData = [
+    { theme: 'Executive Coaching & Personal Development', posts: 119, pct: '35.7%' },
+    { theme: 'Culture & Employee Experience', posts: 47, pct: '14.1%' },
+    { theme: 'Ethical Leadership & Trust', posts: 44, pct: '13.2%' },
+    { theme: 'Personal Vulnerability & Storytelling', posts: 28, pct: '8.4%' },
+    { theme: 'Change Management', posts: 28, pct: '8.4%' },
+    { theme: 'Political/Social Commentary', posts: 12, pct: '3.6%' },
+    { theme: 'Strategic Decision-Making', posts: 11, pct: '3.3%' },
+    { theme: 'Workplace Relationships & Communication', posts: 10, pct: '3.0%' },
+    { theme: 'Power & Influence Dynamics', posts: 9, pct: '2.7%' },
+    { theme: 'Career Transitions & Growth', posts: 8, pct: '2.4%' },
+    { theme: 'Leadership Team Effectiveness', posts: 7, pct: '2.1%' },
+    { theme: 'Cross-Functional Alignment', posts: 3, pct: '0.9%' },
+    { theme: 'Org Design & Structure', posts: 2, pct: '0.6%' },
+    { theme: 'Other', posts: 5, pct: '1.5%' },
+  ]
+
+  const roleData = [
+    { role: 'Coach', count: 48, pct: '24.2%' },
+    { role: 'C-Suite (unknown size)', count: 30, pct: '15.2%' },
+    { role: 'Other', count: 27, pct: '13.6%' },
+    { role: 'Consultant/Advisor', count: 26, pct: '13.1%' },
+    { role: 'Author/Speaker', count: 22, pct: '11.1%' },
+    { role: 'C-Suite (small firm)', count: 12, pct: '6.1%' },
+    { role: 'VP/Director Other', count: 9, pct: '4.5%' },
+    { role: 'Academic/Student', count: 6, pct: '3.0%' },
+    { role: 'HR Practitioner', count: 6, pct: '3.0%' },
+    { role: 'Founder/Entrepreneur', count: 4, pct: '2.0%' },
+    { role: 'VP/Director HR/People/OD', count: 4, pct: '2.0%' },
+    { role: 'Manager/IC', count: 4, pct: '2.0%' },
+  ]
+
+  const tableStyle = { width: '100%' as const, borderCollapse: 'collapse' as const, fontFamily: FONT.body, fontSize: 13 }
+  const thStyle = { textAlign: 'left' as const, padding: '10px 12px', borderBottom: `2px solid ${COLORS.charcoal}`, fontWeight: 700 as const, color: COLORS.charcoal, fontSize: 12 }
+  const tdStyle = { padding: '8px 12px', borderBottom: `1px solid ${COLORS.divider}`, color: COLORS.secondary }
+
+  return (
+    <Section id="appendices">
+      <ScrollReveal>
+        <Kicker color={COLORS.secondary}>APPENDICES</Kicker>
+        <Headline color={COLORS.charcoal}>Supporting data and methodology</Headline>
+      </ScrollReveal>
+
+      {/* Appendix A */}
+      <ScrollReveal>
+        <div style={{ marginTop: 48, marginBottom: 48 }}>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginBottom: 16 }}>
+            Appendix A: Audit Completion Tracker
+          </div>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={tableStyle}>
+              <thead>
+                <tr>
+                  <th style={thStyle}>Data Item</th>
+                  <th style={{ ...thStyle, textAlign: 'center', width: 100 }}>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {auditItems.map((a, i) => (
+                  <tr key={i} style={{ background: i % 2 === 0 ? 'rgba(0,0,0,0.02)' : 'transparent' }}>
+                    <td style={tdStyle}>{a.item}</td>
+                    <td style={{ ...tdStyle, textAlign: 'center' }}>
+                      {a.status === 'Complete' ? (
+                        <span style={{ color: COLORS.teal, fontWeight: 700 }}>✓ Complete</span>
+                      ) : (
+                        <span style={{ color: COLORS.sand, fontWeight: 700 }}>◐ Partial</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </ScrollReveal>
+
+      {/* Appendix B */}
+      <ScrollReveal>
+        <div style={{ marginBottom: 48 }}>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginBottom: 16 }}>
+            Appendix B: Partner Deal Activity and Revenue Attribution
+          </div>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={tableStyle}>
+              <thead>
+                <tr>
+                  <th style={thStyle}>Partner</th>
+                  <th style={{ ...thStyle, textAlign: 'center' }}>Total Deals</th>
+                  <th style={{ ...thStyle, textAlign: 'center' }}>Pipeline</th>
+                  <th style={{ ...thStyle, textAlign: 'center' }}>Won</th>
+                  <th style={{ ...thStyle, textAlign: 'center' }}>New Biz</th>
+                  <th style={{ ...thStyle, textAlign: 'center' }}>Returning</th>
+                  <th style={{ ...thStyle, textAlign: 'center' }}>Web-Sourced</th>
+                </tr>
+              </thead>
+              <tbody>
+                {dealSummary.map((d, i) => (
+                  <tr key={i} style={{ background: i % 2 === 0 ? 'rgba(0,0,0,0.02)' : 'transparent' }}>
+                    <td style={{ ...tdStyle, fontWeight: 700, color: COLORS.charcoal }}>{d.partner}</td>
+                    <td style={{ ...tdStyle, textAlign: 'center' }}>{d.deals}</td>
+                    <td style={{ ...tdStyle, textAlign: 'center' }}>{d.pipeline}</td>
+                    <td style={{ ...tdStyle, textAlign: 'center' }}>{d.won}</td>
+                    <td style={{ ...tdStyle, textAlign: 'center' }}>{d.newBiz}</td>
+                    <td style={{ ...tdStyle, textAlign: 'center' }}>{d.returning}</td>
+                    <td style={{ ...tdStyle, textAlign: 'center' }}>{d.webSource}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Body>
+            <p style={{ marginTop: 16 }}>
+              Mindy Millward's sourcing pattern is the clearest illustration of the relationship engine: $2.06M in new-business revenue across 15 deals, sourced entirely from past clients and referrals. Her latest traffic source on every deal is "Offline Sources." Only 1 of 24 deals originated from the website. Ron, by contrast, sources 9 of 20 new-business deals from the website — his content generates deal flow directly.
+            </p>
+          </Body>
+        </div>
+      </ScrollReveal>
+
+      {/* Appendix C */}
+      <ScrollReveal>
+        <div style={{ marginBottom: 48 }}>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginBottom: 16 }}>
+            Appendix C: Ron Carucci Content Theme Distribution
+          </div>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={tableStyle}>
+              <thead>
+                <tr>
+                  <th style={thStyle}>Theme</th>
+                  <th style={{ ...thStyle, textAlign: 'center' }}>Posts</th>
+                  <th style={{ ...thStyle, textAlign: 'center' }}>% of Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {themeData.map((t, i) => {
+                  const isCore = ['Leadership Team Effectiveness', 'Cross-Functional Alignment', 'Org Design & Structure'].includes(t.theme)
+                  return (
+                    <tr key={i} style={{ background: isCore ? 'rgba(212,61,141,0.06)' : i % 2 === 0 ? 'rgba(0,0,0,0.02)' : 'transparent' }}>
+                      <td style={{ ...tdStyle, fontWeight: isCore ? 700 : 400, color: isCore ? COLORS.magenta : COLORS.secondary }}>{t.theme}</td>
+                      <td style={{ ...tdStyle, textAlign: 'center', fontWeight: isCore ? 700 : 400, color: isCore ? COLORS.magenta : COLORS.secondary }}>{t.posts}</td>
+                      <td style={{ ...tdStyle, textAlign: 'center', fontWeight: isCore ? 700 : 400, color: isCore ? COLORS.magenta : COLORS.secondary }}>{t.pct}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </ScrollReveal>
+
+      {/* Appendix D */}
+      <ScrollReveal>
+        <div style={{ marginBottom: 48 }}>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginBottom: 16 }}>
+            Appendix D: Commenter Role Analysis
+          </div>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={tableStyle}>
+              <thead>
+                <tr>
+                  <th style={thStyle}>Role Category</th>
+                  <th style={{ ...thStyle, textAlign: 'center' }}>Count</th>
+                  <th style={{ ...thStyle, textAlign: 'center' }}>% of Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {roleData.map((r, i) => {
+                  const isICP = r.role === 'VP/Director HR/People/OD'
+                  return (
+                    <tr key={i} style={{ background: isICP ? 'rgba(212,61,141,0.06)' : i % 2 === 0 ? 'rgba(0,0,0,0.02)' : 'transparent' }}>
+                      <td style={{ ...tdStyle, fontWeight: isICP ? 700 : 400, color: isICP ? COLORS.magenta : COLORS.secondary }}>{r.role}</td>
+                      <td style={{ ...tdStyle, textAlign: 'center', fontWeight: isICP ? 700 : 400, color: isICP ? COLORS.magenta : COLORS.secondary }}>{r.count}</td>
+                      <td style={{ ...tdStyle, textAlign: 'center', fontWeight: isICP ? 700 : 400, color: isICP ? COLORS.magenta : COLORS.secondary }}>{r.pct}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+          <Body>
+            <p style={{ marginTop: 16 }}>
+              Client crosswalk finding: Of 198 unique commenters matched against Navalent's full client company list, 1 match was found — Kim Cupelli at Lamb Weston. The visible engagement layer and the buying layer are almost completely separate populations.
+            </p>
+          </Body>
+        </div>
+      </ScrollReveal>
+    </Section>
   )
 }
 
@@ -1545,6 +2335,42 @@ function EditorialSection() {
         </BodyWithMargin>
       </ScrollReveal>
 
+      {/* The Two Growth Levers */}
+      <ScrollReveal>
+        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
+          Two growth levers. No repeatable system connecting them.
+        </div>
+        <Body>
+          <p style={{ marginBottom: 20 }}>
+            This firm runs two powerful demand creation engines.
+          </p>
+          <p style={{ marginBottom: 20 }}>
+            Engine one is Ron's content: 30,892 followers, 508 posts in 3 years, 42+ podcasts, 101K views per quarter. Broad reach, strong brand, zero capture infrastructure.
+          </p>
+          <p style={{ marginBottom: 20 }}>
+            Engine two is the partner relationship network: Mindy alone has $4.8M in pipeline and $3.99M in closed-won revenue, sourced entirely through past clients and referrals. Zero LinkedIn posts in 12 months.
+          </p>
+          <p>
+            There is no repeatable, scalable system that brings these two powerful growth levers together. The infrastructure we build creates the system that makes this connection consistent, visible, and scalable.
+          </p>
+        </Body>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <TwoEngineViz />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <PartnerComparisonTable />
+      </ScrollReveal>
+
+      {/* Transition to From/To */}
+      <ScrollReveal>
+        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.charcoal, marginTop: 32, marginBottom: 16 }}>
+          Here is what that looks like, specifically:
+        </div>
+      </ScrollReveal>
+
       {/* From / To transformation */}
       <ScrollReveal>
         <TransformationTable
@@ -1582,10 +2408,10 @@ function EditorialSection() {
         </BodyWithMargin>
       </ScrollReveal>
 
-      {/* What Ron's content actually does */}
+      {/* Where the real leverage is */}
       <ScrollReveal>
         <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
-          What Ron's content actually does
+          Where the real leverage is
         </div>
         <BodyWithMargin
           stat="21"
@@ -1599,25 +2425,8 @@ function EditorialSection() {
           <p style={{ marginBottom: 20 }}>
             And let me speak to the 800lb elephant in the room: Ron will not be doing this forever. It's a fact partners at the firm have named openly, and as such, our engine needs to respect the trust he has built over 21 years and make it something the firm can see, measure, and maintain in the future.
           </p>
-        </BodyWithMargin>
-      </ScrollReveal>
-
-      {/* Where the real leverage is */}
-      <ScrollReveal>
-        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
-          Where the real leverage is
-        </div>
-        <BodyWithMargin
-          stat="0"
-          statLabel="In Nurture Today"
-          statSublabel="of ~5,000 past contacts"
-          statColor={COLORS.magenta}
-        >
           <p style={{ marginBottom: 20 }}>
-            Every firm in the consulting space is trying to solve the same problem: how do you stay relevant to buyers who aren't in-market right now but will be in 12, 18, or 36 months? Most of them try to solve it with content, campaigns, and outbound. That's a volume play. It works for firms that sell commodities.
-          </p>
-          <p>
-            Navalent doesn't sell a commodity. It sells transformation. And transformation is bought on trust, not on a well-timed email or LinkedIn DM. The leverage is in making the relationships Navalent has already built visible, maintainable, and scalable without bloating weekly schedules with tedious tasks.
+            The leverage is in making the relationships Navalent has already built visible, maintainable, and scalable without bloating weekly schedules with tedious tasks. Today, zero of the roughly 5,000 executives Navalent has touched are in a systematic nurture program. The infrastructure changes that.
           </p>
         </BodyWithMargin>
       </ScrollReveal>
@@ -1801,26 +2610,40 @@ function RecommendationsSection() {
       title: 'Enrich every corporate contact',
       description:
         'The 787 contacts at revenue client companies are the priority: append current title, current company, seniority, LinkedIn URL, and last role change date. This turns a flat list into a living map. Then conduct a full enrichment pull for 7,676 contacts.',
+      sprint: 'Sprint 1 · Days 1–30',
+      proves: 'Signal density holds beyond the 200-contact sample',
+      gate: 'Do we have enough signals to justify building the tracking layer?',
     },
     {
       title: 'Build champion tracking as permanent capability',
       description:
         "Role changes at known contacts are the highest-intent signal in your business. When Shauna Nylund moves from Scoular to nVent, that should surface in someone's inbox within 48 hours, not whenever someone happens to remember her name.",
+      sprint: 'Sprint 2 · Days 31–60',
+      proves: 'Partners receive timely, actionable signals they would not otherwise see',
+      gate: 'Are partners acting on the signals?',
     },
     {
       title: "Connect Ron's content to the CRM",
       description:
         "When an ICP-matching executive engages with a post, that signal needs to flow into HubSpot. Not as a vanity metric. As a relationship signal. The goal is to see who's paying attention, so that when Jarrod or Ron reaches out, they have context.",
+      sprint: 'Sprint 2 · Days 31–60',
+      proves: 'Partners receive timely, actionable signals they would not otherwise see',
     },
     {
       title: 'Create post-engagement nurture system',
       description:
         'Every person touched during discovery and delivery enters a quarterly nurture path. Not a newsletter. A warm, relevant, human-feeling touch that says "we remember you, we\'re still here, and we\'re still thinking about the kind of problems you face."',
+      sprint: 'Sprint 3 · Days 61–90',
+      proves: 'Relationships can be maintained at scale without adding headcount',
+      gate: 'Is the warmth model producing scores the partners trust?',
     },
     {
       title: 'Measure warmth, not pipeline',
       description:
         'Stop measuring success by leads generated. Start measuring it by relationship depth across your top 100 accounts. How many contacts do you know? How recently have you touched them? Which accounts are getting warmer and which are cooling?',
+      sprint: 'Sprint 4 · Days 91–120',
+      proves: 'The system runs. Can Navalent sustain this independently?',
+      gate: 'What does Phase 3 look like?',
     },
   ]
 
@@ -1832,13 +2655,67 @@ function RecommendationsSection() {
           color={COLORS.teal}
           subtitle="The play is to make the invisible visible."
         >
-          What we should build.
+          What we should build, and how we'll prove it.
         </DisplayType>
       </ScrollReveal>
 
       <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
         {recs.map((r, i) => (
-          <RecommendationCard key={i} number={i + 1} title={r.title} description={r.description} accent={COLORS.teal} />
+          <div
+            key={i}
+            style={{
+              padding: '24px 28px',
+              background: i === 0 ? 'rgba(31,167,162,0.06)' : 'rgba(255,255,255,0.03)',
+              border: i === 0 ? `1px solid rgba(31,167,162,0.2)` : '1px solid rgba(255,255,255,0.08)',
+              borderTop: `3px solid ${COLORS.teal}`,
+              borderRadius: 8,
+            }}
+          >
+            {/* Sprint tag */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+              <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, letterSpacing: '0.15em', color: COLORS.teal }}>
+                0{i + 1}
+              </div>
+              <div style={{
+                fontFamily: FONT.body,
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: '0.08em',
+                color: COLORS.sand,
+                background: 'rgba(214,178,109,0.12)',
+                padding: '3px 10px',
+                borderRadius: 12,
+              }}>
+                {r.sprint}
+              </div>
+            </div>
+            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.offWhite, marginBottom: 8 }}>
+              {r.title}
+            </div>
+            <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 15, lineHeight: 1.6, color: 'rgba(246,245,242,0.88)', marginBottom: 16 }}>
+              {r.description}
+            </div>
+            {/* What we prove */}
+            <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 12 }}>
+              <div style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: COLORS.teal, marginBottom: 4 }}>
+                WHAT WE PROVE
+              </div>
+              <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, color: 'rgba(246,245,242,0.7)', lineHeight: 1.5 }}>
+                {r.proves}
+              </div>
+            </div>
+            {/* Decision gate */}
+            {r.gate && (
+              <div style={{ marginTop: 10 }}>
+                <div style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: COLORS.sand, marginBottom: 4 }}>
+                  DECISION GATE
+                </div>
+                <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, fontStyle: 'italic', color: 'rgba(246,245,242,0.6)', lineHeight: 1.5 }}>
+                  {r.gate}
+                </div>
+              </div>
+            )}
+          </div>
         ))}
       </StaggerGroup>
     </Section>
@@ -1868,7 +2745,7 @@ function TimelineSection() {
         <Kicker color={COLORS.sand}>WHAT COMES NEXT</Kicker>
         <Headline color={COLORS.charcoal}>From assessment to action</Headline>
         <Body>
-          <p>If we believe in the direction, here is what next steps look like leading into Q2:</p>
+          <p>If we believe in the direction, here is what next steps look like:</p>
         </Body>
       </ScrollReveal>
 
@@ -1889,28 +2766,14 @@ function TimelineSection() {
 
         <ScrollReveal delay={0.1}>
           <TimelineItem
-            label="Phase 2 Build"
-            period="Months 1-2"
-            color={COLORS.sand}
-            items={[
-              'Build champion tracking as a permanent capability. Role changes surface within 48 hours. This turns the Greg story from accident into pattern.',
-              'Connect Ron\'s content to the CRM. When an ICP-matching executive engages with a LinkedIn post, that signal flows into HubSpot as a relationship signal.',
-              'Design the post-engagement nurture system. Jarrod\'s "engage the 50, not the 3" insight becomes infrastructure. Quarterly nurture path for every person touched during delivery.',
-            ]}
-          />
-        </ScrollReveal>
-
-        <ScrollReveal delay={0.2}>
-          <TimelineItem
-            label="Phase 2 Operating Rhythm"
-            period="Month 3+"
+            label="Readout"
+            period="Scheduled conversation"
             color={COLORS.sand}
             isLast
             items={[
-              'Measure warmth, not pipeline. Shift the monthly partner meeting from "what deals are in motion" to "which relationships are getting warmer and which are cooling."',
-              'Quarterly relationship health reviews. Walk through: which accounts deepened, which went cold, what did we learn, what should we change.',
-              'Continuous enrichment: new contacts enriched within 48 hours of CRM entry.',
-              'Monthly content-to-pipeline attribution reporting.',
+              'I want to present these findings to Ron and Jarrod together and align on priorities before Sprint 1 begins.',
+              'The sprint plan is outlined above in the build cards. Each phase has a clear deliverable, a proof point, and a decision gate.',
+              'The question is not whether to build — the data makes the case. The question is how fast, and in what order.',
             ]}
           />
         </ScrollReveal>
@@ -2071,7 +2934,7 @@ html { scroll-behavior: smooth; }
   }
 
   /* Page breaks before hypothesis sections */
-  #h1, #h2, #h3, #h4, #h5, #editorial, #next {
+  #h1, #h2, #h3, #h4, #h5, #editorial, #next, #appendices {
     page-break-before: always;
   }
 
@@ -2160,6 +3023,7 @@ export default function NavalentAudit() {
         <RecommendationsSection />
         <TimelineDivider />
         <TimelineSection />
+        <AppendicesSection />
         <CloseSection />
       </div>
     </>
