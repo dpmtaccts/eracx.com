@@ -68,16 +68,16 @@ function PasswordGate({ onAuth }: { onAuth: () => void }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        style={{ width: '100%', maxWidth: 400, padding: '0 24px', textAlign: 'center' }}
+        style={{ width: '100%', maxWidth: 320, padding: '0 24px', textAlign: 'center' }}
       >
-        <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 300, color: 'rgba(246,245,242,0.5)', marginBottom: 16 }}>
+        <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, color: 'rgba(246,245,242,0.45)', marginBottom: 12, letterSpacing: '0.02em' }}>
           Go-to-Market Assessment built for:
         </div>
-        <div style={{ marginBottom: 40 }}>
+        <div style={{ marginBottom: 32 }}>
           <img
             src="/images/navalent/navalent-white-logo.svg"
             alt="Navalent"
-            style={{ height: 28, width: 'auto', opacity: 0.85 }}
+            style={{ height: 24, width: 'auto', opacity: 0.85 }}
             onError={(e) => {
               const t = e.target as HTMLImageElement
               t.style.display = 'none'
@@ -93,16 +93,17 @@ function PasswordGate({ onAuth }: { onAuth: () => void }) {
           autoFocus
           style={{
             width: '100%',
-            padding: '16px 20px',
+            padding: '14px 18px',
             background: 'rgba(255,255,255,0.06)',
-            border: `1px solid ${error ? '#e05a4a' : 'rgba(255,255,255,0.12)'}`,
+            border: `1px solid ${error ? '#e05a4a' : 'rgba(255,255,255,0.1)'}`,
             borderRadius: 6,
             color: COLORS.offWhite,
             fontFamily: FONT.body,
-            fontSize: 16,
+            fontSize: 15,
             fontWeight: 300,
             outline: 'none',
             transition: 'border-color 0.3s',
+            textAlign: 'center',
           }}
         />
         {error && (
