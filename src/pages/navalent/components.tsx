@@ -321,16 +321,14 @@ export function InsetStats({
           style={{
             flex: 1,
             minWidth: 100,
-            display: 'flex',
-            alignItems: 'baseline',
-            gap: 8,
-            padding: '12px 16px',
+            padding: '16px 16px',
             background: dark ? 'rgba(255,255,255,0.04)' : COLORS.offWhite,
             borderRadius: 8,
+            textAlign: 'center',
           }}
         >
-          <span style={{ fontSize: 20, fontWeight: 700, color: s.color, fontFamily: FONT.body }}>{s.value}</span>
-          <span style={{ fontSize: 11, color: dark ? 'rgba(246,245,242,0.6)' : COLORS.secondary, fontFamily: FONT.body }}>{s.label}</span>
+          <div style={{ fontSize: 32, fontWeight: 800, color: s.color, fontFamily: FONT.body, lineHeight: 1.1, marginBottom: 6 }}>{s.value}</div>
+          <div style={{ fontSize: 12, lineHeight: 1.4, color: dark ? 'rgba(246,245,242,0.6)' : COLORS.secondary, fontFamily: FONT.body }}>{s.label}</div>
         </div>
       ))}
     </div>
