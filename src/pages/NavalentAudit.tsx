@@ -365,18 +365,18 @@ function DataTransition() {
               <div key={i} style={{ textAlign: 'center' }}>
                 <div style={{
                   fontFamily: FONT.body,
-                  fontSize: 28,
+                  fontSize: 24,
                   fontWeight: 800,
                   color: s.color,
                   lineHeight: 1,
-                  letterSpacing: '-0.02em',
+                  letterSpacing: '-0.01em',
                 }}>
                   {s.prefix || ''}{s.decimals ? s.value.toFixed(s.decimals) : s.value.toLocaleString()}{s.suffix || ''}
                 </div>
                 <div style={{
                   fontFamily: FONT.body,
                   fontSize: 11,
-                  color: COLORS.secondary,
+                  color: 'rgba(246,245,242,0.7)',
                   marginTop: 6,
                   lineHeight: 1.4,
                   whiteSpace: 'pre-line',
