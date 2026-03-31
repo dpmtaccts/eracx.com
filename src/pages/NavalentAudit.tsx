@@ -133,7 +133,7 @@ function CoverSection() {
           </div>
         </ScrollReveal>
         <ScrollReveal delay={0.1}>
-          <Kicker color={COLORS.oxide}>ERA</Kicker>
+          <Kicker color={COLORS.oxide}>PHASE 1 ASSESSMENT</Kicker>
         </ScrollReveal>
         <ScrollReveal delay={0.2}>
           <Headline color={COLORS.offWhite} size="h1">
@@ -191,13 +191,25 @@ function CoverSection() {
         style={{
           position: 'absolute',
           bottom: 32,
-          right: 32,
-          fontFamily: FONT.body,
-          fontSize: 12,
-          color: 'rgba(246,245,242,0.3)',
+          left: 32,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 16,
         }}
       >
-        ERA · eracx.com
+        <img
+          src="/images/era_final.png"
+          alt="ERA"
+          className="logo-adaptive"
+          style={{ height: 20, width: 'auto', opacity: 0.5, filter: 'brightness(0) invert(1)' }}
+        />
+        <div style={{ width: 1, height: 16, background: 'rgba(246,245,242,0.15)' }} />
+        <img
+          src="/images/dpmt_logo.png"
+          alt="Department of Loyalty"
+          className="logo-adaptive"
+          style={{ height: 14, width: 'auto', opacity: 0.4, filter: 'brightness(0) invert(1)' }}
+        />
       </div>
     </Section>
   )
@@ -2960,12 +2972,23 @@ function CloseSection() {
           color: 'rgba(246,245,242,0.3)',
         }}
       >
-        <div>
-          <div style={{ fontWeight: 800, fontSize: 14, letterSpacing: '0.25em', marginBottom: 4 }}>ERA</div>
-          <div>eracx.com</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <img
+            src="/images/era_final.png"
+            alt="ERA"
+            className="logo-adaptive"
+            style={{ height: 20, width: 'auto', opacity: 0.5, filter: 'brightness(0) invert(1)' }}
+          />
+          <div style={{ width: 1, height: 16, background: 'rgba(246,245,242,0.15)' }} />
+          <img
+            src="/images/dpmt_logo.png"
+            alt="Department of Loyalty"
+            className="logo-adaptive"
+            style={{ height: 14, width: 'auto', opacity: 0.4, filter: 'brightness(0) invert(1)' }}
+          />
         </div>
         <div style={{ textAlign: 'right' }}>
-          Confidential. Prepared by Era for Navalent.
+          Confidential. Prepared for Navalent.
         </div>
       </div>
     </Section>
@@ -2987,6 +3010,12 @@ html { scroll-behavior: smooth; }
 #audit-root th,
 #audit-root td {
   transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+/* ─── Logo theme adaptation ─── */
+#audit-root[data-theme="light"] .logo-adaptive {
+  filter: none !important;
+  opacity: 0.6 !important;
 }
 
 /* ─── Light theme: full inversion ─── */
