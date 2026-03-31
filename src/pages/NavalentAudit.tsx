@@ -325,6 +325,88 @@ function SummarySection() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   DATA TRANSITION DIVIDER
+   ═══════════════════════════════════════════════════════════════ */
+
+function DataTransition() {
+  const stats = [
+    { value: 13647, label: 'contacts\nin CRM', color: COLORS.teal },
+    { value: 93, label: 'deals\nanalyzed', color: COLORS.teal },
+    { value: 56.9, prefix: '$', suffix: 'M', decimals: 1, label: 'lifetime\nrevenue', color: COLORS.teal },
+    { value: 333, label: 'LinkedIn\nposts', color: COLORS.teal },
+    { value: 198, label: 'unique\ncommenters', color: COLORS.teal },
+    { value: 101, label: 'client\ncompanies', color: COLORS.teal },
+  ]
+
+  return (
+    <div
+      style={{
+        background: COLORS.charcoal,
+        padding: '80px 32px',
+        textAlign: 'center',
+      }}
+    >
+      <div style={{ maxWidth: 900, margin: '0 auto' }}>
+        <ScrollReveal>
+          <div style={{
+            fontFamily: FONT.body,
+            fontWeight: 700,
+            fontSize: 'clamp(36px, 6vw, 52px)',
+            color: COLORS.offWhite,
+            marginBottom: 32,
+          }}>
+            Now, the data.
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.2}>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-6 md:gap-8" style={{ marginBottom: 32 }}>
+            {stats.map((s, i) => (
+              <div key={i} style={{ textAlign: 'center' }}>
+                <AnimatedCounter
+                  value={s.value}
+                  prefix={s.prefix || ''}
+                  suffix={s.suffix || ''}
+                  decimals={s.decimals || 0}
+                  color={s.color}
+                  size="medium"
+                  dark
+                />
+                <div style={{
+                  fontFamily: FONT.body,
+                  fontSize: 11,
+                  color: COLORS.secondary,
+                  marginTop: 4,
+                  lineHeight: 1.4,
+                  whiteSpace: 'pre-line',
+                }}>
+                  {s.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.4}>
+          <div style={{
+            fontFamily: FONT.body,
+            fontWeight: 300,
+            fontStyle: 'italic',
+            fontSize: 16,
+            color: COLORS.secondary,
+            maxWidth: 600,
+            margin: '0 auto',
+            lineHeight: 1.6,
+          }}>
+            Five hypotheses tested against the data. Each one confirmed, challenged, or reframed.
+          </div>
+        </ScrollReveal>
+      </div>
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════
    SECTION 2: ASSESSMENT FRAMING
    ═══════════════════════════════════════════════════════════════ */
 
@@ -3894,6 +3976,7 @@ export default function NavalentAudit() {
       <div id="audit-root" style={{ fontFamily: FONT.body }}>
         <CoverSection />
         <SummarySection />
+        <DataTransition />
         <FramingSection />
         <Hypothesis1Divider />
         <Hypothesis1Section />
