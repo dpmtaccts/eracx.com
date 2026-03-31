@@ -870,15 +870,6 @@ function Hypothesis4Section() {
       startDate: 'October 2025',
     },
     {
-      name: 'Jennifer Hudson',
-      previousRole: 'HR Director',
-      previousCompany: 'Climatec (Navalent client)',
-      newRole: 'HR Director (via Bosch acquisition of Climatec)',
-      newCompany: 'Bosch Building Technologies North America',
-      employees: '2,100',
-      note: 'Corporate acquisition rather than personal move — places a Navalent champion inside a significantly larger organization with broader transformation needs.',
-    },
-    {
       name: 'Matt Klitus',
       previousRole: 'CFO',
       previousCompany: 'Lyra Health (5 deals)',
@@ -972,7 +963,8 @@ function Hypothesis4Section() {
           <InsetVisual>
             <InsetStats
               stats={[
-                { value: '5', label: 'Champions who left a Navalent client', color: COLORS.sand },
+                { value: '4', label: 'Champions who moved to new roles or orgs', color: COLORS.sand },
+                { value: '1', label: 'M&A signal (champion inside larger org)', color: COLORS.oxide },
                 { value: '10', label: 'WARM buyer contacts at non-clients', color: COLORS.teal },
               ]}
             />
@@ -987,21 +979,44 @@ function Hypothesis4Section() {
             Champions in a state of change
           </div>
           <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 14, color: COLORS.secondary }}>
-            Five contacts who were at Navalent client companies have moved to new organizations in buyer-level roles.
+            Four contacts who were at Navalent client companies have moved to new organizations or roles. Each represents a signal the infrastructure would surface.
           </div>
         </div>
       </ScrollReveal>
-      <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+      <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         {champions.map((c, i) => (
           <ProfileCard key={i} {...c} accent={COLORS.oxide} />
         ))}
       </StaggerGroup>
 
+      {/* M&A signal callout */}
+      <ScrollReveal>
+        <div style={{
+          margin: '0 0 32px',
+          padding: '20px 24px',
+          borderLeft: `4px solid ${COLORS.sand}`,
+          background: 'rgba(214,178,109,0.06)',
+          borderRadius: '0 8px 8px 0',
+        }}>
+          <div style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, letterSpacing: '2px', color: COLORS.sand, marginBottom: 8 }}>
+            M&A SIGNAL
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 15, lineHeight: 1.7, color: COLORS.charcoal }}>
+            <p style={{ marginBottom: 12 }}>
+              A different type of signal also appeared in the sample. <strong>Jennifer Hudson</strong>, HR Director at Climatec (Navalent client), now operates within Bosch Building Technologies North America (2,100 employees) following Bosch's acquisition of Climatec. This was not a personal job change but a corporate acquisition that places a Navalent champion inside a significantly larger organization with broader transformation needs.
+            </p>
+            <p style={{ color: COLORS.secondary }}>
+              The infrastructure should track both signal types: champions who change companies and client companies that are acquired or restructured. Both create new contexts where a known relationship can be activated.
+            </p>
+          </div>
+        </div>
+      </ScrollReveal>
+
       <div>
         <ScrollReveal>
           <Body>
             <p>
-              Each of these individuals has direct experience with Navalent's work and is now in a decision-making role at a new organization. In a system with champion tracking, these signals would have surfaced within 48 hours of the role change — not months later during a manual review.
+              Each of these individuals has direct experience with Navalent's work and is now in a decision-making role at a new or expanded organization. In a system with champion tracking, these signals would have surfaced within 48 hours of the role change — not months later during a manual review.
             </p>
           </Body>
         </ScrollReveal>
@@ -1040,7 +1055,7 @@ function Hypothesis4Section() {
 
       <VerdictBox
         verdict="Confirmed with live data"
-        detail="A 200-contact sample surfaced 5 HOT opportunities, 5 champion-moved signals, and 10 WARM buyer contacts. The full enrichment of the remaining 7,676 contacts is the single highest-ROI investment in this engagement."
+        detail="A 200-contact sample surfaced 5 HOT opportunities, 4 champion-moved signals, 1 M&A signal, and 10 WARM buyer contacts. The full enrichment of the remaining 7,676 contacts is the single highest-ROI investment in this engagement."
         accent={COLORS.oxide}
       />
     </Section>
@@ -1108,7 +1123,7 @@ function ExtrapolationViz() {
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <AnimatedCounter value={197} color={COLORS.oxide} size="medium" label="Projected HOT signals" />
-              <AnimatedCounter value={197} color={COLORS.sand} size="medium" label="Projected champion moves" />
+              <AnimatedCounter value={197} color={COLORS.sand} size="medium" label="Projected champion + M&A signals" />
               <AnimatedCounter value={591} color={COLORS.teal} size="medium" label="Projected WARM signals" />
             </div>
             <div style={{ marginTop: 16, fontFamily: FONT.body, fontSize: 14, color: COLORS.secondary, textAlign: 'center', fontWeight: 300 }}>
