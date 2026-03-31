@@ -2667,185 +2667,151 @@ function SprintTimeline() {
     {
       num: 1,
       title: 'Full data enrichment + CRM foundation',
-      days: '1–30',
+      days: 'Days 1–30',
+      period: 'April',
       color: COLORS.teal,
       deliverable: 'Enriched contact database with signal tags for all 7,876 corporate contacts',
       proves: 'Signal density holds beyond the 200-contact sample',
       gate: 'Do we have enough actionable signals to justify building the tracking layer?',
-      offset: 0,
     },
     {
       num: 2,
       title: 'Champion tracking + content-to-buyer connection',
-      days: '31–60',
+      days: 'Days 31–60',
+      period: 'May',
       color: COLORS.magenta,
       deliverable: 'Automated champion-move alerts + LinkedIn content linked to HubSpot contacts',
       proves: 'Partners receive timely, actionable signals they would not otherwise see',
       gate: 'Are partners acting on the signals? Which signal types drive outreach?',
-      offset: 25,
     },
     {
       num: 3,
       title: 'Nurture system + relationship scoring',
-      days: '61–90',
+      days: 'Days 61–90',
+      period: 'June',
       color: COLORS.sand,
       deliverable: 'Post-engagement nurture sequences + warmth scoring model for top 100 accounts',
       proves: 'Relationships can be maintained at scale without adding headcount',
       gate: 'Is the warmth model producing scores the partners trust and use?',
-      offset: 50,
     },
     {
       num: 4,
       title: 'Operating rhythm + measurement',
-      days: '91–120',
+      days: 'Days 91–120',
+      period: 'July',
       color: COLORS.oxide,
       deliverable: 'Monthly partner review cadence + quarterly relationship health dashboard',
       proves: 'The system runs',
       gate: 'Can the firm sustain this independently? What does Phase 3 look like?',
-      offset: 75,
     },
   ]
 
-  const months = ['Apr', 'May', 'Jun', 'Jul']
-
   return (
     <div ref={ref}>
-      {/* Desktop: horizontal Gantt */}
-      <div className="hidden md:block" style={{ position: 'relative' }}>
-        {/* Timeline axis */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, position: 'relative', paddingLeft: 4 }}
-        >
-          {/* Readout marker */}
-          <div style={{ position: 'absolute', left: 0, top: -20, fontFamily: FONT.body, fontSize: 10, fontWeight: 700, color: COLORS.sand, letterSpacing: '0.08em' }}>
-            ◆ Readout: April 3
-          </div>
-          {months.map((m, i) => (
-            <div key={i} style={{ fontFamily: FONT.body, fontSize: 12, color: COLORS.secondary, fontWeight: 400 }}>{m}</div>
-          ))}
-        </motion.div>
+      {/* Readout marker */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: COLORS.sand, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 8 }}
+      >
+        <span style={{ width: 8, height: 8, background: COLORS.sand, transform: 'rotate(45deg)', display: 'inline-block', flexShrink: 0 }} />
+        Phase 1 readout: April 3
+      </motion.div>
 
-        {/* Gridlines */}
-        <div style={{ position: 'relative', borderTop: `0.5px solid ${COLORS.secondary}` }}>
-          {[25, 50, 75].map((pct) => (
-            <div key={pct} style={{ position: 'absolute', left: `${pct}%`, top: 0, bottom: 0, width: '0.5px', background: 'rgba(246,245,242,0.08)' }} />
-          ))}
-        </div>
-
-        {/* Sprint bars */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 16 }}>
-          {sprints.map((s, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -30 }}
-              animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-              transition={{ duration: 0.4, delay: 0.2 + i * 0.2, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div
-                style={{
-                  position: 'relative',
-                  marginLeft: `${s.offset}%`,
-                  width: '25%',
-                  minWidth: 200,
-                }}
-              >
-                {/* Bar */}
-                <div
-                  style={{
-                    height: 56,
-                    background: `${s.color}22`,
-                    borderLeft: `4px solid ${s.color}`,
-                    borderRadius: '0 8px 8px 0',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '0 16px',
-                    cursor: 'default',
-                    transition: 'transform 0.2s ease',
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'scaleY(1.08)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'scaleY(1)' }}
-                >
-                  <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 700, color: COLORS.offWhite }}>
-                    Sprint {s.num}: {s.title}
-                  </div>
-                  <div style={{ fontFamily: FONT.body, fontSize: 12, color: COLORS.secondary, flexShrink: 0, marginLeft: 12 }}>
-                    Days {s.days}
-                  </div>
-                </div>
-                {/* Detail below bar */}
-                <div style={{ paddingLeft: 16, marginTop: 6 }}>
-                  <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 300, fontStyle: 'italic', color: 'rgba(246,245,242,0.6)', lineHeight: 1.5 }}>
-                    Prove: {s.proves}
-                  </div>
-                  <div style={{ fontFamily: FONT.body, fontSize: 10, color: 'rgba(246,245,242,0.35)', marginTop: 2 }}>
-                    Gate: {s.gate}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* End milestone */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ delay: 1.2, duration: 0.3 }}
-          style={{ textAlign: 'right', marginTop: 16, fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: COLORS.sand }}
-        >
-          ◆ Firm readout
-        </motion.div>
-      </div>
-
-      {/* Mobile: vertical timeline */}
-      <div className="block md:hidden" style={{ position: 'relative', paddingLeft: 24 }}>
-        {/* Vertical line */}
-        <div style={{ position: 'absolute', left: 8, top: 0, bottom: 0, width: 2, background: 'rgba(246,245,242,0.1)', borderRadius: 1 }} />
-
-        {/* Readout marker at top */}
-        <div style={{ position: 'relative', marginBottom: 20, paddingLeft: 16 }}>
-          <div style={{ position: 'absolute', left: -20, top: 4, width: 10, height: 10, background: COLORS.sand, transform: 'rotate(45deg)' }} />
-          <div style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, color: COLORS.sand }}>Phase 1 readout: April 3</div>
-        </div>
-
+      {/* Sprint rows — full width, stacked */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
         {sprints.map((s, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.4, delay: 0.2 + i * 0.15 }}
-            style={{ position: 'relative', marginBottom: 24, paddingLeft: 16 }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+            transition={{ duration: 0.5, delay: 0.15 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              display: 'flex',
+              gap: 0,
+              borderBottom: i < 3 ? '1px solid rgba(246,245,242,0.06)' : 'none',
+            }}
           >
-            {/* Dot on line */}
-            <div style={{ position: 'absolute', left: -20, top: 8, width: 10, height: 10, borderRadius: '50%', background: s.color }} />
-            <div style={{ fontFamily: FONT.body, fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: s.color, marginBottom: 4 }}>
-              SPRINT {s.num} · DAYS {s.days}
+            {/* Left: sprint number + color bar */}
+            <div style={{
+              width: 56,
+              flexShrink: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              paddingTop: 24,
+              position: 'relative',
+            }}>
+              <div style={{
+                width: 36,
+                height: 36,
+                borderRadius: '50%',
+                background: `${s.color}22`,
+                border: `2px solid ${s.color}`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontFamily: FONT.body,
+                fontWeight: 800,
+                fontSize: 14,
+                color: s.color,
+              }}>
+                {s.num}
+              </div>
+              {/* Connecting line to next sprint */}
+              {i < 3 && (
+                <div style={{ width: 2, flex: 1, background: 'rgba(246,245,242,0.08)', marginTop: 8 }} />
+              )}
             </div>
-            <div style={{ fontFamily: FONT.body, fontSize: 16, fontWeight: 700, color: COLORS.offWhite, marginBottom: 4 }}>
-              {s.title}
-            </div>
-            <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, color: 'rgba(246,245,242,0.7)', marginBottom: 6 }}>
-              {s.deliverable}
-            </div>
-            <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 300, fontStyle: 'italic', color: 'rgba(246,245,242,0.5)' }}>
-              Prove: {s.proves}
-            </div>
-            <div style={{ fontFamily: FONT.body, fontSize: 10, color: 'rgba(246,245,242,0.3)', marginTop: 2 }}>
-              Gate: {s.gate}
+
+            {/* Right: content */}
+            <div style={{ flex: 1, padding: '20px 0 28px 16px' }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 6, flexWrap: 'wrap' }}>
+                <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 17, color: COLORS.offWhite }}>
+                  {s.title}
+                </div>
+                <div style={{
+                  fontFamily: FONT.body,
+                  fontSize: 11,
+                  fontWeight: 600,
+                  color: s.color,
+                  background: `${s.color}15`,
+                  padding: '2px 10px',
+                  borderRadius: 10,
+                  letterSpacing: '0.04em',
+                }}>
+                  {s.days} · {s.period}
+                </div>
+              </div>
+              <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 300, color: 'rgba(246,245,242,0.7)', marginBottom: 10, lineHeight: 1.6 }}>
+                {s.deliverable}
+              </div>
+              <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+                <div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: s.color, marginBottom: 2 }}>WHAT WE PROVE</div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, fontStyle: 'italic', color: 'rgba(246,245,242,0.55)', lineHeight: 1.5 }}>{s.proves}</div>
+                </div>
+                <div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(246,245,242,0.3)', marginBottom: 2 }}>DECISION GATE</div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, color: 'rgba(246,245,242,0.4)', lineHeight: 1.5 }}>{s.gate}</div>
+                </div>
+              </div>
             </div>
           </motion.div>
         ))}
-
-        {/* End milestone */}
-        <div style={{ position: 'relative', paddingLeft: 16 }}>
-          <div style={{ position: 'absolute', left: -20, top: 4, width: 10, height: 10, background: COLORS.sand, transform: 'rotate(45deg)' }} />
-          <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: COLORS.sand }}>◆ Firm readout</div>
-        </div>
       </div>
+
+      {/* End milestone */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ delay: 1, duration: 0.3 }}
+        style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 24, marginLeft: 56 + 16, fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: COLORS.sand }}
+      >
+        <span style={{ width: 8, height: 8, background: COLORS.sand, transform: 'rotate(45deg)', display: 'inline-block' }} />
+        Firm readout · End of 120-day build
+      </motion.div>
     </div>
   )
 }
