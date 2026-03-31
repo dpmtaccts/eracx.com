@@ -3049,39 +3049,157 @@ const globalStyles = `
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
-/* ─── Dark theme override ─── */
-#audit-root.theme-dark section:not([style*="min-height: 100vh"]) {
-  background: #141414 !important;
-  color: #F6F5F2 !important;
+/* ─── Smooth theme transitions ─── */
+#audit-root section,
+#audit-root div,
+#audit-root table,
+#audit-root th,
+#audit-root td {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 }
-#audit-root.theme-dark section:not([style*="min-height: 100vh"]) * {
-  color: inherit;
+
+/* ─── Light theme: full inversion ─── */
+
+/* Cover + Close (dark fullHeight sections → light) */
+#audit-root[data-theme="light"] section[style*="min-height: 100vh"] {
+  background: #F6F5F2 !important;
 }
-#audit-root.theme-dark section:not([style*="min-height: 100vh"]) p,
-#audit-root.theme-dark section:not([style*="min-height: 100vh"]) div,
-#audit-root.theme-dark section:not([style*="min-height: 100vh"]) span,
-#audit-root.theme-dark section:not([style*="min-height: 100vh"]) td,
-#audit-root.theme-dark section:not([style*="min-height: 100vh"]) th {
-  color: #F6F5F2 !important;
+#audit-root[data-theme="light"] section[style*="min-height: 100vh"] * {
+  color: #383838 !important;
 }
-#audit-root.theme-dark section:not([style*="min-height: 100vh"]) .two-col {
-  column-rule-color: rgba(246,245,242,0.1) !important;
+#audit-root[data-theme="light"] section[style*="min-height: 100vh"] [style*="color: rgba(246,245,242"] {
+  color: #5B6670 !important;
 }
-#audit-root.theme-dark [style*="background: rgb(246, 245, 242)"],
-#audit-root.theme-dark [style*="background: #F6F5F2"] {
-  background: rgba(255,255,255,0.04) !important;
+#audit-root[data-theme="light"] section[style*="min-height: 100vh"] button {
+  border-color: #D7DADD !important;
 }
-/* Preserve accent/brand colors in dark mode */
-#audit-root.theme-dark section [style*="border-left"] {
-  border-left-color: inherit !important;
+#audit-root[data-theme="light"] section[style*="min-height: 100vh"] button span {
+  color: #383838 !important;
 }
-/* Table header row stays readable */
-#audit-root.theme-dark th {
-  background: #383838 !important;
-  color: #F6F5F2 !important;
+
+/* Section dividers (Charcoal → white) */
+#audit-root[data-theme="light"] > div > div[style*="background: rgb(56, 56, 56)"],
+#audit-root[data-theme="light"] > div > div[style*="background: #383838"],
+#audit-root[data-theme="light"] div[id][style*="background: rgb(56, 56, 56)"],
+#audit-root[data-theme="light"] div[id][style*="background: #383838"] {
+  background: #FFFFFF !important;
 }
-#audit-root.theme-dark td {
-  border-bottom-color: rgba(246,245,242,0.1) !important;
+#audit-root[data-theme="light"] div[style*="background: rgb(56, 56, 56)"] *,
+#audit-root[data-theme="light"] div[style*="background: #383838"] * {
+  color: #383838 !important;
+}
+/* Ghost numbers on dividers: reduce opacity in light mode */
+#audit-root[data-theme="light"] div[style*="background: rgb(56, 56, 56)"] [style*="fontSize: 240"],
+#audit-root[data-theme="light"] div[style*="background: #383838"] [style*="fontSize: 240"],
+#audit-root[data-theme="light"] div[style*="background: rgb(56, 56, 56)"] [style*="font-size: 240"],
+#audit-root[data-theme="light"] div[style*="background: #383838"] [style*="font-size: 240"] {
+  opacity: 0.06 !important;
+}
+
+/* Dark sections (bgDark #141414 → white) */
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"],
+#audit-root[data-theme="light"] section[style*="background: #141414"] {
+  background: #FFFFFF !important;
+}
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] p,
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] div,
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] span,
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] h2,
+#audit-root[data-theme="light"] section[style*="background: #141414"] p,
+#audit-root[data-theme="light"] section[style*="background: #141414"] div,
+#audit-root[data-theme="light"] section[style*="background: #141414"] span,
+#audit-root[data-theme="light"] section[style*="background: #141414"] h2 {
+  color: #383838 !important;
+}
+/* Secondary text in dark sections */
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] [style*="color: rgba(246, 245, 242"],
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] [style*="color: rgba(246,245,242"],
+#audit-root[data-theme="light"] section[style*="background: #141414"] [style*="color: rgba(246, 245, 242"],
+#audit-root[data-theme="light"] section[style*="background: #141414"] [style*="color: rgba(246,245,242"] {
+  color: #5B6670 !important;
+}
+
+/* Light content sections (offWhite → white) */
+#audit-root[data-theme="light"] section[style*="background: rgb(246, 245, 242)"],
+#audit-root[data-theme="light"] section[style*="background: #F6F5F2"] {
+  background: #FFFFFF !important;
+}
+
+/* Two-column rules */
+#audit-root[data-theme="light"] .two-col {
+  column-rule-color: #D7DADD !important;
+}
+
+/* Hero breakouts in dark sections */
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] [style*="column-span"],
+#audit-root[data-theme="light"] section[style*="background: #141414"] [style*="column-span"] {
+  background: rgba(0,0,0,0.03) !important;
+}
+
+/* Inset visuals in dark sections: darken for light bg */
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] [style*="background: rgba(255, 255, 255, 0.04)"],
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] [style*="background: rgba(255,255,255,0.04)"],
+#audit-root[data-theme="light"] section[style*="background: #141414"] [style*="background: rgba(255, 255, 255, 0.04)"],
+#audit-root[data-theme="light"] section[style*="background: #141414"] [style*="background: rgba(255,255,255,0.04)"],
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] [style*="background: rgba(255, 255, 255, 0.03)"],
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] [style*="background: rgba(255,255,255,0.03)"],
+#audit-root[data-theme="light"] section[style*="background: #141414"] [style*="background: rgba(255, 255, 255, 0.03)"],
+#audit-root[data-theme="light"] section[style*="background: #141414"] [style*="background: rgba(255,255,255,0.03)"] {
+  background: rgba(0,0,0,0.03) !important;
+}
+
+/* Borders in dark sections */
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] [style*="border: 1px solid rgba(255"],
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] [style*="border: 1px solid rgba(255, 255, 255"],
+#audit-root[data-theme="light"] section[style*="background: #141414"] [style*="border: 1px solid rgba(255"],
+#audit-root[data-theme="light"] section[style*="background: #141414"] [style*="border: 1px solid rgba(255, 255, 255"] {
+  border-color: #D7DADD !important;
+}
+
+/* Tables */
+#audit-root[data-theme="light"] th {
+  background: #F6F5F2 !important;
+  color: #383838 !important;
+}
+#audit-root[data-theme="light"] td {
+  color: #383838 !important;
+  border-bottom-color: #D7DADD !important;
+}
+
+/* Build cards / sprint timeline bars in dark sections */
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] [style*="border-left: 4px"],
+#audit-root[data-theme="light"] section[style*="background: #141414"] [style*="border-left: 4px"] {
+  background: rgba(0,0,0,0.03) !important;
+}
+
+/* Two-engine viz boxes */
+#audit-root[data-theme="light"] [style*="border: 2px solid rgb(184, 92, 74)"],
+#audit-root[data-theme="light"] [style*="border: 2px solid #B85C4A"] {
+  background: rgba(184,92,74,0.05) !important;
+}
+#audit-root[data-theme="light"] [style*="border: 2px solid rgb(31, 167, 162)"],
+#audit-root[data-theme="light"] [style*="border: 2px solid #1FA7A2"] {
+  background: rgba(31,167,162,0.05) !important;
+}
+
+/* SVG text and strokes in light mode */
+#audit-root[data-theme="light"] section[style*="background: rgb(20, 20, 20)"] svg text,
+#audit-root[data-theme="light"] section[style*="background: #141414"] svg text {
+  fill: #383838 !important;
+}
+
+/* Password gate inherits the theme feel */
+#audit-root[data-theme="light"] + div,
+#audit-root[data-theme="light"] {
+  background: #FFFFFF;
+}
+
+/* Animated arc on editorial divider */
+#audit-root[data-theme="light"] div[style*="background: rgb(56, 56, 56)"] svg circle,
+#audit-root[data-theme="light"] div[style*="background: rgb(56, 56, 56)"] svg path,
+#audit-root[data-theme="light"] div[style*="background: #383838"] svg circle,
+#audit-root[data-theme="light"] div[style*="background: #383838"] svg path {
+  stroke: #D7DADD !important;
 }
 
 @media print {
