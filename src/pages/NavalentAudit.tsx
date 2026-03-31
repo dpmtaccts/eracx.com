@@ -229,7 +229,7 @@ function CoverSection() {
 function FramingSection() {
   const hypotheses = [
     { num: 1, title: 'The relationship is the revenue engine, not marketing', color: COLORS.oxide },
-    { num: 2, title: 'HubSpot has a strong foundation; now it needs to determine next best action', color: COLORS.teal },
+    { num: 2, title: 'Your GTM infrastructure is strong. Now it needs to tell you what to do next.', color: COLORS.teal },
     { num: 3, title: 'You are underleveraged on your existing network', color: COLORS.teal },
     { num: 4, title: 'The biggest missed signal is when a champion changes companies', color: COLORS.oxide },
     { num: 5, title: "The firm's content builds brand, but there is no way to capture the demand it creates", color: COLORS.teal },
@@ -483,7 +483,7 @@ function Hypothesis2Divider() {
   return (
     <SectionDivider
       number="HYPOTHESIS 02"
-      title="The foundation is strong. Now it needs to tell you what to do next."
+      title="Your GTM infrastructure is strong. Now it needs to tell you what to do next."
       subtitle="HubSpot is populated but not yet instrumented to surface next-best-action signals."
       color={COLORS.teal}
       id="h2"
@@ -613,7 +613,7 @@ function Hypothesis3Section() {
         <ScrollReveal>
           <Body dark>
             <p style={{ marginBottom: 16 }}>
-              The math is simple but the implication is significant. If 101 client engagements each touch roughly 50 people, that is 5,000+ executives with firsthand Navalent experience. Today, the CRM retains contact information for only 2-3 stakeholders per account. The rest go dark after the engagement ends.
+              The math is simple but the implication is significant. If 101 client engagements each touch 25–50 people during discovery and delivery, that is anywhere from 2,500 to 5,000+ executives with firsthand Navalent experience. Today, the CRM retains contact information for only 2–3 stakeholders per account. The rest go dark after the engagement ends.
             </p>
             <p>
               These are not cold contacts. They are people who sat in the room, experienced the work, and saw the results. Many of them have since moved to new organizations, carrying their experience of Navalent with them. The question is whether the system knows they exist.
@@ -680,7 +680,7 @@ function Hypothesis3Section() {
 
       <VerdictBox
         verdict="Confirmed"
-        detail="Navalent touches roughly 50 people per engagement but only retains 2-3 in the CRM. Thousands of warm executive relationships are invisible to the system. Once enriched, they become the foundation for the post-engagement system Jarrod described."
+        detail="Navalent touches 25–50 people per engagement but only retains 2–3 in the CRM. Thousands of warm executive relationships are invisible to the system. Once enriched, they become the foundation for the post-engagement nurture system."
         accent={COLORS.teal}
         dark
       />
@@ -694,7 +694,7 @@ function DotVisualization() {
   return (
     <div style={{ textAlign: 'center' }}>
       <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 700, color: COLORS.teal, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 16 }}>
-        50 contacts per engagement. Only 3 retained.
+        25–50 contacts per engagement. Only 2–3 retained.
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 6, maxWidth: 400, margin: '0 auto' }}>
         {dots.map((_, i) => (
@@ -964,7 +964,7 @@ function Hypothesis4Section() {
 
         <ScrollReveal>
           <HeroBreakout accent={COLORS.oxide} background="rgba(184,92,74,0.08)">
-            <AnimatedCounter value={5} color={COLORS.oxide} dark={false} label="HOT opportunities from a 2.5% sample — new role + buyer seat + non-client ICP company" />
+            <AnimatedCounter value={5} color={COLORS.oxide} dark={false} label="HOT opportunities from a 2.5% sample: new role + buyer seat + non-client ICP company" />
           </HeroBreakout>
         </ScrollReveal>
 
@@ -980,11 +980,11 @@ function Hypothesis4Section() {
         </ScrollReveal>
       </div>
 
-      {/* Champions who moved — heading + cards outside TwoCol for clean full-width layout */}
+      {/* Champions in a state of change */}
       <ScrollReveal>
         <div style={{ marginTop: 32, marginBottom: 16 }}>
           <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginBottom: 4 }}>
-            Champions who moved
+            Champions in a state of change
           </div>
           <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 14, color: COLORS.secondary }}>
             Five contacts who were at Navalent client companies have moved to new organizations in buyer-level roles.
@@ -2670,7 +2670,7 @@ function EditorialSection() {
               rows={[
                 { today: "Relationships live in partners' heads and personal networks", future: 'Relationships are visible, mapped, and enriched in the CRM' },
                 { today: 'Champions leave and nobody notices', future: 'Role changes surface within 48 hours as actionable signals' },
-                { today: '50 people experience the work; 3 stay in touch', future: 'Every discovery contact enters a structured nurture path' },
+                { today: '25–50 people experience the work; 2–3 stay in touch', future: 'Every discovery contact enters a structured nurture path' },
                 { today: "Ron's content reaches 100K per quarter with no capture layer", future: 'Content engagement by ICP contacts flows into HubSpot as relationship signals' },
                 { today: 'Pipeline meetings ask "what deals are live?"', future: 'Relationship reviews ask "which accounts are getting warmer?"' },
                 { today: 'The Greg Story happens by accident', future: 'The Greg Story happens by design, across thousands of contacts' },
@@ -2687,11 +2687,11 @@ function EditorialSection() {
           <BodyWithMargin
             stat="~5,000"
             statLabel="Executives Touched"
-            statSublabel="101 engagements × ~50 contacts"
+            statSublabel="101 engagements × 25–50 contacts each"
             statColor={COLORS.teal}
           >
             <p style={{ marginBottom: 20 }}>
-              If you have 101 client engagements, and each one touches roughly 50 people during discovery and delivery, you have somewhere around 5,000 executives who know what it feels like to be on the other side of Navalent's work. Some of them are still at those companies, some have moved, some are now CHROs at organizations twice the size, some are sitting in buyer seats at companies you've never heard of, but all remember their experience of Navalent.
+              If you have 101 client engagements, and each one touches anywhere from 25 to 50 people during discovery and delivery — some engagements 20, some well over 100 — you have somewhere between 2,500 and 5,000+ executives who know what it feels like to be on the other side of Navalent's work. Some are still at those companies, some have moved, some are now CHROs at organizations twice the size, some are sitting in buyer seats at companies you've never heard of, but all remember their experience of Navalent.
             </p>
             <p style={{ marginBottom: 20 }}>
               Today, zero of them are in a systematic nurture program. They live in Ron's memory, in Mindy's phone, in email threads nobody will search, and a CRM that knows their name but not their current title, their current company, or whether they changed jobs six months ago.

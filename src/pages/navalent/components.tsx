@@ -328,8 +328,8 @@ export function InsetStats({
             textAlign: 'center',
           }}
         >
-          <div style={{ fontSize: 32, fontWeight: 800, color: s.color, fontFamily: FONT.body, lineHeight: 1.1, marginBottom: 6 }}>{s.value}</div>
-          <div style={{ fontSize: 12, lineHeight: 1.4, color: dark ? 'rgba(246,245,242,0.6)' : COLORS.secondary, fontFamily: FONT.body }}>{s.label}</div>
+          <div style={{ fontSize: 44, fontWeight: 800, color: s.color, fontFamily: FONT.body, lineHeight: 1.1, marginBottom: 8 }}>{s.value}</div>
+          <div style={{ fontSize: 14, lineHeight: 1.5, color: dark ? 'rgba(246,245,242,0.6)' : COLORS.secondary, fontFamily: FONT.body }}>{s.label}</div>
         </div>
       ))}
     </div>
