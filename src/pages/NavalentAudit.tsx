@@ -609,13 +609,13 @@ function Hypothesis3Section() {
           </HeroBreakout>
         </ScrollReveal>
 
-        {/* Client cluster comparison with logos */}
+        {/* Client cluster comparison — full width breakout */}
         <ScrollReveal>
-          <InsetVisual>
-            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 20 }}>
+          <HeroBreakout accent={COLORS.teal} background="rgba(31,167,162,0.04)">
+            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.offWhite, marginBottom: 24, textAlign: 'left' }}>
               Client data quality comparison
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8" style={{ textAlign: 'left' }}>
               <ClusterCard
                 title="Scoular"
                 subtitle="Gold Standard"
@@ -641,7 +641,7 @@ function Hypothesis3Section() {
                 logoColor="#C92A2A"
               />
             </div>
-          </InsetVisual>
+          </HeroBreakout>
         </ScrollReveal>
 
         {/* Additional cluster data */}
