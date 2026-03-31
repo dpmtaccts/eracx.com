@@ -13,7 +13,6 @@ import {
   AnimatedCounter,
   Kicker,
   Headline,
-  DisplayType,
   Callout,
   VerdictBox,
   Body,
@@ -2895,53 +2894,131 @@ function SystemFlowDiagram() {
    ═══════════════════════════════════════════════════════════════ */
 
 function RecommendationsSection() {
-  return (
-    <Section dark narrow>
-      <ScrollReveal>
-        <DisplayType
-          eyebrow="THE PLAY"
-          color={COLORS.teal}
-          subtitle="The play is to make the invisible visible."
-        >
-          What we should build.
-        </DisplayType>
-      </ScrollReveal>
+  const buildItems = [
+    {
+      num: '01',
+      title: 'Enrich every corporate contact',
+      description: 'The 787 contacts at revenue client companies are the priority: append current title, current company, seniority, LinkedIn URL, and last role change date. This turns a flat list into a living map. Then conduct a full enrichment pull for 7,676 contacts.',
+      sprint: 'Sprint 1 · Days 1–30',
+      proves: 'Signal density holds beyond the 200-contact sample',
+      gate: 'Do we have enough actionable signals to justify building the tracking layer?',
+      color: COLORS.teal,
+      highlight: true,
+    },
+    {
+      num: '02',
+      title: 'Build champion tracking as permanent capability',
+      description: "Role changes at known contacts are the highest-intent signal in your business. When Shauna Nylund moves from Scoular to nVent, that should surface in someone's inbox within 48 hours, not whenever someone happens to remember her name.",
+      sprint: 'Sprint 2 · Days 31–60',
+      proves: 'Partners receive timely, actionable signals they would not otherwise see',
+      gate: 'Are partners acting on the signals? Which signal types drive outreach?',
+      color: COLORS.magenta,
+    },
+    {
+      num: '03',
+      title: "Connect Ron's content to the CRM",
+      description: "When an ICP-matching executive engages with a post, that signal needs to flow into HubSpot. Not as a vanity metric. As a relationship signal. The goal is to see who's paying attention, so that when a partner reaches out, they have context.",
+      sprint: 'Sprint 2 · Days 31–60',
+      proves: 'Partners receive timely, actionable signals they would not otherwise see',
+      color: COLORS.oxide,
+    },
+    {
+      num: '04',
+      title: 'Create post-engagement nurture system',
+      description: 'Every person touched during discovery and delivery enters a quarterly nurture path. Not a newsletter. A warm, relevant, human-feeling touch that says "we remember you, we\'re still here, and we\'re still thinking about the kind of problems you face."',
+      sprint: 'Sprint 3 · Days 61–90',
+      proves: 'Relationships can be maintained at scale without adding headcount',
+      gate: 'Is the warmth model producing scores the partners trust?',
+      color: COLORS.sand,
+    },
+    {
+      num: '05',
+      title: 'Measure warmth, not pipeline',
+      description: 'Stop measuring success by leads generated. Start measuring it by relationship depth across your top 100 accounts. How many contacts do you know? How recently have you touched them? Which accounts are getting warmer and which are cooling?',
+      sprint: 'Sprint 4 · Days 91–120',
+      proves: 'The system runs. Can Navalent sustain this independently?',
+      gate: 'What does Phase 3 look like?',
+      color: COLORS.teal,
+    },
+  ]
 
-      <div>
-        <ScrollReveal>
-          <Body dark>
-            <p><strong style={{ color: COLORS.teal }}>Enrich every corporate contact.</strong> The 787 contacts at revenue client companies are the priority: append current title, current company, seniority, LinkedIn URL, and last role change date. This turns a flat list into a living map. Then conduct a full enrichment pull for 7,676 contacts.</p>
-            <p><strong style={{ color: COLORS.magenta }}>Build champion tracking as permanent capability.</strong> Role changes at known contacts are the highest-intent signal in your business. When Shauna Nylund moves from Scoular to nVent, that should surface in someone's inbox within 48 hours.</p>
-            <p><strong style={{ color: COLORS.oxide }}>Connect Ron's content to the CRM.</strong> When an ICP-matching executive engages with a post, that signal needs to flow into HubSpot. Not as a vanity metric. As a relationship signal.</p>
-            <p><strong style={{ color: COLORS.sand }}>Create post-engagement nurture system.</strong> Every person touched during discovery and delivery enters a quarterly nurture path. Not a newsletter. A warm, relevant, human-feeling touch that says "we remember you."</p>
-            <p><strong style={{ color: COLORS.teal }}>Measure warmth, not pipeline.</strong> Stop measuring success by leads generated. Start measuring it by relationship depth across your top 100 accounts. Which accounts are getting warmer and which are cooling?</p>
-          </Body>
-        </ScrollReveal>
+  return (
+    <Section narrow>
+      {/* Build cards — stacked vertically */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        {buildItems.map((item, i) => (
+          <ScrollReveal key={i} delay={i * 0.08}>
+            <div style={{
+              background: '#fff',
+              border: `0.5px solid ${COLORS.divider}`,
+              borderLeft: `${item.highlight ? 5 : 4}px solid ${item.color}`,
+              borderRadius: 8,
+              padding: '24px 28px',
+              boxShadow: item.highlight ? '0 2px 12px rgba(0,0,0,0.06)' : 'none',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8, flexWrap: 'wrap', gap: 8 }}>
+                <div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, letterSpacing: '3px', color: item.color, marginBottom: 4 }}>
+                    {item.num}
+                  </div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 20, fontWeight: 700, color: COLORS.charcoal }}>
+                    {item.title}
+                  </div>
+                </div>
+                <div style={{
+                  fontFamily: FONT.body,
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: '1px',
+                  color: COLORS.secondary,
+                  border: `0.5px solid ${COLORS.divider}`,
+                  borderRadius: 20,
+                  padding: '3px 12px',
+                  flexShrink: 0,
+                }}>
+                  {item.sprint}
+                </div>
+              </div>
+              <div style={{ fontFamily: FONT.body, fontSize: 15, lineHeight: 1.6, color: COLORS.charcoal, marginBottom: 12 }}>
+                {item.description}
+              </div>
+              <div style={{ fontFamily: FONT.body, fontSize: 12, fontStyle: 'italic', color: COLORS.secondary }}>
+                Prove: {item.proves}
+              </div>
+              {item.gate && (
+                <div style={{ fontFamily: FONT.body, fontSize: 11, color: COLORS.divider, marginTop: 4 }}>
+                  Gate: {item.gate}
+                </div>
+              )}
+            </div>
+          </ScrollReveal>
+        ))}
       </div>
 
-      {/* Content strategy: funnel-specific recs */}
+      {/* Content mix note — compact callout */}
       <ScrollReveal>
-        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 20, color: COLORS.offWhite, marginTop: 48, marginBottom: 16 }}>
-          Rebalance the content funnel
+        <div style={{
+          marginTop: 32,
+          padding: '20px 24px',
+          background: COLORS.offWhite,
+          border: `0.5px solid ${COLORS.divider}`,
+          borderRadius: 8,
+        }}>
+          <div style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, letterSpacing: '2px', color: COLORS.oxide, marginBottom: 8 }}>
+            CONTENT MIX NOTE
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 14, lineHeight: 1.7, color: COLORS.secondary }}>
+            The current content mix is 20% TOFU / 75% MOFU / 5% BOFU. The recommended range is 30–40% / 40–50% / 10–20%. The shift is not about posting differently. It is about adding more reach-driving personal content (TOFU) and more Navalent-specific frameworks as native posts and carousels (BOFU) around the existing MOFU foundation. The infrastructure makes the BOFU content 10x more valuable by connecting each post to the specific contacts who need it.
+          </div>
         </div>
-        <Body dark>
-          <p style={{ marginBottom: 20 }}>
-            <strong style={{ color: COLORS.oxide }}>Top of funnel (20% → 30–35%):</strong> Increase personal stories, lived-experience anecdotes from client work, and takes on leadership moments in the news. This is the content that feeds the algorithm. Ron's "plot twist" author post (200 reactions, 109 comments) is the prototype. Goal: algorithmic reach that carries MOFU and BOFU posts to 10,000 more people each. No format change needed — TOFU is already format-diverse.
-          </p>
-          <p style={{ marginBottom: 20 }}>
-            <strong style={{ color: COLORS.teal }}>Middle of funnel (75% → 45–50%):</strong> Don't reduce MOFU posting — add more TOFU and BOFU around it. Format shift: convert top-performing HBR and Forbes insights into native LinkedIn text posts (1,800 characters) or carousels. Share the key takeaway natively, reference the full article without embedding the URL. Same insight, 36% more people.
-          </p>
-          <p>
-            <strong style={{ color: COLORS.offWhite }}>Bottom of funnel (5% → 10–15%):</strong> Convert Navalent's core frameworks into carousels (8–10 slides). Publish 1–2 native BOFU posts per month as text or image, not article shares. "The 5 patterns of failing executive teams" as a carousel would outperform the same content as an HBR article share by 3–5x. The infrastructure makes BOFU content 10x more valuable by connecting each post to the specific contacts who need it.
-          </p>
-        </Body>
       </ScrollReveal>
 
+      {/* How we'll prove it */}
       <ScrollReveal>
-        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 20, color: COLORS.offWhite, marginTop: 48, marginBottom: 8 }}>
+        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 20, color: COLORS.charcoal, marginTop: 48, marginBottom: 8 }}>
           How we'll prove it
         </div>
-        <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 15, color: 'rgba(246,245,242,0.6)', marginBottom: 24 }}>
+        <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 15, color: COLORS.secondary, marginBottom: 24 }}>
           120 days. Four sprints. A decision gate at every stage.
         </div>
       </ScrollReveal>
@@ -3007,9 +3084,9 @@ function SprintTimeline() {
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.3 }}
-        style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: COLORS.sand, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 8 }}
+        style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: COLORS.oxide, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 8 }}
       >
-        <span style={{ width: 8, height: 8, background: COLORS.sand, transform: 'rotate(45deg)', display: 'inline-block', flexShrink: 0 }} />
+        <span style={{ width: 8, height: 8, background: COLORS.oxide, transform: 'rotate(45deg)', display: 'inline-block', flexShrink: 0 }} />
         Phase 1 readout: April 3
       </motion.div>
 
@@ -3024,7 +3101,7 @@ function SprintTimeline() {
             style={{
               display: 'flex',
               gap: 0,
-              borderBottom: i < 3 ? '1px solid rgba(246,245,242,0.06)' : 'none',
+              borderBottom: i < 3 ? `1px solid ${COLORS.divider}` : 'none',
             }}
           >
             {/* Left: sprint number + color bar */}
@@ -3055,14 +3132,14 @@ function SprintTimeline() {
               </div>
               {/* Connecting line to next sprint */}
               {i < 3 && (
-                <div style={{ width: 2, flex: 1, background: 'rgba(246,245,242,0.08)', marginTop: 8 }} />
+                <div style={{ width: 2, flex: 1, background: COLORS.divider, marginTop: 8 }} />
               )}
             </div>
 
             {/* Right: content */}
             <div style={{ flex: 1, padding: '20px 0 28px 16px' }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 6, flexWrap: 'wrap' }}>
-                <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 17, color: COLORS.offWhite }}>
+                <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 17, color: COLORS.charcoal }}>
                   {s.title}
                 </div>
                 <div style={{
@@ -3078,17 +3155,17 @@ function SprintTimeline() {
                   {s.days} · {s.period}
                 </div>
               </div>
-              <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 300, color: 'rgba(246,245,242,0.7)', marginBottom: 10, lineHeight: 1.6 }}>
+              <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 300, color: COLORS.secondary, marginBottom: 10, lineHeight: 1.6 }}>
                 {s.deliverable}
               </div>
               <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
                 <div>
                   <div style={{ fontFamily: FONT.body, fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: s.color, marginBottom: 2 }}>WHAT WE PROVE</div>
-                  <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, fontStyle: 'italic', color: 'rgba(246,245,242,0.55)', lineHeight: 1.5 }}>{s.proves}</div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, fontStyle: 'italic', color: COLORS.secondary, lineHeight: 1.5 }}>{s.proves}</div>
                 </div>
                 <div>
-                  <div style={{ fontFamily: FONT.body, fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(246,245,242,0.3)', marginBottom: 2 }}>DECISION GATE</div>
-                  <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, color: 'rgba(246,245,242,0.4)', lineHeight: 1.5 }}>{s.gate}</div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: COLORS.divider, marginBottom: 2 }}>DECISION GATE</div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, color: COLORS.secondary, lineHeight: 1.5 }}>{s.gate}</div>
                 </div>
               </div>
             </div>
@@ -3101,9 +3178,9 @@ function SprintTimeline() {
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ delay: 1, duration: 0.3 }}
-        style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 24, marginLeft: 56 + 16, fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: COLORS.sand }}
+        style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 24, marginLeft: 56 + 16, fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: COLORS.oxide }}
       >
-        <span style={{ width: 8, height: 8, background: COLORS.sand, transform: 'rotate(45deg)', display: 'inline-block' }} />
+        <span style={{ width: 8, height: 8, background: COLORS.oxide, transform: 'rotate(45deg)', display: 'inline-block' }} />
         Firm readout · End of 120-day build
       </motion.div>
     </div>
