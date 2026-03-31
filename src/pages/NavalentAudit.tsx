@@ -140,7 +140,7 @@ function CoverSection() {
           </div>
         </ScrollReveal>
         <ScrollReveal delay={0.1}>
-          <Kicker color={COLORS.oxide}>PHASE 1 ASSESSMENT</Kicker>
+          <Kicker color={COLORS.oxide}>GO-TO-MARKET ASSESSMENT</Kicker>
         </ScrollReveal>
         <ScrollReveal delay={0.2}>
           <Headline color={COLORS.offWhite} size="h1">
@@ -171,7 +171,7 @@ function CoverSection() {
               lineHeight: 1.8,
             }}
           >
-            Phase 1 Relationship Infrastructure Assessment · March 2026 · Confidential
+            Go-to-Market Assessment · March 2026 · Confidential
           </div>
         </ScrollReveal>
       </div>
