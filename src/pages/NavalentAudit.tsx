@@ -954,25 +954,26 @@ function Hypothesis4Section() {
           <InsetVisual>
             <InsetStats
               stats={[
-                { value: '5', label: 'Champions who left a Navalent client for a new company', color: COLORS.sand },
-                { value: '10', label: 'WARM: Buyer-level contacts at non-client ICP companies', color: COLORS.teal },
+                { value: '5', label: 'Champions who left a Navalent client', color: COLORS.sand },
+                { value: '10', label: 'WARM buyer contacts at non-clients', color: COLORS.teal },
               ]}
             />
           </InsetVisual>
         </ScrollReveal>
-
-        {/* Champions who moved */}
-        <ScrollReveal>
-          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.charcoal, marginBottom: 4 }}>
-            Champions who moved (highest-value signals)
-          </div>
-          <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 14, color: COLORS.secondary, marginBottom: 16 }}>
-            Five contacts who were at Navalent client companies have moved to new organizations in buyer-level roles.
-          </div>
-        </ScrollReveal>
       </TwoCol>
 
-      <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+      {/* Champions who moved — heading + cards outside TwoCol for clean full-width layout */}
+      <ScrollReveal>
+        <div style={{ marginTop: 32, marginBottom: 16 }}>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginBottom: 4 }}>
+            Champions who moved
+          </div>
+          <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 14, color: COLORS.secondary }}>
+            Five contacts who were at Navalent client companies have moved to new organizations in buyer-level roles.
+          </div>
+        </div>
+      </ScrollReveal>
+      <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         {champions.map((c, i) => (
           <ProfileCard key={i} {...c} accent={COLORS.oxide} />
         ))}
@@ -986,26 +987,26 @@ function Hypothesis4Section() {
             </p>
           </Body>
         </ScrollReveal>
-
-        {/* Net-new HOT */}
-        <ScrollReveal>
-          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.charcoal, marginBottom: 4, marginTop: 32 }}>
-            Net-new HOT opportunities
-          </div>
-          <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 14, color: COLORS.secondary, marginBottom: 16 }}>
-            Five contacts in new buyer-level roles at ICP-sized companies that are not existing Navalent clients.
-          </div>
-        </ScrollReveal>
       </TwoCol>
 
-      <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+      {/* Net-new HOT — heading + cards outside TwoCol */}
+      <ScrollReveal>
+        <div style={{ marginTop: 32, marginBottom: 16 }}>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginBottom: 4 }}>
+            Net-new HOT opportunities
+          </div>
+          <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 14, color: COLORS.secondary }}>
+            Five contacts in new buyer-level roles at ICP-sized companies that are not existing Navalent clients.
+          </div>
+        </div>
+      </ScrollReveal>
+      <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
         {hotSignals.map((c, i) => (
           <ProfileCard key={i} {...c} accent={COLORS.magenta} />
         ))}
       </StaggerGroup>
 
       <TwoCol>
-        {/* Extrapolation */}
         <ScrollReveal>
           <InsetVisual>
             <ExtrapolationViz />
