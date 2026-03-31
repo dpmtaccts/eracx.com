@@ -2931,6 +2931,41 @@ const globalStyles = `
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
+/* ─── Dark theme override ─── */
+#audit-root.theme-dark section:not([style*="min-height: 100vh"]) {
+  background: #141414 !important;
+  color: #F6F5F2 !important;
+}
+#audit-root.theme-dark section:not([style*="min-height: 100vh"]) * {
+  color: inherit;
+}
+#audit-root.theme-dark section:not([style*="min-height: 100vh"]) p,
+#audit-root.theme-dark section:not([style*="min-height: 100vh"]) div,
+#audit-root.theme-dark section:not([style*="min-height: 100vh"]) span,
+#audit-root.theme-dark section:not([style*="min-height: 100vh"]) td,
+#audit-root.theme-dark section:not([style*="min-height: 100vh"]) th {
+  color: #F6F5F2 !important;
+}
+#audit-root.theme-dark section:not([style*="min-height: 100vh"]) .two-col {
+  column-rule-color: rgba(246,245,242,0.1) !important;
+}
+#audit-root.theme-dark [style*="background: rgb(246, 245, 242)"],
+#audit-root.theme-dark [style*="background: #F6F5F2"] {
+  background: rgba(255,255,255,0.04) !important;
+}
+/* Preserve accent/brand colors in dark mode */
+#audit-root.theme-dark section [style*="border-left"] {
+  border-left-color: inherit !important;
+}
+/* Table header row stays readable */
+#audit-root.theme-dark th {
+  background: #383838 !important;
+  color: #F6F5F2 !important;
+}
+#audit-root.theme-dark td {
+  border-bottom-color: rgba(246,245,242,0.1) !important;
+}
+
 @media print {
   /* Collapse two-column layout for print */
   .two-col {
@@ -3065,7 +3100,7 @@ export default function NavalentAudit() {
     <>
       <style>{globalStyles}</style>
       <SideNav />
-      <div style={{ fontFamily: FONT.body }}>
+      <div id="audit-root" style={{ fontFamily: FONT.body }}>
         <CoverSection />
         <FramingSection />
         <Hypothesis1Divider />
