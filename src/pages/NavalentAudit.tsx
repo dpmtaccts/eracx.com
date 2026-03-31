@@ -73,11 +73,11 @@ function PasswordGate({ onAuth }: { onAuth: () => void }) {
         <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, color: 'rgba(246,245,242,0.45)', marginBottom: 12, letterSpacing: '0.02em' }}>
           Go-to-Market Assessment built for:
         </div>
-        <div style={{ marginBottom: 32 }}>
+        <div style={{ marginBottom: 32, display: 'flex', justifyContent: 'center' }}>
           <img
             src="/images/navalent/navalent-white-logo.svg"
             alt="Navalent"
-            style={{ height: 24, width: 'auto', opacity: 0.85 }}
+            style={{ height: 24, width: 'auto', opacity: 0.85, display: 'block' }}
             onError={(e) => {
               const t = e.target as HTMLImageElement
               t.style.display = 'none'
@@ -217,6 +217,108 @@ function CoverSection() {
           className="logo-adaptive"
           style={{ height: 18, width: 'auto', opacity: 0.4, filter: 'brightness(0) invert(1)' }}
         />
+      </div>
+    </Section>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   IF YOU READ NOTHING ELSE
+   ═══════════════════════════════════════════════════════════════ */
+
+function SummarySection() {
+  const items = [
+    {
+      num: '01',
+      bold: 'Relationships close at 70%. Website leads close at 5%.',
+      detail: 'Of $7.6M in total CRM revenue, $5.4M (71%) came from deals originating from prior client relationships. The infrastructure should protect and amplify the pattern that already works.',
+      color: COLORS.teal,
+    },
+    {
+      num: '02',
+      bold: '13,647 contacts. 95 have a job title.',
+      detail: 'The CRM has breadth but no depth. 96% of contacts are defaulted to "Lead." Enrichment turns a contact list into a relationship map.',
+      color: COLORS.teal,
+    },
+    {
+      num: '03',
+      bold: "5,000+ executives have experienced the firm's work. Zero are in a nurture program.",
+      detail: "101 clients × 25–50 discovery contacts = a massive, untapped network living in memory, personal phones, and email threads nobody will search.",
+      color: COLORS.magenta,
+    },
+    {
+      num: '04',
+      bold: 'A 200-contact sample surfaced 5 champion moves and 5 net-new enterprise opportunities.',
+      detail: 'Shauna Nylund left Scoular for nVent. Matt Klitus left Lyra Health for Honor. Nobody reached out. The full database likely holds 100+ signals like these.',
+      color: COLORS.oxide,
+    },
+    {
+      num: '05',
+      bold: '198 LinkedIn commenters over 12 months. 1 works at a client company.',
+      detail: "The visible engagement layer and the buying layer are almost completely separate populations. The buyers are watching. They just don't comment.",
+      color: COLORS.magenta,
+    },
+    {
+      num: '06',
+      bold: 'The partner with the most revenue has zero LinkedIn posts.',
+      detail: 'Mindy: $3.99M closed-won, 100% offline sourcing. Ron: 101K views/quarter, 30,892 followers. Two powerful growth levers. No repeatable system connecting them.',
+      color: COLORS.oxide,
+    },
+    {
+      num: '07',
+      bold: 'The first 30 days: enrich every corporate contact.',
+      detail: 'Append current title, company, seniority, LinkedIn, and last role change date to 7,876 contacts. If the signal density holds, we start outreach in week 5.',
+      color: COLORS.teal,
+    },
+    {
+      num: '08',
+      bold: 'The question for the readout: does the data support the direction?',
+      detail: "The 120-day build is structured as four sprints. Each has a testable outcome and a decision gate. If the data doesn't hold at any stage, we stop.",
+      color: COLORS.sand,
+    },
+  ]
+
+  return (
+    <Section narrow>
+      <div style={{ maxWidth: 760, margin: '0 auto' }}>
+        <ScrollReveal>
+          <h2 style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 30, color: COLORS.charcoal, lineHeight: 1.2, marginBottom: 12 }}>
+            If you read nothing else, read this.
+          </h2>
+          <div style={{ width: 60, height: 2, background: COLORS.oxide, marginBottom: 40 }} />
+        </ScrollReveal>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+          {items.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              style={{ display: 'flex', gap: 20 }}
+            >
+              <div style={{
+                fontFamily: FONT.body,
+                fontSize: 14,
+                fontWeight: 800,
+                color: item.color,
+                flexShrink: 0,
+                paddingTop: 2,
+                width: 28,
+              }}>
+                {item.num}
+              </div>
+              <div>
+                <div style={{ fontFamily: FONT.body, fontSize: 17, fontWeight: 700, color: COLORS.charcoal, lineHeight: 1.5, marginBottom: 4 }}>
+                  {item.bold}
+                </div>
+                <div style={{ fontFamily: FONT.body, fontSize: 15, fontWeight: 300, color: COLORS.secondary, lineHeight: 1.6 }}>
+                  {item.detail}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </Section>
   )
@@ -3791,6 +3893,7 @@ export default function NavalentAudit() {
       <SideNav />
       <div id="audit-root" style={{ fontFamily: FONT.body }}>
         <CoverSection />
+        <SummarySection />
         <FramingSection />
         <Hypothesis1Divider />
         <Hypothesis1Section />
