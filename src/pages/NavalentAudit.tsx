@@ -3290,6 +3290,91 @@ function TimelineSection() {
    SECTION 11: CLOSE / CTA
    ═══════════════════════════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════════════════════════════
+   ABOUT THIS ASSESSMENT
+   ═══════════════════════════════════════════════════════════════ */
+
+function AboutSection() {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.1 })
+
+  return (
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0 }}
+      animate={inView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      style={{
+        background: '#FAF7F2',
+        fontFamily: FONT.body,
+      }}
+    >
+      <div style={{ maxWidth: 720, margin: '0 auto', padding: '80px 32px 48px' }}>
+        {/* Top rule */}
+        <div style={{ height: '0.5px', background: COLORS.divider, marginBottom: 48 }} />
+
+        {/* Accent line */}
+        <div style={{ width: 2, height: 40, background: COLORS.oxide, margin: '0 auto 24px' }} />
+
+        {/* Kicker */}
+        <div style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, letterSpacing: '3px', color: COLORS.oxide, textAlign: 'center', marginBottom: 32 }}>
+          ABOUT THIS ASSESSMENT
+        </div>
+
+        {/* Body */}
+        <div style={{ fontFamily: FONT.body, fontSize: 16, fontWeight: 300, lineHeight: 1.7, color: COLORS.charcoal }}>
+          <p style={{ marginBottom: 16 }}>
+            This assessment was built by me, Justin Marshall, a growth executive with two decades of customer-centered design and go-to-market development for global enterprise companies. I founded Era to solve a specific problem: B2B companies that outgrow founder-led sales but have no system connecting their relationships, content, and pipeline data into something visible and actionable.
+          </p>
+          <p style={{ marginBottom: 16 }}>
+            This report draws from dozens of data sources, including: Navalent's HubSpot CRM (13,647 contacts, 93 deals), lifetime revenue records across 101 clients, Apollo enrichment data (200-contact sample with match validation), 12 months of LinkedIn post data (333 posts, 198 unique commenters classified by role), three months of social media vendor reports, a comprehensive thought leadership audit across LinkedIn, HBR, Forbes, podcasts, YouTube, and the firm's website, partner deal activity and origination analysis, and current LinkedIn algorithm research (van der Blom 2025, Socialinsider 2026, Dreamdata 2026, LinkedIn Engineering). The analysis was conducted using a combination of direct CRM access, enrichment tools, and AI-assisted data classification and pattern recognition.
+          </p>
+          <p style={{ marginBottom: 24 }}>
+            It is not exhaustive, by design. Insights into paid advertising (search, social, sponsorships), event strategy and PR, affiliate or partner marketing, SEO/GEO and organic search performance, direct mail, and competitive positioning were intentionally excluded. These matter for a holistic, 360-degree growth analysis, but the scope of this assessment was designed around four principles:
+          </p>
+
+          {/* Four principles */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20, marginBottom: 32 }}>
+            {[
+              { num: '1', title: 'Start where the revenue already is.', body: '70% of closed-won deals originate from prior relationships. The infrastructure should protect and amplify that pattern first, not chase new channels.' },
+              { num: '2', title: 'Measure what the partners will actually use.', body: 'A system that produces signals nobody acts on is worse than no system at all. Every recommendation is designed to fit within partner capacity, not exceed it.' },
+              { num: '3', title: 'Build for the next 21 years, not the next quarter.', body: 'The firm has operated on memory and personal networks for two decades. The infrastructure needs to make those patterns sustainable beyond any single individual.' },
+              { num: '4', title: 'Test before you build.', body: "The 200-contact enrichment sample, the 12-month commenter analysis, and the partner deal attribution were all designed as proof-of-concept tests. If the signals weren't there, the recommendation would be different." },
+            ].map((p) => (
+              <div key={p.num} style={{ display: 'flex', gap: 16 }}>
+                <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 700, color: COLORS.oxide, flexShrink: 0, paddingTop: 1 }}>{p.num}.</div>
+                <div>
+                  <span style={{ fontWeight: 700 }}>{p.title}</span>{' '}
+                  <span style={{ fontWeight: 300 }}>{p.body}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Closing thought */}
+          <p style={{ marginTop: 32 }}>
+            This assessment is also not done. The moment it's printed, the data will tell a slightly different story. New deals will close, new contacts will change roles, new comments will appear on new posts, and LinkedIn will adjust its algorithm again. But the principles hold. The direction holds. The patterns that produced $56.9 million in revenue are not going to reverse because the data refreshes. The question is whether the firm builds a system to see those patterns or continues to rely on the people who happen to remember them.
+          </p>
+        </div>
+
+        {/* ERA signature */}
+        <div style={{ textAlign: 'center', marginTop: 56 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginBottom: 8 }}>
+            <img
+              src="/images/era_final.png"
+              alt="ERA"
+              style={{ height: 20, width: 'auto', opacity: 0.7 }}
+            />
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 12, color: COLORS.secondary }}>
+            eracx.com · hello@eracx.com
+          </div>
+        </div>
+      </div>
+    </motion.section>
+  )
+}
+
 function CloseSection() {
   return (
     <Section dark fullHeight>
@@ -3546,6 +3631,20 @@ html { scroll-behavior: smooth; }
   stroke: #D7DADD !important;
 }
 
+/* About section — dark mode adaptation */
+#audit-root[data-theme="dark"] section[style*="background: rgb(250, 247, 242)"],
+#audit-root:not([data-theme]) section[style*="background: rgb(250, 247, 242)"] {
+  background: #3E3B38 !important;
+}
+#audit-root[data-theme="dark"] section[style*="background: rgb(250, 247, 242)"] p,
+#audit-root[data-theme="dark"] section[style*="background: rgb(250, 247, 242)"] div,
+#audit-root[data-theme="dark"] section[style*="background: rgb(250, 247, 242)"] span,
+#audit-root:not([data-theme]) section[style*="background: rgb(250, 247, 242)"] p,
+#audit-root:not([data-theme]) section[style*="background: rgb(250, 247, 242)"] div,
+#audit-root:not([data-theme]) section[style*="background: rgb(250, 247, 242)"] span {
+  color: #F6F5F2 !important;
+}
+
 /* On Visibility sidebar — dark mode adaptation */
 #audit-root[data-theme="dark"] #on-visibility,
 #audit-root:not([data-theme]) #on-visibility {
@@ -3710,6 +3809,7 @@ export default function NavalentAudit() {
         <TimelineDivider />
         <TimelineSection />
         <AppendicesSection />
+        <AboutSection />
         <CloseSection />
       </div>
     </>
