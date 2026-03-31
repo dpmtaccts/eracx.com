@@ -1213,12 +1213,17 @@ function Hypothesis5Section() {
       </div>
 
       <ScrollReveal>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-8">
-          <InsetStats dark stats={[
+        <div className="grid grid-cols-3 gap-4 my-8">
+          {[
             { value: '101,399', label: 'Total views across 3 months', color: COLORS.teal },
             { value: '2,295', label: 'Reactions across the portfolio', color: COLORS.teal },
             { value: '484', label: 'Comments on LinkedIn', color: COLORS.teal },
-          ]} />
+          ].map((s, i) => (
+            <div key={i} style={{ padding: '20px 16px', background: 'rgba(255,255,255,0.04)', borderRadius: 8, textAlign: 'center' }}>
+              <div style={{ fontSize: 44, fontWeight: 800, color: s.color, fontFamily: FONT.body, lineHeight: 1.1, marginBottom: 8 }}>{s.value}</div>
+              <div style={{ fontSize: 14, lineHeight: 1.5, color: 'rgba(246,245,242,0.6)', fontFamily: FONT.body }}>{s.label}</div>
+            </div>
+          ))}
         </div>
       </ScrollReveal>
 
