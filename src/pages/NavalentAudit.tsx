@@ -1270,6 +1270,71 @@ function Hypothesis5Section() {
         </div>
       </ScrollReveal>
 
+      {/* Content funnel analysis */}
+      <ScrollReveal>
+        <div style={{ marginTop: 48 }}>
+          <Kicker color={COLORS.oxide}>THE CONTENT FUNNEL: WHERE RON'S POSTS LAND</Kicker>
+          <Body dark>
+            <p style={{ marginBottom: 16 }}>Every post serves one of three roles in a content strategy. We mapped all 333 of Ron's posts against this framework to see where the current emphasis sits.</p>
+          </Body>
+        </div>
+      </ScrollReveal>
+
+      {/* Visual 1: Funnel tiers */}
+      <ScrollReveal>
+        <ContentFunnelViz />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Body dark>
+          <p style={{ marginBottom: 16 }}>The data reveals a clear pattern: Ron's content engine is built for the middle of the funnel. 75% of posts are educational, expertise-building, authority-establishing content. This is what makes Ron synonymous with honest, rigorous leadership thinking. It is the right foundation.</p>
+          <p>But the mix is lopsided. The top of funnel (personal stories, vulnerability, culturally resonant moments) that drives algorithmic reach represents only 20% of posts, despite generating the highest comment rates. And the bottom of funnel (org design, cross-functional alignment, leadership team effectiveness) that maps directly to what Navalent sells represents just 5%, with only 18 posts in an entire year.</p>
+        </Body>
+      </ScrollReveal>
+
+      {/* Visual 2: Actual vs recommended mix */}
+      <ScrollReveal>
+        <FunnelMixComparison />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Body dark>
+          <p style={{ marginBottom: 16 }}>The format data makes this sharper. 67% of BOFU posts are article shares containing external links, which the algorithm penalizes with 40–60% less reach. The posts most relevant to the buyer are being published in the format most suppressed by the algorithm. Zero BOFU posts use carousels, despite carousels generating 3x the reach of standard posts and being optimized for saves.</p>
+        </Body>
+      </ScrollReveal>
+
+      {/* Visual 3: Link penalty */}
+      <ScrollReveal>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{ margin: '24px 0' }}>
+          <div style={{ padding: 24, background: 'rgba(31,167,162,0.08)', border: `1px solid rgba(31,167,162,0.2)`, borderRadius: 8, textAlign: 'center' }}>
+            <div style={{ fontSize: 13, fontFamily: FONT.body, fontWeight: 700, letterSpacing: '0.12em', color: COLORS.teal, marginBottom: 8 }}>NATIVE POSTS</div>
+            <div style={{ fontSize: 40, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite }}>37.4</div>
+            <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>avg reactions</div>
+            <div style={{ fontSize: 12, color: COLORS.secondary, fontFamily: FONT.body, marginTop: 4 }}>46% of posts</div>
+          </div>
+          <div style={{ padding: 24, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, textAlign: 'center' }}>
+            <div style={{ fontSize: 13, fontFamily: FONT.body, fontWeight: 700, letterSpacing: '0.12em', color: COLORS.secondary, marginBottom: 8 }}>ARTICLE SHARES</div>
+            <div style={{ fontSize: 40, fontWeight: 800, fontFamily: FONT.body, color: 'rgba(246,245,242,0.5)' }}>23.9</div>
+            <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.5)', fontFamily: FONT.body, marginTop: 4 }}>avg reactions</div>
+            <div style={{ fontSize: 12, color: COLORS.secondary, fontFamily: FONT.body, marginTop: 4 }}>54% of posts</div>
+          </div>
+        </div>
+        <div style={{ textAlign: 'center', fontFamily: FONT.body, fontSize: 14, marginBottom: 32 }}>
+          <strong style={{ color: COLORS.magenta }}>-36%</strong> <span style={{ color: 'rgba(246,245,242,0.7)' }}>engagement on more than half the content. The algorithm penalizes external links with 40–60% less reach.</span>
+        </div>
+      </ScrollReveal>
+
+      {/* Visual 4: Format distribution by stage */}
+      <ScrollReveal>
+        <FunnelFormatBreakdown />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Body dark>
+          <p>The opportunity is not to change what Ron posts. It is to rebalance the mix and shift the format on BOFU content. Convert 2–3 key Navalent frameworks into carousel format. Publish 1–2 BOFU posts per month as native text or image posts instead of article shares. Increase TOFU personal storytelling from 2/month to 4/month to drive algorithmic reach that carries MOFU and BOFU content further.</p>
+        </Body>
+      </ScrollReveal>
+
       {/* Commenter breakdown — full width */}
       <ScrollReveal>
         <div style={{ marginTop: 48 }}>
@@ -1535,6 +1600,205 @@ function InvisibleBuyerViz() {
 /* ═══════════════════════════════════════════════════════════════
    CONTENT THEME BAR CHART (12-MONTH ANALYSIS)
    ═══════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTENT FUNNEL VISUALIZATIONS
+   ═══════════════════════════════════════════════════════════════ */
+
+function ContentFunnelViz() {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.2 })
+
+  const tiers = [
+    { label: 'TOP OF FUNNEL', desc: 'Awareness and reach', posts: 65, pct: '19.5%', reactions: '32.4', comments: '11.8', color: COLORS.oxide, width: '100%' },
+    { label: 'MIDDLE OF FUNNEL', desc: 'Education and credibility', posts: 250, pct: '75.1%', reactions: '30.3', comments: '6.1', color: COLORS.teal, width: '75%' },
+    { label: 'BOTTOM OF FUNNEL', desc: 'Conversion and business', posts: 18, pct: '5.4%', reactions: '18.9', comments: '5.3', color: COLORS.charcoal, width: '50%' },
+  ]
+
+  return (
+    <div ref={ref} style={{ margin: '24px 0 32px', padding: '28px 24px', background: 'rgba(255,255,255,0.03)', borderRadius: 12, border: '1px solid rgba(255,255,255,0.06)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {tiers.map((t, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: -20 }}
+            animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+            transition={{ duration: 0.5, delay: i * 0.2, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div style={{ width: t.width, maxWidth: '100%' }}>
+              <div style={{
+                padding: '16px 20px',
+                background: i === 2 ? 'rgba(246,245,242,0.08)' : `${t.color}18`,
+                borderLeft: `4px solid ${t.color}`,
+                borderRadius: '0 8px 8px 0',
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: 8 }}>
+                  <div>
+                    <span style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', color: i === 2 ? COLORS.offWhite : t.color }}>{t.label}</span>
+                    <span style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 300, color: 'rgba(246,245,242,0.7)', marginLeft: 12 }}>{t.desc}</span>
+                  </div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 700, color: i === 2 ? COLORS.offWhite : t.color }}>{t.pct}</div>
+                </div>
+                <div style={{ fontFamily: FONT.body, fontSize: 12, color: COLORS.secondary, marginTop: 6 }}>
+                  {t.posts} posts · {t.reactions} avg reactions · {t.comments} avg comments
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function FunnelMixComparison() {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.3 })
+
+  const stages = [
+    { label: 'TOFU', actual: 20, targetLow: 30, targetHigh: 40, color: COLORS.oxide, status: 'under' },
+    { label: 'MOFU', actual: 75, targetLow: 40, targetHigh: 50, color: COLORS.teal, status: 'over' },
+    { label: 'BOFU', actual: 5, targetLow: 10, targetHigh: 20, color: COLORS.charcoal, status: 'under' },
+  ]
+
+  return (
+    <div ref={ref} style={{ margin: '24px 0 32px', padding: '24px', background: 'rgba(255,255,255,0.03)', borderRadius: 12, border: '1px solid rgba(255,255,255,0.06)' }}>
+      <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 14, color: COLORS.offWhite, marginBottom: 20 }}>Actual mix vs. recommended range</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        {stages.map((s, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: i * 0.15 + 0.2 }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: i === 2 ? COLORS.offWhite : s.color, width: 48, flexShrink: 0, letterSpacing: '0.08em' }}>{s.label}</div>
+              <div style={{ flex: 1, position: 'relative', height: 28, background: 'rgba(255,255,255,0.04)', borderRadius: 4, overflow: 'hidden' }}>
+                {/* Target range (faint) */}
+                <div style={{
+                  position: 'absolute',
+                  left: `${s.targetLow}%`,
+                  width: `${s.targetHigh - s.targetLow}%`,
+                  top: 0, bottom: 0,
+                  background: i === 2 ? 'rgba(246,245,242,0.06)' : `${s.color}10`,
+                  borderLeft: `1px dashed ${i === 2 ? 'rgba(246,245,242,0.2)' : s.color + '40'}`,
+                  borderRight: `1px dashed ${i === 2 ? 'rgba(246,245,242,0.2)' : s.color + '40'}`,
+                }} />
+                {/* Actual bar */}
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={inView ? { width: `${s.actual}%` } : { width: 0 }}
+                  transition={{ duration: 0.8, delay: i * 0.15 + 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ height: '100%', background: i === 2 ? COLORS.offWhite : s.color, borderRadius: 4, opacity: 0.8 }}
+                />
+              </div>
+              <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 700, color: i === 2 ? COLORS.offWhite : s.color, width: 36, textAlign: 'right' }}>{s.actual}%</div>
+              <div style={{ fontFamily: FONT.body, fontSize: 11, color: COLORS.secondary, width: 80, textAlign: 'right' }}>{s.targetLow}–{s.targetHigh}%</div>
+              <div style={{
+                fontFamily: FONT.body, fontSize: 10, fontWeight: 700,
+                color: s.status === 'over' ? COLORS.oxide : COLORS.magenta,
+                width: 40, textAlign: 'right',
+              }}>
+                {s.status === 'over' ? '▲ over' : '▼ under'}
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+      <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, color: 'rgba(246,245,242,0.6)', marginTop: 16, lineHeight: 1.6 }}>
+        More TOFU for reach, more BOFU for conversion. MOFU stays strong but becomes a smaller share of a larger, more balanced mix.
+      </div>
+    </div>
+  )
+}
+
+function FunnelFormatBreakdown() {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.3 })
+
+  const stages = [
+    { label: 'TOFU', color: COLORS.oxide, segments: [
+      { type: 'Article', pct: 34, color: 'rgba(246,245,242,0.15)' },
+      { type: 'Image', pct: 29, color: COLORS.oxide },
+      { type: 'Text', pct: 22, color: `${COLORS.oxide}88` },
+      { type: 'Video', pct: 15, color: `${COLORS.oxide}55` },
+    ], note: 'Diverse formats' },
+    { label: 'MOFU', color: COLORS.teal, segments: [
+      { type: 'Article', pct: 58, color: 'rgba(246,245,242,0.15)' },
+      { type: 'Image', pct: 22, color: COLORS.teal },
+      { type: 'Video', pct: 10, color: `${COLORS.teal}88` },
+      { type: 'Text', pct: 10, color: `${COLORS.teal}55` },
+    ], note: 'Link-heavy' },
+    { label: 'BOFU', color: COLORS.offWhite, segments: [
+      { type: 'Article', pct: 67, color: 'rgba(246,245,242,0.15)' },
+      { type: 'Video', pct: 33, color: 'rgba(246,245,242,0.4)' },
+    ], note: 'Zero carousels, zero images' },
+  ]
+
+  return (
+    <div ref={ref} style={{ margin: '24px 0 32px', padding: '24px', background: 'rgba(255,255,255,0.03)', borderRadius: 12, border: '1px solid rgba(255,255,255,0.06)' }}>
+      <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 14, color: COLORS.offWhite, marginBottom: 20 }}>Format distribution by funnel stage</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+        {stages.map((s, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: i * 0.15 + 0.2 }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: i === 2 ? COLORS.offWhite : s.color, width: 48, flexShrink: 0, letterSpacing: '0.08em' }}>{s.label}</div>
+              <div style={{ flex: 1, display: 'flex', height: 24, borderRadius: 4, overflow: 'hidden' }}>
+                {s.segments.map((seg, j) => (
+                  <motion.div
+                    key={j}
+                    initial={{ width: 0 }}
+                    animate={inView ? { width: `${seg.pct}%` } : { width: 0 }}
+                    transition={{ duration: 0.6, delay: i * 0.15 + j * 0.1 + 0.3 }}
+                    style={{
+                      height: '100%',
+                      background: seg.type === 'Article' ? seg.color : seg.color,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 10,
+                      fontFamily: FONT.body,
+                      fontWeight: 600,
+                      color: seg.type === 'Article' ? 'rgba(246,245,242,0.5)' : '#fff',
+                      borderRight: '1px solid rgba(0,0,0,0.2)',
+                      // Hatching pattern for article shares
+                      backgroundImage: seg.type === 'Article' ? 'repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(246,245,242,0.04) 3px, rgba(246,245,242,0.04) 6px)' : 'none',
+                    }}
+                  >
+                    {seg.pct >= 15 ? `${seg.type} ${seg.pct}%` : ''}
+                  </motion.div>
+                ))}
+              </div>
+              <div style={{ fontFamily: FONT.body, fontSize: 11, color: i === 2 ? COLORS.magenta : COLORS.secondary, fontWeight: i === 2 ? 700 : 400, minWidth: 140, textAlign: 'right' }}>
+                {s.note}
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+      {/* Legend */}
+      <div style={{ display: 'flex', gap: 16, marginTop: 16, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: FONT.body, fontSize: 11, color: COLORS.secondary }}>
+          <div style={{ width: 14, height: 14, borderRadius: 2, background: 'rgba(246,245,242,0.15)', backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(246,245,242,0.06) 2px, rgba(246,245,242,0.06) 4px)' }} />
+          Article shares (link penalty)
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: FONT.body, fontSize: 11, color: COLORS.secondary }}>
+          <div style={{ width: 14, height: 14, borderRadius: 2, background: COLORS.teal }} />
+          Native formats
+        </div>
+      </div>
+      <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 700, color: COLORS.magenta, marginTop: 12 }}>
+        Zero carousels in BOFU. The format with 3x reach and highest save rate is completely absent from the content closest to the buyer.
+      </div>
+    </div>
+  )
+}
 
 function ContentThemeBarChart() {
   const themes = [
@@ -2654,6 +2918,24 @@ function RecommendationsSection() {
           </Body>
         </ScrollReveal>
       </div>
+
+      {/* Content strategy: funnel-specific recs */}
+      <ScrollReveal>
+        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 20, color: COLORS.offWhite, marginTop: 48, marginBottom: 16 }}>
+          Rebalance the content funnel
+        </div>
+        <Body dark>
+          <p style={{ marginBottom: 20 }}>
+            <strong style={{ color: COLORS.oxide }}>Top of funnel (20% → 30–35%):</strong> Increase personal stories, lived-experience anecdotes from client work, and takes on leadership moments in the news. This is the content that feeds the algorithm. Ron's "plot twist" author post (200 reactions, 109 comments) is the prototype. Goal: algorithmic reach that carries MOFU and BOFU posts to 10,000 more people each. No format change needed — TOFU is already format-diverse.
+          </p>
+          <p style={{ marginBottom: 20 }}>
+            <strong style={{ color: COLORS.teal }}>Middle of funnel (75% → 45–50%):</strong> Don't reduce MOFU posting — add more TOFU and BOFU around it. Format shift: convert top-performing HBR and Forbes insights into native LinkedIn text posts (1,800 characters) or carousels. Share the key takeaway natively, reference the full article without embedding the URL. Same insight, 36% more people.
+          </p>
+          <p>
+            <strong style={{ color: COLORS.offWhite }}>Bottom of funnel (5% → 10–15%):</strong> Convert Navalent's core frameworks into carousels (8–10 slides). Publish 1–2 native BOFU posts per month as text or image, not article shares. "The 5 patterns of failing executive teams" as a carousel would outperform the same content as an HBR article share by 3–5x. The infrastructure makes BOFU content 10x more valuable by connecting each post to the specific contacts who need it.
+          </p>
+        </Body>
+      </ScrollReveal>
 
       <ScrollReveal>
         <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 20, color: COLORS.offWhite, marginTop: 48, marginBottom: 8 }}>
