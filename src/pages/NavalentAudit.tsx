@@ -2654,48 +2654,6 @@ function SystemFlowDiagram() {
    ═══════════════════════════════════════════════════════════════ */
 
 function RecommendationsSection() {
-  const recs = [
-    {
-      title: 'Enrich every corporate contact',
-      description:
-        'The 787 contacts at revenue client companies are the priority: append current title, current company, seniority, LinkedIn URL, and last role change date. This turns a flat list into a living map. Then conduct a full enrichment pull for 7,676 contacts.',
-      sprint: 'Sprint 1 · Days 1–30',
-      proves: 'Signal density holds beyond the 200-contact sample',
-      gate: 'Do we have enough signals to justify building the tracking layer?',
-    },
-    {
-      title: 'Build champion tracking as permanent capability',
-      description:
-        "Role changes at known contacts are the highest-intent signal in your business. When Shauna Nylund moves from Scoular to nVent, that should surface in someone's inbox within 48 hours, not whenever someone happens to remember her name.",
-      sprint: 'Sprint 2 · Days 31–60',
-      proves: 'Partners receive timely, actionable signals they would not otherwise see',
-      gate: 'Are partners acting on the signals?',
-    },
-    {
-      title: "Connect Ron's content to the CRM",
-      description:
-        "When an ICP-matching executive engages with a post, that signal needs to flow into HubSpot. Not as a vanity metric. As a relationship signal. The goal is to see who's paying attention, so that when Jarrod or Ron reaches out, they have context.",
-      sprint: 'Sprint 2 · Days 31–60',
-      proves: 'Partners receive timely, actionable signals they would not otherwise see',
-    },
-    {
-      title: 'Create post-engagement nurture system',
-      description:
-        'Every person touched during discovery and delivery enters a quarterly nurture path. Not a newsletter. A warm, relevant, human-feeling touch that says "we remember you, we\'re still here, and we\'re still thinking about the kind of problems you face."',
-      sprint: 'Sprint 3 · Days 61–90',
-      proves: 'Relationships can be maintained at scale without adding headcount',
-      gate: 'Is the warmth model producing scores the partners trust?',
-    },
-    {
-      title: 'Measure warmth, not pipeline',
-      description:
-        'Stop measuring success by leads generated. Start measuring it by relationship depth across your top 100 accounts. How many contacts do you know? How recently have you touched them? Which accounts are getting warmer and which are cooling?',
-      sprint: 'Sprint 4 · Days 91–120',
-      proves: 'The system runs. Can Navalent sustain this independently?',
-      gate: 'What does Phase 3 look like?',
-    },
-  ]
-
   return (
     <Section dark narrow>
       <ScrollReveal>
@@ -2704,72 +2662,226 @@ function RecommendationsSection() {
           color={COLORS.teal}
           subtitle="The play is to make the invisible visible."
         >
-          What we should build, and how we'll prove it.
+          What we should build.
         </DisplayType>
       </ScrollReveal>
 
-      <HeroBreakout accent={COLORS.teal} background="rgba(31,167,162,0.06)">
-      <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
-        {recs.map((r, i) => (
-          <div
-            key={i}
-            style={{
-              padding: '24px 28px',
-              background: i === 0 ? 'rgba(31,167,162,0.06)' : 'rgba(255,255,255,0.03)',
-              border: i === 0 ? `1px solid rgba(31,167,162,0.2)` : '1px solid rgba(255,255,255,0.08)',
-              borderTop: `3px solid ${COLORS.teal}`,
-              borderRadius: 8,
-            }}
-          >
-            {/* Sprint tag */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-              <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, letterSpacing: '0.15em', color: COLORS.teal }}>
-                0{i + 1}
-              </div>
-              <div style={{
-                fontFamily: FONT.body,
-                fontSize: 10,
-                fontWeight: 700,
-                letterSpacing: '0.08em',
-                color: COLORS.sand,
-                background: 'rgba(214,178,109,0.12)',
-                padding: '3px 10px',
-                borderRadius: 12,
-              }}>
-                {r.sprint}
-              </div>
-            </div>
-            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.offWhite, marginBottom: 8 }}>
-              {r.title}
-            </div>
-            <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 15, lineHeight: 1.6, color: 'rgba(246,245,242,0.88)', marginBottom: 16 }}>
-              {r.description}
-            </div>
-            {/* What we prove */}
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 12 }}>
-              <div style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: COLORS.teal, marginBottom: 4 }}>
-                WHAT WE PROVE
-              </div>
-              <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, color: 'rgba(246,245,242,0.7)', lineHeight: 1.5 }}>
-                {r.proves}
-              </div>
-            </div>
-            {/* Decision gate */}
-            {r.gate && (
-              <div style={{ marginTop: 10 }}>
-                <div style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: COLORS.sand, marginBottom: 4 }}>
-                  DECISION GATE
-                </div>
-                <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, fontStyle: 'italic', color: 'rgba(246,245,242,0.6)', lineHeight: 1.5 }}>
-                  {r.gate}
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
-      </StaggerGroup>
-      </HeroBreakout>
+      <TwoCol dark>
+        <ScrollReveal>
+          <Body dark>
+            <p><strong style={{ color: COLORS.teal }}>Enrich every corporate contact.</strong> The 787 contacts at revenue client companies are the priority: append current title, current company, seniority, LinkedIn URL, and last role change date. This turns a flat list into a living map. Then conduct a full enrichment pull for 7,676 contacts.</p>
+            <p><strong style={{ color: COLORS.magenta }}>Build champion tracking as permanent capability.</strong> Role changes at known contacts are the highest-intent signal in your business. When Shauna Nylund moves from Scoular to nVent, that should surface in someone's inbox within 48 hours.</p>
+            <p><strong style={{ color: COLORS.oxide }}>Connect Ron's content to the CRM.</strong> When an ICP-matching executive engages with a post, that signal needs to flow into HubSpot. Not as a vanity metric. As a relationship signal.</p>
+            <p><strong style={{ color: COLORS.sand }}>Create post-engagement nurture system.</strong> Every person touched during discovery and delivery enters a quarterly nurture path. Not a newsletter. A warm, relevant, human-feeling touch that says "we remember you."</p>
+            <p><strong style={{ color: COLORS.teal }}>Measure warmth, not pipeline.</strong> Stop measuring success by leads generated. Start measuring it by relationship depth across your top 100 accounts. Which accounts are getting warmer and which are cooling?</p>
+          </Body>
+        </ScrollReveal>
+      </TwoCol>
+
+      <ScrollReveal>
+        <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 20, color: COLORS.offWhite, marginTop: 48, marginBottom: 8 }}>
+          How we'll prove it
+        </div>
+        <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 15, color: 'rgba(246,245,242,0.6)', marginBottom: 24 }}>
+          120 days. Four sprints. A decision gate at every stage.
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <SprintTimeline />
+      </ScrollReveal>
     </Section>
+  )
+}
+
+function SprintTimeline() {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.15 })
+
+  const sprints = [
+    {
+      num: 1,
+      title: 'Full data enrichment + CRM foundation',
+      days: '1–30',
+      color: COLORS.teal,
+      deliverable: 'Enriched contact database with signal tags for all 7,876 corporate contacts',
+      proves: 'Signal density holds beyond the 200-contact sample',
+      gate: 'Do we have enough actionable signals to justify building the tracking layer?',
+      offset: 0,
+    },
+    {
+      num: 2,
+      title: 'Champion tracking + content-to-buyer connection',
+      days: '31–60',
+      color: COLORS.magenta,
+      deliverable: 'Automated champion-move alerts + LinkedIn content linked to HubSpot contacts',
+      proves: 'Partners receive timely, actionable signals they would not otherwise see',
+      gate: 'Are partners acting on the signals? Which signal types drive outreach?',
+      offset: 25,
+    },
+    {
+      num: 3,
+      title: 'Nurture system + relationship scoring',
+      days: '61–90',
+      color: COLORS.sand,
+      deliverable: 'Post-engagement nurture sequences + warmth scoring model for top 100 accounts',
+      proves: 'Relationships can be maintained at scale without adding headcount',
+      gate: 'Is the warmth model producing scores the partners trust and use?',
+      offset: 50,
+    },
+    {
+      num: 4,
+      title: 'Operating rhythm + measurement',
+      days: '91–120',
+      color: COLORS.oxide,
+      deliverable: 'Monthly partner review cadence + quarterly relationship health dashboard',
+      proves: 'The system runs',
+      gate: 'Can the firm sustain this independently? What does Phase 3 look like?',
+      offset: 75,
+    },
+  ]
+
+  const months = ['Apr', 'May', 'Jun', 'Jul']
+
+  return (
+    <div ref={ref}>
+      {/* Desktop: horizontal Gantt */}
+      <div className="hidden md:block" style={{ position: 'relative' }}>
+        {/* Timeline axis */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, position: 'relative', paddingLeft: 4 }}
+        >
+          {/* Readout marker */}
+          <div style={{ position: 'absolute', left: 0, top: -20, fontFamily: FONT.body, fontSize: 10, fontWeight: 700, color: COLORS.sand, letterSpacing: '0.08em' }}>
+            ◆ Readout: April 3
+          </div>
+          {months.map((m, i) => (
+            <div key={i} style={{ fontFamily: FONT.body, fontSize: 12, color: COLORS.secondary, fontWeight: 400 }}>{m}</div>
+          ))}
+        </motion.div>
+
+        {/* Gridlines */}
+        <div style={{ position: 'relative', borderTop: `0.5px solid ${COLORS.secondary}` }}>
+          {[25, 50, 75].map((pct) => (
+            <div key={pct} style={{ position: 'absolute', left: `${pct}%`, top: 0, bottom: 0, width: '0.5px', background: 'rgba(246,245,242,0.08)' }} />
+          ))}
+        </div>
+
+        {/* Sprint bars */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 16 }}>
+          {sprints.map((s, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -30 }}
+              animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+              transition={{ duration: 0.4, delay: 0.2 + i * 0.2, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div
+                style={{
+                  position: 'relative',
+                  marginLeft: `${s.offset}%`,
+                  width: '25%',
+                  minWidth: 200,
+                }}
+              >
+                {/* Bar */}
+                <div
+                  style={{
+                    height: 56,
+                    background: `${s.color}22`,
+                    borderLeft: `4px solid ${s.color}`,
+                    borderRadius: '0 8px 8px 0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '0 16px',
+                    cursor: 'default',
+                    transition: 'transform 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'scaleY(1.08)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'scaleY(1)' }}
+                >
+                  <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 700, color: COLORS.offWhite }}>
+                    Sprint {s.num}: {s.title}
+                  </div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 12, color: COLORS.secondary, flexShrink: 0, marginLeft: 12 }}>
+                    Days {s.days}
+                  </div>
+                </div>
+                {/* Detail below bar */}
+                <div style={{ paddingLeft: 16, marginTop: 6 }}>
+                  <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 300, fontStyle: 'italic', color: 'rgba(246,245,242,0.6)', lineHeight: 1.5 }}>
+                    Prove: {s.proves}
+                  </div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 10, color: 'rgba(246,245,242,0.35)', marginTop: 2 }}>
+                    Gate: {s.gate}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* End milestone */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ delay: 1.2, duration: 0.3 }}
+          style={{ textAlign: 'right', marginTop: 16, fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: COLORS.sand }}
+        >
+          ◆ Firm readout
+        </motion.div>
+      </div>
+
+      {/* Mobile: vertical timeline */}
+      <div className="block md:hidden" style={{ position: 'relative', paddingLeft: 24 }}>
+        {/* Vertical line */}
+        <div style={{ position: 'absolute', left: 8, top: 0, bottom: 0, width: 2, background: 'rgba(246,245,242,0.1)', borderRadius: 1 }} />
+
+        {/* Readout marker at top */}
+        <div style={{ position: 'relative', marginBottom: 20, paddingLeft: 16 }}>
+          <div style={{ position: 'absolute', left: -20, top: 4, width: 10, height: 10, background: COLORS.sand, transform: 'rotate(45deg)' }} />
+          <div style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, color: COLORS.sand }}>Phase 1 readout: April 3</div>
+        </div>
+
+        {sprints.map((s, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.4, delay: 0.2 + i * 0.15 }}
+            style={{ position: 'relative', marginBottom: 24, paddingLeft: 16 }}
+          >
+            {/* Dot on line */}
+            <div style={{ position: 'absolute', left: -20, top: 8, width: 10, height: 10, borderRadius: '50%', background: s.color }} />
+            <div style={{ fontFamily: FONT.body, fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: s.color, marginBottom: 4 }}>
+              SPRINT {s.num} · DAYS {s.days}
+            </div>
+            <div style={{ fontFamily: FONT.body, fontSize: 16, fontWeight: 700, color: COLORS.offWhite, marginBottom: 4 }}>
+              {s.title}
+            </div>
+            <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, color: 'rgba(246,245,242,0.7)', marginBottom: 6 }}>
+              {s.deliverable}
+            </div>
+            <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 300, fontStyle: 'italic', color: 'rgba(246,245,242,0.5)' }}>
+              Prove: {s.proves}
+            </div>
+            <div style={{ fontFamily: FONT.body, fontSize: 10, color: 'rgba(246,245,242,0.3)', marginTop: 2 }}>
+              Gate: {s.gate}
+            </div>
+          </motion.div>
+        ))}
+
+        {/* End milestone */}
+        <div style={{ position: 'relative', paddingLeft: 16 }}>
+          <div style={{ position: 'absolute', left: -20, top: 4, width: 10, height: 10, background: COLORS.sand, transform: 'rotate(45deg)' }} />
+          <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: COLORS.sand }}>◆ Firm readout</div>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -2800,14 +2912,15 @@ function TimelineSection() {
       <TwoCol>
         <ScrollReveal>
           <Body>
-            <p>If we believe in the direction, here is what next steps look like:</p>
+            <p>The Phase 1 readout is scheduled for April 3. This is not a slide deck presentation. It's a conversation about what we found, what it means for the firm, and whether the partners are ready to invest in making the patterns that built this firm visible and repeatable.</p>
+            <p>The 120-day sprint plan provides a structure with testable outcomes and decision gates at every stage. If the data doesn't hold, we stop. If it does, we build.</p>
           </Body>
         </ScrollReveal>
 
         <ScrollReveal>
           <TimelineItem
             label="Immediate"
-            period="Next 2 weeks"
+            period="Before April 3"
             color={COLORS.sand}
             items={[
               'Enrich the 787 contacts at revenue client companies first. Current title, current company, seniority, LinkedIn URL, last role change date.',
@@ -2820,16 +2933,21 @@ function TimelineSection() {
 
         <ScrollReveal delay={0.1}>
           <TimelineItem
-            label="Readout"
-            period="Scheduled conversation"
+            label="Phase 1 Readout"
+            period="April 3, 2026"
             color={COLORS.sand}
             isLast
             items={[
-              'I want to present these findings to Ron and Jarrod together and align on priorities before Sprint 1 begins.',
-              'The sprint plan is outlined above in the build cards. Each phase has a clear deliverable, a proof point, and a decision gate.',
-              'The question is not whether to build — the data makes the case. The question is how fast, and in what order.',
+              'Present these findings to the firm\'s leadership and align on priorities before Sprint 1 begins.',
+              'Each sprint has a clear deliverable, a proof point, and a decision gate. The plan is designed to be stopped, adjusted, or accelerated at every stage.',
             ]}
           />
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.2}>
+          <Callout color={COLORS.sand} textColor={COLORS.charcoal}>
+            The data says the firm has been doing this right for 21 years. The opportunity is to make it sustainable for the next 21.
+          </Callout>
         </ScrollReveal>
       </TwoCol>
     </Section>
