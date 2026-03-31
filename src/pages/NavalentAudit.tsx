@@ -1245,120 +1245,10 @@ function Hypothesis5Section() {
         </div>
       </ScrollReveal>
 
-      {/* 12-month content analysis */}
-      <ScrollReveal>
-        <Kicker color={COLORS.oxide}>12-MONTH CONTENT ANALYSIS (333 POSTS)</Kicker>
-      </ScrollReveal>
-
-      <div>
-        <ScrollReveal>
-          <Body dark>
-            <p>Across 333 posts captured over 12 months, the theme distribution reveals what Ron's content engine actually produces. The themes that map directly to what Navalent sells — Org Design and Structure (2 posts, 0.6%), Cross-Functional Alignment (3 posts, 0.9%), and Leadership Team Effectiveness (7 posts, 2.1%) — account for just 3.6% of Ron's LinkedIn content.</p>
-            <p>Total engagement across 12 months: 10,024 reactions (30.1 average per post), 2,391 comments (7.2 average). Post type breakdown: 179 article shares (54%), 74 images (22%), 42 videos (13%), 38 text posts (11%).</p>
-          </Body>
-        </ScrollReveal>
-      </div>
-
-      {/* Content theme chart — full width */}
-      <ScrollReveal>
-        <ContentThemeBarChart />
-      </ScrollReveal>
-
-      <div>
-        <ScrollReveal>
-          <Body dark>
-            <p>The content that goes viral is not the content that converts. The posts that earn the most views tend to be personal, emotional, or contrarian. The posts most relevant to Navalent's ICP — leadership team design, executive transitions, organizational transformation — reach a smaller but far more valuable audience. The gap between reach and relevance is where the system needs to focus.</p>
-          </Body>
-        </ScrollReveal>
-      </div>
-
-      {/* Reach vs ICP comparison — full width */}
-      <ScrollReveal>
-        <div style={{ margin: '32px 0' }}>
-          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 20 }}>
-            What gets reach vs. what maps to the buyer
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div style={{ padding: 24, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, textAlign: 'center' }}>
-              <div style={{ fontSize: 13, fontFamily: FONT.body, fontWeight: 700, letterSpacing: '0.12em', color: COLORS.teal, marginBottom: 12 }}>VIRAL CONTENT</div>
-              <div style={{ fontSize: 36, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite }}>12,674</div>
-              <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>views (historical echoes / political blog)</div>
-              <div style={{ fontSize: 28, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite, marginTop: 8 }}>7,760</div>
-              <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>views (unsolicited sales tactic rant)</div>
-            </div>
-            <div style={{ padding: 24, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, textAlign: 'center' }}>
-              <div style={{ fontSize: 13, fontFamily: FONT.body, fontWeight: 700, letterSpacing: '0.12em', color: COLORS.oxide, marginBottom: 12 }}>ICP-RELEVANT CONTENT</div>
-              <div style={{ fontSize: 36, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite }}>2,174</div>
-              <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>views ("Resolve Cross-Dept Rivalries" HBR)</div>
-              <div style={{ fontSize: 28, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite, marginTop: 8 }}>2,866</div>
-              <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>views ("Tell Your Boss to Stop Doing Your Job" HBR)</div>
-            </div>
-          </div>
-        </div>
-      </ScrollReveal>
-
-      {/* Content funnel analysis */}
-      <ScrollReveal>
-        <div style={{ marginTop: 48 }}>
-          <Kicker color={COLORS.oxide}>THE CONTENT FUNNEL: WHERE RON'S POSTS LAND</Kicker>
-          <Body dark>
-            <p style={{ marginBottom: 16 }}>Every post serves one of three roles in a content strategy. We mapped all 333 of Ron's posts against this framework to see where the current emphasis sits.</p>
-          </Body>
-        </div>
-      </ScrollReveal>
-
-      {/* Visual 1: Funnel tiers */}
-      <ScrollReveal>
-        <ContentFunnelViz />
-      </ScrollReveal>
-
+      {/* Transition to sidebar */}
       <ScrollReveal>
         <Body dark>
-          <p style={{ marginBottom: 16 }}>The data reveals a clear pattern: Ron's content engine is built for the middle of the funnel. 75% of posts are educational, expertise-building, authority-establishing content. This is what makes Ron synonymous with honest, rigorous leadership thinking. It is the right foundation.</p>
-          <p>But the mix is lopsided. The top of funnel (personal stories, vulnerability, culturally resonant moments) that drives algorithmic reach represents only 20% of posts, despite generating the highest comment rates. And the bottom of funnel (org design, cross-functional alignment, leadership team effectiveness) that maps directly to what Navalent sells represents just 5%, with only 18 posts in an entire year.</p>
-        </Body>
-      </ScrollReveal>
-
-      {/* Visual 2: Actual vs recommended mix */}
-      <ScrollReveal>
-        <FunnelMixComparison />
-      </ScrollReveal>
-
-      <ScrollReveal>
-        <Body dark>
-          <p style={{ marginBottom: 16 }}>The format data makes this sharper. 67% of BOFU posts are article shares containing external links, which the algorithm penalizes with 40–60% less reach. The posts most relevant to the buyer are being published in the format most suppressed by the algorithm. Zero BOFU posts use carousels, despite carousels generating 3x the reach of standard posts and being optimized for saves.</p>
-        </Body>
-      </ScrollReveal>
-
-      {/* Visual 3: Link penalty */}
-      <ScrollReveal>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{ margin: '24px 0' }}>
-          <div style={{ padding: 24, background: 'rgba(31,167,162,0.08)', border: `1px solid rgba(31,167,162,0.2)`, borderRadius: 8, textAlign: 'center' }}>
-            <div style={{ fontSize: 13, fontFamily: FONT.body, fontWeight: 700, letterSpacing: '0.12em', color: COLORS.teal, marginBottom: 8 }}>NATIVE POSTS</div>
-            <div style={{ fontSize: 40, fontWeight: 800, fontFamily: FONT.body, color: COLORS.offWhite }}>37.4</div>
-            <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.7)', fontFamily: FONT.body, marginTop: 4 }}>avg reactions</div>
-            <div style={{ fontSize: 12, color: COLORS.secondary, fontFamily: FONT.body, marginTop: 4 }}>46% of posts</div>
-          </div>
-          <div style={{ padding: 24, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, textAlign: 'center' }}>
-            <div style={{ fontSize: 13, fontFamily: FONT.body, fontWeight: 700, letterSpacing: '0.12em', color: COLORS.secondary, marginBottom: 8 }}>ARTICLE SHARES</div>
-            <div style={{ fontSize: 40, fontWeight: 800, fontFamily: FONT.body, color: 'rgba(246,245,242,0.5)' }}>23.9</div>
-            <div style={{ fontSize: 14, color: 'rgba(246,245,242,0.5)', fontFamily: FONT.body, marginTop: 4 }}>avg reactions</div>
-            <div style={{ fontSize: 12, color: COLORS.secondary, fontFamily: FONT.body, marginTop: 4 }}>54% of posts</div>
-          </div>
-        </div>
-        <div style={{ textAlign: 'center', fontFamily: FONT.body, fontSize: 14, marginBottom: 32 }}>
-          <strong style={{ color: COLORS.magenta }}>-36%</strong> <span style={{ color: 'rgba(246,245,242,0.7)' }}>engagement on more than half the content. The algorithm penalizes external links with 40–60% less reach.</span>
-        </div>
-      </ScrollReveal>
-
-      {/* Visual 4: Format distribution by stage */}
-      <ScrollReveal>
-        <FunnelFormatBreakdown />
-      </ScrollReveal>
-
-      <ScrollReveal>
-        <Body dark>
-          <p>The opportunity is not to change what Ron posts. It is to rebalance the mix and shift the format on BOFU content. Convert 2–3 key Navalent frameworks into carousel format. Publish 1–2 BOFU posts per month as native text or image posts instead of article shares. Increase TOFU personal storytelling from 2/month to 4/month to drive algorithmic reach that carries MOFU and BOFU content further.</p>
+          <p style={{ fontStyle: 'italic', color: 'rgba(246,245,242,0.6)' }}>A detailed analysis of Ron's 12-month content portfolio, LinkedIn algorithm mechanics, and format recommendations appears in the following section.</p>
         </Body>
       </ScrollReveal>
 
@@ -1643,8 +1533,8 @@ function ContentFunnelViz() {
   ]
 
   return (
-    <div ref={ref} style={{ margin: '24px 0 32px', padding: '28px 24px', background: 'rgba(255,255,255,0.03)', borderRadius: 12, border: '1px solid rgba(255,255,255,0.06)' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+    <div ref={ref} style={{ margin: '24px 0 32px', padding: '24px', background: '#fff', borderRadius: 8, border: `0.5px solid ${COLORS.divider}` }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {tiers.map((t, i) => (
           <motion.div
             key={i}
@@ -1654,19 +1544,19 @@ function ContentFunnelViz() {
           >
             <div style={{ width: t.width, maxWidth: '100%' }}>
               <div style={{
-                padding: '16px 20px',
-                background: i === 2 ? 'rgba(246,245,242,0.08)' : `${t.color}18`,
+                padding: '14px 18px',
+                background: i === 2 ? 'rgba(0,0,0,0.04)' : `${t.color}12`,
                 borderLeft: `4px solid ${t.color}`,
-                borderRadius: '0 8px 8px 0',
+                borderRadius: '0 6px 6px 0',
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: 8 }}>
                   <div>
-                    <span style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', color: i === 2 ? COLORS.offWhite : t.color }}>{t.label}</span>
-                    <span style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 300, color: 'rgba(246,245,242,0.7)', marginLeft: 12 }}>{t.desc}</span>
+                    <span style={{ fontFamily: FONT.body, fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', color: t.color }}>{t.label}</span>
+                    <span style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, color: COLORS.secondary, marginLeft: 10 }}>{t.desc}</span>
                   </div>
-                  <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 700, color: i === 2 ? COLORS.offWhite : t.color }}>{t.pct}</div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 700, color: t.color }}>{t.pct}</div>
                 </div>
-                <div style={{ fontFamily: FONT.body, fontSize: 12, color: COLORS.secondary, marginTop: 6 }}>
+                <div style={{ fontFamily: FONT.body, fontSize: 11, color: COLORS.secondary, marginTop: 4 }}>
                   {t.posts} posts · {t.reactions} avg reactions · {t.comments} avg comments
                 </div>
               </div>
@@ -1689,8 +1579,8 @@ function FunnelMixComparison() {
   ]
 
   return (
-    <div ref={ref} style={{ margin: '24px 0 32px', padding: '24px', background: 'rgba(255,255,255,0.03)', borderRadius: 12, border: '1px solid rgba(255,255,255,0.06)' }}>
-      <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 14, color: COLORS.offWhite, marginBottom: 20 }}>Actual mix vs. recommended range</div>
+    <div ref={ref} style={{ margin: '24px 0 32px', padding: '24px', background: '#fff', borderRadius: 8, border: `0.5px solid ${COLORS.divider}` }}>
+      <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 14, color: COLORS.charcoal, marginBottom: 20 }}>Actual mix vs. recommended range</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         {stages.map((s, i) => (
           <motion.div
@@ -1700,27 +1590,25 @@ function FunnelMixComparison() {
             transition={{ delay: i * 0.15 + 0.2 }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: i === 2 ? COLORS.offWhite : s.color, width: 48, flexShrink: 0, letterSpacing: '0.08em' }}>{s.label}</div>
-              <div style={{ flex: 1, position: 'relative', height: 28, background: 'rgba(255,255,255,0.04)', borderRadius: 4, overflow: 'hidden' }}>
-                {/* Target range (faint) */}
+              <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: s.color, width: 48, flexShrink: 0, letterSpacing: '0.08em' }}>{s.label}</div>
+              <div style={{ flex: 1, position: 'relative', height: 24, background: '#f5f4f0', borderRadius: 4, overflow: 'hidden' }}>
                 <div style={{
                   position: 'absolute',
                   left: `${s.targetLow}%`,
                   width: `${s.targetHigh - s.targetLow}%`,
                   top: 0, bottom: 0,
-                  background: i === 2 ? 'rgba(246,245,242,0.06)' : `${s.color}10`,
-                  borderLeft: `1px dashed ${i === 2 ? 'rgba(246,245,242,0.2)' : s.color + '40'}`,
-                  borderRight: `1px dashed ${i === 2 ? 'rgba(246,245,242,0.2)' : s.color + '40'}`,
+                  background: `${s.color}08`,
+                  borderLeft: `1px dashed ${s.color}40`,
+                  borderRight: `1px dashed ${s.color}40`,
                 }} />
-                {/* Actual bar */}
                 <motion.div
                   initial={{ width: 0 }}
                   animate={inView ? { width: `${s.actual}%` } : { width: 0 }}
                   transition={{ duration: 0.8, delay: i * 0.15 + 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ height: '100%', background: i === 2 ? COLORS.offWhite : s.color, borderRadius: 4, opacity: 0.8 }}
+                  style={{ height: '100%', background: s.color, borderRadius: 4, opacity: 0.8 }}
                 />
               </div>
-              <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 700, color: i === 2 ? COLORS.offWhite : s.color, width: 36, textAlign: 'right' }}>{s.actual}%</div>
+              <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 700, color: s.color, width: 36, textAlign: 'right' }}>{s.actual}%</div>
               <div style={{ fontFamily: FONT.body, fontSize: 11, color: COLORS.secondary, width: 80, textAlign: 'right' }}>{s.targetLow}–{s.targetHigh}%</div>
               <div style={{
                 fontFamily: FONT.body, fontSize: 10, fontWeight: 700,
@@ -1733,95 +1621,8 @@ function FunnelMixComparison() {
           </motion.div>
         ))}
       </div>
-      <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, color: 'rgba(246,245,242,0.6)', marginTop: 16, lineHeight: 1.6 }}>
+      <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 300, color: COLORS.secondary, marginTop: 16, lineHeight: 1.6 }}>
         More TOFU for reach, more BOFU for conversion. MOFU stays strong but becomes a smaller share of a larger, more balanced mix.
-      </div>
-    </div>
-  )
-}
-
-function FunnelFormatBreakdown() {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, amount: 0.3 })
-
-  const stages = [
-    { label: 'TOFU', color: COLORS.oxide, segments: [
-      { type: 'Article', pct: 34, color: 'rgba(246,245,242,0.15)' },
-      { type: 'Image', pct: 29, color: COLORS.oxide },
-      { type: 'Text', pct: 22, color: `${COLORS.oxide}88` },
-      { type: 'Video', pct: 15, color: `${COLORS.oxide}55` },
-    ], note: 'Diverse formats' },
-    { label: 'MOFU', color: COLORS.teal, segments: [
-      { type: 'Article', pct: 58, color: 'rgba(246,245,242,0.15)' },
-      { type: 'Image', pct: 22, color: COLORS.teal },
-      { type: 'Video', pct: 10, color: `${COLORS.teal}88` },
-      { type: 'Text', pct: 10, color: `${COLORS.teal}55` },
-    ], note: 'Link-heavy' },
-    { label: 'BOFU', color: COLORS.offWhite, segments: [
-      { type: 'Article', pct: 67, color: 'rgba(246,245,242,0.15)' },
-      { type: 'Video', pct: 33, color: 'rgba(246,245,242,0.4)' },
-    ], note: 'Zero carousels, zero images' },
-  ]
-
-  return (
-    <div ref={ref} style={{ margin: '24px 0 32px', padding: '24px', background: 'rgba(255,255,255,0.03)', borderRadius: 12, border: '1px solid rgba(255,255,255,0.06)' }}>
-      <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 14, color: COLORS.offWhite, marginBottom: 20 }}>Format distribution by funnel stage</div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-        {stages.map((s, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ delay: i * 0.15 + 0.2 }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: i === 2 ? COLORS.offWhite : s.color, width: 48, flexShrink: 0, letterSpacing: '0.08em' }}>{s.label}</div>
-              <div style={{ flex: 1, display: 'flex', height: 24, borderRadius: 4, overflow: 'hidden' }}>
-                {s.segments.map((seg, j) => (
-                  <motion.div
-                    key={j}
-                    initial={{ width: 0 }}
-                    animate={inView ? { width: `${seg.pct}%` } : { width: 0 }}
-                    transition={{ duration: 0.6, delay: i * 0.15 + j * 0.1 + 0.3 }}
-                    style={{
-                      height: '100%',
-                      background: seg.type === 'Article' ? seg.color : seg.color,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: 10,
-                      fontFamily: FONT.body,
-                      fontWeight: 600,
-                      color: seg.type === 'Article' ? 'rgba(246,245,242,0.5)' : '#fff',
-                      borderRight: '1px solid rgba(0,0,0,0.2)',
-                      // Hatching pattern for article shares
-                      backgroundImage: seg.type === 'Article' ? 'repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(246,245,242,0.04) 3px, rgba(246,245,242,0.04) 6px)' : 'none',
-                    }}
-                  >
-                    {seg.pct >= 15 ? `${seg.type} ${seg.pct}%` : ''}
-                  </motion.div>
-                ))}
-              </div>
-              <div style={{ fontFamily: FONT.body, fontSize: 11, color: i === 2 ? COLORS.magenta : COLORS.secondary, fontWeight: i === 2 ? 700 : 400, minWidth: 140, textAlign: 'right' }}>
-                {s.note}
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-      {/* Legend */}
-      <div style={{ display: 'flex', gap: 16, marginTop: 16, flexWrap: 'wrap' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: FONT.body, fontSize: 11, color: COLORS.secondary }}>
-          <div style={{ width: 14, height: 14, borderRadius: 2, background: 'rgba(246,245,242,0.15)', backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(246,245,242,0.06) 2px, rgba(246,245,242,0.06) 4px)' }} />
-          Article shares (link penalty)
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: FONT.body, fontSize: 11, color: COLORS.secondary }}>
-          <div style={{ width: 14, height: 14, borderRadius: 2, background: COLORS.teal }} />
-          Native formats
-        </div>
-      </div>
-      <div style={{ fontFamily: FONT.body, fontSize: 13, fontWeight: 700, color: COLORS.magenta, marginTop: 12 }}>
-        Zero carousels in BOFU. The format with 3x reach and highest save rate is completely absent from the content closest to the buyer.
       </div>
     </div>
   )
@@ -1849,29 +1650,29 @@ function ContentThemeBarChart() {
   const inView = useInView(ref, { once: true, amount: 0.15 })
 
   return (
-    <div ref={ref} style={{ margin: '32px 0', padding: '28px 24px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12 }}>
-      <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 16, color: COLORS.offWhite, marginBottom: 8 }}>
+    <div ref={ref} style={{ margin: '32px 0', padding: '28px 24px', background: '#fff', border: `0.5px solid ${COLORS.divider}`, borderRadius: 8 }}>
+      <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 14, color: COLORS.charcoal, marginBottom: 8 }}>
         Content theme distribution (333 posts, 12 months)
       </div>
-      <div style={{ fontFamily: FONT.body, fontSize: 13, color: 'rgba(246,245,242,0.6)', marginBottom: 24 }}>
+      <div style={{ fontFamily: FONT.body, fontSize: 12, color: COLORS.secondary, marginBottom: 24 }}>
         <span style={{ display: 'inline-block', width: 12, height: 12, borderRadius: 2, background: COLORS.oxide, marginRight: 6, verticalAlign: 'middle' }} /> General themes
         <span style={{ display: 'inline-block', width: 12, height: 12, borderRadius: 2, background: COLORS.magenta, marginRight: 6, marginLeft: 16, verticalAlign: 'middle' }} /> Core Navalent service themes (3.6% combined)
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {themes.map((t, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <div style={{ fontFamily: FONT.body, fontSize: 13, color: t.core ? COLORS.magenta : COLORS.offWhite, fontWeight: t.core ? 700 : 400, minWidth: 260, textAlign: 'right', flexShrink: 0 }}>
+            <div style={{ fontFamily: FONT.body, fontSize: 12, color: t.core ? COLORS.magenta : COLORS.charcoal, fontWeight: t.core ? 700 : 400, minWidth: 220, textAlign: 'right', flexShrink: 0 }}>
               {t.label}
             </div>
-            <div style={{ flex: 1, height: 20, background: 'rgba(255,255,255,0.04)', borderRadius: 4, overflow: 'hidden' }}>
+            <div style={{ flex: 1, height: 16, background: '#f5f4f0', borderRadius: 3, overflow: 'hidden' }}>
               <motion.div
                 initial={{ width: 0 }}
                 animate={inView ? { width: `${(t.pct / 36) * 100}%` } : { width: 0 }}
                 transition={{ duration: 0.8, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
-                style={{ height: '100%', background: t.core ? COLORS.magenta : COLORS.oxide, borderRadius: 4 }}
+                style={{ height: '100%', background: t.core ? COLORS.magenta : COLORS.oxide, borderRadius: 3 }}
               />
             </div>
-            <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: t.core ? COLORS.magenta : 'rgba(246,245,242,0.7)', minWidth: 70, textAlign: 'right' }}>
+            <div style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, color: t.core ? COLORS.magenta : COLORS.secondary, minWidth: 70, textAlign: 'right' }}>
               {t.posts} ({t.pct}%)
             </div>
           </div>
@@ -2511,6 +2312,207 @@ function AppendicesSection() {
 /* ═══════════════════════════════════════════════════════════════
    SECTION 8: MY THOUGHTS (EDITORIAL)
    ═══════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   ON VISIBILITY — SIDEBAR FIELD NOTE
+   ═══════════════════════════════════════════════════════════════ */
+
+function OnVisibilitySection() {
+  return (
+    <section
+      id="on-visibility"
+      style={{
+        background: '#FAF8F3',
+        fontFamily: FONT.body,
+        position: 'relative',
+      }}
+    >
+      <div style={{ maxWidth: 760, margin: '0 auto', padding: '56px 32px' }}>
+        {/* Top rule */}
+        <div style={{ height: '0.5px', background: COLORS.divider, marginBottom: 40 }} />
+
+        {/* Section header */}
+        <ScrollReveal>
+          <div style={{ marginBottom: 32 }}>
+            <div style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, letterSpacing: '3px', color: COLORS.oxide, marginBottom: 8 }}>
+              ON VISIBILITY
+            </div>
+            <div style={{ fontFamily: FONT.body, fontSize: 16, fontWeight: 300, fontStyle: 'italic', color: COLORS.secondary, lineHeight: 1.6 }}>
+              A note on LinkedIn's algorithm and what it means for Navalent's content
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontSize: 15, fontWeight: 300, fontStyle: 'italic', color: COLORS.secondary, lineHeight: 1.7, marginBottom: 32 }}>
+            This section provides context on how LinkedIn distributes content in 2025–2026 and what the data reveals about Ron's content portfolio. It informs the infrastructure recommendations but sits outside the five-hypothesis framework. Think of it as a practitioner's field note: useful context for the partners who want to understand the mechanics behind the findings.
+          </div>
+        </ScrollReveal>
+
+        {/* How the algorithm works */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginBottom: 12 }}>
+            How the algorithm works now
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 16, fontWeight: 300, color: COLORS.charcoal, lineHeight: 1.7, marginBottom: 24 }}>
+            <p style={{ marginBottom: 14 }}>LinkedIn's algorithm shifted between 2024 and 2026 from a social graph (who you know) to an interest graph (what you care about), powered by a 150-billion-parameter model that reads the semantic meaning of every post and cross-references it against the author's professional profile. Posts aligned with a creator's verified professional expertise receive 40% higher organic impressions than off-topic content.</p>
+            <p style={{ marginBottom: 14 }}>The algorithm assigns dramatically different weights to engagement signals. A threaded comment discussion carries roughly 15x the weight of a reaction. Substantive comments (15+ words) carry 7–8x. Saves and bookmarks, which LinkedIn added to analytics in late 2025, carry 3–5x and correlate with "I'll need this later" behavior. This is how not-yet-in-market buyers engage. They don't comment. They save.</p>
+            <p>Posts held for 61+ seconds achieve 15.6% engagement vs. 1.2% for posts scanned in under 3 seconds. A 13x differential. This is why Ron's story-driven posts outperform quick takes: they hold attention.</p>
+          </div>
+        </ScrollReveal>
+
+        {/* Algorithm signal hierarchy — compact bar chart */}
+        <ScrollReveal>
+          <div style={{ margin: '24px 0 32px', padding: '20px', background: '#fff', borderRadius: 8, border: `0.5px solid ${COLORS.divider}` }}>
+            <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 14, color: COLORS.charcoal, marginBottom: 16 }}>Engagement signal weight</div>
+            {[
+              { label: 'Threaded discussion', weight: '15x', pct: 100, color: COLORS.oxide },
+              { label: 'Substantive comment (15+ words)', weight: '7–8x', pct: 53, color: '#C97A5E' },
+              { label: 'Save / bookmark', weight: '3–5x', pct: 33, color: COLORS.sand },
+              { label: 'Share / repost', weight: '2x', pct: 13, color: '#B0B0B0' },
+              { label: 'Reaction (like)', weight: '1x', pct: 7, color: COLORS.divider },
+            ].map((s, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                <div style={{ fontFamily: FONT.body, fontSize: 12, color: COLORS.secondary, width: 200, textAlign: 'right', flexShrink: 0 }}>{s.label}</div>
+                <div style={{ flex: 1, height: 14, background: '#f5f4f0', borderRadius: 3, overflow: 'hidden' }}>
+                  <div style={{ width: `${s.pct}%`, height: '100%', background: s.color, borderRadius: 3 }} />
+                </div>
+                <div style={{ fontFamily: FONT.body, fontSize: 12, fontWeight: 700, color: COLORS.charcoal, width: 40 }}>{s.weight}</div>
+              </div>
+            ))}
+          </div>
+        </ScrollReveal>
+
+        {/* The 93% attribution gap */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginBottom: 12 }}>
+            The 93% attribution gap
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 16, fontWeight: 300, color: COLORS.charcoal, lineHeight: 1.7, marginBottom: 16 }}>
+            <p style={{ marginBottom: 14 }}>Research across 40+ B2B companies found that software-based attribution captured $977K in LinkedIn-attributed revenue, while self-reported attribution showed $14M. A 93% measurement gap. When buyers were asked how they found the company, 44% cited social media. Analytics said 82% came from Google and direct traffic.</p>
+            <p>This is the mechanism behind Mindy's "Offline Sources" traffic source. The buyer may have been reading Ron's content for months. When they finally reach out, the attribution reads "offline" because the discovery happened through channels no analytics platform can track. The infrastructure we build makes more of this invisible journey visible.</p>
+          </div>
+        </ScrollReveal>
+
+        {/* 93% hero stat */}
+        <ScrollReveal>
+          <div style={{ margin: '16px 0 32px', padding: '28px', background: 'rgba(184,92,74,0.06)', borderLeft: `4px solid ${COLORS.oxide}`, borderRadius: '0 8px 8px 0', textAlign: 'center' }}>
+            <div style={{ fontSize: 52, fontWeight: 800, color: COLORS.oxide, fontFamily: FONT.body }}>93%</div>
+            <div style={{ fontSize: 14, color: COLORS.secondary, marginTop: 4 }}>of LinkedIn-sourced revenue invisible to analytics</div>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 32, marginTop: 16 }}>
+              <div><span style={{ fontSize: 18, fontWeight: 700, color: COLORS.charcoal }}>$977K</span><br /><span style={{ fontSize: 11, color: COLORS.secondary }}>software attribution</span></div>
+              <div><span style={{ fontSize: 18, fontWeight: 700, color: COLORS.oxide }}>$14M</span><br /><span style={{ fontSize: 11, color: COLORS.secondary }}>self-reported attribution</span></div>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Ron's content portfolio */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginBottom: 12 }}>
+            Ron's content portfolio: 12 months, 333 posts
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 300, fontStyle: 'italic', color: COLORS.secondary, lineHeight: 1.6, marginBottom: 16 }}>
+            Note: Ron's LinkedIn profile shows 333 posts over the trailing 12 months. The theme analysis categorizes 261 original posts after excluding reposts and shared articles without original commentary.
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 16, fontWeight: 300, color: COLORS.charcoal, lineHeight: 1.7, marginBottom: 16 }}>
+            <p style={{ marginBottom: 14 }}>The theme distribution: Executive Coaching and Personal Development (119 posts, 35.7%), Culture and Employee Experience (47, 14.1%), Ethical Leadership and Trust (44, 13.2%), Personal Vulnerability and Storytelling (28, 8.4%), Change Management (28, 8.4%), Political/Social Commentary (12, 3.6%).</p>
+            <p style={{ marginBottom: 14 }}>The themes that map directly to what Navalent sells: Org Design (2 posts, 0.6%), Cross-Functional Alignment (3, 0.9%), Leadership Team Effectiveness (7, 2.1%). Combined: 3.6% of total output.</p>
+            <p>Total engagement: 10,024 reactions (30.1 avg), 2,391 comments (7.2 avg). Post types: 179 article shares (54%), 74 images (22%), 42 videos (13%), 38 text (11%).</p>
+          </div>
+        </ScrollReveal>
+
+        {/* Content theme chart */}
+        <ScrollReveal>
+          <ContentThemeBarChart />
+        </ScrollReveal>
+
+        {/* What the last 30 posts reveal */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
+            What the last 30 posts reveal
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 16, fontWeight: 300, color: COLORS.charcoal, lineHeight: 1.7, marginBottom: 16 }}>
+            <p style={{ marginBottom: 14 }}>1,197 total reactions (39.9 avg), 191 comments (6.4 avg), 81 shares (2.7 avg). The standout: "It's no secret you're facing things for the first time" generated 374 reactions, 39 comments, and 36 shares. A personal vulnerability post that activated a broad network, driving algorithmic reach.</p>
+            <p>The Navalent-relevant posts: "We've worked with hundreds of executive teams over two decades at Navalent" (1 reaction, 1 comment). "Most organizational transformations don't fail because the idea was wrong" (32 reactions, 6 comments). These posts reach fewer people because the engagement layer does not activate on them, but the people they reach are more likely to be in the buying window.</p>
+          </div>
+        </ScrollReveal>
+
+        {/* The link penalty */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
+            The link penalty
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 16, fontWeight: 300, color: COLORS.charcoal, lineHeight: 1.7, marginBottom: 16 }}>
+            54% of Ron's posts are article shares containing external links. Article shares average 23.9 reactions. Native posts average 37.4 reactions. A 36% engagement penalty on more than half the content.
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <div className="grid grid-cols-2 gap-4" style={{ margin: '0 0 24px' }}>
+            <div style={{ padding: 16, background: '#fff', border: `1px solid rgba(31,167,162,0.2)`, borderRadius: 8, textAlign: 'center' }}>
+              <div style={{ fontSize: 28, fontWeight: 800, color: COLORS.teal, fontFamily: FONT.body }}>37.4</div>
+              <div style={{ fontSize: 12, color: COLORS.secondary }}>avg reactions (native)</div>
+            </div>
+            <div style={{ padding: 16, background: '#fff', border: `0.5px solid ${COLORS.divider}`, borderRadius: 8, textAlign: 'center' }}>
+              <div style={{ fontSize: 28, fontWeight: 800, color: COLORS.secondary, fontFamily: FONT.body }}>23.9</div>
+              <div style={{ fontSize: 12, color: COLORS.secondary }}>avg reactions (article shares)</div>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* The format opportunity */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
+            The format opportunity
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 16, fontWeight: 300, color: COLORS.charcoal, lineHeight: 1.7, marginBottom: 16 }}>
+            <p style={{ marginBottom: 14 }}>Carousels (PDF documents) produce 7% engagement and 3x average reach. Each swipe generates a dwell-time signal. Ron's current mix has zero carousels. The firm's frameworks are multi-step processes that would translate naturally into 8–10 slide carousel formats.</p>
+            <p>LinkedIn newsletters bypass the algorithm entirely, triggering triple notifications (in-app, push, email) to all subscribers. Average open rates: 40%. At 15% conversion of Ron's 30,892 followers, that's 4,600+ people receiving every edition directly.</p>
+          </div>
+        </ScrollReveal>
+
+        {/* The content mix in context */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
+            The content mix in context
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 16, fontWeight: 300, color: COLORS.charcoal, lineHeight: 1.7, marginBottom: 16 }}>
+            Mapped against a standard content funnel, Ron's portfolio is 20% top-of-funnel (personal stories, vulnerability, cultural moments), 75% middle-of-funnel (education, expertise, credibility), and 5% bottom-of-funnel (org design, executive team, cross-functional alignment). The recommended range is roughly 30–40% / 40–50% / 10–20%. The shift is not about posting differently. It is about adding more reach-driving personal content and more Navalent-specific frameworks around the existing foundation.
+          </div>
+        </ScrollReveal>
+
+        {/* Compact funnel visual */}
+        <ScrollReveal>
+          <ContentFunnelViz />
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <FunnelMixComparison />
+        </ScrollReveal>
+
+        {/* What this means for the infrastructure */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginTop: 32, marginBottom: 12 }}>
+            What this means for the infrastructure
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 16, fontWeight: 300, color: COLORS.charcoal, lineHeight: 1.7, marginBottom: 24 }}>
+            The content strategy and the infrastructure are the same system viewed from two angles. The algorithm research tells us what kinds of content and formats drive the most reach and the deepest engagement signals. The infrastructure tells us who that reach is actually touching and what to do about it. Neither works without the other.
+          </div>
+        </ScrollReveal>
+
+        {/* Sources */}
+        <ScrollReveal>
+          <div style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 300, fontStyle: 'italic', color: COLORS.secondary, lineHeight: 1.6 }}>
+            Sources: Richard van der Blom Algorithm Insights 2025 (1.8M posts), Socialinsider 2026 Benchmarks (1.3M posts), Dreamdata 2026 (66M sessions), LinkedIn Engineering Blog, Trust Insights Q1 2026.
+          </div>
+        </ScrollReveal>
+
+        {/* Bottom rule */}
+        <div style={{ height: '0.5px', background: COLORS.divider, marginTop: 40 }} />
+      </div>
+    </section>
+  )
+}
 
 function EditorialDivider() {
   return (
@@ -3544,6 +3546,22 @@ html { scroll-behavior: smooth; }
   stroke: #D7DADD !important;
 }
 
+/* On Visibility sidebar — dark mode adaptation */
+#audit-root[data-theme="dark"] #on-visibility,
+#audit-root:not([data-theme]) #on-visibility {
+  background: #3D3D3D !important;
+}
+#audit-root[data-theme="dark"] #on-visibility *,
+#audit-root:not([data-theme]) #on-visibility * {
+  color: #F6F5F2 !important;
+}
+#audit-root[data-theme="dark"] #on-visibility [style*="background: #fff"],
+#audit-root:not([data-theme]) #on-visibility [style*="background: #fff"],
+#audit-root[data-theme="dark"] #on-visibility [style*="background: rgb(255, 255, 255)"],
+#audit-root:not([data-theme]) #on-visibility [style*="background: rgb(255, 255, 255)"] {
+  background: rgba(255,255,255,0.04) !important;
+}
+
 @media print {
   /* Reset animations and transitions */
   *, *::before, *::after {
@@ -3685,6 +3703,7 @@ export default function NavalentAudit() {
         <Hypothesis4Section />
         <Hypothesis5Divider />
         <Hypothesis5Section />
+        <OnVisibilitySection />
         <EditorialDivider />
         <EditorialSection />
         <RecommendationsSection />
