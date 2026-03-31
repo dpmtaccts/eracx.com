@@ -80,6 +80,7 @@ export function StaggerGroup({
       {children.map((child, i) => (
         <motion.div
           key={i}
+          style={{ display: 'flex' }}
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{
@@ -1066,6 +1067,8 @@ export function ProfileCard({
         borderRadius: 8,
         borderTop: `3px solid ${accent}`,
         background: dark ? 'rgba(255,255,255,0.03)' : '#fff',
+        width: '100%',
+        height: '100%',
       }}
     >
       <div
