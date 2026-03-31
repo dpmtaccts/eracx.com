@@ -360,23 +360,24 @@ function DataTransition() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.2}>
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-6 md:gap-8" style={{ marginBottom: 32 }}>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-y-6 gap-x-4 md:gap-x-6" style={{ marginBottom: 32 }}>
             {stats.map((s, i) => (
               <div key={i} style={{ textAlign: 'center' }}>
-                <AnimatedCounter
-                  value={s.value}
-                  prefix={s.prefix || ''}
-                  suffix={s.suffix || ''}
-                  decimals={s.decimals || 0}
-                  color={s.color}
-                  size="medium"
-                  dark
-                />
+                <div style={{
+                  fontFamily: FONT.body,
+                  fontSize: 28,
+                  fontWeight: 800,
+                  color: s.color,
+                  lineHeight: 1,
+                  letterSpacing: '-0.02em',
+                }}>
+                  {s.prefix || ''}{s.decimals ? s.value.toFixed(s.decimals) : s.value.toLocaleString()}{s.suffix || ''}
+                </div>
                 <div style={{
                   fontFamily: FONT.body,
                   fontSize: 11,
                   color: COLORS.secondary,
-                  marginTop: 4,
+                  marginTop: 6,
                   lineHeight: 1.4,
                   whiteSpace: 'pre-line',
                 }}>
