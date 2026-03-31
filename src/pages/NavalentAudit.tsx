@@ -64,25 +64,26 @@ function PasswordGate({ onAuth }: { onAuth: () => void }) {
         position: 'relative',
       }}
     >
-      <div
-        style={{
-          position: 'absolute',
-          top: 32,
-          left: 32,
-          color: COLORS.offWhite,
-          fontWeight: 800,
-          fontSize: 16,
-          letterSpacing: '0.25em',
-        }}
-      >
-        ERA
-      </div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        style={{ width: '100%', maxWidth: 400, padding: '0 24px' }}
+        style={{ width: '100%', maxWidth: 400, padding: '0 24px', textAlign: 'center' }}
       >
+        <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 300, color: 'rgba(246,245,242,0.5)', marginBottom: 16 }}>
+          Go-to-Market Assessment built for:
+        </div>
+        <div style={{ marginBottom: 40 }}>
+          <img
+            src="/images/navalent/navalent-white-logo.svg"
+            alt="Navalent"
+            style={{ height: 28, width: 'auto', opacity: 0.85 }}
+            onError={(e) => {
+              const t = e.target as HTMLImageElement
+              t.style.display = 'none'
+            }}
+          />
+        </div>
         <input
           type="password"
           placeholder="Enter password"
@@ -114,6 +115,12 @@ function PasswordGate({ onAuth }: { onAuth: () => void }) {
           </motion.div>
         )}
       </motion.div>
+      {/* Bottom-left logos */}
+      <div style={{ position: 'absolute', bottom: 32, left: 32, display: 'flex', alignItems: 'center', gap: 16 }}>
+        <img src="/images/era_final.png" alt="ERA" style={{ height: 18, width: 'auto', opacity: 0.4, filter: 'brightness(0) invert(1)' }} />
+        <div style={{ width: 1, height: 14, background: 'rgba(246,245,242,0.15)' }} />
+        <img src="/images/dpmt_logo.png" alt="Department of Loyalty" style={{ height: 18, width: 'auto', opacity: 0.4, filter: 'brightness(0) invert(1)' }} />
+      </div>
     </div>
   )
 }
@@ -200,14 +207,14 @@ function CoverSection() {
           src="/images/era_final.png"
           alt="ERA"
           className="logo-adaptive"
-          style={{ height: 20, width: 'auto', opacity: 0.5, filter: 'brightness(0) invert(1)' }}
+          style={{ height: 18, width: 'auto', opacity: 0.4, filter: 'brightness(0) invert(1)' }}
         />
-        <div style={{ width: 1, height: 16, background: 'rgba(246,245,242,0.15)' }} />
+        <div style={{ width: 1, height: 14, background: 'rgba(246,245,242,0.15)' }} />
         <img
           src="/images/dpmt_logo.png"
           alt="Department of Loyalty"
           className="logo-adaptive"
-          style={{ height: 14, width: 'auto', opacity: 0.4, filter: 'brightness(0) invert(1)' }}
+          style={{ height: 18, width: 'auto', opacity: 0.4, filter: 'brightness(0) invert(1)' }}
         />
       </div>
     </Section>
@@ -3336,14 +3343,14 @@ function CloseSection() {
             src="/images/era_final.png"
             alt="ERA"
             className="logo-adaptive"
-            style={{ height: 20, width: 'auto', opacity: 0.5, filter: 'brightness(0) invert(1)' }}
+            style={{ height: 18, width: 'auto', opacity: 0.4, filter: 'brightness(0) invert(1)' }}
           />
-          <div style={{ width: 1, height: 16, background: 'rgba(246,245,242,0.15)' }} />
+          <div style={{ width: 1, height: 14, background: 'rgba(246,245,242,0.15)' }} />
           <img
             src="/images/dpmt_logo.png"
             alt="Department of Loyalty"
             className="logo-adaptive"
-            style={{ height: 14, width: 'auto', opacity: 0.4, filter: 'brightness(0) invert(1)' }}
+            style={{ height: 18, width: 'auto', opacity: 0.4, filter: 'brightness(0) invert(1)' }}
           />
         </div>
         <div style={{ textAlign: 'right' }}>
