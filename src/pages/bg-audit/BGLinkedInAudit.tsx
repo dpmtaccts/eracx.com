@@ -1295,7 +1295,6 @@ function Report() {
                       <img
                         src="/images/bg-audit/hearing-aids.png"
                         alt="Hearing aids post - 87 reactions, 6 comments."
-                        style={{ width: 300, height: 675 }}
                         className="w-full h-auto"
                       />
                     </div>
@@ -1342,7 +1341,6 @@ function Report() {
                       <img
                         src="/images/bg-audit/creatine.png"
                         alt="Creatine nostalgia post - 44 reactions, 22 comments."
-                        style={{ width: 300, height: 675 }}
                         className="w-full h-auto"
                       />
                     </div>
@@ -1398,7 +1396,6 @@ function Report() {
                       <img
                         src="/images/bg-audit/brand-day.png"
                         alt="Brand Day at TikTok LA - 84 reactions, 7 comments."
-                        style={{ width: 300, height: 675 }}
                         className="w-full h-auto"
                       />
                     </div>
