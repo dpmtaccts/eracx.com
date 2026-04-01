@@ -27,7 +27,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/gtm-planner" element={<GtmPlanner />} />
         <Route path="/growth-simulator" element={<GrowthSimulator />} />
         <Route path="/audit/navalent" element={<NavalentAudit />} />
-        <Route path="/sample/assessment" element={<SampleAssessment />} />
+        <Route path="/audit/tidera" element={<SampleAssessment />} />
         <Route path="/audit/brian-gonsalves" element={<BGLinkedInAudit />} />
       </Routes>
     </BrowserRouter>
