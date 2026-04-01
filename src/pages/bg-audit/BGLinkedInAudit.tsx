@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { auditData, algorithmData, funnelTiers, commentQualityData, threadDepthData, brianReplyData } from "./data";
+import { auditData, algorithmData, funnelTiers, commentQualityData, brianReplyData } from "./data";
 import type { Post } from "./data";
 
 // ─── Person silhouette SVG ───
