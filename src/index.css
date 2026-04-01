@@ -12,6 +12,13 @@
   --color-loop-loyalty: #D4367A;
   --color-oxide: #B85C4A;
   --font-sans: 'DM Sans', 'Inter', system-ui, sans-serif;
+  /* BG LinkedIn Audit tokens */
+  --color-coral: #D4654A;
+  --color-gold: #C4A265;
+  --color-dark: #1A1A1A;
+  --color-medium: #4A4A4A;
+  --color-light-text: #7A7A7A;
+  --color-border: #E5E2DE;
 }
 
 @layer base {

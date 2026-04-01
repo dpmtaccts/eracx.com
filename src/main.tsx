@@ -12,6 +12,7 @@ import GtmPlanner from './pages/GtmPlanner.tsx'
 import GrowthSimulator from './pages/GrowthSimulator.tsx'
 import NavalentAudit from './pages/NavalentAudit.tsx'
 import SampleAssessment from './pages/SampleAssessment.tsx'
+import BGLinkedInAudit from './pages/bg-audit/BGLinkedInAudit.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -27,6 +28,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/growth-simulator" element={<GrowthSimulator />} />
         <Route path="/audit/navalent" element={<NavalentAudit />} />
         <Route path="/sample/assessment" element={<SampleAssessment />} />
+        <Route path="/audit/brian-gonsalves" element={<BGLinkedInAudit />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
