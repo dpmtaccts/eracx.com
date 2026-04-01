@@ -841,7 +841,7 @@ function PasswordGate({
   if (authenticated) return <>{children}</>;
 
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-cream flex items-center justify-center px-4 py-12" style={{ fontFamily: "'Source Sans 3', sans-serif" }}>
       <div
         className={`w-full max-w-[780px] bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-400 ${
           unlocking ? "opacity-0 -translate-y-4" : "opacity-100 translate-y-0"
@@ -863,7 +863,6 @@ function PasswordGate({
               <img
                 src="/images/bg-audit/1768091997046.jpeg"
                 alt="Brian Gonsalves"
-                style={{ width: 256, height: 256 }}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -997,7 +996,7 @@ function Report() {
   const bottomPosts = posts.filter((p) => funnelTiers[p.post_id] === "bottom");
 
   return (
-    <>
+    <div style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: 18, lineHeight: 1.7, color: '#4A4A4A' }}>
       <Navigation />
 
       <main className="max-w-5xl mx-auto px-4 md:px-8 pb-24">
@@ -2305,7 +2304,7 @@ function Report() {
           <p>Prepared by ERACX &middot; March 2026 &middot; Confidential</p>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 
