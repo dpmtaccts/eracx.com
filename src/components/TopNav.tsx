@@ -10,6 +10,9 @@ const LOOP_SECTIONS = [
 // IDs of sections with light (cream) backgrounds
 const LIGHT_SECTIONS = ["why-era", "the-system", "loop-trust", "gtm-hero"];
 
+// Routes that have a white/light background by default
+const LIGHT_ROUTES = ["/linkedin"];
+
 export default function TopNav() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -88,6 +91,10 @@ export default function TopNav() {
       // Route-based active states
       if (location.pathname === "/our-story") currentSection = "our-story";
       if (location.pathname === "/gtm-design") currentSection = "gtm-design";
+      // Light-background routes default to overLight
+      if (LIGHT_ROUTES.includes(location.pathname)) {
+        isOverLight = true;
+      }
 
       setActiveSection(currentSection);
       setActiveColor(currentColor);
@@ -109,12 +116,14 @@ export default function TopNav() {
     { label: "Our Story", href: "/our-story", id: "our-story" },
   ];
 
+  const isLinkedIn = location.pathname === "/linkedin";
+
   const logoFilter = overLight
     ? "brightness(0)"
     : "brightness(0) invert(1) sepia(1) saturate(0.1) brightness(0.93)";
 
-  const textColor = overLight ? "#111111" : "#F5F0E8";
-  const textMuted = overLight ? "rgba(17,17,17,0.5)" : "rgba(245,240,232,0.5)";
+  const textColor = overLight ? (isLinkedIn ? "#1D1D1B" : "#111111") : "#F5F0E8";
+  const textMuted = overLight ? (isLinkedIn ? "#888888" : "rgba(17,17,17,0.5)") : "rgba(245,240,232,0.5)";
   const hamburgerBg = overLight ? "bg-[#111111]" : "bg-[#F5F0E8]";
 
   return (
@@ -122,10 +131,13 @@ export default function TopNav() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
           ? overLight
-            ? "bg-[#F5F0E8]/90"
+            ? isLinkedIn
+              ? "bg-white/90 backdrop-blur-sm"
+              : "bg-[#F5F0E8]/90"
             : "bg-[#111111]/90"
           : "bg-transparent"
       }`}
+      style={scrolled && isLinkedIn ? { borderBottom: "1px solid #F0F0EE" } : undefined}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
         <a href="/" className="flex-shrink-0">
