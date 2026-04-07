@@ -133,6 +133,21 @@ function PasswordGate({ onAuth }: { onAuth: () => void }) {
 function CoverSection() {
   return (
     <Section dark fullHeight>
+      <div style={{
+        position: 'absolute',
+        top: 20,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        fontFamily: FONT.body,
+        fontSize: 11,
+        fontWeight: 300,
+        color: 'rgba(246,245,242,0.3)',
+        letterSpacing: '0.04em',
+        textAlign: 'center',
+        whiteSpace: 'nowrap',
+      }}>
+        This document is prepared for Jarrod Shappell and Ron Carucci. Distribution beyond this group requires discussion.
+      </div>
       <div style={{ maxWidth: 800 }}>
         <ScrollReveal>
           <div style={{ marginBottom: 40 }}>
@@ -248,8 +263,8 @@ function SummarySection() {
     },
     {
       num: '04',
-      bold: 'A 200-contact sample surfaced 5 champion moves and 5 net-new enterprise opportunities.',
-      detail: 'Shauna Nylund left Scoular for nVent. Matt Klitus left Lyra Health for Honor. Nobody reached out. The full database likely holds 100+ signals like these.',
+      bold: '31.5% of contacts are at a different company than the CRM shows. 23.7% started a new role last year.',
+      detail: 'The network is decaying faster than anyone can track manually. A 200-contact sample surfaced cultivator-level signals. The full enrichment will reveal the buyer-level picture.',
       color: COLORS.oxide,
     },
     {
@@ -260,8 +275,8 @@ function SummarySection() {
     },
     {
       num: '06',
-      bold: 'The partner with the most revenue has zero LinkedIn posts.',
-      detail: 'Mindy: $3.99M closed-won, 100% offline sourcing. Ron: 101K views/quarter, 30,892 followers. Two powerful growth levers. No repeatable system connecting them.',
+      bold: 'The partner with the highest new-business ratio built it entirely through relationships.',
+      detail: '$3.99M closed-won, 100% offline sourcing, no dependence on content. Meanwhile, 101K views/quarter and 30,892 followers on the content side. Two powerful growth levers. No repeatable system connecting them.',
       color: COLORS.oxide,
     },
     {
@@ -416,7 +431,7 @@ function FramingSection() {
     { num: 1, title: 'The relationship is the revenue engine, not marketing', color: COLORS.oxide },
     { num: 2, title: 'Your GTM infrastructure is strong. Now it needs to tell you what to do next.', color: COLORS.teal },
     { num: 3, title: 'You are underleveraged on your existing network', color: COLORS.teal },
-    { num: 4, title: 'The biggest missed signal is when a champion changes companies', color: COLORS.oxide },
+    { num: 4, title: 'Your relationship network is changing faster than you can see', color: COLORS.oxide },
     { num: 5, title: "The firm's content builds brand, but there is no way to capture the demand it creates", color: COLORS.teal },
   ]
 
@@ -434,7 +449,7 @@ function FramingSection() {
               This assessment is organized around five hypotheses that surfaced across our conversations in January, February, and March. Each hypothesis is a testable statement about how Navalent's business actually works. The data either confirms or challenges it.
             </p>
             <p style={{ marginBottom: 20 }}>
-              The goal is not a comprehensive audit of everything. It is a focused diagnostic that answers the questions Ron and Jarrod have been asking for 21 years: where does our business actually come from, what are we missing, and what would a system look like that makes the good patterns repeatable without adding more work to the partners.
+              The goal is not a comprehensive audit of everything. It is a focused diagnostic that answers the questions the partners have been asking for 21 years: where does our business actually come from, what are we missing, and what would a system look like that makes the good patterns repeatable without adding more work to the partners.
             </p>
           </Body>
         </ScrollReveal>
@@ -522,7 +537,7 @@ function Hypothesis1Section() {
       <div>
         <ScrollReveal>
           <Body dark>
-            <p>Ron said it in our first call: 21 years without a reliable demand creation engine, and the business is approaching $6M. Previous partners delivered content, SEO, and campaigns. None of it connected to revenue. The hypothesis is that the business runs on relationships, and the infrastructure gap is not marketing. It is a system to maintain and activate those relationships over time.</p>
+            <p>It surfaced in the initial discovery conversations: 21 years without a reliable demand creation engine, and the business is approaching $6M. Previous partners delivered content, SEO, and campaigns. None of it connected to revenue. The hypothesis is that the business runs on relationships, and the infrastructure gap is not marketing. It is a system to maintain and activate those relationships over time.</p>
           </Body>
         </ScrollReveal>
 
@@ -683,7 +698,7 @@ function Hypothesis2Section() {
   const contactSources = [
     { label: 'Initial import (10,300 records)', value: 75.5, color: COLORS.teal },
     { label: 'Outlook sync (1,756 records)', value: 12.9, color: '#3bc9c4' },
-    { label: "Ron's network (243 contacts)", value: 1.8, color: COLORS.sand },
+    { label: "Partner network imports (243 contacts)", value: 1.8, color: COLORS.sand },
     { label: 'Other sources', value: 9.8, color: COLORS.divider },
   ]
 
@@ -1032,8 +1047,8 @@ function Hypothesis4Divider() {
   return (
     <SectionDivider
       number="HYPOTHESIS 04"
-      title="The biggest missed signal is when a champion changes companies."
-      subtitle="Champion role changes are the highest-intent signal in your business."
+      title="Your relationship network is changing faster than you can see."
+      subtitle="The CRM is decaying in real time. The signals are there — if the infrastructure can detect them."
       color={COLORS.magenta}
       id="h4"
       scope="Signal Detection"
@@ -1134,13 +1149,15 @@ function Hypothesis4Section() {
       <div>
         <ScrollReveal>
           <Body>
-            <p>This was implicit in every conversation: the executives who move companies and bring Navalent with them are the highest-value leads in the business. We enriched a sample of 200 corporate-email contacts through Apollo. 114 matched (57% match rate). The results validated the hypothesis immediately.</p>
+            <p style={{ marginBottom: 20 }}>23.7% of matched contacts started a new role in the last year. 31.5% are now at a different company than what HubSpot shows. The CRM is drifting from reality in real time, and without enrichment, it drifts further from reality every quarter.</p>
+            <p style={{ marginBottom: 20 }}>We enriched a sample of 200 corporate-email contacts through Apollo. 114 matched (57% match rate). The sample surfaced cultivator-level moves — people who experienced the work and are now in new seats — rather than buyer-level moves. That's precisely the point: when 93% of contacts don't have a job title, you can't distinguish a budget holder from a design team participant. The full enrichment is what makes the signal actionable.</p>
+            <p>Job changes are one signal among many. New executive hires at target companies, company acquisitions, org restructures, funding events — these are all triggers that indicate when someone in the network might need help. The infrastructure to detect these signals and route them to the right partner is what turns occasional happy accidents into a repeatable pattern.</p>
           </Body>
         </ScrollReveal>
 
         <ScrollReveal>
           <HeroBreakout accent={COLORS.oxide} background="rgba(184,92,74,0.08)">
-            <AnimatedCounter value={5} color={COLORS.oxide} dark={false} label="HOT opportunities from a 2.5% sample: new role + buyer seat + non-client ICP company" />
+            <AnimatedCounter value={5} color={COLORS.oxide} dark={false} label="signal-bearing contacts from a 2.5% sample — and the sample couldn't distinguish buyers from cultivators" />
           </HeroBreakout>
         </ScrollReveal>
 
@@ -1148,9 +1165,9 @@ function Hypothesis4Section() {
           <InsetVisual>
             <InsetStats
               stats={[
-                { value: '4', label: 'Champions who moved to new roles or orgs', color: COLORS.sand },
-                { value: '1', label: 'M&A signal (champion inside larger org)', color: COLORS.oxide },
-                { value: '10', label: 'WARM buyer contacts at non-clients', color: COLORS.teal },
+                { value: '31.5%', label: 'Now at a different company than the CRM shows', color: COLORS.sand },
+                { value: '23.7%', label: 'Started a new role in the last year', color: COLORS.oxide },
+                { value: '93%', label: 'Missing job title — can\'t classify signal level', color: COLORS.teal },
               ]}
             />
           </InsetVisual>
@@ -1161,10 +1178,10 @@ function Hypothesis4Section() {
       <ScrollReveal>
         <div style={{ marginTop: 32, marginBottom: 16 }}>
           <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginBottom: 4 }}>
-            Champions in a state of change
+            Contacts in a state of change
           </div>
           <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 14, color: COLORS.secondary }}>
-            Four contacts who were at Navalent client companies have moved to new organizations or roles. Each represents a signal the infrastructure would surface.
+            Four contacts from client companies who have moved to new organizations or roles. Most are cultivator-level — people who experienced the work but weren't budget holders. The full enrichment will determine the scale of buyer-level signals.
           </div>
         </div>
       </ScrollReveal>
@@ -1188,10 +1205,10 @@ function Hypothesis4Section() {
           </div>
           <div style={{ fontFamily: FONT.body, fontSize: 15, lineHeight: 1.7, color: COLORS.charcoal }}>
             <p style={{ marginBottom: 12 }}>
-              A different type of signal also appeared in the sample. <strong>Jennifer Hudson</strong>, HR Director at Climatec (Navalent client), now operates within Bosch Building Technologies North America (2,100 employees) following Bosch's acquisition of Climatec. This was not a personal job change but a corporate acquisition that places a Navalent champion inside a significantly larger organization with broader transformation needs.
+              A different type of signal also appeared in the sample. <strong>Jennifer Hudson</strong>, HR Director at Climatec (Navalent client), now appears under Bosch Building Technologies North America (2,100 employees) following Bosch's acquisition of Climatec. Note: this was a company name change in the data, not a personal move — the contact remained in the same role at the same organization. The CRM reflected it as a change because the company entity was absorbed.
             </p>
             <p style={{ color: COLORS.secondary }}>
-              The infrastructure should track both signal types: champions who change companies and client companies that are acquired or restructured. Both create new contexts where a known relationship can be activated.
+              This illustrates a third signal type beyond personal job changes: corporate acquisitions and restructures that place known contacts inside larger or different organizations. The infrastructure should detect all three: personal moves, promotions, and corporate events.
             </p>
           </div>
         </div>
@@ -1201,11 +1218,61 @@ function Hypothesis4Section() {
         <ScrollReveal>
           <Body>
             <p>
-              Each of these individuals has direct experience with Navalent's work and is now in a decision-making role at a new or expanded organization. In a system with champion tracking, these signals would have surfaced within 48 hours of the role change — not months later during a manual review.
+              Each of these individuals has direct experience with Navalent's work. Whether they are in a budget-holding role today is unknown — the sample lacked the enrichment data to classify them. That's precisely why the full enrichment of 7,876 contacts is the test that proves or disproves the signal density at the buyer level. The segmentation framework will make every signal actionable by distinguishing buyers from cultivators.
             </p>
           </Body>
         </ScrollReveal>
       </div>
+
+      {/* Relationship Segmentation Framework */}
+      <ScrollReveal>
+        <div style={{
+          margin: '32px 0',
+          padding: '28px',
+          background: 'rgba(31,167,162,0.06)',
+          border: `1px solid rgba(31,167,162,0.15)`,
+          borderRadius: 8,
+        }}>
+          <div style={{ fontFamily: FONT.body, fontSize: 11, fontWeight: 700, letterSpacing: '2px', color: COLORS.teal, marginBottom: 8 }}>
+            RELATIONSHIP CLASSIFICATION
+          </div>
+          <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 18, color: COLORS.charcoal, marginBottom: 16 }}>
+            Not all relationships are equal. The system needs to know the difference.
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 15, lineHeight: 1.7, color: COLORS.charcoal, marginBottom: 20 }}>
+            The enrichment and nurture strategy requires at minimum five relationship classifications, each with different engagement cadences and different time horizons:
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {[
+              { title: 'Buyer', desc: 'C-suite or budget-holder relative to company size. Commands spend.', engagement: 'High-touch, partner-led.' },
+              { title: 'Finder', desc: "Often HR or strategy. Sent to find a partner on someone else's behalf.", engagement: 'Responsive, relationship-maintaining.' },
+              { title: 'Champion-advocate', desc: 'Internal supporter who has experienced the work. May not have budget today.', engagement: 'Quarterly nurture, content sharing.' },
+              { title: 'Champion-vocalizer', desc: 'Actively advocates externally. Refers, recommends, makes introductions.', engagement: 'Reciprocal, high-value touches.' },
+              { title: 'Cultivator', desc: 'Long-term relationship. Not a buyer now, but could be in 3–5 years.', engagement: 'Lightweight, consistent, patient. Send an article twice a year. Say hello. Stay connected.' },
+            ].map((item, i) => (
+              <div key={i} style={{
+                padding: '16px 20px',
+                background: 'white',
+                borderRadius: 6,
+                borderLeft: `3px solid ${COLORS.teal}`,
+              }}>
+                <div style={{ fontFamily: FONT.body, fontWeight: 700, fontSize: 15, color: COLORS.charcoal, marginBottom: 4 }}>
+                  {item.title}
+                </div>
+                <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 14, color: COLORS.charcoal, marginBottom: 6 }}>
+                  {item.desc}
+                </div>
+                <div style={{ fontFamily: FONT.body, fontWeight: 400, fontSize: 13, color: COLORS.teal, fontStyle: 'italic' }}>
+                  Engagement: {item.engagement}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 14, lineHeight: 1.7, color: COLORS.secondary, marginTop: 20 }}>
+            The enrichment work in Phase 2 will classify contacts into these tiers and build differentiated engagement paths for each. The Christmas card that generates phone calls every year is a cultivator play that already works. The infrastructure makes it work at scale, across the full network, without requiring any single partner to maintain 5,000 relationships in their head.
+          </div>
+        </div>
+      </ScrollReveal>
 
       {/* Net-new HOT — heading + cards outside TwoCol */}
       <ScrollReveal>
@@ -1239,8 +1306,8 @@ function Hypothesis4Section() {
       </div>
 
       <VerdictBox
-        verdict="Confirmed with live data"
-        detail="A 200-contact sample surfaced 5 HOT opportunities, 4 champion-moved signals, 1 M&A signal, and 10 WARM buyer contacts. The full enrichment of the remaining 7,676 contacts is the single highest-ROI investment in this engagement."
+        verdict="Confirmed directionally"
+        detail="The network is decaying faster than anyone can track manually. The 200-contact sample surfaced cultivator-level signals, not buyer-level signals — which is exactly why the full enrichment matters. The full enrichment of 7,876 contacts will determine the scale of buyer-level signals, and the relationship segmentation framework will make every signal actionable."
         accent={COLORS.oxide}
       />
     </Section>
@@ -1538,9 +1605,9 @@ function Hypothesis5Section() {
         <ScrollReveal>
           <Kicker color={COLORS.sand}>THE PARTNER DATA TELLS THE OTHER HALF OF THE STORY</Kicker>
           <Body dark>
-            <p style={{ marginBottom: 20 }}>The partner with the most new-business revenue in the firm, $2.06M across 15 deals, has zero LinkedIn posts in the last 12 months. Mindy Millward's deals source entirely from past clients and referrals. Her latest traffic source on every deal is "Offline Sources." Only 1 of her 24 deals originated from the website.</p>
-            <p style={{ marginBottom: 20 }}>Meanwhile, Ron, who generates 101K views per quarter and has 30,892 followers, sources 9 of his 20 new business deals from the website. His content generates deal flow for him. Mindy's relationships generate deal flow without any content at all.</p>
-            <p>This is the strongest argument for relationship infrastructure over content marketing. Content is one input to the system. Relationships are the system.</p>
+            <p style={{ marginBottom: 20 }}>The partner with the highest new-business ratio (64%) built that pipeline entirely through relationships and referrals, with no dependence on content or digital presence. $2.06M in new-business revenue across 15 deals. Every deal sourced from past clients and referrals. "Offline Sources" as the traffic source on every single one. Only 1 of 24 deals originated from the website.</p>
+            <p style={{ marginBottom: 20 }}>This is the clearest evidence that the relationship engine works on its own. The opportunity is to make the patterns behind that success visible and replicable across the firm, so the firm's growth isn't dependent on any single partner's personal network.</p>
+            <p>Meanwhile, on the content side, 101K views per quarter and 30,892 followers generate a different kind of deal flow — 9 of 20 new business deals sourced from the website. Two powerful engines with no repeatable system connecting them.</p>
           </Body>
         </ScrollReveal>
       </div>
@@ -2416,7 +2483,7 @@ function AppendicesSection() {
           </div>
           <Body>
             <p style={{ marginTop: 16 }}>
-              Mindy Millward's sourcing pattern is the clearest illustration of the relationship engine: $2.06M in new-business revenue across 15 deals, sourced entirely from past clients and referrals. Her latest traffic source on every deal is "Offline Sources." Only 1 of 24 deals originated from the website. Ron, by contrast, sources 9 of 20 new-business deals from the website — his content generates deal flow directly.
+              The partner with the highest new-business ratio illustrates the relationship engine at its strongest: $2.06M in new-business revenue across 15 deals, sourced entirely from past clients and referrals. "Offline Sources" as the traffic source on every deal. Only 1 of 24 deals originated from the website. This is the pattern the infrastructure needs to make visible and replicable.
             </p>
           </Body>
         </div>
@@ -2575,7 +2642,7 @@ function OnVisibilitySection() {
           </div>
           <div style={{ fontFamily: FONT.body, fontSize: 16, fontWeight: 300, color: COLORS.charcoal, lineHeight: 1.7, marginBottom: 16 }}>
             <p style={{ marginBottom: 14 }}>Research across 40+ B2B companies found that software-based attribution captured $977K in LinkedIn-attributed revenue, while self-reported attribution showed $14M. A 93% measurement gap. When buyers were asked how they found the company, 44% cited social media. Analytics said 82% came from Google and direct traffic.</p>
-            <p>This is the mechanism behind Mindy's "Offline Sources" traffic source. The buyer may have been reading Ron's content for months. When they finally reach out, the attribution reads "offline" because the discovery happened through channels no analytics platform can track. The infrastructure we build makes more of this invisible journey visible.</p>
+            <p>This is the mechanism behind the "Offline Sources" traffic source that appears on relationship-driven deals. The buyer may have been reading content for months. When they finally reach out, the attribution reads "offline" because the discovery happened through channels no analytics platform can track. The infrastructure we build makes more of this invisible journey visible.</p>
           </div>
         </ScrollReveal>
 
@@ -2822,7 +2889,7 @@ function EditorialSection() {
             statColor={COLORS.sand}
           >
             <p style={{ marginBottom: 20 }}>
-              $56.9 million in lifetime revenue. 79% win rate on returning clients. Thirteen organizations that account for nearly 80% of all billings. A founder whose content reaches 100,000 people a quarter. A client roster that includes some of the most recognizable logos in American business. And a CEO in Denmark who, after hearing Ron answer six hard questions honestly, said "just go do it" without asking for a proposal.
+              $56.9 million in lifetime revenue. 79% win rate on returning clients. Thirteen organizations that account for nearly 80% of all billings. A founder whose content reaches 100,000 people a quarter. A client roster that includes some of the most recognizable logos in American business. And a CEO in Denmark who, after hearing six hard questions answered honestly, said "just go do it" without asking for a proposal.
             </p>
             <p style={{ marginBottom: 20 }}>
               Navalent doesn't win on credentials, methodologies, or marketing. It wins because when people experience what Navalent does in a room, they don't want to hire anyone else. Impact begets impact.
@@ -2840,10 +2907,10 @@ function EditorialSection() {
               This firm runs two powerful demand creation engines.
             </p>
             <p style={{ marginBottom: 20 }}>
-              Engine one is Ron's content: 30,892 followers, 508 posts in 3 years, 42+ podcasts, 101K views per quarter. Broad reach, strong brand, zero capture infrastructure.
+              Engine one is the firm's content presence: 30,892 followers, 508 posts in 3 years, 42+ podcasts, 101K views per quarter. Broad reach, strong brand, zero capture infrastructure.
             </p>
             <p style={{ marginBottom: 20 }}>
-              Engine two is the partner relationship network: Mindy alone has $4.8M in pipeline and $3.99M in closed-won revenue, sourced entirely through past clients and referrals. Zero LinkedIn posts in 12 months.
+              Engine two is the partner relationship network: the partner with the highest new-business ratio has $4.8M in pipeline and $3.99M in closed-won revenue, sourced entirely through past clients and referrals — with no dependence on content or digital presence.
             </p>
             <p>
               There is no repeatable, scalable system that brings these two powerful growth levers together. The infrastructure we build creates the system that makes this connection consistent, visible, and scalable.
@@ -2878,7 +2945,7 @@ function EditorialSection() {
                 { today: "Relationships live in partners' heads and personal networks", future: 'Relationships are visible, mapped, and enriched in the CRM' },
                 { today: 'Champions leave and nobody notices', future: 'Role changes surface within 48 hours as actionable signals' },
                 { today: '25–50 people experience the work; 2–3 stay in touch', future: 'Every discovery contact enters a structured nurture path' },
-                { today: "Ron's content reaches 100K per quarter with no capture layer", future: 'Content engagement by ICP contacts flows into HubSpot as relationship signals' },
+                { today: "The firm's content reaches 100K per quarter with no capture layer", future: 'Content engagement by ICP contacts flows into HubSpot as relationship signals' },
                 { today: 'Pipeline meetings ask "what deals are live?"', future: 'Relationship reviews ask "which accounts are getting warmer?"' },
                 { today: 'The Greg Story happens by accident', future: 'The Greg Story happens by design, across thousands of contacts' },
               ]}
@@ -2901,10 +2968,10 @@ function EditorialSection() {
               If you have 101 client engagements, and each one touches anywhere from 25 to 50 people during discovery and delivery — some engagements 20, some well over 100 — you have somewhere between 2,500 and 5,000+ executives who know what it feels like to be on the other side of Navalent's work. Some are still at those companies, some have moved, some are now CHROs at organizations twice the size, some are sitting in buyer seats at companies you've never heard of, but all remember their experience of Navalent.
             </p>
             <p style={{ marginBottom: 20 }}>
-              Today, zero of them are in a systematic nurture program. They live in Ron's memory, in Mindy's phone, in email threads nobody will search, and a CRM that knows their name but not their current title, their current company, or whether they changed jobs six months ago.
+              Today, zero of them are in a systematic nurture program. They live in partners' memories, in personal phones, in email threads nobody will search, and a CRM that knows their name but not their current title, their current company, or whether they changed jobs six months ago.
             </p>
             <p>
-              The 200-contact sample proved what this looks like when you actually look. Shauna Nylund left Scoular and is now running HR at nVent. Matt Klitus left Lyra Health and is now CFO at Honor. These are people who know Navalent's work intimately, leading in new seats with new budgets at new companies, and nobody has reached out.
+              The 200-contact sample proved what this looks like when you actually look. Contacts who experienced Navalent's work are now in new seats at new companies — but the sample was too small and too undifferentiated to distinguish buyers from cultivators. The full enrichment is what turns "someone moved" into "a budget holder who knows your work just landed at a company that needs it."
             </p>
           </BodyWithMargin>
         </ScrollReveal>
@@ -2917,14 +2984,14 @@ function EditorialSection() {
           <BodyWithMargin
             stat="21"
             statLabel="Years of Trust"
-            statSublabel="Built by Ron, owned by the firm"
+            statSublabel="Built by the partners, owned by the firm"
             statColor={COLORS.oxide}
           >
             <p style={{ marginBottom: 20 }}>
-              Ron's LinkedIn presence is not a marketing channel. It's a trust engine. The reach, engagement, and overall halo it creates makes Navalent synonymous with a particular kind of honest, rigorous, uncomfortable-in-the-best-way leadership consulting.
+              The firm's LinkedIn presence is not a marketing channel. It's a trust engine. The reach, engagement, and overall halo it creates makes Navalent synonymous with a particular kind of honest, rigorous, uncomfortable-in-the-best-way leadership consulting.
             </p>
             <p style={{ marginBottom: 20 }}>
-              And let me speak to the 800lb elephant in the room: Ron will not be doing this forever. It's a fact partners at the firm have named openly, and as such, our engine needs to respect the trust he has built over 21 years and make it something the firm can see, measure, and maintain in the future.
+              And let me speak to the 800lb elephant in the room: the current content engine is concentrated in one person's output. The partners have named this openly, and as such, the infrastructure needs to respect the trust that has been built over 21 years and make it something the firm can see, measure, and maintain regardless of who is producing the content.
             </p>
             <p style={{ marginBottom: 20 }}>
               The leverage is in making the relationships Navalent has already built visible, maintainable, and scalable without bloating weekly schedules with tedious tasks. Today, zero of the roughly 5,000 executives Navalent has touched are in a systematic nurture program. The infrastructure changes that.
@@ -2948,10 +3015,10 @@ function EditorialSection() {
             </div>
             <div style={{ fontFamily: FONT.body, fontWeight: 300, fontSize: 15, lineHeight: 1.7, color: COLORS.secondary }}>
               <p style={{ marginBottom: 12 }}>
-                Nine years ago, Greg read an HBR article, describing his situation perfectly. He read Ron's book that weekend, his company offered him a coach, and said, "I want him." That one relationship, originating from a single piece of content, became a multi-million dollar client for Navalent. And when Greg moved to a new company, he brought the firm with him.
+                Nine years ago, Greg read an HBR article describing his situation perfectly. He read the book that weekend, his company offered him a coach, and said, "I want him." That one relationship, originating from a single piece of content, became a multi-million dollar client for Navalent. And when Greg moved to a new company, he brought the firm with him.
               </p>
               <p>
-                I know Mindy, Jarrod, and other partners have "Greg Stories" as well, filled with a decade of compounding value. The question is whether these happen by accident or by design. Right now, it is entirely by accident.
+                I know the partners have "Greg Stories" as well, filled with a decade of compounding value. The question is whether these happen by accident or by design. Right now, it is entirely by accident.
               </p>
             </div>
           </div>
@@ -2993,7 +3060,7 @@ function EditorialSection() {
               My goal is to create an infrastructure: not a marketing strategy or an SEO/GEO play or a campaign. Relationship infrastructure that takes the patterns that produced $56.9 million in revenue, patterns that currently live in people's heads and personal networks, and makes them visible, measurable, and repeatable.
             </p>
             <p style={{ marginBottom: 20 }}>
-              The Nationwide pitch tells you everything you need to know about what Navalent is capable of. Ron and Jarrod walked into a private dinner, answered hard questions honestly, and walked out with an invitation to build a $3-4 million engagement. The white paper they sent was gorgeous. The last page said, "We've earned your trust. We've changed your culture. Let us join you."
+              The Nationwide pitch tells you everything you need to know about what Navalent is capable of. The partners walked into a private dinner, answered hard questions honestly, and walked out with an invitation to build a $3-4 million engagement. The white paper they sent was gorgeous. The last page said, "We've earned your trust. We've changed your culture. Let us join you."
             </p>
             <p>
               That's the truth. And the infrastructure we build needs to make that truth available to every relationship in the system, not just the ones we happen to remember at 3 a.m.
@@ -3122,8 +3189,8 @@ function RecommendationsSection() {
     },
     {
       num: '02',
-      title: 'Build champion tracking as permanent capability',
-      description: "Role changes at known contacts are the highest-intent signal in your business. When Shauna Nylund moves from Scoular to nVent, that should surface in someone's inbox within 48 hours, not whenever someone happens to remember her name.",
+      title: 'Build signal detection as permanent capability',
+      description: "A recurring intelligence layer that surfaces role changes, executive hires, and company events within 48 hours. When someone in the network moves into a position where they need help, the firm knows that week — not whenever someone happens to remember their name.",
       sprint: 'Sprint 2 · Days 31–60',
       proves: 'Partners receive timely, actionable signals they would not otherwise see',
       gate: 'Are partners acting on the signals? Which signal types drive outreach?',
@@ -3131,7 +3198,7 @@ function RecommendationsSection() {
     },
     {
       num: '03',
-      title: "Connect Ron's content to the CRM",
+      title: "Connect the firm's content to the CRM",
       description: "When an ICP-matching executive engages with a post, that signal needs to flow into HubSpot. Not as a vanity metric. As a relationship signal. The goal is to see who's paying attention, so that when a partner reaches out, they have context.",
       sprint: 'Sprint 2 · Days 31–60',
       proves: 'Partners receive timely, actionable signals they would not otherwise see',
@@ -3647,7 +3714,7 @@ function CloseSection() {
           />
         </div>
         <div style={{ textAlign: 'right' }}>
-          Confidential. Prepared for Navalent.
+          Prepared for Jarrod Shappell and Ron Carucci. Distribution beyond this group requires discussion.
         </div>
       </div>
     </Section>
