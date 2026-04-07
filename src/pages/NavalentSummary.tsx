@@ -1016,6 +1016,13 @@ export default function NavalentSummary() {
   useEffect(() => {
     loadFonts()
     injectStyles()
+
+    // Override global body styles from index.css
+    const prev = document.body.style.cssText
+    document.body.style.backgroundColor = C.bgDark
+    document.body.style.color = C.textLight
+    document.body.style.margin = '0'
+    return () => { document.body.style.cssText = prev }
   }, [])
 
   if (!authed) return <PasswordGate onAuth={() => setAuthed(true)} />
