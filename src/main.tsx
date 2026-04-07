@@ -14,6 +14,7 @@ import NavalentAudit from './pages/NavalentAudit.tsx'
 import SampleAssessment from './pages/SampleAssessment.tsx'
 import BGLinkedInAudit from './pages/bg-audit/BGLinkedInAudit.tsx'
 import LinkedIn from './pages/LinkedIn.tsx'
+import NavalentSummary from './pages/NavalentSummary.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -31,6 +32,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/audit/tidera" element={<SampleAssessment />} />
         <Route path="/audit/brian-gonsalves" element={<BGLinkedInAudit />} />
         <Route path="/linkedin" element={<LinkedIn />} />
+        <Route path="/audit/navalentsummary" element={<NavalentSummary />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
