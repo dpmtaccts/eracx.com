@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, type ReactNode } from 'react'
+import { useState, useEffect, useRef, type ReactNode } from 'react'
 
 /* ═══════════════════════════════════════════════════════════════
    TOKENS
@@ -232,26 +232,9 @@ function injectStyles() {
    HOOKS & UTILITIES
    ═══════════════════════════════════════════════════════════════ */
 
-function useScrollReveal(threshold = 0.15) {
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { el.classList.add('visible'); observer.unobserve(el) } },
-      { threshold }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [threshold])
-
-  return ref
-}
-
 function useCountUp(end: number, duration = 1500, decimals = 0) {
   const [value, setValue] = useState(0)
-  const ref = useRef<HTMLSpanElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
   const started = useRef(false)
 
   useEffect(() => {
@@ -394,7 +377,6 @@ function DonutChart({ value1, value2, label1, label2, color1, color2 }: {
   }, [])
 
   const offset1 = circumference - (value1 / 100) * circumference
-  const offset2 = circumference - (value2 / 100) * circumference
 
   return (
     <div style={{ textAlign: 'center' }}>
@@ -488,12 +470,6 @@ function DecayRing() {
   // 31.5% different company, 23.7% new role (overlap possible, show as separate arcs)
   const seg1 = 0.315
   const seg2 = 0.237
-  const seg3 = 1 - seg1 - seg2
-
-  const offset1 = circ * (1 - seg1)
-  const offset2Start = seg1 * circ
-  const offset2 = circ * (1 - seg2)
-  const offset3Start = (seg1 + seg2) * circ
 
   return (
     <div style={{ textAlign: 'center' }}>
