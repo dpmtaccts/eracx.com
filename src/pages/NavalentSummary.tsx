@@ -718,7 +718,7 @@ function PageContent() {
       <Section>
         <Reveal>
           <Headline style={{ maxWidth: 800 }}>
-            Navalent is not a firm with a marketing problem.
+            Every touchpoint builds trust. None of them are connected.
           </Headline>
         </Reveal>
         <Reveal delay={100}>
@@ -727,12 +727,12 @@ function PageContent() {
             fontSize: 'clamp(20px, 2.8vw, 28px)', lineHeight: 1.35,
             marginBottom: 24, maxWidth: 860,
           }}>
-            It is a firm that has built one of the most valuable relationship assets in the consulting industry — and has no system to maintain it.
+            LinkedIn posts, HBR articles, podcast appearances, client interviews, partner conversations. Every one creates an impression. None of them feed a system that remembers, follows up, or compounds over time.
           </p>
         </Reveal>
         <Reveal delay={200}>
           <Body style={{ maxWidth: 780, color: '#5B6670' }}>
-            $56.9 million in lifetime revenue. A 79% win rate on returning clients. Thirteen organizations accounting for nearly 80% of all billings. A founder whose content reaches 100,000 people a quarter. And no repeatable system connecting the two engines that drive it all: the relationships and the content.
+            $56.9 million in lifetime revenue. A 79% win rate on returning clients. Thirteen organizations accounting for nearly 80% of all billings. A founder whose content reaches 100,000 people a quarter. And no repeatable system connecting the two engines that drive it all: the relationships and the content. The infrastructure to do that — to keep the firm present with the right people at the right time — is what this assessment is about.
           </Body>
         </Reveal>
       </Section>
