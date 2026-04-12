@@ -49,11 +49,11 @@ export default function LoopDetailSection({
   caseStudy,
 }: LoopDetailProps) {
   const isDark = variant === "dark";
-  const bg = isDark ? "bg-[#111111]" : "bg-[#F5F0E8]";
-  const headingColor = isDark ? "text-[#F5F0E8]" : "text-[#111111]";
-  const bodyColor = isDark ? "text-[#F5F0E8]/60" : "text-[#3C3C3C]";
-  const mutedColor = isDark ? "text-[#F5F0E8]/30" : "text-[#6B6560]";
-  const borderColor = isDark ? "border-[#F5F0E8]/10" : "border-[#111111]/10";
+  const bg = isDark ? "bg-white" : "bg-[#F5F5F5]";
+  const headingColor = isDark ? "text-[#1A1A1A]" : "text-[#111111]";
+  const bodyColor = isDark ? "text-[#1A1A1A]/60" : "text-[#3C3C3C]";
+  const mutedColor = isDark ? "text-[#1A1A1A]/30" : "text-[#6B6560]";
+  const borderColor = isDark ? "border-[#1A1A1A]/10" : "border-[#111111]/10";
 
   return (
     <section id={id} className={`${bg} relative overflow-hidden px-6 py-[120px] md:px-10 md:py-[180px]`}>
@@ -92,7 +92,7 @@ export default function LoopDetailSection({
 
         {/* C) Central question — reader prompt */}
         <motion.p
-          className={`mt-6 max-w-2xl text-[22px] font-light italic leading-[1.4] ${isDark ? "text-[#F5F0E8]/65" : "text-[#111111]/65"}`}
+          className={`mt-6 max-w-2xl text-[22px] font-light italic leading-[1.4] ${isDark ? "text-[#1A1A1A]/65" : "text-[#111111]/65"}`}
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -188,7 +188,7 @@ export default function LoopDetailSection({
 
           {/* Right — case study card */}
           <motion.div
-            className="border-l-2 bg-[#111111] px-8 py-10 md:px-10 md:py-12"
+            className="border-l-2 bg-[#F5F5F5] px-8 py-10 md:px-10 md:py-12"
             style={{ borderLeftColor: loopColor }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -200,7 +200,7 @@ export default function LoopDetailSection({
                 <p className="mb-1 text-[11px] uppercase tracking-[0.2em]" style={{ color: loopColor }}>
                   Client Result, {caseStudy.client}
                 </p>
-                <p className="text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/40">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-[#1A1A1A]/40">
                   {caseStudy.loopTag}
                 </p>
               </div>
@@ -209,22 +209,22 @@ export default function LoopDetailSection({
                   src={caseStudy.clientLogo}
                   alt={caseStudy.client}
                   className="h-6 w-auto flex-shrink-0 opacity-60"
-                  style={{ filter: "brightness(0) invert(1)" }}
+                  style={{  }}
                 />
               )}
             </div>
 
-            <h3 className="text-2xl font-semibold leading-[1.1] text-[#F5F0E8] md:text-3xl">
+            <h3 className="text-2xl font-semibold leading-[1.1] text-[#1A1A1A] md:text-3xl">
               {caseStudy.headline}
             </h3>
 
-            <p className="mt-6 text-base leading-[1.7] text-[#F5F0E8]/50">
+            <p className="mt-6 text-base leading-[1.7] text-[#1A1A1A]/50">
               {caseStudy.body}
             </p>
 
             {/* Quote block */}
             <div className="mt-4">
-              <div className="h-px w-full bg-[#F5F0E8]/15" />
+              <div className="h-px w-full bg-[#1A1A1A]/15" />
               <div className="pt-6">
                 <span
                   className="block text-5xl font-black leading-none"
@@ -233,10 +233,10 @@ export default function LoopDetailSection({
                 >
                   &ldquo;
                 </span>
-                <p className="-mt-4 text-[15px] italic leading-[1.6] text-[#F5F0E8]">
+                <p className="-mt-4 text-[15px] italic leading-[1.6] text-[#1A1A1A]">
                   {caseStudy.quote.text}
                 </p>
-                <div className="mt-4 h-px w-full bg-[#F5F0E8]/15" />
+                <div className="mt-4 h-px w-full bg-[#1A1A1A]/15" />
                 <div className="mt-4 flex items-center gap-4">
                   {caseStudy.quote.photo && (
                     <img
@@ -246,13 +246,13 @@ export default function LoopDetailSection({
                     />
                   )}
                   <div>
-                    <p className="text-[14px] text-[#F5F0E8]">
+                    <p className="text-[14px] text-[#1A1A1A]">
                       {caseStudy.quote.name}
                     </p>
-                    <p className="mt-0.5 text-[12px] text-[#F5F0E8]/60">
+                    <p className="mt-0.5 text-[12px] text-[#1A1A1A]/60">
                       {caseStudy.quote.title}
                     </p>
-                    <p className="mt-2 text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/60">
+                    <p className="mt-2 text-[11px] uppercase tracking-[0.2em] text-[#1A1A1A]/60">
                       {caseStudy.client}
                     </p>
                   </div>
@@ -265,7 +265,7 @@ export default function LoopDetailSection({
               <p className="text-5xl font-black md:text-6xl" style={{ color: loopColor }}>
                 {caseStudy.metricValue}
               </p>
-              <p className="mt-3 text-sm text-[#F5F0E8]/40">
+              <p className="mt-3 text-sm text-[#1A1A1A]/40">
                 {caseStudy.metricLabel}
               </p>
             </div>

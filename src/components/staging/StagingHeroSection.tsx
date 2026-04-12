@@ -106,7 +106,7 @@ export default function StagingHeroSection() {
       style={{
         position: "relative",
         minHeight: "100vh",
-        background: "#0d0d0d",
+        background: "#FFFFFF",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
@@ -146,28 +146,28 @@ export default function StagingHeroSection() {
         >
           {/* Construction grid lines */}
           {[0, 725, 1209, 2245, 3177, 3657, 4386].map((x) => (
-            <line key={`vg${x}`} x1={x} y1={0} x2={x} y2={4387} stroke="rgba(246,245,242,0.02)" strokeWidth={0.5} />
+            <line key={`vg${x}`} x1={x} y1={0} x2={x} y2={4387} stroke="rgba(0,0,0,0.04)" strokeWidth={0.5} />
           ))}
           {[0, 725, 1209, 1416, 1726, 2072, 2387, 3078, 3178, 4387].map((y) => (
-            <line key={`hg${y}`} x1={0} y1={y} x2={4386} y2={y} stroke="rgba(246,245,242,0.02)" strokeWidth={0.5} />
+            <line key={`hg${y}`} x1={0} y1={y} x2={4386} y2={y} stroke="rgba(0,0,0,0.04)" strokeWidth={0.5} />
           ))}
 
           {/* Construction circles at rounded corners */}
-          <circle cx={3177} cy={1209} r={1209} fill="none" stroke="rgba(246,245,242,0.03)" strokeWidth={1} className="blueprint-circle" />
-          <circle cx={1209} cy={3178} r={1209} fill="none" stroke="rgba(246,245,242,0.03)" strokeWidth={1} className="blueprint-circle" />
+          <circle cx={3177} cy={1209} r={1209} fill="none" stroke="rgba(0,0,0,0.05)" strokeWidth={1} className="blueprint-circle" />
+          <circle cx={1209} cy={3178} r={1209} fill="none" stroke="rgba(0,0,0,0.05)" strokeWidth={1} className="blueprint-circle" />
           {/* Internal cutout construction circles */}
-          <circle cx={2935} cy={2387} r={691} fill="none" stroke="rgba(246,245,242,0.02)" strokeWidth={0.5} />
-          <circle cx={1382} cy={1070} r={656} fill="none" stroke="rgba(246,245,242,0.02)" strokeWidth={0.5} />
+          <circle cx={2935} cy={2387} r={691} fill="none" stroke="rgba(0,0,0,0.04)" strokeWidth={0.5} />
+          <circle cx={1382} cy={1070} r={656} fill="none" stroke="rgba(0,0,0,0.04)" strokeWidth={0.5} />
 
           {/* Center crosshair */}
-          <line x1={1993} y1={2194} x2={2393} y2={2194} stroke="rgba(246,245,242,0.03)" strokeWidth={0.5} />
-          <line x1={2193} y1={1994} x2={2193} y2={2394} stroke="rgba(246,245,242,0.03)" strokeWidth={0.5} />
+          <line x1={1993} y1={2194} x2={2393} y2={2194} stroke="rgba(0,0,0,0.05)" strokeWidth={0.5} />
+          <line x1={2193} y1={1994} x2={2193} y2={2394} stroke="rgba(0,0,0,0.05)" strokeWidth={0.5} />
 
           {/* Era symbol outline — stroke only, no fill */}
           <path
             d="M3176.89 0C3844.43 0.000221299 4385.58 541.15 4385.58 1208.69V4387H1208.69C541.151 4387 0 3845.85 0 3178.31V0H3176.89ZM2244.51 2387.12C2244.51 2768.52 2553.7 3077.7 2935.1 3077.7H3657.25V2071.64H2244.51V2387.12ZM725.491 725.499V1069.83C725.491 1432.17 1019.22 1725.89 1381.55 1725.89H3657.24V1416.09C3657.24 1034.69 3348.06 725.499 2966.65 725.499H725.491Z"
             fill="none"
-            stroke="rgba(246,245,242,0.04)"
+            stroke="rgba(0,0,0,0.06)"
             strokeWidth={2}
             className="blueprint-outline"
           />
@@ -180,7 +180,7 @@ export default function StagingHeroSection() {
             [2245, 2072], [3657, 2072], [3657, 3078], [2245, 2387],
             [2935, 3078], [1382, 1726],
           ].map(([x, y], i) => (
-            <circle key={`dd${i}`} cx={x} cy={y} r={3} fill="rgba(246,245,242,0.04)" />
+            <circle key={`dd${i}`} cx={x} cy={y} r={3} fill="rgba(0,0,0,0.06)" />
           ))}
         </svg>
       </div>
@@ -203,7 +203,7 @@ export default function StagingHeroSection() {
             fontSize: "clamp(160px, 22vw, 320px)",
             fontWeight: 900,
             color: "transparent",
-            WebkitTextStroke: "1px rgba(245, 240, 232, 0.04)",
+            WebkitTextStroke: "1px rgba(0, 0, 0, 0.06)",
             userSelect: "none",
             animation: "ghostPulse 8s ease-in-out infinite",
           }}
@@ -232,7 +232,7 @@ export default function StagingHeroSection() {
           style={{
             fontSize: "clamp(52px, 7.5vw, 108px)",
             fontWeight: 800,
-            color: "#F5F0E8",
+            color: "#1A1A1A",
             letterSpacing: "-0.04em",
             lineHeight: 1.05,
             maxWidth: "900px",
@@ -246,7 +246,7 @@ export default function StagingHeroSection() {
           style={{
             fontSize: "17px",
             fontWeight: 400,
-            color: "rgba(245, 240, 232, 0.4)",
+            color: "rgba(0, 0, 0, 0.45)",
             lineHeight: 1.75,
             maxWidth: "520px",
             margin: "0 0 40px",
@@ -269,7 +269,7 @@ export default function StagingHeroSection() {
             href="#system"
             style={{
               background: "#C4522A",
-              color: "#F5F0E8",
+              color: "#FFFFFF",
               fontSize: "12px",
               fontWeight: 700,
               textTransform: "uppercase",
@@ -285,7 +285,7 @@ export default function StagingHeroSection() {
             href="/#contact"
             style={{
               fontSize: "13px",
-              color: "rgba(245, 240, 232, 0.3)",
+              color: "rgba(0, 0, 0, 0.35)",
               textDecoration: "none",
               background: "none",
               fontWeight: 400,
@@ -302,7 +302,7 @@ export default function StagingHeroSection() {
           zIndex: 1,
           display: "grid",
           gridTemplateColumns: "repeat(5, 1fr)",
-          borderTop: "1px solid rgba(245, 240, 232, 0.07)",
+          borderTop: "1px solid rgba(0, 0, 0, 0.08)",
           opacity: visible ? 1 : 0,
           transform: visible ? "translateY(0)" : "translateY(24px)",
           transition: "opacity 1s ease 0.3s, transform 1s ease 0.3s",
@@ -316,7 +316,7 @@ export default function StagingHeroSection() {
               textAlign: "center",
               borderRight:
                 i < COLUMNS.length - 1
-                  ? "1px solid rgba(245, 240, 232, 0.07)"
+                  ? "1px solid rgba(0, 0, 0, 0.08)"
                   : "none",
             }}
           >
@@ -335,7 +335,7 @@ export default function StagingHeroSection() {
               style={{
                 fontSize: "16px",
                 fontWeight: 500,
-                color: "rgba(245, 240, 232, 0.65)",
+                color: "rgba(0, 0, 0, 0.55)",
                 lineHeight: 1.6,
               }}
             >
@@ -347,8 +347,8 @@ export default function StagingHeroSection() {
 
       <style>{`
         @keyframes ghostPulse {
-          0%, 100% { -webkit-text-stroke-color: rgba(245, 240, 232, 0.04); }
-          50%      { -webkit-text-stroke-color: rgba(245, 240, 232, 0.07); }
+          0%, 100% { -webkit-text-stroke-color: rgba(0, 0, 0, 0.06); }
+          50%      { -webkit-text-stroke-color: rgba(0, 0, 0, 0.09); }
         }
         @keyframes blueprintPulse {
           0%, 100% { opacity: 0.03; }

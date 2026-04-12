@@ -32,10 +32,10 @@ export default function LoopsVsCampaignsSection() {
   }, []);
 
   return (
-    <section className="bg-[#111111] px-6 py-[120px] md:px-10 md:py-[180px]">
+    <section className="bg-white px-6 py-[120px] md:px-10 md:py-[180px]">
       <div className="mx-auto max-w-7xl">
         <motion.h2
-          className="text-4xl font-black leading-[0.92] text-[#F5F0E8] md:text-6xl lg:text-7xl"
+          className="text-4xl font-black leading-[0.92] text-[#1A1A1A] md:text-6xl lg:text-7xl"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -45,7 +45,7 @@ export default function LoopsVsCampaignsSection() {
         </motion.h2>
 
         <motion.p
-          className="mt-6 max-w-2xl text-base text-[#F5F0E8]/50 md:text-xl"
+          className="mt-6 max-w-2xl text-base text-[#1A1A1A]/50 md:text-xl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -88,7 +88,7 @@ export default function LoopsVsCampaignsSection() {
             {/* Vertical center rule — desktop only */}
             <div
               className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 md:block"
-              style={{ backgroundColor: "rgba(245, 240, 232, 0.15)" }}
+              style={{ backgroundColor: "rgba(0, 0, 0, 0.12)" }}
             />
 
             {rows.map(([campaign, loop], i) => {
@@ -103,7 +103,7 @@ export default function LoopsVsCampaignsSection() {
                   <div
                     className="h-px w-full"
                     style={{
-                      backgroundColor: "rgba(245, 240, 232, 0.08)",
+                      backgroundColor: "rgba(0, 0, 0, 0.08)",
                       opacity: revealed ? 1 : 0,
                       transition: `opacity 0.15s ease-out ${ruleDelay}s`,
                     }}
@@ -113,7 +113,7 @@ export default function LoopsVsCampaignsSection() {
                   <div className="hidden h-16 items-center md:flex">
                     <div className="w-[40%] pr-8">
                       <p
-                        className="text-lg text-[#F5F0E8]/45"
+                        className="text-lg text-[#1A1A1A]/45"
                         style={{
                           opacity: revealed ? 0.45 : 0,
                           transform: revealed ? "translateY(0)" : "translateY(8px)",
@@ -126,7 +126,7 @@ export default function LoopsVsCampaignsSection() {
                     <div className="w-[20%]" />
                     <div className="w-[40%] pl-8">
                       <p
-                        className="text-lg text-[#F5F0E8]"
+                        className="text-lg text-[#1A1A1A]"
                         style={{
                           opacity: revealed ? 1 : 0,
                           transform: revealed ? "translateY(0)" : "translateY(8px)",
@@ -141,7 +141,7 @@ export default function LoopsVsCampaignsSection() {
                   {/* Mobile row */}
                   <div className="flex flex-col py-5 md:hidden">
                     <p
-                      className="text-[15px] text-[#F5F0E8]/40"
+                      className="text-[15px] text-[#1A1A1A]/45"
                       style={{
                         opacity: revealed ? 0.4 : 0,
                         transform: revealed ? "translateY(0)" : "translateY(8px)",
@@ -151,7 +151,7 @@ export default function LoopsVsCampaignsSection() {
                       {campaign}
                     </p>
                     <p
-                      className="mt-2 text-[15px] text-[#F5F0E8]"
+                      className="mt-2 text-[15px] text-[#1A1A1A]"
                       style={{
                         opacity: revealed ? 1 : 0,
                         transform: revealed ? "translateY(0)" : "translateY(8px)",
@@ -169,7 +169,7 @@ export default function LoopsVsCampaignsSection() {
             <div
               className="h-px w-full"
               style={{
-                backgroundColor: "rgba(245, 240, 232, 0.08)",
+                backgroundColor: "rgba(0, 0, 0, 0.08)",
                 opacity: revealed ? 1 : 0,
                 transition: `opacity 0.15s ease-out ${rows.length * 0.18}s`,
               }}

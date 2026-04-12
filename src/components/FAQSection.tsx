@@ -33,7 +33,7 @@ const faqs = [
 
 export default function FAQSection() {
   return (
-    <section className="bg-[#111111] px-6 py-[120px] md:px-10 md:py-[120px]">
+    <section className="bg-white px-6 py-[120px] md:px-10 md:py-[120px]">
       <div className="mx-auto max-w-[760px]">
         <motion.p
           className="mb-4 text-[11px] uppercase tracking-[0.2em] text-[#C4522A]"
@@ -46,7 +46,7 @@ export default function FAQSection() {
         </motion.p>
 
         <motion.h2
-          className="mb-16 text-[32px] font-black leading-[1.1] text-[#F5F0E8]"
+          className="mb-16 text-[32px] font-black leading-[1.1] text-[#1A1A1A]"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -64,15 +64,15 @@ export default function FAQSection() {
             transition={{ duration: 0.6 }}
           >
             {i > 0 && (
-              <div className="mb-12 h-px w-full bg-[#F5F0E8]/10" />
+              <div className="mb-12 h-px w-full bg-[#1A1A1A]/10" />
             )}
             <h3
-              className="mb-3 text-[18px] font-semibold text-[#F5F0E8]"
+              className="mb-3 text-[18px] font-semibold text-[#1A1A1A]"
             >
               {faq.question}
             </h3>
             <p
-              className="mb-12 text-[16px] leading-[1.7] text-[#F5F0E8]/70"
+              className="mb-12 text-[16px] leading-[1.7] text-[#1A1A1A]/70"
             >
               {faq.answer}
             </p>

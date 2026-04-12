@@ -1,0 +1,230 @@
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
+const LOOP_SECTIONS = [
+  { id: "loop-connection", color: "#C8A96E" },
+  { id: "loop-trust", color: "#2BBFAA" },
+  { id: "loop-loyalty", color: "#D4367A" },
+];
+
+const LIGHT_SECTIONS: string[] = [];
+
+export default function StagingTopNav() {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [activeColor, setActiveColor] = useState<string | null>(null);
+  const [overLight, setOverLight] = useState(false);
+  const logoRef = useRef<HTMLImageElement>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleHashClick = useCallback(
+    (e: React.MouseEvent, hash: string) => {
+      e.preventDefault();
+      if (location.pathname === "/staging") {
+        document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        navigate(`/staging#${hash}`);
+      }
+    },
+    [location.pathname, navigate]
+  );
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+
+      const navBottom = 80;
+      let currentSection: string | null = null;
+      let currentColor: string | null = null;
+      let isOverLight = false;
+
+      for (const loop of LOOP_SECTIONS) {
+        const el = document.getElementById(loop.id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < navBottom && rect.bottom > 0) {
+            currentColor = loop.color;
+            break;
+          }
+        }
+      }
+
+      const sections = ["why-era", "the-system", "how-it-works", "gtm-tools"];
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < navBottom + 100 && rect.bottom > navBottom) {
+            currentSection = id;
+          }
+        }
+      }
+
+      for (const loop of LOOP_SECTIONS) {
+        const el = document.getElementById(loop.id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < navBottom + 100 && rect.bottom > navBottom) {
+            currentSection = "the-system";
+          }
+        }
+      }
+
+      for (const id of LIGHT_SECTIONS) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < navBottom && rect.bottom > 0) {
+            isOverLight = true;
+            break;
+          }
+        }
+      }
+
+      setActiveSection(currentSection);
+      setActiveColor(currentColor);
+      setOverLight(isOverLight);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [location.pathname]);
+
+  const isStaging = location.pathname === "/staging";
+
+  const navLinks = [
+    { label: "Why Era", href: isStaging ? "#why-era" : "/staging#why-era", id: "why-era", hash: "why-era" },
+    { label: "The System", href: isStaging ? "#the-system" : "/staging#the-system", id: "the-system", hash: "the-system" },
+    { label: "GTM Design", href: "/gtm-design", id: "gtm-design" },
+    { label: "How It Works", href: isStaging ? "#how-it-works" : "/staging#how-it-works", id: "how-it-works", hash: "how-it-works" },
+    { label: "GTM Tools", href: isStaging ? "#gtm-tools" : "/staging#gtm-tools", id: "gtm-tools", hash: "gtm-tools" },
+    { label: "Our Story", href: "/our-story", id: "our-story" },
+  ];
+
+  const logoFilter = overLight
+    ? "brightness(0)"
+    : "brightness(0)";
+
+  const textColor = overLight ? "#111111" : "#1A1A1A";
+  const textMuted = overLight ? "rgba(17,17,17,0.5)" : "rgba(0,0,0,0.5)";
+  const hamburgerBg = overLight ? "bg-[#111111]" : "bg-[#1A1A1A]";
+
+  return (
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? overLight
+            ? "bg-white/90"
+            : "bg-white/90"
+          : "bg-transparent"
+      }`}
+    >
+      {/* Staging banner */}
+      <div className="bg-[#C4522A] px-4 py-1.5 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+        Staging Preview
+      </div>
+
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
+        <a href="/staging" className="flex-shrink-0">
+          <img
+            ref={logoRef}
+            src="/assets/era_final.png"
+            alt="Era"
+            className="mt-1 h-5 w-auto transition-[filter] duration-500"
+            style={{ filter: logoFilter }}
+          />
+        </a>
+
+        <div className="hidden items-center gap-10 md:flex">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={link.hash ? (e) => handleHashClick(e, link.hash!) : undefined}
+              className="relative pb-1 text-[11px] uppercase tracking-[0.2em] transition-colors duration-300"
+              style={{
+                color:
+                  activeSection === link.id
+                    ? activeColor || textColor
+                    : textMuted,
+              }}
+            >
+              {link.label}
+              {activeSection === link.id && (
+                <span
+                  className="absolute bottom-0 left-0 right-0 h-[2px] transition-colors duration-300"
+                  style={{ backgroundColor: activeColor || textColor }}
+                />
+              )}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            onClick={(e) => handleHashClick(e, "contact")}
+            className="text-[11px] uppercase tracking-[0.2em] transition-colors duration-300"
+            style={{ color: textMuted }}
+          >
+            Contact
+          </a>
+        </div>
+
+        <button
+          className="flex flex-col gap-1.5 md:hidden"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle menu"
+        >
+          <span
+            className={`block h-px w-5 ${hamburgerBg} transition-all duration-300 ${
+              mobileOpen ? "translate-y-[7px] rotate-45" : ""
+            }`}
+          />
+          <span
+            className={`block h-px w-5 ${hamburgerBg} transition-all duration-300 ${
+              mobileOpen ? "opacity-0" : "opacity-100"
+            }`}
+          />
+          <span
+            className={`block h-px w-5 ${hamburgerBg} transition-all duration-300 ${
+              mobileOpen ? "-translate-y-[7px] -rotate-45" : ""
+            }`}
+          />
+        </button>
+      </div>
+
+      <div
+        className={`overflow-hidden transition-all duration-500 md:hidden ${
+          mobileOpen ? "max-h-screen" : "max-h-0"
+        }`}
+      >
+        <div className="flex flex-col gap-6 bg-white px-6 pb-8 pt-4">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="text-[11px] uppercase tracking-[0.2em] text-[#1A1A1A]/50 transition-colors hover:text-[#1A1A1A]"
+              onClick={(e) => {
+                if (link.hash) handleHashClick(e, link.hash);
+                setMobileOpen(false);
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            onClick={(e) => {
+              handleHashClick(e, "contact");
+              setMobileOpen(false);
+            }}
+            className="text-[11px] uppercase tracking-[0.2em] text-[#1A1A1A]/50 transition-colors hover:text-[#1A1A1A]"
+          >
+            Contact
+          </a>
+        </div>
+      </div>
+    </nav>
+  );
+}

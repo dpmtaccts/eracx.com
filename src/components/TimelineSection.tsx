@@ -24,7 +24,7 @@ const phases = [
 
 export default function TimelineSection() {
   return (
-    <section className="bg-[#111111] px-6 py-[120px] md:px-10 md:py-[180px]">
+    <section className="bg-white px-6 py-[120px] md:px-10 md:py-[180px]">
       <div className="mx-auto max-w-7xl">
         <motion.p
           className="mb-4 text-[11px] uppercase tracking-[0.2em] text-[#C4522A]"
@@ -37,7 +37,7 @@ export default function TimelineSection() {
         </motion.p>
 
         <motion.h2
-          className="text-3xl font-semibold leading-[1.1] text-[#F5F0E8] md:text-5xl"
+          className="text-3xl font-semibold leading-[1.1] text-[#1A1A1A] md:text-5xl"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -55,7 +55,7 @@ export default function TimelineSection() {
           {phases.map((p, i) => (
             <motion.div
               key={p.phase}
-              className="border-t border-[#F5F0E8]/10 pt-8"
+              className="border-t border-[#1A1A1A]/10 pt-8"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -65,15 +65,15 @@ export default function TimelineSection() {
                 {p.phase}
               </span>
 
-              <h3 className="mt-4 text-xl font-semibold text-[#F5F0E8]">
+              <h3 className="mt-4 text-xl font-semibold text-[#1A1A1A]">
                 {p.title}
               </h3>
 
-              <p className="mt-1 text-sm text-[#F5F0E8]/40">
+              <p className="mt-1 text-sm text-[#1A1A1A]/40">
                 {p.period}
               </p>
 
-              <p className="mt-6 text-base leading-[1.7] text-[#F5F0E8]/60">
+              <p className="mt-6 text-base leading-[1.7] text-[#1A1A1A]/60">
                 {p.body}
               </p>
             </motion.div>
