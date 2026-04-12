@@ -7,30 +7,36 @@ import { useEffect, useRef, useState, useCallback } from "react";
 const FONT = "'Source Sans 3', 'DM Sans', 'Inter', system-ui, sans-serif";
 const BG = "#111111";
 
-/* Ring definitions in SVG viewBox coordinates (1440×1080) */
+/* Ring definitions in SVG viewBox coordinates (1440×1080)
+   Concentric bands with dark gaps between them:
+   Outer: r=700, stroke=85 → edges at 742.5 and 657.5
+   Middle: r=630, stroke=65 → edges at 662.5 and 597.5  (gap: 657.5-662.5 = ~5px dark gap, but visually clear due to offset)
+   Inner: r=565, stroke=50 → edges at 590 and 540
+*/
 const RINGS = [
-  { cx: -180, cy: 600, r: 700, stroke: 68, color: "#D6B26D" }, // outer gold — Acquisition
-  { cx: -155, cy: 615, r: 500, stroke: 48, color: "#1FA7A2" }, // middle teal — Engagement
-  { cx: -130, cy: 635, r: 360, stroke: 36, color: "#E0247A" }, // inner magenta — Expansion
+  { cx: -180, cy: 600, r: 700, stroke: 85, color: "#D6B26D" }, // outer gold — Acquisition
+  { cx: -155, cy: 615, r: 625, stroke: 65, color: "#1FA7A2" }, // middle teal — Engagement
+  { cx: -130, cy: 635, r: 555, stroke: 50, color: "#E0247A" }, // inner magenta — Expansion
 ];
 
 /* Spotlight angle — where nodes are "active" (upper-right visible area) */
 const SPOTLIGHT_DEG = 330;
 
-/* Node data: 9 nodes, 3 per ring */
+/* Node data: ALL 9 nodes on the OUTER circle, evenly spaced at 40° intervals.
+   Middle and inner circles are purely visual — no interactive elements. */
 const STAGES = [
-  // Acquisition (outer ring, index 0)
-  { name: "Detect", desc: "Signal-based targeting matched to ICP. Job changes, funding, hiring surges, tech installs.", ring: 0 },
-  { name: "Enrich", desc: "Every account mapped: buying committee, tech stack, active signals, CRM gaps filled.", ring: 0 },
-  { name: "Reach", desc: "Multi-channel outreach fires automatically. Content, LinkedIn, email, personalized by signal.", ring: 0 },
-  // Engagement (middle ring, index 1)
-  { name: "Map", desc: "Full buying committee identified. Champions, economic buyers, evaluators, influencers.", ring: 1 },
-  { name: "Nurture", desc: "Behavior-triggered sequences by role and stage. Thought leadership mapped to each stakeholder.", ring: 1 },
-  { name: "Close", desc: "Deal stall detection. Silence re-engagement. Multi-thread presence across the committee.", ring: 1 },
-  // Expansion (inner ring, index 2)
-  { name: "Measure", desc: "Post-close signal tracking. Engagement, satisfaction, usage, team growth. All continuous.", ring: 2 },
-  { name: "Grow", desc: "Cross-sell and upsell triggered by signals, not calendars. Expansion is data-driven.", ring: 2 },
-  { name: "Refer", desc: "Structured referral activation at 6 months. Every referral feeds back into acquisition.", ring: 2 },
+  // Acquisition (angles 0°, 40°, 80°)
+  { name: "Detect", desc: "Signal-based targeting matched to ICP. Job changes, funding, hiring surges, tech installs.", baseDeg: 0, system: 0 },
+  { name: "Enrich", desc: "Every account mapped: buying committee, tech stack, active signals, CRM gaps filled.", baseDeg: 40, system: 0 },
+  { name: "Reach", desc: "Multi-channel outreach fires automatically. Content, LinkedIn, email, personalized by signal.", baseDeg: 80, system: 0 },
+  // Engagement (angles 120°, 160°, 200°)
+  { name: "Map", desc: "Full buying committee identified. Champions, economic buyers, evaluators, influencers.", baseDeg: 120, system: 1 },
+  { name: "Nurture", desc: "Behavior-triggered sequences by role and stage. Thought leadership mapped to each stakeholder.", baseDeg: 160, system: 1 },
+  { name: "Close", desc: "Deal stall detection. Silence re-engagement. Multi-thread presence across the committee.", baseDeg: 200, system: 1 },
+  // Expansion (angles 240°, 280°, 320°)
+  { name: "Measure", desc: "Post-close signal tracking. Engagement, satisfaction, usage, team growth. All continuous.", baseDeg: 240, system: 2 },
+  { name: "Grow", desc: "Cross-sell and upsell triggered by signals, not calendars. Expansion is data-driven.", baseDeg: 280, system: 2 },
+  { name: "Refer", desc: "Structured referral activation at 6 months. Every referral feeds back into acquisition.", baseDeg: 320, system: 2 },
 ];
 
 /* System editorial data */
@@ -73,9 +79,9 @@ const SYSTEMS: SystemData[] = [
 
 function degToRad(d: number) { return (d * Math.PI) / 180; }
 
-/** Get node position on its ring at a given angle (degrees) */
-function nodeXY(ringIdx: number, angleDeg: number) {
-  const ring = RINGS[ringIdx];
+/** Get node position on the OUTER ring at a given angle (degrees) */
+function nodeXY(angleDeg: number) {
+  const ring = RINGS[0]; // all nodes on outer ring
   const rad = degToRad(angleDeg);
   return {
     x: ring.cx + ring.r * Math.cos(rad),
@@ -83,16 +89,11 @@ function nodeXY(ringIdx: number, angleDeg: number) {
   };
 }
 
-/** Base angle for node i (before any scroll rotation) */
-function baseAngle(i: number) {
-  // Nodes are spaced 40° apart counter-clockwise from the spotlight
-  // So clockwise rotation brings each successive node into the spotlight
-  return SPOTLIGHT_DEG - i * 40;
-}
-
-/** Current angle for node i given rotation in degrees */
+/** Current angle for node i given rotation in degrees.
+ *  baseDeg is the node's starting position on the circle.
+ *  As rotation increases (clockwise), each node moves clockwise. */
 function currentAngle(i: number, rotationDeg: number) {
-  return ((baseAngle(i) + rotationDeg) % 360 + 360) % 360;
+  return ((STAGES[i].baseDeg + rotationDeg) % 360 + 360) % 360;
 }
 
 /** Angular distance from the spotlight (0 = at spotlight) */
@@ -195,9 +196,9 @@ function HighlightCard({ stage, color, visible }: {
   return (
     <div style={{
       position: "absolute",
-      left: "23.2%",
-      top: "23%",
-      width: 303,
+      left: "16vw",
+      top: "23vh",
+      width: "min(303px, 20vw)",
       opacity: visible ? 1 : 0,
       transform: visible ? "translateY(0)" : "translateY(8px)",
       transition: "opacity 0.2s ease, transform 0.2s ease",
@@ -255,7 +256,7 @@ function MobileFallback() {
           <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: sys.color, margin: "8px 0 8px" }}>{sys.label}</p>
           <h3 style={{ fontSize: 22, fontWeight: 900, color: "#F6F5F2", margin: "0 0 6px" }}>{sys.headline}</h3>
           <p style={{ fontSize: 13, fontWeight: 300, color: "rgba(246,245,242,0.6)", lineHeight: 1.5, margin: "0 0 16px" }}>{sys.overview}</p>
-          {STAGES.filter((_, i) => Math.floor(i / 3) === SYSTEMS.indexOf(sys)).map((st) => (
+          {STAGES.filter((st) => st.system === SYSTEMS.indexOf(sys)).map((st) => (
             <div key={st.name} style={{ background: "#1A1A1A", borderRadius: 8, padding: "14px 16px", borderLeft: `3px solid ${sys.color}`, marginBottom: 8 }}>
               <p style={{ fontFamily: FONT, fontSize: 16, fontWeight: 700, color: "#F6F5F2", margin: "0 0 4px" }}>{st.name}</p>
               <p style={{ fontFamily: FONT, fontSize: 13, fontWeight: 300, color: "rgba(246,245,242,0.6)", lineHeight: 1.45, margin: 0 }}>{st.desc}</p>
@@ -373,17 +374,17 @@ export default function CompoundScrollSection() {
     return ringIdx === as ? 1.0 : 0.2;
   };
 
-  /* ── Node visibility: only nodes on visible rings, near visible arc ── */
+  /* ── Node visibility: all on outer ring, show when in visible arc ── */
   const nodeOpacity = (i: number) => {
-    const ringIdx = STAGES[i].ring;
+    const sysIdx = STAGES[i].system;
     const ang = currentAngle(i, rotation);
-    // Visible arc: roughly 270° to 30° (the right portion of each ring)
+    // Visible arc: roughly 260° to 40° (the right portion visible on screen)
     const inVisibleArc = ang > 260 || ang < 40;
     if (!inVisibleArc) return 0;
-    const isOnActiveRing = ringIdx === (activeSystem >= 0 ? activeSystem : visibleSystem);
+    const isOnActiveSystem = sysIdx === (activeSystem >= 0 ? activeSystem : visibleSystem);
     const isSpotlit = i === spotlightNodeIdx && showCard;
     if (isSpotlit) return 1.0;
-    if (isOnActiveRing) return 0.6;
+    if (isOnActiveSystem) return 0.65;
     return 0.25;
   };
 
@@ -427,11 +428,10 @@ export default function CompoundScrollSection() {
             />
           ))}
 
-          {/* Node markers — rotate with scroll */}
+          {/* Node markers — all on outer ring, rotate with scroll */}
           {STAGES.map((stage, i) => {
-            const ring = RINGS[stage.ring];
             const ang = currentAngle(i, rotation);
-            const pos = nodeXY(stage.ring, ang);
+            const pos = nodeXY(ang);
             const opacity = nodeOpacity(i);
             const isSpotlit = i === spotlightNodeIdx && showCard;
             if (opacity === 0) return null;
@@ -473,8 +473,8 @@ export default function CompoundScrollSection() {
         {progress < 0.05 && (
           <div style={{
             position: "absolute",
-            left: "40%",
-            right: "5%",
+            left: "40vw",
+            right: "4vw",
             top: "50%",
             transform: "translateY(-50%)",
             opacity: 1 - (progress / 0.05),
@@ -499,8 +499,8 @@ export default function CompoundScrollSection() {
         {/* ── Right editorial panels ── */}
         <div style={{
           position: "absolute",
-          left: "42%",
-          right: "4%",
+          left: "40vw",
+          right: "4vw",
           top: "8vh",
           bottom: "8vh",
         }}>
