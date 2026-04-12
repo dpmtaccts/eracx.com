@@ -7,36 +7,20 @@ import { useEffect, useRef, useState, useCallback } from "react";
 const FONT = "'Source Sans 3', 'DM Sans', 'Inter', system-ui, sans-serif";
 const BG = "#111111";
 
-/* Ring definitions in SVG viewBox coordinates (1440×1080)
-   Circles shifted far left so outer right edge is at ~30vw.
-   Outer:  r=700, stroke=110 → outer edge 755, inner edge 645
-   Middle: r=570, stroke=60  → outer edge 600, inner edge 540  (gap: 645-600 = 45px)
-   Inner:  r=460, stroke=45  → outer edge 483, inner edge 438  (gap: 540-483 = 57px)
-*/
-const RINGS = [
-  { cx: -380, cy: 540, r: 700, stroke: 110, color: "#D6B26D" }, // outer — color changes with active system
-  { cx: -360, cy: 555, r: 570, stroke: 60, color: "#1FA7A2" },  // middle teal — decorative
-  { cx: -340, cy: 575, r: 460, stroke: 45, color: "#E0247A" },  // inner magenta — decorative
-];
-
 /* Active system colors for the outer ring */
 const SYSTEM_COLORS = ["#D6B26D", "#C4522A", "#E0247A"];
 
-/* Spotlight angle — where nodes are "active" (upper-right visible area) */
-const SPOTLIGHT_DEG = 330;
+/* Spotlight angle — where nodes align with the card */
+const SPOTLIGHT_DEG = 310;
 
-/* Node data: ALL 9 nodes on the OUTER circle, evenly spaced at 40° intervals.
-   Middle and inner circles are purely visual — no interactive elements. */
+/* Node data: ALL 9 on the outer circle, 40° apart */
 const STAGES = [
-  // Acquisition (angles 0°, 40°, 80°)
   { name: "Detect", desc: "Signal-based targeting matched to ICP. Job changes, funding, hiring surges, tech installs.", baseDeg: 0, system: 0 },
   { name: "Enrich", desc: "Every account mapped: buying committee, tech stack, active signals, CRM gaps filled.", baseDeg: 40, system: 0 },
   { name: "Reach", desc: "Multi-channel outreach fires automatically. Content, LinkedIn, email, personalized by signal.", baseDeg: 80, system: 0 },
-  // Engagement (angles 120°, 160°, 200°)
   { name: "Map", desc: "Full buying committee identified. Champions, economic buyers, evaluators, influencers.", baseDeg: 120, system: 1 },
   { name: "Nurture", desc: "Behavior-triggered sequences by role and stage. Thought leadership mapped to each stakeholder.", baseDeg: 160, system: 1 },
   { name: "Close", desc: "Deal stall detection. Silence re-engagement. Multi-thread presence across the committee.", baseDeg: 200, system: 1 },
-  // Expansion (angles 240°, 280°, 320°)
   { name: "Measure", desc: "Post-close signal tracking. Engagement, satisfaction, usage, team growth. All continuous.", baseDeg: 240, system: 2 },
   { name: "Grow", desc: "Cross-sell and upsell triggered by signals, not calendars. Expansion is data-driven.", baseDeg: 280, system: 2 },
   { name: "Refer", desc: "Structured referral activation at 6 months. Every referral feeds back into acquisition.", baseDeg: 320, system: 2 },
@@ -59,7 +43,7 @@ const SYSTEMS: SystemData[] = [
     client: { metric: "2\u00D7", label: "qualified pipeline in 90 days", name: "Lara Vandenberg", title: "Founder, Publicist" },
   },
   {
-    key: "engagement", number: "02", label: "ENGAGEMENT SYSTEM", color: "#1FA7A2",
+    key: "engagement", number: "02", label: "ENGAGEMENT SYSTEM", color: "#C4522A",
     headline: "Win the room.",
     question: "\u201CWe had a great first meeting. Then it went silent for six weeks.\u201D",
     bodyHeadline: "Your champion said yes. But they\u2019re not the only one deciding.",
@@ -77,117 +61,39 @@ const SYSTEMS: SystemData[] = [
 ];
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   GEOMETRY HELPERS
+   GEOMETRY — all in vw, converted to pixels at render time
+   ═══════════════════════════════════════════════════════════════════════════
+
+   Outer:  cx=-22vw, cy=50vh, r=50vw, stroke=8vw
+           inner edge = r - stroke/2 = 50-4 = 46vw from center
+           right edge of circle = cx+r = -22+50 = 28vw ✓
+
+   Middle: cx=-20vw, cy=52vh, r=38vw, stroke=5vw
+           outer edge = r + stroke/2 = 38+2.5 = 40.5vw from center
+           absolute outer = cx + outer = -20+40.5 = 20.5vw
+           GAP from outer inner (28-4=24vw absolute) to middle outer (20.5vw) = 3.5vw ✓
+
+   Inner:  cx=-18vw, cy=48vh, r=28vw, stroke=3.5vw
+           outer edge = 28+1.75 = 29.75vw from center
+           absolute outer = -18+29.75 = 11.75vw
+           Middle inner = -20+(38-2.5) = 15.5vw
+           GAP = 15.5 - 11.75 = 3.75vw ✓
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function degToRad(d: number) { return (d * Math.PI) / 180; }
 
-/** Get node position on the OUTER ring at a given angle (degrees) */
-function nodeXY(angleDeg: number) {
-  const ring = RINGS[0]; // all nodes on outer ring
-  const rad = degToRad(angleDeg);
-  return {
-    x: ring.cx + ring.r * Math.cos(rad),
-    y: ring.cy + ring.r * Math.sin(rad),
-  };
-}
-
-/** Current angle for node i given rotation in degrees.
- *  baseDeg is the node's starting position on the circle.
- *  As rotation increases (clockwise), each node moves clockwise. */
-function currentAngle(i: number, rotationDeg: number) {
-  return ((STAGES[i].baseDeg + rotationDeg) % 360 + 360) % 360;
-}
-
-/** Angular distance from the spotlight (0 = at spotlight) */
 function spotlightDist(angleDeg: number) {
   let d = ((angleDeg - SPOTLIGHT_DEG) % 360 + 360) % 360;
   if (d > 180) d = 360 - d;
   return d;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   EDITORIAL PANEL
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-function EditorialPanel({ system, visible }: { system: SystemData; visible: boolean }) {
-  return (
-    <div style={{
-      opacity: visible ? 1 : 0,
-      transform: visible ? "translateY(0)" : "translateY(12px)",
-      transition: "opacity 0.4s ease, transform 0.4s ease",
-      position: "absolute",
-      top: 0, left: 0, right: 0, bottom: 0,
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      pointerEvents: visible ? "auto" : "none",
-    }}>
-      {/* Eyebrow */}
-      <p style={{
-        fontSize: 11, fontWeight: 700, letterSpacing: "0.2em",
-        textTransform: "uppercase", color: system.color,
-        margin: "0 0 8px", fontFamily: FONT,
-      }}>
-        {system.number} {system.label}
-      </p>
-
-      {/* Headline */}
-      <h3 style={{
-        fontSize: "clamp(44px, 4.5vw, 64px)", fontWeight: 800,
-        color: "#F6F5F2", lineHeight: 1.0,
-        margin: "0 0 16px", fontFamily: FONT,
-      }}>
-        {system.headline}
-      </h3>
-
-      {/* Problem quote */}
-      <p style={{
-        fontSize: 17, fontWeight: 400, fontStyle: "italic",
-        color: "rgba(246,245,242,0.45)", lineHeight: 1.5,
-        margin: "0 0 28px", maxWidth: 520, fontFamily: FONT,
-      }}>
-        {system.question}
-      </p>
-
-      {/* Body headline */}
-      <p style={{
-        fontSize: "clamp(24px, 2.2vw, 32px)", fontWeight: 700,
-        color: "#F6F5F2", lineHeight: 1.25,
-        margin: "0 0 12px", maxWidth: 520, fontFamily: FONT,
-      }}>
-        {system.bodyHeadline}
-      </p>
-
-      {/* Body copy */}
-      <p style={{
-        fontSize: 15, fontWeight: 300,
-        color: "rgba(246,245,242,0.65)", lineHeight: 1.65,
-        margin: "0 0 32px", maxWidth: 520, fontFamily: FONT,
-      }}>
-        {system.overview}
-      </p>
-
-      {/* Client result */}
-      <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 20 }}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 6 }}>
-          <span style={{ fontSize: 36, fontWeight: 800, color: system.color, lineHeight: 1, fontFamily: FONT }}>
-            {system.client.metric}
-          </span>
-          <span style={{ fontSize: 15, fontWeight: 300, color: "rgba(246,245,242,0.55)", fontFamily: FONT }}>
-            {system.client.label}
-          </span>
-        </div>
-        <p style={{ fontSize: 14, fontWeight: 400, color: "rgba(246,245,242,0.35)", margin: 0, fontFamily: FONT }}>
-          &mdash; {system.client.name}, {system.client.title}
-        </p>
-      </div>
-    </div>
-  );
+function currentAngle(i: number, rotationDeg: number) {
+  return ((STAGES[i].baseDeg + rotationDeg) % 360 + 360) % 360;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   HIGHLIGHT CARD — Two-part frosted card (title + description)
+   HIGHLIGHT CARD — fixed at 16vw, 28vh
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function HighlightCard({ stage, color, visible }: {
@@ -199,42 +105,126 @@ function HighlightCard({ stage, color, visible }: {
   return (
     <div style={{
       position: "absolute",
-      left: "15vw",
-      top: "35vh",
-      width: "min(280px, 18vw)",
+      left: "16vw",
+      top: "28vh",
+      width: "18vw",
+      maxWidth: 280,
       opacity: visible ? 1 : 0,
-      transform: visible ? "translateY(0)" : "translateY(8px)",
-      transition: "opacity 0.2s ease, transform 0.2s ease",
       pointerEvents: "none",
       zIndex: 10,
     }}>
-      {/* Title rectangle */}
+      {/* Title box */}
       <div style={{
-        background: "rgba(242, 242, 242, 0.94)",
-        padding: "16px 24px 16px 28px",
+        background: "rgba(242,242,242,0.94)",
+        height: 50,
+        padding: "0 16px",
         borderLeft: `4px solid ${color}`,
         display: "flex",
         alignItems: "center",
       }}>
         <span style={{
-          fontSize: 36, fontWeight: 700, color: "#111111",
-          fontFamily: FONT, lineHeight: 1.2,
+          fontSize: 28, fontWeight: 700, color: "#1A1A1A",
+          fontFamily: FONT,
         }}>
           {stage.name}
         </span>
       </div>
-      {/* Description rectangle */}
+      {/* Description box */}
       <div style={{
-        background: "rgba(242, 242, 242, 0.94)",
-        padding: "20px 24px 24px 28px",
+        background: "rgba(242,242,242,0.94)",
+        padding: "12px 16px",
         borderLeft: `4px solid ${color}`,
         marginTop: 2,
+        minHeight: 120,
       }}>
         <p style={{
-          fontSize: 19, fontWeight: 500, color: "#111111",
+          fontSize: 16, fontWeight: 500, color: "#333",
           lineHeight: 1.45, margin: 0, fontFamily: FONT,
         }}>
           {stage.desc}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EDITORIAL PANEL — positioned at exact vh offsets
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function EditorialPanel({ system, visible }: { system: SystemData; visible: boolean }) {
+  return (
+    <div style={{
+      opacity: visible ? 1 : 0,
+      position: "absolute",
+      inset: 0,
+      pointerEvents: visible ? "auto" : "none",
+    }}>
+      {/* Eyebrow — 5vh */}
+      <p style={{
+        position: "absolute", top: "5vh", left: 0,
+        fontSize: 11, fontWeight: 700, letterSpacing: "0.2em",
+        textTransform: "uppercase", color: system.color,
+        margin: 0, fontFamily: FONT,
+      }}>
+        {system.number} {system.label}
+      </p>
+
+      {/* Headline — 8vh */}
+      <h3 style={{
+        position: "absolute", top: "9vh", left: 0,
+        fontSize: "clamp(44px, 4.5vw, 56px)", fontWeight: 800,
+        color: "#F6F5F2", lineHeight: 1.0,
+        margin: 0, fontFamily: FONT,
+      }}>
+        {system.headline}
+      </h3>
+
+      {/* Problem quote — 20vh */}
+      <p style={{
+        position: "absolute", top: "20vh", left: 0,
+        fontSize: 17, fontWeight: 400, fontStyle: "italic",
+        color: "rgba(246,245,242,0.45)", lineHeight: 1.5,
+        margin: 0, maxWidth: "50vw", fontFamily: FONT,
+      }}>
+        {system.question}
+      </p>
+
+      {/* Body headline — 28vh (ALIGNS WITH CARD) */}
+      <p style={{
+        position: "absolute", top: "28vh", left: 0,
+        fontSize: "clamp(24px, 2.2vw, 32px)", fontWeight: 700,
+        color: "#F6F5F2", lineHeight: 1.25,
+        margin: 0, maxWidth: "50vw", fontFamily: FONT,
+      }}>
+        {system.bodyHeadline}
+      </p>
+
+      {/* Body copy — 38vh */}
+      <p style={{
+        position: "absolute", top: "38vh", left: 0,
+        fontSize: 15, fontWeight: 300,
+        color: "rgba(246,245,242,0.65)", lineHeight: 1.65,
+        margin: 0, maxWidth: "48vw", fontFamily: FONT,
+      }}>
+        {system.overview}
+      </p>
+
+      {/* Client result — 58vh */}
+      <div style={{
+        position: "absolute", top: "58vh", left: 0,
+        borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 20,
+      }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 6 }}>
+          <span style={{ fontSize: 36, fontWeight: 800, color: system.color, lineHeight: 1, fontFamily: FONT }}>
+            {system.client.metric}
+          </span>
+          <span style={{ fontSize: 15, fontWeight: 300, color: "rgba(246,245,242,0.55)", fontFamily: FONT }}>
+            {system.client.label}
+          </span>
+        </div>
+        <p style={{ fontSize: 14, fontWeight: 400, color: "rgba(246,245,242,0.35)", margin: 0, fontFamily: FONT }}>
+          &mdash; {system.client.name}, {system.client.title}
         </p>
       </div>
     </div>
@@ -277,8 +267,11 @@ function MobileFallback() {
 
 export default function CompoundScrollSection() {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
   const [progress, setProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [vw, setVw] = useState(1440);
+  const [vh, setVh] = useState(900);
   const cacheRef = useRef({ top: 0, scrollable: 1 });
 
   // Load Source Sans 3
@@ -299,6 +292,8 @@ export default function CompoundScrollSection() {
       top: rect.top + window.scrollY,
       scrollable: Math.max(1, w.offsetHeight - window.innerHeight),
     };
+    setVw(window.innerWidth);
+    setVh(window.innerHeight);
   }, []);
 
   useEffect(() => {
@@ -333,20 +328,37 @@ export default function CompoundScrollSection() {
 
   if (isMobile) return <MobileFallback />;
 
-  /* ── Rotation: full 360° across the scroll range ──
-     Node i reaches the spotlight at scrollProgress = i/9.
-     Active system determined by which nodes are currently passing through.
-  */
+  /* ── Convert vw/vh to pixels for SVG ── */
+  const toVw = (n: number) => (n / 100) * vw;
+  const toVh = (n: number) => (n / 100) * vh;
+
+  /* ── Circle geometry in pixels ── */
+  const outerCx = toVw(-22);
+  const outerCy = toVh(50);
+  const outerR = toVw(50);
+  const outerStroke = toVw(8);
+
+  const midCx = toVw(-20);
+  const midCy = toVh(52);
+  const midR = toVw(38);
+  const midStroke = toVw(5);
+
+  const innerCx = toVw(-18);
+  const innerCy = toVh(48);
+  const innerR = toVw(28);
+  const innerStroke = toVw(3.5);
+
+  /* ── Rotation ── */
   const rotation = progress * 360;
 
-  /* ── Active system (which ring is highlighted) ── */
+  /* ── Active system ── */
   const activeSystem = (() => {
-    if (progress < 0.03) return 0;   // start with Acquisition
-    if (progress < 0.31) return 0;   // nodes 0,1,2
-    if (progress < 0.36) return -1;  // transition
-    if (progress < 0.64) return 1;   // nodes 3,4,5
-    if (progress < 0.69) return -1;  // transition
-    if (progress < 0.97) return 2;   // nodes 6,7,8
+    if (progress < 0.03) return 0;
+    if (progress < 0.31) return 0;
+    if (progress < 0.36) return -1;
+    if (progress < 0.64) return 1;
+    if (progress < 0.69) return -1;
+    if (progress < 0.97) return 2;
     return 2;
   })();
 
@@ -358,45 +370,53 @@ export default function CompoundScrollSection() {
     return 2;
   })();
 
-  /* ── Find the node closest to the spotlight ── */
+  /* ── Spotlight: find closest node ── */
   let spotlightNodeIdx = -1;
   let minDist = 999;
   for (let i = 0; i < 9; i++) {
-    const ang = currentAngle(i, rotation);
-    const d = spotlightDist(ang);
+    const d = spotlightDist(currentAngle(i, rotation));
     if (d < minDist) { minDist = d; spotlightNodeIdx = i; }
   }
-  // Only show card if the node is reasonably close to the spotlight (within 18°)
-  const showCard = minDist < 18 && progress >= 0.03 && progress < 0.97;
+  const showCard = minDist < 15 && progress >= 0.03 && progress < 0.97;
   const activeStage = showCard ? STAGES[spotlightNodeIdx] : null;
   const activeStageColor = activeStage ? SYSTEM_COLORS[activeStage.system] : "#D6B26D";
 
-  /* ── Outer ring color changes with active system ── */
   const outerColor = SYSTEM_COLORS[activeSystem >= 0 ? activeSystem : visibleSystem];
 
-  /* ── Ring opacity: outer always full, middle/inner decorative ── */
-  const ringOpacity = (ringIdx: number) => {
-    return ringIdx === 0 ? 1.0 : 0.15;
-  };
-
-  /* ── Node visibility: all on outer ring, show when in visible arc ── */
-  const nodeOpacity = (i: number) => {
-    const sysIdx = STAGES[i].system;
+  /* ── Node positions on the outer circle ── */
+  const nodeElements = STAGES.map((stage, i) => {
     const ang = currentAngle(i, rotation);
-    // Visible arc: roughly 260° to 40° (the right portion visible on screen)
-    const inVisibleArc = ang > 260 || ang < 40;
-    if (!inVisibleArc) return 0;
-    const isOnActiveSystem = sysIdx === (activeSystem >= 0 ? activeSystem : visibleSystem);
+    const rad = degToRad(ang);
+    const nx = outerCx + outerR * Math.cos(rad);
+    const ny = outerCy + outerR * Math.sin(rad);
+
+    // Only show nodes in the visible arc (right side of circle)
+    const inVisible = ang > 250 || ang < 50;
+    if (!inVisible) return null;
+
+    const sysIdx = stage.system;
+    const isOnActive = sysIdx === (activeSystem >= 0 ? activeSystem : visibleSystem);
     const isSpotlit = i === spotlightNodeIdx && showCard;
-    if (isSpotlit) return 1.0;
-    if (isOnActiveSystem) return 0.65;
-    return 0.25;
-  };
+    const opacity = isSpotlit ? 1.0 : isOnActive ? 0.6 : 0.25;
+
+    const dotR = toVw(1.5); // ~22px at 1440
+
+    return (
+      <circle
+        key={`node-${i}`}
+        cx={nx}
+        cy={ny}
+        r={dotR}
+        fill="rgba(200,195,185,0.6)"
+        opacity={opacity}
+      />
+    );
+  });
 
   const sectionOpacity = progress > 0.97 ? 1 - ((progress - 0.97) / 0.03) : 1;
 
   return (
-    <div ref={wrapperRef} id="how-it-works-radial" style={{ height: "400vh", position: "relative" }}>
+    <div ref={wrapperRef} id="how-it-works-radial" style={{ height: "450vh", position: "relative" }}>
       <div style={{
         position: "sticky",
         top: 0,
@@ -407,74 +427,49 @@ export default function CompoundScrollSection() {
         opacity: sectionOpacity,
       }}>
 
-        {/* ── SVG: Three concentric circles + node markers ── */}
+        {/* ── SVG: viewport-sized, circles positioned with pixel values ── */}
         <svg
-          viewBox="0 0 1440 1080"
-          preserveAspectRatio="xMidYMid slice"
+          ref={svgRef}
+          viewBox={`0 0 ${vw} ${vh}`}
           style={{
             position: "absolute",
             inset: 0,
             width: "100%",
             height: "100%",
+            willChange: "transform",
           }}
         >
-          {/* Three COMPLETE circles — no gaps, no segments */}
-          {RINGS.map((ring, ri) => (
-            <circle
-              key={`ring-${ri}`}
-              cx={ring.cx}
-              cy={ring.cy}
-              r={ring.r}
-              fill="none"
-              stroke={ri === 0 ? outerColor : ring.color}
-              strokeWidth={ring.stroke}
-              opacity={ringOpacity(ri)}
-              style={ri === 0 ? undefined : { transition: "opacity 0.5s ease" }}
-            />
-          ))}
+          {/* Outer circle — color changes with system */}
+          <circle
+            cx={outerCx} cy={outerCy} r={outerR}
+            fill="none" stroke={outerColor}
+            strokeWidth={outerStroke} opacity={1.0}
+          />
+          {/* Middle circle — decorative */}
+          <circle
+            cx={midCx} cy={midCy} r={midR}
+            fill="none" stroke="#1FA7A2"
+            strokeWidth={midStroke} opacity={0.3}
+          />
+          {/* Inner circle — decorative */}
+          <circle
+            cx={innerCx} cy={innerCy} r={innerR}
+            fill="none" stroke="#E0247A"
+            strokeWidth={innerStroke} opacity={0.25}
+          />
 
-          {/* Node markers — all on outer ring, rotate with scroll */}
-          {STAGES.map((stage, i) => {
-            const ang = currentAngle(i, rotation);
-            const pos = nodeXY(ang);
-            const opacity = nodeOpacity(i);
-            const isSpotlit = i === spotlightNodeIdx && showCard;
-            if (opacity === 0) return null;
-            return (
-              <g key={`node-${i}`} style={{ transition: "opacity 0.3s ease" }} opacity={opacity}>
-                {/* Outer ring */}
-                <circle
-                  cx={pos.x} cy={pos.y} r={44}
-                  fill="none"
-                  stroke="rgba(255,255,255,0.06)"
-                  strokeWidth={1.5}
-                />
-                {/* Inner filled dot */}
-                <circle
-                  cx={pos.x} cy={pos.y} r={37}
-                  fill={isSpotlit ? "#E8E4DC" : "#D4D0C8"}
-                  opacity={0.85}
-                />
-                {/* Subtle inner shadow */}
-                <circle
-                  cx={pos.x} cy={pos.y} r={37}
-                  fill="none"
-                  stroke="rgba(0,0,0,0.08)"
-                  strokeWidth={2}
-                />
-              </g>
-            );
-          })}
+          {/* Node markers on outer circle */}
+          {nodeElements}
         </svg>
 
-        {/* ── Highlight card (fixed position) ── */}
+        {/* ── Highlight card — fixed at 16vw, 28vh ── */}
         <HighlightCard
           stage={activeStage}
           color={activeStageColor}
           visible={showCard}
         />
 
-        {/* ── Overview text (before scroll starts) ── */}
+        {/* ── Overview text ── */}
         {progress < 0.05 && (
           <div style={{
             position: "absolute",
@@ -501,13 +496,13 @@ export default function CompoundScrollSection() {
           </div>
         )}
 
-        {/* ── Right editorial panels ── */}
+        {/* ── Right editorial panels at 38vw ── */}
         <div style={{
           position: "absolute",
           left: "38vw",
           right: "5vw",
-          top: "8vh",
-          bottom: "8vh",
+          top: 0,
+          bottom: 0,
         }}>
           {SYSTEMS.map((sys, si) => (
             <EditorialPanel
