@@ -366,7 +366,7 @@ export default function CompoundScrollSection() {
   // Only show card if the node is reasonably close to the spotlight (within 18°)
   const showCard = minDist < 18 && progress >= 0.03 && progress < 0.97;
   const activeStage = showCard ? STAGES[spotlightNodeIdx] : null;
-  const activeStageColor = activeStage ? RINGS[activeStage.ring].color : "#D6B26D";
+  const activeStageColor = activeStage ? RINGS[activeStage.system].color : "#D6B26D";
 
   /* ── Ring opacity ── */
   const ringOpacity = (ringIdx: number) => {
