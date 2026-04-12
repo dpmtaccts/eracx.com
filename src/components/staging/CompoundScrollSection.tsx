@@ -8,16 +8,19 @@ const FONT = "'Source Sans 3', 'DM Sans', 'Inter', system-ui, sans-serif";
 const BG = "#111111";
 
 /* Ring definitions in SVG viewBox coordinates (1440×1080)
-   Concentric bands with CLEAR dark gaps between them:
-   Outer:  r=700, stroke=85 → outer edge 742, inner edge 658
-   Middle: r=590, stroke=65 → outer edge 623, inner edge 558  (gap: 658-623 = 35px)
-   Inner:  r=490, stroke=50 → outer edge 515, inner edge 465  (gap: 558-515 = 43px)
+   Circles shifted far left so outer right edge is at ~30vw.
+   Outer:  r=700, stroke=110 → outer edge 755, inner edge 645
+   Middle: r=570, stroke=60  → outer edge 600, inner edge 540  (gap: 645-600 = 45px)
+   Inner:  r=460, stroke=45  → outer edge 483, inner edge 438  (gap: 540-483 = 57px)
 */
 const RINGS = [
-  { cx: -180, cy: 600, r: 700, stroke: 85, color: "#D6B26D" }, // outer gold — Acquisition
-  { cx: -160, cy: 615, r: 590, stroke: 65, color: "#1FA7A2" }, // middle teal — Engagement
-  { cx: -140, cy: 635, r: 490, stroke: 50, color: "#E0247A" }, // inner magenta — Expansion
+  { cx: -380, cy: 540, r: 700, stroke: 110, color: "#D6B26D" }, // outer — color changes with active system
+  { cx: -360, cy: 555, r: 570, stroke: 60, color: "#1FA7A2" },  // middle teal — decorative
+  { cx: -340, cy: 575, r: 460, stroke: 45, color: "#E0247A" },  // inner magenta — decorative
 ];
+
+/* Active system colors for the outer ring */
+const SYSTEM_COLORS = ["#D6B26D", "#C4522A", "#E0247A"];
 
 /* Spotlight angle — where nodes are "active" (upper-right visible area) */
 const SPOTLIGHT_DEG = 330;
@@ -366,12 +369,14 @@ export default function CompoundScrollSection() {
   // Only show card if the node is reasonably close to the spotlight (within 18°)
   const showCard = minDist < 18 && progress >= 0.03 && progress < 0.97;
   const activeStage = showCard ? STAGES[spotlightNodeIdx] : null;
-  const activeStageColor = activeStage ? RINGS[activeStage.system].color : "#D6B26D";
+  const activeStageColor = activeStage ? SYSTEM_COLORS[activeStage.system] : "#D6B26D";
 
-  /* ── Ring opacity ── */
+  /* ── Outer ring color changes with active system ── */
+  const outerColor = SYSTEM_COLORS[activeSystem >= 0 ? activeSystem : visibleSystem];
+
+  /* ── Ring opacity: outer always full, middle/inner decorative ── */
   const ringOpacity = (ringIdx: number) => {
-    const as = activeSystem >= 0 ? activeSystem : visibleSystem;
-    return ringIdx === as ? 1.0 : 0.2;
+    return ringIdx === 0 ? 1.0 : 0.15;
   };
 
   /* ── Node visibility: all on outer ring, show when in visible arc ── */
@@ -421,10 +426,10 @@ export default function CompoundScrollSection() {
               cy={ring.cy}
               r={ring.r}
               fill="none"
-              stroke={ring.color}
+              stroke={ri === 0 ? outerColor : ring.color}
               strokeWidth={ring.stroke}
               opacity={ringOpacity(ri)}
-              style={{ transition: "opacity 0.5s ease" }}
+              style={ri === 0 ? undefined : { transition: "opacity 0.5s ease" }}
             />
           ))}
 
@@ -473,8 +478,8 @@ export default function CompoundScrollSection() {
         {progress < 0.05 && (
           <div style={{
             position: "absolute",
-            left: "42vw",
-            right: "4vw",
+            left: "38vw",
+            right: "5vw",
             top: "50%",
             transform: "translateY(-50%)",
             opacity: 1 - (progress / 0.05),
@@ -499,8 +504,8 @@ export default function CompoundScrollSection() {
         {/* ── Right editorial panels ── */}
         <div style={{
           position: "absolute",
-          left: "42vw",
-          right: "4vw",
+          left: "38vw",
+          right: "5vw",
           top: "8vh",
           bottom: "8vh",
         }}>
