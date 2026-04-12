@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
    ═══════════════════════════════════════════════════════════════════════════ */
 
 const FONT = "'Source Sans 3', 'DM Sans', 'Inter', system-ui, sans-serif";
-const BG = "#111111";
+const BG = "#FFFFFF";
 
 /* Active system colors for the outer ring */
 const SYSTEM_COLORS = ["#D6B26D", "#C4522A", "#E0247A"];
@@ -174,7 +174,7 @@ function EditorialPanel({ system, visible }: { system: SystemData; visible: bool
       <h3 style={{
         position: "absolute", top: "9vh", left: 0,
         fontSize: "clamp(44px, 4.5vw, 56px)", fontWeight: 800,
-        color: "#F6F5F2", lineHeight: 1.0,
+        color: "#1A1A1A", lineHeight: 1.0,
         margin: 0, fontFamily: FONT,
       }}>
         {system.headline}
@@ -184,7 +184,7 @@ function EditorialPanel({ system, visible }: { system: SystemData; visible: bool
       <p style={{
         position: "absolute", top: "20vh", left: 0,
         fontSize: 17, fontWeight: 400, fontStyle: "italic",
-        color: "rgba(246,245,242,0.45)", lineHeight: 1.5,
+        color: "rgba(0,0,0,0.4)", lineHeight: 1.5,
         margin: 0, maxWidth: "50vw", fontFamily: FONT,
       }}>
         {system.question}
@@ -194,7 +194,7 @@ function EditorialPanel({ system, visible }: { system: SystemData; visible: bool
       <p style={{
         position: "absolute", top: "28vh", left: 0,
         fontSize: "clamp(24px, 2.2vw, 32px)", fontWeight: 700,
-        color: "#F6F5F2", lineHeight: 1.25,
+        color: "#1A1A1A", lineHeight: 1.25,
         margin: 0, maxWidth: "50vw", fontFamily: FONT,
       }}>
         {system.bodyHeadline}
@@ -203,8 +203,8 @@ function EditorialPanel({ system, visible }: { system: SystemData; visible: bool
       {/* Body copy — 38vh */}
       <p style={{
         position: "absolute", top: "38vh", left: 0,
-        fontSize: 15, fontWeight: 300,
-        color: "rgba(246,245,242,0.65)", lineHeight: 1.65,
+        fontSize: 15, fontWeight: 400,
+        color: "rgba(0,0,0,0.6)", lineHeight: 1.65,
         margin: 0, maxWidth: "48vw", fontFamily: FONT,
       }}>
         {system.overview}
@@ -213,17 +213,17 @@ function EditorialPanel({ system, visible }: { system: SystemData; visible: bool
       {/* Client result — 58vh */}
       <div style={{
         position: "absolute", top: "58vh", left: 0,
-        borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 20,
+        borderTop: "1px solid rgba(0,0,0,0.08)", paddingTop: 20,
       }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 6 }}>
           <span style={{ fontSize: 36, fontWeight: 800, color: system.color, lineHeight: 1, fontFamily: FONT }}>
             {system.client.metric}
           </span>
-          <span style={{ fontSize: 15, fontWeight: 300, color: "rgba(246,245,242,0.55)", fontFamily: FONT }}>
+          <span style={{ fontSize: 15, fontWeight: 400, color: "rgba(0,0,0,0.5)", fontFamily: FONT }}>
             {system.client.label}
           </span>
         </div>
-        <p style={{ fontSize: 14, fontWeight: 400, color: "rgba(246,245,242,0.35)", margin: 0, fontFamily: FONT }}>
+        <p style={{ fontSize: 14, fontWeight: 400, color: "rgba(0,0,0,0.35)", margin: 0, fontFamily: FONT }}>
           &mdash; {system.client.name}, {system.client.title}
         </p>
       </div>
@@ -239,20 +239,20 @@ function MobileFallback() {
   return (
     <section style={{ background: BG, fontFamily: FONT, padding: "48px 24px" }}>
       <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: "#1FA7A2", margin: "0 0 8px" }}>HOW IT WORKS</p>
-      <h2 style={{ fontSize: 32, fontWeight: 900, color: "#F6F5F2", lineHeight: 0.95, margin: "0 0 12px" }}>Each system compounds.</h2>
-      <p style={{ fontSize: 14, fontWeight: 300, color: "rgba(246,245,242,0.6)", maxWidth: 440, margin: "0 0 36px", lineHeight: 1.55 }}>
+      <h2 style={{ fontSize: 32, fontWeight: 900, color: "#1A1A1A", lineHeight: 0.95, margin: "0 0 12px" }}>Each system compounds.</h2>
+      <p style={{ fontSize: 14, fontWeight: 300, color: "rgba(0,0,0,0.5)", maxWidth: 440, margin: "0 0 36px", lineHeight: 1.55 }}>
         Signals from acquisition inform deal engagement. Deal signals trigger expansion. Expansion generates referrals that feed acquisition.
       </p>
       {SYSTEMS.map((sys) => (
         <div key={sys.key} style={{ marginBottom: 40 }}>
           <span style={{ fontSize: 56, fontWeight: 200, color: sys.color, opacity: 0.2, lineHeight: 1, display: "block" }}>{sys.number}</span>
           <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: sys.color, margin: "8px 0 8px" }}>{sys.label}</p>
-          <h3 style={{ fontSize: 22, fontWeight: 900, color: "#F6F5F2", margin: "0 0 6px" }}>{sys.headline}</h3>
-          <p style={{ fontSize: 13, fontWeight: 300, color: "rgba(246,245,242,0.6)", lineHeight: 1.5, margin: "0 0 16px" }}>{sys.overview}</p>
+          <h3 style={{ fontSize: 22, fontWeight: 900, color: "#1A1A1A", margin: "0 0 6px" }}>{sys.headline}</h3>
+          <p style={{ fontSize: 13, fontWeight: 300, color: "rgba(0,0,0,0.5)", lineHeight: 1.5, margin: "0 0 16px" }}>{sys.overview}</p>
           {STAGES.filter((st) => st.system === SYSTEMS.indexOf(sys)).map((st) => (
-            <div key={st.name} style={{ background: "#1A1A1A", borderRadius: 8, padding: "14px 16px", borderLeft: `3px solid ${sys.color}`, marginBottom: 8 }}>
-              <p style={{ fontFamily: FONT, fontSize: 16, fontWeight: 700, color: "#F6F5F2", margin: "0 0 4px" }}>{st.name}</p>
-              <p style={{ fontFamily: FONT, fontSize: 13, fontWeight: 300, color: "rgba(246,245,242,0.6)", lineHeight: 1.45, margin: 0 }}>{st.desc}</p>
+            <div key={st.name} style={{ background: "#F5F5F5", borderRadius: 8, padding: "14px 16px", borderLeft: `3px solid ${sys.color}`, marginBottom: 8 }}>
+              <p style={{ fontFamily: FONT, fontSize: 16, fontWeight: 700, color: "#1A1A1A", margin: "0 0 4px" }}>{st.name}</p>
+              <p style={{ fontFamily: FONT, fontSize: 13, fontWeight: 300, color: "rgba(0,0,0,0.5)", lineHeight: 1.45, margin: 0 }}>{st.desc}</p>
             </div>
           ))}
         </div>
@@ -482,15 +482,15 @@ export default function CompoundScrollSection() {
             <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: "#1FA7A2", margin: "0 0 8px", fontFamily: FONT }}>
               HOW IT WORKS
             </p>
-            <h2 style={{ fontSize: "clamp(36px, 4vw, 56px)", fontWeight: 900, color: "#F6F5F2", lineHeight: 0.95, margin: "0 0 24px", fontFamily: FONT }}>
+            <h2 style={{ fontSize: "clamp(36px, 4vw, 56px)", fontWeight: 900, color: "#1A1A1A", lineHeight: 0.95, margin: "0 0 24px", fontFamily: FONT }}>
               Each system compounds.
             </h2>
-            <p style={{ fontSize: 16, fontWeight: 300, color: "rgba(246,245,242,0.6)", lineHeight: 1.65, maxWidth: 460, margin: "0 0 28px", fontFamily: FONT }}>
+            <p style={{ fontSize: 16, fontWeight: 300, color: "rgba(0,0,0,0.5)", lineHeight: 1.65, maxWidth: 460, margin: "0 0 28px", fontFamily: FONT }}>
               The three systems aren&rsquo;t separate programs. They&rsquo;re one connected architecture.
               Signals from acquisition inform deal engagement. Deal signals trigger expansion.
               Expansion generates referrals that feed acquisition. Every cycle makes the next one smarter.
             </p>
-            <p style={{ fontSize: 13, fontWeight: 500, color: "rgba(246,245,242,0.4)", fontFamily: FONT }}>
+            <p style={{ fontSize: 13, fontWeight: 500, color: "rgba(0,0,0,0.35)", fontFamily: FONT }}>
               Scroll to explore &darr;
             </p>
           </div>
