@@ -155,27 +155,44 @@ export default function CTAFooter() {
 
       <div className="mx-6 h-px bg-[#F5F0E8]/8 md:mx-10" />
 
-      <div className="px-6 py-8 md:px-10">
-        <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <img
-            src="/assets/era_final.png"
-            alt="Era"
-            className="h-5 w-auto"
-            style={{ filter: "brightness(0) invert(1) sepia(1) saturate(0.1) brightness(0.93)" }}
-          />
-          <p className="text-sm text-[#F5F0E8]/30">
+      {/* Footer nav row */}
+      <div className="px-6 py-10 md:px-10">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-y-4">
+          <nav className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            {[
+              { label: "WHY ERA", href: "#why-era" },
+              { label: "THE SYSTEM", href: "#the-system" },
+              { label: "GTM DESIGN", href: "/gtm-design" },
+              { label: "HOW IT WORKS", href: "#how-it-works" },
+              { label: "GTM TOOLS", href: "#gtm-tools" },
+              { label: "OUR STORY", href: "/our-story" },
+              { label: "CONTACT", href: "#contact" },
+            ].map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-[11px] font-medium tracking-[0.12em] text-[#F5F0E8]/30 transition-colors hover:text-[#F5F0E8]/60"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+          <a
+            href="mailto:hello@eracx.com"
+            className="text-[11px] font-medium tracking-[0.08em] text-[#F5F0E8]/30 transition-colors hover:text-[#F5F0E8]/60"
+          >
             hello@eracx.com
-          </p>
+          </a>
         </div>
       </div>
 
-      {/* Oversized Era logo — top ~40% visible, rest cropped */}
+      {/* Oversized cropped Era logo — top ~35% visible, rest clipped */}
       <div
         aria-hidden
         style={{
           overflow: "hidden",
-          height: "clamp(200px, 28vw, 420px)",
-          position: "relative",
+          height: "clamp(120px, 14vw, 220px)",
+          marginTop: "clamp(60px, 8vw, 120px)",
           display: "flex",
           justifyContent: "center",
           alignItems: "flex-start",
@@ -186,11 +203,11 @@ export default function CTAFooter() {
           src="/assets/era_final_nosymbol.png"
           alt=""
           style={{
-            width: "clamp(500px, 70vw, 1100px)",
+            width: "clamp(700px, 75vw, 1200px)",
             height: "auto",
-            opacity: 0.07,
             flexShrink: 0,
-            filter: "brightness(0) invert(1)",
+            filter: "brightness(0.17)",
+            opacity: 1,
           }}
         />
       </div>
