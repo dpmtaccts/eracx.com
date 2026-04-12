@@ -168,6 +168,36 @@ export default function CTAFooter() {
           </p>
         </div>
       </div>
+
+      {/* Oversized Era logo — top ~40% visible, rest cropped */}
+      <div
+        aria-hidden
+        style={{
+          overflow: "hidden",
+          height: "clamp(200px, 28vw, 420px)",
+          position: "relative",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "flex-start",
+          pointerEvents: "none",
+        }}
+      >
+        <svg
+          viewBox="0 0 4386 4387"
+          style={{
+            width: "clamp(500px, 70vw, 1100px)",
+            height: "auto",
+            color: "#E5E5E5",
+            opacity: 0.07,
+            flexShrink: 0,
+          }}
+        >
+          <path
+            d="M3176.89 0C3844.43 0.000221299 4385.58 541.15 4385.58 1208.69V4387H1208.69C541.151 4387 0 3845.85 0 3178.31V0H3176.89ZM2244.51 2387.12C2244.51 2768.52 2553.7 3077.7 2935.1 3077.7H3657.25V2071.64H2244.51V2387.12ZM725.491 725.499V1069.83C725.491 1432.17 1019.22 1725.89 1381.55 1725.89H3657.24V1416.09C3657.24 1034.69 3348.06 725.499 2966.65 725.499H725.491Z"
+            fill="currentColor"
+          />
+        </svg>
+      </div>
     </footer>
   );
 }
