@@ -8,15 +8,15 @@ const FONT = "'Source Sans 3', 'DM Sans', 'Inter', system-ui, sans-serif";
 const BG = "#111111";
 
 /* Ring definitions in SVG viewBox coordinates (1440×1080)
-   Concentric bands with dark gaps between them:
-   Outer: r=700, stroke=85 → edges at 742.5 and 657.5
-   Middle: r=630, stroke=65 → edges at 662.5 and 597.5  (gap: 657.5-662.5 = ~5px dark gap, but visually clear due to offset)
-   Inner: r=565, stroke=50 → edges at 590 and 540
+   Concentric bands with CLEAR dark gaps between them:
+   Outer:  r=700, stroke=85 → outer edge 742, inner edge 658
+   Middle: r=590, stroke=65 → outer edge 623, inner edge 558  (gap: 658-623 = 35px)
+   Inner:  r=490, stroke=50 → outer edge 515, inner edge 465  (gap: 558-515 = 43px)
 */
 const RINGS = [
   { cx: -180, cy: 600, r: 700, stroke: 85, color: "#D6B26D" }, // outer gold — Acquisition
-  { cx: -155, cy: 615, r: 625, stroke: 65, color: "#1FA7A2" }, // middle teal — Engagement
-  { cx: -130, cy: 635, r: 555, stroke: 50, color: "#E0247A" }, // inner magenta — Expansion
+  { cx: -160, cy: 615, r: 590, stroke: 65, color: "#1FA7A2" }, // middle teal — Engagement
+  { cx: -140, cy: 635, r: 490, stroke: 50, color: "#E0247A" }, // inner magenta — Expansion
 ];
 
 /* Spotlight angle — where nodes are "active" (upper-right visible area) */
@@ -196,9 +196,9 @@ function HighlightCard({ stage, color, visible }: {
   return (
     <div style={{
       position: "absolute",
-      left: "16vw",
-      top: "23vh",
-      width: "min(303px, 20vw)",
+      left: "15vw",
+      top: "35vh",
+      width: "min(280px, 18vw)",
       opacity: visible ? 1 : 0,
       transform: visible ? "translateY(0)" : "translateY(8px)",
       transition: "opacity 0.2s ease, transform 0.2s ease",
@@ -473,7 +473,7 @@ export default function CompoundScrollSection() {
         {progress < 0.05 && (
           <div style={{
             position: "absolute",
-            left: "40vw",
+            left: "42vw",
             right: "4vw",
             top: "50%",
             transform: "translateY(-50%)",
@@ -499,7 +499,7 @@ export default function CompoundScrollSection() {
         {/* ── Right editorial panels ── */}
         <div style={{
           position: "absolute",
-          left: "40vw",
+          left: "42vw",
           right: "4vw",
           top: "8vh",
           bottom: "8vh",
