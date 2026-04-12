@@ -1,101 +1,43 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   DATA
+   CONSTANTS
    ═══════════════════════════════════════════════════════════════════════════ */
 
-interface StageData {
-  name: string;
-  description: string;
-  icon: (props: { size: number; color: string }) => JSX.Element;
-}
-interface ClientResult { metric: string; label: string; name: string; title: string; }
+const FONT = "'Source Sans 3', 'DM Sans', 'Inter', system-ui, sans-serif";
+const BG = "#111111";
+
+/* Ring definitions in SVG viewBox coordinates (1440×1080) */
+const RINGS = [
+  { cx: -180, cy: 600, r: 700, stroke: 68, color: "#D6B26D" }, // outer gold — Acquisition
+  { cx: -155, cy: 615, r: 500, stroke: 48, color: "#1FA7A2" }, // middle teal — Engagement
+  { cx: -130, cy: 635, r: 360, stroke: 36, color: "#E0247A" }, // inner magenta — Expansion
+];
+
+/* Spotlight angle — where nodes are "active" (upper-right visible area) */
+const SPOTLIGHT_DEG = 330;
+
+/* Node data: 9 nodes, 3 per ring */
+const STAGES = [
+  // Acquisition (outer ring, index 0)
+  { name: "Detect", desc: "Signal-based targeting matched to ICP. Job changes, funding, hiring surges, tech installs.", ring: 0 },
+  { name: "Enrich", desc: "Every account mapped: buying committee, tech stack, active signals, CRM gaps filled.", ring: 0 },
+  { name: "Reach", desc: "Multi-channel outreach fires automatically. Content, LinkedIn, email, personalized by signal.", ring: 0 },
+  // Engagement (middle ring, index 1)
+  { name: "Map", desc: "Full buying committee identified. Champions, economic buyers, evaluators, influencers.", ring: 1 },
+  { name: "Nurture", desc: "Behavior-triggered sequences by role and stage. Thought leadership mapped to each stakeholder.", ring: 1 },
+  { name: "Close", desc: "Deal stall detection. Silence re-engagement. Multi-thread presence across the committee.", ring: 1 },
+  // Expansion (inner ring, index 2)
+  { name: "Measure", desc: "Post-close signal tracking. Engagement, satisfaction, usage, team growth. All continuous.", ring: 2 },
+  { name: "Grow", desc: "Cross-sell and upsell triggered by signals, not calendars. Expansion is data-driven.", ring: 2 },
+  { name: "Refer", desc: "Structured referral activation at 6 months. Every referral feeds back into acquisition.", ring: 2 },
+];
+
+/* System editorial data */
 interface SystemData {
   key: string; number: string; label: string; color: string;
   headline: string; question: string; bodyHeadline: string; overview: string;
-  stages: StageData[]; client: ClientResult;
-}
-
-/* ── SVG Icon Components ── */
-
-function IconSignal({ size, color }: { size: number; color: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2} strokeLinecap="round">
-      <circle cx="12" cy="18" r="1" fill={color} />
-      <path d="M8.5 14.5a5 5 0 0 1 7 0" />
-      <path d="M5 11a10 10 0 0 1 14 0" />
-    </svg>
-  );
-}
-function IconLayers({ size, color }: { size: number; color: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 2 2 7l10 5 10-5-10-5Z" />
-      <path d="m2 17 10 5 10-5" />
-      <path d="m2 12 10 5 10-5" />
-    </svg>
-  );
-}
-function IconSend({ size, color }: { size: number; color: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="m22 2-7 20-4-9-9-4 20-7Z" />
-      <path d="m22 2-11 11" />
-    </svg>
-  );
-}
-function IconGrid({ size, color }: { size: number; color: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="3" width="7" height="7" />
-      <rect x="14" y="3" width="7" height="7" />
-      <rect x="3" y="14" width="7" height="7" />
-      <rect x="14" y="14" width="7" height="7" />
-    </svg>
-  );
-}
-function IconMessage({ size, color }: { size: number; color: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-    </svg>
-  );
-}
-function IconCheck({ size, color }: { size: number; color: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-      <path d="m9 11 3 3L22 4" />
-    </svg>
-  );
-}
-function IconChart({ size, color }: { size: number; color: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <line x1="18" y1="20" x2="18" y2="10" />
-      <line x1="12" y1="20" x2="12" y2="4" />
-      <line x1="6" y1="20" x2="6" y2="14" />
-    </svg>
-  );
-}
-function IconTrending({ size, color }: { size: number; color: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-      <polyline points="16 7 22 7 22 13" />
-    </svg>
-  );
-}
-function IconShare({ size, color }: { size: number; color: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="18" cy="5" r="3" />
-      <circle cx="6" cy="12" r="3" />
-      <circle cx="18" cy="19" r="3" />
-      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-    </svg>
-  );
+  client: { metric: string; label: string; name: string; title: string };
 }
 
 const SYSTEMS: SystemData[] = [
@@ -104,25 +46,15 @@ const SYSTEMS: SystemData[] = [
     headline: "Fill the pipeline.",
     question: "\u201CWe\u2019re doing outbound but nothing is converting. What are we missing?\u201D",
     bodyHeadline: "Your buyers are already in-market. You\u2019re just not finding them in time.",
-    overview: "Era captures signals and turns them into targeted outreach before a competitor gets the first meeting. It runs continuously, without a human initiating it.",
-    stages: [
-      { name: "Detect", description: "Signal-based targeting matched to ICP. Job changes, funding, hiring surges, tech installs.", icon: IconSignal },
-      { name: "Enrich", description: "Every account mapped: buying committee, tech stack, active signals, CRM gaps filled.", icon: IconLayers },
-      { name: "Reach", description: "Multi-channel outreach fires automatically. Content, LinkedIn, email, personalized by signal.", icon: IconSend },
-    ],
+    overview: "97% of your market isn\u2019t buying today \u2014 but the ones who will be are already sending signals. Job changes, funding events, hiring patterns, tech installs. Era captures those signals and turns them into targeted outreach before a competitor gets the first meeting. It runs continuously, without a human initiating it.",
     client: { metric: "2\u00D7", label: "qualified pipeline in 90 days", name: "Lara Vandenberg", title: "Founder, Publicist" },
   },
   {
-    key: "engagement", number: "02", label: "ENGAGEMENT SYSTEM", color: "#C4522A",
+    key: "engagement", number: "02", label: "ENGAGEMENT SYSTEM", color: "#1FA7A2",
     headline: "Win the room.",
     question: "\u201CWe had a great first meeting. Then it went silent for six weeks.\u201D",
-    bodyHeadline: "The average mid-market deal has 10+ people involved. Your rep is talking to one.",
-    overview: "Era builds presence across the full buying committee so deals don\u2019t die in committee. Mapping every touchpoint to a stakeholder and a stage.",
-    stages: [
-      { name: "Map", description: "Full buying committee identified. Champions, economic buyers, evaluators, influencers.", icon: IconGrid },
-      { name: "Nurture", description: "Behavior-triggered sequences by role and stage. Thought leadership mapped to each stakeholder.", icon: IconMessage },
-      { name: "Close", description: "Deal stall detection. Silence re-engagement. Multi-thread presence across the committee.", icon: IconCheck },
-    ],
+    bodyHeadline: "Your champion said yes. But they\u2019re not the only one deciding.",
+    overview: "The average mid-market deal has 10+ people involved in the decision. Your rep is talking to one of them. Era builds presence across the full buying committee: champions, economic buyers, influencers. When deals go quiet, the system re-engages. When new stakeholders appear, they get added automatically.",
     client: { metric: "250", label: "stakeholders in active system", name: "Senior Leader", title: "Enterprise Software" },
   },
   {
@@ -130,173 +62,48 @@ const SYSTEMS: SystemData[] = [
     headline: "Grow what you have.",
     question: "\u201COur customers love us but we have no idea when they\u2019re ready to buy more.\u201D",
     bodyHeadline: "Your best new pipeline source is the customers you\u2019ve already closed.",
-    overview: "Era tracks post-close signals and converts them into expansion conversations, referrals, and renewals automatically. No cold upsell calls.",
-    stages: [
-      { name: "Measure", description: "Post-close signal tracking. Engagement, satisfaction, usage, team growth. All continuous.", icon: IconChart },
-      { name: "Grow", description: "Cross-sell and upsell triggered by signals, not calendars. Expansion is data-driven.", icon: IconTrending },
-      { name: "Refer", description: "Structured referral activation at 6 months. Every referral feeds back into acquisition.", icon: IconShare },
-    ],
+    overview: "You have happy customers who would expand, refer, and renew \u2014 if someone asked at the right time. Era tracks post-close signals and converts them into expansion conversations, referrals, and renewals automatically. No cold upsell calls. Every conversation is signal-triggered.",
     client: { metric: "0", label: "cold upsell calls", name: "Senior Leader", title: "Ecommerce Operator" },
   },
 ];
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SVG RING — Three thick arc segments, flat ends
+   GEOMETRY HELPERS
    ═══════════════════════════════════════════════════════════════════════════ */
 
-const VB = 600;
-const CX = VB / 2;
-const CY = VB / 2;
-const R = 230;
-const STROKE = 60;
-const GAP = 7;
-const ARC = 120 - GAP;
+function degToRad(d: number) { return (d * Math.PI) / 180; }
 
-// Segment start angles (0° = 3 o'clock, clockwise)
-const STARTS = [
-  -90 + GAP / 2,        // top → right
-  -90 + 120 + GAP / 2,  // right → bottom
-  -90 + 240 + GAP / 2,  // bottom → left (partially off-screen)
-];
-
-function polar(cx: number, cy: number, r: number, deg: number) {
-  const rad = (deg * Math.PI) / 180;
-  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+/** Get node position on its ring at a given angle (degrees) */
+function nodeXY(ringIdx: number, angleDeg: number) {
+  const ring = RINGS[ringIdx];
+  const rad = degToRad(angleDeg);
+  return {
+    x: ring.cx + ring.r * Math.cos(rad),
+    y: ring.cy + ring.r * Math.sin(rad),
+  };
 }
 
-function arc(cx: number, cy: number, r: number, s: number, e: number) {
-  const p1 = polar(cx, cy, r, s);
-  const p2 = polar(cx, cy, r, e);
-  return `M ${p1.x} ${p1.y} A ${r} ${r} 0 ${e - s > 180 ? 1 : 0} 1 ${p2.x} ${p2.y}`;
+/** Base angle for node i (before any scroll rotation) */
+function baseAngle(i: number) {
+  // Nodes are spaced 40° apart counter-clockwise from the spotlight
+  // So clockwise rotation brings each successive node into the spotlight
+  return SPOTLIGHT_DEG - i * 40;
 }
 
-// One node per segment, positioned at the midpoint of the arc
-function nodePos(segIdx: number, stageIdx: number) {
-  const start = STARTS[segIdx];
-  const t = (stageIdx + 1) / 4; // 25%, 50%, 75% through arc
-  const deg = start + ARC * t;
-  return polar(CX, CY, R, deg);
+/** Current angle for node i given rotation in degrees */
+function currentAngle(i: number, rotationDeg: number) {
+  return ((baseAngle(i) + rotationDeg) % 360 + 360) % 360;
 }
 
-function RingArcs({ activeSystem }: { activeSystem: number }) {
-  return (
-    <svg viewBox={`0 0 ${VB} ${VB}`} style={{ width: "100%", height: "100%", display: "block" }}>
-      {SYSTEMS.map((sys, si) => {
-        const s = STARTS[si];
-        const e = s + ARC;
-        return (
-          <path
-            key={si}
-            d={arc(CX, CY, R, s, e)}
-            fill="none"
-            stroke={sys.color}
-            strokeWidth={STROKE}
-            strokeLinecap="butt"
-            opacity={si === activeSystem ? 1.0 : 0.18}
-            style={{ transition: "opacity 0.5s ease" }}
-          />
-        );
-      })}
-    </svg>
-  );
+/** Angular distance from the spotlight (0 = at spotlight) */
+function spotlightDist(angleDeg: number) {
+  let d = ((angleDeg - SPOTLIGHT_DEG) % 360 + 360) % 360;
+  if (d > 180) d = 360 - d;
+  return d;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   NODE MARKERS — HTML divs overlaying the ring container
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-function NodeMarker({ system, stageIdx, isActiveSys, activeStage }: {
-  system: SystemData; stageIdx: number; isActiveSys: boolean; activeStage: number;
-}) {
-  const segIdx = SYSTEMS.indexOf(system);
-  const pos = nodePos(segIdx, stageIdx);
-  const pctLeft = (pos.x / VB) * 100;
-  const pctTop = (pos.y / VB) * 100;
-
-  const isActive = isActiveSys && activeStage === stageIdx;
-  const isPast = isActiveSys && activeStage > stageIdx;
-  const opacity = isActiveSys
-    ? (isActive ? 1.0 : isPast ? 0.7 : 0.35)
-    : 0.2;
-
-  const StageIcon = system.stages[stageIdx].icon;
-
-  return (
-    <div style={{
-      position: "absolute",
-      left: `${pctLeft}%`,
-      top: `${pctTop}%`,
-      transform: "translate(-50%, -50%)",
-      width: 44,
-      height: 44,
-      borderRadius: "50%",
-      background: "#2A2A2A",
-      border: "1px solid rgba(255,255,255,0.08)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      opacity,
-      transition: "opacity 0.3s ease",
-      boxShadow: isActive ? `0 0 12px ${system.color}40` : "none",
-      zIndex: 5,
-    }}>
-      <StageIcon size={20} color="rgba(246,245,242,0.7)" />
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   DESCRIPTION CARD — appears next to active node
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-const FONT = "'Source Sans 3', 'DM Sans', 'Inter', system-ui, sans-serif";
-
-// Fixed viewport positions for the three cards (top/middle/bottom)
-const CARD_SPOTS = [
-  { top: "25vh", left: "22vw" },
-  { top: "48vh", left: "28vw" },
-  { top: "72vh", left: "22vw" },
-];
-
-function DescriptionCard({ stage, color, spotIdx, visible }: {
-  stage: StageData; color: string; spotIdx: number; visible: boolean;
-}) {
-  const spot = CARD_SPOTS[spotIdx];
-  return (
-    <div style={{
-      position: "absolute",
-      top: spot.top,
-      left: spot.left,
-      width: 240,
-      background: "#FFFFFF",
-      borderLeft: `4px solid ${color}`,
-      borderRadius: 3,
-      padding: "16px 20px",
-      boxShadow: "0 2px 12px rgba(0,0,0,0.2)",
-      opacity: visible ? 1 : 0,
-      transform: visible ? "translateY(0)" : "translateY(8px)",
-      transition: "opacity 0.2s ease, transform 0.2s ease",
-      pointerEvents: "none",
-      zIndex: 10,
-    }}>
-      <h4 style={{
-        fontSize: 18, fontWeight: 700, color: "#1A1A1A",
-        margin: "0 0 6px", lineHeight: 1.2, fontFamily: FONT,
-      }}>
-        {stage.name}
-      </h4>
-      <p style={{
-        fontSize: 14, fontWeight: 400, color: "#5B6670",
-        lineHeight: 1.5, margin: 0, fontFamily: FONT,
-      }}>
-        {stage.description}
-      </p>
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   EDITORIAL PANEL (right 55-60%)
+   EDITORIAL PANEL
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function EditorialPanel({ system, visible }: { system: SystemData; visible: boolean }) {
@@ -323,7 +130,7 @@ function EditorialPanel({ system, visible }: { system: SystemData; visible: bool
 
       {/* Headline */}
       <h3 style={{
-        fontSize: "clamp(40px, 4vw, 56px)", fontWeight: 800,
+        fontSize: "clamp(44px, 4.5vw, 64px)", fontWeight: 800,
         color: "#F6F5F2", lineHeight: 1.0,
         margin: "0 0 16px", fontFamily: FONT,
       }}>
@@ -333,7 +140,7 @@ function EditorialPanel({ system, visible }: { system: SystemData; visible: bool
       {/* Problem quote */}
       <p style={{
         fontSize: 17, fontWeight: 400, fontStyle: "italic",
-        color: "rgba(246,245,242,0.5)", lineHeight: 1.5,
+        color: "rgba(246,245,242,0.45)", lineHeight: 1.5,
         margin: "0 0 28px", maxWidth: 520, fontFamily: FONT,
       }}>
         {system.question}
@@ -341,7 +148,7 @@ function EditorialPanel({ system, visible }: { system: SystemData; visible: bool
 
       {/* Body headline */}
       <p style={{
-        fontSize: "clamp(22px, 2vw, 30px)", fontWeight: 700,
+        fontSize: "clamp(24px, 2.2vw, 32px)", fontWeight: 700,
         color: "#F6F5F2", lineHeight: 1.25,
         margin: "0 0 12px", maxWidth: 520, fontFamily: FONT,
       }}>
@@ -351,36 +158,79 @@ function EditorialPanel({ system, visible }: { system: SystemData; visible: bool
       {/* Body copy */}
       <p style={{
         fontSize: 15, fontWeight: 300,
-        color: "rgba(246,245,242,0.7)", lineHeight: 1.65,
+        color: "rgba(246,245,242,0.65)", lineHeight: 1.65,
         margin: "0 0 32px", maxWidth: 520, fontFamily: FONT,
       }}>
         {system.overview}
       </p>
 
       {/* Client result */}
-      <div style={{
-        borderTop: "1px solid rgba(255,255,255,0.1)",
-        paddingTop: 20,
-      }}>
+      <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 20 }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 6 }}>
-          <span style={{
-            fontSize: 36, fontWeight: 800, color: system.color,
-            lineHeight: 1, fontFamily: FONT,
-          }}>
+          <span style={{ fontSize: 36, fontWeight: 800, color: system.color, lineHeight: 1, fontFamily: FONT }}>
             {system.client.metric}
           </span>
-          <span style={{
-            fontSize: 15, fontWeight: 300, color: "rgba(246,245,242,0.6)",
-            fontFamily: FONT,
-          }}>
+          <span style={{ fontSize: 15, fontWeight: 300, color: "rgba(246,245,242,0.55)", fontFamily: FONT }}>
             {system.client.label}
           </span>
         </div>
-        <p style={{
-          fontSize: 14, fontWeight: 400, color: "rgba(246,245,242,0.4)",
-          margin: 0, fontFamily: FONT,
-        }}>
+        <p style={{ fontSize: 14, fontWeight: 400, color: "rgba(246,245,242,0.35)", margin: 0, fontFamily: FONT }}>
           &mdash; {system.client.name}, {system.client.title}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HIGHLIGHT CARD — Two-part frosted card (title + description)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function HighlightCard({ stage, color, visible }: {
+  stage: { name: string; desc: string } | null;
+  color: string;
+  visible: boolean;
+}) {
+  if (!stage) return null;
+  return (
+    <div style={{
+      position: "absolute",
+      left: "23.2%",
+      top: "23%",
+      width: 303,
+      opacity: visible ? 1 : 0,
+      transform: visible ? "translateY(0)" : "translateY(8px)",
+      transition: "opacity 0.2s ease, transform 0.2s ease",
+      pointerEvents: "none",
+      zIndex: 10,
+    }}>
+      {/* Title rectangle */}
+      <div style={{
+        background: "rgba(242, 242, 242, 0.94)",
+        padding: "16px 24px 16px 28px",
+        borderLeft: `4px solid ${color}`,
+        display: "flex",
+        alignItems: "center",
+      }}>
+        <span style={{
+          fontSize: 36, fontWeight: 700, color: "#111111",
+          fontFamily: FONT, lineHeight: 1.2,
+        }}>
+          {stage.name}
+        </span>
+      </div>
+      {/* Description rectangle */}
+      <div style={{
+        background: "rgba(242, 242, 242, 0.94)",
+        padding: "20px 24px 24px 28px",
+        borderLeft: `4px solid ${color}`,
+        marginTop: 2,
+      }}>
+        <p style={{
+          fontSize: 19, fontWeight: 500, color: "#111111",
+          lineHeight: 1.45, margin: 0, fontFamily: FONT,
+        }}>
+          {stage.desc}
         </p>
       </div>
     </div>
@@ -393,7 +243,7 @@ function EditorialPanel({ system, visible }: { system: SystemData; visible: bool
 
 function MobileFallback() {
   return (
-    <section style={{ background: "#1A1A1A", fontFamily: FONT, padding: "48px 24px" }}>
+    <section style={{ background: BG, fontFamily: FONT, padding: "48px 24px" }}>
       <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: "#1FA7A2", margin: "0 0 8px" }}>HOW IT WORKS</p>
       <h2 style={{ fontSize: 32, fontWeight: 900, color: "#F6F5F2", lineHeight: 0.95, margin: "0 0 12px" }}>Each system compounds.</h2>
       <p style={{ fontSize: 14, fontWeight: 300, color: "rgba(246,245,242,0.6)", maxWidth: 440, margin: "0 0 36px", lineHeight: 1.55 }}>
@@ -405,10 +255,10 @@ function MobileFallback() {
           <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: sys.color, margin: "8px 0 8px" }}>{sys.label}</p>
           <h3 style={{ fontSize: 22, fontWeight: 900, color: "#F6F5F2", margin: "0 0 6px" }}>{sys.headline}</h3>
           <p style={{ fontSize: 13, fontWeight: 300, color: "rgba(246,245,242,0.6)", lineHeight: 1.5, margin: "0 0 16px" }}>{sys.overview}</p>
-          {sys.stages.map((stage) => (
-            <div key={stage.name} style={{ background: "#2A2A2A", borderRadius: 8, padding: "14px 16px", borderLeft: `3px solid ${sys.color}`, marginBottom: 8 }}>
-              <p style={{ fontFamily: FONT, fontSize: 16, fontWeight: 700, color: "#F6F5F2", margin: "0 0 4px" }}>{stage.name}</p>
-              <p style={{ fontFamily: FONT, fontSize: 13, fontWeight: 300, color: "rgba(246,245,242,0.6)", lineHeight: 1.45, margin: 0 }}>{stage.description}</p>
+          {STAGES.filter((_, i) => Math.floor(i / 3) === SYSTEMS.indexOf(sys)).map((st) => (
+            <div key={st.name} style={{ background: "#1A1A1A", borderRadius: 8, padding: "14px 16px", borderLeft: `3px solid ${sys.color}`, marginBottom: 8 }}>
+              <p style={{ fontFamily: FONT, fontSize: 16, fontWeight: 700, color: "#F6F5F2", margin: "0 0 4px" }}>{st.name}</p>
+              <p style={{ fontFamily: FONT, fontSize: 13, fontWeight: 300, color: "rgba(246,245,242,0.6)", lineHeight: 1.45, margin: 0 }}>{st.desc}</p>
             </div>
           ))}
         </div>
@@ -421,23 +271,18 @@ function MobileFallback() {
    MAIN COMPONENT
    ═══════════════════════════════════════════════════════════════════════════ */
 
-// Ring sizing: center at 8vw, diameter capped so right edge stays under 35vw
-// At 16:9 (1920×1080): min(80vh,48vw) = min(864,922) = 864px ≈ 45vw → right edge 8+22.5 = 30.5vw ✓
-// At 16:10 (1440×900): min(80vh,48vw) = min(720,691) = 691px = 48vw → right edge 8+24 = 32vw ✓
-const RING_CENTER_VW = 8;
-const RING_SIZE = "min(80vh, 48vw)";
-
 export default function CompoundScrollSection() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const cacheRef = useRef({ top: 0, scrollable: 1 });
 
+  // Load Source Sans 3
   useEffect(() => {
     if (!document.querySelector('link[href*="Source+Sans+3"]')) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
-      link.href = "https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400&display=swap";
+      link.href = "https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap";
       document.head.appendChild(link);
     }
   }, []);
@@ -484,57 +329,65 @@ export default function CompoundScrollSection() {
 
   if (isMobile) return <MobileFallback />;
 
-  /* ── Phase map ──
-     0.00–0.08  overview
-     0.08–0.35  Acquisition  (cards: 08–17, 17–26, 26–35)
-     0.35–0.42  transition 1→2
-     0.42–0.65  Engagement   (cards: 42–50, 50–57, 57–65)
-     0.65–0.72  transition 2→3
-     0.72–0.92  Expansion    (cards: 72–79, 79–86, 86–92)
-     0.92–1.00  exit fade
+  /* ── Rotation: full 360° across the scroll range ──
+     Node i reaches the spotlight at scrollProgress = i/9.
+     Active system determined by which nodes are currently passing through.
   */
+  const rotation = progress * 360;
 
+  /* ── Active system (which ring is highlighted) ── */
   const activeSystem = (() => {
-    if (progress < 0.08) return 0;
-    if (progress < 0.385) return 0;
-    if (progress < 0.42) return -1;
-    if (progress < 0.685) return 1;
-    if (progress < 0.72) return -1;
-    if (progress < 0.92) return 2;
+    if (progress < 0.03) return 0;   // start with Acquisition
+    if (progress < 0.31) return 0;   // nodes 0,1,2
+    if (progress < 0.36) return -1;  // transition
+    if (progress < 0.64) return 1;   // nodes 3,4,5
+    if (progress < 0.69) return -1;  // transition
+    if (progress < 0.97) return 2;   // nodes 6,7,8
     return 2;
   })();
 
   const visibleSystem = (() => {
-    if (progress < 0.385) return 0;
-    if (progress < 0.42) return progress < 0.40 ? 0 : 1;
-    if (progress < 0.685) return 1;
-    if (progress < 0.72) return progress < 0.70 ? 1 : 2;
+    if (progress < 0.33) return 0;
+    if (progress < 0.36) return progress < 0.345 ? 0 : 1;
+    if (progress < 0.66) return 1;
+    if (progress < 0.69) return progress < 0.675 ? 1 : 2;
     return 2;
   })();
 
-  const activeStage = (() => {
-    if (activeSystem === 0) {
-      if (progress < 0.08) return -1;
-      if (progress < 0.17) return 0;
-      if (progress < 0.26) return 1;
-      return 2;
-    }
-    if (activeSystem === 1) {
-      if (progress < 0.42) return -1;
-      if (progress < 0.50) return 0;
-      if (progress < 0.57) return 1;
-      return 2;
-    }
-    if (activeSystem === 2) {
-      if (progress < 0.72) return -1;
-      if (progress < 0.79) return 0;
-      if (progress < 0.86) return 1;
-      return 2;
-    }
-    return -1;
-  })();
+  /* ── Find the node closest to the spotlight ── */
+  let spotlightNodeIdx = -1;
+  let minDist = 999;
+  for (let i = 0; i < 9; i++) {
+    const ang = currentAngle(i, rotation);
+    const d = spotlightDist(ang);
+    if (d < minDist) { minDist = d; spotlightNodeIdx = i; }
+  }
+  // Only show card if the node is reasonably close to the spotlight (within 18°)
+  const showCard = minDist < 18 && progress >= 0.03 && progress < 0.97;
+  const activeStage = showCard ? STAGES[spotlightNodeIdx] : null;
+  const activeStageColor = activeStage ? RINGS[activeStage.ring].color : "#D6B26D";
 
-  const sectionOpacity = progress > 0.95 ? 1 - ((progress - 0.95) / 0.05) : 1;
+  /* ── Ring opacity ── */
+  const ringOpacity = (ringIdx: number) => {
+    const as = activeSystem >= 0 ? activeSystem : visibleSystem;
+    return ringIdx === as ? 1.0 : 0.2;
+  };
+
+  /* ── Node visibility: only nodes on visible rings, near visible arc ── */
+  const nodeOpacity = (i: number) => {
+    const ringIdx = STAGES[i].ring;
+    const ang = currentAngle(i, rotation);
+    // Visible arc: roughly 270° to 30° (the right portion of each ring)
+    const inVisibleArc = ang > 260 || ang < 40;
+    if (!inVisibleArc) return 0;
+    const isOnActiveRing = ringIdx === (activeSystem >= 0 ? activeSystem : visibleSystem);
+    const isSpotlit = i === spotlightNodeIdx && showCard;
+    if (isSpotlit) return 1.0;
+    if (isOnActiveRing) return 0.6;
+    return 0.25;
+  };
+
+  const sectionOpacity = progress > 0.97 ? 1 - ((progress - 0.97) / 0.03) : 1;
 
   return (
     <div ref={wrapperRef} id="how-it-works-radial" style={{ height: "400vh", position: "relative" }}>
@@ -543,59 +396,88 @@ export default function CompoundScrollSection() {
         top: 0,
         height: "100vh",
         overflow: "hidden",
-        background: "#1A1A1A",
+        background: BG,
         fontFamily: FONT,
         opacity: sectionOpacity,
       }}>
 
-        {/* ── RING CONTAINER ── */}
-        <div style={{
-          position: "absolute",
-          width: RING_SIZE,
-          height: RING_SIZE,
-          left: `calc(${RING_CENTER_VW}vw - ${RING_SIZE} / 2)`,
-          top: `calc(50vh - ${RING_SIZE} / 2)`,
-          willChange: "transform, opacity",
-        }}>
-          {/* SVG arcs only */}
-          <RingArcs activeSystem={activeSystem >= 0 ? activeSystem : visibleSystem} />
-
-          {/* Node markers as HTML overlays */}
-          {SYSTEMS.map((sys, si) =>
-            [0, 1, 2].map((sti) => (
-              <NodeMarker
-                key={`n-${si}-${sti}`}
-                system={sys}
-                stageIdx={sti}
-                isActiveSys={(activeSystem >= 0 ? activeSystem : visibleSystem) === si}
-                activeStage={activeStage}
-              />
-            ))
-          )}
-        </div>
-
-        {/* ── DESCRIPTION CARDS (viewport-positioned) ── */}
-        {SYSTEMS.map((sys, si) =>
-          sys.stages.map((stage, sti) => (
-            <DescriptionCard
-              key={`c-${si}-${sti}`}
-              stage={stage}
-              color={sys.color}
-              spotIdx={sti}
-              visible={activeSystem === si && activeStage === sti}
+        {/* ── SVG: Three concentric circles + node markers ── */}
+        <svg
+          viewBox="0 0 1440 1080"
+          preserveAspectRatio="xMidYMid slice"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          {/* Three COMPLETE circles — no gaps, no segments */}
+          {RINGS.map((ring, ri) => (
+            <circle
+              key={`ring-${ri}`}
+              cx={ring.cx}
+              cy={ring.cy}
+              r={ring.r}
+              fill="none"
+              stroke={ring.color}
+              strokeWidth={ring.stroke}
+              opacity={ringOpacity(ri)}
+              style={{ transition: "opacity 0.5s ease" }}
             />
-          ))
-        )}
+          ))}
 
-        {/* ── OVERVIEW TEXT (before scroll starts) ── */}
-        {progress < 0.08 && (
+          {/* Node markers — rotate with scroll */}
+          {STAGES.map((stage, i) => {
+            const ring = RINGS[stage.ring];
+            const ang = currentAngle(i, rotation);
+            const pos = nodeXY(stage.ring, ang);
+            const opacity = nodeOpacity(i);
+            const isSpotlit = i === spotlightNodeIdx && showCard;
+            if (opacity === 0) return null;
+            return (
+              <g key={`node-${i}`} style={{ transition: "opacity 0.3s ease" }} opacity={opacity}>
+                {/* Outer ring */}
+                <circle
+                  cx={pos.x} cy={pos.y} r={44}
+                  fill="none"
+                  stroke="rgba(255,255,255,0.06)"
+                  strokeWidth={1.5}
+                />
+                {/* Inner filled dot */}
+                <circle
+                  cx={pos.x} cy={pos.y} r={37}
+                  fill={isSpotlit ? "#E8E4DC" : "#D4D0C8"}
+                  opacity={0.85}
+                />
+                {/* Subtle inner shadow */}
+                <circle
+                  cx={pos.x} cy={pos.y} r={37}
+                  fill="none"
+                  stroke="rgba(0,0,0,0.08)"
+                  strokeWidth={2}
+                />
+              </g>
+            );
+          })}
+        </svg>
+
+        {/* ── Highlight card (fixed position) ── */}
+        <HighlightCard
+          stage={activeStage}
+          color={activeStageColor}
+          visible={showCard}
+        />
+
+        {/* ── Overview text (before scroll starts) ── */}
+        {progress < 0.05 && (
           <div style={{
             position: "absolute",
-            left: "40vw",
-            right: "5vw",
+            left: "40%",
+            right: "5%",
             top: "50%",
             transform: "translateY(-50%)",
-            opacity: 1 - (progress / 0.08),
+            opacity: 1 - (progress / 0.05),
           }}>
             <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: "#1FA7A2", margin: "0 0 8px", fontFamily: FONT }}>
               HOW IT WORKS
@@ -614,19 +496,19 @@ export default function CompoundScrollSection() {
           </div>
         )}
 
-        {/* ── EDITORIAL PANELS (right side) ── */}
+        {/* ── Right editorial panels ── */}
         <div style={{
           position: "absolute",
-          left: "40vw",
-          right: "5vw",
-          top: "10vh",
-          bottom: "10vh",
+          left: "42%",
+          right: "4%",
+          top: "8vh",
+          bottom: "8vh",
         }}>
           {SYSTEMS.map((sys, si) => (
             <EditorialPanel
               key={sys.key}
               system={sys}
-              visible={progress >= 0.08 && visibleSystem === si}
+              visible={progress >= 0.03 && visibleSystem === si}
             />
           ))}
         </div>
