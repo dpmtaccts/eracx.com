@@ -1,0 +1,744 @@
+{
+  "slug": "brian-gonsalves",
+  "subject": {
+    "name": "Brian Gonsalves",
+    "title": "Co-CEO and Co-Founder at Netrush",
+    "company": "Netrush",
+    "linkedinUrl": "https://www.linkedin.com/in/brian-gonsalves/",
+    "companyDescription": ""
+  },
+  "meta": {
+    "followers": 5303,
+    "postsAnalyzed": 19,
+    "commentsAnalyzed": 144,
+    "uniqueCommenters": 66,
+    "estimatedImpressions": 108000,
+    "weeksCovered": 26,
+    "icpMatches": 17,
+    "pctAbove9Words": 49.3,
+    "auditDate": "March 2026",
+    "auditWindow": "September 2025 - March 2026"
+  },
+  "actionItems": [
+    {
+      "headline": "Add MIDDLE and BOTTOM funnel posts.",
+      "explanation": "",
+      "dataPoint": "Funnel Mix score: 40/100 (benchmark: 50, top decile: 75). 2x increase in inbound DMs."
+    },
+    {
+      "headline": "Post 2x/week consistently.",
+      "explanation": "",
+      "dataPoint": "Distribution score: 45/100 (benchmark: 52, top decile: 80). 20-35% increase in impressions."
+    },
+    {
+      "headline": "Reply to every ICP comment with 15+ words.",
+      "explanation": "",
+      "dataPoint": "Trust score: 48/100 (benchmark: 50, top decile: 78). 30-40% increase in comment quality."
+    }
+  ],
+  "scores": [
+    {
+      "dimension": "Authority",
+      "score": 62,
+      "benchmark": 55,
+      "topDecile": 85,
+      "label": "Authority",
+      "question": "Does LinkedIn recognize your expertise?",
+      "findings": [],
+      "topRecommendation": "Focus on 2-3 core themes.",
+      "potentialImpact": "15-25% increase in ICP impressions."
+    },
+    {
+      "dimension": "Trust",
+      "score": 48,
+      "benchmark": 50,
+      "topDecile": 78,
+      "label": "Trust",
+      "question": "Do the right people find you credible?",
+      "findings": [],
+      "topRecommendation": "Reply to every ICP comment with 15+ words.",
+      "potentialImpact": "30-40% increase in comment quality."
+    },
+    {
+      "dimension": "Distribution",
+      "score": 45,
+      "benchmark": 52,
+      "topDecile": 80,
+      "label": "Distribution",
+      "question": "Is the algorithm working for you?",
+      "findings": [],
+      "topRecommendation": "Post 2x/week consistently.",
+      "potentialImpact": "20-35% increase in impressions."
+    },
+    {
+      "dimension": "Relationship",
+      "score": 55,
+      "benchmark": 45,
+      "topDecile": 82,
+      "label": "Relationship",
+      "question": "Are you deepening the right network?",
+      "findings": [],
+      "topRecommendation": "Comment on 5 ICP profiles daily.",
+      "potentialImpact": "2-3x increase in repeat ICP engagers."
+    },
+    {
+      "dimension": "Funnel Mix",
+      "score": 40,
+      "benchmark": 50,
+      "topDecile": 75,
+      "label": "Funnel Mix",
+      "question": "Does your content move people to action?",
+      "findings": [],
+      "topRecommendation": "Add MIDDLE and BOTTOM funnel posts.",
+      "potentialImpact": "2x increase in inbound DMs."
+    },
+    {
+      "dimension": "Business Impact",
+      "score": 65,
+      "benchmark": 35,
+      "topDecile": 70,
+      "label": "Business Impact",
+      "question": "Can you trace revenue to LinkedIn?",
+      "findings": [],
+      "topRecommendation": "Add UTM links to every BOTTOM post.",
+      "potentialImpact": "Attribution of 2-5 pipeline opps/quarter."
+    },
+    {
+      "dimension": "Dark Social",
+      "score": 58,
+      "benchmark": 40,
+      "topDecile": 75,
+      "label": "Dark Social",
+      "question": "Is your content built for invisible sharing?",
+      "findings": [],
+      "topRecommendation": "End every post with a screenshot-friendly takeaway.",
+      "potentialImpact": "25-40% more private shares."
+    }
+  ],
+  "funnelTiers": [
+    {
+      "tier": "TOP",
+      "label": "Awareness & Thought Leadership",
+      "postCount": 7,
+      "percentOfTotal": 36.8,
+      "avgReactions": 53.3,
+      "avgComments": 8,
+      "currentMix": 37,
+      "recommendedMix": 37
+    },
+    {
+      "tier": "MIDDLE",
+      "label": "Consideration & Problem Framing",
+      "postCount": 9,
+      "percentOfTotal": 47.4,
+      "avgReactions": 52,
+      "avgComments": 7,
+      "currentMix": 47,
+      "recommendedMix": 38
+    },
+    {
+      "tier": "BOTTOM",
+      "label": "Conversion & Proof",
+      "postCount": 3,
+      "percentOfTotal": 15.8,
+      "avgReactions": 79.7,
+      "avgComments": 8.3,
+      "currentMix": 16,
+      "recommendedMix": 25
+    }
+  ],
+  "posts": [
+    {
+      "date": "2026-03-27",
+      "summary": "National Vietnam War Veterans Day is March 29.",
+      "theme": "industry history",
+      "tier": "TOP",
+      "format": "text",
+      "reactions": 31,
+      "comments": 2,
+      "reposts": 0,
+      "estimatedImpressions": 3100,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-03-25",
+      "summary": "MLB Opening Day always makes me reflect.",
+      "theme": "personal story",
+      "tier": "TOP",
+      "format": "text",
+      "reactions": 20,
+      "comments": 2,
+      "reposts": 0,
+      "estimatedImpressions": 2000,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-03-24",
+      "summary": "For 30 years, I have sold dietary supplements online and have seen just about...",
+      "theme": "marketplace insight",
+      "tier": "MIDDLE",
+      "format": "text",
+      "reactions": 13,
+      "comments": 3,
+      "reposts": 0,
+      "estimatedImpressions": 1300,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-03-23",
+      "summary": "When I was in 5th grade, I got my first pair of hearing aids.",
+      "theme": "personal story",
+      "tier": "TOP",
+      "format": "text",
+      "reactions": 87,
+      "comments": 6,
+      "reposts": 0,
+      "estimatedImpressions": 8700,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-03-23",
+      "summary": "Practitioner brands have earned trust through quality, clinical standards...",
+      "theme": "product pitch",
+      "tier": "MIDDLE",
+      "format": "text",
+      "reactions": 21,
+      "comments": 1,
+      "reposts": 0,
+      "estimatedImpressions": 2100,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-03-16",
+      "summary": "Amazon Supply Chain Services team invited me to share feedback...",
+      "theme": "marketplace insight",
+      "tier": "MIDDLE",
+      "format": "text",
+      "reactions": 37,
+      "comments": 5,
+      "reposts": 0,
+      "estimatedImpressions": 3700,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-03-16",
+      "summary": "1997: launched the brand Extreme Sports Nutrition.",
+      "theme": "industry history",
+      "tier": "TOP",
+      "format": "text",
+      "reactions": 44,
+      "comments": 22,
+      "reposts": 0,
+      "estimatedImpressions": 4400,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-03-09",
+      "summary": "Even Scott Needham agrees that Netrush is still crushing it.",
+      "theme": "company news",
+      "tier": "MIDDLE",
+      "format": "text",
+      "reactions": 34,
+      "comments": 0,
+      "reposts": 0,
+      "estimatedImpressions": 3400,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-03-09",
+      "summary": "Another Brand Day today. Big thanks to the leadership at TikTok...",
+      "theme": "brand day",
+      "tier": "BOTTOM",
+      "format": "text",
+      "reactions": 84,
+      "comments": 7,
+      "reposts": 0,
+      "estimatedImpressions": 8400,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-02-27",
+      "summary": "Celebrating National Protein Day with a quick nod to a few supplement & snack brands...",
+      "theme": "sports culture",
+      "tier": "TOP",
+      "format": "text",
+      "reactions": 52,
+      "comments": 10,
+      "reposts": 0,
+      "estimatedImpressions": 5200,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-02-24",
+      "summary": "Change feels a lot like Formula 1.",
+      "theme": "company news",
+      "tier": "MIDDLE",
+      "format": "text",
+      "reactions": 27,
+      "comments": 0,
+      "reposts": 0,
+      "estimatedImpressions": 2700,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-02-22",
+      "summary": "From the beginning at Netrush, we chose to lead with our values...",
+      "theme": "company news",
+      "tier": "MIDDLE",
+      "format": "text",
+      "reactions": 66,
+      "comments": 8,
+      "reposts": 0,
+      "estimatedImpressions": 6600,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-02-18",
+      "summary": "Grateful to William Hood & Company for opening up their NYC office...",
+      "theme": "brand day",
+      "tier": "BOTTOM",
+      "format": "text",
+      "reactions": 104,
+      "comments": 14,
+      "reposts": 0,
+      "estimatedImpressions": 10400,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-02-16",
+      "summary": "Getting excited for our next Brand Day.",
+      "theme": "brand day",
+      "tier": "BOTTOM",
+      "format": "text",
+      "reactions": 51,
+      "comments": 4,
+      "reposts": 0,
+      "estimatedImpressions": 5100,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-02-14",
+      "summary": "In Hollywood, the Showrunner keeps the whole production on track.",
+      "theme": "team appreciation",
+      "tier": "TOP",
+      "format": "text",
+      "reactions": 26,
+      "comments": 2,
+      "reposts": 0,
+      "estimatedImpressions": 2600,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-02-12",
+      "summary": "Commerce is everywhere now. Attention is expensive.",
+      "theme": "product pitch",
+      "tier": "MIDDLE",
+      "format": "text",
+      "reactions": 37,
+      "comments": 3,
+      "reposts": 0,
+      "estimatedImpressions": 3700,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-02-10",
+      "summary": "Netrush used to run a classic Amazon accelerator model.",
+      "theme": "marketplace insight",
+      "tier": "MIDDLE",
+      "format": "text",
+      "reactions": 59,
+      "comments": 1,
+      "reposts": 0,
+      "estimatedImpressions": 5900,
+      "hookType": "story"
+    },
+    {
+      "date": "2026-02-05",
+      "summary": "Netrush turns 20 this year.",
+      "theme": "company news",
+      "tier": "MIDDLE",
+      "format": "text",
+      "reactions": 174,
+      "comments": 42,
+      "reposts": 0,
+      "estimatedImpressions": 17400,
+      "hookType": "story"
+    },
+    {
+      "date": "2025-11-30",
+      "summary": "Thirty years ago, I started a business while in college. Now my daughter Ella...",
+      "theme": "personal story",
+      "tier": "TOP",
+      "format": "text",
+      "reactions": 113,
+      "comments": 12,
+      "reposts": 0,
+      "estimatedImpressions": 11300,
+      "hookType": "story"
+    }
+  ],
+  "commentWordCounts": [
+    {
+      "bucket": "1-3",
+      "count": 24
+    },
+    {
+      "bucket": "4-8",
+      "count": 42
+    },
+    {
+      "bucket": "9-15",
+      "count": 39
+    },
+    {
+      "bucket": "16-25",
+      "count": 21
+    },
+    {
+      "bucket": "26+",
+      "count": 18
+    }
+  ],
+  "threadDepths": [
+    {
+      "postSummary": "Post #7 (deepest thread by Anthony Almada)",
+      "maxDepth": 13,
+      "authorParticipated": true
+    }
+  ],
+  "replyScorecard": {
+    "totalAuthorReplies": 24,
+    "avgReplyWordCount": 7.4,
+    "repliesOver9Words": 9,
+    "repliesOver15Words": 4,
+    "replyRate": 64.7,
+    "avgReplyTime": "unknown",
+    "missedICPComments": []
+  },
+  "silentBuyer": {
+    "visibleEngagers": 42,
+    "estimatedSilentReaders": 1740,
+    "icpAmongVisible": 25,
+    "estimatedICPAmongSilent": 15,
+    "visibleCategories": [
+      {
+        "label": "ICP Match",
+        "count": 11,
+        "color": "#2563eb"
+      },
+      {
+        "label": "Industry Peers",
+        "count": 15,
+        "color": "#7c3aed"
+      },
+      {
+        "label": "Other",
+        "count": 17,
+        "color": "#9ca3af"
+      }
+    ]
+  },
+  "signalMap": [
+    {
+      "signal": "Long comments (>9 words)",
+      "weight": "4x",
+      "yourScore": "moderate",
+      "note": "49.3% of comments exceed 9 words. Near the top-creator threshold."
+    },
+    {
+      "signal": "Author replies (>9 words)",
+      "weight": "4x",
+      "yourScore": "weak",
+      "note": "NaN% of your replies exceed 9 words (NaN of 24). Average reply: 7.4 words."
+    },
+    {
+      "signal": "Shares with commentary",
+      "weight": "3x",
+      "yourScore": "weak",
+      "note": "Averaging 0.0 reposts per post. Room to create more shareable formats."
+    },
+    {
+      "signal": "Dwell time (>8 sec)",
+      "weight": "2x",
+      "yourScore": "weak",
+      "note": "0% of posts are high-dwell formats (articles/carousels). Consider more long-form or carousel content."
+    },
+    {
+      "signal": "Short comments (<9 words)",
+      "weight": "2x",
+      "yourScore": "strong",
+      "note": "Averaging 7.6 comments per post. Good volume base."
+    },
+    {
+      "signal": "Saves / bookmarks",
+      "weight": "2x",
+      "yourScore": "strong",
+      "note": "12 posts are framework/proof formats that drive saves. Strong save-worthy content mix."
+    },
+    {
+      "signal": "Reactions (like/celebrate)",
+      "weight": "1x",
+      "yourScore": "strong",
+      "note": "Averaging 56.8 reactions per post. Well above median for your follower count."
+    },
+    {
+      "signal": "Early comment velocity (first 60 min)",
+      "weight": "3x",
+      "yourScore": "moderate",
+      "note": "Based on 7.6 avg comments per post. Improving reply speed and tagging can boost first-hour comments."
+    },
+    {
+      "signal": "Reply speed (<1 hour)",
+      "weight": "2x",
+      "yourScore": "weak",
+      "note": "Reply speed data not tracked. Aim to reply within 60 minutes of publishing for maximum algorithmic boost."
+    },
+    {
+      "signal": "External link clicks",
+      "weight": "0.5x (penalty)",
+      "yourScore": "strong",
+      "note": "0 of 19 posts include hashtags/links. Minimal link penalty exposure."
+    }
+  ],
+  "roadmap": [
+    {
+      "phase": "Immediate",
+      "timeframe": "This week",
+      "items": [
+        "Reply to unreplied comments on 5 posts identified in this audit -- it's not too late",
+        "Rewrite LinkedIn headline to lead with the outcome you deliver for clients",
+        "Set up UTM link for LinkedIn bio pointing to your company site",
+        "Add a \"LinkedIn Inbound\" source tag to your CRM"
+      ]
+    },
+    {
+      "phase": "Phase 1: Fix the Foundation",
+      "timeframe": "Weeks 1-4",
+      "items": [
+        "Increase posting cadence from 0.7x/week to 2x/week (Tues + Thurs, 8-9am)",
+        "Reply to every comment within 60 minutes of publishing; aim for 15+ words per reply",
+        "Spend 15 min/day commenting (>12 words) on 5 ICP-match profiles",
+        "End every post with a bolded, screenshot-able one-liner"
+      ]
+    },
+    {
+      "phase": "Phase 2: Diversify Formats & Deepen Funnel",
+      "timeframe": "Weeks 5-8",
+      "items": [
+        "Experiment with underused formats: carousel, video",
+        "Create a branded framework (e.g., a named methodology) and reference it in 3+ posts",
+        "Publish 2+ BOTTOM-funnel posts: client case studies with specific numbers",
+        "Review metrics: target 59%+ of comments over 9 words",
+        "Run a poll testing an ICP pain-point hypothesis to generate MIDDLE-funnel content ideas"
+      ]
+    },
+    {
+      "phase": "Phase 3: Connect Content to Pipeline",
+      "timeframe": "Weeks 9-12",
+      "items": [
+        "Identify top 10 repeat commenters and move to direct outreach list",
+        "Publish a \"what we're seeing\" data post that references commenter conversations (with permission)",
+        "Invite 3 ICP commenters to co-create content -- a quote carousel or joint LinkedIn Live",
+        "Audit LinkedIn-to-CRM attribution: how many inbound DMs converted to calls?",
+        "Set quarterly goals: target 50% ICP comment rate, 2 attributable pipeline opportunities/month"
+      ]
+    }
+  ],
+  "password": "moderncommerce",
+  "editorial": {
+    "actionItems": [
+      {
+        "headline": "Post twice a week. Every week. For 12 straight weeks.",
+        "paragraphs": [
+          "Tuesday and Thursday. Personal stories, industry history, Brand Day recaps. The algorithm research across 1.8 million posts is unambiguous: consistency is the single strongest signal for building reach. You hit this cadence in March. The compound effect starts when you sustain it for 12 consecutive weeks without a gap.",
+          "One constraint: never post twice in 24 hours. The algorithm promotes one post per account per day. Posting more suppresses both.",
+          "Your publishing timeline tells the story. One post in October 2025. Then silence through January. Six posts in February, twelve in March. That February restart, escalating to near-daily in March, is exactly right. The next 12 weeks determine whether the algorithm classifies you as a consistent creator or a sporadic one. There is no shortcut here. The compound effect requires uninterrupted cadence."
+        ],
+        "dataPoint": "Distribution score: 45/100 (benchmark: 52). 19 posts in 26 weeks = 0.73 posts/week vs. recommended 2/week."
+      },
+      {
+        "headline": "Reply to every comment in 10+ words within 90 minutes.",
+        "paragraphs": [
+          "Your average reply right now is 7.4 words. That is below the 9-word threshold where LinkedIn starts amplifying the signal. Most of your replies are two to five word acknowledgments that the algorithm treats as equivalent to a Like.",
+          "The fix takes ten seconds per reply. Instead of \"Love it,\" write \"Love it, that point about [X] is exactly what we are seeing with brands navigating this right now.\" That transforms a dead signal into a 3x impression trigger. And when a brand executive like Chris Glosson leaves a 60-word comment about protein ecosystem innovation, replying with a follow-up question can spark a threaded conversation that the algorithm weights at 15x.",
+          "Six of your posts had substantive comments with zero replies. Those are the highest-ROI missed touchpoints in this entire assessment."
+        ],
+        "dataPoint": "7.4 avg reply word count (target: 9+). Only 37.5% of replies exceed 9 words. 9 missed ICP-quality comments with zero replies."
+      },
+      {
+        "headline": "Use your content as a halo. Share what is interesting with those who would find it interesting.",
+        "paragraphs": [
+          "This is the move that turns LinkedIn from a broadcast channel into a relationship engine.",
+          "When you publish a post about creatine history, or Amazon compliance shifts, or what you learned at Brand Day, that content is not just for your feed. It is an asset you can share directly with the people it is most relevant to.",
+          "A brand leader you met at Expo West who is navigating Amazon compliance? Send them your COA post with a note: \"This came up in a conversation I had with Amazon's team. Thought of you.\" A supplement founder who just launched on TikTok Shop? Forward your Brand Day recap: \"This is what the creators told us about how they choose products. Figured you would find it useful.\"",
+          "Every post becomes a reason to reach out without asking for anything. The content is the value. The share is the touchpoint. The relationship is what compounds.",
+          "This is how you turn 104 posts per year into 200+ personalized touchpoints across your network. Not by writing more, but by sharing what you already wrote with the specific people who need to see it."
+        ],
+        "dataPoint": "19 posts in the audit window. Each one is a shareable asset for targeted outreach to ICP contacts."
+      }
+    ],
+    "funnelEditorial": {
+      "TOP": {
+        "callout": "Your instinct for personal storytelling is strong. The hearing aids post is a textbook top-of-funnel hit: specific, human, unexpected. The F1 metaphor (zero comments) shows where abstraction without personal grounding falls flat. When it comes from a real moment in your life, the audience engages. When it is an abstract metaphor, they scroll past.",
+        "featuredPostId": null
+      },
+      "MIDDLE": {
+        "callout": "The creatine post is your MOFU masterpiece: industry history told through personal experience, triggering a 13-message thread with an industry legend. This is the template. The Amazon compliance post (lowest engagement in the dataset) shows what happens when expertise is delivered without narrative. Same knowledge, completely different response.",
+        "featuredPostId": null
+      },
+      "BOTTOM": {
+        "callout": "Brand Day content breaks the \"bottom of funnel gets less engagement\" rule because it feels like an exclusive room, not a sales pitch. The NYC Brand Day is your highest-engagement post overall. Direct product pitches (Batch Pro: 21 reactions, 1 comment) follow the expected pattern: narrow audience, low engagement, but potentially high intent.",
+        "featuredPostId": null
+      }
+    },
+    "unrepliedComments": {
+      "narrative": "You replied on 11 of 17 posts that received comments. When you did reply, your average word count was 7.4 words. The research says replies over 9 words boost the parent post's impressions by 3x. Only 37.5% of your replies clear that threshold.\n\nThe most critical gap: you left 0 replies on the hearing aids post (6 comments, including one from an Amazon Sr. Partnership Manager), the Amazon Supply Chain post (5 comments, including heartfelt notes from the Cal Poly students you praised), and the Protein Day post (10 comments, including a 60-word analysis from a protein value chain executive).",
+      "blockquote": "Every unanswered comment is a signal the algorithm reads as disengagement. Every reply you write, especially within 90 minutes, extends the post's reach window and tells the algorithm the conversation is still alive. This is the single highest-leverage behavior change available.",
+      "icpMissed": [
+        {
+          "name": "Kat Bryce",
+          "headline": "Chief Growth & Marketing Officer",
+          "words": 28,
+          "topic": "Brand Day NYC"
+        },
+        {
+          "name": "Russ Dieringer",
+          "headline": "Founder & CEO, Stratably | Omnichannel",
+          "words": 12,
+          "topic": "Brand Day NYC"
+        },
+        {
+          "name": "Viktor K.",
+          "headline": "COO at Wise Engineering",
+          "words": 25,
+          "topic": "Batch Pro"
+        },
+        {
+          "name": "Chris Glosson",
+          "headline": "Executive Commercial Leader | Protein Value Chain",
+          "words": 60,
+          "topic": "Protein Day"
+        },
+        {
+          "name": "Ali Davey",
+          "headline": "Director of Partnerships | Scaling Brands",
+          "words": 33,
+          "topic": "Protein Day"
+        }
+      ],
+      "otherMissed": [
+        {
+          "name": "Santi Strasser",
+          "headline": "Resilience Architect",
+          "words": 22,
+          "topic": "Commerce video"
+        },
+        {
+          "name": "Briana Dixon",
+          "headline": "Revenue Whisperer",
+          "words": 42,
+          "topic": "Commerce video"
+        },
+        {
+          "name": "Anjani Nabar",
+          "headline": "Business & Statistics @ Cal Poly SLO",
+          "words": 42,
+          "topic": "Amazon Supply Chain"
+        },
+        {
+          "name": "Wesley Bea",
+          "headline": "Incoming Sales Engineering Intern @ Siemens",
+          "words": 32,
+          "topic": "Amazon Supply Chain"
+        }
+      ]
+    },
+    "buildAdditions": {
+      "contentCalendar": {
+        "weeks": [
+          {
+            "post1": {
+              "tier": "TOP",
+              "desc": "Personal story or vulnerability"
+            },
+            "post2": {
+              "tier": "MIDDLE",
+              "desc": "Industry insight through personal experience"
+            }
+          },
+          {
+            "post1": {
+              "tier": "TOP",
+              "desc": "Industry shout-out, appreciation, or cultural moment"
+            },
+            "post2": {
+              "tier": "MIDDLE",
+              "desc": "Amazon or TikTok intelligence, framed as narrative"
+            }
+          },
+          {
+            "post1": {
+              "tier": "TOP",
+              "desc": "Personal story or nostalgia with business bridge"
+            },
+            "post2": {
+              "tier": "BOTTOM",
+              "desc": "Brand Day recap, preview, or attendee tags"
+            }
+          },
+          {
+            "post1": {
+              "tier": "MIDDLE",
+              "desc": "Framework, playbook, or case study framed as a lesson"
+            },
+            "post2": {
+              "tier": "BOTTOM",
+              "desc": "Soft sell: capability embedded in a story, never standalone"
+            }
+          }
+        ],
+        "narrative": "The funnel research is clear: you need all three working together. Top-of-funnel drives the reach that feeds the algorithm. Middle-of-funnel converts that reach into followers and establishes authority. Bottom-of-funnel captures the demand your top and middle content creates.\n\nMost B2B creators over-index on BOFU (pitching, selling, promoting). Your natural instinct leans toward TOFU and MOFU, which is actually the stronger foundation. The recommendation is to protect that instinct and be disciplined about inserting BOFU content only 25% of the time, always wrapped in story."
+      },
+      "formatDiversification": {
+        "formats": [
+          {
+            "type": "Text + Image",
+            "pct": 50,
+            "note": "Your current strength"
+          },
+          {
+            "type": "Carousel / PDF",
+            "pct": 25,
+            "note": "3x reach. Swipeable frameworks."
+          },
+          {
+            "type": "Short Video",
+            "pct": 15,
+            "note": "30-90s, vertical, captioned"
+          },
+          {
+            "type": "Poll",
+            "pct": 10,
+            "note": "1x/month. 200% above avg reach."
+          }
+        ]
+      },
+      "brandDayPlaybook": [
+        "Pre-event (1 week before): Teaser. Who is in the room, what you are discussing.",
+        "Day-of: Real-time photo from the room. Energy, proof, exclusivity.",
+        "Post-event (1-2 days after): Recap with attendee tags. This is the tagging cascade that drove the NYC post to 104 reactions and 14 comments.",
+        "+1 week: One insight from the conversation, framed as thought leadership. Not \"Brand Day was great.\" Instead: \"Something a brand leader said at our last Brand Day that I have not been able to stop thinking about...\""
+      ],
+      "commentingStrategy": "After each post, spend 15 minutes engaging with 3-5 relevant posts from people in your network: brand executives, Amazon/TikTok leaders, industry peers. Reply to every meaningful comment on your own post within the first 90 minutes. This is the \"Golden Hour\" strategy that determines 70% of a post's ultimate reach.",
+      "compoundMath": "At 2 posts per week for 52 weeks, you publish 104 posts per year. If the weekly digest extends each post into an email touchpoint, that is 208 brand impressions per prospect per year. The average B2B buyer needs 60+ touchpoints across 272 days. Two hundred and eight touchpoints, delivered consistently, from a trusted voice in the industry, does not just meet that bar. It exceeds it.\n\nBut only if it is consistent. The research is unambiguous: content marketing is a compounding asset. Posts from earlier phases continue circulating within interest clusters for 2-3 weeks. Each new post compounds on the algorithmic authority of the last. Break the chain, and you restart from zero."
+    }
+  },
+  "profile": {
+    "name": "Brian Gonsalves",
+    "headline": "Co-CEO and Co-Founder at Netrush",
+    "company": "Netrush",
+    "location": "Vancouver, Washington, United States",
+    "followers": 5303,
+    "bannerText": "passion + PURPOSE"
+  }
+}

@@ -1,0 +1,164 @@
+import { useEffect } from "react";
+import StagingTopNav from "../components/staging/StagingTopNav";
+import StagingHeroSection from "../components/staging/StagingHeroSection";
+import ClientEvidenceSection from "../components/staging/ClientEvidenceSection";
+import LoopsVsCampaignsSection from "../components/LoopsVsCampaignsSection";
+import StagingSystemOverview from "../components/staging/StagingSystemOverview";
+import CompoundScrollSection from "../components/staging/CompoundScrollSection";
+import LoopDetailSection from "../components/LoopDetailSection";
+import StagingMechanismSection from "../components/staging/StagingMechanismSection";
+import ProductsSection from "../components/staging/ProductsSection";
+import TimelineSection from "../components/TimelineSection";
+import FAQSection from "../components/FAQSection";
+import CTAFooter from "../components/CTAFooter";
+
+export default function Staging() {
+  useEffect(() => {
+    if (window.location.hash === "#contact") {
+      setTimeout(() => {
+        document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, []);
+
+  return (
+    <div className="min-h-screen">
+      <StagingTopNav />
+
+      <StagingHeroSection />
+
+      <div id="why-era">
+        <ClientEvidenceSection />
+      </div>
+
+      <LoopsVsCampaignsSection />
+
+      <div id="the-system">
+        <StagingSystemOverview />
+      </div>
+
+      <CompoundScrollSection />
+
+      {/* System detail sections — updated labels, body, and mechanics */}
+      <LoopDetailSection
+        id="loop-connection"
+        loopNumber="01"
+        loopColor="#C8A96E"
+        diagramLabels={["DETECT", "ENRICH", "REACH"]}
+        variant="dark"
+        purposeLine="Fill the pipeline."
+        question={'"We\'re doing outbound but nothing is converting. What are we missing?"'}
+        label="01 Acquisition System"
+        headline="Your buyers are already in-market. You're just not finding them in time."
+        body="97% of your market isn't buying today — but the ones who will be are already sending signals. Job changes, funding events, hiring patterns, tech installs. Era captures those signals and turns them into targeted outreach before a competitor gets the first meeting. It runs continuously, without a human initiating it."
+        mechanics={[
+          "Signal-based account targeting matched to ICP",
+          "Multi-channel outreach triggered by behavioral data",
+          "Content that builds authority around the 3-5 problems your buyers face",
+          "LinkedIn presence strategy that creates visibility with your ICP",
+          "Intent tracking across the full buying window",
+          "Every touchpoint writes back to the account record",
+        ]}
+        caseStudy={{
+          client: "Publicist",
+          clientLogo: "/assets/clients/publicist.png",
+          loopTag: "ACQUISITION SYSTEM",
+          headline: "2x qualified pipeline in 90 days.",
+          body: "Publicist needed to reach enterprise accounts they'd never penetrated through traditional outreach. Era built a signal-based acquisition system targeting funding events, executive hires, and tech changes across their ICP. The system ran continuously. In 90 days, qualified pipeline doubled, with no new hires and no increase in ad spend.",
+          quote: {
+            text: "Era is an asset to any high-growth company, impacting every aspect of revenue, marketing, and customer success.",
+            name: "Lara Vandenberg",
+            title: "Founder, Publicist",
+            photo: "/assets/clients/lara-vandenberg.jpeg",
+          },
+          metricValue: "2\u00D7",
+          metricLabel: "qualified pipeline growth, 90 days",
+        }}
+      />
+
+      <LoopDetailSection
+        id="loop-trust"
+        loopNumber="02"
+        loopColor="#2BBFAA"
+        diagramLabels={["MAP", "NURTURE", "CLOSE"]}
+        variant="light"
+        purposeLine="Win the room."
+        question={'"We had a great first meeting. Then it went silent for six weeks."'}
+        label="02 Engagement System"
+        headline="Your champion said yes. But they're not the only one deciding."
+        body="The average mid-market deal has 10+ people involved in the decision. Your rep is talking to one of them. The rest are evaluating you in conversations you're not part of. Era builds presence across the full buying committee: champions, economic buyers, influencers. Mapping every touchpoint to a stakeholder and a stage. When deals go quiet, the system re-engages. When new stakeholders appear, they get added automatically."
+        mechanics={[
+          "Behavior-triggered nurture sequences by role and stage",
+          "Multi-thread engagement across the buying committee",
+          "Thought leadership content delivered to each stakeholder based on their role",
+          "LinkedIn engagement strategy for deal acceleration",
+          "Champion tracking with automatic re-engagement on silence",
+          "Deal stall detection with targeted re-entry plays",
+          "RevOps integration: every stakeholder interaction updates the CRM",
+        ]}
+        caseStudy={{
+          client: "Enterprise Software Co.",
+          loopTag: "ENGAGEMENT SYSTEM",
+          headline: "250 buyers. One coordinated system.",
+          body: "A global enterprise software company operates in complex global accounts where the buying committee spans functions, geographies, and seniority levels. Era built a nurture infrastructure reaching 250 champions and economic buyers, each receiving content and touchpoints mapped to their role and stage. Deals that previously stalled at evaluation began to move.",
+          quote: {
+            text: "Era built something we didn't know we needed, a way to stay present with 250 buyers across our global accounts without adding headcount.",
+            name: "Senior Leader",
+            title: "Enterprise Software",
+          },
+          metricValue: "250",
+          metricLabel: "stakeholders in active system, across global accounts",
+        }}
+      />
+
+      <LoopDetailSection
+        id="loop-loyalty"
+        loopNumber="03"
+        loopColor="#D4367A"
+        diagramLabels={["MEASURE", "GROW", "REFER"]}
+        variant="dark"
+        purposeLine="Grow what you have."
+        question={'"Our customers love us but we have no idea when they\'re ready to buy more."'}
+        label="03 Expansion System"
+        headline="Your best new pipeline source is the customers you've already closed."
+        body="You have happy customers who would expand, refer, and renew — if someone asked at the right time. But nobody has a system for knowing when that is. Era tracks post-close signals — engagement patterns, satisfaction indicators, team growth — and converts them into expansion conversations, referrals, and renewals automatically. No cold upsell calls. Every conversation is signal-triggered."
+        mechanics={[
+          "90-day post-close onboarding and expansion sequence",
+          "Customer content strategy that deepens engagement and surfaces upsell opportunities",
+          "Satisfaction and confidence signal tracking",
+          "Cross-sell and upsell triggers based on account behavior",
+          "Referral activation at the 6-month mark",
+          "Renewal intelligence tied to relationship health score",
+          "RevOps: every expansion signal writes back to the account and informs the next cycle",
+        ]}
+        caseStudy={{
+          client: "Ecommerce Operator",
+          loopTag: "EXPANSION SYSTEM",
+          headline: "Expansion revenue from signals, not guesswork.",
+          body: "A mid-market ecommerce operator had strong customer relationships but no system to convert them into expansion revenue. Era built a post-close signal infrastructure tracking confidence and satisfaction indicators across their customer base. Cross-sell and upsell conversations triggered automatically when signals aligned, not when a rep remembered to check in.",
+          quote: {
+            text: "For the first time, our expansion conversations were triggered by the system, not by someone remembering to follow up.",
+            name: "Senior Leader",
+            title: "Ecommerce",
+          },
+          metricValue: "0",
+          metricLabel: "cold upsell calls, every expansion conversation was signal-triggered",
+        }}
+      />
+
+      <div id="how-it-works">
+        <StagingMechanismSection />
+      </div>
+
+      <div id="gtm-tools">
+        <ProductsSection />
+      </div>
+
+      <TimelineSection />
+
+      <FAQSection />
+
+      <CTAFooter />
+    </div>
+  );
+}

@@ -174,28 +174,6 @@ function describeArc(
    SUB-COMPONENTS
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ── Tool tag chip ── */
-function ToolTag({ name, small }: { name: string; small?: boolean }) {
-  return (
-    <span
-      style={{
-        fontFamily: FONT,
-        fontSize: small ? 9 : 11,
-        fontWeight: 600,
-        color: C.secondary,
-        background: small ? C.offWhite : C.white,
-        border: `1px solid ${C.divider}`,
-        borderRadius: 5,
-        padding: small ? "3px 8px" : "4px 10px",
-        display: "inline-block",
-        whiteSpace: "nowrap",
-      }}
-    >
-      {name}
-    </span>
-  );
-}
-
 /* ── Progress dots + play/pause icon ── */
 function ProgressDots({
   activeIndex,
@@ -209,6 +187,7 @@ function ProgressDots({
   onTogglePlay: () => void;
 }) {
   const activeLoopIdx = Math.floor(activeIndex / 3);
+  const activeColor = LOOPS[activeLoopIdx].color;
   return (
     <div
       style={{
@@ -249,27 +228,24 @@ function ProgressDots({
           </span>
         );
       })}
-      {/* Play / Pause icon */}
+      {/* Play / Pause icon — standalone, colored by active loop */}
       <span style={{ width: 12 }} />
       <button
         onClick={onTogglePlay}
         aria-label={playing ? "Pause" : "Play"}
         style={{
-          width: 28,
-          height: 28,
-          borderRadius: "50%",
-          border: `1px solid ${C.divider}`,
-          background: C.white,
+          background: "none",
+          border: "none",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           padding: 0,
           flexShrink: 0,
-          color: C.secondary,
-          fontSize: 11,
+          color: activeColor,
+          fontSize: 14,
           lineHeight: 1,
-          transition: "border-color 0.2s ease",
+          transition: "color 0.4s ease",
         }}
       >
         {playing ? "⏸" : "▶"}
@@ -345,12 +321,22 @@ function StageDetail({ activeIndex }: { activeIndex: number }) {
         {stage.description}
       </p>
 
-      {/* Tool tags — always visible */}
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-        {stage.tools.map((t) => (
-          <ToolTag key={t} name={t} />
-        ))}
-      </div>
+      {/* "See how it runs" link */}
+      <a
+        href="#how-it-works-radial"
+        style={{
+          fontSize: 14,
+          fontWeight: 600,
+          color: loop.color,
+          textDecoration: "none",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 6,
+          transition: "opacity 0.2s ease",
+        }}
+      >
+        See how it runs &rarr;
+      </a>
     </div>
   );
 }
@@ -452,18 +438,21 @@ function MobileLoopSection({ loop }: { loop: LoopData }) {
             >
               {stage.description}
             </p>
-            <div
+            <a
+              href="#how-it-works-radial"
               style={{
-                display: "flex",
-                gap: 5,
-                flexWrap: "wrap",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
                 marginTop: 10,
+                fontSize: 13,
+                fontWeight: 600,
+                color: loop.color,
+                textDecoration: "none",
               }}
             >
-              {stage.tools.map((t) => (
-                <ToolTag key={t} name={t} small />
-              ))}
-            </div>
+              See how it runs &rarr;
+            </a>
           </div>
         ))}
       </div>
@@ -542,30 +531,14 @@ function RadialDiagram({ activeIndex }: { activeIndex: number }) {
         );
       })}
 
-      {/* ── Center hub ── */}
-      <circle cx={CX} cy={CY} r={HUB_R} fill={C.charcoal} />
+      {/* ── Center hub — standalone dark era symbol ── */}
       <image
         href="/era-symbol.png"
-        x={CX - 18}
+        x={CX - 22}
         y={CY - 22}
-        width={36}
-        height={36}
-        style={{ filter: "brightness(10)" }}
+        width={44}
+        height={44}
       />
-      <text
-        x={CX}
-        y={CY + 26}
-        textAnchor="middle"
-        fill="white"
-        fillOpacity={0.6}
-        fontSize={7}
-        fontWeight={400}
-        fontFamily={FONT}
-        letterSpacing="1.5px"
-        style={{ textTransform: "uppercase" }}
-      >
-        HOW IT WORKS
-      </text>
 
       {/* ── Loop name labels (inner ring) ── */}
       {LOOPS.map((loop, li) => {
