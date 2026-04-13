@@ -9,6 +9,40 @@ Updated at the end of every Claude Code session.
 
 > What I'm actively working on or needs to ship this week.
 
+### BetterUp Revenue Signal Audit (`/audit/betterup`)
+
+**Phase 1 — Foundation**
+- Scaffold `src/pages/BetterUpAudit.tsx` and `src/pages/betterup/components.tsx`
+- Register routes in `src/main.tsx` (`/audit/betterup`, `/audit/betterup/summary`)
+- Password gate (`dontswe@tthejrouney`, sessionStorage)
+- Theme system: CSS custom properties, light default with dark toggle, localStorage persistence
+- Load fonts: Instrument Serif, DM Sans, JetBrains Mono
+- Stepper nav component (8 nodes, scroll-tracked, fills with rust)
+
+**Phase 2 — Hero Sections**
+- Section 1: Executive Summary (company profile, 3 hero gauges, core finding, strengths/vulnerabilities)
+- Section 6: The AI Mirror (two-column simulated AI chat, score, action box)
+
+**Phase 3 — Core Framework**
+- Section 2: Brand Conviction Cascade (6 layers, expandable cards, cascade break callout)
+- Section 3: LinkedIn Leadership Signals (CEO + Company Page tabs, 5 dimensions each)
+- Section 4: Content-to-Pipeline Signal Map (8 signal cards, alignment bars)
+
+**Phase 4 — Intelligence & Strategy**
+- Section 5: Audience Reality (Moodlight data, tensions, dead zones, 4-stage buyer journey)
+- Section 7: Investment vs. Return (current vs. projected metric cards)
+- Section 8: What We'd Build Together (3-phase plan, CTA card)
+
+**Phase 5 — Summary Page**
+- Build `/audit/betterup/summary` (condensed: profile, gauges, finding, cascade, top 5 gaps, AI mirror, investment, CTA)
+
+**Phase 6 — Polish & Deploy**
+- Scroll-triggered reveals (IntersectionObserver), animated counters, gauge fills
+- Responsive QA (desktop + tablet)
+- Brand guideline pass: no em dashes, no exclamations, no staccato, no emoticons
+- Deploy to Vercel
+
+
 - [ ] Audit deployed site for broken links and image references
 - [ ] Update pricing and service tier information to reflect current offerings
 

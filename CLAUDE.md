@@ -167,3 +167,69 @@ When I say "update docs" or "wrap up," update all three.
 - Ask me before making architectural decisions
 - Default to the simplest solution that handles the current use case
 - If you hit a wall, document what you tried and what failed in the CHANGELOG
+
+---
+
+## BetterUp Revenue Signal Audit
+
+### Overview
+Single-page scrolling sales tool diagnosing BetterUp's go-to-market signal alignment. Used as a prospect deliverable and case study for the Revenue Signal Audit product. Tone: confident, analytical, diagnostic — not a report.
+
+### Routes
+- `/audit/betterup` — Full 8-section audit
+- `/audit/betterup/summary` — Condensed standalone summary
+- Password gate (client-side, sessionStorage): `transformation`
+
+### Theme System
+Light mode default with dark toggle in nav. All colors as CSS custom properties so every component respects active theme. Preference persisted in localStorage.
+
+**Light palette:**
+- Background: #F7F5F2 (warm white)
+- Card: #FFFFFF
+- Border: #E8E4DE
+- Text Primary: #1A1A1A
+- Text Secondary: #6B6760
+- Accent Rust: #C85A3A
+- Accent Sky: #4AADE8
+- Accent Magenta: #E8175D
+
+**Dark palette:**
+- Background: #0F0F0E
+- Card: #151514
+- Border: #2A2825
+- Text Primary: #F6F5F2
+- Text Secondary: #A8A39A
+- Accents: same as light (rust/sky/magenta)
+
+### Brand Guidelines
+- No em dashes
+- No staccato fragments
+- No exclamation marks
+- No emoticons
+- Headlines: Instrument Serif
+- Body/UI/labels: DM Sans
+- Data/metrics: JetBrains Mono
+
+### 8-Section Architecture
+1. Executive Summary — company profile, 3 hero gauges, core finding, strengths/vulnerabilities
+2. Brand Conviction Cascade — 6-layer flow framework (ERA core IP)
+3. LinkedIn Leadership Signals — CEO + Company Page tabs, 5 dimensions each
+4. Content-to-Pipeline Signal Map — 8 signal cards with alignment scores
+5. Audience Reality — Moodlight-sourced buyer profile, tensions, dead zones, journey
+6. The AI Mirror — what generative search says vs. what BetterUp wants it to say
+7. Investment vs. Return — current state vs. projected impact
+8. What We'd Build Together — 90-day phased program, ERA + Pinwheel scope
+
+### Data Sources
+- `docs/betterup-audit-design-spec.md` — full build spec
+- `docs/BetterUp Brand Health_Feb_ 2026.pdf` — Pinwheel brand health assessment
+- `docs/betterup-moodlight-audience.md` — Moodlight audience intelligence
+
+### Reference Prototypes
+Located in `docs/reference/` (visual references from Claude.ai, NOT production code):
+- `brand-conviction-cascade.jsx`
+- `linkedin-leadership-audit.jsx`
+- `content-to-pipeline-signal-map.jsx`
+
+### Stack Note
+Despite spec mentioning Next.js, this repo uses **Vite + React Router**. Follow the Navalent pattern: page component in `src/pages/`, subcomponents in `src/pages/<slug>/components.tsx`, route registered in `src/main.tsx`.

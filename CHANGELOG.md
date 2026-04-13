@@ -5,6 +5,17 @@ Format: `[YYYY-MM-DD] — Summary of what changed`
 
 ---
 
+## [2026-04-13] — BetterUp Revenue Signal Audit Initialized
+
+- Added design spec at `docs/betterup-audit-design-spec.md` (8 sections, light/dark theme system, stepper nav)
+- Added Pinwheel brand health assessment at `docs/BetterUp Brand Health_Feb_ 2026.pdf`
+- Added Moodlight audience intelligence report at `docs/betterup-moodlight-audience.md`
+- Created `docs/reference/` for visual prototype .jsx files (brand-conviction-cascade, linkedin-leadership-audit, content-to-pipeline-signal-map)
+- Appended BetterUp section to CLAUDE.md (routes, password, theme palettes, brand guidelines, architecture)
+- Routing decision: follow Navalent pattern (Vite + React Router), not Next.js as spec suggests
+
+---
+
 ## [2026-03-23] — How It Works Radial Section
 
 - Added interactive radial diagram showing all three loops (Connection, Trust, Loyalty) with three stages each
