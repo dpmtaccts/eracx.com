@@ -30,6 +30,7 @@ import { COMPANY_PAGE } from './data/companyPage'
 import { ALEXI_COMMENTER_MIX, NETWORK_REACH, PROFILE_VISUALS } from './data/profiles'
 import { BRAND_HEALTH, BRAND_HEALTH_NOTE } from './data/brandHealth'
 import type { ThemePalette } from './theme'
+import { BrandHealthOnly } from './dataLayer'
 import { SIGNALS, SIGNALS_AVG_ALIGNMENT, SIGNALS_CRITICAL_GAPS, SIGNALS_FINDING, SIGNALS_HEADLINE, SIGNALS_STRONG, type Signal } from './data/signals'
 
 /* ──────────────────────────────────────────────
@@ -282,11 +283,13 @@ export function GTMSection() {
         <ChannelDetail channel={channel} />
       </Reveal>
 
-      {/* Brand health scorecard */}
-      <div style={{ height: 80 }} />
-      <Reveal>
-        <BrandHealthScorecard />
-      </Reveal>
+      {/* Brand health scorecard — Pinwheel-sourced, hidden in ERA-only mode */}
+      <BrandHealthOnly placeholder={<BrandHealthHiddenPlaceholder />}>
+        <div style={{ height: 80 }} />
+        <Reveal>
+          <BrandHealthScorecard />
+        </Reveal>
+      </BrandHealthOnly>
 
       {/* Buyer behavior callouts (renamed from Moodlight) */}
       <div style={{ marginTop: 64, display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -939,6 +942,40 @@ function SparkMetric({ value, label, accent }: { value: string; label: string; a
 }
 
 /* ── Brand health scorecard ────────────────── */
+function BrandHealthHiddenPlaceholder() {
+  const { palette } = useTheme()
+  return (
+    <div style={{ marginTop: 80 }}>
+      <div
+        style={{
+          background: palette.cardAlt,
+          border: `1px dashed ${palette.border}`,
+          borderRadius: 6,
+          padding: '24px 28px',
+          display: 'flex',
+          gap: 16,
+          alignItems: 'center',
+          fontFamily: FONT.body,
+        }}
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={palette.textDim} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ flex: '0 0 auto' }}>
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <line x1="3" y1="9" x2="21" y2="9" />
+          <line x1="9" y1="21" x2="9" y2="9" />
+        </svg>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontFamily: FONT.body, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: palette.textDim, fontWeight: 600 }}>
+            Brand Health layer hidden
+          </div>
+          <div style={{ fontSize: 13, color: palette.textMuted, marginTop: 4 }}>
+            Competitive brand health benchmark vs. CoachHub, Torch, and Ezra appears here when the Brand Health data layer is enabled.
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function BrandHealthScorecard() {
   const { palette } = useTheme()
   return (
@@ -1213,12 +1250,9 @@ export { COMPANY_PAGE }
 import {
   ACTIVE_TENSIONS,
   AUDIENCE_HEADLINE,
-  AUDIENCE_PROFILE,
   BUYER_JOURNEY,
   DEAD_ZONES,
   KEY_METRICS,
-  PLATFORM_BEHAVIOR,
-  TURNOFF,
   VELOCITY_SHIFTS,
   WHO_THEY_THINK_VS_REAL,
 } from './data/audience'
@@ -1229,71 +1263,24 @@ export function AudienceSection() {
     <Section id="audience">
       <SectionHeader kicker="Audience Reality" headline={AUDIENCE_HEADLINE} />
 
+      {/* Persona card — visual, not prose */}
       <Reveal>
-        <div
-          style={{
-            background: palette.card,
-            border: `1px solid ${palette.border}`,
-            borderRadius: 6,
-            padding: '32px 36px',
-            marginBottom: 48,
-          }}
-        >
-          <div style={smallLabel(palette.rust)}>The real buyer profile</div>
-          <p style={{ fontFamily: FONT.body, fontSize: 17, lineHeight: 1.65, color: palette.text, margin: '12px 0 0' }}>
-            {AUDIENCE_PROFILE}
-          </p>
-        </div>
+        <PersonaCard />
       </Reveal>
 
-      {/* Key metrics */}
+      <div style={{ height: 64 }} />
+
+      {/* Hero metric cards — bigger, bolder */}
       <Reveal>
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 16,
-            marginBottom: 56,
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: 12,
+            marginBottom: 80,
           }}
         >
-          {KEY_METRICS.map((m) => (
-            <div
-              key={m.label}
-              style={{
-                background: palette.card,
-                border: `1px solid ${palette.border}`,
-                borderRadius: 6,
-                padding: '24px 24px',
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: FONT.mono,
-                  fontSize: 36,
-                  color: palette.rust,
-                  lineHeight: 1,
-                  fontWeight: 500,
-                }}
-              >
-                {m.value}
-              </div>
-              <div
-                style={{
-                  fontFamily: FONT.body,
-                  fontSize: 13,
-                  color: palette.text,
-                  marginTop: 12,
-                  lineHeight: 1.4,
-                  fontWeight: 600,
-                }}
-              >
-                {m.label}
-              </div>
-              <div style={{ fontFamily: FONT.body, fontSize: 12, color: palette.textMuted, marginTop: 6 }}>
-                {m.sub}
-              </div>
-            </div>
-          ))}
+          {KEY_METRICS.map((m, i) => <HeroMetricCard key={m.label} m={m} index={i} />)}
         </div>
       </Reveal>
 
@@ -1323,16 +1310,12 @@ export function AudienceSection() {
         </div>
       </Reveal>
 
-      {/* Active tensions */}
+      {/* Active tensions — tug-of-war */}
       <Reveal>
-        <div style={{ marginBottom: 56 }}>
-          <div style={smallLabel(palette.rust)}>Three active tensions the buyer is navigating</div>
-          <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {ACTIVE_TENSIONS.map((t) => (
-              <ExpandableCard key={t.title} title={t.title}>
-                <p style={{ margin: 0, paddingTop: 16 }}>{t.body}</p>
-              </ExpandableCard>
-            ))}
+        <div style={{ marginBottom: 80 }}>
+          <div style={smallLabel(palette.rust)}>Three tensions the buyer is navigating</div>
+          <div style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {ACTIVE_TENSIONS.map((t) => <TugOfWarCard key={t.title} title={t.title} body={t.body} />)}
           </div>
         </div>
       </Reveal>
@@ -1520,24 +1503,291 @@ export function AudienceSection() {
         </div>
       </Reveal>
 
-      {/* Platform behavior */}
+      {/* Platform behavior — pull quote */}
       <Reveal>
-        <div style={{ marginBottom: 32 }}>
-          <Callout tone="sky">
-            <div style={smallLabel(palette.sky)}>How BetterUp's buyers behave online</div>
-            {PLATFORM_BEHAVIOR}
-          </Callout>
-        </div>
+        <BehaviorPullQuote
+          kicker="How BetterUp's buyers behave online"
+          quote="They consume in private, decide in committee, and share only what makes them look informed, not enthusiastic."
+          caption="The conversation lives in financial press and curated feeds, not in coaching communities. LinkedIn engagement signals nothing because they don't engage publicly."
+          tone="sky"
+        />
       </Reveal>
 
-      {/* Turnoff */}
+      {/* Turnoff — pull quote */}
+      <div style={{ height: 48 }} />
       <Reveal>
-        <Callout tone="red">
-          <div style={smallLabel(palette.red)}>The turnoff</div>
-          {TURNOFF}
-        </Callout>
+        <BehaviorPullQuote
+          kicker="The turnoff"
+          quote="Lead with the human, substantiate with the AI. Not the other way around."
+          caption="96.6% of AI-coaching conversation is emotionally neutral. Any campaign that opens with 'AI-powered' is filtered as noise."
+          tone="red"
+        />
       </Reveal>
     </Section>
+  )
+}
+
+/* ── Persona card ─────────────────────────── */
+function PersonaCard() {
+  const { palette } = useTheme()
+  const traits = [
+    'Mid-career operator',
+    'CHRO · VP L&D · CPO',
+    'Defends budget to the CFO',
+    'Vendor-fatigued',
+    'Buys in committee',
+    'Quietly skeptical',
+  ]
+  return (
+    <div
+      style={{
+        background: palette.card,
+        border: `1px solid ${palette.border}`,
+        borderRadius: 8,
+        padding: '36px 40px',
+        display: 'grid',
+        gridTemplateColumns: 'auto 1fr',
+        gap: 32,
+        alignItems: 'center',
+      }}
+    >
+      {/* Persona icon */}
+      <div
+        style={{
+          width: 96,
+          height: 96,
+          borderRadius: '50%',
+          background: palette.rustSoft,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: palette.rust,
+          flex: '0 0 auto',
+        }}
+      >
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2" />
+        </svg>
+      </div>
+
+      <div>
+        <div style={smallLabel(palette.rust)}>The buyer</div>
+        <div style={{ fontFamily: FONT.display, fontSize: 28, color: palette.text, lineHeight: 1.2, margin: '8px 0 16px' }}>
+          Risk-aware enterprise operator, emotionally locked in neutral.
+        </div>
+        {/* Trait chips */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 18 }}>
+          {traits.map((t) => (
+            <span
+              key={t}
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 12,
+                color: palette.text,
+                background: palette.cardAlt,
+                border: `1px solid ${palette.border}`,
+                padding: '5px 12px',
+                borderRadius: 999,
+                letterSpacing: '0.02em',
+              }}
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+        {/* Emotional state spectrum */}
+        <EmotionSpectrum />
+      </div>
+    </div>
+  )
+}
+
+function EmotionSpectrum() {
+  const { palette } = useTheme()
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: FONT.body, fontSize: 11, color: palette.textDim, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>
+        <span>Hostile</span>
+        <span style={{ color: palette.rust, fontWeight: 600 }}>Locked neutral</span>
+        <span>Enthusiastic</span>
+      </div>
+      <div style={{ position: 'relative', height: 6, background: `linear-gradient(90deg, ${palette.red}, ${palette.amber}, ${palette.green})`, borderRadius: 3, opacity: 0.4 }}>
+        <div
+          style={{
+            position: 'absolute',
+            left: '46%',
+            top: -6,
+            width: 18,
+            height: 18,
+            background: palette.rust,
+            border: `3px solid ${palette.bg}`,
+            borderRadius: '50%',
+            boxShadow: `0 2px 8px ${palette.rust}44`,
+          }}
+        />
+      </div>
+    </div>
+  )
+}
+
+/* ── Hero metric card ─────────────────────── */
+function HeroMetricCard({ m, index }: { m: { value: string; label: string; sub: string }; index: number }) {
+  const { palette } = useTheme()
+  const accents = [palette.rust, palette.magenta, palette.red, palette.amber, palette.sky, palette.textMuted]
+  const accent = accents[index % accents.length]
+  return (
+    <div
+      style={{
+        background: palette.card,
+        border: `1px solid ${palette.border}`,
+        borderTop: `3px solid ${accent}`,
+        borderRadius: 4,
+        padding: '32px 28px 28px',
+        position: 'relative',
+        minHeight: 200,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <div
+        style={{
+          fontFamily: FONT.mono,
+          fontSize: 'clamp(48px, 5vw, 64px)',
+          color: accent,
+          lineHeight: 0.95,
+          fontWeight: 500,
+          letterSpacing: '-0.02em',
+        }}
+      >
+        {m.value}
+      </div>
+      <div
+        style={{
+          fontFamily: FONT.body,
+          fontSize: 14,
+          color: palette.text,
+          marginTop: 14,
+          lineHeight: 1.35,
+          fontWeight: 600,
+        }}
+      >
+        {m.label}
+      </div>
+      <div
+        style={{
+          fontFamily: FONT.body,
+          fontSize: 12,
+          color: palette.textMuted,
+          marginTop: 8,
+          lineHeight: 1.5,
+          fontStyle: 'italic',
+        }}
+      >
+        {m.sub}
+      </div>
+    </div>
+  )
+}
+
+/* ── Tug-of-war tension card ──────────────── */
+function TugOfWarCard({ title, body }: { title: string; body: string }) {
+  const { palette } = useTheme()
+  // Title format: "X" vs. "Y"
+  const match = title.match(/"([^"]+)"\s*vs\.?\s*"([^"]+)"/)
+  const left = match?.[1] ?? title
+  const right = match?.[2] ?? ''
+  return (
+    <div
+      style={{
+        background: palette.card,
+        border: `1px solid ${palette.border}`,
+        borderRadius: 6,
+        padding: '24px 28px',
+      }}
+    >
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: 20, alignItems: 'center', marginBottom: 16 }}>
+        <div style={{ textAlign: 'right', fontFamily: FONT.display, fontSize: 17, color: palette.text, lineHeight: 1.3 }}>
+          “{left}”
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            fontFamily: FONT.mono,
+            fontSize: 11,
+            color: palette.rust,
+            letterSpacing: '0.12em',
+          }}
+        >
+          <span style={{ fontSize: 18 }}>⇄</span>
+          <span>VS</span>
+        </div>
+        <div style={{ fontFamily: FONT.display, fontSize: 17, color: palette.text, lineHeight: 1.3 }}>
+          “{right}”
+        </div>
+      </div>
+      {/* Spectrum bar with marker */}
+      <div style={{ position: 'relative', height: 4, background: palette.border, borderRadius: 2, marginBottom: 16 }}>
+        <div
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: -5,
+            transform: 'translateX(-50%)',
+            width: 14,
+            height: 14,
+            background: palette.rust,
+            border: `2px solid ${palette.bg}`,
+            borderRadius: '50%',
+          }}
+        />
+      </div>
+      <div style={{ fontFamily: FONT.body, fontSize: 13, lineHeight: 1.6, color: palette.textMuted, margin: 0 }}>
+        {body}
+      </div>
+    </div>
+  )
+}
+
+/* ── Behavior pull quote ──────────────────── */
+function BehaviorPullQuote({
+  kicker,
+  quote,
+  caption,
+  tone,
+}: {
+  kicker: string
+  quote: string
+  caption: string
+  tone: 'sky' | 'red'
+}) {
+  const { palette } = useTheme()
+  const accent = tone === 'sky' ? palette.sky : palette.red
+  return (
+    <div>
+      <div style={smallLabel(accent)}>{kicker}</div>
+      <blockquote
+        style={{
+          margin: '20px 0 16px',
+          padding: '0 0 0 28px',
+          borderLeft: `4px solid ${accent}`,
+          fontFamily: FONT.display,
+          fontStyle: 'italic',
+          fontSize: 'clamp(26px, 3.2vw, 38px)',
+          lineHeight: 1.25,
+          color: palette.text,
+          fontWeight: 400,
+          maxWidth: 880,
+        }}
+      >
+        {quote}
+      </blockquote>
+      <p style={{ fontFamily: FONT.body, fontSize: 14, lineHeight: 1.6, color: palette.textMuted, margin: '0 0 0 32px', maxWidth: 760 }}>
+        {caption}
+      </p>
+    </div>
   )
 }
 
@@ -1634,7 +1884,6 @@ import {
   CURRENT_INVESTMENTS,
   CURRENT_RETURNS,
   INVESTMENT_HEADLINE,
-  PIPELINE_PROJECTION,
   PROJECTED_IMPACT,
   PROJECTION_CAVEAT,
 } from './data/investment'
@@ -1645,13 +1894,63 @@ export function InvestmentSection() {
     <Section id="investment">
       <SectionHeader kicker="Investment vs. Return" headline={INVESTMENT_HEADLINE} />
 
+      {/* PROJECTED IMPACT — the centerpiece, moved to the top */}
+      <Reveal>
+        <div style={smallLabel(palette.rust)}>If the signals connect</div>
+        <div
+          style={{
+            marginTop: 20,
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: 16,
+            marginBottom: 28,
+          }}
+        >
+          {PROJECTED_IMPACT.map((p) => <ProjectedCard key={p.label} p={p} />)}
+        </div>
+        <div
+          style={{
+            background: palette.text,
+            color: palette.bg,
+            borderRadius: 8,
+            padding: '24px 32px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 20,
+            flexWrap: 'wrap',
+            marginBottom: 80,
+          }}
+        >
+          <div
+            style={{
+              fontFamily: FONT.mono,
+              fontSize: 36,
+              color: '#D86A48',
+              lineHeight: 1,
+              fontWeight: 500,
+            }}
+          >
+            +15-25%
+          </div>
+          <div style={{ flex: 1, minWidth: 240 }}>
+            <div style={{ fontFamily: FONT.body, fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#D86A48', marginBottom: 6 }}>
+              Estimated pipeline impact
+            </div>
+            <div style={{ fontFamily: FONT.body, fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
+              Improvement in qualified opportunity conversion at the due diligence stage.
+            </div>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* Current vs Connected */}
       <Reveal>
         <div
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
             gap: 24,
-            marginBottom: 64,
+            marginBottom: 32,
           }}
         >
           {/* Current state */}
@@ -1661,33 +1960,24 @@ export function InvestmentSection() {
               border: `1px solid ${palette.border}`,
               borderRadius: 6,
               padding: '28px 32px',
-              opacity: 0.8,
+              opacity: 0.92,
             }}
           >
-            <div style={smallLabel(palette.textDim)}>Current state · what BetterUp invests in</div>
-            <ul style={{ listStyle: 'none', margin: '14px 0 24px', padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {CURRENT_INVESTMENTS.map((i) => (
-                <li key={i} style={{ fontFamily: FONT.body, fontSize: 14, color: palette.textMuted, display: 'flex', gap: 10 }}>
-                  <span style={{ color: palette.textDim }}>›</span>
-                  <span>{i}</span>
+            <div style={smallLabel(palette.textDim)}>Where the money is going today</div>
+            <ul style={{ listStyle: 'none', margin: '16px 0 28px', padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {CURRENT_INVESTMENTS.map((i, idx) => (
+                <li key={i} style={{ fontFamily: FONT.body, fontSize: 13.5, color: palette.textMuted, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                  <InvestmentIcon index={idx} color={palette.textDim} />
+                  <span style={{ marginTop: 2 }}>{i}</span>
                 </li>
               ))}
             </ul>
             <div style={smallLabel(palette.textDim)}>What the return looks like</div>
-            <div style={{ marginTop: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
               {CURRENT_RETURNS.map((r) => (
-                <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
+                <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
                   <span style={{ fontFamily: FONT.body, fontSize: 13, color: palette.textMuted }}>{r.label}</span>
-                  <span
-                    style={{
-                      fontFamily: FONT.mono,
-                      fontSize: 12,
-                      color: r.tone === 'positive' ? palette.green : palette.red,
-                      textAlign: 'right',
-                    }}
-                  >
-                    {r.state}
-                  </span>
+                  <StatusPill state={r.state} tone={r.tone} />
                 </div>
               ))}
             </div>
@@ -1704,10 +1994,10 @@ export function InvestmentSection() {
             }}
           >
             <div style={smallLabel(palette.rust)}>What connected signals would change</div>
-            <ul style={{ listStyle: 'none', margin: '14px 0 0', padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <ul style={{ listStyle: 'none', margin: '16px 0 0', padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
               {CONNECTED_CHANGES.map((c) => (
                 <li key={c} style={{ fontFamily: FONT.body, fontSize: 14, lineHeight: 1.5, color: palette.text, display: 'flex', gap: 10 }}>
-                  <span style={{ color: palette.rust, flex: '0 0 auto' }}>→</span>
+                  <span style={{ color: palette.rust, flex: '0 0 auto', fontWeight: 700 }}>→</span>
                   <span>{c}</span>
                 </li>
               ))}
@@ -1716,82 +2006,104 @@ export function InvestmentSection() {
         </div>
       </Reveal>
 
-      {/* Projected impact */}
       <Reveal>
-        <div style={smallLabel(palette.rust)}>Projected impact</div>
-        <div
-          style={{
-            marginTop: 16,
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 16,
-            marginBottom: 32,
-          }}
-        >
-          {PROJECTED_IMPACT.map((p) => {
-            const delta = Math.round(((p.projected - p.current) / p.current) * 100)
-            return (
-              <div
-                key={p.label}
-                style={{
-                  background: palette.card,
-                  border: `1px solid ${palette.border}`,
-                  borderRadius: 6,
-                  padding: '24px 24px',
-                }}
-              >
-                <div style={{ fontFamily: FONT.body, fontSize: 12, color: palette.textMuted, marginBottom: 12 }}>
-                  {p.label}
-                </div>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-                  <span style={{ fontFamily: FONT.mono, fontSize: 22, color: palette.textDim, textDecoration: 'line-through' }}>
-                    {p.current}
-                  </span>
-                  <span style={{ fontFamily: FONT.mono, color: palette.rust, fontSize: 14 }}>→</span>
-                  <span style={{ fontFamily: FONT.mono, fontSize: 32, color: palette.rust, fontWeight: 500 }}>
-                    {p.projected}
-                  </span>
-                </div>
-                <div
-                  style={{
-                    fontFamily: FONT.mono,
-                    fontSize: 12,
-                    color: palette.green,
-                    marginTop: 8,
-                    letterSpacing: '0.04em',
-                  }}
-                >
-                  +{delta}%
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </Reveal>
-
-      <Reveal>
-        <Callout tone="rust">
-          <div style={smallLabel(palette.rust)}>Estimated pipeline impact</div>
-          {PIPELINE_PROJECTION}
-        </Callout>
-      </Reveal>
-
-      <Reveal>
-        <p
-          style={{
-            marginTop: 24,
-            fontFamily: FONT.body,
-            fontSize: 12,
-            color: palette.textDim,
-            lineHeight: 1.5,
-            fontStyle: 'italic',
-          }}
-        >
+        <p style={{ marginTop: 24, fontFamily: FONT.body, fontSize: 12, color: palette.textDim, lineHeight: 1.5, fontStyle: 'italic' }}>
           {PROJECTION_CAVEAT}
         </p>
       </Reveal>
     </Section>
   )
+}
+
+function ProjectedCard({ p }: { p: { label: string; current: number; projected: number } }) {
+  const { palette } = useTheme()
+  const delta = Math.round(((p.projected - p.current) / p.current) * 100)
+  return (
+    <div
+      style={{
+        background: palette.card,
+        border: `1px solid ${palette.border}`,
+        borderTop: `3px solid ${palette.rust}`,
+        borderRadius: 4,
+        padding: '28px 28px 24px',
+      }}
+    >
+      <div style={{ fontFamily: FONT.body, fontSize: 12, color: palette.textMuted, marginBottom: 18, letterSpacing: '0.04em' }}>
+        {p.label}
+      </div>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, flexWrap: 'wrap' }}>
+        <span style={{ fontFamily: FONT.mono, fontSize: 22, color: palette.textDim, textDecoration: 'line-through' }}>
+          {p.current}
+        </span>
+        <svg width="20" height="14" viewBox="0 0 24 14" fill="none" stroke={palette.rust} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="3" y1="7" x2="20" y2="7" />
+          <polyline points="14 1 20 7 14 13" />
+        </svg>
+        <span style={{ fontFamily: FONT.mono, fontSize: 'clamp(48px, 5vw, 64px)', color: palette.rust, fontWeight: 500, lineHeight: 0.95 }}>
+          {p.projected}
+        </span>
+      </div>
+      <div
+        style={{
+          marginTop: 16,
+          display: 'inline-block',
+          background: 'rgba(58, 155, 110, 0.12)',
+          color: palette.green,
+          fontFamily: FONT.mono,
+          fontSize: 13,
+          padding: '4px 10px',
+          borderRadius: 999,
+          fontWeight: 600,
+        }}
+      >
+        +{delta}%
+      </div>
+    </div>
+  )
+}
+
+function StatusPill({ state, tone }: { state: string; tone: 'positive' | 'negative' }) {
+  const { palette } = useTheme()
+  const color = tone === 'positive' ? palette.green : palette.red
+  const bg = tone === 'positive' ? 'rgba(58, 155, 110, 0.12)' : 'rgba(200, 68, 56, 0.12)'
+  return (
+    <span
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 6,
+        background: bg,
+        color: color,
+        fontFamily: FONT.mono,
+        fontSize: 11,
+        padding: '4px 10px',
+        borderRadius: 999,
+        letterSpacing: '0.04em',
+        fontWeight: 600,
+      }}
+    >
+      <span style={{ width: 6, height: 6, borderRadius: '50%', background: color }} />
+      {state}
+    </span>
+  )
+}
+
+function InvestmentIcon({ index, color }: { index: number; color: string }) {
+  const props = {
+    width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: color,
+    strokeWidth: 1.6, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const,
+    style: { flex: '0 0 auto' as const, marginTop: 2 },
+  }
+  // 0 conf, 1 racing, 2 person, 3 article, 4 team, 5 chip
+  switch (index) {
+    case 0: return <svg {...props}><rect x="3" y="4" width="18" height="14" rx="2" /><path d="M8 22h8M12 18v4" /></svg>
+    case 1: return <svg {...props}><circle cx="6" cy="17" r="3" /><circle cx="18" cy="17" r="3" /><path d="M9 17h6M6 14V8h12v6" /></svg>
+    case 2: return <svg {...props}><circle cx="12" cy="8" r="4" /><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2" /></svg>
+    case 3: return <svg {...props}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></svg>
+    case 4: return <svg {...props}><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+    case 5: return <svg {...props}><rect x="4" y="4" width="16" height="16" rx="2" /><rect x="9" y="9" width="6" height="6" /><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3" /></svg>
+    default: return <svg {...props}><circle cx="12" cy="12" r="8" /></svg>
+  }
 }
 
 /* ──────────────────────────────────────────────
@@ -1805,7 +2117,7 @@ export function BuildSection() {
     <Section id="build">
       <SectionHeader kicker="What We'd Build Together" headline={BUILD_HEADLINE} />
 
-      {/* Phases */}
+      {/* Phases — with connector arrows */}
       <Reveal>
         <div
           style={{
@@ -1813,11 +2125,38 @@ export function BuildSection() {
             gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
             gap: 16,
             marginBottom: 56,
+            position: 'relative',
           }}
         >
-          {PHASES.map((phase) => (
+          {PHASES.map((phase, i) => (
+            <div key={phase.number} style={{ position: 'relative', display: 'flex' }}>
+              {i < PHASES.length - 1 && (
+                <div
+                  aria-hidden
+                  style={{
+                    position: 'absolute',
+                    right: -22,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    color: palette.rust,
+                    zIndex: 2,
+                    background: palette.bg,
+                    width: 28,
+                    height: 28,
+                    borderRadius: '50%',
+                    border: `1px solid ${palette.rust}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </div>
+              )}
             <div
-              key={phase.number}
               style={{
                 background: palette.card,
                 border: `1px solid ${palette.border}`,
@@ -1826,6 +2165,7 @@ export function BuildSection() {
                 padding: '28px 28px',
                 display: 'flex',
                 flexDirection: 'column',
+                width: '100%',
               }}
             >
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 4 }}>
@@ -1871,6 +2211,7 @@ export function BuildSection() {
                 </div>
               )}
             </div>
+            </div>
           ))}
         </div>
       </Reveal>
@@ -1885,22 +2226,52 @@ export function BuildSection() {
             marginBottom: 56,
           }}
         >
-          {TEAM.map((t) => (
-            <div
-              key={t.org}
-              style={{
-                background: palette.cardAlt,
-                border: `1px solid ${palette.border}`,
-                borderRadius: 6,
-                padding: '24px 28px',
-              }}
-            >
-              <div style={{ fontFamily: FONT.display, fontSize: 22, color: palette.text, marginBottom: 8 }}>{t.org}</div>
-              <div style={{ fontFamily: FONT.body, fontSize: 14, lineHeight: 1.55, color: palette.textMuted }}>
-                {t.scope}
+          {TEAM.map((t, i) => {
+            const accent = i === 0 ? palette.rust : palette.magenta
+            return (
+              <div
+                key={t.org}
+                style={{
+                  background: palette.cardAlt,
+                  border: `1px solid ${palette.border}`,
+                  borderRadius: 6,
+                  padding: '28px 32px',
+                  display: 'flex',
+                  gap: 20,
+                  alignItems: 'flex-start',
+                }}
+              >
+                <div
+                  style={{
+                    width: 56,
+                    height: 56,
+                    borderRadius: '50%',
+                    background: accent,
+                    color: '#FFFFFF',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontFamily: FONT.display,
+                    fontStyle: 'italic',
+                    fontSize: 24,
+                    fontWeight: 400,
+                    flex: '0 0 auto',
+                  }}
+                >
+                  {t.org === 'ERA' ? 'E' : 'P'}
+                </div>
+                <div>
+                  <div style={{ fontFamily: FONT.display, fontSize: 22, color: palette.text, marginBottom: 4 }}>{t.org}</div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: accent, marginBottom: 12, fontWeight: 600 }}>
+                    {i === 0 ? 'Signal & strategy' : 'Brand & creative'}
+                  </div>
+                  <div style={{ fontFamily: FONT.body, fontSize: 14, lineHeight: 1.55, color: palette.textMuted }}>
+                    {t.scope}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </Reveal>
 

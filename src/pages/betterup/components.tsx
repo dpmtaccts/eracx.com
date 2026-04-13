@@ -614,7 +614,7 @@ export function Section({
       id={id}
       style={{
         background: background ?? palette.bg,
-        padding: '120px 0',
+        padding: '160px 0',
         scrollMarginTop: 80,
       }}
     >
@@ -671,10 +671,12 @@ export function StepperNav({
   items,
   onToggleTheme,
   themeMode,
+  layerToggle,
 }: {
   items: StepperItem[]
   onToggleTheme: () => void
   themeMode: 'light' | 'dark'
+  layerToggle?: { layer: 'era' | 'era-plus-bh'; onSet: (l: 'era' | 'era-plus-bh') => void }
 }) {
   const { palette } = useTheme()
   const [active, setActive] = useState(0)
@@ -796,6 +798,7 @@ export function StepperNav({
             )
           })}
         </div>
+        {layerToggle && <LayerTogglePill layer={layerToggle.layer} onSet={layerToggle.onSet} />}
         <button
           onClick={onToggleTheme}
           aria-label={themeMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
@@ -829,6 +832,57 @@ export function StepperNav({
         </button>
       </div>
     </nav>
+  )
+}
+
+function LayerTogglePill({
+  layer,
+  onSet,
+}: {
+  layer: 'era' | 'era-plus-bh'
+  onSet: (l: 'era' | 'era-plus-bh') => void
+}) {
+  const { palette } = useTheme()
+  const opt = (key: 'era' | 'era-plus-bh', label: string) => {
+    const active = layer === key
+    return (
+      <button
+        key={key}
+        onClick={() => onSet(key)}
+        style={{
+          background: active ? palette.text : 'transparent',
+          color: active ? palette.bg : palette.textMuted,
+          border: 'none',
+          padding: '6px 12px',
+          borderRadius: 999,
+          cursor: 'pointer',
+          fontFamily: FONT.body,
+          fontSize: 11,
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          fontWeight: active ? 600 : 500,
+          transition: 'all 0.2s',
+        }}
+      >
+        {label}
+      </button>
+    )
+  }
+  return (
+    <div
+      style={{
+        display: 'inline-flex',
+        background: palette.cardAlt,
+        border: `1px solid ${palette.border}`,
+        borderRadius: 999,
+        padding: 3,
+        gap: 2,
+        flex: '0 0 auto',
+      }}
+    >
+      {opt('era', 'ERA')}
+      {opt('era-plus-bh', '+ Brand Health')}
+    </div>
   )
 }
 

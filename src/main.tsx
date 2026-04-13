@@ -11,7 +11,7 @@ import Benchmark from './pages/Benchmark.tsx'
 import GtmPlanner from './pages/GtmPlanner.tsx'
 import GrowthSimulator from './pages/GrowthSimulator.tsx'
 import NavalentAudit from './pages/NavalentAudit.tsx'
-import BetterUpAudit from './pages/BetterUpAudit.tsx'
+import BetterUpAudit, { BetterUpAuditEra } from './pages/BetterUpAudit.tsx'
 import BetterUpSummary from './pages/BetterUpSummary.tsx'
 import SampleAssessment from './pages/SampleAssessment.tsx'
 import BGLinkedInAudit from './pages/bg-audit/BGLinkedInAudit.tsx'
@@ -46,6 +46,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/growth-simulator" element={<GrowthSimulator />} />
         <Route path="/audit/navalent" element={<NavalentAudit />} />
         <Route path="/audit/betterup" element={<BetterUpAudit />} />
+        <Route path="/audit/betterup/era" element={<BetterUpAuditEra />} />
         <Route path="/audit/betterup/summary" element={<BetterUpSummary />} />
         <Route path="/audit/tidera" element={<SampleAssessment />} />
         <Route path="/audit/brian-gonsalves" element={<BGLinkedInAuditV2 />} />

@@ -34,6 +34,7 @@ import {
 } from './betterup/data/aiMirror'
 import { SECTIONS } from './betterup/data/sections'
 import { AudienceSection, BuildSection, CascadeSection, GTMSection, InvestmentSection, SignalsSection } from './betterup/sections'
+import { DataLayerProvider, useDataLayer, type DataLayer } from './betterup/dataLayer'
 
 const PASSWORD = 'transformation'
 const SESSION_KEY = 'betterup-audit-auth'
@@ -362,10 +363,11 @@ function PullQuote({ text }: { text: string }) {
 }
 
 function CompanyProfile() {
-  const fields = [
+  const { showBH } = useDataLayer()
+  const fields: Array<[string, string]> = [
     ['Founded', COMPANY.founded],
     ['Category', COMPANY.category],
-    ['Revenue', COMPANY.revenue],
+    ...((showBH ? [['Revenue', COMPANY.revenue]] : []) as Array<[string, string]>),
     ['Valuation', COMPANY.valuation],
     ['Funding', COMPANY.funding],
     ['Employees', COMPANY.employees],
@@ -578,75 +580,98 @@ function ChatColumn({
   items: { tone: string; text: string }[]
 }) {
   const isAspirational = tone === 'aspirational'
+
+  // For real column, separate the summary line out
+  const summaryItem = items.find((i) => i.tone === 'summary')
+  const bodyItems = items.filter((i) => i.tone !== 'summary')
+
   return (
     <div
       style={{
         background: isAspirational ? '#FBF9F6' : '#FFFFFF',
-        border: `1px solid ${isAspirational ? '#E8E4DE' : '#E8E4DE'}`,
-        borderRadius: 6,
-        padding: '28px 28px 32px',
+        border: `1px solid #E8E4DE`,
+        borderRadius: 12,
+        padding: '24px 26px 28px',
         display: 'flex',
         flexDirection: 'column',
+        boxShadow: isAspirational ? 'none' : '0 8px 32px rgba(0,0,0,0.06)',
+        position: 'relative',
       }}
     >
-      <div
-        style={{
-          fontFamily: FONT.body,
-          fontSize: 11,
-          letterSpacing: '0.14em',
-          textTransform: 'uppercase',
-          color: isAspirational ? '#9A958C' : '#C85A3A',
-          marginBottom: 6,
-        }}
-      >
-        {isAspirational ? 'Marketing copy' : 'Composite AI answer'}
+      {/* Header — chat avatar for the AI side */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
+        {isAspirational ? (
+          <div
+            style={{
+              width: 32, height: 32, borderRadius: '50%',
+              background: '#E8E4DE',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontFamily: FONT.body, fontSize: 11, color: '#6B6760', fontWeight: 600, letterSpacing: '0.04em',
+            }}
+          >
+            BU
+          </div>
+        ) : (
+          <div
+            style={{
+              width: 32, height: 32, borderRadius: '50%',
+              background: '#1A1A1A', color: '#FFFFFF',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+            </svg>
+          </div>
+        )}
+        <div>
+          <div
+            style={{
+              fontFamily: FONT.body, fontSize: 11, letterSpacing: '0.14em',
+              textTransform: 'uppercase', color: isAspirational ? '#9A958C' : '#C85A3A',
+              fontWeight: 600,
+            }}
+          >
+            {isAspirational ? 'Marketing copy' : 'Composite AI answer'}
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 11, color: '#9A958C', marginTop: 2 }}>
+            {isAspirational ? 'What BetterUp tells the world' : 'ChatGPT · Claude · Perplexity · Google AI'}
+          </div>
+        </div>
       </div>
-      <div
-        style={{
-          fontFamily: FONT.display,
-          fontSize: 22,
-          color: '#1A1A1A',
-          marginBottom: 24,
-          lineHeight: 1.25,
-        }}
-      >
+
+      <div style={{ fontFamily: FONT.display, fontSize: 20, color: '#1A1A1A', marginBottom: 20, lineHeight: 1.25 }}>
         {title}
       </div>
-      <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {items.map((item, i) => {
-          const dotColor =
-            item.tone === 'positive'
-              ? '#3A9B6E'
-              : item.tone === 'negative'
-                ? '#C84438'
-                : item.tone === 'summary'
-                  ? '#1A1A1A'
-                  : '#9A958C'
-          const isSummary = item.tone === 'summary'
+
+      <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {bodyItems.map((item, i) => {
+          const isPositive = item.tone === 'positive'
+          const isNegative = item.tone === 'negative'
+          const dotColor = isPositive ? '#3A9B6E' : isNegative ? '#C84438' : '#9A958C'
           return (
             <li
               key={i}
               style={{
                 fontFamily: FONT.body,
-                fontSize: 14.5,
-                lineHeight: 1.55,
+                fontSize: isNegative ? 15 : 14,
+                lineHeight: 1.5,
                 color: '#1A1A1A',
                 display: 'flex',
                 gap: 12,
-                paddingTop: isSummary ? 14 : 0,
-                marginTop: isSummary ? 8 : 0,
-                borderTop: isSummary ? '1px solid #E8E4DE' : 'none',
-                fontStyle: isSummary ? 'italic' : 'normal',
+                alignItems: 'flex-start',
+                padding: isNegative ? '6px 12px 6px 14px' : '4px 0',
+                background: isNegative ? 'rgba(200,68,56,0.04)' : 'transparent',
+                borderLeft: isNegative ? '2px solid #C84438' : 'none',
+                borderRadius: isNegative ? 2 : 0,
+                fontWeight: isNegative ? 500 : 400,
               }}
             >
               <span
                 style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: '50%',
+                  width: 8, height: 8, borderRadius: '50%',
                   background: dotColor,
-                  flex: '0 0 auto',
-                  marginTop: 8,
+                  flex: '0 0 auto', marginTop: 8,
                 }}
               />
               <span>{item.text}</span>
@@ -654,6 +679,36 @@ function ChatColumn({
           )
         })}
       </ul>
+
+      {/* Summary callout */}
+      {summaryItem && (
+        <div
+          style={{
+            marginTop: 22,
+            padding: '16px 18px',
+            background: '#1A1A1A',
+            color: '#FFFFFF',
+            borderRadius: 8,
+            fontFamily: FONT.body,
+            fontSize: 14,
+            lineHeight: 1.5,
+            display: 'flex',
+            gap: 12,
+            alignItems: 'flex-start',
+          }}
+        >
+          <div
+            style={{
+              fontFamily: FONT.body, fontSize: 9, letterSpacing: '0.16em',
+              textTransform: 'uppercase', color: '#D86A48',
+              fontWeight: 600, flex: '0 0 auto', marginTop: 3, whiteSpace: 'nowrap',
+            }}
+          >
+            Net read
+          </div>
+          <span style={{ fontStyle: 'italic' }}>{summaryItem.text}</span>
+        </div>
+      )}
     </div>
   )
 }
@@ -710,8 +765,9 @@ function TestYourself() {
 /* ──────────────────────────────────────────────
    Page shell
    ────────────────────────────────────────────── */
-function AuditShell() {
+function AuditShell({ eraMode }: { eraMode: boolean }) {
   const theme = useThemeState()
+  const [layer, setLayer] = useState<DataLayer>(eraMode ? 'era' : 'era-plus-bh')
 
   useEffect(() => {
     document.documentElement.style.background = theme.palette.bg
@@ -721,24 +777,47 @@ function AuditShell() {
 
   return (
     <ThemeContext.Provider value={theme}>
-      <div style={{ background: theme.palette.bg, minHeight: '100vh', color: theme.palette.text, fontFamily: FONT.body }}>
-        <StepperNav items={SECTIONS} onToggleTheme={theme.toggle} themeMode={theme.mode} />
-        <div style={{ paddingTop: 60 }}>
-          <ExecutiveSummary />
-          <CascadeSection />
-          <GTMSection />
-          <SignalsSection />
-          <AudienceSection />
-          <AIMirror />
-          <InvestmentSection />
-          <BuildSection />
+      <DataLayerProvider defaultLayer={eraMode ? 'era' : 'era-plus-bh'} showLayerToggle={eraMode}>
+        <DataLayerSync layer={layer} setLayer={setLayer} />
+        <div style={{ background: theme.palette.bg, minHeight: '100vh', color: theme.palette.text, fontFamily: FONT.body }}>
+          <StepperNav
+            items={SECTIONS}
+            onToggleTheme={theme.toggle}
+            themeMode={theme.mode}
+            layerToggle={eraMode ? { layer, onSet: setLayer } : undefined}
+          />
+          <div style={{ paddingTop: 60 }}>
+            <ExecutiveSummary />
+            <CascadeSection />
+            <GTMSection />
+            <SignalsSection />
+            <AudienceSection />
+            <AIMirror />
+            <InvestmentSection />
+            <BuildSection />
+          </div>
         </div>
-      </div>
+      </DataLayerProvider>
     </ThemeContext.Provider>
   )
 }
 
-export default function BetterUpAudit() {
+/** Bridges the local toggle state in AuditShell into the DataLayerProvider context. */
+function DataLayerSync({ layer, setLayer }: { layer: DataLayer; setLayer: (l: DataLayer) => void }) {
+  const ctx = useDataLayer()
+  useEffect(() => {
+    if (ctx.layer !== layer) ctx.setLayer(layer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layer])
+  // Also: if the context changes (e.g. via the pill), pull it back into local state
+  useEffect(() => {
+    if (ctx.layer !== layer) setLayer(ctx.layer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ctx.layer])
+  return null
+}
+
+function BetterUpAuditPage({ eraMode }: { eraMode: boolean }) {
   const [authed, setAuthed] = useState(false)
 
   useEffect(() => {
@@ -747,7 +826,15 @@ export default function BetterUpAudit() {
   }, [])
 
   if (!authed) return <PasswordGate onAuth={() => setAuthed(true)} />
-  return <AuditShell />
+  return <AuditShell eraMode={eraMode} />
+}
+
+export default function BetterUpAudit() {
+  return <BetterUpAuditPage eraMode={false} />
+}
+
+export function BetterUpAuditEra() {
+  return <BetterUpAuditPage eraMode />
 }
 
 // MetricCard re-export to satisfy data-driven future sections
