@@ -7,6 +7,7 @@ import {
   useTheme,
   type ThemePalette,
 } from './theme'
+import { track } from './analytics'
 
 /* ──────────────────────────────────────────────
    Scroll reveal
@@ -87,11 +88,13 @@ export function Gauge({
   score,
   size = 140,
   label,
+  description,
   thickness = 8,
 }: {
   score: number
   size?: number
   label?: string
+  description?: string
   thickness?: number
 }) {
   const { palette } = useTheme()
@@ -169,10 +172,26 @@ export function Gauge({
             textTransform: 'uppercase',
             color: palette.textMuted,
             textAlign: 'center',
-            maxWidth: size + 40,
+            maxWidth: size + 80,
           }}
         >
           {label}
+        </div>
+      )}
+      {description && (
+        <div
+          style={{
+            fontFamily: FONT.display,
+            fontStyle: 'italic',
+            fontSize: 13,
+            color: palette.textDim,
+            textAlign: 'center',
+            maxWidth: size + 80,
+            lineHeight: 1.4,
+            marginTop: -4,
+          }}
+        >
+          {description}
         </div>
       )}
     </div>
@@ -401,11 +420,13 @@ export function ExpandableCard({
   meta,
   children,
   defaultOpen = false,
+  trackId,
 }: {
   title: ReactNode
   meta?: ReactNode
   children: ReactNode
   defaultOpen?: boolean
+  trackId?: string
 }) {
   const { palette } = useTheme()
   const [open, setOpen] = useState(defaultOpen)
@@ -419,7 +440,13 @@ export function ExpandableCard({
       }}
     >
       <button
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => {
+          setOpen((o) => {
+            const next = !o
+            if (next && trackId) void track('card_expand', trackId, 'full')
+            return next
+          })
+        }}
         style={{
           width: '100%',
           background: 'transparent',

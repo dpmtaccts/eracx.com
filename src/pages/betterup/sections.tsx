@@ -31,6 +31,7 @@ import { ALEXI_COMMENTER_MIX, NETWORK_REACH, PROFILE_VISUALS } from './data/prof
 import { BRAND_HEALTH, BRAND_HEALTH_NOTE } from './data/brandHealth'
 import type { ThemePalette } from './theme'
 import { BrandHealthOnly } from './dataLayer'
+import { track } from './analytics'
 import { SIGNALS, SIGNALS_AVG_ALIGNMENT, SIGNALS_CRITICAL_GAPS, SIGNALS_FINDING, SIGNALS_HEADLINE, SIGNALS_STRONG, type Signal } from './data/signals'
 
 /* ──────────────────────────────────────────────
@@ -78,6 +79,7 @@ export function CascadeSection() {
         {CASCADE_LAYERS.map((layer) => (
           <ExpandableCard
             key={layer.number}
+            trackId={`cascade-${layer.number}-${layer.name}`}
             title={
               <span>
                 <span style={{ fontFamily: FONT.mono, color: palette.textDim, marginRight: 12, fontSize: 16 }}>
@@ -520,7 +522,7 @@ function AvatarTabs({
         return (
           <button
             key={c.id}
-            onClick={() => setActiveTab(c.id)}
+            onClick={() => { void track('tab_click', c.id, 'full'); setActiveTab(c.id) }}
             style={{
               background: isActive ? palette.card : 'transparent',
               border: `1px solid ${isActive ? accent : palette.border}`,

@@ -13,9 +13,21 @@ export const COMPANY = {
 }
 
 export const HERO_GAUGES = [
-  { label: 'Brand Conviction Cascade', score: 41 },
-  { label: 'GTM Signal Chain', score: 24 },
-  { label: 'Content-to-Pipeline Alignment', score: 29 },
+  {
+    label: 'Brand Conviction Cascade',
+    score: 41,
+    description: 'Does what you believe flow through everything you do?',
+  },
+  {
+    label: 'GTM Signal Chain',
+    score: 24,
+    description: 'Are the right people showing up where your buyer looks?',
+  },
+  {
+    label: 'Content-to-Pipeline',
+    score: 29,
+    description: 'Is your content moving buyers or just filling feeds?',
+  },
 ] as const
 
 export const CORE_FINDING_PARAGRAPHS: string[] = [

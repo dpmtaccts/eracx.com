@@ -6,73 +6,8 @@ import { CASCADE_LAYERS } from './betterup/data/cascade'
 import { SIGNALS } from './betterup/data/signals'
 import { AI_MIRROR_SCORE } from './betterup/data/aiMirror'
 import { CONTACTS, CTA_BODY } from './betterup/data/build'
-
-const SESSION_KEY = 'betterup-audit-auth'
-const PASSWORD = 'transformation'
-
-function PasswordGate({ onAuth }: { onAuth: () => void }) {
-  const [value, setValue] = useState('')
-  const [error, setError] = useState(false)
-  const submit = () => {
-    if (value === PASSWORD) {
-      sessionStorage.setItem(SESSION_KEY, '1')
-      onAuth()
-    } else {
-      setError(true)
-      setTimeout(() => setError(false), 1500)
-    }
-  }
-  return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: '#F7F5F2',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 24,
-      }}
-    >
-      <div style={{ maxWidth: 360, width: '100%', textAlign: 'center', fontFamily: FONT.body }}>
-        <img src="/images/betterup/bu_logo_black.svg" alt="BetterUp" style={{ height: 36, marginBottom: 32 }} />
-        <input
-          type="password"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && submit()}
-          placeholder="Password"
-          style={{
-            width: '100%',
-            padding: '14px 18px',
-            background: '#FFFFFF',
-            border: `1px solid ${error ? '#C84438' : '#E8E4DE'}`,
-            borderRadius: 4,
-            fontSize: 15,
-            outline: 'none',
-            marginBottom: 12,
-          }}
-        />
-        <button
-          onClick={submit}
-          style={{
-            width: '100%',
-            padding: 14,
-            background: '#C85A3A',
-            color: '#FFFFFF',
-            border: 'none',
-            borderRadius: 4,
-            fontSize: 13,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            cursor: 'pointer',
-          }}
-        >
-          Enter
-        </button>
-      </div>
-    </div>
-  )
-}
+import { PasswordGate, isAuthed } from './betterup/PasswordGate'
+import { startSectionTimeTracker } from './betterup/analytics'
 
 function SummaryShell() {
   const theme = useThemeState()
@@ -168,7 +103,7 @@ function SummaryShell() {
               }}
             >
               {HERO_GAUGES.map((g) => (
-                <Gauge key={g.label} score={g.score} label={g.label} size={140} />
+                <Gauge key={g.label} score={g.score} label={g.label} description={g.description} size={140} />
               ))}
             </div>
           </Reveal>
@@ -381,8 +316,12 @@ export default function BetterUpSummary() {
   const [authed, setAuthed] = useState(false)
   useEffect(() => {
     loadBetterUpFonts()
-    if (sessionStorage.getItem(SESSION_KEY) === '1') setAuthed(true)
+    if (isAuthed()) setAuthed(true)
   }, [])
-  if (!authed) return <PasswordGate onAuth={() => setAuthed(true)} />
+  useEffect(() => {
+    if (!authed) return
+    return startSectionTimeTracker(['summary-page'], 'summary')
+  }, [authed])
+  if (!authed) return <PasswordGate page="summary" onAuth={() => setAuthed(true)} />
   return <SummaryShell />
 }

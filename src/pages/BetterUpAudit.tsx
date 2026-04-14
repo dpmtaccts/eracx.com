@@ -35,102 +35,8 @@ import {
 import { SECTIONS } from './betterup/data/sections'
 import { AudienceSection, BuildSection, CascadeSection, GTMSection, InvestmentSection, SignalsSection } from './betterup/sections'
 import { DataLayerProvider, useDataLayer, type DataLayer } from './betterup/dataLayer'
-
-const PASSWORD = 'transformation'
-const SESSION_KEY = 'betterup-audit-auth'
-
-/* ──────────────────────────────────────────────
-   Password gate
-   ────────────────────────────────────────────── */
-function PasswordGate({ onAuth }: { onAuth: () => void }) {
-  const [value, setValue] = useState('')
-  const [error, setError] = useState(false)
-
-  const submit = () => {
-    if (value === PASSWORD) {
-      sessionStorage.setItem(SESSION_KEY, '1')
-      onAuth()
-    } else {
-      setError(true)
-      setTimeout(() => setError(false), 1500)
-    }
-  }
-
-  return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: '#F7F5F2',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontFamily: FONT.body,
-        padding: '0 24px',
-      }}
-    >
-      <div style={{ maxWidth: 360, width: '100%', textAlign: 'center' }}>
-        <div
-          style={{
-            fontFamily: FONT.body,
-            fontSize: 12,
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color: '#6B6760',
-            marginBottom: 18,
-          }}
-        >
-          Revenue Signal Audit built for
-        </div>
-        <div style={{ marginBottom: 40, display: 'flex', justifyContent: 'center' }}>
-          <img
-            src="/images/betterup/bu_logo_black.svg"
-            alt="BetterUp"
-            style={{ height: 36, width: 'auto', display: 'block' }}
-          />
-        </div>
-        <input
-          type="password"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && submit()}
-          placeholder="Password"
-          style={{
-            width: '100%',
-            padding: '14px 18px',
-            background: '#FFFFFF',
-            border: `1px solid ${error ? '#C84438' : '#E8E4DE'}`,
-            borderRadius: 4,
-            fontFamily: FONT.body,
-            fontSize: 15,
-            color: '#1A1A1A',
-            outline: 'none',
-            marginBottom: 12,
-            transition: 'border-color 0.3s',
-          }}
-        />
-        <button
-          onClick={submit}
-          style={{
-            width: '100%',
-            padding: '14px',
-            background: '#C85A3A',
-            color: '#FFFFFF',
-            border: 'none',
-            borderRadius: 4,
-            fontFamily: FONT.body,
-            fontSize: 13,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            cursor: 'pointer',
-          }}
-        >
-          Enter
-        </button>
-      </div>
-    </div>
-  )
-}
+import { PasswordGate, isAuthed } from './betterup/PasswordGate'
+import { startSectionTimeTracker, track } from './betterup/analytics'
 
 /* ──────────────────────────────────────────────
    Section 1: Executive Summary
@@ -184,7 +90,7 @@ function ExecutiveSummary() {
           }}
         >
           {HERO_GAUGES.map((g) => (
-            <Gauge key={g.label} score={g.score} label={g.label} size={170} />
+            <Gauge key={g.label} score={g.score} label={g.label} description={g.description} size={170} />
           ))}
         </div>
       </Reveal>
@@ -768,12 +674,31 @@ function TestYourself() {
 function AuditShell({ eraMode }: { eraMode: boolean }) {
   const theme = useThemeState()
   const [layer, setLayer] = useState<DataLayer>(eraMode ? 'era' : 'era-plus-bh')
+  const page = eraMode ? 'era' : 'full'
 
   useEffect(() => {
     document.documentElement.style.background = theme.palette.bg
     document.body.style.background = theme.palette.bg
     document.body.style.color = theme.palette.text
   }, [theme.palette])
+
+  // Behavioral analytics: section views, time per section, scroll depth, session duration
+  useEffect(() => {
+    const cleanup = startSectionTimeTracker(SECTIONS.map((s) => s.id), page)
+    return cleanup
+  }, [page])
+
+  // Theme toggle tracking
+  const handleThemeToggle = () => {
+    void track('theme_toggle', theme.mode === 'light' ? 'dark' : 'light', page)
+    theme.toggle()
+  }
+
+  // Layer toggle tracking
+  const handleLayerSet = (l: DataLayer) => {
+    void track('layer_toggle', l, page)
+    setLayer(l)
+  }
 
   return (
     <ThemeContext.Provider value={theme}>
@@ -782,9 +707,9 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
         <div style={{ background: theme.palette.bg, minHeight: '100vh', color: theme.palette.text, fontFamily: FONT.body }}>
           <StepperNav
             items={SECTIONS}
-            onToggleTheme={theme.toggle}
+            onToggleTheme={handleThemeToggle}
             themeMode={theme.mode}
-            layerToggle={eraMode ? { layer, onSet: setLayer } : undefined}
+            layerToggle={eraMode ? { layer, onSet: handleLayerSet } : undefined}
           />
           <div style={{ paddingTop: 60 }}>
             <ExecutiveSummary />
@@ -819,13 +744,14 @@ function DataLayerSync({ layer, setLayer }: { layer: DataLayer; setLayer: (l: Da
 
 function BetterUpAuditPage({ eraMode }: { eraMode: boolean }) {
   const [authed, setAuthed] = useState(false)
+  const page = eraMode ? 'era' : 'full'
 
   useEffect(() => {
     loadBetterUpFonts()
-    if (sessionStorage.getItem(SESSION_KEY) === '1') setAuthed(true)
+    if (isAuthed()) setAuthed(true)
   }, [])
 
-  if (!authed) return <PasswordGate onAuth={() => setAuthed(true)} />
+  if (!authed) return <PasswordGate page={page} onAuth={() => setAuthed(true)} />
   return <AuditShell eraMode={eraMode} />
 }
 
