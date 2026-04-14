@@ -37,6 +37,8 @@ import { AudienceSection, BuildSection, CascadeSection, GTMSection, InvestmentSe
 import { DataLayerProvider, useDataLayer, type DataLayer } from './betterup/dataLayer'
 import { PasswordGate, isAuthed } from './betterup/PasswordGate'
 import { startSectionTimeTracker, track } from './betterup/analytics'
+import { SummaryView } from './betterup/SummaryView'
+import { AnimatePresence, motion } from 'framer-motion'
 
 /* ──────────────────────────────────────────────
    Section 1: Executive Summary
@@ -671,10 +673,28 @@ function TestYourself() {
 /* ──────────────────────────────────────────────
    Page shell
    ────────────────────────────────────────────── */
+const VIEW_MODE_KEY = 'betterup-audit-view-mode'
+
 function AuditShell({ eraMode }: { eraMode: boolean }) {
   const theme = useThemeState()
   const [layer, setLayer] = useState<DataLayer>(eraMode ? 'era' : 'era-plus-bh')
   const page = eraMode ? 'era' : 'full'
+
+  // View mode (Summary | Full) — only used on the main route. Default Summary on first visit.
+  const [viewMode, setViewMode] = useState<'summary' | 'full'>(() => {
+    if (eraMode) return 'full'
+    try {
+      const stored = localStorage.getItem(VIEW_MODE_KEY)
+      if (stored === 'summary' || stored === 'full') return stored
+    } catch {}
+    return 'summary'
+  })
+
+  useEffect(() => {
+    if (!eraMode) {
+      try { localStorage.setItem(VIEW_MODE_KEY, viewMode) } catch {}
+    }
+  }, [viewMode, eraMode])
 
   useEffect(() => {
     document.documentElement.style.background = theme.palette.bg
@@ -682,22 +702,28 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
     document.body.style.color = theme.palette.text
   }, [theme.palette])
 
-  // Behavioral analytics: section views, time per section, scroll depth, session duration
+  // Behavioral analytics: only run the section observer when the full sections are mounted.
   useEffect(() => {
-    const cleanup = startSectionTimeTracker(SECTIONS.map((s) => s.id), page)
-    return cleanup
-  }, [page])
+    if (eraMode || viewMode === 'full') {
+      const cleanup = startSectionTimeTracker(SECTIONS.map((s) => s.id), page)
+      return cleanup
+    }
+  }, [page, viewMode, eraMode])
 
-  // Theme toggle tracking
   const handleThemeToggle = () => {
     void track('theme_toggle', theme.mode === 'light' ? 'dark' : 'light', page)
     theme.toggle()
   }
 
-  // Layer toggle tracking
   const handleLayerSet = (l: DataLayer) => {
     void track('layer_toggle', l, page)
     setLayer(l)
+  }
+
+  const handleViewModeSet = (m: 'summary' | 'full') => {
+    void track('view_mode_toggle', m, page)
+    setViewMode(m)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
@@ -710,16 +736,39 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
             onToggleTheme={handleThemeToggle}
             themeMode={theme.mode}
             layerToggle={eraMode ? { layer, onSet: handleLayerSet } : undefined}
+            viewModeToggle={!eraMode ? { mode: viewMode, onSet: handleViewModeSet } : undefined}
           />
           <div style={{ paddingTop: 60 }}>
-            <ExecutiveSummary />
-            <CascadeSection />
-            <GTMSection />
-            <SignalsSection />
-            <AudienceSection />
-            <AIMirror />
-            <InvestmentSection />
-            <BuildSection />
+            <AnimatePresence mode="wait">
+              {!eraMode && viewMode === 'summary' ? (
+                <motion.div
+                  key="summary"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <SummaryView />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="full"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <ExecutiveSummary />
+                  <CascadeSection />
+                  <GTMSection />
+                  <SignalsSection />
+                  <AudienceSection />
+                  <AIMirror />
+                  <InvestmentSection />
+                  <BuildSection />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </DataLayerProvider>

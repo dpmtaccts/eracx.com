@@ -12,6 +12,7 @@ export type AnalyticsEvent =
   | 'session_duration'
   | 'theme_toggle'
   | 'layer_toggle'
+  | 'view_mode_toggle'
 
 const EMAIL_KEY = 'betterup-audit-email'
 const SESSION_KEY = 'betterup-audit-auth'

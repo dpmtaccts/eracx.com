@@ -699,11 +699,13 @@ export function StepperNav({
   onToggleTheme,
   themeMode,
   layerToggle,
+  viewModeToggle,
 }: {
   items: StepperItem[]
   onToggleTheme: () => void
   themeMode: 'light' | 'dark'
   layerToggle?: { layer: 'era' | 'era-plus-bh'; onSet: (l: 'era' | 'era-plus-bh') => void }
+  viewModeToggle?: { mode: 'summary' | 'full'; onSet: (m: 'summary' | 'full') => void }
 }) {
   const { palette } = useTheme()
   const [active, setActive] = useState(0)
@@ -825,6 +827,13 @@ export function StepperNav({
             )
           })}
         </div>
+        {viewModeToggle && (
+          <SegmentedPill
+            options={[{ key: 'summary', label: 'Summary' }, { key: 'full', label: 'Full' }]}
+            value={viewModeToggle.mode}
+            onChange={(v) => viewModeToggle.onSet(v as 'summary' | 'full')}
+          />
+        )}
         {layerToggle && <LayerTogglePill layer={layerToggle.layer} onSet={layerToggle.onSet} />}
         <button
           onClick={onToggleTheme}
@@ -869,32 +878,25 @@ function LayerTogglePill({
   layer: 'era' | 'era-plus-bh'
   onSet: (l: 'era' | 'era-plus-bh') => void
 }) {
+  return (
+    <SegmentedPill
+      options={[{ key: 'era', label: 'ERA' }, { key: 'era-plus-bh', label: '+ Brand Health' }]}
+      value={layer}
+      onChange={(v) => onSet(v as 'era' | 'era-plus-bh')}
+    />
+  )
+}
+
+export function SegmentedPill({
+  options,
+  value,
+  onChange,
+}: {
+  options: { key: string; label: string }[]
+  value: string
+  onChange: (v: string) => void
+}) {
   const { palette } = useTheme()
-  const opt = (key: 'era' | 'era-plus-bh', label: string) => {
-    const active = layer === key
-    return (
-      <button
-        key={key}
-        onClick={() => onSet(key)}
-        style={{
-          background: active ? palette.text : 'transparent',
-          color: active ? palette.bg : palette.textMuted,
-          border: 'none',
-          padding: '6px 12px',
-          borderRadius: 999,
-          cursor: 'pointer',
-          fontFamily: FONT.body,
-          fontSize: 11,
-          letterSpacing: '0.08em',
-          textTransform: 'uppercase',
-          fontWeight: active ? 600 : 500,
-          transition: 'all 0.2s',
-        }}
-      >
-        {label}
-      </button>
-    )
-  }
   return (
     <div
       style={{
@@ -907,8 +909,32 @@ function LayerTogglePill({
         flex: '0 0 auto',
       }}
     >
-      {opt('era', 'ERA')}
-      {opt('era-plus-bh', '+ Brand Health')}
+      {options.map((o) => {
+        const active = value === o.key
+        return (
+          <button
+            key={o.key}
+            onClick={() => onChange(o.key)}
+            style={{
+              background: active ? palette.text : 'transparent',
+              color: active ? palette.bg : palette.textMuted,
+              border: 'none',
+              padding: '6px 12px',
+              borderRadius: 999,
+              cursor: 'pointer',
+              fontFamily: FONT.body,
+              fontSize: 11,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              fontWeight: active ? 600 : 500,
+              transition: 'all 0.2s',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {o.label}
+          </button>
+        )
+      })}
     </div>
   )
 }
