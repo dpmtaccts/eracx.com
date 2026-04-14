@@ -687,7 +687,7 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
       const stored = localStorage.getItem(VIEW_MODE_KEY)
       if (stored === 'summary' || stored === 'full') return stored
     } catch {}
-    return 'summary'
+    return 'full'
   })
 
   useEffect(() => {
