@@ -1,3 +1,4 @@
+import { usePostHog } from '@posthog/react'
 import { Callout, Gauge, Reveal } from './components'
 import { FONT, colorForScore, useTheme } from './theme'
 import { COMPANY, CORE_FINDING, HERO_GAUGES } from './data/executive'
@@ -12,6 +13,7 @@ import { PROJECTED_IMPACT } from './data/investment'
    top 5 signals, AI mirror, projected impact, CTA. Renders inside the
    existing audit ThemeProvider. */
 export function SummaryView() {
+  const posthog = usePostHog()
   const { palette } = useTheme()
   const top5 = [...SIGNALS].sort((a, b) => a.alignment - b.alignment).slice(0, 5)
 
@@ -269,6 +271,7 @@ export function SummaryView() {
                   <div style={{ fontFamily: FONT.body, fontSize: 11, opacity: 0.6, marginTop: 4 }}>{c.role}</div>
                   <a
                     href={`mailto:${c.email}`}
+                    onClick={() => posthog?.capture('audit_summary_cta_email_clicked', { contact_name: c.name, contact_role: c.role, email: c.email })}
                     style={{
                       display: 'inline-block', marginTop: 8, fontFamily: FONT.mono,
                       fontSize: 12, color: '#D86A48', textDecoration: 'none',

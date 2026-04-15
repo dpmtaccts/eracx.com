@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { usePostHog } from '@posthog/react'
 import {
   Callout,
   DimensionGauge,
@@ -41,7 +42,7 @@ export function CascadeSection() {
   const { palette } = useTheme()
   return (
     <Section id="cascade">
-      <SectionHeader kicker="The Brand Conviction Cascade" headline={CASCADE_HEADLINE} intro={CASCADE_INTRO} />
+      <SectionHeader kicker="The Brand Conviction Cascade" headline={CASCADE_HEADLINE} intro={CASCADE_INTRO} shareId="cascade" />
 
       <Reveal>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 48 }}>
@@ -260,6 +261,7 @@ export function GTMSection() {
         kicker="Go-to-Market Signal Chain"
         headline="Your buyer is conducting due diligence on LinkedIn right now."
         intro="They are looking at your CEO's profile, your sales team, your company page, your coaches, and your clients. Every profile is either building trust or eroding it. Here is what they find when they look at yours."
+        shareId="leaders"
       />
 
       <Reveal>
@@ -334,7 +336,7 @@ function CompositeStrip() {
         alignItems: 'center',
       }}
     >
-      <Gauge score={GTM_COMPOSITE_SCORE} size={130} label="Composite GTM Signal Chain" />
+      <Gauge score={GTM_COMPOSITE_SCORE} benchmark={50} benchmarkLabel="functional floor" size={130} label="Composite GTM Signal Chain" />
       <div>
         <div style={smallLabel(palette.rust)}>{GTM_HEADLINE}</div>
         <p style={{ fontFamily: FONT.body, fontSize: 15, lineHeight: 1.6, color: palette.textMuted, margin: 0 }}>
@@ -506,6 +508,7 @@ function AvatarTabs({
   activeTab: GTMChannel['id']
   setActiveTab: (id: GTMChannel['id']) => void
 }) {
+  const posthog = usePostHog()
   const { palette } = useTheme()
   return (
     <div
@@ -522,7 +525,7 @@ function AvatarTabs({
         return (
           <button
             key={c.id}
-            onClick={() => { void track('tab_click', c.id, 'full'); setActiveTab(c.id) }}
+            onClick={() => { void track('tab_click', c.id, 'full'); posthog?.capture('audit_tab_clicked', { tab_id: c.id }); setActiveTab(c.id) }}
             style={{
               background: isActive ? palette.card : 'transparent',
               border: `1px solid ${isActive ? accent : palette.border}`,
@@ -1101,7 +1104,7 @@ export function SignalsSection() {
   const { palette } = useTheme()
   return (
     <Section id="signals">
-      <SectionHeader kicker="Content-to-Pipeline Signal Map" headline={SIGNALS_HEADLINE} />
+      <SectionHeader kicker="Content-to-Pipeline Signal Map" headline={SIGNALS_HEADLINE} shareId="signals" />
 
       <Reveal>
         <div
@@ -1263,7 +1266,7 @@ export function AudienceSection() {
   const { palette } = useTheme()
   return (
     <Section id="audience">
-      <SectionHeader kicker="Audience Reality" headline={AUDIENCE_HEADLINE} />
+      <SectionHeader kicker="Audience Reality" headline={AUDIENCE_HEADLINE} shareId="audience" />
 
       {/* Persona card — visual, not prose */}
       <Reveal>
@@ -1894,7 +1897,7 @@ export function InvestmentSection() {
   const { palette } = useTheme()
   return (
     <Section id="investment">
-      <SectionHeader kicker="Investment vs. Return" headline={INVESTMENT_HEADLINE} />
+      <SectionHeader kicker="Investment vs. Return" headline={INVESTMENT_HEADLINE} shareId="investment" />
 
       {/* PROJECTED IMPACT — the centerpiece, moved to the top */}
       <Reveal>
@@ -2114,10 +2117,11 @@ function InvestmentIcon({ index, color }: { index: number; color: string }) {
 import { BUILD_HEADLINE, CONTACTS, CTA_BODY, PHASES, TEAM } from './data/build'
 
 export function BuildSection() {
+  const posthog = usePostHog()
   const { palette } = useTheme()
   return (
     <Section id="build">
-      <SectionHeader kicker="What We'd Build Together" headline={BUILD_HEADLINE} />
+      <SectionHeader kicker="What We'd Build Together" headline={BUILD_HEADLINE} shareId="build" />
 
       {/* Phases — with connector arrows */}
       <Reveal>
@@ -2317,6 +2321,7 @@ export function BuildSection() {
                 <div style={{ fontFamily: FONT.body, fontSize: 12, opacity: 0.6, marginTop: 4 }}>{c.role}</div>
                 <a
                   href={`mailto:${c.email}`}
+                  onClick={() => posthog?.capture('audit_cta_email_clicked', { contact_name: c.name, contact_role: c.role, email: c.email })}
                   style={{
                     display: 'inline-block',
                     marginTop: 8,

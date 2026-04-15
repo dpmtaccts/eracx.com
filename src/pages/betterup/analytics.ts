@@ -13,6 +13,9 @@ export type AnalyticsEvent =
   | 'theme_toggle'
   | 'layer_toggle'
   | 'view_mode_toggle'
+  | 'share_click'
+  | 'prompt_copy'
+  | 'bento_tile_click'
 
 const EMAIL_KEY = 'betterup-audit-email'
 const SESSION_KEY = 'betterup-audit-auth'

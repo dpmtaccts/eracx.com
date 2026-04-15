@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { usePostHog } from "@posthog/react";
 
 const LOOP_SECTIONS = [
   { id: "loop-connection", color: "#C8A96E" },
@@ -14,6 +15,7 @@ const LIGHT_SECTIONS = ["why-era", "the-system", "loop-trust", "gtm-hero"];
 const LIGHT_ROUTES = ["/linkedin"];
 
 export default function TopNav() {
+  const posthog = usePostHog();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -174,7 +176,7 @@ export default function TopNav() {
           ))}
           <a
             href="#contact"
-            onClick={(e) => handleHashClick(e, "contact")}
+            onClick={(e) => { handleHashClick(e, "contact"); posthog?.capture('nav_contact_clicked', { source: 'desktop_nav' }); }}
             className="text-[11px] uppercase tracking-[0.2em] transition-colors duration-300"
             style={{ color: textMuted }}
           >
@@ -226,7 +228,7 @@ export default function TopNav() {
           ))}
           <a
             href="#contact"
-            onClick={(e) => { handleHashClick(e, "contact"); setMobileOpen(false); }}
+            onClick={(e) => { handleHashClick(e, "contact"); setMobileOpen(false); posthog?.capture('nav_contact_clicked', { source: 'mobile_nav' }); }}
             className="text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/50 transition-colors hover:text-[#F5F0E8]"
           >
             Contact

@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import { usePostHog } from "@posthog/react";
 
 const COLUMNS = [
   "AI-driven signals and buying intent data",
@@ -16,6 +17,7 @@ const DOT_SPACING = 18;
 const DOT_RADIUS = 1.4;
 
 export default function HeroSection() {
+  const posthog = usePostHog();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
   const [visible, setVisible] = useState(false);
@@ -212,6 +214,7 @@ export default function HeroSection() {
         >
           <a
             href="#system"
+            onClick={() => posthog?.capture('hero_cta_clicked', { cta: 'see_the_system' })}
             style={{
               background: "#C4522A",
               color: "#F5F0E8",
@@ -228,6 +231,7 @@ export default function HeroSection() {
           </a>
           <a
             href="/#contact"
+            onClick={() => posthog?.capture('hero_cta_clicked', { cta: 'talk_to_us' })}
             style={{
               fontSize: "13px",
               color: "rgba(245, 240, 232, 0.3)",

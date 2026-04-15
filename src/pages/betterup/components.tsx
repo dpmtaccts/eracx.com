@@ -90,12 +90,16 @@ export function Gauge({
   label,
   description,
   thickness = 8,
+  benchmark,
+  benchmarkLabel,
 }: {
   score: number
   size?: number
   label?: string
   description?: string
   thickness?: number
+  benchmark?: number
+  benchmarkLabel?: string
 }) {
   const { palette } = useTheme()
   const ref = useRef<SVGSVGElement>(null)
@@ -120,31 +124,57 @@ export function Gauge({
   const c = 2 * Math.PI * r
   const offset = c - (progress / 100) * c
   const stroke = colorForScore(palette, score)
+  const variance = benchmark != null ? score - benchmark : null
+  const benchAngle = benchmark != null ? (benchmark / 100) * 360 - 90 : 0
+  const benchX = size / 2 + r * Math.cos((benchAngle * Math.PI) / 180)
+  const benchY = size / 2 + r * Math.sin((benchAngle * Math.PI) / 180)
+  const benchInnerR = r - thickness / 2 - 2
+  const benchOuterR = r + thickness / 2 + 2
+  const benchX1 = size / 2 + benchInnerR * Math.cos((benchAngle * Math.PI) / 180)
+  const benchY1 = size / 2 + benchInnerR * Math.sin((benchAngle * Math.PI) / 180)
+  const benchX2 = size / 2 + benchOuterR * Math.cos((benchAngle * Math.PI) / 180)
+  const benchY2 = size / 2 + benchOuterR * Math.sin((benchAngle * Math.PI) / 180)
 
   return (
     <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
       <div style={{ position: 'relative', width: size, height: size }}>
-        <svg ref={ref} width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={r}
-            fill="none"
-            stroke={palette.border}
-            strokeWidth={thickness}
-          />
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={r}
-            fill="none"
-            stroke={stroke}
-            strokeWidth={thickness}
-            strokeDasharray={c}
-            strokeDashoffset={offset}
-            strokeLinecap="round"
-            style={{ transition: 'stroke-dashoffset 60ms linear' }}
-          />
+        <svg ref={ref} width={size} height={size}>
+          <g style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}>
+            <circle
+              cx={size / 2}
+              cy={size / 2}
+              r={r}
+              fill="none"
+              stroke={palette.border}
+              strokeWidth={thickness}
+            />
+            <circle
+              cx={size / 2}
+              cy={size / 2}
+              r={r}
+              fill="none"
+              stroke={stroke}
+              strokeWidth={thickness}
+              strokeDasharray={c}
+              strokeDashoffset={offset}
+              strokeLinecap="round"
+              style={{ transition: 'stroke-dashoffset 60ms linear' }}
+            />
+          </g>
+          {benchmark != null && (
+            <line
+              x1={benchX1}
+              y1={benchY1}
+              x2={benchX2}
+              y2={benchY2}
+              stroke={palette.textMuted}
+              strokeWidth={1.5}
+              strokeLinecap="round"
+            />
+          )}
+          {benchmark != null && (
+            <circle cx={benchX} cy={benchY} r={0} fill="none" />
+          )}
         </svg>
         <div
           style={{
@@ -178,6 +208,21 @@ export function Gauge({
           {label}
         </div>
       )}
+      {variance != null && (
+        <div
+          style={{
+            fontFamily: FONT.mono,
+            fontSize: 11,
+            letterSpacing: '0.04em',
+            color: variance >= 0 ? '#3A9B6E' : '#C84438',
+            marginTop: -6,
+            textAlign: 'center',
+          }}
+        >
+          {variance >= 0 ? '+' : ''}{variance} vs. {benchmarkLabel ?? 'benchmark'}
+          <span style={{ color: palette.textDim, marginLeft: 6 }}>({benchmark})</span>
+        </div>
+      )}
       {description && (
         <div
           style={{
@@ -195,6 +240,107 @@ export function Gauge({
         </div>
       )}
     </div>
+  )
+}
+
+/* ──────────────────────────────────────────────
+   ShareButton — copies deep-link to a section
+   ────────────────────────────────────────────── */
+export function ShareButton({
+  anchorId,
+  label,
+  page = 'full',
+  size = 'md',
+}: {
+  anchorId: string
+  label: string
+  page?: 'full' | 'era' | 'summary'
+  size?: 'sm' | 'md'
+}) {
+  const { palette } = useTheme()
+  const [copied, setCopied] = useState(false)
+  const onClick = async () => {
+    const url = `${window.location.origin}${window.location.pathname}#${anchorId}`
+    try {
+      await navigator.clipboard.writeText(url)
+    } catch {
+      const ta = document.createElement('textarea')
+      ta.value = url
+      document.body.appendChild(ta)
+      ta.select()
+      try { document.execCommand('copy') } catch {}
+      document.body.removeChild(ta)
+    }
+    setCopied(true)
+    void track('share_click', anchorId, page)
+    setTimeout(() => setCopied(false), 1800)
+  }
+  const pad = size === 'sm' ? '5px 10px 5px 8px' : '7px 14px 7px 11px'
+  const fontSize = size === 'sm' ? 10 : 11
+  return (
+    <span style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+      <button
+        onClick={onClick}
+        aria-label={`Copy link to ${label}`}
+        title={`Share: ${label}`}
+        style={{
+          background: 'transparent',
+          border: `1px solid ${palette.border}`,
+          borderRadius: 999,
+          padding: pad,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 7,
+          cursor: 'pointer',
+          color: palette.textMuted,
+          fontFamily: FONT.body,
+          fontSize,
+          letterSpacing: '0.1em',
+          textTransform: 'uppercase',
+          fontWeight: 600,
+          transition: 'all 0.2s',
+          whiteSpace: 'nowrap',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.color = palette.text
+          e.currentTarget.style.borderColor = palette.text
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.color = palette.textMuted
+          e.currentTarget.style.borderColor = palette.border
+        }}
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7" />
+          <polyline points="16 6 12 2 8 6" />
+          <line x1="12" y1="2" x2="12" y2="15" />
+        </svg>
+        Share: {label}
+      </button>
+      {copied && (
+        <span
+          style={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            top: '100%',
+            marginTop: 8,
+            background: palette.text,
+            color: palette.bg,
+            padding: '4px 10px',
+            borderRadius: 4,
+            fontFamily: FONT.body,
+            fontSize: 11,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            whiteSpace: 'nowrap',
+            zIndex: 2,
+          }}
+        >
+          Link copied
+        </span>
+      )}
+    </span>
   )
 }
 
@@ -570,10 +716,12 @@ export function SectionHeader({
   kicker,
   headline,
   intro,
+  shareId,
 }: {
   kicker: string
   headline: string
   intro?: string
+  shareId?: string
 }) {
   const { palette } = useTheme()
   return (
@@ -581,15 +729,25 @@ export function SectionHeader({
       <div style={{ marginBottom: 48 }}>
         <div
           style={{
-            fontFamily: FONT.body,
-            fontSize: 12,
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color: palette.rust,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 16,
             marginBottom: 16,
           }}
         >
-          {kicker}
+          <div
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 12,
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color: palette.rust,
+            }}
+          >
+            {kicker}
+          </div>
+          {shareId && <ShareButton anchorId={shareId} label={kicker} />}
         </div>
         <h2
           style={{

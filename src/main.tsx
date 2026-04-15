@@ -1,6 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import posthog from 'posthog-js'
+import { PostHogErrorBoundary, PostHogProvider } from '@posthog/react'
 import './index.css'
 import App from './App.tsx'
 import OurStory from './pages/OurStory.tsx'
@@ -26,8 +28,15 @@ import V3ColorBlocks from './pages/staging/V3ColorBlocks.tsx'
 import V4TimelineRibbon from './pages/staging/V4TimelineRibbon.tsx'
 import V5ExpandingCards from './pages/staging/V5ExpandingCards.tsx'
 
+posthog.init(import.meta.env.VITE_PUBLIC_POSTHOG_TOKEN, {
+  api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
+  defaults: '2026-01-30',
+})
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <PostHogProvider client={posthog}>
+    <PostHogErrorBoundary>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
@@ -56,5 +65,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/audit/vik" element={<VikAudit />} />
       </Routes>
     </BrowserRouter>
+    </PostHogErrorBoundary>
+    </PostHogProvider>
   </StrictMode>,
 )

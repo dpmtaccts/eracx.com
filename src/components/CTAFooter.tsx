@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { usePostHog } from "@posthog/react";
 
 export default function CTAFooter() {
+  const posthog = usePostHog();
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -24,11 +26,21 @@ export default function CTAFooter() {
       });
       if (res.ok) {
         setStatus("success");
+        posthog?.identify(data.email, { email: data.email, name: data.name, company: data.company });
+        posthog?.capture("contact_form_submitted", {
+          name: data.name,
+          company: data.company,
+          email: data.email,
+          has_message: !!data.message,
+        });
       } else {
         setStatus("error");
+        posthog?.capture("contact_form_submission_failed", { status_code: res.status });
       }
-    } catch {
+    } catch (err) {
       setStatus("error");
+      posthog?.captureException(err instanceof Error ? err : new Error(String(err)));
+      posthog?.capture("contact_form_submission_failed", { error: String(err) });
     }
   }
 

@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
+import { usePostHog } from '@posthog/react'
 import GrowthSimulatorChart from '../components/GrowthSimulatorChart'
 import SimulatorInputsComponent from '../components/SimulatorInputs'
 import {
@@ -79,6 +80,7 @@ function ModeToggle({
 // ── Main Page ───────────────────────────────────────────────────────────────
 
 export default function GrowthSimulator() {
+  const posthog = usePostHog()
   const [inputs, setInputs] = useState<SimulatorInputs>({ ...DEFAULT_INPUTS })
 
   useEffect(() => {
@@ -104,7 +106,8 @@ export default function GrowthSimulator() {
 
   const handleToggle = useCallback((mode: ToggleMode) => {
     update({ toggleMode: mode })
-  }, [update])
+    posthog?.capture('growth_simulator_mode_toggled', { mode })
+  }, [update, posthog])
 
   const handleRevenueChange = useCallback((v: number) => {
     update({ revenueTarget: v })

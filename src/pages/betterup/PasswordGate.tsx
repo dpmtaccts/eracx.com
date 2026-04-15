@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { usePostHog } from '@posthog/react'
 import { FONT } from './theme'
 import { getStoredEmail, setStoredEmail, track, type AuditPage } from './analytics'
 
@@ -16,6 +17,7 @@ export function isAuthed(): boolean {
 }
 
 export function PasswordGate({ onAuth, page }: { onAuth: () => void; page: AuditPage }) {
+  const posthog = usePostHog()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<'email' | 'password' | null>(null)
@@ -30,16 +32,20 @@ export function PasswordGate({ onAuth, page }: { onAuth: () => void; page: Audit
     if (!isValidEmail(email)) {
       setError('email')
       setTimeout(() => setError(null), 1500)
+      posthog?.capture('audit_password_failed', { reason: 'invalid_email', audit_page: page })
       return
     }
     if (password !== PASSWORD) {
       setError('password')
       setTimeout(() => setError(null), 1500)
+      posthog?.capture('audit_password_failed', { reason: 'wrong_password', audit_page: page })
       return
     }
     setStoredEmail(email)
     sessionStorage.setItem(SESSION_KEY, '1')
     void track('session_start', null, page)
+    posthog?.identify(email, { email, audit_page: page })
+    posthog?.capture('audit_accessed', { email, audit_page: page })
     onAuth()
   }
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { usePostHog } from '@posthog/react'
 import {
   Callout,
   Gauge,
@@ -7,8 +8,10 @@ import {
   Reveal,
   Section,
   SectionHeader,
+  ShareButton,
   StepperNav,
 } from './betterup/components'
+import { CASCADE_LAYERS } from './betterup/data/cascade'
 import {
   FONT,
   ThemeContext,
@@ -18,7 +21,6 @@ import {
 import {
   COMPANY,
   CORE_FINDING_PARAGRAPHS,
-  HERO_GAUGES,
   PULL_QUOTE_1,
   PULL_QUOTE_2,
   STRENGTHS,
@@ -57,44 +59,18 @@ function ExecutiveSummary() {
             marginBottom: 16,
           }}
         >
-          Revenue Signal Audit
+          Revenue Signal Audit · {COMPANY.date}
         </div>
         <img
           src="/images/betterup/bu_logo_black.svg"
           alt="BetterUp"
-          style={{ height: 'clamp(56px, 8vw, 96px)', width: 'auto', display: 'block', marginTop: 8 }}
+          style={{ height: 'clamp(48px, 6vw, 72px)', width: 'auto', display: 'block', marginTop: 8 }}
         />
         <h1 style={{ position: 'absolute', left: -9999 }}>BetterUp</h1>
-        <div
-          style={{
-            fontFamily: FONT.mono,
-            fontSize: 13,
-            marginTop: 16,
-            opacity: 0.7,
-          }}
-        >
-          {COMPANY.url} · {COMPANY.date}
-        </div>
       </Reveal>
 
       <Reveal delay={0.1}>
-        <CompanyProfile />
-      </Reveal>
-
-      <Reveal delay={0.15}>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: 24,
-            marginTop: 56,
-            justifyItems: 'center',
-          }}
-        >
-          {HERO_GAUGES.map((g) => (
-            <Gauge key={g.label} score={g.score} label={g.label} description={g.description} size={170} />
-          ))}
-        </div>
+        <BentoHero />
       </Reveal>
 
       <CoreFindingEditorial />
@@ -105,6 +81,231 @@ function ExecutiveSummary() {
         <StrengthsVulnerabilities />
       </Reveal>
     </Section>
+  )
+}
+
+/* ──────────────────────────────────────────────
+   Bento hero — six tiles, one viewport, clickable deep-links
+   ────────────────────────────────────────────── */
+function BentoHero() {
+  const goto = (id: string) => {
+    void track('bento_tile_click', id, 'full')
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
+  return (
+    <div
+      style={{
+        marginTop: 40,
+        display: 'grid',
+        gridTemplateColumns: 'repeat(12, 1fr)',
+        gridAutoRows: 'minmax(0, auto)',
+        gap: 16,
+      }}
+    >
+      <BentoGaugeTile
+        onClick={() => goto('cascade')}
+        label="Brand Conviction Cascade"
+        score={41}
+        benchmark={57}
+        benchmarkLabel="category avg"
+        column="span 4"
+      />
+      <BentoGaugeTile
+        onClick={() => goto('leaders')}
+        label="GTM Signal Chain"
+        score={24}
+        benchmark={50}
+        benchmarkLabel="functional floor"
+        column="span 4"
+      />
+      <BentoGaugeTile
+        onClick={() => goto('signals')}
+        label="Content-to-Pipeline"
+        score={29}
+        benchmark={45}
+        benchmarkLabel="functional floor"
+        column="span 4"
+      />
+
+      <BentoTile onClick={() => goto('cascade')} column="span 6" tone="light">
+        <BentoEyebrow>Where the conviction breaks</BentoEyebrow>
+        <CascadeBreakVisual />
+      </BentoTile>
+
+      <BentoTile onClick={() => goto('audience')} column="span 6" tone="rust">
+        <BentoEyebrow light>Employee Brand Health</BentoEyebrow>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 20, marginTop: 8 }}>
+          <div style={{ fontFamily: FONT.display, fontSize: 72, lineHeight: 1, color: '#F7F5F2' }}>
+            32
+          </div>
+          <div style={{ fontFamily: FONT.body, fontSize: 14, color: '#F7F5F2', opacity: 0.85 }}>
+            BetterUp
+            <div style={{ opacity: 0.65, fontSize: 12 }}>vs. Torch 82 · category avg 62</div>
+          </div>
+        </div>
+        <div style={{ fontFamily: FONT.display, fontStyle: 'italic', fontSize: 20, color: '#F7F5F2', marginTop: 16, lineHeight: 1.3 }}>
+          Your competitor's greatest strength is your greatest weakness.
+        </div>
+      </BentoTile>
+
+      <BentoTile onClick={() => goto('mirror')} column="span 4" tone="dark">
+        <BentoEyebrow light>AI Mirror</BentoEyebrow>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginTop: 8 }}>
+          <div style={{ fontFamily: FONT.display, fontSize: 64, lineHeight: 1, color: '#D86A48' }}>38</div>
+          <div style={{ fontFamily: FONT.mono, fontSize: 11, color: '#F7F5F2', opacity: 0.55 }}>/ 100</div>
+        </div>
+        <div style={{ fontFamily: FONT.body, fontSize: 14, color: '#F7F5F2', marginTop: 14, lineHeight: 1.45 }}>
+          Product praised, organization questioned. That's what your buyer's AI search returns.
+        </div>
+      </BentoTile>
+
+      <BentoTile onClick={() => goto('leaders')} column="span 4" tone="light">
+        <BentoEyebrow>GTM Signal Chain</BentoEyebrow>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 10 }}>
+          <BentoBigStat value="6%" label="of commenters on CEO content match the buyer profile" />
+          <BentoBigStat value="0%" label="of sales team content addresses buyer pain points" />
+        </div>
+      </BentoTile>
+
+      <BentoTile column="span 4" tone="quote">
+        <BentoEyebrow>Core finding</BentoEyebrow>
+        <div
+          style={{
+            fontFamily: FONT.display,
+            fontStyle: 'italic',
+            fontSize: 18,
+            lineHeight: 1.35,
+            color: '#1A1A1A',
+            marginTop: 10,
+          }}
+        >
+          "A category pioneer leaking pipeline not because the product fails, but because the go-to-market doesn't carry the conviction far enough."
+        </div>
+      </BentoTile>
+    </div>
+  )
+}
+
+function BentoTile({
+  onClick,
+  children,
+  column,
+  tone = 'light',
+}: {
+  onClick?: () => void
+  children: React.ReactNode
+  column: string
+  tone?: 'light' | 'dark' | 'rust' | 'quote'
+}) {
+  const bg = tone === 'dark' ? '#1A1A1A' : tone === 'rust' ? '#C85A3A' : tone === 'quote' ? '#F0EDEA' : '#FFFFFF'
+  const border = tone === 'light' || tone === 'quote' ? '1px solid #E8E4DE' : 'none'
+  return (
+    <div
+      onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onKeyDown={(e) => { if (onClick && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onClick() } }}
+      style={{
+        gridColumn: column,
+        background: bg,
+        border,
+        borderRadius: 8,
+        padding: '20px 22px',
+        cursor: onClick ? 'pointer' : 'default',
+        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+        minHeight: 160,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+      onMouseEnter={(e) => {
+        if (onClick) {
+          e.currentTarget.style.transform = 'translateY(-2px)'
+          e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.10)'
+        }
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'translateY(0)'
+        e.currentTarget.style.boxShadow = 'none'
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
+function BentoEyebrow({ children, light }: { children: React.ReactNode; light?: boolean }) {
+  return (
+    <div
+      style={{
+        fontFamily: FONT.body,
+        fontSize: 10,
+        letterSpacing: '0.16em',
+        textTransform: 'uppercase',
+        color: light ? 'rgba(247,245,242,0.75)' : '#9A958C',
+        fontWeight: 600,
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
+function BentoGaugeTile({
+  label,
+  score,
+  benchmark,
+  benchmarkLabel,
+  column,
+  onClick,
+}: {
+  label: string
+  score: number
+  benchmark: number
+  benchmarkLabel: string
+  column: string
+  onClick: () => void
+}) {
+  return (
+    <BentoTile onClick={onClick} column={column} tone="light">
+      <BentoEyebrow>{label}</BentoEyebrow>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, paddingTop: 8 }}>
+        <Gauge score={score} benchmark={benchmark} benchmarkLabel={benchmarkLabel} size={140} />
+      </div>
+    </BentoTile>
+  )
+}
+
+function BentoBigStat({ value, label }: { value: string; label: string }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
+      <div style={{ fontFamily: FONT.display, fontSize: 34, color: '#C85A3A', lineHeight: 1 }}>{value}</div>
+      <div style={{ fontFamily: FONT.body, fontSize: 12, color: '#1A1A1A', lineHeight: 1.4 }}>{label}</div>
+    </div>
+  )
+}
+
+function CascadeBreakVisual() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 12 }}>
+      {CASCADE_LAYERS.map((layer) => {
+        const color = layer.score >= 60 ? '#3A9B6E' : layer.score >= 40 ? '#C85A3A' : '#C84438'
+        const isBreak = layer.status === 'Cascade Break'
+        return (
+          <div key={layer.number} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ fontFamily: FONT.mono, fontSize: 10, color: '#9A958C', width: 18 }}>{layer.number}</span>
+            <span style={{ fontFamily: FONT.body, fontSize: 12, color: isBreak ? '#C84438' : '#1A1A1A', flex: 1, fontWeight: isBreak ? 600 : 400 }}>
+              {layer.name}
+            </span>
+            <div style={{ flex: 2, height: 6, background: '#E8E4DE', borderRadius: 3, overflow: 'hidden' }}>
+              <div style={{ width: `${layer.score}%`, height: '100%', background: color, borderRadius: 3 }} />
+            </div>
+            <span style={{ fontFamily: FONT.mono, fontSize: 11, color: isBreak ? '#C84438' : '#1A1A1A', width: 28, textAlign: 'right', fontWeight: isBreak ? 600 : 400 }}>
+              {layer.score}
+            </span>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 
@@ -191,7 +392,7 @@ function CoreFindingEditorial() {
 
       {/* Pull quote 1 — wider than body, breaks out of the column */}
       <Reveal>
-        <PullQuote text={PULL_QUOTE_1} />
+        <PullQuote text={PULL_QUOTE_1} anchorId="quote-1" />
       </Reveal>
 
       {/* Paragraphs after pull quote 1 — tight spacing */}
@@ -215,7 +416,7 @@ function CoreFindingEditorial() {
 
       {/* Pull quote 2 — closer */}
       <Reveal>
-        <PullQuote text={PULL_QUOTE_2} />
+        <PullQuote text={PULL_QUOTE_2} anchorId="quote-2" />
       </Reveal>
 
       {/* Bottom rust rule as transition out */}
@@ -232,9 +433,10 @@ function CoreFindingEditorial() {
   )
 }
 
-function PullQuote({ text }: { text: string }) {
+function PullQuote({ text, anchorId }: { text: string; anchorId?: string }) {
   return (
     <blockquote
+      id={anchorId}
       style={{
         maxWidth: 880,
         margin: '72px auto',
@@ -266,55 +468,12 @@ function PullQuote({ text }: { text: string }) {
         “
       </span>
       {text}
-    </blockquote>
-  )
-}
-
-function CompanyProfile() {
-  const { showBH } = useDataLayer()
-  const fields: Array<[string, string]> = [
-    ['Founded', COMPANY.founded],
-    ['Category', COMPANY.category],
-    ...((showBH ? [['Revenue', COMPANY.revenue]] : []) as Array<[string, string]>),
-    ['Valuation', COMPANY.valuation],
-    ['Funding', COMPANY.funding],
-    ['Employees', COMPANY.employees],
-    ['Notable clients', COMPANY.notableClients],
-    ['Primary buyer', COMPANY.primaryBuyer],
-  ]
-  return (
-    <div
-      style={{
-        marginTop: 56,
-        background: '#FFFFFF',
-        border: '1px solid #E8E4DE',
-        borderRadius: 6,
-        padding: '32px 36px',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-        gap: '20px 40px',
-      }}
-    >
-      {fields.map(([label, value]) => (
-        <div key={label}>
-          <div
-            style={{
-              fontFamily: FONT.body,
-              fontSize: 11,
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              color: '#9A958C',
-              marginBottom: 6,
-            }}
-          >
-            {label}
-          </div>
-          <div style={{ fontFamily: FONT.body, fontSize: 15, color: '#1A1A1A', lineHeight: 1.4 }}>
-            {value}
-          </div>
+      {anchorId && (
+        <div style={{ marginTop: 24, display: 'flex', justifyContent: 'flex-end' }}>
+          <ShareButton anchorId={anchorId} label="this quote" size="sm" />
         </div>
-      ))}
-    </div>
+      )}
+    </blockquote>
   )
 }
 
@@ -398,6 +557,7 @@ function AIMirror() {
       <SectionHeader
         kicker="The AI Mirror"
         headline="When your buyer asks an AI about you, does the answer reflect your conviction or your cascade failure?"
+        shareId="mirror"
       />
 
       <Reveal>
@@ -447,7 +607,7 @@ function AIMirror() {
             justifyContent: 'center',
           }}
         >
-          <Gauge score={AI_MIRROR_SCORE} label="AI Mirror Score" size={180} />
+          <Gauge score={AI_MIRROR_SCORE} benchmark={65} benchmarkLabel="high-performing floor" label="AI Mirror Score" size={180} />
         </div>
       </Reveal>
 
@@ -471,10 +631,81 @@ function AIMirror() {
         </Reveal>
       </div>
 
+      <Reveal delay={0.08}>
+        <BuyerPromptCard />
+      </Reveal>
+
       <Reveal delay={0.1}>
         <TestYourself />
       </Reveal>
     </Section>
+  )
+}
+
+const BUYER_PROMPT = `I am a CHRO at a Fortune 500 company evaluating enterprise coaching platforms. I have a $2M annual budget for leadership development and need to justify the spend to my CFO. Tell me about BetterUp. Include pricing, employee reviews, competitive alternatives, and whether the ROI evidence is strong enough to present to a board.`
+
+function BuyerPromptCard() {
+  const [copied, setCopied] = useState(false)
+  const onCopy = async () => {
+    try { await navigator.clipboard.writeText(BUYER_PROMPT) } catch {}
+    setCopied(true)
+    void track('prompt_copy', 'buyer_prompt', 'full')
+    setTimeout(() => setCopied(false), 1800)
+  }
+  return (
+    <div
+      style={{
+        marginTop: 48,
+        background: '#FBF9F6',
+        border: '1px solid #E8E4DE',
+        borderRadius: 10,
+        padding: '28px 32px',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginBottom: 12, flexWrap: 'wrap' }}>
+        <div>
+          <div style={{ fontFamily: FONT.body, fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#C85A3A', fontWeight: 600, marginBottom: 6 }}>
+            See what your buyer sees
+          </div>
+          <div style={{ fontFamily: FONT.display, fontSize: 22, color: '#1A1A1A', lineHeight: 1.25 }}>
+            Paste this into ChatGPT, Claude, or Perplexity.
+          </div>
+        </div>
+        <button
+          onClick={onCopy}
+          style={{
+            background: '#1A1A1A',
+            color: '#F7F5F2',
+            border: 'none',
+            borderRadius: 6,
+            padding: '10px 18px',
+            fontFamily: FONT.body,
+            fontSize: 12,
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            fontWeight: 600,
+            cursor: 'pointer',
+          }}
+        >
+          {copied ? 'Copied' : 'Copy to clipboard'}
+        </button>
+      </div>
+      <div
+        style={{
+          fontFamily: FONT.mono,
+          fontSize: 14,
+          lineHeight: 1.6,
+          color: '#1A1A1A',
+          background: '#FFFFFF',
+          border: '1px solid #E8E4DE',
+          borderRadius: 6,
+          padding: '20px 24px',
+          whiteSpace: 'pre-wrap',
+        }}
+      >
+        {BUYER_PROMPT}
+      </div>
+    </div>
   )
 }
 
@@ -676,6 +907,7 @@ function TestYourself() {
 const VIEW_MODE_KEY = 'betterup-audit-view-mode'
 
 function AuditShell({ eraMode }: { eraMode: boolean }) {
+  const posthog = usePostHog()
   const theme = useThemeState()
   const [layer, setLayer] = useState<DataLayer>(eraMode ? 'era' : 'era-plus-bh')
   const page = eraMode ? 'era' : 'full'
@@ -711,17 +943,21 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
   }, [page, viewMode, eraMode])
 
   const handleThemeToggle = () => {
-    void track('theme_toggle', theme.mode === 'light' ? 'dark' : 'light', page)
+    const newMode = theme.mode === 'light' ? 'dark' : 'light'
+    void track('theme_toggle', newMode, page)
+    posthog?.capture('audit_theme_toggled', { theme: newMode, audit_page: page })
     theme.toggle()
   }
 
   const handleLayerSet = (l: DataLayer) => {
     void track('layer_toggle', l, page)
+    posthog?.capture('audit_data_layer_changed', { layer: l, audit_page: page })
     setLayer(l)
   }
 
   const handleViewModeSet = (m: 'summary' | 'full') => {
     void track('view_mode_toggle', m, page)
+    posthog?.capture('audit_view_mode_changed', { view_mode: m, audit_page: page })
     setViewMode(m)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
