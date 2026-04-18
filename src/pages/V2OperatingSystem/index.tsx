@@ -9,6 +9,7 @@ import Playbook from './sections/Playbook'
 import System from './sections/System'
 import SignalLibrary from './sections/SignalLibrary'
 import SignalMap from './sections/SignalMap'
+import Aux from './sections/Aux'
 import Integrations from './sections/Integrations'
 import Halo from './sections/Halo'
 import Expect from './sections/Expect'
@@ -53,6 +54,7 @@ export default function V2OperatingSystem() {
       <System />
       <SignalLibrary />
       <SignalMap />
+      <Aux />
       <Integrations />
       <Halo />
       <Expect />

@@ -213,6 +213,75 @@ export const signalMap = {
   caption: 'Live sample · 5 of 47 active rules · Score reflects buyer readiness',
 }
 
+// ─── AUX (section 06 deep dive) ───
+
+export type AuxActivity = {
+  name: string
+  action: string
+  points: string
+  time: string
+  tone: 'primary' | 'warm' | 'cool'
+}
+
+export type AuxScore = {
+  label: string
+  value: number
+  color: 'rust' | 'gold'
+}
+
+export type AuxTier = {
+  tier: 1 | 2 | 3
+  tag: string
+  label: string
+  widthPct: number
+  count: number
+}
+
+export const aux = {
+  sectionLabel: '06 — Inside AUX',
+  headline: { before: 'A warmth score for every account. ', italic: 'Updated daily.', after: '' },
+  note: 'Five dimensions. Three sub-scores. One composite. What most teams guess at, AUX measures.',
+  account: {
+    name: 'Capital One',
+    domain: 'capitalone.com',
+    warmth: 76,
+    warmthTrend: '↑ +14 · 30d',
+    rolesEngaged: 14,
+    rolesTotal: 48,
+    rolesNote: 'buying committee',
+    tierBadge: 'T1 · Active',
+    // FRVRD values 0-100 drive the pentagon radar.
+    frvrd: {
+      frequency: 85,
+      recency: 72,
+      value: 90,
+      responsiveness: 65,
+      density: 58,
+    },
+    scores: [
+      { label: 'Fit', value: 91, color: 'rust' },
+      { label: 'Wallet', value: 65, color: 'gold' },
+      { label: 'Readiness', value: 78, color: 'rust' },
+    ] as AuxScore[],
+    composite: 79,
+    activity: [
+      { name: 'Carly Stein', action: 'LinkedIn connect accepted · Economic Buyer', points: '+10', time: '2d ago', tone: 'primary' },
+      { name: 'Marcus Johnson', action: 'Content download · Amazon audit template', points: '+12', time: '5d ago', tone: 'primary' },
+      { name: 'Amy Liu', action: 'Email reply · Positive to content', points: '+8', time: '7d ago', tone: 'warm' },
+      { name: 'Marcus Johnson', action: 'Webinar attended · Amazon strategy', points: '+15', time: '11d ago', tone: 'cool' },
+    ] as AuxActivity[],
+  },
+  tierDist: {
+    titleLeft: 'Tier distribution · 132 target accounts',
+    titleRight: 'ICP1 · Beauty & Wellness',
+    tiers: [
+      { tier: 1, tag: 'T1', label: 'Active', widthPct: 9, count: 12 },
+      { tier: 2, tag: 'T2', label: 'Light', widthPct: 26, count: 34 },
+      { tier: 3, tag: 'T3', label: 'Dormant', widthPct: 65, count: 86 },
+    ] as AuxTier[],
+  },
+}
+
 // ─── Integrations ───
 
 export const integrations = {
