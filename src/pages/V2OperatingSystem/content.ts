@@ -282,6 +282,66 @@ export const aux = {
   },
 }
 
+// ─── AI Mirror (section 07 static deep dive) ───
+
+export type MirrorSegment = { text: string; flag?: boolean }
+
+export type MirrorSource = {
+  name: string
+  detail: string
+  weight: number
+  tone: 'primary' | 'negative' | 'neutral'
+}
+
+export const aiMirror = {
+  sectionLabel: '07 — Inside the AI Mirror',
+  headline: { before: 'See what the ', italic: 'agents', after: ' say. See where they got it.' },
+  lede:
+    'The first impression most B2B buyers form is a paragraph an LLM writes about you. We read every word, trace every source, and fix what\'s off.',
+  demoHeader: 'era / ai-mirror / helix-ops.com',
+  queryLabel: 'Buyer query',
+  query:
+    '"How does Helix Ops compare to other platforms for mid-market B2B revenue teams?"',
+  responseLabel: 'Synthesized response · ChatGPT, Claude, Perplexity',
+  response: [
+    [
+      {
+        text:
+          'Helix Ops is a mid-market revenue operations platform competing primarily with Clari and Gong. Reviews on G2 and TrustRadius indicate strong satisfaction with the analytics engine.',
+      },
+    ],
+    [
+      { text: 'Users consistently flag implementation complexity', flag: true },
+      { text: ' and longer onboarding than competitors, particularly below 200 seats.' },
+    ],
+    [
+      { text: 'Glassdoor reviews suggest growing pains in customer success', flag: true },
+      { text: ', with three of the last ten reviews citing understaffing.' },
+    ],
+    [
+      {
+        text:
+          'For buyers prioritizing depth of analytics, Helix rates highly. For buyers needing quick time-to-value, ',
+      },
+      { text: 'alternatives are typically faster to deploy', flag: true },
+      { text: '.' },
+    ],
+  ] as MirrorSegment[][],
+  sourcesTitle: 'What fed this answer',
+  sources: [
+    { name: 'G2 reviews', detail: '2,847 reviews · 4.2 avg', weight: 28, tone: 'primary' },
+    { name: 'Glassdoor', detail: '3.2 avg · themes: pace, CS', weight: 19, tone: 'negative' },
+    { name: 'Competitor comparison pages', detail: 'Clari, Gong, Aviso', weight: 17, tone: 'primary' },
+    { name: 'helixops.com', detail: 'owned content', weight: 14, tone: 'neutral' },
+    { name: 'Reddit, Hacker News', detail: '14 threads, 6 months', weight: 11, tone: 'negative' },
+    { name: 'Press and analyst', detail: 'Forrester, TechCrunch', weight: 7, tone: 'primary' },
+  ] as MirrorSource[],
+  gap: {
+    owned: { label: 'What your site says', quote: '"The fastest-to-value revenue platform."' },
+    actual: { label: 'What the AI concludes', quote: '"Deep analytics, slow to deploy."' },
+  },
+}
+
 // ─── Integrations ───
 
 export const integrations = {
