@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div>
             <div className="logo">
-              ERA<span className="dot">◆</span>
+              <img src="/assets/era_final.png" alt="ERA" />
             </div>
           </div>
           {footer.columns.map((col) => (
@@ -25,7 +25,7 @@ export default function Footer() {
         </div>
         <div className="copyright">
           <div>{footer.copyright}</div>
-          <div>ERA ◆</div>
+          <div>eracx.com</div>
         </div>
       </div>
     </footer>

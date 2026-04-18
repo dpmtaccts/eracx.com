@@ -10,9 +10,9 @@ type Props = {
 export default function Nav({ theme, setTheme }: Props) {
   return (
     <nav className="v2-nav">
-      <div className="logo">
-        ERA<span className="dot">◆</span>
-      </div>
+      <a href="#top" className="logo" aria-label="ERA — home">
+        <img src="/assets/era_final.png" alt="ERA" />
+      </a>
       <div className="nav-links">
         {nav.links.map((link) => (
           <a key={link.href} href={link.href}>
