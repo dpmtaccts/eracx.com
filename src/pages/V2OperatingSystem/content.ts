@@ -166,6 +166,53 @@ export const signalLibrary = {
   ] as SignalTile[],
 }
 
+// ─── Signal Map (section 05 deep dive) ───
+
+export type SignalMapRow = {
+  signal: { primary: string; meta: string }
+  play: { primary: string; meta: string }
+  score: number
+}
+
+export const signalMap = {
+  sectionLabel: '05 — Inside the Signal Map',
+  headline: {
+    before: 'Every signal becomes a move. Every move ',
+    italic: 'feeds the next one.',
+    after: '',
+  },
+  note: 'A sample of what the Signal Map is running for a live client today.',
+  columns: { signal: 'Signal', play: 'Play', priority: 'Priority' },
+  rows: [
+    {
+      signal: { primary: 'Exec hire at target account', meta: 'CRUNCHBASE · LINKEDIN' },
+      play: { primary: 'Relationship re-anchor', meta: 'SIGNAL CHAIN · 72HR' },
+      score: 92,
+    },
+    {
+      signal: { primary: 'Funding round announced', meta: 'APOLLO · PRESS' },
+      play: { primary: 'ICP re-scoring + outreach', meta: 'AUX · REPLY' },
+      score: 88,
+    },
+    {
+      signal: { primary: 'Deal stalls 30 days', meta: 'HUBSPOT' },
+      play: { primary: 'Multi-thread expansion', meta: 'SIGNAL CHAIN · CRM' },
+      score: 78,
+    },
+    {
+      signal: { primary: 'Champion changes jobs', meta: 'LINKEDIN' },
+      play: { primary: 'Congrats + new account entry', meta: 'HALO · SIGNAL CHAIN' },
+      score: 71,
+    },
+    {
+      signal: { primary: 'Customer hits 90 days post-close', meta: 'CRM' },
+      play: { primary: 'Expansion conversation trigger', meta: 'LOYALTY LOOP' },
+      score: 64,
+    },
+  ] as SignalMapRow[],
+  caption: 'Live sample · 5 of 47 active rules · Score reflects buyer readiness',
+}
+
 // ─── Integrations ───
 
 export const integrations = {
