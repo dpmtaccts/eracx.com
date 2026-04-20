@@ -2418,9 +2418,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Anchor a little above center so the top of the head sits in the
-     widest visible band of the circle and the hair isn't clipped. */
-  object-position: center 35%;
+  object-position: center 30%;
   display: block;
 }
 /* ERA symbol stamped in the top-right corner of the photo frame.
