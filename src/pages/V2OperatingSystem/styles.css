@@ -1346,7 +1346,9 @@
 }
 .era-v2 .score-strip .score-item {
   padding: 20px 32px;
-  display: flex; flex-direction: column; gap: 8px;
+  display: flex; flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
   border-right: 1px solid var(--rule);
 }
 .era-v2 .score-strip .score-item:last-child { border-right: none; }
@@ -1367,14 +1369,25 @@
 }
 .era-v2 .score-strip .score-bar {
   height: 4px;
+  width: 100%;
   background: var(--rule);
   border-radius: 2px;
   overflow: hidden;
+  flex: none;
+  align-self: flex-start;
 }
+/* The older AUX CSS higher in this file sets .score-bar-fill to
+   position: absolute; top/left/bottom: 0 — which, combined with the
+   score-strip's motion.div animating width, stretches the fill to
+   the full card height. Reset position explicitly here. */
 .era-v2 .score-strip .score-bar-fill {
+  position: static;
+  top: auto; left: auto; bottom: auto;
   height: 100%;
   background: var(--rust);
   border-radius: 2px;
+  transform: none;
+  transition: width 1s ease-out;
 }
 .era-v2 .score-strip .score-bar-fill.gold { background: var(--gold); }
 @media (max-width: 900px) {
