@@ -2398,8 +2398,10 @@
 }
 .era-v2 .founder-img {
   position: relative;
-  aspect-ratio: 4 / 5;
-  background: var(--paper-deep);
+  aspect-ratio: 1 / 1;
+  /* Card color (white in light mode) matches bio-nobg.png's baked
+     white background so the photo sits inside the frame cleanly. */
+  background: var(--card);
   border: 1px solid var(--rule);
   border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
@@ -2408,9 +2410,9 @@
   overflow: hidden;
 }
 .era-v2 .founder-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 92%;
+  height: 92%;
+  object-fit: contain;
   object-position: center center;
   display: block;
 }
@@ -2431,22 +2433,20 @@
   pointer-events: none;
   z-index: 1;
 }
-/* Small ERA diamond+slash mark in the top-right corner of the photo —
-   reads as an intentional brand stamp rather than a masked crop. */
+/* ERA symbol stamped in the top-right corner of the photo frame.
+   Uses era_symbol.svg as a CSS mask so it renders in rust brand
+   color regardless of the source SVG's own fill. */
 .era-v2 .founder-img-mark {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 32px;
-  height: 32px;
+  top: 18px;
+  right: 18px;
+  width: 28px;
+  height: 28px;
   z-index: 2;
-  color: var(--rust);
+  background-color: var(--rust);
+  -webkit-mask: url('/images/era_symbol.svg') center / contain no-repeat;
+          mask: url('/images/era_symbol.svg') center / contain no-repeat;
   pointer-events: none;
-}
-.era-v2 .founder-img-mark svg {
-  width: 100%;
-  height: 100%;
-  display: block;
 }
 .era-v2 .founder-body h2 {
   font-family: 'Instrument Sans', system-ui, sans-serif;
