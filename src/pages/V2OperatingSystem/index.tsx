@@ -3,6 +3,7 @@ import './styles.css'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Hero from './sections/Hero'
+import ProofStrip from './sections/ProofStrip'
 import Ghost from './sections/Ghost'
 import Stats from './sections/Stats'
 import Playbook from './sections/Playbook'
@@ -49,6 +50,7 @@ export default function V2OperatingSystem() {
     <div className="era-v2" data-theme={theme}>
       <Nav theme={theme} setTheme={setTheme} />
       <Hero />
+      <ProofStrip />
       <Ghost />
       <Stats />
       <Playbook />

@@ -165,6 +165,61 @@
   .era-v2 .logo-strip { gap: 24px; font-size: 18px; }
 }
 
+/* ─── Proof Strip (between Hero and Ghost) ─── */
+.era-v2 .proof-strip {
+  background: var(--paper-deep);
+  border-bottom: 1px solid var(--rule);
+  padding: 56px 0;
+}
+.era-v2 .proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+.era-v2 .proof-col {
+  padding: 8px 40px;
+  border-left: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.era-v2 .proof-col:first-child { border-left: none; padding-left: 0; }
+.era-v2 .proof-col:last-child { padding-right: 0; }
+.era-v2 .proof-descriptor {
+  font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.era-v2 .proof-outcome {
+  font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.era-v2 .proof-detail {
+  font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink-soft);
+  line-height: 1.35;
+}
+.era-v2 .proof-col.placeholder .proof-descriptor,
+.era-v2 .proof-col.placeholder .proof-outcome,
+.era-v2 .proof-col.placeholder .proof-detail {
+  color: var(--ink-muted);
+  opacity: 0.55;
+}
+@media (max-width: 768px) {
+  .era-v2 .proof-strip { padding: 40px 0; }
+  .era-v2 .proof-grid { grid-template-columns: 1fr; gap: 32px; }
+  .era-v2 .proof-col { border-left: none; padding: 0; }
+}
+
 /* ─── Ghost ─── */
 .era-v2 .ghost {
   padding: 180px 0;
@@ -1091,6 +1146,15 @@
   font-weight: 400;
 }
 .era-v2 .halo-header h2 .it { font-style: italic; color: var(--rust); }
+.era-v2 .halo-header .halo-subtitle {
+  font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 500;
+  margin-bottom: 20px;
+}
 .era-v2 .halo-header .tagline {
   font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
   font-style: italic; font-size: 22px;
@@ -1125,11 +1189,19 @@
 }
 .era-v2 .halo-cta-price {
   font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
-  font-style: italic; font-size: 22px;
-  color: var(--ink-soft);
+  font-size: 22px;
+  color: var(--ink);
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px;
 }
-.era-v2 .halo-cta-price strong {
-  font-style: normal; font-weight: 500; color: var(--ink);
+.era-v2 .halo-cta-price .price { font-weight: 700; }
+.era-v2 .halo-cta-price .duration { font-weight: 700; }
+.era-v2 .halo-cta-price .sep { color: var(--ink-muted); font-weight: 400; }
+.era-v2 .halo-cta-price .note {
+  font-size: 14px;
+  color: var(--ink-muted);
+  font-style: italic;
+  font-weight: 400;
+  flex-basis: 100%;
 }
 .era-v2 .halo-cta-row .btn-primary {
   padding: 14px 24px; font-size: 15px;
@@ -1295,26 +1367,61 @@
 .era-v2 .tiers { border-top: 1px solid var(--rule-strong); }
 .era-v2 .tier {
   padding: 40px 0; display: grid;
-  grid-template-columns: 2fr 1fr 1fr 2fr;
-  gap: 40px; align-items: center;
+  grid-template-columns: 1.3fr 1.5fr 1.8fr;
+  gap: 40px; align-items: start;
   border-bottom: 1px solid var(--rule);
   transition: padding-left 0.3s;
 }
 .era-v2 .tier:hover { padding-left: 16px; }
+.era-v2 .tier-name-stack { display: flex; flex-direction: column; gap: 6px; }
 .era-v2 .tier-name {
   font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
   font-size: 28px; font-style: italic;
+  line-height: 1.1;
+}
+.era-v2 .tier-subtitle {
+  font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+.era-v2 .tier-price-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
 }
 .era-v2 .tier-price {
   font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
-  font-size: 15px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
 }
-.era-v2 .tier-price.inquire { color: var(--ink-muted); font-style: italic; }
+.era-v2 .tier-price.inquire { color: var(--ink-muted); font-style: italic; font-weight: 500; }
+.era-v2 .tier-duration {
+  font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.era-v2 .tier-duration.muted { color: var(--ink-muted); font-weight: 500; font-style: italic; }
+.era-v2 .tier-sep { color: var(--ink-muted); font-weight: 400; }
 .era-v2 .tier-time {
   font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
-  font-size: 13px; color: var(--ink-muted); letter-spacing: 0.04em;
+  font-size: 13px;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
 }
-.era-v2 .tier-desc { font-size: 15px; color: var(--ink-soft); }
+.era-v2 .tier-desc-stack { display: flex; flex-direction: column; gap: 8px; }
+.era-v2 .tier-desc { font-size: 15px; color: var(--ink-soft); line-height: 1.45; }
+.era-v2 .tier-desc-sup {
+  font-size: 13px;
+  color: var(--ink-muted);
+  font-style: italic;
+  line-height: 1.4;
+}
 .era-v2 .entry-note {
   margin-top: 56px; text-align: center;
   font-family: 'DM Sans', 'Inter', system-ui, sans-serif;

@@ -42,6 +42,15 @@ export default function Halo() {
                 {halo.headline}
               </motion.h2>
               <motion.div
+                className="halo-subtitle"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.5 }}
+                variants={fadeUp}
+              >
+                {halo.subtitle}
+              </motion.div>
+              <motion.div
                 className="tagline"
                 initial="hidden"
                 whileInView="show"
@@ -86,7 +95,10 @@ export default function Halo() {
             variants={fadeUp}
           >
             <div className="halo-cta-price">
-              {halo.priceLead} <strong>{halo.priceValue}</strong> {halo.priceNote}
+              <span className="price">{halo.price}</span>
+              <span className="sep">·</span>
+              <span className="duration">{halo.duration}</span>
+              <span className="note">{halo.priceNote}</span>
             </div>
             <a href={halo.cta.href} className="btn-primary">
               {halo.cta.label}

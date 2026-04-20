@@ -15,6 +15,39 @@ export const nav = {
   cta: { label: 'Start with an audit', href: '#entry' } as CtaLink,
 }
 
+// ─── Proof strip (sits between Hero and Ghost) ───
+
+export type ProofColumn = {
+  descriptor: string
+  outcome: string          // the big number, e.g. "$2M"
+  detail: string           // "in new pipeline · under 4 months"
+  isPlaceholder?: boolean  // renders in muted treatment if true
+}
+
+export const proofStrip: { columns: ProofColumn[] } = {
+  columns: [
+    {
+      descriptor: 'SAAS TALENT MARKETPLACE',
+      outcome: '$2M',
+      detail: 'in new pipeline · under 4 months',
+    },
+    {
+      // TODO: confirm outcome from Netrush or Navalent engagement.
+      descriptor: 'OUTCOME 2',
+      outcome: '—',
+      detail: 'pending · quantified outcome + time-to-result',
+      isPlaceholder: true,
+    },
+    {
+      // TODO: confirm outcome from Miniac or Seismic engagement.
+      descriptor: 'OUTCOME 3',
+      outcome: '—',
+      detail: 'pending · quantified outcome + time-to-result',
+      isPlaceholder: true,
+    },
+  ],
+}
+
 export const hero = {
   headline: { before: 'ERA runs the ', italic: 'modern', after: ' B2B playbook.' },
   sub: "Measurement, signals, and operations for the part of the buyer journey your pipeline doesn't see.",
@@ -362,6 +395,7 @@ export const integrations = {
 export const halo = {
   sectionLabel: '09 — The productized surface',
   headline: 'Halo.',
+  subtitle: 'The LinkedIn operating layer',
   tagline: 'The operating layer for executive presence on LinkedIn.',
   sideBody: [
     'Halo plugs one executive, or a whole GTM team, into the Signal River and Signal Map. Voice discovery builds the content engine. Warmth scoring triggers the outreach. Every post and every DM is operated by ERA.',
@@ -387,8 +421,8 @@ export const halo = {
         'Weekly output. Monthly scoring. Quarterly review. You approve, we ship. No training programs, no "best practices" decks.',
     },
   ],
-  priceLead: 'Starting at',
-  priceValue: '$999/month.',
+  price: 'From $999/mo',
+  duration: 'ongoing',
   priceNote: 'Scope varies by team size.',
   cta: { label: 'See if Halo fits', href: '#entry' } as CtaLink,
 }
@@ -406,7 +440,7 @@ export const expect = {
       name: 'Design + Install',
       months: 'Months 1–2',
       desc:
-        'Signal architecture is defined. Trigger logic is built. First outreach goes live by week three. You see measurable activity before month two ends.',
+        'Signal architecture defined by week two. First outreach live by week three. Measurable activity before month two ends.',
     },
     {
       label: 'Phase 2',
@@ -475,10 +509,13 @@ export const clients = {
 
 export type Tier = {
   name: string
-  price: string
+  subtitle?: string
+  price: string               // primary price, bold
+  duration?: string           // "one-time" | "ongoing" | null — rendered with same weight as price
+  time?: string               // delivery window, muted (e.g. "14 days")
   priceIsInquire?: boolean
-  time: string
   desc: string
+  descSupplement?: string     // optional second line for tiers that need extra clarity
 }
 
 export const engage = {
@@ -489,32 +526,35 @@ export const engage = {
     {
       name: 'Revenue Signal Audit',
       price: '$15,000',
+      duration: 'one-time',
       time: '14 days',
       desc:
         'A diagnostic against the new playbook. See where you stand and what to change first.',
+      descSupplement:
+        'Includes GTM strategy and playbook, delivered as a written deliverable.',
     },
     {
       name: 'Halo',
-      price: 'From $999 / mo',
-      time: 'Ongoing',
-      desc:
-        'The productized surface. One executive or your whole GTM team, operated on LinkedIn.',
+      subtitle: 'The LinkedIn operating layer',
+      price: 'From $999/mo',
+      duration: 'ongoing',
+      desc: 'Voice-tuned content and signal-triggered outreach, operated on LinkedIn.',
     },
     {
-      name: '90-Day Architecture',
+      // TODO: confirm Signal Only price and duration tag (flagged open in v7 spec).
+      name: 'Signal Only',
       price: 'By engagement',
       priceIsInquire: true,
-      time: '90 days',
+      duration: 'TBD',
       desc:
-        'Skip the diagnosis. Build the target list, signal system, and operating cadence.',
+        'Signal architecture and the live feed, without the outreach operation. You run the plays.',
     },
     {
-      name: 'Full Operations',
-      price: 'By engagement',
-      priceIsInquire: true,
-      time: 'Ongoing',
+      name: 'The System',
+      price: 'From $15,000/month',
+      duration: 'ongoing',
       desc:
-        'We run the plays monthly. You keep the relationships and close the work.',
+        'Strategy and execution. We design the playbook and operate it for you.',
     },
   ] as Tier[],
 }

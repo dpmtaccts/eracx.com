@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { engage } from '../content'
+import { engage, type Tier } from '../content'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -51,10 +51,15 @@ export default function Engage() {
           >
             {engage.tiers.map((t) => (
               <motion.div key={t.name} className="tier" variants={row}>
-                <div className="tier-name">{t.name}</div>
-                <div className={`tier-price${t.priceIsInquire ? ' inquire' : ''}`}>{t.price}</div>
-                <div className="tier-time">{t.time}</div>
-                <div className="tier-desc">{t.desc}</div>
+                <div className="tier-name-stack">
+                  <div className="tier-name">{t.name}</div>
+                  {t.subtitle && <div className="tier-subtitle">{t.subtitle}</div>}
+                </div>
+                <PriceRow tier={t} />
+                <div className="tier-desc-stack">
+                  <div className="tier-desc">{t.desc}</div>
+                  {t.descSupplement && <div className="tier-desc-sup">{t.descSupplement}</div>}
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -70,5 +75,29 @@ export default function Engage() {
         </div>
       </div>
     </section>
+  )
+}
+
+function PriceRow({ tier }: { tier: Tier }) {
+  // "TBD" renders muted so Signal Only signals that the duration is still open.
+  const durationIsPlaceholder = tier.duration === 'TBD'
+  return (
+    <div className="tier-price-row">
+      <span className={`tier-price${tier.priceIsInquire ? ' inquire' : ''}`}>{tier.price}</span>
+      {tier.duration && (
+        <>
+          <span className="tier-sep">·</span>
+          <span className={`tier-duration${durationIsPlaceholder ? ' muted' : ''}`}>
+            {tier.duration}
+          </span>
+        </>
+      )}
+      {tier.time && (
+        <>
+          <span className="tier-sep">·</span>
+          <span className="tier-time">{tier.time}</span>
+        </>
+      )}
+    </div>
   )
 }
