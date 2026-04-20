@@ -2405,43 +2405,32 @@
   aspect-ratio: 1 / 1;
   background: var(--card);
   border: 1px solid var(--rule);
-  /* Circular mask — the forehead crop line on bio-nobg.png gets absorbed
-     by the curved top of the circle so it reads as framing, not a cut. */
   border-radius: 50%;
   display: block;
   font-family: 'Instrument Sans', system-ui, sans-serif;
   font-size: 12px; color: var(--ink-muted);
   overflow: hidden;
   width: 100%;
-  max-width: 460px;
+  max-width: 340px;
   margin: 0 auto;
 }
 .era-v2 .founder-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Anchor the image just below the top so eyes/face land at the circle's
-     widest band and the crop line falls into the very top arc. */
-  object-position: center 18%;
+  object-position: center center;
   display: block;
+  /* Shift the photo down inside the circle so the forehead crop line
+     sits well above the visible area and the face centers lower in
+     the frame. Tune the % to move further up or down. */
+  transform: translateY(14%);
 }
 /* ERA symbol stamped in the top-right corner of the photo frame.
    Uses era_symbol.svg as a CSS mask so it renders in rust brand
    color regardless of the source SVG's own fill. */
-.era-v2 .founder-img-mark {
-  /* Positioned outside the circle (in the founder-body's column gap),
-     sitting bottom-right of the circle as a small signature stamp. */
-  position: absolute;
-  bottom: -8px;
-  right: 8%;
-  width: 32px;
-  height: 32px;
-  z-index: 3;
-  background-color: var(--ink);
-  -webkit-mask: url('/images/era_symbol.svg') center / contain no-repeat;
-          mask: url('/images/era_symbol.svg') center / contain no-repeat;
-  pointer-events: none;
-}
+/* .founder-img-mark removed per v8: the circle mask itself is the
+   visual treatment. Keep this placeholder comment so future
+   iterations know the spot is intentionally empty. */
 .era-v2 .founder-body h2 {
   font-family: 'Instrument Sans', system-ui, sans-serif;
   font-size: clamp(36px, 4.5vw, 56px);

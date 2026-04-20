@@ -118,20 +118,17 @@ export default function Founder() {
           </div>
 
           <motion.div
-            className="founder-img-wrap"
+            className="founder-img"
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeUp}
           >
-            <div className="founder-img">
-              {founder.imageSrc ? (
-                <img src={founder.imageSrc} alt={founder.imageAlt} />
-              ) : (
-                <span>[photograph of Justin — TODO]</span>
-              )}
-            </div>
-            <span className="founder-img-mark" aria-hidden="true" />
+            {founder.imageSrc ? (
+              <img src={founder.imageSrc} alt={founder.imageAlt} />
+            ) : (
+              <span>[photograph of Justin — TODO]</span>
+            )}
           </motion.div>
         </div>
       </div>
