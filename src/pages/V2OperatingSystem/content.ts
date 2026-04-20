@@ -55,15 +55,16 @@ export const proofStrip: { columns: ProofColumn[] } = {
 
 export const hero = {
   headline: { before: 'The modern B2B playbook. ', italic: 'Run for you.', after: '' },
-  sub: "Measurement, signals, and operations for the part of the buyer journey your pipeline doesn't see.",
+  sub: 'ERA operates the signals, scoring, and outreach that shape how buyers decide before they ever contact your team.',
   primary: { label: 'Build your new playbook', href: '#entry' } as CtaLink,
+  secondary: { label: 'Request an audit', href: '#entry' } as CtaLink,
   clientsLabel: 'TRUSTED BY',
   clients: ['Netrush', 'POP', 'Miniac', 'Navalent', 'Seismic'],
 }
 
 // v8: Ghost + Stats collapsed into a single Intro section.
 export const intro = {
-  sectionLabel: '02 · The new growth playbook',
+  sectionLabel: "01 · The decision you don't see",
   headline: 'Meet the new growth playbook.',
   body: [
     'Most B2B decisions form before a vendor is ever contacted.',
@@ -90,7 +91,7 @@ export const intro = {
 }
 
 export const playbook = {
-  sectionLabel: '03 · Two playbooks',
+  sectionLabel: '02 · Two playbooks',
   headline: { before: 'Old playbook. ', italic: 'New playbook.', after: '' },
   rows: [
     ['Drive traffic. Capture MQLs.', 'Shape ambient awareness. Own the shortlist.'],
@@ -102,6 +103,79 @@ export const playbook = {
     ['The funnel.', 'The buyer journey.'],
   ] as [string, string][],
   closer: 'We run the right column.',
+}
+
+// ─── Loops (section 03 — the new v8 centerpiece) ───
+
+export type LoopStage = {
+  name: string
+  lede: string
+  body: string
+}
+
+export const loops = {
+  sectionLabel: '03 · The playbook',
+  headline: { before: 'Runs in ', italic: 'loops.', after: '' },
+  lede: 'Nine stages. One continuous motion. Every interaction feeds the next.',
+  hint: 'TAP ANY STAGE TO EXPLORE IT',
+  footerLine: 'Operational in week three. From there, the loop runs.',
+  cta: { label: 'Build your new playbook', href: '#entry' } as CtaLink,
+  autoCycleMs: 4500,
+  stages: [
+    {
+      name: 'Detect',
+      lede: 'Signals the moment a buying window opens.',
+      body:
+        'Exec hires, funding rounds, tech installs, hiring bursts. The real intent, before the form fill.',
+    },
+    {
+      name: 'Enrich',
+      lede: 'Adds the context that makes a signal actionable.',
+      body:
+        'ICP fit, role, team shape, tech stack. Every signal arrives scored and routed.',
+    },
+    {
+      name: 'Score',
+      lede: 'Ranks every account by warmth and readiness.',
+      body: 'Fit. Wallet. Readiness. One composite, updated as signals land.',
+    },
+    {
+      name: 'Reach',
+      lede: 'Opens the first conversation on the right channel.',
+      body:
+        'LinkedIn, email, voice note. The opening tuned to the role and the moment.',
+    },
+    {
+      name: 'Respond',
+      lede: 'Closes the loop on every buyer action.',
+      body:
+        'A reply, a visit, a webinar attend. Each one triggers the next move, without waiting on a rep to remember.',
+    },
+    {
+      name: 'Nurture',
+      lede: 'Keeps the relationship warm between deals.',
+      body:
+        'Signal-triggered content. Not a drip. Every touch is a response to something the buyer actually did.',
+    },
+    {
+      name: 'Close',
+      lede: 'Gets the committee to consensus.',
+      body:
+        'Deal stall detection. Champion maps. Committee alignment plays that run whether the rep is watching or not.',
+    },
+    {
+      name: 'Retain',
+      lede: 'Keeps closed accounts confident and expanding.',
+      body:
+        'Post-close warmth tracking. Usage signals. The moment confidence drops, we know.',
+    },
+    {
+      name: 'Expand',
+      lede: 'Turns retention into referral and new pipeline.',
+      body:
+        'Champion job changes. NPS replies. The compounding layer. A closed account becomes three open ones.',
+    },
+  ] as LoopStage[],
 }
 
 export type SystemComponent = {
@@ -162,11 +236,12 @@ export type SignalTile = {
 }
 
 export const signalLibrary = {
-  sectionLabel: 'The Signal River · Feeds the loops',
-  headline: { before: 'Every signal we watch.', italic: '', after: '' },
+  sectionLabel: '04 · The Signal River',
+  headline: { before: 'Every signal ', italic: 'we watch.', after: '' },
   note:
-    'Thirty active signal types across intent, relationship, product, and pipeline. Each one fires a specific play, on a specific cadence, through a specific stack.',
-  countLabel: '24 of 47 signals shown · full library in the audit',
+    'Thirty active signal types across intent, relationship, product, and pipeline. Each one fires a specific outcome, on a specific cadence, through a specific stack.',
+  countLabel: '24 of 47 signals shown.',
+  countMeta: 'THE FULL LIBRARY SHIPS WITH EVERY AUDIT',
   closer: '',
   tiles: [
     { name: 'Exec Hire', tools: 'Apollo · LinkedIn', play: 'Relationship re-anchor', tone: 'primary' },
@@ -211,36 +286,36 @@ export const signalMap = {
     italic: 'feeds the next one.',
     after: '',
   },
-  note: 'A sample of what the Signal Map is running for a live client today.',
+  note: 'A sample of signals driving action today for a live client.',
   columns: { signal: 'Signal', play: 'Outcome', priority: 'Priority' },
   rows: [
     {
       signal: { primary: 'Exec hire at target account', meta: 'CRUNCHBASE · LINKEDIN' },
-      play: { primary: '+1 exec relationship anchored', meta: 'SIGNAL CHAIN · 72HR' },
+      play: { primary: '+1 exec relationship engaged within 72 hours', meta: 'SIGNAL CHAIN · 72HR' },
       score: 92,
     },
     {
       signal: { primary: 'Funding round announced', meta: 'APOLLO · PRESS' },
-      play: { primary: '+3 new ICP accounts engaged', meta: 'AUX · REPLY · 5D' },
+      play: { primary: 'Account reprioritized · 3 new touches queued', meta: 'AUX · REPLY · 5D' },
       score: 88,
     },
     {
       signal: { primary: 'Deal stalls 30 days', meta: 'HUBSPOT' },
-      play: { primary: '+4 committee roles re-engaged', meta: 'SIGNAL CHAIN · CRM · 48HR' },
+      play: { primary: '+3 committee roles engaged · deal restarted', meta: 'SIGNAL CHAIN · CRM · 48HR' },
       score: 78,
     },
     {
       signal: { primary: 'Champion changes jobs', meta: 'LINKEDIN' },
-      play: { primary: '+2 accounts re-anchored', meta: 'HALO · SIGNAL CHAIN · 1WK' },
+      play: { primary: 'New account opened · warm intro carried over', meta: 'HALO · SIGNAL CHAIN · 1WK' },
       score: 71,
     },
     {
       signal: { primary: 'Customer hits 90 days post-close', meta: 'CRM' },
-      play: { primary: '+1 expansion conversation opened', meta: 'LOYALTY LOOP · 24HR' },
+      play: { primary: 'Expansion conversation booked', meta: 'LOYALTY LOOP · 24HR' },
       score: 64,
     },
   ] as SignalMapRow[],
-  caption: 'A sample of signals driving action today for a live client',
+  caption: 'Live sample · 5 of 47 active rules · Score reflects buyer readiness',
 }
 
 // ─── AUX (section 06 deep dive) ───
@@ -270,12 +345,12 @@ export type AuxTier = {
 export const aux = {
   sectionLabel: '06 · Inside AUX',
   headline: {
-    before: 'We measure relationships, ',
-    italic: 'not campaigns.',
-    after: '',
+    before: 'Build the ',
+    italic: 'relationship infrastructure.',
+    after: ' Measured daily.',
   },
   note:
-    'Five dimensions. Three sub-scores. One composite. Relationship depth, measured daily and updated as signals land.',
+    'Campaigns are one execution. The relationship is the asset. ERA builds the infrastructure, scores every account, and tracks the whole system daily. The compounding layer most teams never build.',
   account: {
     name: 'Capital One',
     domain: 'capitalone.com',
@@ -324,12 +399,12 @@ export type MirrorSource = {
 export const aiMirror = {
   sectionLabel: '07 · Inside the AI Mirror',
   headline: {
-    before: 'Map what they see to ',
-    italic: 'what you want them to see.',
-    after: '',
+    before: 'See what the ',
+    italic: 'agents',
+    after: ' say. See where they got it.',
   },
   lede:
-    'The first impression most B2B buyers form is a paragraph an LLM writes about you. We read every word, trace every source, and fix what\'s off.',
+    "The first impression most B2B buyers form is a paragraph an LLM writes about you. We read every word, trace every source, and fix what's off.",
   framing:
     "The 22 people on the buying committee are hearing about you from sources you don't own.",
   demoHeader: 'era / ai-mirror / helix-ops.com',
@@ -381,12 +456,13 @@ export const aiMirror = {
 export const integrations = {
   sectionLabel: '08 · The stack we operate',
   headline: { before: 'Built to ', italic: 'maximize outcomes.', after: '' },
-  note: 'These are the tools we use and integrate.',
+  note:
+    'These are the tools we use and integrate. ERA is the operating layer between them and your revenue.',
   closer: "If we don't integrate with it yet, we build the bridge.",
   columns: [
     { category: 'Enrichment & intent', tools: ['Clay', 'Apollo', 'Unify', 'HockeyStack'] },
     { category: 'CRM', tools: ['HubSpot', 'Copper', 'Day.ai'] },
-    { category: 'Automation & AI', tools: ['Zapier', 'Reply', 'Salesforge', 'Custom pipes'] },
+    { category: 'Automation & AI', tools: ['Zapier', 'Claude', 'Custom pipes'] },
   ],
 }
 
@@ -522,7 +598,16 @@ export const engage = {
   sectionLabel: '12 · Engage',
   headline: { before: 'Four ways ', italic: 'in.', after: '' },
   note: "Most start with the audit. We'll tell you within 48 hours which one fits.",
+  fitLine:
+    'Built for B2B companies $10M to $100M. Not for B2C, companies under $5M, or teams shopping for a content agency.',
   tiers: [
+    {
+      name: 'Halo',
+      subtitle: 'THE LINKEDIN OPERATING LAYER',
+      price: 'From $999/mo',
+      duration: 'ongoing',
+      desc: 'Voice-tuned content and signal-triggered outreach, operated on LinkedIn.',
+    },
     {
       name: 'Revenue Signal Audit',
       subtitle: 'THE DIAGNOSTIC',
@@ -533,16 +618,8 @@ export const engage = {
         'A diagnostic against the new playbook. See where you stand and what to change first. Includes GTM strategy and playbook, delivered as a written deliverable.',
     },
     {
-      name: 'Halo',
-      subtitle: 'THE LINKEDIN OPERATING LAYER',
-      price: 'From $999/mo',
-      duration: 'ongoing',
-      desc: 'Voice-tuned content and signal-triggered outreach, operated on LinkedIn.',
-    },
-    {
-      // TODO: confirm Signal Only duration tag (open in v7 spec). Pricing
-      // screenshot shared by Justin shows $8.5K/mo with 3-month minimum; v7
-      // spec writes "By engagement". Using v7 spec wording pending confirmation.
+      // TODO: confirm Signal Only pricing. v7 spec writes "By engagement"; a
+      // separate pricing screenshot shows $8.5K/mo with a 3-month minimum.
       name: 'Signal Only',
       subtitle: 'INTEL + WEEKLY REVIEW',
       price: 'By engagement',
@@ -584,13 +661,31 @@ export const fit = {
 // ─── Founder ───
 
 export const founder = {
-  sectionLabel: '14 · Who runs it',
-  headline: { before: 'Justin Marshall. ', italic: 'Twenty years in direct response.', after: '' },
+  sectionLabel: '13 · Who runs it',
+  headline: { before: 'Decades of ', italic: 'growth.', after: '' },
   imageAlt: 'Justin Marshall',
-  // TODO: add a real photograph of Justin to /public and update imageSrc.
-  imageSrc: '',
-  body:
-    'Justin ran enterprise accounts at a major direct marketing agency for two decades, back when marketing was measured by how many envelopes got opened. Every buyer interaction in 2026 is still direct response. ERA applies that lens to the current market.',
+  // TODO: confirm final founder photo with Justin. Using existing asset until then.
+  imageSrc: '/images/justinmarshall.png',
+  body: [
+    'I love making connections: introducing two people I respect, knowing something good will follow. There are few things more rewarding.',
+    "I've spent decades building companies of all stages. The most effective go-to-market programs focus on creating repeatable, measurable human connection. I built ERA to create systems that scale connection and reduce pipeline uncertainty.",
+    "If you're interested in creating stability in your growth actions, let's chat.",
+  ],
+  byline: { name: 'JUSTIN MARSHALL', role: 'FOUNDER' },
+  credentialsLabel: 'PREVIOUSLY BUILT GROWTH FOR',
+  credentials: [
+    { name: 'Microsoft', src: '/images/navalent/microsoft.png' },
+    { name: 'Chase', src: '/images/navalent/chase-logo.png' },
+    { name: 'P&G', src: '/images/navalent/P&G_logo 1.png' },
+    { name: 'IHG', src: '/images/navalent/InterContinental_Hotels_Group.svg 1.png' },
+    { name: 'Amazon', src: '/images/navalent/Amazon_logo.svg 1.png' },
+    // TODO: source Intel logo asset. Rendering as text until file lands.
+    { name: 'Intel', src: '' },
+    { name: 'T-Mobile', src: '/images/navalent/tmobile.png' },
+  ],
+  cta: { label: "Let's chat", href: '#entry' } as CtaLink,
+  // Optional advisors block, off by default per v8 spec.
+  advisorsEnabled: false,
   advisors: [
     { name: 'Ron Carucci', role: 'Co-founder, Navalent' },
     { name: 'Ryan Hammill', role: 'Former CMO' },
@@ -620,8 +715,8 @@ export const footer = {
       items: [
         { label: 'Halo', href: '#halo' },
         { label: 'Audit', href: '#entry' },
-        { label: 'Architecture', href: '#entry' },
-        { label: 'Operations', href: '#entry' },
+        { label: 'Signal Only', href: '#entry' },
+        { label: 'The System', href: '#entry' },
       ],
     },
     {

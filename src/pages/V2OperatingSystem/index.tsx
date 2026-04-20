@@ -6,7 +6,7 @@ import Hero from './sections/Hero'
 import ProofStrip from './sections/ProofStrip'
 import Intro from './sections/Intro'
 import Playbook from './sections/Playbook'
-import System from './sections/System'
+import Loops from './sections/Loops'
 import SignalLibrary from './sections/SignalLibrary'
 import SignalMap from './sections/SignalMap'
 import Aux from './sections/Aux'
@@ -16,7 +16,6 @@ import Halo from './sections/Halo'
 import Expect from './sections/Expect'
 import Clients from './sections/Clients'
 import Engage from './sections/Engage'
-import Fit from './sections/Fit'
 import Founder from './sections/Founder'
 import Close from './sections/Close'
 
@@ -52,7 +51,7 @@ export default function V2OperatingSystem() {
       <ProofStrip />
       <Intro />
       <Playbook />
-      <System />
+      <Loops />
       <SignalLibrary />
       <SignalMap />
       <Aux />
@@ -62,7 +61,6 @@ export default function V2OperatingSystem() {
       <Expect />
       <Clients />
       <Engage />
-      <Fit />
       <Founder />
       <Close />
       <Footer />

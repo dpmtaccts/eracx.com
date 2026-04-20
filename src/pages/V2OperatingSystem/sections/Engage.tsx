@@ -71,6 +71,15 @@ export default function Engage() {
           >
             {engage.note}
           </motion.div>
+          <motion.div
+            className="entry-fit-line"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.5 }}
+            variants={fadeUp}
+          >
+            {engage.fitLine}
+          </motion.div>
         </div>
       </div>
     </section>

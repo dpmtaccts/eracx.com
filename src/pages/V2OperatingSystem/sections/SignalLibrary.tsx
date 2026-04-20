@@ -72,10 +72,10 @@ export default function SignalLibrary() {
         </motion.div>
 
         <div className="lib-footer">
-          <div className="lib-count">{signalLibrary.countLabel}</div>
-          {signalLibrary.closer && (
-            <div className="lib-note-right">{signalLibrary.closer}</div>
-          )}
+          <div className="lib-count-stack">
+            <div className="lib-count">{signalLibrary.countLabel}</div>
+            <div className="lib-count-meta">{signalLibrary.countMeta}</div>
+          </div>
         </div>
       </div>
     </section>

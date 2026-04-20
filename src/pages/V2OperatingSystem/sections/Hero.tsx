@@ -28,6 +28,9 @@ export default function Hero() {
             <a href={hero.primary.href} className="btn-primary">
               {hero.primary.label}
             </a>
+            <a href={hero.secondary.href} className="btn-secondary">
+              {hero.secondary.label}
+            </a>
           </motion.div>
           <motion.div className="logo-strip" variants={item}>
             <span className="label">{hero.clientsLabel}</span>
