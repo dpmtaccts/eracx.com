@@ -321,8 +321,10 @@ export const signalMap = {
 // ─── AUX (section 06 deep dive) ───
 
 export type AuxActivity = {
-  role: string
-  action: string
+  // Redacted treatment blurs `person` text (name + role) at render. Kept
+  // as realistic placeholder strings for visual weight.
+  person: string
+  detail: string
   points: string
   time: string
   tone: 'primary' | 'warm' | 'cool'
@@ -350,7 +352,8 @@ export const aux = {
     after: ' Measured daily.',
   },
   note:
-    'Campaigns are one execution. The relationship is the asset. ERA builds the infrastructure, scores every account, and tracks the whole system daily. The compounding layer most teams never build.',
+    'Campaigns are one execution. The relationship is the asset. ERA builds the infrastructure, scores every account, and tracks the whole system daily.',
+  redactionNote: 'Names redacted · real client data',
   account: {
     name: 'Capital One',
     domain: 'capitalone.com',
@@ -375,13 +378,12 @@ export const aux = {
     ] as AuxScore[],
     composite: 79,
     activity: [
-      { role: 'Economic Buyer', action: 'accepted LinkedIn connect', points: '+10', time: '2d ago', tone: 'primary' },
-      { role: 'Champion', action: 'downloaded Amazon audit template', points: '+12', time: '5d ago', tone: 'primary' },
-      { role: 'Technical Evaluator', action: 'replied positive to content email', points: '+8', time: '7d ago', tone: 'warm' },
-      { role: 'Champion', action: 'attended Amazon strategy webinar', points: '+15', time: '11d ago', tone: 'cool' },
+      { person: 'Sarah Chen · Economic Buyer', detail: 'LinkedIn connect accepted', points: '+10', time: '2d', tone: 'primary' },
+      { person: 'Marcus Johnson · Champion', detail: 'Content download · Q4 Trends Report', points: '+12', time: '5d', tone: 'primary' },
+      { person: 'Amy Liu · Technical Evaluator', detail: 'Email reply · positive sentiment', points: '+8', time: '7d', tone: 'warm' },
+      { person: 'Jordan Taylor · Executive Sponsor', detail: 'Webinar attended · AI in FinTech', points: '+15', time: '11d', tone: 'cool' },
     ] as AuxActivity[],
   },
-  // v5/v8: tier-distribution section removed. Data retained in case needed later.
 }
 
 // ─── AI Mirror (section 07 static deep dive) ───
@@ -453,8 +455,33 @@ export const aiMirror = {
 
 // ─── Integrations ───
 
+// ─── Audit (section 08 · Start here — new in v8) ───
+
+export type AuditShot = {
+  src: string
+  alt: string
+}
+
+export const audit = {
+  sectionLabel: '08 · Start here',
+  headline: {
+    before: 'AI and automation without strategy is ',
+    italic: 'noise.',
+    after: '',
+  },
+  lede:
+    'Every company is stacking AI. The ones winning are starting with the playbook. The GTM audit is 14 days. You leave with a scored gap analysis, a new playbook, and a 90-day operating plan.',
+  caption: "These are from audits we've delivered. Yours would look like this, scored against your stack.",
+  cta: { label: 'Get your audit', href: '#entry' } as CtaLink,
+  shots: [
+    { src: '/images/audit_screenshots/convictioncascade.png', alt: 'Sample audit · conviction cascade view (anonymized)' },
+    { src: '/images/audit_screenshots/dashboard.png', alt: 'Sample audit · dashboard view (anonymized)' },
+    { src: '/images/audit_screenshots/agentic.png', alt: 'Sample audit · agentic visibility view (anonymized)' },
+  ] as AuditShot[],
+}
+
 export const integrations = {
-  sectionLabel: '08 · The stack we operate',
+  sectionLabel: '09 · The stack we operate',
   headline: { before: 'Built to ', italic: 'maximize outcomes.', after: '' },
   note:
     'These are the tools we use and integrate. ERA is the operating layer between them and your revenue.',
@@ -469,7 +496,7 @@ export const integrations = {
 // ─── Halo ───
 
 export const halo = {
-  sectionLabel: '09 · The productized surface',
+  sectionLabel: '10 · The productized surface',
   headline: 'Halo.',
   subtitle: 'The LinkedIn operating layer',
   tagline: 'The operating layer for executive presence on LinkedIn.',
@@ -506,7 +533,7 @@ export const halo = {
 // ─── What to Expect ───
 
 export const expect = {
-  sectionLabel: '10 · What to expect',
+  sectionLabel: '11 · What to expect',
   headline: { before: 'The return in month ten is ', italic: 'structurally different', after: ' from month three.' },
   sub: "This is infrastructure, not a sprint. The system compounds. Here's what the first year actually looks like.",
   markers: ['Months 1 – 2', 'Months 3 – 4', 'Months 5 – 12+'],
@@ -547,7 +574,7 @@ export type ClientCard = {
 }
 
 export const clients = {
-  sectionLabel: '11 · Who trusts us',
+  sectionLabel: '12 · Who trusts us',
   headline: { before: 'The people we work ', italic: 'with.', after: '' },
   items: [
     {
@@ -595,7 +622,7 @@ export type Tier = {
 }
 
 export const engage = {
-  sectionLabel: '12 · Engage',
+  sectionLabel: '13 · Engage',
   headline: { before: 'Four ways ', italic: 'in.', after: '' },
   note: "Most start with the audit. We'll tell you within 48 hours which one fits.",
   fitLine:
@@ -661,7 +688,7 @@ export const fit = {
 // ─── Founder ───
 
 export const founder = {
-  sectionLabel: '13 · Who runs it',
+  sectionLabel: '14 · Who runs it',
   headline: { before: 'Decades of ', italic: 'growth.', after: '' },
   imageAlt: 'Justin Marshall',
   // TODO: confirm final founder photo with Justin. Using existing asset until then.

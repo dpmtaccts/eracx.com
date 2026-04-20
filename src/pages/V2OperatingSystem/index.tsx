@@ -11,6 +11,7 @@ import SignalLibrary from './sections/SignalLibrary'
 import SignalMap from './sections/SignalMap'
 import Aux from './sections/Aux'
 import AiMirror from './sections/AiMirror'
+import Audit from './sections/Audit'
 import Integrations from './sections/Integrations'
 import Halo from './sections/Halo'
 import Expect from './sections/Expect'
@@ -56,6 +57,7 @@ export default function V2OperatingSystem() {
       <SignalMap />
       <Aux />
       <AiMirror />
+      <Audit />
       <Integrations />
       <Halo />
       <Expect />
