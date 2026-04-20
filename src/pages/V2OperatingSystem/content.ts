@@ -528,6 +528,11 @@ export const halo = {
   duration: 'ongoing',
   priceNote: 'Scope varies by team size.',
   cta: { label: 'See if Halo fits', href: '#entry' } as CtaLink,
+  screenshots: [
+    { src: '/images/halo_screenshots/dashboard.png', alt: 'Halo · dashboard view' },
+    { src: '/images/halo_screenshots/engagement.png', alt: 'Halo · engagement view' },
+    { src: '/images/halo_screenshots/score.png', alt: 'Halo · warmth score view' },
+  ],
 }
 
 // ─── What to Expect ───

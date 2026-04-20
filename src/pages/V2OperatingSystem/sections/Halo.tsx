@@ -72,6 +72,19 @@ export default function Halo() {
             </motion.div>
           </div>
           <motion.div
+            className="halo-shots"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.15 }}
+            variants={stagger}
+          >
+            {halo.screenshots.map((s) => (
+              <motion.div key={s.src} className="halo-shot" variants={feat}>
+                <img src={s.src} alt={s.alt} loading="lazy" />
+              </motion.div>
+            ))}
+          </motion.div>
+          <motion.div
             className="halo-features"
             initial="hidden"
             whileInView="show"

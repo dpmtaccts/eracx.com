@@ -2047,6 +2047,30 @@
 .era-v2 .halo-side { font-size: 17px; line-height: 1.6; color: var(--ink-soft); }
 .era-v2 .halo-side p { margin-bottom: 16px; }
 .era-v2 .halo-side p:last-child { color: var(--ink); font-weight: 500; }
+.era-v2 .halo-shots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 64px;
+}
+.era-v2 .halo-shot {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  aspect-ratio: 4 / 3;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.era-v2 .halo-shot img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.era-v2 .halo-shot:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.12);
+}
 .era-v2 .halo-features {
   display: grid; grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--rule-strong);
@@ -2096,6 +2120,7 @@
 .era-v2 .halo-cta-row .btn-primary:hover { background: var(--rust-deep); transform: translateY(-1px); }
 @media (max-width: 900px) {
   .era-v2 .halo-intro { grid-template-columns: 1fr; gap: 40px; }
+  .era-v2 .halo-shots { grid-template-columns: 1fr; gap: 16px; margin-bottom: 48px; }
   .era-v2 .halo-features { grid-template-columns: 1fr; }
   .era-v2 .halo-feat { border-right: none; border-bottom: 1px solid var(--rule); padding: 32px 0 !important; }
   .era-v2 .halo-feat:last-child { border-bottom: none; }
