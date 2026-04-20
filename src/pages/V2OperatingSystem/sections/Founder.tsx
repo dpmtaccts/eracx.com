@@ -129,6 +129,20 @@ export default function Founder() {
             ) : (
               <span>[photograph of Justin — TODO]</span>
             )}
+            <span className="founder-img-mark" aria-hidden="true">
+              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <path
+                  d="M 6,2 Q 2,2 2,6 L 2,16 L 16,30 L 30,30 Q 30,30 30,26 L 30,16 L 16,2 Z"
+                  fill="currentColor"
+                />
+                <line
+                  x1="6" y1="26" x2="26" y2="6"
+                  stroke="var(--paper)"
+                  strokeWidth="2.5"
+                  strokeLinecap="square"
+                />
+              </svg>
+            </span>
           </motion.div>
         </div>
       </div>
