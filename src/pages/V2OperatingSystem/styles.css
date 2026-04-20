@@ -2418,12 +2418,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  /* Anchor a little above center so the top of the head sits in the
+     widest visible band of the circle and the hair isn't clipped. */
+  object-position: center 35%;
   display: block;
-  /* Shift the photo down inside the circle so the forehead crop line
-     sits well above the visible area and the face centers lower in
-     the frame. Tune the % to move further up or down. */
-  transform: translateY(14%);
 }
 /* ERA symbol stamped in the top-right corner of the photo frame.
    Uses era_symbol.svg as a CSS mask so it renders in rust brand
