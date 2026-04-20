@@ -2398,7 +2398,7 @@
 }
 .era-v2 .founder-img {
   position: relative;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 16 / 9;
   /* Card color (white in light mode) matches bio-nobg.png's baked
      white background so the photo sits inside the frame cleanly. */
   background: var(--card);
@@ -2443,7 +2443,9 @@
   width: 28px;
   height: 28px;
   z-index: 2;
-  background-color: var(--rust);
+  /* Uses --ink so the mark is dark on light theme and paper on dark theme,
+     auto-flipping with the theme toggle. */
+  background-color: var(--ink);
   -webkit-mask: url('/images/era_symbol.svg') center / contain no-repeat;
           mask: url('/images/era_symbol.svg') center / contain no-repeat;
   pointer-events: none;
