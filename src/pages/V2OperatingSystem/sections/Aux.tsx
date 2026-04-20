@@ -79,7 +79,7 @@ export default function Aux() {
               variants={fadeUp}
             >
               {aux.headline.before}
-              <span className="it">{aux.headline.italic}</span>
+              <span className="accent">{aux.headline.italic}</span>
               {aux.headline.after}
             </motion.h2>
             <motion.div
@@ -208,7 +208,7 @@ export default function Aux() {
                     className={`activity-dot${a.tone === 'warm' ? ' warm' : a.tone === 'cool' ? ' cool' : ''}`}
                   />
                   <div className="activity-desc">
-                    <strong>{a.name}</strong> — {a.action}
+                    <strong>{a.role}</strong> {a.action}
                   </div>
                   <div className="activity-points">{a.points}</div>
                   <div className="activity-time">{a.time}</div>
@@ -216,35 +216,6 @@ export default function Aux() {
               ))}
             </div>
           </motion.div>
-
-          <div className="tier-distribution">
-            <div className="tier-dist-title">
-              <span>{aux.tierDist.titleLeft}</span>
-              <span>{aux.tierDist.titleRight}</span>
-            </div>
-            {aux.tierDist.tiers.map((t, i) => (
-              <div key={t.tier} className="tier-row" data-tier={t.tier}>
-                <div className="tier-label">
-                  <span className="tag">{t.tag}</span>
-                  {t.label}
-                </div>
-                <div className="tier-bar">
-                  <motion.div
-                    className="tier-bar-fill"
-                    initial={{ scaleX: 0 }}
-                    animate={inView ? { scaleX: t.widthPct / 100 } : { scaleX: 0 }}
-                    transition={{
-                      duration: 1.4,
-                      delay: 0.4 + i * 0.15,
-                      ease: [0.23, 1, 0.32, 1],
-                    }}
-                    style={{ width: '100%' }}
-                  />
-                </div>
-                <div className="tier-count">{t.count}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>

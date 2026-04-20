@@ -4,8 +4,7 @@ import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Hero from './sections/Hero'
 import ProofStrip from './sections/ProofStrip'
-import Ghost from './sections/Ghost'
-import Stats from './sections/Stats'
+import Intro from './sections/Intro'
 import Playbook from './sections/Playbook'
 import System from './sections/System'
 import SignalLibrary from './sections/SignalLibrary'
@@ -51,8 +50,7 @@ export default function V2OperatingSystem() {
       <Nav theme={theme} setTheme={setTheme} />
       <Hero />
       <ProofStrip />
-      <Ghost />
-      <Stats />
+      <Intro />
       <Playbook />
       <System />
       <SignalLibrary />

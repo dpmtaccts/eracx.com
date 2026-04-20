@@ -16,6 +16,7 @@
     "@vercel/analytics": "^1.6.1",
     "@vercel/gatsby-plugin-vercel-analytics": "file:../node-v22.13.1-darwin-arm64/lib/node_modules/vercel/node_modules/@vercel/gatsby-plugin-vercel-analytics",
     "framer-motion": "^12.34.1",
+    "lucide-react": "^1.8.0",
     "posthog-js": "^1.369.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

@@ -18,7 +18,7 @@ export default function Hero() {
         <motion.div className="hero-content" variants={container} initial="hidden" animate="show">
           <motion.h1 variants={item}>
             {hero.headline.before}
-            <span className="it">{hero.headline.italic}</span>
+            <span className="accent">{hero.headline.italic}</span>
             {hero.headline.after}
           </motion.h1>
           <motion.p className="sub" variants={item}>
@@ -27,9 +27,6 @@ export default function Hero() {
           <motion.div className="actions" variants={item}>
             <a href={hero.primary.href} className="btn-primary">
               {hero.primary.label}
-            </a>
-            <a href={hero.secondary.href} className="btn-secondary">
-              {hero.secondary.label}
             </a>
           </motion.div>
           <motion.div className="logo-strip" variants={item}>

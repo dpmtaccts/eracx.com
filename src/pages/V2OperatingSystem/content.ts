@@ -12,16 +12,18 @@ export const nav = {
     { label: 'Halo', href: '#halo' },
     { label: 'Timeline', href: '#expect' },
   ] as CtaLink[],
-  cta: { label: 'Start with an audit', href: '#entry' } as CtaLink,
+  cta: { label: 'Request an audit', href: '#entry' } as CtaLink,
 }
 
 // ─── Proof strip (sits between Hero and Ghost) ───
 
 export type ProofColumn = {
   descriptor: string
-  outcome: string          // the big number, e.g. "$2M"
-  detail: string           // "in new pipeline · under 4 months"
-  isPlaceholder?: boolean  // renders in muted treatment if true
+  outcome: string
+  detail: string
+  // Lucide icon name. Component resolves the icon at render.
+  icon: 'TrendingUp' | 'Users' | 'Target' | 'Repeat' | 'Signal' | 'CircleDashed'
+  isPlaceholder?: boolean
 }
 
 export const proofStrip: { columns: ProofColumn[] } = {
@@ -30,12 +32,14 @@ export const proofStrip: { columns: ProofColumn[] } = {
       descriptor: 'SAAS TALENT MARKETPLACE',
       outcome: '$2M',
       detail: 'in new pipeline · under 4 months',
+      icon: 'TrendingUp',
     },
     {
       // TODO: confirm outcome from Netrush or Navalent engagement.
       descriptor: 'OUTCOME 2',
       outcome: '—',
       detail: 'pending · quantified outcome + time-to-result',
+      icon: 'CircleDashed',
       isPlaceholder: true,
     },
     {
@@ -43,54 +47,47 @@ export const proofStrip: { columns: ProofColumn[] } = {
       descriptor: 'OUTCOME 3',
       outcome: '—',
       detail: 'pending · quantified outcome + time-to-result',
+      icon: 'CircleDashed',
       isPlaceholder: true,
     },
   ],
 }
 
 export const hero = {
-  headline: { before: 'ERA runs the ', italic: 'modern', after: ' B2B playbook.' },
+  headline: { before: 'The modern B2B playbook. ', italic: 'Run for you.', after: '' },
   sub: "Measurement, signals, and operations for the part of the buyer journey your pipeline doesn't see.",
-  primary: { label: 'See the system', href: '#system' } as CtaLink,
-  secondary: { label: 'Start with an audit', href: '#entry' } as CtaLink,
-  clientsLabel: 'Operators in residence',
+  primary: { label: 'Build your new playbook', href: '#entry' } as CtaLink,
+  clientsLabel: 'TRUSTED BY',
   clients: ['Netrush', 'POP', 'Miniac', 'Navalent', 'Seismic'],
 }
 
-export const ghost = {
-  sectionNum: "02 · The decision you don't see",
-  headline: {
-    before: "That lead didn't ghost you. Their mind was ",
-    italic: 'made up',
-    after: ' before you met.',
-  },
+// v8: Ghost + Stats collapsed into a single Intro section.
+export const intro = {
+  sectionLabel: '02 · The new growth playbook',
+  headline: 'Meet the new growth playbook.',
   body: [
-    'In 2026, most B2B decisions form before a vendor is ever contacted. Buyers evaluate in the background. Across AI. Across reviews. Across peer networks.',
+    'Most B2B decisions form before a vendor is ever contacted.',
+    'Buyers evaluate in the background, across AI, reviews, peer networks.',
     'The meeting is the last step, not the first.',
-    'ERA measures that environment and runs the plays that shape it.',
+  ],
+  stats: [
+    {
+      value: '95%',
+      text: 'of B2B deals go to a vendor already on the Day One shortlist.',
+      source: '6sense · 2025',
+    },
+    {
+      value: '94%',
+      text: 'of buyers research with AI before contacting a vendor.',
+      source: 'Forrester · 2026',
+    },
+    {
+      value: '22',
+      text: 'people on the average buying committee.',
+      source: 'Forrester · 2026',
+    },
   ],
 }
-
-export const stats = [
-  {
-    number: '95',
-    numberItalic: '%',
-    text: 'of B2B deals go to a vendor already on the Day One shortlist.',
-    source: '6sense · Buyer Experience Report · 2025',
-  },
-  {
-    number: '94',
-    numberItalic: '%',
-    text: 'of buyers use AI to research vendors before they ever contact one.',
-    source: 'Forrester · State of Business Buying · 2026',
-  },
-  {
-    number: '22',
-    numberItalic: '',
-    text: 'people on the average buying committee.',
-    source: 'Forrester · 2026',
-  },
-]
 
 export const playbook = {
   sectionLabel: '03 · Two playbooks',
@@ -165,12 +162,12 @@ export type SignalTile = {
 }
 
 export const signalLibrary = {
-  sectionLabel: 'The library',
-  headline: { before: 'Every signal we watch. ', italic: 'Every play it fires.', after: '' },
+  sectionLabel: 'The Signal River · Feeds the loops',
+  headline: { before: 'Every signal we watch.', italic: '', after: '' },
   note:
     'Thirty active signal types across intent, relationship, product, and pipeline. Each one fires a specific play, on a specific cadence, through a specific stack.',
   countLabel: '24 of 47 signals shown · full library in the audit',
-  closer: 'Every signal becomes a move.',
+  closer: '',
   tiles: [
     { name: 'Exec Hire', tools: 'Apollo · LinkedIn', play: 'Relationship re-anchor', tone: 'primary' },
     { name: 'Funding Round', tools: 'Crunchbase · Apollo', play: 'ICP scoring update', tone: 'primary' },
@@ -215,41 +212,41 @@ export const signalMap = {
     after: '',
   },
   note: 'A sample of what the Signal Map is running for a live client today.',
-  columns: { signal: 'Signal', play: 'Play', priority: 'Priority' },
+  columns: { signal: 'Signal', play: 'Outcome', priority: 'Priority' },
   rows: [
     {
       signal: { primary: 'Exec hire at target account', meta: 'CRUNCHBASE · LINKEDIN' },
-      play: { primary: 'Relationship re-anchor', meta: 'SIGNAL CHAIN · 72HR' },
+      play: { primary: '+1 exec relationship anchored', meta: 'SIGNAL CHAIN · 72HR' },
       score: 92,
     },
     {
       signal: { primary: 'Funding round announced', meta: 'APOLLO · PRESS' },
-      play: { primary: 'ICP re-scoring + outreach', meta: 'AUX · REPLY' },
+      play: { primary: '+3 new ICP accounts engaged', meta: 'AUX · REPLY · 5D' },
       score: 88,
     },
     {
       signal: { primary: 'Deal stalls 30 days', meta: 'HUBSPOT' },
-      play: { primary: 'Multi-thread expansion', meta: 'SIGNAL CHAIN · CRM' },
+      play: { primary: '+4 committee roles re-engaged', meta: 'SIGNAL CHAIN · CRM · 48HR' },
       score: 78,
     },
     {
       signal: { primary: 'Champion changes jobs', meta: 'LINKEDIN' },
-      play: { primary: 'Congrats + new account entry', meta: 'HALO · SIGNAL CHAIN' },
+      play: { primary: '+2 accounts re-anchored', meta: 'HALO · SIGNAL CHAIN · 1WK' },
       score: 71,
     },
     {
       signal: { primary: 'Customer hits 90 days post-close', meta: 'CRM' },
-      play: { primary: 'Expansion conversation trigger', meta: 'LOYALTY LOOP' },
+      play: { primary: '+1 expansion conversation opened', meta: 'LOYALTY LOOP · 24HR' },
       score: 64,
     },
   ] as SignalMapRow[],
-  caption: 'Live sample · 5 of 47 active rules · Score reflects buyer readiness',
+  caption: 'A sample of signals driving action today for a live client',
 }
 
 // ─── AUX (section 06 deep dive) ───
 
 export type AuxActivity = {
-  name: string
+  role: string
   action: string
   points: string
   time: string
@@ -272,8 +269,13 @@ export type AuxTier = {
 
 export const aux = {
   sectionLabel: '06 · Inside AUX',
-  headline: { before: 'A warmth score for every account. ', italic: 'Updated daily.', after: '' },
-  note: 'Five dimensions. Three sub-scores. One composite. What most teams guess at, AUX measures.',
+  headline: {
+    before: 'We measure relationships, ',
+    italic: 'not campaigns.',
+    after: '',
+  },
+  note:
+    'Five dimensions. Three sub-scores. One composite. Relationship depth, measured daily and updated as signals land.',
   account: {
     name: 'Capital One',
     domain: 'capitalone.com',
@@ -298,21 +300,13 @@ export const aux = {
     ] as AuxScore[],
     composite: 79,
     activity: [
-      { name: 'Carly Stein', action: 'LinkedIn connect accepted · Economic Buyer', points: '+10', time: '2d ago', tone: 'primary' },
-      { name: 'Marcus Johnson', action: 'Content download · Amazon audit template', points: '+12', time: '5d ago', tone: 'primary' },
-      { name: 'Amy Liu', action: 'Email reply · Positive to content', points: '+8', time: '7d ago', tone: 'warm' },
-      { name: 'Marcus Johnson', action: 'Webinar attended · Amazon strategy', points: '+15', time: '11d ago', tone: 'cool' },
+      { role: 'Economic Buyer', action: 'accepted LinkedIn connect', points: '+10', time: '2d ago', tone: 'primary' },
+      { role: 'Champion', action: 'downloaded Amazon audit template', points: '+12', time: '5d ago', tone: 'primary' },
+      { role: 'Technical Evaluator', action: 'replied positive to content email', points: '+8', time: '7d ago', tone: 'warm' },
+      { role: 'Champion', action: 'attended Amazon strategy webinar', points: '+15', time: '11d ago', tone: 'cool' },
     ] as AuxActivity[],
   },
-  tierDist: {
-    titleLeft: 'Tier distribution · 132 target accounts',
-    titleRight: 'ICP1 · Beauty & Wellness',
-    tiers: [
-      { tier: 1, tag: 'T1', label: 'Active', widthPct: 9, count: 12 },
-      { tier: 2, tag: 'T2', label: 'Light', widthPct: 26, count: 34 },
-      { tier: 3, tag: 'T3', label: 'Dormant', widthPct: 65, count: 86 },
-    ] as AuxTier[],
-  },
+  // v5/v8: tier-distribution section removed. Data retained in case needed later.
 }
 
 // ─── AI Mirror (section 07 static deep dive) ───
@@ -324,13 +318,20 @@ export type MirrorSource = {
   detail: string
   weight: number
   tone: 'primary' | 'negative' | 'neutral'
+  unlikely?: boolean  // v8: flag sources that buyers don't expect to shape perception
 }
 
 export const aiMirror = {
   sectionLabel: '07 · Inside the AI Mirror',
-  headline: { before: 'See what the ', italic: 'agents', after: ' say. See where they got it.' },
+  headline: {
+    before: 'Map what they see to ',
+    italic: 'what you want them to see.',
+    after: '',
+  },
   lede:
     'The first impression most B2B buyers form is a paragraph an LLM writes about you. We read every word, trace every source, and fix what\'s off.',
+  framing:
+    "The 22 people on the buying committee are hearing about you from sources you don't own.",
   demoHeader: 'era / ai-mirror / helix-ops.com',
   queryLabel: 'Buyer query',
   query:
@@ -363,10 +364,10 @@ export const aiMirror = {
   sourcesTitle: 'What fed this answer',
   sources: [
     { name: 'G2 reviews', detail: '2,847 reviews · 4.2 avg', weight: 28, tone: 'primary' },
-    { name: 'Glassdoor', detail: '3.2 avg · themes: pace, CS', weight: 19, tone: 'negative' },
+    { name: 'Glassdoor', detail: '3.2 avg · themes: pace, CS', weight: 19, tone: 'negative', unlikely: true },
     { name: 'Competitor comparison pages', detail: 'Clari, Gong, Aviso', weight: 17, tone: 'primary' },
     { name: 'helixops.com', detail: 'owned content', weight: 14, tone: 'neutral' },
-    { name: 'Reddit, Hacker News', detail: '14 threads, 6 months', weight: 11, tone: 'negative' },
+    { name: 'Reddit, Hacker News', detail: '14 threads, 6 months', weight: 11, tone: 'negative', unlikely: true },
     { name: 'Press and analyst', detail: 'Forrester, TechCrunch', weight: 7, tone: 'primary' },
   ] as MirrorSource[],
   gap: {
@@ -379,14 +380,13 @@ export const aiMirror = {
 
 export const integrations = {
   sectionLabel: '08 · The stack we operate',
-  headline: { before: 'We integrate with the tools ', italic: 'you already have.', after: '' },
-  note: "The licenses are commodity. The operating layer is what you're paying for.",
+  headline: { before: 'Built to ', italic: 'maximize outcomes.', after: '' },
+  note: 'These are the tools we use and integrate.',
   closer: "If we don't integrate with it yet, we build the bridge.",
   columns: [
     { category: 'Enrichment & intent', tools: ['Clay', 'Apollo', 'Unify', 'HockeyStack'] },
     { category: 'CRM', tools: ['HubSpot', 'Copper', 'Day.ai'] },
-    { category: 'Outreach', tools: ['Reply', 'Salesforge', 'Dripify'] },
-    { category: 'Automation', tools: ['Zapier', 'Custom pipes'] },
+    { category: 'Automation & AI', tools: ['Zapier', 'Reply', 'Salesforge', 'Custom pipes'] },
   ],
 }
 
@@ -601,7 +601,7 @@ export const founder = {
 
 export const close = {
   headline: { before: 'See what your ', italic: 'buyers see.', after: '' },
-  cta: { label: 'Start with an audit', href: '#entry' } as CtaLink,
+  cta: { label: 'Build your new playbook', href: '#entry' } as CtaLink,
 }
 
 export const footer = {

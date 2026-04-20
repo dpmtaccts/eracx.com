@@ -38,7 +38,9 @@ export default function SignalLibrary() {
               variants={fadeUp}
             >
               {signalLibrary.headline.before}
-              <span className="it">{signalLibrary.headline.italic}</span>
+              {signalLibrary.headline.italic && (
+                <span className="accent">{signalLibrary.headline.italic}</span>
+              )}
               {signalLibrary.headline.after}
             </motion.h2>
           </div>
@@ -71,7 +73,9 @@ export default function SignalLibrary() {
 
         <div className="lib-footer">
           <div className="lib-count">{signalLibrary.countLabel}</div>
-          <div className="lib-note-right">{signalLibrary.closer}</div>
+          {signalLibrary.closer && (
+            <div className="lib-note-right">{signalLibrary.closer}</div>
+          )}
         </div>
       </div>
     </section>

@@ -31,7 +31,7 @@ export default function AiMirror() {
             variants={fadeUp}
           >
             {aiMirror.headline.before}
-            <span className="it">{aiMirror.headline.italic}</span>
+            <span className="accent">{aiMirror.headline.italic}</span>
             {aiMirror.headline.after}
           </motion.h2>
           <motion.p
@@ -43,6 +43,16 @@ export default function AiMirror() {
           >
             {aiMirror.lede}
           </motion.p>
+
+          <motion.div
+            className="mirror-framing"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.5 }}
+            variants={fadeUp}
+          >
+            {aiMirror.framing}
+          </motion.div>
 
           <motion.div
             className="mirror-demo"
@@ -67,20 +77,22 @@ export default function AiMirror() {
                 <div className="mirror-query">{aiMirror.query}</div>
 
                 <div className="response-label">{aiMirror.responseLabel}</div>
-                <div className="mirror-response">
-                  {aiMirror.response.map((para, i) => (
-                    <p key={i}>
-                      {para.map((seg, j) =>
-                        seg.flag ? (
-                          <span key={j} className="flag">
-                            {seg.text}
-                          </span>
-                        ) : (
-                          <span key={j}>{seg.text}</span>
-                        ),
-                      )}
-                    </p>
-                  ))}
+                <div className="mirror-response-bubble">
+                  <div className="mirror-response">
+                    {aiMirror.response.map((para, i) => (
+                      <p key={i}>
+                        {para.map((seg, j) =>
+                          seg.flag ? (
+                            <span key={j} className="flag">
+                              {seg.text}
+                            </span>
+                          ) : (
+                            <span key={j}>{seg.text}</span>
+                          ),
+                        )}
+                      </p>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -95,6 +107,7 @@ export default function AiMirror() {
                       <div className="source-info">
                         <div className="source-name">{s.name}</div>
                         <div className="source-detail">{s.detail}</div>
+                        {s.unlikely && <div className="source-unlikely">Unlikely source</div>}
                       </div>
                       <div className="source-weight">{s.weight}%</div>
                       <div className="source-bar">
