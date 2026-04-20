@@ -696,7 +696,7 @@ export const founder = {
   sectionLabel: '14 · Who runs it',
   headline: { before: 'Decades of ', italic: 'growth.', after: '' },
   imageAlt: 'Justin Marshall',
-  imageSrc: '/images/bio.jpg',
+  imageSrc: '/images/bio-nobg.png',
   body: [
     'I love making connections: introducing two people I respect, knowing something good will follow. There are few things more rewarding.',
     "I've spent decades building companies of all stages. The most effective go-to-market programs focus on creating repeatable, measurable human connection. I built ERA to create systems that scale connection and reduce pipeline uncertainty.",
