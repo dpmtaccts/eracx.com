@@ -2393,11 +2393,12 @@
 .era-v2 .founder { padding: 180px 0; border-bottom: 1px solid var(--rule); }
 .era-v2 .founder-grid {
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
+  grid-template-columns: 1.2fr 1fr;
   gap: 80px; align-items: start;
 }
 .era-v2 .founder-img {
-  aspect-ratio: 3/4;
+  /* Matches bio.jpg's native 2542×4181 portrait aspect. */
+  aspect-ratio: 3 / 5;
   background: var(--paper-deep);
   border: 1px solid var(--rule);
   display: flex; align-items: center; justify-content: center;
@@ -2409,13 +2410,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
   display: block;
-  /* Zoom in anchored at the top so the dpmt crate falls below the crop
-     line and more of the head reads at rest. Adjust the scale value to
-     tighten or loosen the crop. */
-  transform: scale(1.3);
-  transform-origin: top center;
 }
 .era-v2 .founder-body h2 {
   font-family: 'Instrument Sans', system-ui, sans-serif;
