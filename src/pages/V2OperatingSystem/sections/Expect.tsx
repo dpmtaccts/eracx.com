@@ -23,7 +23,6 @@ export default function Expect() {
 
   return (
     <section className="expect" id="expect" ref={sectionRef}>
-      <div className="watermark">10</div>
       <div className="container">
         <div className="expect-content">
           <motion.div

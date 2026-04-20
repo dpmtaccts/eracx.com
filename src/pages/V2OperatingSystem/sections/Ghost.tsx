@@ -19,7 +19,6 @@ const staggerItem = {
 export default function Ghost() {
   return (
     <section className="ghost">
-      <div className="watermark">02</div>
       <div className="container-narrow">
         <div className="ghost-content">
           <motion.div

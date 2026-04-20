@@ -14,7 +14,6 @@ const item = {
 export default function Hero() {
   return (
     <section className="hero">
-      <div className="watermark">01</div>
       <div className="container">
         <motion.div className="hero-content" variants={container} initial="hidden" animate="show">
           <motion.h1 variants={item}>

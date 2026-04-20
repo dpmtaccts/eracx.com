@@ -28,6 +28,7 @@ export default function ProofStrip() {
               className={`proof-col${c.isPlaceholder ? ' placeholder' : ''}`}
               variants={col}
             >
+              {c.isPlaceholder && <div className="proof-todo">TODO</div>}
               <div className="proof-descriptor">{c.descriptor}</div>
               <div className="proof-outcome">{c.outcome}</div>
               <div className="proof-detail">{c.detail}</div>

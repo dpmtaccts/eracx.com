@@ -13,7 +13,6 @@ export default function SignalMap() {
 
   return (
     <section className="signal-map" id="signal-map">
-      <div className="watermark">05</div>
       <div className="container">
         <div className="signal-map-content">
           <div className="map-intro">

@@ -19,7 +19,6 @@ const feat = {
 export default function Halo() {
   return (
     <section className="halo" id="halo">
-      <div className="watermark">09</div>
       <div className="container">
         <div className="halo-content">
           <motion.div

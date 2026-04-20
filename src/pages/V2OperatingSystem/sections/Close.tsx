@@ -9,7 +9,6 @@ const fadeUp = {
 export default function Close() {
   return (
     <section className="close">
-      <div className="watermark">◆</div>
       <div className="container-narrow">
         <div className="close-content">
           <motion.h2

@@ -19,7 +19,6 @@ const row = {
 export default function Engage() {
   return (
     <section className="entry" id="entry">
-      <div className="watermark">12</div>
       <div className="container">
         <div className="entry-content">
           <motion.div

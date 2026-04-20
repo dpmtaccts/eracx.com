@@ -14,7 +14,6 @@ const stagger = {
 export default function System() {
   return (
     <section className="system" id="system">
-      <div className="watermark">04</div>
       <div className="container">
         <div className="system-content">
           <motion.div

@@ -19,7 +19,6 @@ const card = {
 export default function Clients() {
   return (
     <section className="clients" id="clients">
-      <div className="watermark">11</div>
       <div className="container">
         <div className="clients-content">
           <motion.div

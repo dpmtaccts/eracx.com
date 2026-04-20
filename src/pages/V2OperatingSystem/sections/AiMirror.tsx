@@ -13,7 +13,6 @@ export default function AiMirror() {
 
   return (
     <section className="mirror" id="mirror">
-      <div className="watermark">07</div>
       <div className="container">
         <div className="mirror-content">
           <motion.div

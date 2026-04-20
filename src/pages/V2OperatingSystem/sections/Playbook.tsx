@@ -19,7 +19,6 @@ const cell = {
 export default function Playbook() {
   return (
     <section className="playbook">
-      <div className="watermark">03</div>
       <div className="container">
         <div className="playbook-content">
           <motion.div

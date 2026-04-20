@@ -58,7 +58,7 @@ export const hero = {
 }
 
 export const ghost = {
-  sectionNum: "02 — The decision you don't see",
+  sectionNum: "02 · The decision you don't see",
   headline: {
     before: "That lead didn't ghost you. Their mind was ",
     italic: 'made up',
@@ -93,7 +93,7 @@ export const stats = [
 ]
 
 export const playbook = {
-  sectionLabel: '03 — Two playbooks',
+  sectionLabel: '03 · Two playbooks',
   headline: { before: 'Old playbook. ', italic: 'New playbook.', after: '' },
   rows: [
     ['Drive traffic. Capture MQLs.', 'Shape ambient awareness. Own the shortlist.'],
@@ -116,7 +116,7 @@ export type SystemComponent = {
 }
 
 export const system = {
-  sectionLabel: '04 — The system',
+  sectionLabel: '04 · The system',
   headline: { before: 'Four components. ', italic: 'One operating layer.', after: '' },
   lede: 'Anyone can buy the licenses. ERA integrates them into a system that measures, scores, and moves every day.',
   components: [
@@ -208,7 +208,7 @@ export type SignalMapRow = {
 }
 
 export const signalMap = {
-  sectionLabel: '05 — Inside the Signal Map',
+  sectionLabel: '05 · Inside the Signal Map',
   headline: {
     before: 'Every signal becomes a move. Every move ',
     italic: 'feeds the next one.',
@@ -271,7 +271,7 @@ export type AuxTier = {
 }
 
 export const aux = {
-  sectionLabel: '06 — Inside AUX',
+  sectionLabel: '06 · Inside AUX',
   headline: { before: 'A warmth score for every account. ', italic: 'Updated daily.', after: '' },
   note: 'Five dimensions. Three sub-scores. One composite. What most teams guess at, AUX measures.',
   account: {
@@ -327,7 +327,7 @@ export type MirrorSource = {
 }
 
 export const aiMirror = {
-  sectionLabel: '07 — Inside the AI Mirror',
+  sectionLabel: '07 · Inside the AI Mirror',
   headline: { before: 'See what the ', italic: 'agents', after: ' say. See where they got it.' },
   lede:
     'The first impression most B2B buyers form is a paragraph an LLM writes about you. We read every word, trace every source, and fix what\'s off.',
@@ -378,7 +378,7 @@ export const aiMirror = {
 // ─── Integrations ───
 
 export const integrations = {
-  sectionLabel: '08 — The stack we operate',
+  sectionLabel: '08 · The stack we operate',
   headline: { before: 'We integrate with the tools ', italic: 'you already have.', after: '' },
   note: "The licenses are commodity. The operating layer is what you're paying for.",
   closer: "If we don't integrate with it yet, we build the bridge.",
@@ -393,7 +393,7 @@ export const integrations = {
 // ─── Halo ───
 
 export const halo = {
-  sectionLabel: '09 — The productized surface',
+  sectionLabel: '09 · The productized surface',
   headline: 'Halo.',
   subtitle: 'The LinkedIn operating layer',
   tagline: 'The operating layer for executive presence on LinkedIn.',
@@ -430,7 +430,7 @@ export const halo = {
 // ─── What to Expect ───
 
 export const expect = {
-  sectionLabel: '10 — What to expect',
+  sectionLabel: '10 · What to expect',
   headline: { before: 'The return in month ten is ', italic: 'structurally different', after: ' from month three.' },
   sub: "This is infrastructure, not a sprint. The system compounds. Here's what the first year actually looks like.",
   markers: ['Months 1 – 2', 'Months 3 – 4', 'Months 5 – 12+'],
@@ -471,7 +471,7 @@ export type ClientCard = {
 }
 
 export const clients = {
-  sectionLabel: '11 — Who trusts us',
+  sectionLabel: '11 · Who trusts us',
   headline: { before: 'The people we work ', italic: 'with.', after: '' },
   items: [
     {
@@ -519,38 +519,41 @@ export type Tier = {
 }
 
 export const engage = {
-  sectionLabel: '12 — Engage',
+  sectionLabel: '12 · Engage',
   headline: { before: 'Four ways ', italic: 'in.', after: '' },
   note: "Most start with the audit. We'll tell you within 48 hours which one fits.",
   tiers: [
     {
       name: 'Revenue Signal Audit',
+      subtitle: 'THE DIAGNOSTIC',
       price: '$15,000',
       duration: 'one-time',
       time: '14 days',
       desc:
-        'A diagnostic against the new playbook. See where you stand and what to change first.',
-      descSupplement:
-        'Includes GTM strategy and playbook, delivered as a written deliverable.',
+        'A diagnostic against the new playbook. See where you stand and what to change first. Includes GTM strategy and playbook, delivered as a written deliverable.',
     },
     {
       name: 'Halo',
-      subtitle: 'The LinkedIn operating layer',
+      subtitle: 'THE LINKEDIN OPERATING LAYER',
       price: 'From $999/mo',
       duration: 'ongoing',
       desc: 'Voice-tuned content and signal-triggered outreach, operated on LinkedIn.',
     },
     {
-      // TODO: confirm Signal Only price and duration tag (flagged open in v7 spec).
+      // TODO: confirm Signal Only duration tag (open in v7 spec). Pricing
+      // screenshot shared by Justin shows $8.5K/mo with 3-month minimum; v7
+      // spec writes "By engagement". Using v7 spec wording pending confirmation.
       name: 'Signal Only',
+      subtitle: 'INTEL + WEEKLY REVIEW',
       price: 'By engagement',
       priceIsInquire: true,
-      duration: 'TBD',
+      duration: 'ongoing',
       desc:
-        'Signal architecture and the live feed, without the outreach operation. You run the plays.',
+        'Signal River and AUX, delivered with weekly analyst review. Your team acts on what we surface.',
     },
     {
       name: 'The System',
+      subtitle: 'THREE PRICING TIERS TO MEET YOUR NEEDS',
       price: 'From $15,000/month',
       duration: 'ongoing',
       desc:
@@ -562,7 +565,7 @@ export const engage = {
 // ─── Fit ───
 
 export const fit = {
-  sectionLabel: '13 — Fit',
+  sectionLabel: '13 · Fit',
   headline: { before: 'Who this is ', italic: 'for.', after: '' },
   forItems: [
     'B2B companies between $10M and $100M',
@@ -581,7 +584,7 @@ export const fit = {
 // ─── Founder ───
 
 export const founder = {
-  sectionLabel: '14 — Who runs it',
+  sectionLabel: '14 · Who runs it',
   headline: { before: 'Justin Marshall. ', italic: 'Twenty years in direct response.', after: '' },
   imageAlt: 'Justin Marshall',
   // TODO: add a real photograph of Justin to /public and update imageSrc.

@@ -60,7 +60,6 @@ export default function Aux() {
 
   return (
     <section className="aux" id="aux" ref={sectionRef}>
-      <div className="watermark">06</div>
       <div className="container">
         <div className="aux-section-content">
           <motion.div
