@@ -10,6 +10,8 @@ export const nav = {
     { label: 'AUX', href: '#aux' },
     { label: 'AI Mirror', href: '#mirror' },
     { label: 'Halo', href: '#halo' },
+    // v8 delta item 25: Our Story lives at its own route.
+    { label: 'Our Story', href: '/our-story' },
     { label: 'Timeline', href: '#expect' },
   ] as CtaLink[],
   cta: { label: 'Request an audit', href: '#entry' } as CtaLink,
@@ -765,18 +767,19 @@ export const fit = {
 
 // ─── Founder ───
 
+// v8 delta item 24: homepage Founder block replaced with an operator-bench
+// credibility block. No headshot, no bio paragraphs, no personal voice on the
+// homepage. Personal content lives on /our-story (item 25).
 export const founder = {
-  sectionLabel: 'Who runs it',
-  headline: { before: 'Decades of ', italic: 'growth.', after: '' },
-  imageAlt: 'Justin Marshall',
-  imageSrc: '/images/bio2.jpg',
-  body: [
-    'I love making connections: introducing two people I respect, knowing something good will follow. There are few things more rewarding.',
-    "I've spent decades building companies of all stages. The most effective go-to-market programs focus on creating repeatable, measurable human connection. I built ERA to create systems that scale connection and reduce pipeline uncertainty.",
-    "If you're interested in creating stability in your growth actions, let's chat.",
-  ],
-  byline: { name: 'JUSTIN MARSHALL', role: 'FOUNDER' },
-  credentialsLabel: 'Building Enterprise Go-to-Market Success with:',
+  sectionLabel: 'Who operates it',
+  headline: {
+    before: 'Decades of ',
+    italic: 'growth,',
+    after: ' now built into one system.',
+  },
+  lede:
+    "ERA is run by GTM executives and operators with decades of experience across Fortune 500 enterprises. We've built data-driven growth programs for some of the largest B2B companies in the world. Now we build systems that put those programs into your business.",
+  credentialsLabel: 'Built growth programs with:',
   credentials: [
     { name: 'Microsoft', src: '/images/navalent/microsoft.png' },
     { name: 'Chase', src: '/images/navalent/chase-logo.png' },
@@ -787,13 +790,76 @@ export const founder = {
     { name: 'Intel', src: '' },
     { name: 'T-Mobile', src: '/images/navalent/tmobile.png' },
   ],
-  cta: { label: "Let's chat", href: '#entry' } as CtaLink,
-  // Optional advisors block, off by default per v8 spec.
-  advisorsEnabled: false,
-  advisors: [
-    { name: 'Ron Carucci', role: 'Co-founder, Navalent' },
-    { name: 'Ryan Hammill', role: 'Former CMO' },
-  ],
+  cta: { label: 'Read our approach', href: '/our-story' } as CtaLink,
+}
+
+// v8 delta item 25: dedicated /our-story page.
+// Copy status:
+//   - preamble: TODO — Justin's "Hey there" short founder-voice intro
+//   - manifesto: TODO — full "On Focus" essay body
+//   - profiles: Justin confirmed; Jen Anderson placeholder, confirm before
+//     flipping the feature flag.
+export const ourStory = {
+  preamble: {
+    // TODO (awaiting Justin): the "Hey there" short founder-voice note that
+    // runs as a preamble above the On Focus essay. Rendered in italic serif.
+    body: '[TODO — insert Justin\'s "Hey there" short founder-voice intro here.]',
+    signature: 'Justin',
+  },
+  manifesto: {
+    eyebrow: 'On Focus',
+    // TODO (awaiting Justin): full "On Focus" essay. Each element of `body`
+    // renders as a paragraph. Each element of `pullQuotes` renders as a
+    // breakaway pull quote between the body paragraphs (placement is
+    // handled in the component — currently after paragraph 3 and 6).
+    body: [
+      '[TODO — insert opening paragraph of the On Focus essay. This is where a drop-cap can live.]',
+      '[TODO — insert the body of the On Focus essay here. Each paragraph is a separate string in this array.]',
+      "[TODO — once the full essay is pasted in, split into paragraphs and this array will reflect the rhythm.]",
+    ],
+    pullQuotes: [
+      "We built Era to work alongside those people.",
+      "Focus isn't a strategy. It's a discipline.",
+    ],
+    signature: { name: 'Justin Marshall', role: 'Founder' },
+  },
+  whoRunsIt: {
+    sectionLabel: 'Who runs it',
+    headline: 'The bench behind the system.',
+    profiles: [
+      {
+        enabled: true,
+        name: 'Justin Marshall',
+        role: 'Founder',
+        // TODO: replace with a headshot hosted at /public/images/. bio2.jpg
+        // stands in for now since it is the most recent confirmed shot.
+        imageSrc: '/images/bio2.jpg',
+        imageAlt: 'Justin Marshall',
+        credential:
+          'Built growth programs across Microsoft, Chase, P&G, IHG, Amazon, Intel, T-Mobile',
+        bio:
+          'Built ERA to turn decades of enterprise growth experience into a system that runs inside B2B companies.',
+      },
+      {
+        // TODO: confirm Jen Anderson's listing (name, title, credentials, bio,
+        // headshot). Render placeholder only until enabled.
+        enabled: false,
+        name: 'Jen Anderson',
+        role: 'Customer Intelligence',
+        imageSrc: '',
+        imageAlt: 'Jen Anderson',
+        credential:
+          'Ran Customer Intelligence at T-Mobile. [Other credentials TBD]',
+        bio: '[Bio TBD from Jen\'s CV — pending her confirmation for public listing.]',
+      },
+    ],
+    closer:
+      'Supported by a bench of GTM operators and advisors across the US and EU.',
+  },
+  cta: {
+    headline: 'Ready to focus?',
+    link: { label: 'Start a conversation', href: '/#close' } as CtaLink,
+  },
 }
 
 // ─── Close ───

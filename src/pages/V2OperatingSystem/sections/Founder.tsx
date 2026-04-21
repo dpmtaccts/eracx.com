@@ -16,121 +16,81 @@ const credItem = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] as const } },
 }
 
+// v8 delta item 24: homepage operator-bench credibility block.
+// Cream ground, no headshot, no first-person copy. Supersedes item 23.
 export default function Founder() {
   return (
-    <section className="founder founder-dark" data-ground="dark">
+    <section className="operator-bench">
       <div className="container">
-        <div className="founder-grid">
-          <div className="founder-body">
-            <motion.div
-              className="section-label"
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.5 }}
-              variants={fadeUp}
-            >
-              {founder.sectionLabel}
-            </motion.div>
-            <motion.h2
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.5 }}
-              variants={fadeUp}
-            >
-              {founder.headline.before}
-              <span className="accent">{founder.headline.italic}</span>
-              {founder.headline.after}
-            </motion.h2>
-            {founder.body.map((p, i) => (
-              <motion.p
-                key={i}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.3 }}
-                variants={fadeUp}
-              >
-                {p}
-              </motion.p>
-            ))}
-            <motion.div
-              className="founder-byline"
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.4 }}
-              variants={fadeUp}
-            >
-              <span className="name">{founder.byline.name}</span>
-              <span className="role">{founder.byline.role}</span>
-            </motion.div>
+        <motion.div
+          className="section-label"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={fadeUp}
+        >
+          {founder.sectionLabel}
+        </motion.div>
+        <motion.h2
+          className="operator-bench-headline"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={fadeUp}
+        >
+          {founder.headline.before}
+          <span className="accent">{founder.headline.italic}</span>
+          {founder.headline.after}
+        </motion.h2>
+        <motion.p
+          className="operator-bench-lede"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.4 }}
+          variants={fadeUp}
+        >
+          {founder.lede}
+        </motion.p>
 
-            <motion.div
-              className="credentials"
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={stagger}
-            >
-              <motion.div className="credentials-label" variants={credItem}>
-                {founder.credentialsLabel}
-              </motion.div>
-              <div className="credentials-grid">
-                {founder.credentials.map((c) => (
-                  <motion.div key={c.name} variants={credItem}>
-                    {c.src ? (
-                      <img
-                        src={c.src}
-                        alt={c.name}
-                        className="credential-logo"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <span className="credential-text">{c.name}</span>
-                    )}
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.a
-              href={founder.cta.href}
-              className="founder-cta"
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.4 }}
-              variants={fadeUp}
-            >
-              {founder.cta.label} →
-            </motion.a>
-
-            {founder.advisorsEnabled && (
-              <div className="advisors">
-                <div className="advisors-label">Advisors</div>
-                <div className="advisors-list">
-                  {founder.advisors.map((a) => (
-                    <div key={a.name} className="advisor">
-                      {a.name}
-                      <span>{a.role}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          <motion.div
-            className="founder-img"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUp}
-          >
-            {founder.imageSrc ? (
-              <img src={founder.imageSrc} alt={founder.imageAlt} />
-            ) : (
-              <span>[photograph of Justin — TODO]</span>
-            )}
+        <motion.div
+          className="operator-bench-credentials"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={stagger}
+        >
+          <motion.div className="credentials-label" variants={credItem}>
+            {founder.credentialsLabel}
           </motion.div>
-        </div>
+          <div className="credentials-grid">
+            {founder.credentials.map((c) => (
+              <motion.div key={c.name} variants={credItem}>
+                {c.src ? (
+                  <img
+                    src={c.src}
+                    alt={c.name}
+                    className="credential-logo"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span className="credential-text">{c.name}</span>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="operator-bench-cta-row"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.4 }}
+          variants={fadeUp}
+        >
+          <a className="operator-bench-cta" href={founder.cta.href}>
+            {founder.cta.label} →
+          </a>
+        </motion.div>
       </div>
     </section>
   )

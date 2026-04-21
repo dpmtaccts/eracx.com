@@ -28,6 +28,7 @@ import V3ColorBlocks from './pages/staging/V3ColorBlocks.tsx'
 import V4TimelineRibbon from './pages/staging/V4TimelineRibbon.tsx'
 import V5ExpandingCards from './pages/staging/V5ExpandingCards.tsx'
 import V2OperatingSystem from './pages/V2OperatingSystem/index.tsx'
+import V2OurStory from './pages/V2OperatingSystem/OurStory.tsx'
 
 posthog.init(import.meta.env.VITE_PUBLIC_POSTHOG_TOKEN, {
   api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
@@ -42,6 +43,7 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/v2" element={<V2OperatingSystem />} />
+        <Route path="/our-story" element={<V2OurStory />} />
         <Route path="/staging" element={<Staging />} />
         <Route path="/staging/v1" element={<V1RingZoom />} />
         <Route path="/staging/v2" element={<V2MagazineSpreads />} />
