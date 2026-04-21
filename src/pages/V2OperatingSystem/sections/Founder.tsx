@@ -18,7 +18,7 @@ const credItem = {
 
 export default function Founder() {
   return (
-    <section className="founder">
+    <section className="founder founder-dark" data-ground="dark">
       <div className="container">
         <div className="founder-grid">
           <div className="founder-body">

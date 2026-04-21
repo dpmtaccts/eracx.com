@@ -18,7 +18,7 @@ const tile = {
 
 export default function SignalLibrary() {
   return (
-    <section className="signal-library">
+    <section className="signal-library" data-ground="dark">
       <div className="container">
         <div className="lib-intro">
           <div>

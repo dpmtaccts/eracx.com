@@ -34,21 +34,14 @@ export default function Halo() {
           </motion.div>
           <div className="halo-intro">
             <div className="halo-header">
-              <motion.div
-                className="halo-headline-row"
+              <motion.h2
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, amount: 0.5 }}
                 variants={fadeUp}
               >
-                <h2>{halo.headline}</h2>
-                <img
-                  className="halo-linkedin"
-                  src={halo.linkedinLogo}
-                  alt=""
-                  aria-hidden="true"
-                />
-              </motion.div>
+                {halo.headline}
+              </motion.h2>
               <motion.div
                 className="halo-subtitle"
                 initial="hidden"
@@ -81,7 +74,9 @@ export default function Halo() {
             </motion.div>
           </div>
 
-          {/* v8 delta item 10: asymmetric bento — main 2/3, two stacked 1/3. */}
+          {/* v8 delta items 10 + 22: main tile 16:10 with LinkedIn lockup
+              inside its top-left corner; secondary tiles 4:3, stacked
+              vertically to the right. */}
           <motion.div
             className="halo-bento"
             initial="hidden"
@@ -91,7 +86,16 @@ export default function Halo() {
           >
             {main && (
               <motion.div className="halo-bento-main" variants={feat}>
-                <img src={main.src} alt={main.alt} loading="lazy" />
+                <img
+                  className="halo-bento-main-img"
+                  src={main.src}
+                  alt={main.alt}
+                  loading="lazy"
+                />
+                <div className="halo-bento-lockup" aria-hidden="true">
+                  <img src={halo.linkedinLogo} alt="" />
+                  <span>on LinkedIn</span>
+                </div>
               </motion.div>
             )}
             <div className="halo-bento-stack">

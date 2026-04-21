@@ -1,5 +1,5 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
-import { useMemo, useRef } from 'react'
+import { useRef } from 'react'
 import { hero } from '../content'
 
 const container = {
@@ -12,58 +12,61 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.23, 1, 0.32, 1] as const } },
 }
 
-// Deterministic pseudo-random so dots stay stable across renders.
-function mulberry32(seed: number) {
-  let t = seed >>> 0
-  return () => {
-    t = (t + 0x6d2b79f5) >>> 0
-    let r = t
-    r = Math.imul(r ^ (r >>> 15), r | 1)
-    r ^= r + Math.imul(r ^ (r >>> 7), r | 61)
-    return ((r ^ (r >>> 14)) >>> 0) / 4294967296
-  }
-}
+// v8 deltas items 17 + 18: replace the dot field with a playbook-maze motion
+// system. Five invisible routes span the hero; a cluster of five flowing
+// dots per route creates a leading head + fading trail. Values tuned per
+// item 18: leading dot 0.5 opacity, durations slowed ~60%, only 5 routes
+// rendered (routes 6/7 paths retained in <defs> for future use).
+const ROUTES = [
+  { id: 'route-1', d: 'M -5 12 H 22 V 8 H 55 V 18 H 78 V 12 H 105', dur: '28s', begin: '0s' },
+  { id: 'route-2', d: 'M -5 22 H 15 V 32 H 40 V 22 H 68 V 38 H 105', dur: '34s', begin: '-4s' },
+  { id: 'route-3', d: 'M -5 42 H 28 V 52 H 62 V 42 H 88 V 50 H 105', dur: '42s', begin: '-2s' },
+  { id: 'route-4', d: 'M 35 -5 V 15 H 60 V 30 H 85 V 25 H 105', dur: '30s', begin: '-6s' },
+  { id: 'route-5', d: 'M -5 30 H 8 V 45 H 30 V 30 H 50 V 20 H 72 V 8 H 105', dur: '38s', begin: '-1s' },
+] as const
 
-type Dot = {
-  left: number          // percent
-  top: number           // percent
-  size: number          // px
-  opacity: number
-  duration: number      // s
-  delay: number         // s
-  shiftY: number        // px drift per cycle
-}
+const DORMANT_ROUTES = [
+  { id: 'route-6', d: 'M 15 65 V 48 H 42 V 58 H 70 V 42 H 105' },
+  { id: 'route-7', d: 'M -5 55 H 22 V 42 H 50 V 55 H 75 V 35 H 95 V 20 H 105' },
+] as const
 
-function generateDots(count: number): Dot[] {
-  const rand = mulberry32(42)
-  return Array.from({ length: count }, () => {
-    // Bias concentration toward lower-left and upper-right corners.
-    const corner = rand() > 0.5
-    const biasX = corner ? rand() * 0.35 : 0.55 + rand() * 0.45
-    const biasY = corner ? 0.55 + rand() * 0.45 : rand() * 0.45
-    return {
-      left: biasX * 100,
-      top: biasY * 100,
-      size: 2 + rand() * 1.5,
-      opacity: 0.15 + rand() * 0.2,
-      duration: 4 + rand() * 4,
-      delay: rand() * -6,
-      shiftY: 3 + rand() * 5,
-    }
-  })
+const WAYPOINTS: [number, number][] = [
+  [22, 8],
+  [55, 18],
+  [40, 22],
+  [68, 38],
+  [28, 52],
+  [62, 42],
+  [60, 15],
+  [85, 25],
+  [30, 30],
+  [50, 20],
+]
+
+// Five dots per route: one leader + four trail dots at descending opacities.
+// Each trail dot's begin offset relative to the route's own begin value.
+const TRAIL = [
+  { r: 0.4, opacity: 0.5, offset: 0 },
+  { r: 0.36, opacity: 0.3, offset: 0.3 },
+  { r: 0.32, opacity: 0.18, offset: 0.6 },
+  { r: 0.28, opacity: 0.1, offset: 0.9 },
+  { r: 0.25, opacity: 0.04, offset: 1.2 },
+]
+
+function beginFor(base: string, offset: number): string {
+  // base looks like "0s" or "-4s" — shift by a negative offset seconds.
+  const n = parseFloat(base)
+  return `${n - offset}s`
 }
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const reduceMotion = useReducedMotion()
   const { scrollY } = useScroll()
-  // Subtle parallax: watermark drifts up 12% as the hero scrolls out.
   const watermarkY = useTransform(scrollY, [0, 600], [0, -80])
 
-  const dots = useMemo(() => generateDots(52), [])
-
   return (
-    <section className="hero" ref={sectionRef}>
+    <section className="hero" ref={sectionRef} data-ground="light">
       <motion.div
         className="hero-watermark"
         style={reduceMotion ? undefined : { y: watermarkY }}
@@ -72,26 +75,54 @@ export default function Hero() {
         PLAYBOOK
       </motion.div>
 
-      <div className="hero-dots" aria-hidden="true">
-        {dots.map((d, i) => (
-          <span
-            key={i}
-            className={`hero-dot${reduceMotion ? ' static' : ''}`}
-            style={
-              {
-                left: `${d.left}%`,
-                top: `${d.top}%`,
-                width: d.size,
-                height: d.size,
-                opacity: d.opacity,
-                '--shift-y': `${d.shiftY}px`,
-                animationDuration: `${d.duration}s`,
-                animationDelay: `${d.delay}s`,
-              } as React.CSSProperties
-            }
-          />
+      <svg
+        className="hero-maze"
+        viewBox="0 0 100 60"
+        preserveAspectRatio="xMidYMid slice"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <defs>
+          {ROUTES.map((r) => (
+            <path key={r.id} id={r.id} d={r.d} />
+          ))}
+          {DORMANT_ROUTES.map((r) => (
+            <path key={r.id} id={r.id} d={r.d} />
+          ))}
+        </defs>
+
+        {/* Static route traces — the "board" that persists even when motion is paused. */}
+        {ROUTES.map((r) => (
+          <use key={`trace-${r.id}`} href={`#${r.id}`} className="route-line" />
         ))}
-      </div>
+
+        {WAYPOINTS.map(([cx, cy], i) => (
+          <circle key={`wp-${i}`} cx={cx} cy={cy} r={0.25} className="waypoint" />
+        ))}
+
+        {/* Flowing dots — five per route, comet-tail effect. Hidden under prefers-reduced-motion. */}
+        {!reduceMotion &&
+          ROUTES.map((r) => (
+            <g key={`flow-${r.id}`}>
+              {TRAIL.map((t, i) => (
+                <circle
+                  key={i}
+                  r={t.r}
+                  className="flow-dot"
+                  fillOpacity={t.opacity}
+                >
+                  <animateMotion
+                    dur={r.dur}
+                    begin={beginFor(r.begin, t.offset)}
+                    repeatCount="indefinite"
+                  >
+                    <mpath href={`#${r.id}`} />
+                  </animateMotion>
+                </circle>
+              ))}
+            </g>
+          ))}
+      </svg>
 
       <div className="container">
         <motion.div className="hero-content" variants={container} initial="hidden" animate="show">

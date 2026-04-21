@@ -164,50 +164,71 @@
 .era-v2 .watermark-dark { color: var(--paper); opacity: 0.04; }
 .era-v2[data-theme="dark"] .watermark { opacity: 0.10; }
 
-/* ─── Nav (v8 delta item 16: solid dark band) ─── */
-.era-v2 .v2-nav {
+/* ─── Nav (v8 delta item 19: adaptive per section ground) ─── */
+.era-v2 .v2-nav.adaptive {
   position: sticky; top: 0; z-index: 50;
   padding: 20px 48px;
-  background: #0A0A0A;
-  color: #F5F0EB;
-  border-bottom: 1px solid rgba(245, 240, 235, 0.1);
+  background: transparent;
+  color: var(--ink);
+  border-bottom: 1px solid transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: background 0.25s ease, color 0.25s ease,
+              backdrop-filter 0.25s ease, -webkit-backdrop-filter 0.25s ease,
+              border-bottom-color 0.25s ease;
   display: flex; justify-content: space-between; align-items: center;
   gap: 24px;
 }
-.era-v2[data-theme="dark"] .v2-nav {
-  background: #F5F0EB;
-  color: #0A0A0A;
-  border-bottom-color: rgba(10, 10, 10, 0.1);
+.era-v2 .v2-nav.adaptive.nav-over-dark {
+  background: rgba(10, 10, 10, 0.9);
+  color: #F5F0EB;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom-color: rgba(245, 240, 235, 0.1);
 }
-/* Logo inverts relative to nav bg (cream logo on dark nav, dark on cream nav). */
-.era-v2 .v2-nav .logo img {
+/* Logo follows the nav ground: dark mark on light, cream mark on dark. */
+.era-v2 .v2-nav.adaptive .logo img {
+  filter: brightness(0);
+  transition: filter 0.25s ease;
+}
+.era-v2 .v2-nav.adaptive.nav-over-dark .logo img {
   filter: brightness(0) invert(1) sepia(1) saturate(0.1) brightness(0.93);
 }
-.era-v2[data-theme="dark"] .v2-nav .logo img {
-  filter: brightness(0);
+.era-v2 .v2-nav.adaptive .nav-links a {
+  color: rgba(10, 10, 10, 0.72);
+  transition: color 0.25s ease;
 }
-.era-v2 .v2-nav .nav-links a { color: rgba(245, 240, 235, 0.72); }
-.era-v2 .v2-nav .nav-links a:hover { color: #F5F0EB; }
-.era-v2[data-theme="dark"] .v2-nav .nav-links a { color: rgba(10, 10, 10, 0.72); }
-.era-v2[data-theme="dark"] .v2-nav .nav-links a:hover { color: #0A0A0A; }
-/* CTA: rust on both themes stands out against the dark/cream nav. */
-.era-v2 .v2-nav .cta {
+.era-v2 .v2-nav.adaptive .nav-links a:hover { color: var(--ink); }
+.era-v2 .v2-nav.adaptive.nav-over-dark .nav-links a { color: rgba(245, 240, 235, 0.72); }
+.era-v2 .v2-nav.adaptive.nav-over-dark .nav-links a:hover { color: #F5F0EB; }
+.era-v2 .v2-nav.adaptive .cta {
   background: var(--rust);
   color: #F5F0EB;
 }
-.era-v2 .v2-nav .cta:hover { background: var(--rust-deep); }
-.era-v2 .v2-nav .theme-toggle {
-  color: rgba(245, 240, 235, 0.72);
+.era-v2 .v2-nav.adaptive .cta:hover { background: var(--rust-deep); }
+.era-v2 .v2-nav.adaptive .theme-toggle {
+  color: rgba(10, 10, 10, 0.72);
+  transition: color 0.25s ease, background 0.25s ease;
 }
-.era-v2 .v2-nav .theme-toggle:hover {
+.era-v2 .v2-nav.adaptive .theme-toggle:hover {
+  color: var(--ink);
+  background: rgba(10, 10, 10, 0.06);
+}
+.era-v2 .v2-nav.adaptive.nav-over-dark .theme-toggle { color: rgba(245, 240, 235, 0.72); }
+.era-v2 .v2-nav.adaptive.nav-over-dark .theme-toggle:hover {
   color: #F5F0EB;
   background: rgba(245, 240, 235, 0.08);
 }
-.era-v2[data-theme="dark"] .v2-nav .theme-toggle { color: rgba(10, 10, 10, 0.72); }
-.era-v2[data-theme="dark"] .v2-nav .theme-toggle:hover {
-  color: #0A0A0A;
-  background: rgba(10, 10, 10, 0.06);
+/* Dark theme baseline: nav matches the page's dark ground (which is now the
+   default). Over light-ground sections in dark theme, invert. */
+.era-v2[data-theme="dark"] .v2-nav.adaptive {
+  color: var(--ink);
 }
+.era-v2[data-theme="dark"] .v2-nav.adaptive .logo img {
+  filter: brightness(0) invert(1) sepia(1) saturate(0.1) brightness(0.93);
+}
+.era-v2[data-theme="dark"] .v2-nav.adaptive .nav-links a { color: rgba(245, 240, 235, 0.72); }
+.era-v2[data-theme="dark"] .v2-nav.adaptive .nav-links a:hover { color: var(--ink); }
 .era-v2 .v2-nav .logo {
   font-family: 'Instrument Sans', system-ui, sans-serif;
   font-size: 24px;
@@ -276,30 +297,31 @@
           text-stroke: 1px rgba(245, 240, 235, 0.05);
 }
 
-/* v8 hero ambient layer 2: floating rust-dot field. */
-.era-v2 .hero-dots {
+/* v8 delta items 17 + 18: playbook-maze motion replaces the dot field. */
+.era-v2 .hero-maze {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 0;
   pointer-events: none;
-  overflow: hidden;
 }
-.era-v2 .hero-dot {
-  position: absolute;
-  background: var(--rust);
-  border-radius: 50%;
-  animation-name: v2-heroDotFloat;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-  will-change: transform, opacity;
+.era-v2 .hero-maze .route-line {
+  fill: none;
+  stroke: rgba(200, 90, 58, 0.03);
+  stroke-width: 0.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-.era-v2 .hero-dot.static { animation: none; }
-@keyframes v2-heroDotFloat {
-  0%, 100% { transform: translate3d(0, 0, 0); opacity: var(--dot-opacity, 1); }
-  50% { transform: translate3d(0, var(--shift-y, 6px), 0); opacity: 1; }
+.era-v2[data-theme="dark"] .hero-maze .route-line {
+  stroke: rgba(214, 106, 62, 0.04);
 }
+.era-v2 .hero-maze .waypoint { fill: rgba(200, 90, 58, 0.03); }
+.era-v2[data-theme="dark"] .hero-maze .waypoint { fill: rgba(214, 106, 62, 0.04); }
+.era-v2 .hero-maze .flow-dot { fill: var(--rust); }
 @media (prefers-reduced-motion: reduce) {
-  .era-v2 .hero-dot { animation: none; }
+  .era-v2 .hero-maze animateMotion { display: none; }
+  .era-v2 .hero-maze .route-line { stroke: rgba(200, 90, 58, 0.06); }
 }
 
 .era-v2 .hero .container { position: relative; z-index: 1; }
@@ -1350,31 +1372,36 @@
 .era-v2 .account-card.v8 .card-body {
   display: grid; grid-template-columns: 1fr 1fr;
 }
-/* v8 delta item 5: radar on top + plays table below on the left of the card body. */
-.era-v2 .radar-plays-stack {
-  display: flex; flex-direction: column;
-  border-right: 1px solid var(--rule);
-}
-.era-v2 .account-card.v8 .radar-plays-stack .radar-panel { border-right: none; }
-.era-v2 .plays-panel {
-  padding: 24px 40px 32px;
+/* v8 delta item 20: plays table spans full card width below body. */
+.era-v2 .plays-panel.full-width {
+  padding: 32px 40px 36px;
   border-top: 1px solid var(--rule);
+  background: var(--paper-deep);
 }
 .era-v2 .plays-table { display: flex; flex-direction: column; }
 .era-v2 .plays-row {
   display: grid;
-  grid-template-columns: 1.1fr 1.1fr auto;
-  gap: 16px;
+  grid-template-columns: 1.3fr 30px 1.3fr 120px;
+  gap: 20px;
   align-items: center;
-  padding: 12px 0;
+  padding: 14px 0;
   border-bottom: 1px dashed var(--rule);
+}
+.era-v2 .plays-row::before {
+  content: "→";
+  grid-column: 2;
+  color: var(--rust);
+  font-size: 16px;
+  text-align: center;
+  grid-row: 1;
+  order: 2;
 }
 .era-v2 .plays-row:last-child { border-bottom: none; }
 .era-v2 .plays-signal, .era-v2 .plays-outcome {
   display: flex; flex-direction: column; gap: 2px;
 }
 .era-v2 .plays-primary {
-  font-size: 13px; line-height: 1.25;
+  font-size: 15px; line-height: 1.3;
   font-weight: 500;
   color: var(--ink);
 }
@@ -1400,7 +1427,7 @@
   color: var(--ink);
 }
 .era-v2 .plays-score-bar {
-  width: 44px;
+  width: 80px;
   height: 3px;
   background: var(--rule);
   border-radius: 2px;
@@ -1413,7 +1440,8 @@
   transform-origin: left center;
 }
 .era-v2 .account-card.v8 .radar-panel {
-  padding: 32px 40px 16px;
+  padding: 40px;
+  border-right: 1px solid var(--rule);
   display: flex; flex-direction: column;
 }
 .era-v2 .account-card.v8 .panel-title {
@@ -2373,13 +2401,13 @@
 .era-v2 .halo-side { font-size: 17px; line-height: 1.6; color: var(--ink-soft); }
 .era-v2 .halo-side p { margin-bottom: 16px; }
 .era-v2 .halo-side p:last-child { color: var(--ink); font-weight: 500; }
-/* v8 delta item 10: bento layout — main 2/3 + stacked 1/3 column. */
+/* v8 delta items 10 + 22: main tile (16:10, 2/3 width) + two stacked 4:3 tiles. */
 .era-v2 .halo-bento {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 16px;
+  gap: 20px;
   margin-bottom: 64px;
-  aspect-ratio: 12 / 5;
+  align-items: stretch;
 }
 .era-v2 .halo-bento-main,
 .era-v2 .halo-bento-small {
@@ -2387,7 +2415,7 @@
   border: 1px solid var(--rule);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-product);
   position: relative;
 }
 .era-v2 .halo-bento-main::after,
@@ -2398,41 +2426,62 @@
   pointer-events: none;
   border-radius: inherit;
 }
-.era-v2 .halo-bento-main { height: 100%; }
+.era-v2 .halo-bento-main {
+  aspect-ratio: 16 / 10;
+}
 .era-v2 .halo-bento-stack {
   display: grid;
   grid-template-rows: 1fr 1fr;
-  gap: 16px;
+  gap: 20px;
   min-height: 0;
 }
-.era-v2 .halo-bento-main img,
+.era-v2 .halo-bento-small {
+  aspect-ratio: 4 / 3;
+}
+.era-v2 .halo-bento-main-img,
 .era-v2 .halo-bento-small img {
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
 }
+
+/* LinkedIn lockup stamped into the top-left corner of the main tile. */
+.era-v2 .halo-bento-lockup {
+  position: absolute;
+  top: 18px; left: 18px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(10, 10, 10, 0.08);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.era-v2 .halo-bento-lockup img {
+  height: 18px;
+  width: auto;
+  display: block;
+}
+
 @media (max-width: 768px) {
   .era-v2 .halo-bento {
     grid-template-columns: 1fr;
-    aspect-ratio: auto;
-    gap: 12px;
+    gap: 16px;
   }
-  .era-v2 .halo-bento-main { aspect-ratio: 16 / 10; }
-  .era-v2 .halo-bento-stack { grid-template-columns: 1fr 1fr; grid-template-rows: none; }
-  .era-v2 .halo-bento-small { aspect-ratio: 16 / 10; }
-}
-
-/* v8 delta item 9: LinkedIn logo next to the Halo headline. */
-.era-v2 .halo-headline-row {
-  display: flex; align-items: center; gap: 16px;
-  margin-bottom: 16px;
-}
-.era-v2 .halo-headline-row h2 { margin: 0; }
-.era-v2 .halo-linkedin {
-  height: 36px;
-  width: auto;
-  display: block;
-  opacity: 0.9;
+  .era-v2 .halo-bento-stack {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: none;
+    gap: 16px;
+  }
 }
 .era-v2 .halo-features {
   display: grid; grid-template-columns: repeat(3, 1fr);
@@ -2741,6 +2790,40 @@
 
 /* ─── Founder ─── */
 .era-v2 .founder { padding: 180px 0; border-bottom: 1px solid var(--rule); }
+/* v8 delta item 23: Founder section flipped to dark ground. */
+.era-v2 .founder.founder-dark {
+  background: #0A0A0A;
+  border-bottom-color: rgba(245, 240, 235, 0.1);
+}
+.era-v2 .founder.founder-dark .section-label { color: rgba(245, 240, 235, 0.5); }
+.era-v2 .founder.founder-dark .founder-body h2 { color: #F5F0EB; }
+.era-v2 .founder.founder-dark .founder-body h2 .accent,
+.era-v2 .founder.founder-dark .founder-body h2 .it { color: #D66A3E; }
+.era-v2 .founder.founder-dark .founder-body p { color: #F0F0F0; }
+.era-v2 .founder.founder-dark .founder-byline .name { color: #F5F0EB; }
+.era-v2 .founder.founder-dark .founder-byline .role { color: #B8B8B8; }
+.era-v2 .founder.founder-dark .credentials {
+  border-top-color: rgba(245, 240, 235, 0.1);
+}
+.era-v2 .founder.founder-dark .credentials-label { color: #B8B8B8; }
+.era-v2 .founder.founder-dark .credential-logo {
+  filter: grayscale(1) invert(1) brightness(0.85);
+  opacity: 0.6;
+}
+.era-v2 .founder.founder-dark .credential-logo:hover { opacity: 1; }
+.era-v2 .founder.founder-dark .credential-text {
+  color: #B8B8B8;
+  opacity: 0.7;
+}
+.era-v2 .founder.founder-dark .founder-cta {
+  background: #D66A3E;
+  color: #F5F0EB;
+}
+.era-v2 .founder.founder-dark .founder-cta:hover { background: #E57A50; }
+.era-v2 .founder.founder-dark .founder-img {
+  background: #1A1A1A;
+  border-color: rgba(245, 240, 235, 0.1);
+}
 .era-v2 .founder-grid {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
