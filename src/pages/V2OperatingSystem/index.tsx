@@ -5,10 +5,12 @@ import Footer from './components/Footer'
 import Hero from './sections/Hero'
 import ProofStrip from './sections/ProofStrip'
 import Intro from './sections/Intro'
-import Playbook from './sections/Playbook'
+// Playbook + SignalMap hidden from render per v8 delta items 1 & 5.
+// Files retained in the repo for potential future reuse.
+// import Playbook from './sections/Playbook'
 import Loops from './sections/Loops'
 import SignalLibrary from './sections/SignalLibrary'
-import SignalMap from './sections/SignalMap'
+// import SignalMap from './sections/SignalMap'
 import Aux from './sections/Aux'
 import AiMirror from './sections/AiMirror'
 import Audit from './sections/Audit'
@@ -51,10 +53,12 @@ export default function V2OperatingSystem() {
       <Hero />
       <ProofStrip />
       <Intro />
-      <Playbook />
+      {/* v8 delta item 1: Playbook section hidden from render. */}
+      {/* <Playbook /> */}
       <Loops />
       <SignalLibrary />
-      <SignalMap />
+      {/* v8 delta item 5: Signal Map folded into the AUX card body. */}
+      {/* <SignalMap /> */}
       <Aux />
       <AiMirror />
       <Audit />

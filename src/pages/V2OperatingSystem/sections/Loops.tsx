@@ -1,6 +1,16 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { Pause, Play } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import {
+  CircleCheck,
+  Database,
+  Gauge,
+  MessageCircle,
+  Radar,
+  RefreshCw,
+  Send,
+  Sprout,
+  TrendingUp,
+} from 'lucide-react'
+import { type ComponentType, type SVGProps, useCallback, useState } from 'react'
 import { loops } from '../content'
 
 const fadeUp = {
@@ -10,44 +20,45 @@ const fadeUp = {
 
 const CX = 250
 const CY = 250
-const RADIUS = 180          // node center distance from origin
-const LABEL_RADIUS = 222    // label center distance
+const RADIUS = 180
+const LABEL_RADIUS = 232
 const NODE_COUNT = 9
-const STEP_DEG = 360 / NODE_COUNT   // 40° between nodes
+const STEP_DEG = 360 / NODE_COUNT
+
+const ICONS: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
+  Radar,
+  Database,
+  Gauge,
+  Send,
+  MessageCircle,
+  Sprout,
+  CircleCheck,
+  RefreshCw,
+  TrendingUp,
+}
 
 function nodePosition(i: number, r: number) {
-  // First node at -90° (top), clockwise.
   const angleDeg = -90 + i * STEP_DEG
   const rad = (angleDeg * Math.PI) / 180
   return { x: CX + r * Math.cos(rad), y: CY + r * Math.sin(rad), angleDeg }
 }
 
 function labelAnchor(angleDeg: number): 'start' | 'middle' | 'end' {
-  // Top and bottom → middle. Right hemisphere → start. Left hemisphere → end.
-  if (angleDeg > -30 && angleDeg < 30) return 'middle'         // top (roughly)
-  if (angleDeg > 150 && angleDeg < 210) return 'middle'        // bottom
-  if (angleDeg >= 30 && angleDeg <= 150) return 'start'        // right side
-  return 'end'                                                  // left side
+  if (angleDeg > -30 && angleDeg < 30) return 'middle'
+  if (angleDeg > 150 && angleDeg < 210) return 'middle'
+  if (angleDeg >= 30 && angleDeg <= 150) return 'start'
+  return 'end'
 }
 
 export default function Loops() {
   const [active, setActive] = useState(0)
-  const [playing, setPlaying] = useState(true)
-
-  useEffect(() => {
-    if (!playing) return
-    const id = window.setInterval(() => {
-      setActive((i) => (i + 1) % NODE_COUNT)
-    }, loops.autoCycleMs)
-    return () => window.clearInterval(id)
-  }, [playing])
 
   const jumpTo = useCallback((i: number) => {
     setActive(i)
-    setPlaying(false) // pause when user takes control
   }, [])
 
   const stage = loops.stages[active]
+  const group = loops.stageGroup[active]
 
   return (
     <section className="loops" id="loops">
@@ -92,10 +103,13 @@ export default function Loops() {
                 const label = nodePosition(i, LABEL_RADIUS)
                 const anchor = labelAnchor(angleDeg)
                 const isActive = active === i
+                const IconComp = ICONS[loops.stageIcon[i]] ?? Radar
                 return (
                   <g
                     key={s.name}
                     className={`loops-node-group${isActive ? ' active' : ''}`}
+                    onMouseEnter={() => jumpTo(i)}
+                    onFocus={() => jumpTo(i)}
                     onClick={() => jumpTo(i)}
                     role="button"
                     tabIndex={0}
@@ -107,11 +121,16 @@ export default function Loops() {
                     }}
                     aria-label={`Stage ${i + 1}: ${s.name}`}
                   >
-                    <circle className="loops-node-hit" cx={x} cy={y} r={22} />
-                    <circle className="loops-node" cx={x} cy={y} r={6} />
-                    <text className="loops-node-index" x={x} y={y}>
-                      {String(i + 1).padStart(2, '0')}
-                    </text>
+                    <circle className="loops-node-hit" cx={x} cy={y} r={26} />
+                    <circle className="loops-node" cx={x} cy={y} r={20} />
+                    <foreignObject x={x - 11} y={y - 11} width={22} height={22}>
+                      <div
+                        className="loops-node-icon"
+                        style={{ width: 22, height: 22, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                      >
+                        <IconComp width={20} height={20} strokeWidth={1.5} />
+                      </div>
+                    </foreignObject>
                     <text
                       className="loops-node-label"
                       x={label.x}
@@ -143,7 +162,7 @@ export default function Loops() {
                 transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
                 style={{ display: 'flex', flexDirection: 'column', gap: 20 }}
               >
-                <div className="loops-detail-num">STAGE {String(active + 1).padStart(2, '0')}</div>
+                <div className="loops-detail-num">{group}</div>
                 <div className="loops-detail-name">{stage.name}</div>
                 <div className="loops-detail-lede">{stage.lede}</div>
                 <div className="loops-detail-body">{stage.body}</div>
@@ -158,20 +177,12 @@ export default function Loops() {
                     type="button"
                     className={active === i ? 'active' : ''}
                     onClick={() => jumpTo(i)}
-                    aria-label={`Jump to ${s.name}`}
+                    onMouseEnter={() => jumpTo(i)}
+                    aria-label={`Show ${s.name}`}
                     aria-current={active === i}
                   />
                 ))}
               </div>
-              <button
-                type="button"
-                className="loops-play"
-                onClick={() => setPlaying((p) => !p)}
-                aria-pressed={playing}
-              >
-                {playing ? <Pause size={10} /> : <Play size={10} />}
-                {playing ? 'Pause' : 'Play'}
-              </button>
             </div>
           </motion.div>
         </div>

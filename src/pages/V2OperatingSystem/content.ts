@@ -64,7 +64,7 @@ export const hero = {
 
 // v8: Ghost + Stats collapsed into a single Intro section.
 export const intro = {
-  sectionLabel: "01 · The decision you don't see",
+  sectionLabel: "The decision you don't see",
   headline: 'Meet the new growth playbook.',
   body: [
     'Most B2B decisions form before a vendor is ever contacted.',
@@ -91,7 +91,7 @@ export const intro = {
 }
 
 export const playbook = {
-  sectionLabel: '02 · Two playbooks',
+  sectionLabel: 'Two playbooks',
   headline: { before: 'Old playbook. ', italic: 'New playbook.', after: '' },
   rows: [
     ['Drive traffic. Capture MQLs.', 'Shape ambient awareness. Own the shortlist.'],
@@ -113,14 +113,22 @@ export type LoopStage = {
   body: string
 }
 
+// v8 delta: stage groups for the detail-panel eyebrow.
+// Working assumption pending Justin confirmation:
+//   1-3 Detect / Enrich / Score → "Connect"
+//   4-6 Reach / Respond / Nurture → "Build Trust"
+//   7-9 Close / Retain / Expand → "Grow"
 export const loops = {
-  sectionLabel: '03 · The playbook',
-  headline: { before: 'Runs in ', italic: 'loops.', after: '' },
-  lede: 'Nine stages. One continuous motion. Every interaction feeds the next.',
-  hint: 'TAP ANY STAGE TO EXPLORE IT',
+  sectionLabel: 'The new playbook',
+  headline: { before: 'Run loops, not ', italic: 'campaigns.', after: '' },
+  lede: 'Every play is designed to generate a new signal.',
+  hint: 'Explore each stage',
   footerLine: 'Operational in week three. From there, the loop runs.',
   cta: { label: 'Build your new playbook', href: '#entry' } as CtaLink,
-  autoCycleMs: 4500,
+  // Auto-cycle retired per v8 delta item 4. Hover-reveal only.
+  autoCycleMs: 0,
+  stageGroup: ['Connect', 'Connect', 'Connect', 'Build Trust', 'Build Trust', 'Build Trust', 'Grow', 'Grow', 'Grow'] as const,
+  stageIcon: ['Radar', 'Database', 'Gauge', 'Send', 'MessageCircle', 'Sprout', 'CircleCheck', 'RefreshCw', 'TrendingUp'] as const,
   stages: [
     {
       name: 'Detect',
@@ -236,7 +244,7 @@ export type SignalTile = {
 }
 
 export const signalLibrary = {
-  sectionLabel: '04 · The Signal River',
+  sectionLabel: 'The Signal River',
   headline: { before: 'Every signal ', italic: 'we watch.', after: '' },
   note:
     'Thirty active signal types across intent, relationship, product, and pipeline. Each one fires a specific outcome, on a specific cadence, through a specific stack.',
@@ -280,7 +288,7 @@ export type SignalMapRow = {
 }
 
 export const signalMap = {
-  sectionLabel: '05 · Inside the Signal Map',
+  sectionLabel: 'Signal Map',
   headline: {
     before: 'Every signal becomes a move. Every move ',
     italic: 'feeds the next one.',
@@ -345,7 +353,7 @@ export type AuxTier = {
 }
 
 export const aux = {
-  sectionLabel: '06 · Inside AUX',
+  sectionLabel: 'Inside AUX',
   headline: {
     before: 'Build the ',
     italic: 'relationship infrastructure.',
@@ -399,7 +407,7 @@ export type MirrorSource = {
 }
 
 export const aiMirror = {
-  sectionLabel: '07 · Inside the AI Mirror',
+  sectionLabel: 'Inside the AI Mirror',
   headline: {
     before: 'See what the ',
     italic: 'agents',
@@ -472,7 +480,7 @@ export type AuditShot = {
 }
 
 export const audit = {
-  sectionLabel: '08 · Start here',
+  sectionLabel: 'Start here',
   headline: {
     before: 'AI and automation without strategy is ',
     italic: 'noise.',
@@ -526,23 +534,39 @@ export const audit = {
   ] as AuditShot[],
 }
 
+export type IntegrationTool = {
+  name: string
+  src?: string  // logo path; falls back to text if absent
+}
+
 export const integrations = {
-  sectionLabel: '09 · The stack we operate',
+  sectionLabel: 'The stack we operate',
   headline: { before: 'Built to ', italic: 'maximize outcomes.', after: '' },
   note:
     'These are the tools we use and integrate. ERA is the operating layer between them and your revenue.',
   closer: "If we don't integrate with it yet, we build the bridge.",
-  columns: [
-    { category: 'Enrichment & intent', tools: ['Clay', 'Apollo', 'Unify', 'HockeyStack'] },
-    { category: 'CRM', tools: ['HubSpot', 'Copper', 'Day.ai'] },
-    { category: 'Automation & AI', tools: ['Zapier', 'Claude', 'Custom pipes'] },
-  ],
+  // v8 delta item 8: real logos from /public/images/apps/. "Custom pipes"
+  // has no logo; rendered as text. Text-only fallbacks allowed per-tool.
+  tools: [
+    { name: 'Clay', src: '/images/apps/68dd418739aadd6263219522_clay-logo.png' },
+    { name: 'Apollo', src: '/images/apps/Apollo.Io-Logo-Vector.svg-.png' },
+    { name: 'Unify', src: '/images/apps/67d87bbaa7748700619e5277_Unify.png' },
+    { name: 'HockeyStack', src: '/images/apps/hockeystack-logo-new.png' },
+    { name: 'HubSpot', src: '/images/apps/hubspot-inc-business-logo-inbound-marketing-portable-network-graphics-business.jpg' },
+    { name: 'Copper', src: '/images/apps/383-3835182_icon-logo-dark-copper-copper-crm-logo-hd.png.jpeg' },
+    { name: 'Day.ai', src: '/images/apps/dayai-black.svg' },
+    { name: 'Zapier', src: '/images/apps/zapier-logo-VY4evj0B.jpg' },
+    { name: 'Claude', src: '/images/apps/Claude_AI_logo.svg.png' },
+    { name: 'Reply', src: '/images/apps/reply_company_logo_5a3ec05946.png' },
+    { name: 'Salesforge', src: '/images/apps/Salesforge-Logo-PNG-SVG-Vector-01-300x300.png' },
+    { name: 'Custom pipes' },
+  ] as IntegrationTool[],
 }
 
 // ─── Halo ───
 
 export const halo = {
-  sectionLabel: '10 · The productized surface',
+  sectionLabel: 'The productized surface',
   headline: 'Halo.',
   subtitle: 'The LinkedIn operating layer',
   tagline: 'The operating layer for executive presence on LinkedIn.',
@@ -567,24 +591,27 @@ export const halo = {
       num: '03',
       heading: 'Operated, not advised.',
       body:
-        'Weekly output. Monthly scoring. Quarterly review. You approve, we ship. No training programs, no "best practices" decks.',
+        'Output ships weekly, the system gets scored monthly, and strategy gets reviewed every quarter. You approve each delivery and we run the play. We do not sell training programs or best-practices decks.',
     },
   ],
   price: 'From $999/mo',
   duration: 'ongoing',
   priceNote: 'Scope varies by team size.',
   cta: { label: 'See if Halo fits', href: '#entry' } as CtaLink,
+  // v8 delta item 10: bento layout. [0] = main large tile (2/3 width),
+  // [1] + [2] = stacked secondary tiles (1/3 width each, half height).
   screenshots: [
     { src: '/images/halo_screenshots/dashboard.png', alt: 'Halo · dashboard view' },
     { src: '/images/halo_screenshots/engagement.png', alt: 'Halo · engagement view' },
     { src: '/images/halo_screenshots/score.png', alt: 'Halo · warmth score view' },
   ],
+  linkedinLogo: '/images/apps/LinkedIn_logo_initials.png',
 }
 
 // ─── What to Expect ───
 
 export const expect = {
-  sectionLabel: '11 · What to expect',
+  sectionLabel: 'What to expect',
   headline: { before: 'The return in month ten is ', italic: 'structurally different', after: ' from month three.' },
   sub: "This is infrastructure, not a sprint. The system compounds. Here's what the first year actually looks like.",
   markers: ['Months 1 – 2', 'Months 3 – 4', 'Months 5 – 12+'],
@@ -625,7 +652,7 @@ export type ClientCard = {
 }
 
 export const clients = {
-  sectionLabel: '12 · Who trusts us',
+  sectionLabel: 'Who trusts us',
   headline: { before: 'The people we work ', italic: 'with.', after: '' },
   items: [
     {
@@ -673,7 +700,7 @@ export type Tier = {
 }
 
 export const engage = {
-  sectionLabel: '13 · Engage',
+  sectionLabel: 'Engage',
   headline: { before: 'Four ways ', italic: 'in.', after: '' },
   note: "Most start with the audit. We'll tell you within 48 hours which one fits.",
   fitLine:
@@ -739,7 +766,7 @@ export const fit = {
 // ─── Founder ───
 
 export const founder = {
-  sectionLabel: '14 · Who runs it',
+  sectionLabel: 'Who runs it',
   headline: { before: 'Decades of ', italic: 'growth.', after: '' },
   imageAlt: 'Justin Marshall',
   imageSrc: '/images/bio2.jpg',
@@ -749,7 +776,7 @@ export const founder = {
     "If you're interested in creating stability in your growth actions, let's chat.",
   ],
   byline: { name: 'JUSTIN MARSHALL', role: 'FOUNDER' },
-  credentialsLabel: 'PREVIOUSLY BUILT GROWTH FOR',
+  credentialsLabel: 'Building Enterprise Go-to-Market Success with:',
   credentials: [
     { name: 'Microsoft', src: '/images/navalent/microsoft.png' },
     { name: 'Chase', src: '/images/navalent/chase-logo.png' },
@@ -772,38 +799,66 @@ export const founder = {
 // ─── Close ───
 
 export const close = {
-  headline: { before: 'See what your ', italic: 'buyers see.', after: '' },
+  headline: { before: "The pipeline doesn't ", italic: 'build itself.', after: '' },
+  sub: 'ERA builds the system that does.',
+  conversation: {
+    label: 'Start a conversation',
+    email: 'hello@eracx.com',
+  },
+  form: {
+    fields: [
+      { id: 'name', label: 'Your name', type: 'text', required: true },
+      { id: 'company', label: 'Company', type: 'text', required: true },
+      { id: 'email', label: 'Work email', type: 'email', required: true },
+      { id: 'message', label: 'What are you trying to solve?', type: 'textarea', required: true },
+    ] as const,
+    submitLabel: 'Send',
+  },
+  // Legacy CTA kept in case a tile-only variant is needed elsewhere.
   cta: { label: 'Build your new playbook', href: '#entry' } as CtaLink,
 }
 
+// v8 delta items 13 + 15: dark-ground 3-row footer, copyright line removed.
 export const footer = {
   columns: [
     {
-      heading: 'The System',
+      heading: 'NAVIGATE',
       items: [
-        { label: 'Signal River', href: '#system' },
-        { label: 'Signal Map', href: '#signal-map' },
+        { label: 'Why ERA', href: '#top' },
+        { label: 'The System', href: '#aux' },
+        { label: 'GTM Design', href: '#' },
+        { label: 'How it Works', href: '#loops' },
+        { label: 'Our Story', href: '#' },
+        { label: 'Contact', href: '#close' },
+      ],
+    },
+    {
+      heading: 'PRODUCTS',
+      items: [
         { label: 'AUX', href: '#aux' },
         { label: 'AI Mirror', href: '#mirror' },
-      ],
-    },
-    {
-      heading: 'Engage',
-      items: [
+        { label: 'Signal Map', href: '#aux' },
         { label: 'Halo', href: '#halo' },
-        { label: 'Audit', href: '#entry' },
-        { label: 'Signal Only', href: '#entry' },
-        { label: 'The System', href: '#entry' },
       ],
     },
     {
-      heading: 'Company',
+      heading: 'ENGAGE',
+      items: [
+        { label: 'Revenue Signal Audit', href: '#entry' },
+        { label: 'The System', href: '#entry' },
+        { label: 'Signal Only', href: '#entry' },
+        { label: 'Halo', href: '#halo' },
+      ],
+    },
+    {
+      heading: 'COMPANY',
       items: [
         { label: 'About', href: '#' },
-        { label: 'Writing', href: '#' },
-        { label: 'Contact', href: '#' },
+        { label: 'Contact', href: '#close' },
+        { label: 'hello@eracx.com', href: 'mailto:hello@eracx.com' },
       ],
     },
   ],
-  copyright: '© 2026 Department of Loyalty LLC · Bainbridge Island, WA',
+  tagline: 'The modern B2B playbook, run for you.',
+  meta: 'Bainbridge Island, WA',
 }

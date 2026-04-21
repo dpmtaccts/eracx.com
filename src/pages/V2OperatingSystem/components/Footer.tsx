@@ -1,21 +1,17 @@
 import { footer } from '../content'
 
+// v8 delta items 13 + 15: dark-ground footer with three rows.
 export default function Footer() {
   return (
-    <footer>
+    <footer className="v2-footer-dark">
       <div className="container">
-        <div className="footer-grid">
-          <div>
-            <div className="logo">
-              <img src="/assets/era_final.png" alt="ERA" />
-            </div>
-          </div>
+        <div className="footer-nav">
           {footer.columns.map((col) => (
-            <div key={col.heading}>
+            <div key={col.heading} className="footer-col">
               <h4>{col.heading}</h4>
               <ul>
                 {col.items.map((item) => (
-                  <li key={item.label}>
+                  <li key={`${col.heading}-${item.label}`}>
                     <a href={item.href}>{item.label}</a>
                   </li>
                 ))}
@@ -23,9 +19,17 @@ export default function Footer() {
             </div>
           ))}
         </div>
-        <div className="copyright">
-          <div>{footer.copyright}</div>
-          <div>eracx.com</div>
+
+        <div className="footer-wordmark-row">
+          <a href="#top" className="footer-wordmark" aria-label="ERA">
+            <img src="/assets/era_final.png" alt="ERA" />
+          </a>
+          <div className="footer-tagline">{footer.tagline}</div>
+        </div>
+
+        <div className="footer-meta-row">
+          <span className="footer-mark" aria-hidden="true" />
+          <span className="footer-meta">{footer.meta}</span>
         </div>
       </div>
     </footer>

@@ -1,13 +1,12 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { aux } from '../content'
+import { aux, signalMap } from '../content'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.23, 1, 0.32, 1] as const } },
 }
 
-// FRVRD pentagon geometry: center (220, 220), max radius 160.
 const CX = 220
 const CY = 220
 const R = 160
@@ -122,43 +121,80 @@ export default function Aux() {
           </div>
 
           <div className="card-body">
-            <div className="radar-panel">
-              <div className="panel-title">FRVRD Breakdown</div>
-              <svg className="frvrd-radar v8" viewBox="0 0 440 440" xmlns="http://www.w3.org/2000/svg">
-                {rings.map((pts, i) => (
-                  <polygon key={`ring-${i}`} className="grid-ring" points={pts} />
-                ))}
-                {AXES.map((a) => {
-                  const [x, y] = polar(a.angleDeg, R)
-                  return <line key={a.key} className="axis" x1={CX} y1={CY} x2={x} y2={y} />
-                })}
-                <motion.polygon
-                  className="data"
-                  points={dataPolygon}
-                  initial={{ scale: 0.1, opacity: 0 }}
-                  animate={inView ? { scale: 1, opacity: 1 } : { scale: 0.1, opacity: 0 }}
-                  transition={{ duration: 1.5, ease: [0.23, 1, 0.32, 1] }}
-                  style={{ transformOrigin: `${CX}px ${CY}px` }}
-                />
-                {dataPoints.map(([x, y], i) => (
-                  <motion.circle
-                    key={`dot-${i}`}
-                    className="dot"
-                    cx={x}
-                    cy={y}
-                    r={4}
-                    initial={{ opacity: 0 }}
-                    animate={inView ? { opacity: 1 } : { opacity: 0 }}
-                    transition={{ duration: 0.5, delay: 1, ease: 'easeOut' }}
+            <div className="radar-plays-stack">
+              <div className="radar-panel">
+                <div className="panel-title">FRVRD Breakdown</div>
+                <svg className="frvrd-radar v8" viewBox="0 0 440 440" xmlns="http://www.w3.org/2000/svg">
+                  {rings.map((pts, i) => (
+                    <polygon key={`ring-${i}`} className="grid-ring" points={pts} />
+                  ))}
+                  {AXES.map((a) => {
+                    const [x, y] = polar(a.angleDeg, R)
+                    return <line key={a.key} className="axis" x1={CX} y1={CY} x2={x} y2={y} />
+                  })}
+                  <motion.polygon
+                    className="data"
+                    points={dataPolygon}
+                    initial={{ scale: 0.1, opacity: 0 }}
+                    animate={inView ? { scale: 1, opacity: 1 } : { scale: 0.1, opacity: 0 }}
+                    transition={{ duration: 1.5, ease: [0.23, 1, 0.32, 1] }}
+                    style={{ transformOrigin: `${CX}px ${CY}px` }}
                   />
-                ))}
-                {labelPositions.map(({ label, value, lx, ly, vx, vy }) => (
-                  <g key={label}>
-                    <text className="axis-label" x={lx} y={ly}>{label}</text>
-                    <text className="axis-val" x={vx} y={vy}>{value}</text>
-                  </g>
-                ))}
-              </svg>
+                  {dataPoints.map(([x, y], i) => (
+                    <motion.circle
+                      key={`dot-${i}`}
+                      className="dot"
+                      cx={x}
+                      cy={y}
+                      r={4}
+                      initial={{ opacity: 0 }}
+                      animate={inView ? { opacity: 1 } : { opacity: 0 }}
+                      transition={{ duration: 0.5, delay: 1, ease: 'easeOut' }}
+                    />
+                  ))}
+                  {labelPositions.map(({ label, value, lx, ly, vx, vy }) => (
+                    <g key={label}>
+                      <text className="axis-label" x={lx} y={ly}>{label}</text>
+                      <text className="axis-val" x={vx} y={vy}>{value}</text>
+                    </g>
+                  ))}
+                </svg>
+              </div>
+
+              {/* v8 delta item 5: Signal Map rolled into the AUX card. */}
+              <div className="plays-panel">
+                <div className="panel-title">Signal → Outcome</div>
+                <div className="plays-table">
+                  {signalMap.rows.map((r, i) => (
+                    <div key={r.signal.primary} className="plays-row">
+                      <div className="plays-signal">
+                        <div className="plays-primary">{r.signal.primary}</div>
+                        <div className="plays-meta">{r.signal.meta}</div>
+                      </div>
+                      <div className="plays-outcome">
+                        <div className="plays-primary play">{r.play.primary}</div>
+                        <div className="plays-meta">{r.play.meta}</div>
+                      </div>
+                      <div className="plays-score">
+                        <span className="plays-score-num">{r.score}</span>
+                        <div className="plays-score-bar">
+                          <motion.div
+                            className="plays-score-fill"
+                            initial={{ scaleX: 0 }}
+                            animate={inView ? { scaleX: r.score / 100 } : { scaleX: 0 }}
+                            transition={{
+                              duration: 1.0,
+                              delay: 0.3 + i * 0.08,
+                              ease: [0.23, 1, 0.32, 1],
+                            }}
+                            style={{ width: '100%' }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <div className="activity-panel">
@@ -180,25 +216,6 @@ export default function Aux() {
               </div>
               <div className="redaction-note">{aux.redactionNote}</div>
             </div>
-          </div>
-
-          <div className="score-strip">
-            {aux.account.scores.map((s, i) => (
-              <div key={s.label} className="score-item">
-                <div className="score-header">
-                  <span className="score-name">{s.label}</span>
-                  <span className="score-num">{s.value}</span>
-                </div>
-                <div className="score-bar">
-                  <motion.div
-                    className={`score-bar-fill${s.color === 'gold' ? ' gold' : ''}`}
-                    initial={{ width: 0 }}
-                    animate={inView ? { width: `${s.value}%` } : { width: 0 }}
-                    transition={{ duration: 1, delay: 0.3 + i * 0.1, ease: 'easeOut' }}
-                  />
-                </div>
-              </div>
-            ))}
           </div>
         </motion.div>
       </div>

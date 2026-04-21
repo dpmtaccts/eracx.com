@@ -17,6 +17,8 @@ const feat = {
 }
 
 export default function Halo() {
+  const [main, secondaryA, secondaryB] = halo.screenshots
+
   return (
     <section className="halo" id="halo">
       <div className="container">
@@ -32,14 +34,21 @@ export default function Halo() {
           </motion.div>
           <div className="halo-intro">
             <div className="halo-header">
-              <motion.h2
+              <motion.div
+                className="halo-headline-row"
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, amount: 0.5 }}
                 variants={fadeUp}
               >
-                {halo.headline}
-              </motion.h2>
+                <h2>{halo.headline}</h2>
+                <img
+                  className="halo-linkedin"
+                  src={halo.linkedinLogo}
+                  alt=""
+                  aria-hidden="true"
+                />
+              </motion.div>
               <motion.div
                 className="halo-subtitle"
                 initial="hidden"
@@ -71,19 +80,34 @@ export default function Halo() {
               ))}
             </motion.div>
           </div>
+
+          {/* v8 delta item 10: asymmetric bento — main 2/3, two stacked 1/3. */}
           <motion.div
-            className="halo-shots"
+            className="halo-bento"
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.15 }}
             variants={stagger}
           >
-            {halo.screenshots.map((s) => (
-              <motion.div key={s.src} className="halo-shot" variants={feat}>
-                <img src={s.src} alt={s.alt} loading="lazy" />
+            {main && (
+              <motion.div className="halo-bento-main" variants={feat}>
+                <img src={main.src} alt={main.alt} loading="lazy" />
               </motion.div>
-            ))}
+            )}
+            <div className="halo-bento-stack">
+              {secondaryA && (
+                <motion.div className="halo-bento-small" variants={feat}>
+                  <img src={secondaryA.src} alt={secondaryA.alt} loading="lazy" />
+                </motion.div>
+              )}
+              {secondaryB && (
+                <motion.div className="halo-bento-small" variants={feat}>
+                  <img src={secondaryB.src} alt={secondaryB.alt} loading="lazy" />
+                </motion.div>
+              )}
+            </div>
           </motion.div>
+
           <motion.div
             className="halo-features"
             initial="hidden"
