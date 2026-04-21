@@ -28,6 +28,11 @@
   --rule-strong: rgba(10, 10, 10, 0.28);
   --rule-subtle: rgba(10, 10, 10, 0.06);
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+  /* v8 primary product surface depth — near + mid + ambient halo. */
+  --shadow-product:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.06),
+    0 24px 48px rgba(0, 0, 0, 0.04);
 
   --font-display: 'Instrument Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -63,6 +68,7 @@
   --rule-strong: rgba(245, 240, 235, 0.35);
   --rule-subtle: rgba(245, 240, 235, 0.06);
   --shadow-card: none;
+  --shadow-product: none;
 }
 
 /* Mono family for all label / tag / data selectors (v7: JetBrains Mono, 10-12px, 0.4em tracking). */
@@ -162,12 +168,20 @@
 .era-v2 .v2-nav {
   position: sticky; top: 0; z-index: 50;
   padding: 24px 48px;
+  /* v8: nav is transparent and borderless until scrolled past the hero.
+     The nav shares ground with the hero at the top of the page. */
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.25s ease, border-bottom-color 0.25s ease,
+              backdrop-filter 0.25s ease;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 24px;
+}
+.era-v2 .v2-nav.scrolled {
   background: color-mix(in srgb, var(--paper) 88%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--rule);
-  display: flex; justify-content: space-between; align-items: center;
-  gap: 24px;
+  border-bottom-color: var(--rule);
 }
 .era-v2 .v2-nav .logo {
   font-family: 'Instrument Sans', system-ui, sans-serif;
@@ -202,10 +216,69 @@
 
 /* ─── Hero ─── */
 .era-v2 .hero {
+  /* v8: hero is a single continuous space shared with the nav. No border
+     above (nav stays transparent until scroll) or below (proof strip
+     separates via ground change, not a rule). */
   padding: 180px 0 140px;
-  border-bottom: 1px solid var(--rule);
-  position: relative; overflow: hidden;
+  position: relative;
+  overflow: hidden;
+  /* The hero's top edge runs up to the viewport top; the nav sits on top
+     of it transparently. Reserve its own stacking context. */
+  isolation: isolate;
 }
+
+/* v8 hero ambient layer 1: outlined PLAYBOOK watermark, center-right. */
+.era-v2 .hero-watermark {
+  position: absolute;
+  right: -4%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(240px, 36vw, 560px);
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(10, 10, 10, 0.06);
+          text-stroke: 1px rgba(10, 10, 10, 0.06);
+  white-space: nowrap;
+}
+.era-v2[data-theme="dark"] .hero-watermark {
+  -webkit-text-stroke: 1px rgba(245, 240, 235, 0.05);
+          text-stroke: 1px rgba(245, 240, 235, 0.05);
+}
+
+/* v8 hero ambient layer 2: floating rust-dot field. */
+.era-v2 .hero-dots {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.era-v2 .hero-dot {
+  position: absolute;
+  background: var(--rust);
+  border-radius: 50%;
+  animation-name: v2-heroDotFloat;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  will-change: transform, opacity;
+}
+.era-v2 .hero-dot.static { animation: none; }
+@keyframes v2-heroDotFloat {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: var(--dot-opacity, 1); }
+  50% { transform: translate3d(0, var(--shift-y, 6px), 0); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .era-v2 .hero-dot { animation: none; }
+}
+
+.era-v2 .hero .container { position: relative; z-index: 1; }
+.era-v2 .hero-content { position: relative; z-index: 1; }
 .era-v2 .hero .watermark {
   font-size: clamp(400px, 55vw, 900px);
   right: -5%; top: 50%; transform: translateY(-50%);
@@ -1176,7 +1249,9 @@
   border: 1px solid var(--rule);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: var(--shadow-card);
+  /* v8 depth rule: primary product surfaces use the stacked shadow
+     (near + mid + ambient) to lift cleanly off the cream ground. */
+  box-shadow: var(--shadow-product);
 }
 .era-v2 .account-card.v8 .card-header {
   display: grid; grid-template-columns: 1fr auto;
@@ -1459,7 +1534,7 @@
   border: 1px solid var(--rule);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-product);
   display: flex; flex-direction: column;
   transition: transform 0.4s ease, box-shadow 0.4s ease, z-index 0s ease 0.4s;
 }
@@ -1921,6 +1996,7 @@
   background: var(--paper-deep);
   overflow: hidden;
   border-radius: 16px;
+  box-shadow: var(--shadow-product);
 }
 .era-v2 .demo-header {
   padding: 20px 28px;
