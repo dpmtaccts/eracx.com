@@ -61,13 +61,32 @@ export default function Audit() {
           variants={stagger}
         >
           {audit.shots.map((shot, i) => (
-            <motion.div
+            <motion.article
               key={shot.src}
               className={`audit-shot ${POSITIONS[i] ?? 'center'}`}
               variants={shotItem}
             >
-              <img src={shot.src} alt={shot.alt} loading="lazy" />
-            </motion.div>
+              <header className="audit-shot-header">
+                <div className="audit-shot-header-left">
+                  <div className="audit-shot-client">{shot.clientName}</div>
+                  <div className="audit-shot-domain">{shot.domain}</div>
+                  <div className="audit-shot-chips">
+                    <span className="audit-tier-badge">{shot.tierBadge}</span>
+                    <span className={`audit-loop-tag ${shot.loop}`}>{shot.loopTag}</span>
+                  </div>
+                </div>
+                <div className="audit-shot-metric">
+                  <div className="audit-shot-metric-value">{shot.pullMetric.value}</div>
+                  <div className="audit-shot-metric-label">{shot.pullMetric.label}</div>
+                </div>
+              </header>
+              <div className="audit-shot-body">
+                <img src={shot.src} alt={shot.alt} loading="lazy" />
+              </div>
+              {shot.finding && (
+                <div className="audit-shot-finding">{shot.finding}</div>
+              )}
+            </motion.article>
           ))}
         </motion.div>
 

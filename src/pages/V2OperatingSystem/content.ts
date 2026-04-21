@@ -457,9 +457,18 @@ export const aiMirror = {
 
 // ─── Audit (section 08 · Start here — new in v8) ───
 
+export type AuditLoop = 'connection' | 'trust' | 'loyalty'
+
 export type AuditShot = {
   src: string
   alt: string
+  clientName: string
+  domain: string
+  tierBadge: string       // e.g. "T1 · DIAGNOSTIC"
+  loopTag: string         // e.g. "CONNECTION LOOP"
+  loop: AuditLoop
+  pullMetric: { value: string; label: string }
+  finding: string         // one-line closing finding
 }
 
 export const audit = {
@@ -473,10 +482,47 @@ export const audit = {
     'Every company is stacking AI. The ones winning are starting with the playbook. The GTM audit is 14 days. You leave with a scored gap analysis, a new playbook, and a 90-day operating plan.',
   caption: "These are from audits we've delivered. Yours would look like this, scored against your stack.",
   cta: { label: 'Get your audit', href: '#entry' } as CtaLink,
+  // TODO: confirm loop tag for each client audit with Justin. Current
+  // mapping is a best-guess placeholder: Navalent → Connection (relationship
+  // acquisition diagnostic), BetterUp → Trust (committee engagement), third
+  // audit → Loyalty.
   shots: [
-    { src: '/images/audit_screenshots/convictioncascade.png', alt: 'Sample audit · conviction cascade view (anonymized)' },
-    { src: '/images/audit_screenshots/dashboard.png', alt: 'Sample audit · dashboard view (anonymized)' },
-    { src: '/images/audit_screenshots/agentic.png', alt: 'Sample audit · agentic visibility view (anonymized)' },
+    {
+      src: '/images/audit_screenshots/convictioncascade.png',
+      alt: 'Sample audit · conviction cascade view (anonymized)',
+      clientName: 'Anonymized · Leadership Advisory',
+      domain: 'navalent-style-engagement',
+      tierBadge: 'T1 · DIAGNOSTIC',
+      loopTag: 'CONNECTION LOOP',
+      loop: 'connection',
+      pullMetric: { value: '7,800', label: 'CONTACTS ENRICHED' },
+      finding:
+        'The CRM has a strong foundation. Now it needs to tell you what to do next.',
+    },
+    {
+      src: '/images/audit_screenshots/dashboard.png',
+      alt: 'Sample audit · dashboard view (anonymized)',
+      clientName: 'Anonymized · Coaching Platform',
+      domain: 'betterup-style-engagement',
+      tierBadge: 'T1 · DIAGNOSTIC',
+      loopTag: 'TRUST LOOP',
+      loop: 'trust',
+      pullMetric: { value: '14/48', label: 'COMMITTEE ROLES' },
+      finding:
+        'Deals stall mid-committee. The trust loop rebuilds pressure at every stage.',
+    },
+    {
+      src: '/images/audit_screenshots/agentic.png',
+      alt: 'Sample audit · agentic visibility view (anonymized)',
+      clientName: 'Anonymized · RevOps SaaS',
+      domain: 'loyalty-style-engagement',
+      tierBadge: 'T1 · DIAGNOSTIC',
+      loopTag: 'LOYALTY LOOP',
+      loop: 'loyalty',
+      pullMetric: { value: '+3x', label: 'EXPANSION PIPELINE' },
+      finding:
+        'The customer base is the next growth engine. The loyalty loop operates it.',
+    },
   ] as AuditShot[],
 }
 
