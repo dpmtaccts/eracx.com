@@ -29,11 +29,9 @@ export default function Hero() {
 
       <div className="container">
         <motion.div className="hero-content" variants={container} initial="hidden" animate="show">
-          {/* TODO: confirm eyebrow chip copy with Justin. Spec names the
-              chip treatment but not the text. */}
           <motion.div className="hero-eyebrow-chip" variants={item}>
             <span className="hero-eyebrow-dot" aria-hidden="true" />
-            The modern B2B playbook
+            The operating layer
           </motion.div>
           <motion.h1 variants={item}>
             {hero.headline.before}
