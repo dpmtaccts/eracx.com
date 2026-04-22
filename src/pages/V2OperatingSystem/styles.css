@@ -2,32 +2,48 @@
    Ported from era-prototype-v4.html. Only applies inside .era-v2. */
 
 .era-v2 {
-  /* v8 brand tokens — three-layer system:
-     1. Ground + ink (neutrals)
-     2. Action + data (rust = primary, gold = Wallet / secondary data)
-     3. Loop taxonomy (connection / trust / loyalty — carry brand meaning)
-  */
-  --paper: #F5F0EB;
-  --paper-deep: #EBE4D6;
+  /* v8.1 Architectural Light palette. Token names preserved to avoid
+     churn across hundreds of rules; values swapped. Old rust (#C85A3A)
+     is retired — `--rust` now holds Deep Steel (#35505F) which is the
+     primary action + data accent across the entire site. Loop taxonomy
+     (connection/trust/loyalty) is retired; those tokens alias to Deep
+     Steel so any residual references render color-neutral. */
+
+  /* Foundation */
+  --paper: #F4F1EA;              /* Parchment */
+  --paper-deep: #E8E2D8;         /* Chalk */
   --card: #FFFFFF;
-  --ink: #0A0A0A;
-  --ink-soft: #3D3D3D;
-  --text: #1A1A1A;
-  --ink-muted: #5A5A5A;
-  --text-subtle: #8A8A8A;
-  --rust: #C85A3A;
-  --rust-deep: #B44E30;
-  --rust-soft: rgba(200, 90, 58, 0.08);
-  --sky: #4AADE8;
-  --magenta: #E8175D;
-  --gold: #C89B3C;
-  --connection: #B8862C;
-  --trust: #2F8F7A;
-  --loyalty: #D01656;
-  --rule: rgba(10, 10, 10, 0.1);
-  --rule-strong: rgba(10, 10, 10, 0.28);
-  --rule-subtle: rgba(10, 10, 10, 0.06);
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --ink: #121417;                /* Ink */
+  --ink-soft: #2A3138;           /* Graphite */
+  --text: #121417;
+  --ink-muted: #4A525A;
+  --text-subtle: #8A9199;
+
+  /* Primary brand / action (was rust — now Deep Steel) */
+  --rust: #35505F;               /* Deep Steel */
+  --rust-deep: #3F6274;
+  --rust-soft: rgba(53, 80, 95, 0.08);
+
+  /* Structural blues (new in Architectural Light) */
+  --mineral: #4E6E81;            /* Mineral Blue — 10% structural */
+  --mist: #A9BAC4;               /* Mist Blue — muted bars, UI borders */
+  --graphite: #2A3138;
+
+  /* Secondary accents */
+  --sky: #4E6E81;                /* retired alias → Mineral */
+  --magenta: #C44A7A;            /* Midcentury Magenta — 5% maximum */
+  --gold: #C89B3C;               /* AUX Wallet bar only */
+
+  /* Loop taxonomy retired — aliased to Deep Steel so any leftover
+     references stay color-neutral until the selectors are cleaned up. */
+  --connection: #35505F;
+  --trust: #35505F;
+  --loyalty: #35505F;
+
+  --rule: rgba(18, 20, 23, 0.1);
+  --rule-strong: rgba(18, 20, 23, 0.28);
+  --rule-subtle: rgba(18, 20, 23, 0.06);
+  --shadow-card: 0 2px 8px rgba(18, 20, 23, 0.06);
   /* v8 primary product surface depth — near + mid + ambient halo. */
   --shadow-product:
     0 1px 2px rgba(0, 0, 0, 0.04),
@@ -47,26 +63,35 @@
 }
 
 .era-v2[data-theme="dark"] {
-  --paper: #0A0A0A;
-  --paper-deep: #111111;
-  --card: #1A1A1A;
-  --ink: #F5F0EB;
-  --ink-soft: #CCCCCC;
-  --text: #F0F0F0;
-  --ink-muted: #B8B8B8;
-  --text-subtle: #8A8A8A;
-  --rust: #D66A3E;
-  --rust-deep: #E57A50;
-  --rust-soft: rgba(214, 106, 62, 0.12);
-  --sky: #5ABFF0;
-  --magenta: #F03878;
+  /* Architectural Light, dark theme. */
+  --paper: #121417;
+  --paper-deep: #1A1D21;
+  --card: #1E2228;
+  --ink: #F4F1EA;
+  --ink-soft: #C5C9CE;
+  --text: #F0EDE5;
+  --ink-muted: #A9B0B7;
+  --text-subtle: #7A828B;
+
+  --rust: #6B8EA2;                    /* Deep Steel lifted */
+  --rust-deep: #7FA0B4;
+  --rust-soft: rgba(107, 142, 162, 0.15);
+
+  --mineral: #7B97AB;
+  --mist: #A9BAC4;
+  --graphite: #C5C9CE;
+
+  --sky: #7B97AB;
+  --magenta: #D66B94;
   --gold: #D8A848;
-  --connection: #C89B3C;
-  --trust: #4FAA96;
-  --loyalty: #E8175D;
-  --rule: rgba(245, 240, 235, 0.12);
-  --rule-strong: rgba(245, 240, 235, 0.35);
-  --rule-subtle: rgba(245, 240, 235, 0.06);
+
+  --connection: #6B8EA2;
+  --trust: #6B8EA2;
+  --loyalty: #6B8EA2;
+
+  --rule: rgba(244, 241, 234, 0.12);
+  --rule-strong: rgba(244, 241, 234, 0.32);
+  --rule-subtle: rgba(244, 241, 234, 0.06);
   --shadow-card: none;
   --shadow-product: none;
 }
@@ -308,20 +333,20 @@
 }
 .era-v2 .hero-maze .route-line {
   fill: none;
-  stroke: rgba(200, 90, 58, 0.03);
+  stroke: rgba(53, 80, 95, 0.03);
   stroke-width: 0.25;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 .era-v2[data-theme="dark"] .hero-maze .route-line {
-  stroke: rgba(214, 106, 62, 0.04);
+  stroke: rgba(107, 142, 162, 0.04);
 }
-.era-v2 .hero-maze .waypoint { fill: rgba(200, 90, 58, 0.03); }
-.era-v2[data-theme="dark"] .hero-maze .waypoint { fill: rgba(214, 106, 62, 0.04); }
+.era-v2 .hero-maze .waypoint { fill: rgba(53, 80, 95, 0.03); }
+.era-v2[data-theme="dark"] .hero-maze .waypoint { fill: rgba(107, 142, 162, 0.04); }
 .era-v2 .hero-maze .flow-dot { fill: var(--rust); }
 @media (prefers-reduced-motion: reduce) {
   .era-v2 .hero-maze animateMotion { display: none; }
-  .era-v2 .hero-maze .route-line { stroke: rgba(200, 90, 58, 0.06); }
+  .era-v2 .hero-maze .route-line { stroke: rgba(53, 80, 95, 0.06); }
 }
 
 .era-v2 .hero .container { position: relative; z-index: 1; }
@@ -666,7 +691,7 @@
   line-height: 1; letter-spacing: -0.03em; margin-bottom: 40px;
   font-weight: 400;
 }
-.era-v2 .system h2 .it { font-style: italic; color: #D66A3E; }
+.era-v2 .system h2 .it { font-style: italic; color: var(--rust); }
 .era-v2 .system .lede {
   font-family: 'Instrument Sans', system-ui, sans-serif;
   font-size: clamp(22px, 2.2vw, 28px);
@@ -689,7 +714,7 @@
 .era-v2 .component .c-label {
   font-family: 'Instrument Sans', system-ui, sans-serif;
   font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: #D66A3E; margin-bottom: 16px;
+  color: var(--rust); margin-bottom: 16px;
 }
 .era-v2 .component .c-name {
   font-family: 'Instrument Sans', system-ui, sans-serif;
@@ -710,7 +735,7 @@
 
 /* Viz: Signal River */
 .era-v2 .viz-river { display: flex; gap: 6px; align-items: flex-end; height: 40px; }
-.era-v2 .viz-river span { flex: 1; background: #D66A3E; animation: v2-riverPulse 2.4s ease-in-out infinite; }
+.era-v2 .viz-river span { flex: 1; background: var(--rust); animation: v2-riverPulse 2.4s ease-in-out infinite; }
 .era-v2 .viz-river span:nth-child(1) { animation-delay: 0s; }
 .era-v2 .viz-river span:nth-child(2) { animation-delay: 0.12s; }
 .era-v2 .viz-river span:nth-child(3) { animation-delay: 0.24s; }
@@ -729,7 +754,7 @@
 /* Viz: Signal Map */
 .era-v2 .viz-map { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; }
 .era-v2 .viz-map span { aspect-ratio: 1; background: rgba(242, 237, 228, 0.15); border-radius: 50%; transition: background 0.3s; }
-.era-v2 .viz-map span.hot { background: #D66A3E; animation: v2-dotPulse 3s infinite; }
+.era-v2 .viz-map span.hot { background: var(--rust); animation: v2-dotPulse 3s infinite; }
 .era-v2 .viz-map span.warm { background: #E0B860; animation: v2-dotPulse 3s infinite 0.7s; }
 @keyframes v2-dotPulse {
   0%, 100% { transform: scale(1); opacity: 0.8; }
@@ -745,7 +770,7 @@
   font-size: 11px; color: rgba(242, 237, 228, 0.6);
 }
 .era-v2 .viz-aux-bar { height: 4px; background: rgba(242, 237, 228, 0.1); position: relative; }
-.era-v2 .viz-aux-bar::after { content: ""; position: absolute; top: 0; left: 0; bottom: 0; background: #D66A3E; }
+.era-v2 .viz-aux-bar::after { content: ""; position: absolute; top: 0; left: 0; bottom: 0; background: var(--rust); }
 .era-v2 .viz-aux-row:nth-child(1) .viz-aux-bar::after { width: 87%; }
 .era-v2 .viz-aux-row:nth-child(2) .viz-aux-bar::after { width: 62%; }
 .era-v2 .viz-aux-row:nth-child(3) .viz-aux-bar::after { width: 41%; }
@@ -1089,7 +1114,7 @@
   line-height: 1.1; letter-spacing: -0.025em;
   font-weight: 400;
 }
-.era-v2 .lib-intro h2 .it { font-style: italic; color: #D66A3E; }
+.era-v2 .lib-intro h2 .it { font-style: italic; color: var(--rust); }
 .era-v2 .lib-intro .lib-note {
   font-family: 'Instrument Sans', system-ui, sans-serif;
   font-size: 19px; line-height: 1.45;
@@ -1111,8 +1136,8 @@
   transition: all 0.3s;
 }
 .era-v2 .sig-tile:hover {
-  background: rgba(214, 106, 62, 0.08);
-  border-color: #D66A3E;
+  background: var(--rust-soft);
+  border-color: var(--rust);
   transform: translateY(-2px);
 }
 .era-v2 .sig-name {
@@ -1130,7 +1155,7 @@
 .era-v2 .sig-play {
   font-family: 'Instrument Sans', system-ui, sans-serif;
   font-style: italic; font-size: 14px;
-  line-height: 1.3; color: #D66A3E;
+  line-height: 1.3; color: var(--rust);
 }
 .era-v2 .sig-tile.warm .sig-play { color: #E0B860; }
 .era-v2 .sig-tile.cool .sig-play { color: #7BA8C8; }
@@ -1315,7 +1340,7 @@
   display: inline-flex; align-items: center; gap: 8px;
   padding: 6px 12px;
   border: 1px solid var(--rust);
-  background: var(--accent-soft, rgba(200, 90, 58, 0.08));
+  background: var(--accent-soft, var(--rust-soft));
   color: var(--rust);
   border-radius: 4px;
   font-size: 10px; font-weight: 500;
@@ -1455,7 +1480,7 @@
 .era-v2 .frvrd-radar.v8 .grid-ring { fill: none; stroke: var(--rule); stroke-width: 1; }
 .era-v2 .frvrd-radar.v8 .axis { stroke: var(--rule); stroke-width: 1; }
 .era-v2 .frvrd-radar.v8 .data {
-  fill: rgba(200, 90, 58, 0.18);
+  fill: rgba(53, 80, 95, 0.18);
   stroke: var(--rust); stroke-width: 2;
 }
 .era-v2 .frvrd-radar.v8 .dot { fill: var(--rust); }
@@ -1698,20 +1723,13 @@
   text-transform: uppercase;
   border: 1px solid;
 }
-.era-v2 .audit-loop-tag.connection {
-  color: var(--connection);
-  border-color: var(--connection);
-  background: rgba(184, 134, 44, 0.08);
-}
-.era-v2 .audit-loop-tag.trust {
-  color: var(--trust);
-  border-color: var(--trust);
-  background: rgba(47, 143, 122, 0.08);
-}
+/* v8.1: loop taxonomy retired. All audit loop tags render in Deep Steel. */
+.era-v2 .audit-loop-tag.connection,
+.era-v2 .audit-loop-tag.trust,
 .era-v2 .audit-loop-tag.loyalty {
-  color: var(--loyalty);
-  border-color: var(--loyalty);
-  background: rgba(208, 22, 86, 0.08);
+  color: var(--rust);
+  border-color: var(--rust);
+  background: var(--rust-soft);
 }
 .era-v2 .audit-shot-metric {
   text-align: right;
@@ -2178,7 +2196,7 @@
   padding: 1px 4px; border-radius: 2px;
 }
 .era-v2[data-theme="dark"] .mirror-response .flag {
-  background: rgba(214, 106, 62, 0.20);
+  background: rgba(53, 80, 95, 0.20);
   color: var(--rust);
 }
 .era-v2 .sources-title {
@@ -3053,7 +3071,7 @@
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.12em;
-  color: #D66A3E;
+  color: var(--rust);
   margin-bottom: 16px;
   line-height: 1.5;
   text-transform: uppercase;
