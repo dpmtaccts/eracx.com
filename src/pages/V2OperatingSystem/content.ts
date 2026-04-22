@@ -645,47 +645,49 @@ export const expect = {
 
 // ─── Clients ───
 
-export type ClientCard = {
-  name: string
-  title: string
-  plays: string
+// v8 delta item 26: Clients 2x2 grid replaced with two testimonial cards.
+export type Testimonial = {
+  stars: number
   quote: string
-  quoteIsPlaceholder?: boolean
+  photo: string
+  photoAlt: string
+  name: string
+  role: string
+  companyLogo: string
+  companyLogoAlt: string
 }
 
 export const clients = {
-  sectionLabel: 'Who trusts us',
-  headline: { before: 'The people we work ', italic: 'with.', after: '' },
+  sectionLabel: 'Clients',
+  headline: { before: 'Leaders talking about ', italic: 'the work.', after: '' },
+  sub: "Two leaders who've seen the system run inside their companies.",
   items: [
     {
-      name: 'Stephen Roesler',
-      title: 'FOUNDER, CEO · MINIAC',
-      plays: 'Signal River · AUX · Halo',
+      stars: 5,
       quote:
-        '"They built the content engine and signal system. I stopped running cold outbound and started operating on warmth."',
-    },
-    {
-      name: 'Ron Carucci',
-      title: 'CO-FOUNDER · NAVALENT',
-      plays: 'Signal River · AUX · Signal Map',
-      quote:
-        '"ERA took 7,800 unsegmented contacts and turned them into a tiered champion network. The difference is operational, not cosmetic."',
-    },
-    {
-      name: 'Brian Gonsalves',
-      title: 'HEAD OF GROWTH · NETRUSH',
-      plays: 'Halo · Signal Map · AI Mirror',
-      quote: '[Real quote pending · pull from current case material.]',
-      quoteIsPlaceholder: true,
-    },
-    {
+        'Justin builds the thing most consultants just talk about. Actual operational systems. Scoring, enrichment, sequencing, CRM. When he hands it off, your team can run it.',
+      photo: '/images/betterup/nathaniel-houghton.jpeg',
+      photoAlt: 'Nate Houghton',
       name: 'Nate Houghton',
-      title: 'HEAD OF REVENUE · LORIKEET',
-      plays: 'AI Mirror · AUX · Signal Map',
-      quote: '[Real quote pending · pull from current case material.]',
-      quoteIsPlaceholder: true,
+      role: 'Head of Sales, Americas',
+      companyLogo: '/images/navalent/Lorikeet_logo_color.png',
+      companyLogoAlt: 'Lorikeet',
     },
-  ] as ClientCard[],
+    {
+      stars: 5,
+      // TODO: confirm with Justin whether (a) Lara approved this ERA-adapted
+      // quote or it needs a refresh, and (b) which affiliation ships —
+      // historical Publicist (when the work happened) or current Assemble.
+      quote:
+        'Era is an asset to any high-growth company, impacting every aspect of revenue, marketing, customer success, and account management.',
+      photo: '/images/lara-vandenberg.jpeg',
+      photoAlt: 'Lara Vandenberg',
+      name: 'Lara Vandenberg',
+      role: 'Founder, Publicist',
+      companyLogo: '/assets/clients/publicist.png',
+      companyLogoAlt: 'Publicist',
+    },
+  ] as Testimonial[],
 }
 
 // ─── Engage (pricing tiers) ───
@@ -767,19 +769,20 @@ export const fit = {
 
 // ─── Founder ───
 
-// v8 delta item 24: homepage Founder block replaced with an operator-bench
-// credibility block. No headshot, no bio paragraphs, no personal voice on the
-// homepage. Personal content lives on /our-story (item 25).
+// v8 delta item 24 (revised): homepage Founder slot becomes a leader-bench
+// credibility block. Terminology matters here — ERA *operates*, but the
+// homepage block refers to *leaders* (GTM executives, founders, business
+// leaders), not operators. Keep that distinction consistent.
 export const founder = {
-  sectionLabel: 'Who operates it',
+  sectionLabel: 'Who runs it',
   headline: {
     before: 'Decades of ',
     italic: 'growth,',
     after: ' now built into one system.',
   },
   lede:
-    "ERA is run by GTM executives and operators with decades of experience across Fortune 500 enterprises. We've built data-driven growth programs for some of the largest B2B companies in the world. Now we build systems that put those programs into your business.",
-  credentialsLabel: 'Built growth programs with:',
+    "ERA is built by GTM executives, business leaders, and founders with decades of experience across Fortune 500 enterprises. We've led the data-driven growth programs at some of the largest B2B companies in the world. Now we operate that experience as a system inside yours.",
+  credentialsLabel: 'Led growth at:',
   credentials: [
     { name: 'Microsoft', src: '/images/navalent/microsoft.png' },
     { name: 'Chase', src: '/images/navalent/chase-logo.png' },
@@ -854,7 +857,7 @@ export const ourStory = {
       },
     ],
     closer:
-      'Supported by a bench of GTM operators and advisors across the US and EU.',
+      'Supported by a bench of GTM leaders and advisors across the US and EU.',
   },
   cta: {
     headline: 'Ready to focus?',
