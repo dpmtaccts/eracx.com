@@ -44,11 +44,17 @@
   --rule-strong: rgba(18, 20, 23, 0.28);
   --rule-subtle: rgba(18, 20, 23, 0.06);
   --shadow-card: 0 2px 8px rgba(18, 20, 23, 0.06);
+  /* v8 delta item 27: layered shadow retuned to ink rgba so the blue-cool
+     ink tints the halo rather than pure black. */
+  --shadow-card-layered:
+    0 1px 2px rgba(18, 20, 23, 0.04),
+    0 8px 24px rgba(18, 20, 23, 0.06),
+    0 24px 48px rgba(18, 20, 23, 0.04);
   /* v8 primary product surface depth — near + mid + ambient halo. */
   --shadow-product:
-    0 1px 2px rgba(0, 0, 0, 0.04),
-    0 8px 24px rgba(0, 0, 0, 0.06),
-    0 24px 48px rgba(0, 0, 0, 0.04);
+    0 1px 2px rgba(18, 20, 23, 0.04),
+    0 8px 24px rgba(18, 20, 23, 0.06),
+    0 24px 48px rgba(18, 20, 23, 0.04);
 
   --font-display: 'Instrument Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -231,18 +237,46 @@
   color: #F5F0EB;
 }
 .era-v2 .v2-nav.adaptive .cta:hover { background: var(--rust-deep); }
-.era-v2 .v2-nav.adaptive .theme-toggle {
-  color: rgba(10, 10, 10, 0.72);
-  transition: color 0.25s ease, background 0.25s ease;
+/* v8 delta item 28: theme chip replaces the icon-only toggle. */
+.era-v2 .theme-chip {
+  display: inline-flex;
+  padding: 3px;
+  background: rgba(244, 241, 234, 0.68);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  gap: 2px;
 }
-.era-v2 .v2-nav.adaptive .theme-toggle:hover {
+.era-v2 .theme-chip-option {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.era-v2 .theme-chip-option:hover { color: var(--ink); }
+.era-v2 .theme-chip-option.active {
+  background: var(--card);
   color: var(--ink);
-  background: rgba(10, 10, 10, 0.06);
+  box-shadow: 0 1px 3px rgba(18, 20, 23, 0.1);
 }
-.era-v2 .v2-nav.adaptive.nav-over-dark .theme-toggle { color: rgba(245, 240, 235, 0.72); }
-.era-v2 .v2-nav.adaptive.nav-over-dark .theme-toggle:hover {
-  color: #F5F0EB;
-  background: rgba(245, 240, 235, 0.08);
+.era-v2 .v2-nav.adaptive.nav-over-dark .theme-chip {
+  background: rgba(30, 34, 40, 0.55);
+  border-color: rgba(244, 241, 234, 0.12);
+}
+.era-v2 .v2-nav.adaptive.nav-over-dark .theme-chip-option { color: rgba(244, 241, 234, 0.6); }
+.era-v2 .v2-nav.adaptive.nav-over-dark .theme-chip-option:hover { color: #F4F1EA; }
+.era-v2 .v2-nav.adaptive.nav-over-dark .theme-chip-option.active {
+  background: rgba(244, 241, 234, 0.12);
+  color: #F4F1EA;
 }
 /* Dark theme baseline: nav matches the page's dark ground (which is now the
    default). Over light-ground sections in dark theme, invert. */
@@ -322,31 +356,142 @@
           text-stroke: 1px rgba(245, 240, 235, 0.05);
 }
 
-/* v8 delta items 17 + 18: playbook-maze motion replaces the dot field. */
-.era-v2 .hero-maze {
+/* v8 delta item 28: atmospheric drift replaces the playbook-maze.
+   Three large blurred radial-gradient fields drift behind the hero
+   content. The PLAYBOOK watermark retires — the drift fields ARE the
+   background ornament. prefers-reduced-motion pauses the animations
+   but leaves the fields visible as static washes. */
+.era-v2 .drift-layer {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
   z-index: 0;
   pointer-events: none;
+  overflow: hidden;
 }
-.era-v2 .hero-maze .route-line {
-  fill: none;
-  stroke: rgba(53, 80, 95, 0.03);
-  stroke-width: 0.25;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.era-v2 .drift-field {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: transform;
 }
-.era-v2[data-theme="dark"] .hero-maze .route-line {
-  stroke: rgba(107, 142, 162, 0.04);
+.era-v2 .drift-a {
+  /* Mist Blue wash, top-left, largest */
+  top: -12%;
+  left: -10%;
+  width: 54rem;
+  height: 54rem;
+  background: radial-gradient(
+    circle at center,
+    rgba(169, 186, 196, 0.55) 0%,
+    rgba(169, 186, 196, 0) 62%
+  );
+  animation: v2-driftA 28s ease-in-out infinite;
 }
-.era-v2 .hero-maze .waypoint { fill: rgba(53, 80, 95, 0.03); }
-.era-v2[data-theme="dark"] .hero-maze .waypoint { fill: rgba(107, 142, 162, 0.04); }
-.era-v2 .hero-maze .flow-dot { fill: var(--rust); }
+.era-v2 .drift-b {
+  /* Deep Steel wash, top-right */
+  top: -8%;
+  right: -6%;
+  width: 48rem;
+  height: 48rem;
+  background: radial-gradient(
+    circle at center,
+    rgba(53, 80, 95, 0.22) 0%,
+    rgba(53, 80, 95, 0) 60%
+  );
+  animation: v2-driftB 24s ease-in-out infinite;
+}
+.era-v2 .drift-c {
+  /* Magenta whisper, bottom-center, lowest opacity */
+  bottom: -18%;
+  left: 38%;
+  width: 34rem;
+  height: 34rem;
+  background: radial-gradient(
+    circle at center,
+    rgba(196, 74, 122, 0.08) 0%,
+    rgba(196, 74, 122, 0) 60%
+  );
+  animation: v2-driftC 30s ease-in-out infinite;
+}
+.era-v2[data-theme="dark"] .drift-a {
+  background: radial-gradient(circle at center, rgba(169, 186, 196, 0.16) 0%, rgba(169, 186, 196, 0) 60%);
+}
+.era-v2[data-theme="dark"] .drift-b {
+  background: radial-gradient(circle at center, rgba(107, 142, 162, 0.32) 0%, rgba(107, 142, 162, 0) 60%);
+}
+.era-v2[data-theme="dark"] .drift-c {
+  background: radial-gradient(circle at center, rgba(214, 107, 148, 0.1) 0%, rgba(214, 107, 148, 0) 60%);
+}
+.era-v2 .drift-wash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(244, 241, 234, 0) 0%,
+    rgba(244, 241, 234, 0.35) 70%,
+    rgba(244, 241, 234, 0.55) 100%
+  );
+  pointer-events: none;
+}
+.era-v2[data-theme="dark"] .drift-wash {
+  background: linear-gradient(
+    180deg,
+    rgba(18, 20, 23, 0) 0%,
+    rgba(18, 20, 23, 0.4) 70%,
+    rgba(18, 20, 23, 0.6) 100%
+  );
+}
+@keyframes v2-driftA {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(4%, 6%, 0) scale(1.06); }
+}
+@keyframes v2-driftB {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-5%, 4%, 0) scale(1.08); }
+}
+@keyframes v2-driftC {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(3%, -5%, 0) scale(1.1); }
+}
 @media (prefers-reduced-motion: reduce) {
-  .era-v2 .hero-maze animateMotion { display: none; }
-  .era-v2 .hero-maze .route-line { stroke: rgba(53, 80, 95, 0.06); }
+  .era-v2 .drift-field { animation: none; }
+}
+
+/* Eyebrow chip above the headline — pulsing Deep Steel dot + label. */
+.era-v2 .hero-eyebrow-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  margin-bottom: 32px;
+  background: rgba(244, 241, 234, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.era-v2[data-theme="dark"] .hero-eyebrow-chip {
+  background: rgba(30, 34, 40, 0.6);
+}
+.era-v2 .hero-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--rust);
+  animation: v2-eyebrowDotPulse 2.5s ease-in-out infinite;
+}
+@keyframes v2-eyebrowDotPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.35); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .era-v2 .hero-eyebrow-dot { animation: none; opacity: 0.9; }
 }
 
 .era-v2 .hero .container { position: relative; z-index: 1; }
@@ -373,13 +518,42 @@
   padding: 14px 24px; font-size: 15px;
   border-radius: 2px; transition: all 0.2s;
 }
-.era-v2 .btn-primary { background: var(--ink); color: var(--paper); }
-.era-v2 .btn-primary:hover { background: var(--rust-deep); transform: translateY(-1px); }
-.era-v2 .btn-secondary {
-  background: transparent; color: var(--ink);
-  border: 1px solid var(--rule-strong);
+/* v8 delta item 28: primary CTA carries a soft Deep Steel drop shadow;
+   secondary CTA uses the glassmorphic surface pattern. */
+.era-v2 .btn-primary {
+  background: var(--rust);
+  color: #FFFFFF;
+  box-shadow: 0 10px 30px rgba(53, 80, 95, 0.18);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
-.era-v2 .btn-secondary:hover { border-color: var(--ink); }
+.era-v2 .btn-primary:hover {
+  background: var(--rust-deep);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 36px rgba(53, 80, 95, 0.24);
+}
+.era-v2[data-theme="dark"] .btn-primary {
+  box-shadow: 0 10px 30px rgba(107, 142, 162, 0.22);
+}
+.era-v2[data-theme="dark"] .btn-primary:hover {
+  box-shadow: 0 14px 36px rgba(107, 142, 162, 0.28);
+}
+.era-v2 .btn-secondary {
+  background: rgba(232, 226, 216, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--ink);
+  border: 1px solid var(--rule-strong);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.era-v2 .btn-secondary:hover {
+  border-color: var(--ink);
+  background: rgba(232, 226, 216, 0.9);
+}
+.era-v2[data-theme="dark"] .btn-secondary {
+  background: rgba(30, 34, 40, 0.55);
+  color: var(--ink);
+}
+.era-v2[data-theme="dark"] .btn-secondary:hover { background: rgba(30, 34, 40, 0.8); }
 
 .era-v2 .logo-strip {
   padding-top: 48px; border-top: 1px solid var(--rule);
