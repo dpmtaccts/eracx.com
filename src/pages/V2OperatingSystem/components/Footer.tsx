@@ -3,7 +3,7 @@ import { footer } from '../content'
 // v8 delta items 13 + 15: dark-ground footer with three rows.
 export default function Footer() {
   return (
-    <footer className="v2-footer-dark">
+    <footer className="v2-footer-dark" data-ground="dark">
       <div className="container">
         <div className="footer-nav">
           {footer.columns.map((col) => (

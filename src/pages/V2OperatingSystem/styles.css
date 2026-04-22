@@ -102,6 +102,29 @@
   --shadow-product: none;
 }
 
+/* v8 delta addendum: dark-ground contrast lift.
+   Any section marked data-ground="dark" receives the lifted palette —
+   Deep Steel jumps to #6B8EA2 so it reads against near-black, text and
+   muted ladders flip to Parchment-family, rules lift to parchment rgba.
+   This keeps dark sections legible without touching the light-theme
+   defaults and matches the spec's "do not drift too polite" guard. */
+.era-v2 [data-ground="dark"] {
+  --text: #F0EDE5;
+  --ink: #F4F1EA;
+  --ink-soft: #C5C9CE;
+  --ink-muted: #A9B0B7;
+  --text-subtle: #7A828B;
+  --rust: #6B8EA2;
+  --rust-deep: #7FA0B4;
+  --rust-soft: rgba(107, 142, 162, 0.15);
+  --mineral: #7B97AB;
+  --mist: #A9BAC4;
+  --magenta: #D66B94;
+  --rule: rgba(244, 241, 234, 0.18);
+  --rule-strong: rgba(244, 241, 234, 0.38);
+  --rule-subtle: rgba(244, 241, 234, 0.1);
+}
+
 /* Mono family for all label / tag / data selectors (v7: JetBrains Mono, 10-12px, 0.4em tracking). */
 .era-v2 .section-label,
 .era-v2 .logo-strip .label,
@@ -1273,15 +1296,15 @@
 .era-v2 .signal-library {
   padding: 140px 0 160px;
   background: #1A1715;
-  color: #F2EDE4;
+  color: var(--ink);
   position: relative; overflow: hidden;
-  border-bottom: 1px solid rgba(242, 237, 228, 0.15);
+  border-bottom: 1px solid var(--rule);
 }
 .era-v2 .lib-intro {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 80px; margin-bottom: 64px; align-items: end;
 }
-.era-v2 .lib-intro .section-label { color: rgba(242, 237, 228, 0.5); }
+.era-v2 .lib-intro .section-label { color: var(--ink-muted); }
 .era-v2 .lib-intro h2 {
   font-family: 'Instrument Sans', system-ui, sans-serif;
   font-size: clamp(36px, 4.5vw, 56px);
@@ -1292,7 +1315,7 @@
 .era-v2 .lib-intro .lib-note {
   font-family: 'Instrument Sans', system-ui, sans-serif;
   font-size: 19px; line-height: 1.45;
-  color: rgba(242, 237, 228, 0.7);
+  color: var(--ink-soft);
   font-style: italic;
 }
 .era-v2 .library-grid {
@@ -1302,7 +1325,7 @@
 }
 .era-v2 .sig-tile {
   padding: 18px 16px;
-  border: 1px solid rgba(242, 237, 228, 0.15);
+  border: 1px solid var(--rule);
   background: rgba(242, 237, 228, 0.02);
   min-height: 100px;
   display: flex; flex-direction: column;
@@ -1318,12 +1341,12 @@
   font-family: 'Instrument Sans', system-ui, sans-serif;
   font-size: 11px; letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #F2EDE4; font-weight: 500;
+  color: var(--ink); font-weight: 500;
 }
 .era-v2 .sig-tools {
   font-family: 'Instrument Sans', system-ui, sans-serif;
   font-size: 10px;
-  color: rgba(242, 237, 228, 0.5);
+  color: var(--ink-muted);
   letter-spacing: 0.04em;
 }
 .era-v2 .sig-play {
@@ -1337,7 +1360,7 @@
   margin-top: 40px;
   display: flex; justify-content: space-between; align-items: center;
   padding-top: 32px;
-  border-top: 1px solid rgba(242, 237, 228, 0.15);
+  border-top: 1px solid var(--rule);
 }
 .era-v2 .lib-count-stack { display: flex; flex-direction: column; gap: 6px; }
 .era-v2 .lib-count {
@@ -3195,16 +3218,16 @@
 /* Section B — Who runs it (dark ground) */
 .era-v2 .our-story-bench {
   background: #0A0A0A;
-  color: #F0F0F0;
+  color: var(--text);
   padding: 120px 0;
 }
-.era-v2 .our-story-bench .section-label { color: rgba(245, 240, 235, 0.5); }
+.era-v2 .our-story-bench .section-label { color: var(--ink-muted); }
 .era-v2 .our-story-bench h2 {
   font-size: clamp(36px, 5vw, 64px);
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1;
-  color: #F5F0EB;
+  color: var(--ink);
   margin-top: 20px;
   margin-bottom: 64px;
 }
@@ -3219,7 +3242,7 @@
   border-radius: 8px;
   overflow: hidden;
   background: #1A1A1A;
-  border: 1px solid rgba(245, 240, 235, 0.1);
+  border: 1px solid var(--rule);
   margin-bottom: 20px;
   filter: grayscale(1);
 }
@@ -3230,7 +3253,7 @@
 }
 .era-v2 .our-story-profile-name {
   font-size: 20px; font-weight: 700;
-  color: #F5F0EB;
+  color: var(--ink);
   margin-bottom: 4px;
 }
 .era-v2 .our-story-profile-role {
@@ -3238,7 +3261,7 @@
   font-size: 11px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #B8B8B8;
+  color: var(--ink-muted);
   margin-bottom: 12px;
 }
 .era-v2 .our-story-profile-credential {
@@ -3253,14 +3276,14 @@
 .era-v2 .our-story-profile-bio {
   font-size: 15px;
   line-height: 1.5;
-  color: #F0F0F0;
+  color: var(--text);
 }
 .era-v2 .our-story-bench-closer {
   margin-top: 64px;
   padding-top: 32px;
-  border-top: 1px solid rgba(245, 240, 235, 0.12);
+  border-top: 1px solid var(--rule);
   font-size: 17px;
-  color: #B8B8B8;
+  color: var(--ink-muted);
   max-width: 640px;
 }
 
