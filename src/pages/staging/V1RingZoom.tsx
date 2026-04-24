@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useRef, useState, useEffect, useCallback } from "react";
+import StagingLayout from "../../components/StagingLayout";
 
 /* ═══════════════════════════════════════════════════════════════════════════
    DATA
@@ -788,6 +789,7 @@ export default function V1RingZoom() {
     phase.spotlightIdx >= 0 ? ENGINES[phase.spotlightIdx] : null;
 
   return (
+    <StagingLayout stagingId="v1-ring-zoom">
     <div
       ref={wrapperRef}
       style={{
@@ -1183,5 +1185,6 @@ export default function V1RingZoom() {
         </div>
       </div>
     </div>
+    </StagingLayout>
   );
 }

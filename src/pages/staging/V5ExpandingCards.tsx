@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useRef, useState, useEffect, useCallback } from "react";
+import StagingLayout from "../../components/StagingLayout";
 
 // ─── Google Fonts Injector ──────────────────────────────────────
 const FONT_HREF =
@@ -786,6 +787,7 @@ export default function V5ExpandingCards() {
   const restoredTextOpacity = progress >= PHASE_RESTORED_START ? clamp01((progress - PHASE_RESTORED_START) / 0.06) : 0;
 
   return (
+    <StagingLayout stagingId="v5-expanding-cards">
     <div
       style={{
         fontFamily: "'Source Sans 3', sans-serif",
@@ -1059,5 +1061,6 @@ export default function V5ExpandingCards() {
         </div>
       </div>
     </div>
+    </StagingLayout>
   );
 }

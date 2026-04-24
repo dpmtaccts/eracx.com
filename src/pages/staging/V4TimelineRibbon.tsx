@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useRef, useState, useEffect, useCallback, useMemo } from 'react';
+import StagingLayout from '../../components/StagingLayout';
 
 /* ------------------------------------------------------------------ */
 /*  V4 — The Infinity Scroll                                           */
@@ -663,6 +664,7 @@ export default function V4TimelineRibbon() {
   }, [a]);
 
   return (
+    <StagingLayout stagingId="v4-timeline-ribbon">
     <div
       ref={wrapperRef}
       style={{
@@ -937,5 +939,6 @@ export default function V4TimelineRibbon() {
         ))}
       </div>
     </div>
+    </StagingLayout>
   );
 }

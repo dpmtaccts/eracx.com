@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useRef, useState, useEffect, useCallback } from "react";
+import StagingLayout from "../../components/StagingLayout";
 
 /* ─── Google Fonts injection ─── */
 const FONT_HREF =
@@ -735,6 +736,7 @@ export default function V3ColorBlocks() {
   const stickyTextDark = stickyBg === C.offwhite;
 
   return (
+    <StagingLayout stagingId="v3-color-blocks">
     <div
       style={{
         background: C.nearBlack,
@@ -1024,5 +1026,6 @@ export default function V3ColorBlocks() {
         </div>
       </div>
     </div>
+    </StagingLayout>
   );
 }

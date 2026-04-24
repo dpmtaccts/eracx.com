@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useEffect, useRef, useState, useCallback } from "react";
+import StagingLayout from "../../components/StagingLayout";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -255,6 +256,7 @@ export default function V2MagazineSpreads() {
   });
 
   return (
+    <StagingLayout stagingId="v2-magazine-spreads">
     <div
       ref={containerRef}
       style={{
@@ -732,5 +734,6 @@ export default function V2MagazineSpreads() {
         </section>
       </div>
     </div>
+    </StagingLayout>
   );
 }
