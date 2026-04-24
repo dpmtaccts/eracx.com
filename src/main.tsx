@@ -13,6 +13,7 @@ import Benchmark from './pages/Benchmark.tsx'
 import GtmPlanner from './pages/GtmPlanner.tsx'
 import GrowthSimulator from './pages/GrowthSimulator.tsx'
 import NavalentAudit from './pages/NavalentAudit.tsx'
+import NavalentEnrichment from './pages/NavalentEnrichment.tsx'
 import BetterUpAudit, { BetterUpAuditEra } from './pages/BetterUpAudit.tsx'
 import BetterUpAdmin from './pages/BetterUpAdmin.tsx'
 import SampleAssessment from './pages/SampleAssessment.tsx'
@@ -60,6 +61,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/gtm-planner" element={<GtmPlanner />} />
         <Route path="/growth-simulator" element={<GrowthSimulator />} />
         <Route path="/audit/navalent" element={<NavalentAudit />} />
+        <Route path="/audit/navalentenrichment" element={<NavalentEnrichment />} />
         <Route path="/audit/betterup" element={<BetterUpAudit />} />
         <Route path="/audit/betterup/era" element={<BetterUpAuditEra />} />
         <Route path="/audit/betterup/admin" element={<BetterUpAdmin />} />
