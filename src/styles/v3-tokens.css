@@ -1,0 +1,121 @@
+/* v3-tokens.css — Architectural Light palette for the /v3 staging homepage.
+ *
+ * Scoped to `.v3-root` so none of the custom properties, base styles, or
+ * palette values leak into the rest of the site (the main app uses a
+ * cream/charcoal/terracotta palette defined in src/index.css).
+ *
+ * The wrapper element at src/pages/v3/V3.tsx carries `className="v3-root"`
+ * and `data-theme="light"` (or "dark" when the UI Fixer toggles it).
+ */
+
+/* ======================================================================
+   LIGHT THEME — default
+   ====================================================================== */
+.v3-root[data-theme="light"] {
+  /* Foundation */
+  --parchment: #F4F1EA;
+  --chalk:     #E8E2D8;
+  --white:     #FFFFFF;
+  --ink:       #121417;
+  --graphite:  #2A3138;
+
+  /* Primary */
+  --deep-steel:   #35505F;
+  --mineral-blue: #4E6E81;
+  --sky-blue:     #C4D5DE;
+
+  /* Surprise */
+  --magenta: #C44A7A;
+
+  /* Data secondary */
+  --gold: #C89B3C;
+
+  /* Semantic mappings */
+  --bg:           var(--parchment);
+  --bg-alt:       var(--chalk);
+  --surface:      var(--white);
+  --text:         var(--ink);
+  --text-2:       var(--graphite);
+  --text-muted:   #6B6E72;
+  --accent:       var(--deep-steel);
+  --accent-hover: var(--mineral-blue);
+  --mist:         var(--sky-blue);
+  --rule:         #CFC8BA;
+  --rule-soft:    #DFD9CC;
+  --accent-ink:   var(--ink);
+
+  /* Cold → Warm scale */
+  --cold:    var(--sky-blue);
+  --warming: var(--mineral-blue);
+  --warm:    var(--deep-steel);
+  --hot:     var(--magenta);
+}
+
+/* ======================================================================
+   DARK THEME — toggled via UI Fixer
+   ====================================================================== */
+.v3-root[data-theme="dark"] {
+  --parchment:    #0F1418;
+  --chalk:        #161C22;
+  --white:        #1D242B;
+  --ink:          #E8ECEF;
+  --graphite:     #C2C8CE;
+
+  --deep-steel:   #6B8EA2;
+  --mineral-blue: #7B97AB;
+  --sky-blue:     #A9BAC4;
+
+  --magenta:      #D66B94;
+  --gold:         #D8A848;
+
+  --bg:           var(--parchment);
+  --bg-alt:       var(--chalk);
+  --surface:      var(--white);
+  --text:         var(--ink);
+  --text-2:       var(--graphite);
+  --text-muted:   #8B9199;
+  --accent:       var(--deep-steel);
+  --accent-hover: #7FA0B4;
+  --mist:         var(--sky-blue);
+  --rule:         #2F3940;
+  --rule-soft:    #242C33;
+  --accent-ink:   var(--parchment);
+
+  --cold:    var(--sky-blue);
+  --warming: var(--mineral-blue);
+  --warm:    var(--deep-steel);
+  --hot:     var(--magenta);
+}
+
+/* ======================================================================
+   UI FIXER KNOBS + BASE PRESENTATION
+   These live on the wrapper so they don't override global html/body styles.
+   ====================================================================== */
+.v3-root {
+  --base-font-size: 16px;
+  --section-padding: 96px;
+  --container-max: 1400px;
+  --container-pad: 40px;
+  --type-scale: 1;
+
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: var(--base-font-size);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background 200ms, color 200ms;
+  min-height: 100vh;
+}
+
+.v3-root * { box-sizing: border-box; }
+
+/* Selection (palette-aligned) */
+.v3-root ::selection {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--text);
+}
+.v3-root ::-moz-selection {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--text);
+}
