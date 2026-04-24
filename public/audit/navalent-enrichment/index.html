@@ -795,7 +795,6 @@
               <th data-sort="hst" class="old-col">HubSpot title <span class="sort-arrow">↕</span></th>
               <th data-sort="at">Enriched title <span class="sort-arrow">↕</span></th>
               <th data-sort="ac">Company <span class="sort-arrow">↕</span></th>
-              <th data-sort="tier">Tier <span class="sort-arrow">↕</span></th>
               <th data-sort="ind">Industry <span class="sort-arrow">↕</span></th>
               <th data-sort="city">Location <span class="sort-arrow">↕</span></th>
               <th>LinkedIn</th>
@@ -842,7 +841,6 @@
               <th data-sort="hsc">Previous company <span class="sort-arrow">↕</span></th>
               <th data-sort="ac">New company <span class="sort-arrow">↕</span></th>
               <th data-sort="at">New title <span class="sort-arrow">↕</span></th>
-              <th data-sort="tier">Tier <span class="sort-arrow">↕</span></th>
               <th data-sort="ind">Industry <span class="sort-arrow">↕</span></th>
               <th>LinkedIn</th>
             </tr>
@@ -1085,7 +1083,7 @@
   $$('#proofGrid .reveal').forEach(el => io.observe(el));
 
   /* Hidden buyers */
-  const hiddenState = { sort: 'tier', dir: 1, query: '' };
+  const hiddenState = { sort: 'fn', dir: 1, query: '' };
   $('#hiddenSearch').addEventListener('input', (e) => {
     hiddenState.query = e.target.value.trim().toLowerCase();
     renderHidden();
@@ -1101,7 +1099,6 @@
     });
   });
 
-  const TIER_WEIGHT = {'C-Suite / Founder': 0, 'VP / SVP / EVP': 1, 'Head of': 2, 'Sr. People / Talent': 3};
   function renderHidden() {
     let rows = DATA.hidden.slice();
     if (hiddenState.query) {
@@ -1113,8 +1110,7 @@
     }
     rows.sort((a, b) => {
       let av, bv;
-      if (hiddenState.sort === 'tier') { av = TIER_WEIGHT[a.tier] ?? 9; bv = TIER_WEIGHT[b.tier] ?? 9; }
-      else if (hiddenState.sort === 'fn') { av = ((a.ln||'') + (a.fn||'')).toLowerCase(); bv = ((b.ln||'') + (b.fn||'')).toLowerCase(); }
+      if (hiddenState.sort === 'fn') { av = ((a.ln||'') + (a.fn||'')).toLowerCase(); bv = ((b.ln||'') + (b.fn||'')).toLowerCase(); }
       else { av = (a[hiddenState.sort] || '').toString().toLowerCase(); bv = (b[hiddenState.sort] || '').toString().toLowerCase(); }
       if (av < bv) return -1 * hiddenState.dir;
       if (av > bv) return  1 * hiddenState.dir;
@@ -1124,14 +1120,12 @@
     const body = $('#hiddenBody');
     body.innerHTML = rows.map(r => {
       const loc = [r.city, r.state || r.ctry].filter(Boolean).join(', ');
-      const tc = tierClass(r.tier);
       return `
         <tr>
           <td class="name">${esc(r.fn || '')} ${esc(r.ln || '')}</td>
           <td class="old">${r.hst ? esc(r.hst) : '(none)'}</td>
           <td>${esc(r.at || '')}</td>
           <td>${esc(r.ac || '')}</td>
-          <td><span class="tier-badge ${tc}" style="margin:0">${esc(r.tier || '')}</span></td>
           <td>${esc(cap(r.ind || ''))}</td>
           <td class="mono">${esc(loc)}</td>
           <td>${r.li ? `<a class="li-link" href="${esc(r.li)}" target="_blank" rel="noopener">/in/${esc(liShort(r.li))}</a>` : ''}</td>
@@ -1142,7 +1136,7 @@
   renderHidden();
 
   /* Movers */
-  const moverState = { sort: 'tier', dir: 1, query: '' };
+  const moverState = { sort: 'fn', dir: 1, query: '' };
   $('#moverSearch').addEventListener('input', (e) => {
     moverState.query = e.target.value.trim().toLowerCase();
     renderMovers();
@@ -1168,8 +1162,7 @@
     }
     rows.sort((a, b) => {
       let av, bv;
-      if (moverState.sort === 'tier') { av = TIER_WEIGHT[a.tier] ?? 9; bv = TIER_WEIGHT[b.tier] ?? 9; }
-      else if (moverState.sort === 'fn') { av = ((a.ln||'') + (a.fn||'')).toLowerCase(); bv = ((b.ln||'') + (b.fn||'')).toLowerCase(); }
+      if (moverState.sort === 'fn') { av = ((a.ln||'') + (a.fn||'')).toLowerCase(); bv = ((b.ln||'') + (b.fn||'')).toLowerCase(); }
       else { av = (a[moverState.sort] || '').toString().toLowerCase(); bv = (b[moverState.sort] || '').toString().toLowerCase(); }
       if (av < bv) return -1 * moverState.dir;
       if (av > bv) return  1 * moverState.dir;
@@ -1177,14 +1170,12 @@
     });
     const body = $('#moverBody');
     body.innerHTML = rows.map(r => {
-      const tc = tierClass(r.tier);
       return `
         <tr>
           <td class="name">${esc(r.fn || '')} ${esc(r.ln || '')}</td>
           <td class="old">${esc(r.hsc || '')}</td>
           <td>${esc(r.ac || '')}</td>
           <td>${esc(r.at || '')}</td>
-          <td><span class="tier-badge ${tc}" style="margin:0">${esc(r.tier || '')}</span></td>
           <td>${esc(cap(r.ind || ''))}</td>
           <td>${r.li ? `<a class="li-link" href="${esc(r.li)}" target="_blank" rel="noopener">/in/${esc(liShort(r.li))}</a>` : ''}</td>
         </tr>`;
