@@ -13,7 +13,7 @@ export default function HowItWorks() {
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">§01 &nbsp; How it works</div>
+            <div className="eyebrow">01 &nbsp; How it works</div>
             <h2 className="section-h2">
               Five touches.<br />
               <span className="slab">Six weeks.</span>
@@ -40,7 +40,7 @@ export default function HowItWorks() {
         {/* Figure 01 — The interaction sequence */}
         <div className="fig-block">
           <div className="fig-head">
-            <div className="fig-tag">Figure 01 &nbsp;·&nbsp; The scene</div>
+            <div className="fig-tag">Figure 01</div>
             <h2 className="fig-title">
               The <span className="slab">interaction sequence.</span>
             </h2>
@@ -51,7 +51,7 @@ export default function HowItWorks() {
         {/* Figure 02 — Source, signal, action */}
         <div className="fig-block">
           <div className="fig-head">
-            <div className="fig-tag">Figure 02 &nbsp;·&nbsp; The mechanism</div>
+            <div className="fig-tag">Figure 02</div>
             <h2 className="fig-title">
               Source, signal, <span className="slab">action.</span>
             </h2>
@@ -62,7 +62,7 @@ export default function HowItWorks() {
         {/* Figure 03 — Warmth, updated daily */}
         <div className="fig-block">
           <div className="fig-head">
-            <div className="fig-tag">Figure 03 &nbsp;·&nbsp; The compounding</div>
+            <div className="fig-tag">Figure 03</div>
             <h2 className="fig-title">
               Warmth, <span className="slab">updated daily.</span>
             </h2>

@@ -224,7 +224,7 @@ export default function PointOfView() {
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">§03 &nbsp; Point of view</div>
+            <div className="eyebrow">03 &nbsp; Point of view</div>
             <h2 className="section-h2">
               Five things<br />
               <span className="slab">we believe.</span>

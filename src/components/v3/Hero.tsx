@@ -11,7 +11,7 @@ export default function Hero() {
         <div className="hero-grid">
           <div>
             <div className="eyebrow">
-              Revenue Through Subtraction &nbsp;·&nbsp; Bainbridge Island, WA
+              AI-powered ABM Programs
             </div>
             <h1 className="hero-title">
               Cold outbound
@@ -37,12 +37,9 @@ export default function Hero() {
                 See how it works
               </a>
             </div>
-            <div className="hero-meta">
+            <div className="hero-meta hero-meta-single">
               <div>
                 <b>GTM Design Sprint</b>$10K – $15K · 4 weeks
-              </div>
-              <div>
-                <b>Current clients</b>Netrush · Navalent · Miniac · POP · Seismic
               </div>
             </div>
           </div>

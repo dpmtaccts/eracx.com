@@ -1,7 +1,8 @@
 // Evidence.tsx — §02 section for the /v3 staging homepage.
 // Four big-number tiles (warmth lift, reply rate, time to live, handoff),
-// a client logo wall (wordmarks for now; swap for raster logos later),
-// and a single pull quote. Copy + labels verbatim from the source HTML.
+// followed by two client testimonials sourced verbatim from the v2
+// Clients section (src/pages/V2OperatingSystem/content.ts → clients.items):
+// Nate Houghton (Lorikeet) and Lara Vandenberg (Publicist).
 
 interface BigNum {
   label: string
@@ -56,17 +57,37 @@ const BIG_NUMBERS: BigNum[] = [
   },
 ]
 
-interface Logo {
+interface Testimonial {
+  quote: string
+  photo: string
+  photoAlt: string
   name: string
-  tag: string
+  role: string
+  companyLogo: string
+  companyLogoAlt: string
 }
 
-const LOGOS: Logo[] = [
-  { name: 'Netrush', tag: 'E-commerce · BD' },
-  { name: 'Navalent', tag: 'Consulting · GTM' },
-  { name: 'Miniac', tag: 'SaaS · Content' },
-  { name: 'POP', tag: 'Agency · Systems' },
-  { name: 'Seismic', tag: 'Enterprise · ABM' },
+const TESTIMONIALS: Testimonial[] = [
+  {
+    quote:
+      'Justin builds the thing most consultants just talk about. Actual operational systems. Scoring, enrichment, sequencing, CRM. When he hands it off, your team can run it.',
+    photo: '/images/betterup/nathaniel-houghton.jpeg',
+    photoAlt: 'Nate Houghton',
+    name: 'Nate Houghton',
+    role: 'Head of Sales, Americas',
+    companyLogo: '/images/navalent/Lorikeet_logo_color.png',
+    companyLogoAlt: 'Lorikeet',
+  },
+  {
+    quote:
+      'Era is an asset to any high-growth company, impacting every aspect of revenue, marketing, customer success, and account management.',
+    photo: '/images/lara-vandenberg.jpeg',
+    photoAlt: 'Lara Vandenberg',
+    name: 'Lara Vandenberg',
+    role: 'Founder, Publicist',
+    companyLogo: '/assets/clients/publicist.png',
+    companyLogoAlt: 'Publicist',
+  },
 ]
 
 export default function Evidence() {
@@ -75,7 +96,7 @@ export default function Evidence() {
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">§02 &nbsp; Evidence</div>
+            <div className="eyebrow">02 &nbsp; Evidence</div>
             <h2 className="section-h2">
               The numbers<br />
               <span className="slab">
@@ -104,35 +125,29 @@ export default function Evidence() {
           ))}
         </div>
 
-        <div className="logo-wall-head">
-          <div className="logo-wall-title">
-            <b>Current</b> engagements.
-          </div>
-          <div className="logo-wall-meta">
-            [ client marks to replace wordmarks ]
-          </div>
-        </div>
-        <div className="logo-wall">
-          {LOGOS.map((logo) => (
-            <div key={logo.name} className="logo-cell">
-              <div className="logo-mark">
-                {logo.name}
-                <small>{logo.tag}</small>
-              </div>
-            </div>
+        <div className="testimonials">
+          {TESTIMONIALS.map((t) => (
+            <figure key={t.name} className="testimonial">
+              <div className="testimonial-mark">&ldquo;</div>
+              <blockquote className="testimonial-quote">{t.quote}</blockquote>
+              <figcaption className="testimonial-meta">
+                <img
+                  className="testimonial-photo"
+                  src={t.photo}
+                  alt={t.photoAlt}
+                />
+                <div className="testimonial-attrib">
+                  <b>{t.name}</b>
+                  <small>{t.role}</small>
+                </div>
+                <img
+                  className="testimonial-company-logo"
+                  src={t.companyLogo}
+                  alt={t.companyLogoAlt}
+                />
+              </figcaption>
+            </figure>
           ))}
-        </div>
-
-        <div className="pull-quote">
-          <div className="pull-quote-mark">&ldquo;</div>
-          <div className="pull-quote-text">
-            We had a pipeline problem. Turns out we had{' '}
-            <em>a warmth problem.</em>
-          </div>
-          <div className="pull-quote-attrib">
-            <b>[ Client name ]</b>
-            <small>[ Role · Company ]</small>
-          </div>
         </div>
       </div>
     </section>
