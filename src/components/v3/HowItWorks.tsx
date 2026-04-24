@@ -69,11 +69,6 @@ export default function HowItWorks() {
           </div>
           <WarmthRadars />
         </div>
-
-        <div className="close-line">
-          Warmth is what accumulates{' '}
-          <span className="accent">when the chain is intact.</span>
-        </div>
       </div>
     </section>
   )

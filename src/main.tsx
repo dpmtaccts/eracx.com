@@ -30,6 +30,9 @@ import V4TimelineRibbon from './pages/staging/V4TimelineRibbon.tsx'
 import V5ExpandingCards from './pages/staging/V5ExpandingCards.tsx'
 import V2OperatingSystem from './pages/V2OperatingSystem/index.tsx'
 import V2OurStory from './pages/V2OperatingSystem/OurStory.tsx'
+import V2HaloPage from './pages/V2OperatingSystem/HaloPage.tsx'
+import V2StubPage from './pages/V2OperatingSystem/StubPage.tsx'
+import V2GtmDesignPage from './pages/V2OperatingSystem/GtmDesignPage.tsx'
 import V3 from './pages/v3/V3.tsx'
 
 posthog.init(import.meta.env.VITE_PUBLIC_POSTHOG_TOKEN, {
@@ -47,6 +50,41 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/v3" element={<V3 />} />
         <Route path="/v2" element={<V2OperatingSystem />} />
         <Route path="/our-story" element={<V2OurStory />} />
+        <Route path="/halo" element={<V2HaloPage />} />
+        <Route
+          path="/why-era"
+          element={
+            <V2StubPage
+              title="Why ERA"
+              eyebrow="Why ERA"
+              headline="A growth system, not another tool."
+              body="Most B2B companies don't have a GTM problem. They have a clarity problem. Copy for this page is on the way. In the meantime, the fastest way to understand how ERA runs is to request an audit."
+            />
+          }
+        />
+        <Route
+          path="/free-tools"
+          element={
+            <V2StubPage
+              title="Free Tools"
+              eyebrow="Free Tools"
+              headline="Growth diagnostics you can run on your own pipeline."
+              body="Benchmarks, the GTM planner, and the growth simulator are being consolidated into a single surface. For now, request an audit and we'll route you to the right diagnostic for your stage."
+            />
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <V2StubPage
+              title="Contact"
+              eyebrow="Contact"
+              headline="Let's talk about your GTM system."
+              body="Fastest path in: request an audit from the homepage form. We respond within two business days."
+              primaryCta={{ label: 'Request an audit →', href: '/#entry', internal: true }}
+            />
+          }
+        />
         <Route path="/staging" element={<Staging />} />
         <Route path="/staging/v1" element={<V1RingZoom />} />
         <Route path="/staging/v2" element={<V2MagazineSpreads />} />
@@ -55,7 +93,11 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/staging/v5" element={<V5ExpandingCards />} />
         <Route path="/our-story" element={<OurStory />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/gtm-design" element={<GtmDesign />} />
+        {/* v8 round 3: /gtm-design now renders the v8 page. Old GtmDesign
+            route preserved at /gtm-design/legacy in case we need the
+            pre-v8 page for reference. */}
+        <Route path="/gtm-design" element={<V2GtmDesignPage />} />
+        <Route path="/gtm-design/legacy" element={<GtmDesign />} />
         <Route path="/review/:slug" element={<Review />} />
         <Route path="/benchmark" element={<Benchmark />} />
         <Route path="/gtm-planner" element={<GtmPlanner />} />

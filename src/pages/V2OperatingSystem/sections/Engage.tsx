@@ -11,11 +11,16 @@ const stagger = {
   show: { opacity: 1, transition: { staggerChildren: 0.08 } },
 }
 
-const row = {
+const card = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.23, 1, 0.32, 1] as const } },
 }
 
+// v8 delta item 33j: 2x2 pricing card grid. Horizontal stacked-rows layout
+// retired. One recommended tier (Revenue Signal Audit) gets a magenta top
+// border, "Recommended" label, and magenta CTA fill. Feature bullets are
+// blocked pending finalization from Justin — cards render without the
+// bullet row until tier.features is populated.
 export default function Engage() {
   return (
     <section className="entry" id="entry">
@@ -41,27 +46,19 @@ export default function Engage() {
             <span className="it">{engage.headline.italic}</span>
             {engage.headline.after}
           </motion.h2>
+
           <motion.div
-            className="tiers"
+            className="pricing-grid"
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.15 }}
             variants={stagger}
           >
             {engage.tiers.map((t) => (
-              <motion.div key={t.name} className="tier" variants={row}>
-                <div className="tier-name-stack">
-                  <div className="tier-name">{t.name}</div>
-                  {t.subtitle && <div className="tier-subtitle">{t.subtitle}</div>}
-                </div>
-                <PriceRow tier={t} />
-                <div className="tier-desc-stack">
-                  <div className="tier-desc">{t.desc}</div>
-                  {t.descSupplement && <div className="tier-desc-sup">{t.descSupplement}</div>}
-                </div>
-              </motion.div>
+              <PricingCard key={t.name} tier={t} variants={card} />
             ))}
           </motion.div>
+
           <motion.div
             className="entry-note"
             initial="hidden"
@@ -86,26 +83,50 @@ export default function Engage() {
   )
 }
 
-function PriceRow({ tier }: { tier: Tier }) {
-  // "TBD" renders muted so Signal Only signals that the duration is still open.
-  const durationIsPlaceholder = tier.duration === 'TBD'
+function PricingCard({
+  tier,
+  variants,
+}: {
+  tier: Tier
+  variants: typeof fadeUp
+}) {
+  const hasFeatures = tier.features && tier.features.length > 0
   return (
-    <div className="tier-price-row">
-      <span className={`tier-price${tier.priceIsInquire ? ' inquire' : ''}`}>{tier.price}</span>
-      {tier.duration && (
-        <>
-          <span className="tier-sep">·</span>
-          <span className={`tier-duration${durationIsPlaceholder ? ' muted' : ''}`}>
-            {tier.duration}
-          </span>
-        </>
+    <motion.article
+      className={`pricing-card${tier.recommended ? ' recommended' : ''}`}
+      variants={variants}
+    >
+      {tier.recommended && (
+        <div className="pricing-recommended-bar" aria-hidden="true" />
       )}
-      {tier.time && (
-        <>
-          <span className="tier-sep">·</span>
-          <span className="tier-time">{tier.time}</span>
-        </>
+      {tier.recommended && (
+        <div className="pricing-recommended-label">Recommended</div>
       )}
-    </div>
+      <div className="pricing-card-head">
+        <div className="pricing-card-name">{tier.name}</div>
+        <div className="pricing-card-descriptor">{tier.descriptor}</div>
+      </div>
+      <div className="pricing-card-rule" aria-hidden="true" />
+      <div className="pricing-card-price">
+        <span className="pricing-card-price-value">{tier.price}</span>
+        {tier.timing && (
+          <span className="pricing-card-price-timing">{tier.timing}</span>
+        )}
+      </div>
+      <p className="pricing-card-summary">{tier.summary}</p>
+      {hasFeatures && (
+        <ul className="pricing-card-features">
+          {tier.features!.map((f) => (
+            <li key={f}>{f}</li>
+          ))}
+        </ul>
+      )}
+      <a
+        href={tier.cta.href}
+        className={`pricing-card-cta${tier.recommended ? ' primary' : ''}`}
+      >
+        {tier.cta.label} →
+      </a>
+    </motion.article>
   )
 }

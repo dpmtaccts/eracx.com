@@ -26,7 +26,9 @@
 
   /* Structural blues (new in Architectural Light) */
   --mineral: #4E6E81;            /* Mineral Blue — 10% structural */
-  --mist: #A9BAC4;               /* Mist Blue — muted bars, UI borders */
+  --mist: #A9BAC4;               /* Mist Blue (legacy) — muted bars, UI borders */
+  --sky-blue: #C4D5DE;           /* Sky Blue (v8 item 31b) — primary accent on dark ground */
+  --sky-blue-hover: #DAE6EC;     /* Sky Blue hover */
   --graphite: #2A3138;
 
   /* Secondary accents */
@@ -102,27 +104,57 @@
   --shadow-product: none;
 }
 
-/* v8 delta addendum: dark-ground contrast lift.
-   Any section marked data-ground="dark" receives the lifted palette —
-   Deep Steel jumps to #6B8EA2 so it reads against near-black, text and
-   muted ladders flip to Parchment-family, rules lift to parchment rgba.
-   This keeps dark sections legible without touching the light-theme
-   defaults and matches the spec's "do not drift too polite" guard. */
+/* v8 delta items 27/29: dark-ground contrast lift + Sky Blue accent.
+   On any section with data-ground="dark", the primary accent token
+   (--rust, inherited everywhere as CTA / data colour) swaps from Deep
+   Steel to Sky Blue #C4D5DE. Text + rules step up to Parchment-family
+   ladders so the section reads against near-black Ink ground. This is
+   the canonical enforcement of item 29 and the "too-polite guard"
+   in the v8 anti-pattern checklist. */
 .era-v2 [data-ground="dark"] {
   --text: #F0EDE5;
   --ink: #F4F1EA;
   --ink-soft: #C5C9CE;
   --ink-muted: #A9B0B7;
   --text-subtle: #7A828B;
-  --rust: #6B8EA2;
-  --rust-deep: #7FA0B4;
-  --rust-soft: rgba(107, 142, 162, 0.15);
+  --rust: #C4D5DE;                        /* Sky Blue — primary accent on dark */
+  --rust-deep: #DAE6EC;                   /* Sky Blue hover */
+  --rust-soft: rgba(196, 213, 222, 0.15);
   --mineral: #7B97AB;
   --mist: #A9BAC4;
   --magenta: #D66B94;
   --rule: rgba(244, 241, 234, 0.18);
   --rule-strong: rgba(244, 241, 234, 0.38);
   --rule-subtle: rgba(244, 241, 234, 0.1);
+}
+
+/* v8 delta item 33d helper: a data-ground="light" element nested inside a
+   data-ground="dark" parent resets all tokens to their light-palette
+   defaults. Used by the AUX card so the card itself stays white even
+   though the surrounding band is Ink. */
+.era-v2 [data-ground="dark"] [data-ground="light"] {
+  --text: #121417;
+  --ink: #121417;
+  --ink-soft: #2A3138;
+  --ink-muted: #4A525A;
+  --text-subtle: #8A9199;
+  --rust: #35505F;
+  --rust-deep: #3F6274;
+  --rust-soft: rgba(53, 80, 95, 0.08);
+  --mineral: #4E6E81;
+  --mist: #A9BAC4;
+  --magenta: #C44A7A;
+  --rule: rgba(18, 20, 23, 0.1);
+  --rule-strong: rgba(18, 20, 23, 0.28);
+  --rule-subtle: rgba(18, 20, 23, 0.06);
+}
+/* Bump the card shadow a touch so the cream surface floats cleanly
+   above the Ink surround. Still Ink-tinted per v8 §1.6. */
+.era-v2 [data-ground="dark"] .account-card.v8 {
+  box-shadow:
+    0 1px 2px rgba(18, 20, 23, 0.12),
+    0 12px 32px rgba(18, 20, 23, 0.22),
+    0 32px 64px rgba(18, 20, 23, 0.18);
 }
 
 /* Mono family for all label / tag / data selectors (v7: JetBrains Mono, 10-12px, 0.4em tracking). */
@@ -184,6 +216,30 @@
 .era-v2 .it {
   color: var(--rust);
   font-style: normal;
+}
+
+/* v8 delta item 31: magenta is allowed in exactly six places on the
+   homepage. Hero "Run for you" italic (31a) + Audit "noise" (31e) are the
+   two .accent overrides. All other .accent uses stay Deep Steel. */
+.era-v2 .hero .accent,
+.era-v2 .audit-section .accent {
+  color: var(--magenta);
+}
+
+/* v8 delta item 32: magenta eyebrow dots on Loops (32a) and AUX (32b).
+   The dot renders via ::before on the section-label inside those two
+   sections only. Mono eyebrow text stays Deep Steel muted. */
+.era-v2 .loops .section-label::before,
+.era-v2 .aux .section-label::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--magenta);
+  margin-right: 10px;
+  vertical-align: middle;
+  transform: translateY(-1px);
 }
 
 /* Watermark numbers retired per v7 style guide ("no giant decorative background text"). */
@@ -337,9 +393,109 @@
   transition: color 0.2s, background 0.2s;
 }
 .era-v2 .theme-toggle:hover { color: var(--ink); background: var(--rule); }
+
+/* v8 delta item 30: mobile drawer. Hamburger is hidden on wide layouts and
+   appears below 768px. Drawer slides in from the right with the six nav
+   items stacked vertically + full-width CTA at the bottom. */
+.era-v2 .nav-hamburger {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ink-soft);
+  padding: 6px;
+  border-radius: 2px;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, background 0.2s;
+}
+.era-v2 .nav-hamburger:hover { color: var(--ink); background: var(--rule); }
+.era-v2 .v2-nav.adaptive.nav-over-dark .nav-hamburger { color: rgba(244, 241, 234, 0.8); }
+.era-v2 .v2-nav.adaptive.nav-over-dark .nav-hamburger:hover { color: #F4F1EA; }
+
+.era-v2 .nav-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 20, 23, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 90;
+  display: none;
+}
+.era-v2 .nav-drawer-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.era-v2 .nav-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(340px, 86vw);
+  background: var(--paper);
+  box-shadow: -16px 0 48px rgba(18, 20, 23, 0.18);
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+  padding: 24px;
+}
+.era-v2 .nav-drawer.open { transform: translateX(0); }
+.era-v2 .nav-drawer-head {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+}
+.era-v2 .nav-drawer-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ink);
+  padding: 6px;
+  border-radius: 2px;
+}
+.era-v2 .nav-drawer-links {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0;
+}
+.era-v2 .nav-drawer-links a {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-size: 18px;
+  color: var(--ink);
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule);
+  letter-spacing: -0.01em;
+}
+.era-v2 .nav-drawer-links a:first-child { border-top: 1px solid var(--rule); }
+.era-v2 .nav-drawer-links a:hover { color: var(--rust); }
+.era-v2 .nav-drawer-cta { padding-top: 24px; }
+.era-v2 .nav-drawer-cta .cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 16px 20px;
+  background: var(--rust);
+  color: var(--paper);
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+.era-v2 .nav-drawer-cta .cta:hover { background: var(--rust-deep); }
+
 @media (max-width: 768px) {
   .era-v2 .v2-nav { padding: 16px 24px; }
   .era-v2 .v2-nav .nav-links { display: none; }
+  .era-v2 .v2-nav .nav-right .cta { display: none; }
+  .era-v2 .v2-nav .nav-hamburger { display: inline-flex; }
+  .era-v2 .nav-drawer-backdrop { display: block; }
+  .era-v2 .nav-drawer { display: flex; }
 }
 
 /* ─── Hero ─── */
@@ -595,6 +751,51 @@
   .era-v2 .hero .actions { flex-direction: column; margin-bottom: 80px; }
   .era-v2 .hero .actions a { text-align: center; }
   .era-v2 .logo-strip { gap: 24px; font-size: 18px; }
+}
+
+/* Hero pillars — 5-up row that replaces the "TRUSTED BY" logo strip. */
+.era-v2 .hero-pillars {
+  list-style: none;
+  padding: 48px 0 0;
+  margin: 0;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 32px;
+}
+.era-v2 .hero-pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  padding: 0 8px;
+}
+.era-v2 .hero-pillar-mark {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--rust);
+  font-weight: 500;
+}
+.era-v2 .hero-pillar-label {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-muted);
+  max-width: 22ch;
+}
+
+@media (max-width: 960px) {
+  .era-v2 .hero-pillars { grid-template-columns: repeat(2, 1fr); gap: 28px 24px; }
+  .era-v2 .hero-pillar:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) {
+  .era-v2 .hero-pillars { grid-template-columns: 1fr; padding-top: 36px; gap: 22px; }
+  .era-v2 .hero-pillar:last-child { grid-column: auto; }
+  .era-v2 .hero-pillar { flex-direction: row; text-align: left; gap: 14px; align-items: flex-start; }
+  .era-v2 .hero-pillar-mark { padding-top: 2px; }
+  .era-v2 .hero-pillar-label { max-width: none; }
 }
 
 /* ─── Proof Strip (between Hero and Ghost) ─── */
@@ -1277,14 +1478,15 @@
 .era-v2 .founder-cta:hover { background: var(--rust-deep); transform: translateY(-1px); }
 .era-v2[data-theme="dark"] .founder-cta { color: var(--paper); }
 
-/* ─── Engage fit footer line (v8: absorbs old Fit section) ─── */
+/* ─── Engage fit footer line (v8: absorbs old Fit section) ───
+   v8 delta item 33j: fine-print qualifier, 10px mono subtle. */
 .era-v2 .entry-fit-line {
-  margin-top: 24px;
+  margin-top: 20px;
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--ink-muted);
+  color: var(--text-subtle);
   text-align: center;
   max-width: 680px;
   margin-left: auto;
@@ -1676,11 +1878,14 @@
 .era-v2 .frvrd-radar.v8 { width: 100%; max-width: 400px; aspect-ratio: 1; margin: 0 auto; }
 .era-v2 .frvrd-radar.v8 .grid-ring { fill: none; stroke: var(--rule); stroke-width: 1; }
 .era-v2 .frvrd-radar.v8 .axis { stroke: var(--rule); stroke-width: 1; }
+/* v8 delta item 33c: FRVRD pentagon flips to Magenta. One approved magenta
+   moment inside an otherwise Deep Steel AUX card — pops harder against the
+   dark-ground wrap added in 33d. */
 .era-v2 .frvrd-radar.v8 .data {
-  fill: rgba(53, 80, 95, 0.18);
-  stroke: var(--rust); stroke-width: 2;
+  fill: rgba(196, 74, 122, 0.22);
+  stroke: var(--magenta); stroke-width: 2;
 }
-.era-v2 .frvrd-radar.v8 .dot { fill: var(--rust); }
+.era-v2 .frvrd-radar.v8 .dot { fill: var(--magenta); }
 .era-v2 .frvrd-radar.v8 .axis-label {
   font-size: 10px; font-weight: 500;
   letter-spacing: 0.25em;
@@ -1690,7 +1895,7 @@
 }
 .era-v2 .frvrd-radar.v8 .axis-val {
   font-size: 11px; font-weight: 500;
-  fill: var(--rust);
+  fill: var(--magenta);
   text-anchor: middle;
 }
 .era-v2 .account-card.v8 .activity-panel { padding: 40px; }
@@ -2022,10 +2227,15 @@
 }
 
 /* ─── AUX (section 06) ─── */
+/* v8 delta item 33d: dark ground under the whole AUX band. Background
+   lifts to Ink; intro eyebrow + headline + lede read on dark palette
+   via the data-ground="dark" scoped override. The AUX card itself
+   carries data-ground="light" so its tokens reset back to light
+   defaults and the surface stays cream-on-dark. */
 .era-v2 .aux {
   padding: 180px 0;
-  border-bottom: 1px solid var(--rule);
-  background: var(--paper);
+  border-bottom: 1px solid rgba(244, 241, 234, 0.12);
+  background: #121417;
   position: relative; overflow: hidden;
 }
 .era-v2 .aux .watermark {
@@ -2315,125 +2525,190 @@
   border-left: 3px solid var(--rust);
   margin-bottom: 48px;
 }
-.era-v2 .mirror-demo {
+/* v8 delta item 21: AI Mirror chat UI.
+   Left column is a real conversation preview — user bubble right, assistant
+   bubble left, non-functional input + Send below. Right column is the
+   sources panel with icon/logo rows, separated by a vertical rule. */
+.era-v2 .mirror-chat-shell {
   border: 1px solid var(--rule);
-  background: var(--paper-deep);
+  background: var(--paper);
   overflow: hidden;
   border-radius: 16px;
   box-shadow: var(--shadow-product);
 }
-.era-v2 .demo-header {
-  padding: 20px 28px;
+.era-v2 .mirror-chat-header {
+  padding: 16px 24px;
   border-bottom: 1px solid var(--rule);
   display: flex; justify-content: space-between; align-items: center;
-  font-family: 'Instrument Sans', system-ui, sans-serif;
-  font-size: 12px; color: var(--ink-muted);
-  letter-spacing: 0.05em; background: var(--paper);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px; color: var(--ink-muted);
+  letter-spacing: 0.05em; background: var(--paper-deep);
 }
-.era-v2 .demo-header .dots { display: flex; gap: 6px; }
-.era-v2 .demo-header .dots .dot {
+.era-v2 .mirror-chat-header .dots { display: flex; gap: 6px; }
+.era-v2 .mirror-chat-header .dots .dot {
   width: 8px; height: 8px; border-radius: 50%;
   background: var(--rule-strong);
 }
-.era-v2 .demo-grid {
-  display: grid; grid-template-columns: 1.3fr 1fr;
+.era-v2 .mirror-chat-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr;
 }
-.era-v2 .demo-left {
-  padding: 40px;
+.era-v2 .mirror-chat-col {
+  padding: 36px 40px 28px;
   border-right: 1px solid var(--rule);
+  display: flex; flex-direction: column; gap: 20px;
   background: var(--paper);
 }
-.era-v2 .demo-right { padding: 40px; }
-.era-v2 .query-label {
-  font-family: 'Instrument Sans', system-ui, sans-serif;
-  font-size: 11px; color: var(--ink-muted);
-  letter-spacing: 0.08em; margin-bottom: 12px;
-  font-weight: 500; text-transform: uppercase;
+.era-v2 .mirror-chat-log {
+  display: flex; flex-direction: column; gap: 18px;
+  flex: 1;
 }
-/* v8: style query and response as chat bubbles instead of stacked document prose. */
-.era-v2 .mirror-query {
+.era-v2 .mirror-bubble {
   font-family: 'Instrument Sans', system-ui, sans-serif;
-  font-size: 18px; line-height: 1.4;
-  background: var(--card);
-  border: 1px solid var(--rule);
-  border-radius: 16px 16px 4px 16px;
-  padding: 16px 20px;
-  margin-left: auto;
-  max-width: 80%;
-  margin-bottom: 24px;
+  font-size: 14px; line-height: 1.55;
+  padding: 14px 18px;
+  max-width: 88%;
+  border-radius: 14px;
+}
+.era-v2 .mirror-bubble-user {
+  background: var(--rule);
   color: var(--text);
-  width: fit-content;
-  display: block;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
 }
-.era-v2 .mirror-response-bubble {
-  background: var(--paper);
+.era-v2 .mirror-bubble-assistant {
+  background: var(--paper-deep);
   border: 1px solid var(--rule);
-  border-radius: 16px 16px 16px 4px;
-  padding: 20px 24px;
-  max-width: 92%;
+  color: var(--text);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.era-v2 .mirror-bubble-assistant p { margin-bottom: 12px; }
+.era-v2 .mirror-bubble-assistant p:last-child { margin-bottom: 0; }
+.era-v2 .mirror-bubble-meta {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
   margin-bottom: 12px;
 }
-.era-v2 .response-label {
-  font-family: 'Instrument Sans', system-ui, sans-serif;
-  font-size: 11px; color: var(--ink-muted);
-  letter-spacing: 0.08em; margin-bottom: 16px;
-  font-weight: 500; text-transform: uppercase;
-  display: flex; align-items: center; gap: 10px;
-}
-.era-v2 .response-label::before {
-  content: ""; width: 8px; height: 8px;
-  background: var(--rust); border-radius: 50%;
+.era-v2 .mirror-bubble-meta::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--rust);
   animation: v2-dotPulse 2s infinite;
 }
-.era-v2 .mirror-response { font-size: 15px; line-height: 1.65; }
-.era-v2 .mirror-response p { margin-bottom: 14px; }
-.era-v2 .mirror-response .flag {
-  background: rgba(180, 74, 30, 0.15);
+.era-v2 .mirror-bubble-assistant .flag {
+  background: rgba(53, 80, 95, 0.12);
   color: var(--rust-deep);
   padding: 1px 4px; border-radius: 2px;
 }
-.era-v2[data-theme="dark"] .mirror-response .flag {
-  background: rgba(53, 80, 95, 0.20);
+.era-v2[data-theme="dark"] .mirror-bubble-assistant .flag {
+  background: rgba(196, 213, 222, 0.18);
   color: var(--rust);
 }
-.era-v2 .sources-title {
+
+/* Non-functional input. Cursor + focus-ring confirm it's a chat UI, but
+   Send triggers a demo-mode tooltip — no request goes out. */
+.era-v2 .mirror-chat-input {
+  display: flex; align-items: center; gap: 12px;
+  border-top: 1px solid var(--rule);
+  padding-top: 16px;
+  position: relative;
+}
+.era-v2 .mirror-chat-input input {
+  flex: 1;
   font-family: 'Instrument Sans', system-ui, sans-serif;
-  font-size: 11px; color: var(--ink-muted);
-  letter-spacing: 0.08em; margin-bottom: 24px;
-  font-weight: 500; text-transform: uppercase;
+  font-size: 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  padding: 8px 2px;
+  color: var(--text);
+  transition: border-color 0.2s;
 }
-.era-v2 .source-list {
-  display: flex; flex-direction: column; gap: 14px;
+.era-v2 .mirror-chat-input input:focus {
+  outline: none;
+  border-bottom-color: var(--ink);
 }
-.era-v2 .source {
-  display: grid; grid-template-columns: 1fr auto;
-  gap: 16px; align-items: center;
-}
-.era-v2 .source-info {
-  display: flex; flex-direction: column; gap: 4px;
-}
-.era-v2 .source-name { font-size: 14px; font-weight: 500; }
-.era-v2 .source-detail {
+.era-v2 .mirror-chat-input input::placeholder { color: var(--text-subtle); }
+.era-v2 .mirror-chat-send {
   font-family: 'Instrument Sans', system-ui, sans-serif;
-  font-size: 11px; color: var(--ink-muted);
-}
-.era-v2 .source-weight {
-  font-family: 'Instrument Sans', system-ui, sans-serif;
-  font-size: 13px; min-width: 36px;
-  text-align: right; font-weight: 500;
-}
-.era-v2 .source-bar {
-  grid-column: 1 / -1;
-  height: 2px; background: var(--rule);
-  position: relative; overflow: hidden;
-}
-.era-v2 .source-bar .fill {
-  position: absolute; top: 0; left: 0; bottom: 0;
+  font-size: 13px;
+  font-weight: 500;
   background: var(--rust);
-  transform-origin: left center;
+  color: var(--paper);
+  border: none;
+  border-radius: 4px;
+  padding: 10px 14px;
+  display: inline-flex; align-items: center; gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
-.era-v2 .source.negative .fill { background: var(--magenta); }
-.era-v2 .source.neutral .fill { background: var(--ink-muted); }
+.era-v2 .mirror-chat-send:hover { background: var(--rust-deep); }
+.era-v2 .mirror-chat-tooltip {
+  position: absolute;
+  top: -38px;
+  right: 0;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--ink-muted);
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 6px 10px;
+  letter-spacing: 0.02em;
+}
+
+.era-v2 .mirror-sources-col { padding: 36px 40px 28px; }
+.era-v2 .mirror-sources-head { margin-bottom: 20px; }
+.era-v2 .mirror-sources-title {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+}
+.era-v2 .mirror-sources-subtitle {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: var(--ink-muted);
+  margin-top: 6px;
+}
+.era-v2 .mirror-sources-list {
+  display: flex; flex-direction: column;
+  list-style: none; padding: 0; margin: 0;
+}
+.era-v2 .mirror-source-row {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: flex-start;
+}
+.era-v2 .mirror-source-row:last-child { border-bottom: none; }
+.era-v2 .mirror-source-mark {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-muted);
+}
+.era-v2 .mirror-source-mark img {
+  max-width: 20px; max-height: 20px;
+  object-fit: contain;
+}
+.era-v2 .mirror-source-body {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.era-v2 .mirror-source-name {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-size: 14px; font-weight: 500; color: var(--text);
+}
+.era-v2 .mirror-source-detail {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-size: 12px; color: var(--ink-muted);
+}
 .era-v2 .source-unlikely {
   font-family: var(--font-mono);
   font-size: 9px;
@@ -2468,14 +2743,18 @@
 }
 .era-v2 .gap-col.owned h4 { color: var(--ink-muted); }
 @media (max-width: 900px) {
-  .era-v2 .demo-grid { grid-template-columns: 1fr; }
-  .era-v2 .demo-left { border-right: none; border-bottom: 1px solid var(--rule); }
+  .era-v2 .mirror-chat-grid { grid-template-columns: 1fr; }
+  .era-v2 .mirror-chat-col {
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+  }
   .era-v2 .gap-analysis { grid-template-columns: 1fr; gap: 24px; }
 }
 @media (max-width: 768px) {
   .era-v2 .mirror { padding: 100px 0; }
-  .era-v2 .demo-left, .era-v2 .demo-right { padding: 28px; }
-  .era-v2 .mirror-query { font-size: 18px; }
+  .era-v2 .mirror-chat-col,
+  .era-v2 .mirror-sources-col { padding: 28px; }
+  .era-v2 .mirror-bubble { font-size: 13px; }
 }
 
 /* ─── Integrations ─── */
@@ -2588,6 +2867,22 @@
   right: -3%; top: 5%;
 }
 .era-v2 .halo-content { position: relative; z-index: 1; }
+
+/* v8 delta item 33f: LinkedIn logo lockup beside the "Halo" headline.
+   Flex row keeps the icon glued to the word; align-items center lands
+   the icon visually at roughly cap-height for the heading scale. */
+.era-v2 .halo-headline-with-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.era-v2 .halo-linkedin-lockup {
+  height: 24px;
+  width: auto;
+  display: inline-block;
+  flex-shrink: 0;
+}
 .era-v2 .halo-intro {
   display: grid; grid-template-columns: 1.2fr 1fr;
   gap: 80px; align-items: end; margin-bottom: 80px;
@@ -2790,15 +3085,18 @@
   background: var(--rust);
   transform-origin: left center;
 }
+/* v8 delta item 33e: dots bisected by the baseline rule. Track sits at
+   padding-top:40px with height:2px, so track center is y=41. Dot is 12px
+   tall → dot top at y=35 centers it on the track. */
 .era-v2 .timeline-markers {
-  position: absolute; top: 28px; left: 0; right: 0;
+  position: absolute; top: 35px; left: 0; right: 0;
   display: grid; grid-template-columns: repeat(3, 1fr);
 }
 .era-v2 .timeline-marker { display: flex; flex-direction: column; align-items: flex-start; }
 .era-v2 .timeline-marker .dot {
   width: 12px; height: 12px; border-radius: 50%;
   background: var(--paper); border: 2px solid var(--rust);
-  margin-bottom: 16px; margin-left: -6px;
+  margin-bottom: 22px; margin-left: -6px;
 }
 .era-v2 .timeline-marker .months {
   font-family: 'Instrument Sans', system-ui, sans-serif;
@@ -3018,72 +3316,177 @@
   left: -5%; top: 20%;
 }
 .era-v2 .entry-content { position: relative; z-index: 1; }
-.era-v2 .tiers { border-top: 1px solid var(--rule-strong); }
-.era-v2 .tier {
-  padding: 40px 0; display: grid;
-  grid-template-columns: 1.3fr 1.5fr 1.8fr;
-  gap: 40px; align-items: start;
-  border-bottom: 1px solid var(--rule);
-  transition: padding-left 0.3s;
+
+/* v8 delta item 33j: 2x2 pricing card grid replaces the horizontal
+   stacked-row layout. Cards are white on Parchment, 12px radius, layered
+   Ink-tinted shadow. The Revenue Signal Audit card is recommended —
+   magenta top border, "Recommended" label, magenta CTA fill. */
+.era-v2 .pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.era-v2 .tier:hover { padding-left: 16px; }
-.era-v2 .tier-name-stack { display: flex; flex-direction: column; gap: 6px; }
-.era-v2 .tier-name {
-  font-family: 'Instrument Sans', system-ui, sans-serif;
-  font-size: 28px; font-style: italic;
-  line-height: 1.1;
+.era-v2 .pricing-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: var(--shadow-card-layered);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
 }
-.era-v2 .tier-subtitle {
-  font-family: 'Instrument Sans', system-ui, sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.08em;
+.era-v2 .pricing-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 2px 4px rgba(18, 20, 23, 0.06),
+    0 14px 36px rgba(18, 20, 23, 0.09),
+    0 32px 64px rgba(18, 20, 23, 0.06);
+}
+.era-v2 .pricing-card.recommended {
+  padding-top: 44px;  /* account for the magenta top border */
+}
+.era-v2 .pricing-recommended-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--magenta);
+}
+.era-v2 .pricing-recommended-label {
+  position: absolute;
+  top: 14px; right: 20px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--magenta);
   text-transform: uppercase;
-  color: var(--ink-muted);
   font-weight: 500;
 }
-.era-v2 .tier-price-row {
+.era-v2 .pricing-card-head {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px 10px;
+  flex-direction: column;
+  gap: 8px;
 }
-.era-v2 .tier-price {
+.era-v2 .pricing-card-name {
   font-family: 'Instrument Sans', system-ui, sans-serif;
-  font-size: 17px;
   font-weight: 700;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   color: var(--ink);
 }
-.era-v2 .tier-price.inquire { color: var(--ink-muted); font-style: italic; font-weight: 500; }
-.era-v2 .tier-duration {
+.era-v2 .pricing-card-descriptor {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.era-v2 .pricing-card-rule {
+  height: 1px;
+  background: var(--rule);
+}
+.era-v2 .pricing-card-price {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.era-v2 .pricing-card-price-value {
   font-family: 'Instrument Sans', system-ui, sans-serif;
-  font-size: 17px;
   font-weight: 700;
-  color: var(--ink);
+  font-size: 32px;
+  line-height: 1;
+  color: var(--rust);
+  letter-spacing: -0.015em;
 }
-.era-v2 .tier-duration.muted { color: var(--ink-muted); font-weight: 500; font-style: italic; }
-.era-v2 .tier-sep { color: var(--ink-muted); font-weight: 400; }
-.era-v2 .tier-time {
+.era-v2 .pricing-card-price-timing {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+  text-transform: lowercase;
+}
+.era-v2 .pricing-card-summary {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+}
+.era-v2 .pricing-card-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.era-v2 .pricing-card-features li {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text);
+  padding-left: 18px;
+  position: relative;
+}
+.era-v2 .pricing-card-features li::before {
+  content: "·";
+  position: absolute;
+  left: 4px;
+  top: 0;
+  color: var(--rust);
+  font-weight: 700;
+}
+.era-v2 .pricing-card-cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px 20px;
   font-family: 'Instrument Sans', system-ui, sans-serif;
-  font-size: 13px;
-  color: var(--ink-muted);
-  letter-spacing: 0.04em;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border-radius: 4px;
+  border: 1px solid var(--rust);
+  color: var(--rust);
+  background: transparent;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
-.era-v2 .tier-desc-stack { display: flex; flex-direction: column; gap: 8px; }
-.era-v2 .tier-desc { font-size: 15px; color: var(--ink-soft); line-height: 1.45; }
-.era-v2 .tier-desc-sup {
-  font-size: 13px;
-  color: var(--ink-muted);
-  font-style: italic;
-  line-height: 1.4;
+.era-v2 .pricing-card-cta:hover {
+  background: var(--rust);
+  color: var(--paper);
 }
+.era-v2 .pricing-card-cta.primary {
+  background: var(--magenta);
+  color: var(--paper);
+  border-color: var(--magenta);
+}
+.era-v2 .pricing-card-cta.primary:hover {
+  background: #A8385F;
+  border-color: #A8385F;
+}
+
 .era-v2 .entry-note {
-  margin-top: 56px; text-align: center;
-  font-family: 'Instrument Sans', system-ui, sans-serif;
-  font-style: italic; font-size: 20px; color: var(--ink-soft);
+  margin-top: 56px;
+  text-align: center;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .era-v2 .pricing-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
-  .era-v2 .tier { grid-template-columns: 1fr; gap: 8px; padding: 32px 0; }
   .era-v2 .entry { padding: 100px 0; }
+  .era-v2 .pricing-card { padding: 32px 28px; }
+  .era-v2 .pricing-card.recommended { padding-top: 40px; }
 }
 
 /* ─── Fit ─── */
@@ -3729,52 +4132,69 @@
 .era-v2 footer.v2-footer-dark .footer-col a:hover {
   color: var(--rust);
 }
-.era-v2 footer.v2-footer-dark .footer-wordmark-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 32px;
-  padding: 56px 0 40px;
-  border-bottom: 1px solid rgba(245, 240, 235, 0.1);
-}
-.era-v2 footer.v2-footer-dark .footer-wordmark img {
-  height: 40px;
-  width: auto;
-  display: block;
-  filter: brightness(0) invert(1) sepia(1) saturate(0.1) brightness(0.93);
-}
-.era-v2 footer.v2-footer-dark .footer-tagline {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(245, 240, 235, 0.5);
-  max-width: 340px;
-  text-align: right;
-}
-.era-v2 footer.v2-footer-dark .footer-meta-row {
+/* v8 delta item 33b: footer brand row. Diamond symbol + "era" wordmark on
+   the left, tagline + location on the right. Replaces the prior wordmark
+   image + split meta row; consolidates the "both return" brand lockup. */
+.era-v2 footer.v2-footer-dark .footer-brand-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 28px;
+  gap: 32px;
+  padding: 56px 0 48px;
+}
+.era-v2 footer.v2-footer-dark .footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: inherit;
+}
+.era-v2 footer.v2-footer-dark .footer-brand-mark {
+  display: block;
+  width: 32px;
+  height: 32px;
+  background-color: #F4F1EA;
+  -webkit-mask: url('/images/era_symbol.svg') center / contain no-repeat;
+          mask: url('/images/era_symbol.svg') center / contain no-repeat;
+  flex-shrink: 0;
+}
+.era-v2 footer.v2-footer-dark .footer-brand-wordmark {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  color: #F4F1EA;
+  line-height: 1;
+}
+.era-v2 footer.v2-footer-dark .footer-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: right;
+}
+.era-v2 footer.v2-footer-dark .footer-tagline {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgba(245, 240, 235, 0.45);
+  color: rgba(245, 240, 235, 0.65);
+  line-height: 1.4;
 }
-.era-v2 footer.v2-footer-dark .footer-mark {
-  display: block;
-  width: 20px;
-  height: 20px;
-  background-color: rgba(245, 240, 235, 0.7);
-  -webkit-mask: url('/images/era_symbol.svg') center / contain no-repeat;
-          mask: url('/images/era_symbol.svg') center / contain no-repeat;
+.era-v2 footer.v2-footer-dark .footer-location {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 235, 0.4);
+  line-height: 1.4;
 }
 @media (max-width: 900px) {
   .era-v2 footer.v2-footer-dark .footer-nav { grid-template-columns: repeat(2, 1fr); gap: 32px; }
-  .era-v2 footer.v2-footer-dark .footer-wordmark-row { flex-direction: column; align-items: flex-start; gap: 24px; }
-  .era-v2 footer.v2-footer-dark .footer-tagline { text-align: left; }
+  .era-v2 footer.v2-footer-dark .footer-brand-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .era-v2 footer.v2-footer-dark .footer-brand-text { text-align: left; }
 }
 
 /* Legacy footer styles retained below for any other consumer. */
@@ -3809,4 +4229,431 @@
 }
 @media (max-width: 768px) {
   .era-v2 footer .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ─── /gtm-design page ──────────────────────────────────────────────── */
+/* Hero: two-column. Left = narrative + CTA. Right = deliverables summary
+   card (01-04) rendered as a compact index. Both columns live on cream
+   ground with generous top padding to clear the transparent nav. */
+.era-v2 .gtm-design-page { background: var(--paper); }
+.era-v2 .gtm-hero { padding: 180px 0 120px; position: relative; overflow: hidden; }
+.era-v2 .gtm-hero-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.era-v2 .gtm-hero-col { display: flex; flex-direction: column; gap: 28px; }
+.era-v2 .gtm-hero-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--rust);
+  text-transform: uppercase;
+}
+.era-v2 .gtm-hero-headline {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(56px, 8vw, 112px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  max-width: 16ch;
+}
+.era-v2 .gtm-hero-sub {
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+  max-width: 56ch;
+}
+.era-v2 .gtm-hero-cta-row {
+  display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+  margin-top: 8px;
+}
+.era-v2 .gtm-hero-meta {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px; letter-spacing: 0.2em; color: var(--ink-muted);
+  text-transform: uppercase;
+}
+.era-v2 .gtm-hero-summary {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card-layered);
+  padding: 32px;
+}
+.era-v2 .gtm-hero-summary-head { margin-bottom: 24px; }
+.era-v2 .gtm-hero-summary-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.3em;
+  color: var(--rust);
+  text-transform: uppercase;
+}
+.era-v2 .gtm-hero-summary-line {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-size: 14px; color: var(--ink-muted);
+  margin-top: 6px;
+}
+.era-v2 .gtm-hero-summary-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column;
+}
+.era-v2 .gtm-hero-summary-item {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 14px;
+  padding: 16px 0;
+  border-top: 1px solid var(--rule);
+}
+.era-v2 .gtm-hero-summary-num {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px; letter-spacing: 0.1em;
+  color: var(--rust);
+  padding-top: 2px;
+}
+.era-v2 .gtm-hero-summary-name {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px; letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.era-v2 .gtm-hero-summary-detail {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-size: 13px; color: var(--ink-muted);
+  margin-top: 2px; line-height: 1.45;
+}
+
+/* Problem framing. Big two-part headline with italic "clarity" accent. */
+.era-v2 .gtm-problem { padding: 140px 0 80px; }
+.era-v2 .gtm-problem-sub {
+  font-size: 19px; line-height: 1.55;
+  color: var(--ink-muted);
+  margin-top: 24px; max-width: 58ch;
+}
+
+/* Three gaps. Each gap is a full-width row with body copy + stat callout. */
+.era-v2 .gtm-gaps { padding: 40px 0 120px; }
+.era-v2 .gtm-gaps-list {
+  display: flex; flex-direction: column;
+}
+.era-v2 .gtm-gap {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 60px;
+  padding: 56px 0;
+  border-top: 1px solid var(--rule);
+}
+.era-v2 .gtm-gap:last-child { border-bottom: 1px solid var(--rule); }
+.era-v2 .gtm-gap-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.3em;
+  color: var(--rust); text-transform: uppercase;
+  grid-column: 1 / -1;
+  margin-bottom: -16px;
+}
+.era-v2 .gtm-gap-title {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.15; letter-spacing: -0.02em;
+  color: var(--ink);
+  grid-column: 1 / -1;
+}
+.era-v2 .gtm-gap-body {
+  font-size: 17px; line-height: 1.6;
+  color: var(--text);
+  grid-column: 1;
+}
+.era-v2 .gtm-gap-closer {
+  font-size: 17px; line-height: 1.6;
+  color: var(--ink);
+  font-weight: 500;
+  grid-column: 1 / -1;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule-subtle);
+  max-width: 72ch;
+}
+.era-v2 .gtm-gap-stat {
+  background: var(--paper-deep);
+  border-left: 2px solid var(--rust);
+  padding: 24px 24px;
+  grid-column: 2;
+  align-self: start;
+}
+.era-v2 .gtm-gap-stat-value {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 48px; line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.era-v2 .gtm-gap-stat-line {
+  font-size: 15px; line-height: 1.5;
+  color: var(--text);
+  margin-top: 10px;
+}
+.era-v2 .gtm-gap-stat-source {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.3em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  margin-top: 12px;
+}
+
+/* Four deliverables — 2x2 card grid on cream. */
+.era-v2 .gtm-deliverables { padding: 120px 0; background: var(--paper-deep); }
+.era-v2 .gtm-deliverables-sub {
+  font-size: 19px; line-height: 1.55;
+  color: var(--ink-muted);
+  margin-top: -40px;
+  margin-bottom: 56px;
+  max-width: 60ch;
+}
+.era-v2 .gtm-deliverables-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.era-v2 .gtm-deliverable-card {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card-layered);
+  padding: 36px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.era-v2 .gtm-deliverable-num {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.3em;
+  color: var(--rust); text-transform: uppercase;
+}
+.era-v2 .gtm-deliverable-title {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.era-v2 .gtm-deliverable-body {
+  font-size: 15px; line-height: 1.6;
+  color: var(--text);
+}
+.era-v2 .gtm-deliverable-meta {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.3em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  margin-top: auto; padding-top: 12px;
+  border-top: 1px solid var(--rule);
+}
+
+/* Engagement — dark ground, three-phase timeline. */
+.era-v2 .gtm-engagement {
+  padding: 120px 0;
+  background: var(--ink);
+  position: relative;
+}
+.era-v2 .gtm-phase-rail {
+  height: 1px;
+  background: var(--rule-strong);
+  margin: 56px 0 40px;
+}
+.era-v2 .gtm-phase-grid {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.era-v2 .gtm-phase-card {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.era-v2 .gtm-phase-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.3em;
+  color: var(--rust);
+  text-transform: uppercase;
+}
+.era-v2 .gtm-phase-when {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.2em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+}
+.era-v2 .gtm-phase-num {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-size: 48px; font-weight: 700;
+  color: var(--rust); line-height: 1;
+  margin-top: 4px;
+}
+.era-v2 .gtm-phase-title {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.2; letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.era-v2 .gtm-phase-body {
+  font-size: 15px; line-height: 1.6;
+  color: var(--text);
+}
+
+/* Fit criteria. Horizontal revenue-range bar + checklist grid. */
+.era-v2 .gtm-fit { padding: 120px 0; }
+.era-v2 .gtm-fit-range {
+  margin: 56px 0 64px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.era-v2 .gtm-fit-range-labels {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+}
+.era-v2 .gtm-fit-range-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px; letter-spacing: 0.3em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+}
+.era-v2 .gtm-fit-range-label.pos-1 {
+  color: var(--rust);
+  text-align: center;
+}
+.era-v2 .gtm-fit-range-label.pos-2 { text-align: right; }
+.era-v2 .gtm-fit-range-bar {
+  position: relative;
+  height: 6px;
+  background: var(--rule);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.era-v2 .gtm-fit-range-active {
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  top: 0; bottom: 0;
+  background: var(--rust);
+  border-radius: 3px;
+}
+.era-v2 .gtm-fit-range-markers {
+  display: flex; justify-content: space-between;
+  padding: 0 16%;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 13px; color: var(--ink);
+  letter-spacing: 0.05em;
+}
+.era-v2 .gtm-fit-body-grid {
+  display: grid; grid-template-columns: 1.3fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+.era-v2 .gtm-fit-body {
+  font-size: 17px; line-height: 1.6;
+  color: var(--text);
+}
+.era-v2 .gtm-fit-checklist-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.3em;
+  color: var(--rust);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.era-v2 .gtm-fit-checklist ul {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column;
+}
+.era-v2 .gtm-fit-checklist li {
+  padding: 14px 0 14px 28px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 15px; line-height: 1.5;
+  color: var(--text);
+  position: relative;
+}
+.era-v2 .gtm-fit-checklist li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 20px;
+  width: 14px; height: 2px;
+  background: var(--rust);
+}
+.era-v2 .gtm-fit-checklist li:last-child { border-bottom: none; }
+
+/* Ready-to-build CTA block. */
+.era-v2 .gtm-ready {
+  padding: 120px 0 80px;
+  text-align: center;
+}
+.era-v2 .gtm-ready-headline {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(48px, 6vw, 72px);
+  line-height: 1.05; letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+.era-v2 .gtm-ready-sub {
+  font-size: 19px; color: var(--ink-muted);
+  margin-bottom: 36px;
+}
+
+/* GTM Design page responsive. */
+@media (max-width: 960px) {
+  .era-v2 .gtm-hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  .era-v2 .gtm-gap { grid-template-columns: 1fr; gap: 24px; }
+  .era-v2 .gtm-gap-stat { grid-column: 1; }
+  .era-v2 .gtm-gap-body { grid-column: 1; }
+  .era-v2 .gtm-deliverables-grid { grid-template-columns: 1fr; }
+  .era-v2 .gtm-phase-grid { grid-template-columns: 1fr; gap: 40px; }
+  .era-v2 .gtm-fit-body-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 768px) {
+  .era-v2 .gtm-hero { padding: 140px 0 80px; }
+  .era-v2 .gtm-problem { padding: 100px 0 60px; }
+  .era-v2 .gtm-gaps { padding: 20px 0 80px; }
+  .era-v2 .gtm-deliverables, .era-v2 .gtm-engagement, .era-v2 .gtm-fit { padding: 80px 0; }
+  .era-v2 .gtm-deliverable-card { padding: 28px; }
+  .era-v2 .gtm-fit-range-markers { padding: 0 8%; }
+  .era-v2 .gtm-fit-range-active { left: 8%; right: 8%; }
+}
+
+/* Stub pages + Halo page hero — minimal page-scale header so the six
+   standalone destinations in the nav land on something self-contained
+   while round-4 copy is still pending. */
+.era-v2 .stub-page,
+.era-v2 .halo-page {
+  background: var(--paper);
+  min-height: 100vh;
+}
+.era-v2 .stub-hero,
+.era-v2 .halo-page-hero {
+  padding: 180px 0 120px;
+  text-align: left;
+}
+.era-v2 .stub-hero .section-label,
+.era-v2 .halo-page-hero .section-label {
+  margin-bottom: 24px;
+}
+.era-v2 .stub-headline {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(48px, 7vw, 88px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 28px;
+  max-width: 22ch;
+}
+.era-v2 .stub-body {
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+  max-width: 60ch;
+  margin-bottom: 40px;
+}
+.era-v2 .stub-cta-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+@media (max-width: 768px) {
+  .era-v2 .stub-hero,
+  .era-v2 .halo-page-hero { padding: 140px 0 80px; }
 }

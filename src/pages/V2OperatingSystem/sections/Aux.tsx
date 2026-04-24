@@ -53,7 +53,9 @@ export default function Aux() {
   })
 
   return (
-    <section className="aux" id="aux" ref={sectionRef}>
+    // v8 delta item 33d: AUX section band flips to dark ground (Ink).
+    // The card itself stays white via data-ground="light" → token reset.
+    <section className="aux" id="aux" ref={sectionRef} data-ground="dark">
       <div className="container">
         <div className="aux-intro-v8">
           <div>
@@ -90,6 +92,7 @@ export default function Aux() {
 
         <motion.div
           className="account-card v8"
+          data-ground="light"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.1 }}

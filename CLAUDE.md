@@ -7,24 +7,11 @@
 
 ## Identity
 
-You are building tools and applications for **ERA** (eracx.com), a B2B revenue operations consultancy operated by Justin Marshall under Department of Loyalty LLC. ERA's methodology is called **Revenue Through Subtraction**: fewer tools, fewer motions, better targeting, compounding engagement.
-
-ERA serves B2B companies with signal-driven growth systems built around three loops: Connection (unknown to known), Trust (known to closed), and Loyalty (closed to retained/expanded).
+You are building tools and applications for **ERA** (eracx.com), a B2B revenue operations consultancy operated by Justin Marshall under Department of Loyalty LLC. 
 
 ---
 
-## Tech Stack
-
-- **Framework:** Next.js 14+ (App Router)
-- **Styling:** Tailwind CSS (utility-first, no custom CSS unless necessary)
-- **Charts:** Recharts
-- **Deployment:** Vercel (team ID: team_jjmde8H3Mq9C53LGsAnOYv5G)
-- **Domain:** eracx.com
-- **Language:** TypeScript (strict mode preferred, JavaScript acceptable for quick prototypes)
-- **Package manager:** npm
-- **Node version:** 18+
-
----
+ ---
 
 ## Brand Tokens
 

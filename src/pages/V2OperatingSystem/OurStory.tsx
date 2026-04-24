@@ -39,12 +39,12 @@ export default function OurStory() {
 
   const { preamble, manifesto, whoRunsIt, cta } = ourStory
 
-  // Split the manifesto body around the pull quotes. Current placement:
-  // pull 1 after paragraph ~3, pull 2 after paragraph ~6. With placeholder
-  // copy of only 3 paragraphs, both pulls fall at the end.
+  // Pull-quote placement: pull 1 after the paragraph that contains its
+  // source line; pull 2 after the "Focus isn't a strategy" line. With the
+  // full v8 essay loaded that's paragraph 3 and paragraph 10.
   const manifestoParagraphs = manifesto.body
   const pull1After = Math.min(3, Math.max(1, manifestoParagraphs.length - 1))
-  const pull2After = Math.min(6, manifestoParagraphs.length)
+  const pull2After = Math.min(10, manifestoParagraphs.length)
 
   return (
     <div className="era-v2 our-story-page" data-theme={theme}>
@@ -60,7 +60,9 @@ export default function OurStory() {
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeUp}
           >
-            <p>{preamble.body}</p>
+            {preamble.body.map((p, i) => (
+              <p key={`pre-${i}`}>{p}</p>
+            ))}
             <div className="our-story-preamble-sig">— {preamble.signature}</div>
           </motion.div>
 

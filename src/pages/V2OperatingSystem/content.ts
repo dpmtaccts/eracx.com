@@ -3,16 +3,17 @@
 
 export type CtaLink = { label: string; href: string }
 
+// v8 delta item 30: six standalone destinations, no hash anchors.
+// All six resolve to their own routes. /why-era, /free-tools, /contact
+// are round-4 stubs and render a placeholder until copy lands.
 export const nav = {
   links: [
-    { label: 'System', href: '#system' },
-    { label: 'Signal Map', href: '#signal-map' },
-    { label: 'AUX', href: '#aux' },
-    { label: 'AI Mirror', href: '#mirror' },
-    { label: 'Halo', href: '#halo' },
-    // v8 delta item 25: Our Story lives at its own route.
+    { label: 'Why Era', href: '/why-era' },
+    { label: 'GTM Design', href: '/gtm-design' },
+    { label: 'Halo', href: '/halo' },
+    { label: 'Free Tools', href: '/free-tools' },
     { label: 'Our Story', href: '/our-story' },
-    { label: 'Timeline', href: '#expect' },
+    { label: 'Contact', href: '/contact' },
   ] as CtaLink[],
   cta: { label: 'Request an audit', href: '#entry' } as CtaLink,
 }
@@ -62,6 +63,13 @@ export const hero = {
   secondary: { label: 'Request an audit', href: '#entry' } as CtaLink,
   clientsLabel: 'TRUSTED BY',
   clients: ['Netrush', 'POP', 'Miniac', 'Navalent', 'Seismic'],
+  pillars: [
+    'AI-driven signals and buying intent data',
+    'Automated outreach and follow-up sequences',
+    'Real-time sales intelligence and alerts',
+    'Proven playbooks, already loaded',
+    'A team of GTM leaders running all of it',
+  ],
 }
 
 // v8: Ghost + Stats collapsed into a single Intro section.
@@ -400,12 +408,15 @@ export const aux = {
 
 export type MirrorSegment = { text: string; flag?: boolean }
 
+// v8 delta item 21 + 33g: sources render as icon/logo + name + detail.
+// The scored-weight bar from v7 is retired; the UNLIKELY SOURCE magenta
+// tag is also retired per 33g — every source is now a standard row.
 export type MirrorSource = {
+  // Either a Lucide icon name or a logo src from /public/images/.
+  iconName?: 'globe' | 'newspaper'
+  logoSrc?: string
   name: string
   detail: string
-  weight: number
-  tone: 'primary' | 'negative' | 'neutral'
-  unlikely?: boolean  // v8: flag sources that buyers don't expect to shape perception
 }
 
 export const aiMirror = {
@@ -449,13 +460,27 @@ export const aiMirror = {
     ],
   ] as MirrorSegment[][],
   sourcesTitle: 'What fed this answer',
+  sourcesSubtitle: 'SOURCES',
+  inputPlaceholder: 'Ask a buyer question...',
+  sendLabel: 'Send',
+  // v8 delta item 21 + 33g: icon/logo-first source list. UNLIKELY SOURCE
+  // magenta flag retired — Glassdoor and the other rows render neutral.
   sources: [
-    { name: 'G2 reviews', detail: '2,847 reviews · 4.2 avg', weight: 28, tone: 'primary' },
-    { name: 'Glassdoor', detail: '3.2 avg · themes: pace, CS', weight: 19, tone: 'negative', unlikely: true },
-    { name: 'Competitor comparison pages', detail: 'Clari, Gong, Aviso', weight: 17, tone: 'primary' },
-    { name: 'helixops.com', detail: 'owned content', weight: 14, tone: 'neutral' },
-    { name: 'Reddit, Hacker News', detail: '14 threads, 6 months', weight: 11, tone: 'negative', unlikely: true },
-    { name: 'Press and analyst', detail: 'Forrester, TechCrunch', weight: 7, tone: 'primary' },
+    { iconName: 'globe', name: 'helixops.com', detail: 'Company website' },
+    {
+      iconName: 'newspaper',
+      name: 'Press & analyst coverage',
+      detail: 'TechCrunch, Forrester, Business Insider',
+    },
+    { logoSrc: '/images/g2.svg', name: 'G2', detail: '127 reviews, 4.3 avg rating' },
+    {
+      logoSrc: '/images/glassdoor_logo_icon_171086.png',
+      name: 'Glassdoor',
+      detail: 'Employee sentiment, 3.9 rating',
+    },
+    { logoSrc: '/images/gong.svg', name: 'Gong', detail: 'Sales intelligence' },
+    { logoSrc: '/images/clari.png', name: 'Clari', detail: 'Revenue intelligence' },
+    { logoSrc: '/images/aviso.png', name: 'Aviso', detail: 'Forecasting intelligence' },
   ] as MirrorSource[],
   gap: {
     owned: { label: 'What your site says', quote: '"The fastest-to-value revenue platform."' },
@@ -692,15 +717,20 @@ export const clients = {
 
 // ─── Engage (pricing tiers) ───
 
+// v8 delta item 33j: 2x2 pricing card grid. Each card carries its own
+// descriptor, price, summary, and CTA. The Revenue Signal Audit card is
+// the recommended tier — magenta top border + recommended label + magenta
+// CTA fill. Feature bullets are BLOCKED pending finalization from Justin;
+// cards render without the bullet row until `features` is populated.
 export type Tier = {
   name: string
-  subtitle?: string
-  price: string               // primary price, bold
-  duration?: string           // "one-time" | "ongoing" | null — rendered with same weight as price
-  time?: string               // delivery window, muted (e.g. "14 days")
-  priceIsInquire?: boolean
-  desc: string
-  descSupplement?: string     // optional second line for tiers that need extra clarity
+  descriptor: string               // mono uppercase 11px 0.25em tracking
+  price: string                    // Instrument Sans 700 32px Deep Steel
+  timing?: string                  // mono subtext below price (e.g. "· ongoing", "· 14 days")
+  summary: string                  // 14px body
+  features?: string[]              // 3-4 short bullets. Empty = skip bullet row.
+  cta: { label: string; href: string }
+  recommended?: boolean            // Revenue Signal Audit
 }
 
 export const engage = {
@@ -712,38 +742,44 @@ export const engage = {
   tiers: [
     {
       name: 'Halo',
-      subtitle: 'THE LINKEDIN OPERATING LAYER',
+      descriptor: 'THE LINKEDIN OPERATING LAYER',
       price: 'From $999/mo',
-      duration: 'ongoing',
-      desc: 'Voice-tuned content and signal-triggered outreach, operated on LinkedIn.',
+      timing: '· ongoing',
+      summary:
+        'Voice-tuned content and signal-triggered outreach, operated on LinkedIn.',
+      features: [],  // TODO (Justin): finalize 3 bullets for Halo card
+      cta: { label: 'See if Halo fits', href: '/halo' },
     },
     {
       name: 'Revenue Signal Audit',
-      subtitle: 'THE DIAGNOSTIC',
+      descriptor: 'THE DIAGNOSTIC · 14 DAYS',
       price: '$15,000',
-      duration: 'one-time',
-      time: '14 days',
-      desc:
+      timing: '· one-time',
+      summary:
         'A diagnostic against the new playbook. See where you stand and what to change first. Includes GTM strategy and playbook, delivered as a written deliverable.',
+      features: [],  // TODO (Justin): finalize 3 bullets for the recommended card
+      cta: { label: 'Get your audit', href: '#close' },
+      recommended: true,
     },
     {
-      // TODO: confirm Signal Only pricing. v7 spec writes "By engagement"; a
-      // separate pricing screenshot shows $8.5K/mo with a 3-month minimum.
       name: 'Signal Only',
-      subtitle: 'INTEL + WEEKLY REVIEW',
+      descriptor: 'INTEL + WEEKLY REVIEW',
       price: 'By engagement',
-      priceIsInquire: true,
-      duration: 'ongoing',
-      desc:
+      timing: '· ongoing',
+      summary:
         'Signal River and AUX, delivered with weekly analyst review. Your team acts on what we surface.',
+      features: [],  // TODO (Justin): finalize 3 bullets for Signal Only card
+      cta: { label: 'Start signal intake', href: '#close' },
     },
     {
       name: 'The System',
-      subtitle: 'THREE PRICING TIERS TO MEET YOUR NEEDS',
+      descriptor: 'THREE PRICING TIERS TO MEET YOUR NEEDS',
       price: 'From $15,000/month',
-      duration: 'ongoing',
-      desc:
+      timing: '· ongoing',
+      summary:
         'Strategy and execution. We design the playbook and operate it for you.',
+      features: [],  // TODO (Justin): finalize 3 bullets for The System card
+      cta: { label: 'Start the conversation', href: '#close' },
     },
   ] as Tier[],
 }
@@ -803,25 +839,42 @@ export const founder = {
 //   - profiles: Justin confirmed; Jen Anderson placeholder, confirm before
 //     flipping the feature flag.
 export const ourStory = {
+  // v8 delta item 25: preamble renders as italic serif. Each array entry is
+  // a paragraph so the note reads with vertical rhythm, not a single block.
   preamble: {
-    // TODO (awaiting Justin): the "Hey there" short founder-voice note that
-    // runs as a preamble above the On Focus essay. Rendered in italic serif.
-    body: '[TODO — insert Justin\'s "Hey there" short founder-voice intro here.]',
+    body: [
+      'Hey there,',
+      'Thanks for being here.',
+      'I want to set expectations early.',
+      'Era exists for one reason: the relationships that matter most to your growth are the ones you keep meaning to follow up on.',
+      "Between the meetings you didn't plan, the priorities that shift by Wednesday, and the conversations that pile up in a founder's week, something always gives. Usually it's the follow-up.",
+      "Most GTM tools assume you'll stop what you're doing, open a dashboard, and run the play. That rarely happens.",
+      "Era is built to work when you're busy.",
+      'We run the system. You keep the focus.',
+      "It's more than a tool, not another platform to babysit, and just a reliable way to make sure the right people keep hearing from you, even when you're not thinking about them.",
+      "If Era does its job, you'll notice one thing first: you're back to doing the work only you can do.",
+      "That's the goal.",
+    ],
     signature: 'Justin',
   },
   manifesto: {
     eyebrow: 'On Focus',
-    // TODO (awaiting Justin): full "On Focus" essay. Each element of `body`
-    // renders as a paragraph. Each element of `pullQuotes` renders as a
-    // breakaway pull quote between the body paragraphs (placement is
-    // handled in the component — currently after paragraph 3 and 6).
     body: [
-      '[TODO — insert opening paragraph of the On Focus essay. This is where a drop-cap can live.]',
-      '[TODO — insert the body of the On Focus essay here. Each paragraph is a separate string in this array.]',
-      "[TODO — once the full essay is pasted in, split into paragraphs and this array will reflect the rhythm.]",
+      "The best leaders I've ever worked with share one trait: ruthless about what they don't do.",
+      'It\'s infuriating how they say "No," to the meeting that could be an email. "No," to the introduction that goes nowhere. "No," to the conference, the panel, the offsite that everyone else wants an invite to, unless it serves one thing: the objective. They say "No," because they\'ve raised their floor. And because they say no to almost everything, when they say, "Yes," it means something.',
+      "We built Era to work alongside those people. Leaders who know exactly what they're building and who they're building it for. Executives who wake up thinking about their product, their team, their customers.",
+      'They are missional. And that focus is what makes them great.',
+      'Our job is to protect it.',
+      "If you have a good product and a strong sales team, you don't need to spend your time evaluating GTM tools, interviewing BDR candidates, managing CRM workflows, or managing agencies who report on vanity metrics. You need a system that builds and maintains the relationships that matter. One that runs without pulling you into it.",
+      "That's what Era is.",
+      'We are built on focus. Our playbook is built to connect with real people, in real companies, with real problems that your product actually solves. We build toward that relationship deliberately: from unknown to known, from known to trusted, from trusted to the kind of relationship that generates referrals, expansions, and renewals without anyone having to remember to follow up.',
+      'We also believe the best companies know exactly who they serve. Every system we build is designed around that principle. Who are we trying to reach? Who are we building trust with? Who do we want to still be talking to in three years?',
+      "Focus isn't a strategy. It's a discipline. And it's the hardest thing to maintain when growth feels urgent.",
+      "We use the best in AI and automation to make that discipline scalable. Growth is hard enough. We're not here to make it harder. We're here to make sure the hard work you've already done compounds into something that keeps working.",
+      "That's why we built Era.",
     ],
     pullQuotes: [
-      "We built Era to work alongside those people.",
+      'We built Era to work alongside those people.',
       "Focus isn't a strategy. It's a discipline.",
     ],
     signature: { name: 'Justin Marshall', role: 'Founder' },
@@ -865,6 +918,185 @@ export const ourStory = {
   },
 }
 
+// ─── GTM Design (standalone /gtm-design page) ───
+
+// v8 delta item 30 + round-3 build: copy sourced verbatim from
+// "Era — GTM Systems for B2B Companies.pdf" in /docs/v8/. The Three Loops
+// (Connection/Trust/Loyalty) section from the PDF is retired per item 27 —
+// loop taxonomy is no longer part of the v8 palette or narrative.
+export const gtmDesign = {
+  hero: {
+    eyebrow: 'FIXED-SCOPE GTM SPRINT',
+    headline: {
+      before: "Your pipeline shouldn't depend on who the ",
+      italic: 'founder knows.',
+      after: '',
+    },
+    sub:
+      'Set your growth trajectory with a complete go-to-market blueprint, designed for immediate implementation and scale.',
+    meta: '3 weeks · 4 deliverables',
+    cta: { label: 'Start the conversation', href: '#close' } as CtaLink,
+    summaryEyebrow: 'GTM DESIGN',
+    summaryLine: '4 deliverables · 3 weeks · fixed scope',
+    summaryItems: [
+      { num: '01', name: 'PIPELINE MAP', detail: 'Full revenue pipeline, end-to-end' },
+      {
+        num: '02',
+        name: 'ICP + SCORED LIST',
+        detail: 'Firmographic, behavioral, relational criteria',
+      },
+      {
+        num: '03',
+        name: 'CAMPAIGN ARCHITECTURE',
+        detail: 'Channel logic, sequence, and message design',
+      },
+      { num: '04', name: 'GTM BLUEPRINT DOC', detail: 'Operator-ready system document' },
+    ],
+  },
+  problem: {
+    eyebrow: 'The real problem',
+    headline: {
+      before: "Most B2B companies don't have a go-to-market problem. They have a ",
+      italic: 'clarity',
+      after: ' problem.',
+    },
+    sub:
+      'GTM Design solves for the three gaps we see in nearly every B2B company between $5M and $50M.',
+  },
+  gaps: [
+    {
+      eyebrow: 'SIGNAL-BASED PIPELINE',
+      title: 'Pipeline built on signals, not relationships',
+      body:
+        "Most B2B revenue at the $5–50M stage is driven by founder relationships and referrals. That works — until it doesn't. When those relationships plateau, there's no underlying system to fall back on. The pipeline dries up and nobody knows why.",
+      stat: {
+        value: '68%',
+        line: 'of B2B companies cite pipeline generation as their top growth challenge.',
+        source: 'FORRESTER, 2025',
+      },
+      closer:
+        "We map your full pipeline from first signal to closed deal — so growth doesn't depend on who picks up the phone.",
+    },
+    {
+      eyebrow: 'DEFINED ICP + SCORED LIST',
+      title: 'ICP defined by criteria, not gut feel',
+      body:
+        '"Companies like our best customers" is not an ICP. Without defined firmographic, behavioral, and relational criteria, every rep qualifies differently, every campaign targets differently, and nothing compounds. You get inconsistency at scale.',
+      stat: {
+        value: '22%',
+        line: 'of B2B companies say they have a clearly defined and documented ICP.',
+        source: 'GARTNER, 2024',
+      },
+      closer:
+        'We define your ICP with scored criteria and deliver a ranked prospect list you can act on the day you receive it.',
+    },
+    {
+      eyebrow: 'CAMPAIGN ARCHITECTURE',
+      title: 'Outbound with a map, not just a message',
+      body:
+        "Most B2B outbound is launched before the pipeline architecture exists. Sequences go out, responses come back, and there's no system to route, score, or prioritize what happens next. Activity without architecture produces noise, not revenue.",
+      stat: {
+        value: '<5%',
+        line: 'of cold outreach gets a response. The volume playbook stopped working.',
+        source: 'BELKINS, 2025',
+      },
+      closer:
+        'We design the channel logic, sequence, and message architecture so every touchpoint has a reason and a next step.',
+    },
+  ],
+  deliverables: {
+    eyebrow: 'What you get',
+    headline: {
+      before: 'A complete go-to-market system. Built in ',
+      italic: 'weeks',
+      after: ', not quarters.',
+    },
+    sub:
+      'GTM Design is a fixed-scope sprint. Four interconnected deliverables that map, define, and sequence your entire revenue motion.',
+    items: [
+      {
+        num: '01',
+        title: 'Pipeline Map',
+        body:
+          'We diagram your full revenue pipeline from first signal to closed deal to expansion motion. Every stage, every handoff, every gap. Most companies have never seen their pipeline drawn end-to-end — this alone changes how leadership thinks about where to invest.',
+        meta: 'LIVE SIGNAL FEED FROM SIGNALS.ERACX.COM',
+      },
+      {
+        num: '02',
+        title: 'ICP Definition and Scored Prospect List',
+        body:
+          "We define your Ideal Customer Profile using firmographic, behavioral, and relational criteria — then build a scored prospect list using ERA's FRVRD scoring model (Frequency, Recency, Value, Responsiveness, Density). Delivered as a live, ranked list you can act on immediately, tracked in real time at aux.eracx.com.",
+        meta: 'SCORED PROSPECT LIST FROM SIGNALS.ERACX.COM',
+      },
+      {
+        num: '03',
+        title: 'Campaign Architecture',
+        body:
+          'We design the logic for your primary go-to-market motion: which channels, in what sequence, with what message at each stage of the buying journey. Built specifically around your pipeline map and ICP — not adapted from a template.',
+        meta: 'CHANNEL · SEQUENCE · MESSAGE',
+      },
+      {
+        num: '04',
+        title: 'GTM Blueprint Document',
+        body:
+          'Everything tied together in a single operator-ready document: ICP criteria, scoring rationale, pipeline stage definitions, campaign sequences, and prioritized next actions. Formatted to hand off to an ops team, a new hire, or inform a full ERA engagement.',
+        meta: 'ICP · SCORING · PIPELINE · SEQUENCES · NEXT ACTIONS',
+      },
+    ],
+  },
+  engagement: {
+    eyebrow: 'How the engagement works',
+    headline: 'Three weeks. Three phases. One handoff.',
+    phases: [
+      {
+        num: '01',
+        label: 'DIAGNOSTIC',
+        when: 'Week 1',
+        title: 'Diagnostic Call',
+        body:
+          "We start by understanding your current revenue motion: what's working, what's stalled, and what's never been built. We map your existing pipeline, gather ICP input from sales and leadership, and identify the highest-leverage design decisions.",
+      },
+      {
+        num: '02',
+        label: 'BUILD',
+        when: 'Weeks 1–2',
+        title: 'Blueprint Build',
+        body:
+          'We build the four deliverables in sequence — pipeline map first, ICP second, campaign architecture third, blueprint document last. Each informs the next. You receive a draft for review at the midpoint.',
+      },
+      {
+        num: '03',
+        label: 'HANDOFF',
+        when: 'Week 3',
+        title: 'Handoff and Walkthrough',
+        body:
+          'We deliver the final GTM Blueprint package in a live working session. We walk through each component, answer questions, and document recommended next actions. You leave with a system ready to implement.',
+      },
+    ],
+  },
+  fit: {
+    eyebrow: 'Who this is for',
+    headline: 'Built for B2B companies that have traction but not a system.',
+    rangeLabels: ['EARLY', 'GTM DESIGN RANGE', 'ENTERPRISE'],
+    rangeMarkers: ['$2M', '$50M'],
+    body:
+      "GTM Design is designed for B2B companies between $2M and $50M in revenue — past early traction, short of a full growth infrastructure. You have a product that works and customers who bought it. What you don't have is a repeatable, scalable system for finding more of them. This engagement is the architectural starting point.",
+    checklistLabel: "YOU'RE A FIT IF…",
+    checklist: [
+      'Your pipeline is inconsistent quarter to quarter',
+      'Your ICP is defined informally or not at all',
+      "Outbound exists but isn't producing predictable results",
+      "You're preparing for a hiring push and need a system before adding headcount",
+      "You've tried tools and tactics but haven't built the underlying architecture",
+    ],
+  },
+  close: {
+    headline: 'Ready to build the system?',
+    sub: 'GTM Design is a fixed-scope engagement. Delivered in three weeks.',
+    cta: { label: 'Start the Conversation', href: '#close' } as CtaLink,
+  },
+}
+
 // ─── Close ───
 
 export const close = {
@@ -890,40 +1122,41 @@ export const close = {
 // v8 delta items 13 + 15: dark-ground 3-row footer, copyright line removed.
 export const footer = {
   columns: [
+    // v8 delta item 30: footer nav mirrors the six standalone pages.
     {
       heading: 'NAVIGATE',
       items: [
-        { label: 'Why ERA', href: '#top' },
-        { label: 'The System', href: '#aux' },
-        { label: 'GTM Design', href: '#' },
-        { label: 'How it Works', href: '#loops' },
-        { label: 'Our Story', href: '#' },
-        { label: 'Contact', href: '#close' },
+        { label: 'Why ERA', href: '/why-era' },
+        { label: 'GTM Design', href: '/gtm-design' },
+        { label: 'Halo', href: '/halo' },
+        { label: 'Free Tools', href: '/free-tools' },
+        { label: 'Our Story', href: '/our-story' },
+        { label: 'Contact', href: '/contact' },
       ],
     },
     {
       heading: 'PRODUCTS',
       items: [
-        { label: 'AUX', href: '#aux' },
-        { label: 'AI Mirror', href: '#mirror' },
-        { label: 'Signal Map', href: '#aux' },
-        { label: 'Halo', href: '#halo' },
+        { label: 'AUX', href: '/#aux' },
+        { label: 'AI Mirror', href: '/#mirror' },
+        { label: 'Signal Map', href: '/#aux' },
+        { label: 'Halo', href: '/halo' },
       ],
     },
     {
       heading: 'ENGAGE',
       items: [
-        { label: 'Revenue Signal Audit', href: '#entry' },
-        { label: 'The System', href: '#entry' },
-        { label: 'Signal Only', href: '#entry' },
-        { label: 'Halo', href: '#halo' },
+        { label: 'Revenue Signal Audit', href: '/#entry' },
+        { label: 'The System', href: '/#entry' },
+        { label: 'Signal Only', href: '/#entry' },
+        { label: 'Halo', href: '/halo' },
       ],
     },
     {
       heading: 'COMPANY',
       items: [
-        { label: 'About', href: '#' },
-        { label: 'Contact', href: '#close' },
+        { label: 'Our Story', href: '/our-story' },
+        { label: 'Contact', href: '/contact' },
         { label: 'hello@eracx.com', href: 'mailto:hello@eracx.com' },
       ],
     },

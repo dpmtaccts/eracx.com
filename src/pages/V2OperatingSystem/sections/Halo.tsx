@@ -39,8 +39,14 @@ export default function Halo() {
                 whileInView="show"
                 viewport={{ once: true, amount: 0.5 }}
                 variants={fadeUp}
+                className="halo-headline-with-lockup"
               >
-                {halo.headline}
+                <span className="halo-headline-word">{halo.headline}</span>
+                <img
+                  className="halo-linkedin-lockup"
+                  src="/images/linkedin.svg"
+                  alt="LinkedIn"
+                />
               </motion.h2>
               <motion.div
                 className="halo-subtitle"

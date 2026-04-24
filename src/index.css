@@ -35,9 +35,15 @@
     margin: 0;
   }
 
+  /* v8 delta item 33h: magenta-soft selection highlight, Architectural
+     Light palette. Retires the residual rust selection from v5/6. */
   ::selection {
-    background-color: var(--color-terracotta);
-    color: white;
+    background: rgba(196, 74, 122, 0.25);
+    color: #121417;
+  }
+  ::-moz-selection {
+    background: rgba(196, 74, 122, 0.25);
+    color: #121417;
   }
 }
 
