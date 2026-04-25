@@ -1,21 +1,16 @@
-// Operators.tsx — §04 section for the /v3 staging homepage.
-// Reframed for the monthly/ongoing engagement model (pulled from v2's
-// "What to expect" + "Who runs it" content in
-// src/pages/V2OperatingSystem/content.ts). The sprint-in-weeks narrative
-// is out; the infrastructure-that-compounds-over-months narrative is in.
-//
-// Timeline: three phases covering Months 1–2 (Design + Install),
-// Months 3–4 (First Results), Months 5–12+ (Infrastructure Compounds).
-// Below, a credential-bench team panel with the v2 "Who runs it" write-up
-// replaces the three portrait placeholders.
+// Operators.tsx — §06 section for the /v3 staging homepage.
+// Three-phase ongoing program structure (Design+Install / First Results /
+// Infrastructure Compounds). Replaces the prior Gantt-style sprint timeline.
+// A horizontal timeline with three open-circle node markers sits above the
+// three phase cards. Below the cards, a portrait strip with operator names
+// (placeholders for now) and the "Three operators. Zero account managers."
+// subtitle.
 
 interface Credential {
   name: string
   src: string
 }
 
-// From v2 content.ts → founder.credentials (Intel intentionally left as
-// text because the logo asset wasn't sourced at v2 time).
 const CREDENTIALS: Credential[] = [
   { name: 'Microsoft', src: '/images/navalent/microsoft.png' },
   { name: 'Chase', src: '/images/navalent/chase-logo.png' },
@@ -26,13 +21,44 @@ const CREDENTIALS: Credential[] = [
   { name: 'T-Mobile', src: '/images/navalent/tmobile.png' },
 ]
 
+interface Phase {
+  num: string
+  duration: string
+  title: string
+  body: string
+}
+
+const PHASES: Phase[] = [
+  {
+    num: 'PHASE 1',
+    duration: 'Months 1–2',
+    title: 'Design + Install',
+    body:
+      'Signal architecture defined by week two. First outreach live by week three. Measurable activity before month two ends.',
+  },
+  {
+    num: 'PHASE 2',
+    duration: 'Months 3–4',
+    title: 'First Results',
+    body:
+      'Pipeline moves. Stalled deals re-engage. The signal library is fully active. This is the minimum window. Most clients know what they have by month four.',
+  },
+  {
+    num: 'PHASE 3',
+    duration: 'Months 5–12+',
+    title: 'Infrastructure Compounds',
+    body:
+      'The relationship database deepens. Referral loops activate. Warm pipeline grows without added spend. The return in month ten is structurally different from month three.',
+  },
+]
+
 export default function Operators() {
   return (
     <section id="operators">
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">04 &nbsp; Operators</div>
+            <div className="eyebrow">06 &nbsp; Operators</div>
             <h2 className="section-h2">
               Compounding,<br />
               <span className="slab">not linear.</span>
@@ -45,88 +71,75 @@ export default function Operators() {
           </p>
         </div>
 
-        <div className="timeline">
-          <div className="timeline-head">
-            <div className="timeline-title">
-              <b>Program timeline.</b> &nbsp;Monthly, ongoing.
-            </div>
-            <div className="timeline-meta">From $15K/mo · ongoing</div>
-          </div>
-          <div className="timeline-svg-wrap">
-            <svg className="timeline-svg" viewBox="0 0 1000 320" xmlns="http://www.w3.org/2000/svg">
-              {/* Phase labels — three windows across the first year */}
-              <g fontFamily="JetBrains Mono, monospace" fontSize="11" fontWeight="700" fill="var(--text)" letterSpacing="0.1em">
-                <text x="215" y="26" textAnchor="middle">MONTHS 01 – 02</text>
-                <text x="525" y="26" textAnchor="middle">MONTHS 03 – 04</text>
-                <text x="800" y="26" textAnchor="middle">MONTHS 05 – 12+</text>
-              </g>
-              <g stroke="var(--rule)" strokeWidth="0.8" strokeDasharray="2 4" opacity="0.6">
-                <line x1="50" y1="40" x2="950" y2="40" />
-                <line x1="50" y1="280" x2="950" y2="280" />
-              </g>
-              <g stroke="var(--rule-soft)" strokeWidth="0.8">
-                <line x1="380" y1="40" x2="380" y2="280" />
-                <line x1="670" y1="40" x2="670" y2="280" />
-              </g>
-
-              {/* Row 1 — Design + Install */}
-              <g>
-                <text x="40" y="74" textAnchor="end" fontFamily="Instrument Sans, sans-serif" fontSize="13" fontWeight="600" fill="var(--text)">Design + Install</text>
-                <rect x="55" y="58" width="320" height="28" fill="var(--cold)" />
-                <text x="215" y="77" textAnchor="middle" fontFamily="Instrument Sans, sans-serif" fontSize="12" fontWeight="600" fill="var(--text)">Signal architecture · capture layer · first outreach by week three</text>
-              </g>
-
-              {/* Row 2 — First Results */}
-              <g>
-                <text x="40" y="114" textAnchor="end" fontFamily="Instrument Sans, sans-serif" fontSize="13" fontWeight="600" fill="var(--text)">First Results</text>
-                <rect x="385" y="98" width="280" height="28" fill="var(--warming)" />
-                <text x="525" y="117" textAnchor="middle" fontFamily="Instrument Sans, sans-serif" fontSize="12" fontWeight="600" fill="var(--bg)">Pipeline moves · stalled deals re-engage</text>
-              </g>
-
-              {/* Row 3 — Infrastructure compounds */}
-              <g>
-                <text x="40" y="154" textAnchor="end" fontFamily="Instrument Sans, sans-serif" fontSize="13" fontWeight="600" fill="var(--text)">Infrastructure compounds</text>
-                <rect x="675" y="138" width="270" height="28" fill="var(--warm)" />
-                <text x="810" y="157" textAnchor="middle" fontFamily="Instrument Sans, sans-serif" fontSize="12" fontWeight="600" fill="var(--bg)">Referral loops · warm pipeline without new spend</text>
-              </g>
-
-              {/* Row 4 — Aux dashboard (spans month 2 onward) */}
-              <g>
-                <text x="40" y="194" textAnchor="end" fontFamily="Instrument Sans, sans-serif" fontSize="13" fontWeight="600" fill="var(--text)">Aux dashboard</text>
-                <rect x="215" y="178" width="730" height="28" fill="var(--text)" />
-                <text x="580" y="197" textAnchor="middle" fontFamily="Instrument Sans, sans-serif" fontSize="12" fontWeight="600" fill="var(--bg)">Live from Month 02 onward · updates daily</text>
-              </g>
-
-              {/* Row 5 — Monthly standup */}
-              <g>
-                <text x="40" y="234" textAnchor="end" fontFamily="Instrument Sans, sans-serif" fontSize="13" fontWeight="600" fill="var(--text)">Monthly review</text>
-                <rect x="55" y="218" width="890" height="28" fill="none" stroke="var(--text)" strokeWidth="1.4" strokeDasharray="6 4" />
-                <text x="500" y="237" textAnchor="middle" fontFamily="Instrument Sans, sans-serif" fontSize="12" fontWeight="600" fill="var(--text)">30 min · shared doc · async by default</text>
-              </g>
-
-              {/* Row 6 — Quarterly strategy */}
-              <g>
-                <text x="40" y="274" textAnchor="end" fontFamily="Instrument Sans, sans-serif" fontSize="13" fontWeight="600" fill="var(--text)">Quarterly strategy</text>
-                <rect x="55" y="258" width="890" height="28" fill="var(--bg-alt)" stroke="var(--rule)" strokeWidth="1" />
-                <text x="500" y="277" textAnchor="middle" fontFamily="Instrument Sans, sans-serif" fontSize="12" fontWeight="600" fill="var(--text)">Strategy reviewed · thresholds retuned · loops extended</text>
-              </g>
-
-              {/* "First results" anchor marker at month 4 boundary */}
-              <line x1="670" y1="40" x2="670" y2="290" stroke="var(--accent)" strokeWidth="2" />
-              <circle cx="670" cy="40" r="5" fill="var(--accent)" />
-              <text x="680" y="36" fontFamily="JetBrains Mono, monospace" fontSize="10" fontWeight="700" fill="var(--accent)" letterSpacing="0.08em">FIRST RESULTS</text>
-
-              <text x="500" y="310" textAnchor="middle" fontFamily="Instrument Sans, sans-serif" fontStyle="italic" fontSize="13" fill="var(--text-muted)">Most clients know what they have by month four.</text>
-            </svg>
-          </div>
+        {/* Horizontal three-stop timeline */}
+        <div className="phase-timeline">
+          <svg
+            className="phase-timeline-svg"
+            viewBox="0 0 1000 80"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="none"
+            role="presentation"
+          >
+            <line x1="80" y1="50" x2="920" y2="50" stroke="var(--accent)" strokeWidth="1" />
+            <g
+              fontFamily="JetBrains Mono, monospace"
+              fontSize="11"
+              fontWeight="700"
+              fill="var(--text)"
+              letterSpacing="0.12em"
+            >
+              <text x="160" y="28" textAnchor="middle">MONTHS 1–2</text>
+              <text x="500" y="28" textAnchor="middle">MONTHS 3–4</text>
+              <text x="840" y="28" textAnchor="middle">MONTHS 5–12+</text>
+            </g>
+            <g fill="var(--bg)" stroke="var(--accent)" strokeWidth="1.5">
+              <circle cx="160" cy="50" r="7" />
+              <circle cx="500" cy="50" r="7" />
+              <circle cx="840" cy="50" r="7" />
+            </g>
+          </svg>
         </div>
+
+        <div className="phase-grid">
+          {PHASES.map((p) => (
+            <div key={p.num} className="phase-card">
+              <div className="phase-overline">{p.num}</div>
+              <div className="phase-duration">{p.duration}</div>
+              <div className="phase-title">{p.title}</div>
+              <p className="phase-body">{p.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <p className="phase-pull">
+          Compounding,&nbsp;
+          <span className="slab">not linear.</span>
+        </p>
 
         <div className="portraits-head">
           <div className="portraits-title">
-            <b>The team.</b> &nbsp;No layers.
+            <b>The team.</b> &nbsp;Three operators. Zero account managers.
           </div>
           <div className="portraits-count">
             Led growth at Fortune 500s
+          </div>
+        </div>
+
+        <div className="portraits-grid">
+          <div className="portrait-card">
+            <div className="portrait-image" aria-hidden="true" />
+            <div className="portrait-name">[ Founder name ]</div>
+            <div className="portrait-role">Founder</div>
+          </div>
+          <div className="portrait-card">
+            <div className="portrait-image" aria-hidden="true" />
+            <div className="portrait-name">[ Operator name ]</div>
+            <div className="portrait-role">Operator</div>
+          </div>
+          <div className="portrait-card">
+            <div className="portrait-image" aria-hidden="true" />
+            <div className="portrait-name">[ Operator name ]</div>
+            <div className="portrait-role">Operator</div>
           </div>
         </div>
 

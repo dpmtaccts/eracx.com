@@ -14,7 +14,7 @@ export default function Footer() {
               <img src="/images/era-logo.svg" alt="ERA" />
             </a>
             <div className="footer-tagline">
-              AI-powered ABM programs.<br />
+              Signal-driven ABM programs.<br />
               Warmth is the asset.
             </div>
           </div>
@@ -53,7 +53,7 @@ export default function Footer() {
           <div>ERA &nbsp;·&nbsp; Department of Loyalty LLC</div>
           <div>Warmth is the asset.</div>
           <div className="r">
-            Bainbridge Island, WA &nbsp;·&nbsp; © 2026
+            © 2026
           </div>
         </div>
       </div>

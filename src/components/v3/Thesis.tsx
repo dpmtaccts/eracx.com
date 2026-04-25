@@ -1,7 +1,6 @@
 // Thesis.tsx — Chalk-background band with the 95/5 thesis.
 // Left: italic serif question with "95% of the accounts in it" highlighted
-// in the Deep Steel accent. Right: three-paragraph body. All text copied
-// verbatim from design/era-v3-staging.html.
+// in the Deep Steel accent. Right: two short paragraphs (TTF compress).
 
 export default function Thesis() {
   return (
@@ -21,17 +20,8 @@ export default function Thesis() {
               enemy. They are your inventory.
             </p>
             <p>
-              Funnel thinking wastes them. It calls them unqualified and
-              moves on. Warmth thinking treats them as the asset that
-              matures.{' '}
-              <strong>
-                Every signal captured, every loop run, every campaign
-                deployed is a deposit.
-              </strong>
-            </p>
-            <p>
-              ERA designs the deposit system. What to listen for. How to
-              compound it. When to draw down.
+              Funnel thinking wastes them. Warmth thinking treats them as
+              the asset that matures.
             </p>
           </div>
         </div>

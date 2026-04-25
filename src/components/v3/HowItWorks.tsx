@@ -13,7 +13,7 @@ export default function HowItWorks() {
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">01 &nbsp; How it works</div>
+            <div className="eyebrow">03 &nbsp; How it works</div>
             <h2 className="section-h2">
               Five touches.<br />
               <span className="slab">Six weeks.</span>
@@ -21,8 +21,9 @@ export default function HowItWorks() {
           </div>
           <div className="section-lede">
             <p>
-              A real account, traced end to end. The interactions are nothing
-              new. <strong>The capture and scoring underneath them is.</strong>
+              One account, traced end to end through the loop. The
+              interactions are nothing new.{' '}
+              <strong>The capture and scoring underneath them is.</strong>
             </p>
           </div>
         </div>

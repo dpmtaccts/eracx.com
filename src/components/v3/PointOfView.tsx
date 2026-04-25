@@ -224,14 +224,14 @@ export default function PointOfView() {
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">03 &nbsp; Point of view</div>
+            <div className="eyebrow">07 &nbsp; Point of view</div>
             <h2 className="section-h2">
               Five things<br />
               <span className="slab">we believe.</span>
             </h2>
           </div>
           <p className="section-lede">
-            We build <strong>AI-powered ABM programs</strong> that generate
+            We build <strong>signal-driven ABM programs</strong> that generate
             warmth with your highest-value accounts. Here is why we do it the
             way we do.
           </p>

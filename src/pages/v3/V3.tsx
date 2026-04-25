@@ -10,7 +10,9 @@ import StagingLayout from '../../components/StagingLayout'
 import Nav from '../../components/v3/Nav'
 import Hero from '../../components/v3/Hero'
 import Thesis from '../../components/v3/Thesis'
+import LoopHalo from '../../components/v3/LoopHalo'
 import HowItWorks from '../../components/v3/HowItWorks'
+import SignalRiver from '../../components/v3/SignalRiver'
 import Evidence from '../../components/v3/Evidence'
 import PointOfView from '../../components/v3/PointOfView'
 import Operators from '../../components/v3/Operators'
@@ -24,7 +26,9 @@ export default function V3() {
       <Nav />
       <Hero />
       <Thesis />
+      <LoopHalo />
       <HowItWorks />
+      <SignalRiver />
       <Evidence />
       <PointOfView />
       <Operators />

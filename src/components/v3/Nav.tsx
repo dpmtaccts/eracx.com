@@ -17,7 +17,7 @@ export default function Nav() {
           <a href="#pov">Point of view</a>
           <a href="#operators">Operators</a>
         </div>
-        <a href="#cta" className="nav-cta">Start a sprint</a>
+        <a href="#cta" className="nav-cta">Get Started</a>
       </div>
     </nav>
   )

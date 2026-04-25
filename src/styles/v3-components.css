@@ -1663,4 +1663,199 @@
     border-left: 2px solid var(--accent);
     margin-top: 16px;
   }
+
+  /* ============ LOOP + HALO (§02) ============ */
+  & .loop-figure {
+    display: grid;
+    justify-items: center;
+    gap: 28px;
+    margin: 0 auto;
+    max-width: 720px;
+  }
+  & .loop-svg {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    display: block;
+  }
+  @media (max-width: 600px) {
+    & .loop-svg { max-width: 100%; }
+  }
+  & .loop-caption {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: calc(15px * var(--type-scale));
+    line-height: 1.5;
+    color: var(--text-muted);
+    text-align: center;
+    max-width: 56ch;
+    margin: 0;
+  }
+
+  /* ============ SIGNAL RIVER (§04) ============ */
+  & .signal-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 1200px) {
+    & .signal-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 820px) {
+    & .signal-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  & .signal-chip {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 16px 18px 16px 22px;
+    overflow: hidden;
+  }
+  & .signal-chip::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--rule);
+  }
+  & .signal-chip--cold::before { background: var(--cold); }
+  & .signal-chip--warming::before { background: var(--warming); }
+  & .signal-chip--warm::before { background: var(--warm); }
+  & .signal-chip--hot::before { background: var(--hot); }
+
+  & .signal-name {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: calc(14px * var(--type-scale));
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.005em;
+    line-height: 1.25;
+  }
+  & .signal-source {
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: calc(10px * var(--type-scale));
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  & .signal-caption {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: calc(14px * var(--type-scale));
+    line-height: 1.5;
+    color: var(--text-muted);
+    text-align: center;
+    margin: 0;
+  }
+
+  /* ============ OPERATORS PHASE LAYOUT (§06) ============ */
+  & .phase-timeline {
+    margin-bottom: 36px;
+    padding: 0 8px;
+  }
+  & .phase-timeline-svg {
+    width: 100%;
+    height: 80px;
+    display: block;
+  }
+  & .phase-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 900px) {
+    & .phase-grid { grid-template-columns: 1fr; }
+  }
+  & .phase-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 32px 28px;
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+  & .phase-overline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: calc(11px * var(--type-scale));
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  & .phase-duration {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: calc(12px * var(--type-scale));
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  & .phase-title {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: calc(22px * var(--type-scale));
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+  & .phase-body {
+    margin: 0;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: calc(14.5px * var(--type-scale));
+    line-height: 1.55;
+    color: var(--text-2);
+  }
+  & .phase-pull {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(calc(20px * var(--type-scale)), 2.4vw, calc(28px * var(--type-scale)));
+    text-align: center;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin: 0 0 64px;
+  }
+  & .phase-pull .slab {
+    font-family: 'Instrument Sans', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* Portrait grid (3 cards) — replaces team-panel-only layout */
+  & .portraits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    margin-bottom: 32px;
+  }
+  @media (max-width: 820px) {
+    & .portraits-grid { grid-template-columns: 1fr; }
+  }
+  & .portrait-card {
+    padding: 24px 24px 22px;
+    border-right: 1px solid var(--rule);
+    display: grid;
+    gap: 14px;
+  }
+  & .portrait-card:last-child { border-right: none; }
+  @media (max-width: 820px) {
+    & .portrait-card {
+      border-right: none;
+      border-bottom: 1px solid var(--rule);
+    }
+    & .portrait-card:last-child { border-bottom: none; }
+  }
+  & .portrait-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--bg-alt);
+    border: 1px solid var(--rule-soft);
+  }
 }

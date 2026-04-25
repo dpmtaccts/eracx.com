@@ -2,7 +2,7 @@
 // Two-column grid at desktop, stacks below 1000px. Large italic serif
 // headline with a Sans slab mix ("Warmth is the asset."), lede + two CTAs
 // on the right, and a three-column Nightingale-style corner markers row
-// below the grid. All text copied verbatim from design/era-v3-staging.html.
+// below the grid.
 
 export default function Hero() {
   return (
@@ -11,7 +11,7 @@ export default function Hero() {
         <div className="hero-grid">
           <div>
             <div className="eyebrow">
-              AI-powered ABM Programs
+              Revenue Through Subtraction
             </div>
             <h1 className="hero-title">
               Cold outbound
@@ -25,21 +25,24 @@ export default function Hero() {
           </div>
           <div className="hero-side">
             <p className="hero-lede">
-              ERA builds <strong>AI-powered ABM programs</strong> that generate
+              ERA builds <strong>signal-driven ABM programs</strong> that generate
               warmth with your highest-value accounts. We measure the way
               investors measure: compounding.
             </p>
             <div className="hero-cta-row">
               <a href="#cta" className="btn-primary">
-                Start a GTM sprint &nbsp;→
+                Get Started &nbsp;→
               </a>
               <a href="#how" className="btn-ghost">
-                See how it works
+                Evaluate your GTM
               </a>
             </div>
-            <div className="hero-meta hero-meta-single">
+            <div className="hero-meta">
               <div>
-                <b>GTM Design Sprint</b>$10K – $15K · 4 weeks
+                <b>Outcome</b>Reduces 80% of wasted growth actions
+              </div>
+              <div>
+                <b>Current clients</b>Netrush · Navalent · Miniac · POP · Seismic
               </div>
             </div>
           </div>

@@ -45,7 +45,7 @@ export default function Contact() {
         <div className="cta-grid">
           <div>
             <div className="eyebrow" style={{ color: '#C4D5DE' }}>
-              05 &nbsp; Start here
+              08 &nbsp; Start here
             </div>
             <h2>
               Map your current<br />
@@ -54,20 +54,20 @@ export default function Contact() {
               </span>
             </h2>
             <p className="cta-sub">
-              A four-week sprint from kickoff to live system.{' '}
+              A four-week engagement to install the loop.{' '}
               <strong>
-                Fixed scope, named deliverables, operator handoff.
+                Fixed scope. Named deliverables. Operator handoff at month two.
               </strong>
             </p>
             <div className="cta-meta">
               <div>
-                <b>$10K – $15K</b>Fixed-scope sprint
+                <b>Engagement</b>From $15K/mo
               </div>
               <div>
-                <b>4 weeks</b>Kickoff to handoff
+                <b>Time to first results</b>4 weeks
               </div>
               <div>
-                <b>Bainbridge Island, WA</b>Available globally
+                <b>Outcome</b>Reduces 80% of wasted growth actions
               </div>
             </div>
           </div>
@@ -120,11 +120,11 @@ export default function Contact() {
                 >
                   {status === 'submitting'
                     ? 'Sending…'
-                    : 'Book intro call  →'}
+                    : 'Get Started  →'}
                 </button>
                 {status === 'idle' && (
                   <span className="cta-note">
-                    We respond within 48 hours.
+                    48 hour response.
                   </span>
                 )}
                 {status === 'success' && (
