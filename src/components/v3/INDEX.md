@@ -12,9 +12,9 @@ Nav → Hero → Thesis → LoopHalo → HowItWorks → SignalRiver → Evidence
 ## Components
 
 - **Nav.tsx** — Sticky top navigation with brand logo (/images/era-logo.svg), section anchor links, and the "Get Started" CTA.
-- **Hero.tsx** — Full-width hero. "Revenue Through Subtraction" eyebrow, "Cold outbound is done. Warmth is the asset." headline, signal-driven ABM lede, "Get Started →" / "Evaluate your GTM" CTA pair, two meta tiles ("Outcome — Reduces 80% of wasted growth actions" + "Current clients"), and three Nightingale-style figure markers.
-- **Thesis.tsx** — Chalk-background band with the 95/5 question on the left and a two-paragraph compressed body on the right (no em dashes).
-- **LoopHalo.tsx** — §02. Centerpiece concentric-ring SVG: outer Halo layer (LinkedIn · AEO · PR · events), middle Loop ring with 9 evenly-spaced stage nodes (Detect, Enrich, Score, Reach, Respond, Nurture, Close, Expand, Retain), inner negative space. Single-weight 2-unit-stroke line icons in each node. Pure inline SVG, no client-side JS.
+- **Hero.tsx** — Full-width hero. "Revenue Through Subtraction" eyebrow, "Cold outbound is done. Warmth is the asset." headline, signal-driven ABM lede, "Get Started →" / "Evaluate your GTM" CTA pair, two meta tiles ("Outcome — Reduces 80% of wasted growth actions" + "Current customers"), and three Nightingale-style figure markers.
+- **Thesis.tsx** — Chalk-background band with the binary-choice question on the left (vanity metrics vs. relationships) and a two-sentence body on the right. "Real pipeline" is bold-accented; "eighteen months" is italic-serif-accented.
+- **LoopHalo.tsx** — §02. Two-column layout at 1100px+ (stacks below): left is the concentric-ring SVG (hairline Halo outer ring + 9-stage Loop ring with labeled nodes), right is an interactive stage detail card. Halo annotation sits outside the outer ring at top-right on desktop, and above the diagram on mobile (Tufte-style, no leader line). Clicking a node, clicking a dot, or pressing ← / → (when the section is in viewport) cycles the selected stage. No auto-advance. Default = Detect.
 - **HowItWorks.tsx** — §03. Wraps the three "How it works" figures below.
   - **InteractionSequence.tsx** — Figure 01. Horizontal 5-touchpoint SVG (Post → Comment → Landing page → Email → Meeting).
   - **InteractionChain.tsx** — Figure 02. Five signal cards (source → captured → dimensions → fired next) with warmth-stage color stripes.

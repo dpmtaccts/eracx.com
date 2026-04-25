@@ -42,7 +42,7 @@ export default function Hero() {
                 <b>Outcome</b>Reduces 80% of wasted growth actions
               </div>
               <div>
-                <b>Current clients</b>Netrush · Navalent · Miniac · POP · Seismic
+                <b>Current customers</b>Netrush · Navalent · Miniac · POP · Seismic
               </div>
             </div>
           </div>

@@ -48,9 +48,9 @@ export default function Contact() {
               08 &nbsp; Start here
             </div>
             <h2>
-              Map your current<br />
+              Map the signals<br />
               <span className="slab">
-                warmth <span className="accent">distribution.</span>
+                that can drive your <span className="accent">revenue.</span>
               </span>
             </h2>
             <p className="cta-sub">

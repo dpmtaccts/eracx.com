@@ -1,20 +1,20 @@
-// LoopHalo.tsx — §02 centerpiece figure for the /v3 staging homepage.
-// Concentric three-ring SVG: outer Halo layer, middle 9-stage Loop ring,
-// inner negative space. Nine stage nodes are evenly distributed every 40°,
-// each rendered as a white circle with a single-weight 2px line icon.
-// Pure inline SVG, no client-side JS, no dependencies.
+// LoopHalo.tsx — §02 centerpiece for the /v3 staging homepage.
+// Two-column layout at desktop (loop diagram on left, interactive stage
+// detail card on right). Stacks on mobile. Loop is a concentric three-ring
+// SVG: hairline outer Halo ring, middle Loop ring with 9 evenly-spaced
+// stage nodes, inner negative space. Halo annotation lives outside the
+// outer ring (top-right at desktop, above on mobile) — Tufte-style minimal
+// ink. Card content updates on click/dot/keyboard. No auto-advance.
 
-import type { ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 
 interface Stage {
   label: string
-  // Returns the icon's path geometry on a 24x24 viewBox. Stroke and color
-  // come from the parent <g>; the icon body is just the geometry.
+  overline: 'CONNECT' | 'TRUST' | 'LOYALTY'
+  claim: string
+  body: string
   paths: () => ReactNode
 }
-
-// Each icon body is rendered inside a <g> that already sets
-// fill="none", stroke=currentColor, strokeWidth=2, linecap/linejoin=round.
 
 const detectPaths = () => (
   <>
@@ -23,7 +23,7 @@ const detectPaths = () => (
     <line x1="12" y1="18" x2="12" y2="22" />
     <line x1="2" y1="12" x2="6" y2="12" />
     <line x1="18" y1="12" x2="22" y2="12" />
-    <circle cx="12" cy="12" r="1.5" fill="var(--accent)" stroke="none" />
+    <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
   </>
 )
 
@@ -39,7 +39,7 @@ const scorePaths = () => (
   <>
     <path d="M3 16 a9 9 0 0 1 18 0" />
     <line x1="12" y1="16" x2="17" y2="9" />
-    <circle cx="12" cy="16" r="1.5" fill="var(--accent)" stroke="none" />
+    <circle cx="12" cy="16" r="1.5" fill="currentColor" stroke="none" />
   </>
 )
 
@@ -86,18 +86,114 @@ const retainPaths = () => (
 )
 
 const STAGES: Stage[] = [
-  { label: 'Detect', paths: detectPaths },
-  { label: 'Enrich', paths: enrichPaths },
-  { label: 'Score', paths: scorePaths },
-  { label: 'Reach', paths: reachPaths },
-  { label: 'Respond', paths: respondPaths },
-  { label: 'Nurture', paths: nurturePaths },
-  { label: 'Close', paths: closePaths },
-  { label: 'Expand', paths: expandPaths },
-  { label: 'Retain', paths: retainPaths },
+  {
+    label: 'Detect',
+    overline: 'CONNECT',
+    claim: 'Signals the moment a buying window opens.',
+    body:
+      'Exec hires, funding rounds, tech installs, hiring bursts. The real intent, before the form fill.',
+    paths: detectPaths,
+  },
+  {
+    label: 'Enrich',
+    overline: 'CONNECT',
+    claim: "Builds context the rep doesn't have time to build.",
+    body:
+      "Account size, buying committee, current stack, recent press. Everything you need to start a conversation that doesn't sound automated.",
+    paths: enrichPaths,
+  },
+  {
+    label: 'Score',
+    overline: 'CONNECT',
+    claim: 'Ranks the heat. Knows when to wait.',
+    body:
+      'Warmth updated daily. Frequency, recency, density of engagement. The accounts ready get the first move. The rest stay in the loop.',
+    paths: scorePaths,
+  },
+  {
+    label: 'Reach',
+    overline: 'TRUST',
+    claim: 'Outreach with a reason, not a quota.',
+    body:
+      'Multi-channel sequences triggered by signals, not calendars. The right person, the right message, the moment something changed.',
+    paths: reachPaths,
+  },
+  {
+    label: 'Respond',
+    overline: 'TRUST',
+    claim: "Replies that sound like the buyer's question, not your script.",
+    body:
+      'Inbound replies handled in tone. Objections answered with specifics. Meetings booked without the back-and-forth.',
+    paths: respondPaths,
+  },
+  {
+    label: 'Nurture',
+    overline: 'TRUST',
+    claim: "Stays useful when they're not ready.",
+    body:
+      "Buyers who aren't buying this quarter still need value. Halo posts, AEO content, peer intros. Warmth that compounds.",
+    paths: nurturePaths,
+  },
+  {
+    label: 'Close',
+    overline: 'LOYALTY',
+    claim: 'Pushes through the last ten yards.',
+    body:
+      'Procurement, security review, exec sign-off. The stages where deals stall. We unstick them with the right intel at the right step.',
+    paths: closePaths,
+  },
+  {
+    label: 'Expand',
+    overline: 'LOYALTY',
+    claim: 'Grows the account after the win.',
+    body:
+      "New users, new departments, new product lines. Existing customers buy more when someone is paying attention. Most teams aren't.",
+    paths: expandPaths,
+  },
+  {
+    label: 'Retain',
+    overline: 'LOYALTY',
+    claim: 'Keeps the relationship warm past renewal.',
+    body:
+      'Churn signals fire before the cancellation email. Save plays trigger automatically. Renewal stops being a fire drill.',
+    paths: retainPaths,
+  },
 ]
 
 export default function LoopHalo() {
+  const [active, setActive] = useState(0)
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const [inView, setInView] = useState(false)
+
+  // Track viewport visibility so arrow keys only cycle stages when this
+  // section is on screen — otherwise they'd hijack the user's scroll.
+  useEffect(() => {
+    const node = sectionRef.current
+    if (!node) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.2 },
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!inView) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        setActive((i) => (i + 1) % STAGES.length)
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        setActive((i) => (i - 1 + STAGES.length) % STAGES.length)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [inView])
+
+  // Geometry — viewBox 720x720, center (360, 360).
   const cx = 360
   const cy = 360
   const rOuter = 320
@@ -107,15 +203,17 @@ export default function LoopHalo() {
   const labelR = rLoop + 60
   const iconSize = 26
 
+  const stage = STAGES[active]
+
   return (
-    <section id="loop">
+    <section id="loop" ref={sectionRef}>
       <div className="container">
         <div className="section-head">
           <div>
             <div className="eyebrow">02 &nbsp; The system</div>
             <h2 className="section-h2">
-              The loop runs.<br />
-              <span className="slab">Halo makes it visible.</span>
+              Run loops, not campaigns.<br />
+              <span className="slab">Halo makes them visible.</span>
             </h2>
           </div>
           <p className="section-lede">
@@ -125,94 +223,130 @@ export default function LoopHalo() {
           </p>
         </div>
 
-        <div className="loop-figure">
-          <svg
-            className="loop-svg"
-            viewBox="0 0 720 720"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="ERA loop with Halo amplification ring"
-          >
-            {/* Outer Halo ring fill — Chalk */}
-            <circle cx={cx} cy={cy} r={rOuter} fill="var(--bg-alt)" />
-            {/* Inner ring (Parchment over Chalk) where stages sit */}
-            <circle cx={cx} cy={cy} r={(rOuter + rInner) / 2 + 28} fill="var(--bg)" />
-            {/* Ring borders */}
-            <circle cx={cx} cy={cy} r={rOuter} fill="none" stroke="var(--rule)" strokeWidth="1" />
-            <circle cx={cx} cy={cy} r={rInner} fill="none" stroke="var(--rule)" strokeWidth="1" />
+        {/* Mobile-only halo annotation, single line above the diagram */}
+        <div className="loop-halo-mobile" aria-hidden="true">
+          HALO &middot; LinkedIn &middot; AEO &middot; PR &middot; Events
+        </div>
 
-            {/* Halo label at the top of the outer ring */}
-            <text
-              x={cx}
-              y={cy - rOuter + 26}
-              textAnchor="middle"
-              fontFamily="Instrument Sans, sans-serif"
-              fontSize="14"
-              fontWeight="600"
-              fill="var(--text)"
+        <div className="loop-layout">
+          <div className="loop-figure">
+            <svg
+              className="loop-svg"
+              viewBox="0 0 720 720"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="ERA loop with Halo amplification ring"
             >
-              Halo
-            </text>
-            <text
-              x={cx}
-              y={cy - rOuter + 44}
-              textAnchor="middle"
-              fontFamily="JetBrains Mono, monospace"
-              fontSize="11"
-              letterSpacing="0.16em"
-              fill="var(--text-muted)"
-            >
-              LINKEDIN · AEO · PR · EVENTS
-            </text>
+              {/* Halo outer ring: hairline stroke, very subtle fill */}
+              <circle
+                cx={cx}
+                cy={cy}
+                r={rOuter}
+                fill="var(--bg-alt)"
+                fillOpacity="0.4"
+                stroke="var(--accent)"
+                strokeWidth="1"
+              />
+              {/* Inner ring */}
+              <circle
+                cx={cx}
+                cy={cy}
+                r={rInner}
+                fill="var(--bg)"
+                stroke="var(--rule)"
+                strokeWidth="1"
+              />
 
-            {STAGES.map((stage, i) => {
-              const angleDeg = -90 + i * 40
-              const angle = (angleDeg * Math.PI) / 180
-              const nx = cx + rLoop * Math.cos(angle)
-              const ny = cy + rLoop * Math.sin(angle)
-              const lx = cx + labelR * Math.cos(angle)
-              const ly = cy + labelR * Math.sin(angle)
-              const scale = iconSize / 24
-              return (
-                <g key={stage.label}>
-                  <circle
-                    cx={nx}
-                    cy={ny}
-                    r={nodeR}
-                    fill="var(--surface)"
-                    stroke="var(--accent)"
-                    strokeWidth="1"
-                  />
+              {STAGES.map((s, i) => {
+                const angleDeg = -90 + i * 40
+                const angle = (angleDeg * Math.PI) / 180
+                const nx = cx + rLoop * Math.cos(angle)
+                const ny = cy + rLoop * Math.sin(angle)
+                const lx = cx + labelR * Math.cos(angle)
+                const ly = cy + labelR * Math.sin(angle)
+                const scale = iconSize / 24
+                const isActive = i === active
+                return (
                   <g
-                    transform={`translate(${nx - iconSize / 2}, ${ny - iconSize / 2}) scale(${scale})`}
-                    fill="none"
-                    stroke="var(--accent)"
-                    strokeWidth={2 / scale}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    key={s.label}
+                    className="loop-node"
+                    onClick={() => setActive(i)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={s.label}
+                    aria-pressed={isActive}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        setActive(i)
+                      }
+                    }}
                   >
-                    {stage.paths()}
+                    <circle
+                      cx={nx}
+                      cy={ny}
+                      r={nodeR}
+                      fill={isActive ? 'var(--accent)' : 'var(--surface)'}
+                      stroke="var(--accent)"
+                      strokeWidth="1"
+                    />
+                    <g
+                      transform={`translate(${nx - iconSize / 2}, ${ny - iconSize / 2}) scale(${scale})`}
+                      fill="none"
+                      stroke={isActive ? 'var(--bg)' : 'var(--accent)'}
+                      strokeWidth={2 / scale}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{ color: isActive ? 'var(--bg)' : 'var(--accent)' }}
+                    >
+                      {s.paths()}
+                    </g>
+                    <text
+                      x={lx}
+                      y={ly + 4}
+                      textAnchor="middle"
+                      fontFamily="Instrument Sans, sans-serif"
+                      fontSize="13"
+                      fontWeight={isActive ? 600 : 500}
+                      fill="var(--text)"
+                    >
+                      {s.label}
+                    </text>
                   </g>
-                  <text
-                    x={lx}
-                    y={ly + 4}
-                    textAnchor="middle"
-                    fontFamily="Instrument Sans, sans-serif"
-                    fontSize="13"
-                    fontWeight="500"
-                    fill="var(--text)"
-                  >
-                    {stage.label}
-                  </text>
-                </g>
-              )
-            })}
-          </svg>
+                )
+              })}
+            </svg>
 
-          <p className="loop-caption">
-            The outer ring is where visibility gets earned. The inner ring
-            is where revenue gets made.
-          </p>
+            {/* Desktop-only halo annotation, top-right outside the ring */}
+            <div className="loop-halo-annotation" aria-hidden="true">
+              <div className="loop-halo-mark">HALO</div>
+              <div className="loop-halo-channels">
+                LinkedIn &middot; AEO &middot; PR &middot; Events
+              </div>
+            </div>
+          </div>
+
+          <div className="loop-card" aria-live="polite">
+            <div className="loop-card-overline">{stage.overline}</div>
+            <div className="loop-card-title">{stage.label}</div>
+            <p className="loop-card-claim">{stage.claim}</p>
+            <p className="loop-card-body">{stage.body}</p>
+            <div className="loop-card-rule" />
+            <div className="loop-card-pagination" role="tablist" aria-label="Loop stages">
+              {STAGES.map((s, i) => (
+                <button
+                  key={s.label}
+                  type="button"
+                  role="tab"
+                  aria-selected={i === active}
+                  aria-label={s.label}
+                  className={`loop-dot${i === active ? ' is-active' : ''}`}
+                  onClick={() => setActive(i)}
+                />
+              ))}
+            </div>
+            <div className="loop-card-footer">EXPLORE EACH STAGE</div>
+          </div>
         </div>
       </div>
     </section>

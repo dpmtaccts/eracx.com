@@ -1,8 +1,9 @@
-// Evidence.tsx — §02 section for the /v3 staging homepage.
+// Evidence.tsx — §05 section for the /v3 staging homepage.
 // Four big-number tiles (warmth lift, reply rate, time to live, handoff),
-// followed by two client testimonials sourced verbatim from the v2
-// Clients section (src/pages/V2OperatingSystem/content.ts → clients.items):
-// Nate Houghton (Lorikeet) and Lara Vandenberg (Publicist).
+// followed by two customer testimonials sourced verbatim from the v2
+// content file (src/pages/V2OperatingSystem/content.ts → clients.items —
+// the v2 identifier is unchanged): Nate Houghton (Lorikeet) and Lara
+// Vandenberg (Publicist).
 
 interface BigNum {
   label: string
@@ -50,7 +51,7 @@ const BIG_NUMBERS: BigNum[] = [
     unit: '%',
     context: (
       <>
-        Client teams running the system <b>without ERA in the room</b> at week
+        Customer teams running the system <b>without ERA in the room</b> at week
         five.
       </>
     ),

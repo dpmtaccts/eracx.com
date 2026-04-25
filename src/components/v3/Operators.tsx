@@ -41,7 +41,7 @@ const PHASES: Phase[] = [
     duration: 'Months 3–4',
     title: 'First Results',
     body:
-      'Pipeline moves. Stalled deals re-engage. The signal library is fully active. This is the minimum window. Most clients know what they have by month four.',
+      'Pipeline moves. Stalled deals re-engage. The signal library is fully active. This is the minimum window. Most customers know what they have by month four.',
   },
   {
     num: 'PHASE 3',

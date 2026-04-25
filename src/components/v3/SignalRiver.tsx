@@ -1,38 +1,39 @@
 // SignalRiver.tsx — §04 signal catalog for the /v3 staging homepage.
 // Static grid of 24 signal chips. No animation. Each chip has a left-edge
-// color stripe matching the warmth stage most likely to fire.
+// color stripe matching the warmth stage most likely to fire. The subtitle
+// line is plain-speak (what the signal means), not the source platform.
 
 interface Signal {
   name: string
-  source: string
+  meaning: string
   stage: 'cold' | 'warming' | 'warm' | 'hot'
 }
 
 const SIGNALS: Signal[] = [
-  { name: 'New CX Leader', source: 'LinkedIn', stage: 'cold' },
-  { name: 'Hiring Surge', source: 'LinkedIn Jobs', stage: 'cold' },
-  { name: 'Tech Stack Change', source: 'BuiltWith', stage: 'warming' },
-  { name: 'Funding Round', source: 'Crunchbase', stage: 'warming' },
-  { name: 'Traffic Spike', source: 'SimilarWeb', stage: 'cold' },
-  { name: 'Review Sentiment', source: 'G2 / Trustpilot', stage: 'cold' },
-  { name: 'Press Announcement', source: 'Google News', stage: 'cold' },
-  { name: 'Social Complaint', source: 'X / Reddit', stage: 'cold' },
-  { name: 'Website Visit', source: 'RB2B', stage: 'warming' },
-  { name: 'Past Engagement', source: 'HubSpot', stage: 'warming' },
-  { name: 'Content Download', source: 'HockeyStack', stage: 'warming' },
-  { name: 'LinkedIn Post Reaction', source: 'LinkedIn', stage: 'cold' },
-  { name: 'LinkedIn Comment', source: 'LinkedIn', stage: 'warming' },
-  { name: 'LinkedIn Connection Request', source: 'LinkedIn', stage: 'warming' },
-  { name: 'Email Reply', source: 'Gmail / Reply', stage: 'warm' },
-  { name: 'Meeting Scheduled', source: 'Calendar', stage: 'warm' },
-  { name: 'Product Launch', source: 'Company Blog', stage: 'cold' },
-  { name: 'Competitor Mention', source: 'Google Alerts', stage: 'cold' },
-  { name: 'Customer Review Theme', source: 'Trustpilot', stage: 'cold' },
-  { name: 'Job Description Change', source: 'LinkedIn Jobs', stage: 'cold' },
-  { name: 'Conference Attendance', source: 'Event Lists', stage: 'warming' },
-  { name: 'Dark Social Mention', source: 'Common Room', stage: 'warming' },
-  { name: 'Referral Intro', source: 'Gmail / Slack', stage: 'warm' },
-  { name: 'Renewal Window', source: 'HubSpot', stage: 'warm' },
+  { name: 'New CX Leader', meaning: 'New decision-maker arrives', stage: 'cold' },
+  { name: 'Hiring Surge', meaning: 'Team scaling fast', stage: 'cold' },
+  { name: 'Tech Stack Change', meaning: 'Just installed something new', stage: 'warming' },
+  { name: 'Funding Round', meaning: 'Fresh budget on the table', stage: 'warming' },
+  { name: 'Traffic Spike', meaning: 'Buyers researching this week', stage: 'cold' },
+  { name: 'Review Sentiment', meaning: 'Customers complaining publicly', stage: 'cold' },
+  { name: 'Press Announcement', meaning: 'New strategic direction', stage: 'cold' },
+  { name: 'Social Complaint', meaning: 'Pain showing in public', stage: 'cold' },
+  { name: 'Website Visit', meaning: 'Researching your solution', stage: 'warming' },
+  { name: 'Past Engagement', meaning: 'Knows you. Worth re-engaging.', stage: 'warming' },
+  { name: 'Content Download', meaning: 'Exploring a solution', stage: 'warming' },
+  { name: 'LinkedIn Post Reaction', meaning: 'Interested in the topic', stage: 'cold' },
+  { name: 'LinkedIn Comment', meaning: 'Engaging publicly', stage: 'warming' },
+  { name: 'LinkedIn Connection Request', meaning: 'Wants to connect', stage: 'warming' },
+  { name: 'Email Reply', meaning: 'Wrote back. Interested.', stage: 'warm' },
+  { name: 'Meeting Scheduled', meaning: 'Booked a call', stage: 'warm' },
+  { name: 'Product Launch', meaning: 'Making strategic moves', stage: 'cold' },
+  { name: 'Competitor Mention', meaning: 'Comparing options', stage: 'cold' },
+  { name: 'Customer Review Theme', meaning: 'Pattern of pain showing', stage: 'cold' },
+  { name: 'Job Description Change', meaning: 'Role expanded. New scope.', stage: 'cold' },
+  { name: 'Conference Attendance', meaning: 'Showed up to learn', stage: 'warming' },
+  { name: 'Dark Social Mention', meaning: 'Talking about you privately', stage: 'warming' },
+  { name: 'Referral Intro', meaning: 'Warm introduction', stage: 'warm' },
+  { name: 'Renewal Window', meaning: 'Decision time approaching', stage: 'warm' },
 ]
 
 export default function SignalRiver() {
@@ -61,13 +62,13 @@ export default function SignalRiver() {
               className={`signal-chip signal-chip--${signal.stage}`}
             >
               <div className="signal-name">{signal.name}</div>
-              <div className="signal-source">{signal.source}</div>
+              <div className="signal-meaning">{signal.meaning}</div>
             </div>
           ))}
         </div>
 
         <p className="signal-caption">
-          Sample catalog. Signals expand with each new client.
+          Sample catalog. Signals expand with each new customer.
         </p>
       </div>
     </section>
