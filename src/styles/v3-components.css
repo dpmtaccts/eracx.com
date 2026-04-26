@@ -1997,4 +1997,713 @@
     background: var(--bg-alt);
     border: 1px solid var(--rule-soft);
   }
+
+  /* ============ HOWITWORKS LAYOUT TOGGLE (dev) ============ */
+  & .hiw-toggle {
+    margin-top: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  & .hiw-toggle-opt {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--text-muted);
+    cursor: pointer;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+  }
+  & .hiw-toggle-opt:hover { color: var(--text); }
+  & .hiw-toggle-opt.is-active { color: var(--accent); }
+  & .hiw-toggle-sep { color: var(--rule); }
+
+  /* ============ HIW VERTICAL — outer layout ============ */
+  & .hiw-vertical {
+    margin-top: 16px;
+  }
+  & .hiw-vertical-skip {
+    text-align: right;
+    margin-bottom: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  & .hiw-vertical-skip a {
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+    transition: color 150ms, border-color 150ms;
+  }
+  & .hiw-vertical-skip a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  & .hiw-vertical-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 1099px) {
+    & .hiw-vertical-grid { grid-template-columns: 1fr; gap: 0; }
+  }
+
+  & .hiw-vertical-stages {
+    display: flex;
+    flex-direction: column;
+  }
+
+  & .hiw-vertical-radar-col {
+    position: relative;
+  }
+  @media (max-width: 1099px) {
+    & .hiw-vertical-radar-col { display: none; }
+  }
+  & .hiw-vertical-radar-sticky {
+    position: sticky;
+    top: 100px;
+  }
+
+  /* ============ HIW VERTICAL — stage sections ============ */
+  & .vstage {
+    position: relative;
+    min-height: 600px;
+    padding: 64px 0;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  & .vstage:last-child { border-bottom: none; }
+  @media (max-width: 1099px) {
+    & .vstage { min-height: auto; padding: 48px 0; }
+  }
+  & .vstage::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -16px;
+    width: 3px;
+    background: var(--rule);
+  }
+  & .vstage--cold::before { background: var(--cold); }
+  & .vstage--warming::before { background: var(--warming); }
+  & .vstage--warm::before { background: var(--warm); }
+  & .vstage--hot::before { background: var(--hot); }
+
+  & .vstage-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+    align-items: center;
+    height: 100%;
+  }
+  @media (max-width: 1099px) {
+    & .vstage-grid { grid-template-columns: 1fr; gap: 24px; align-items: stretch; }
+  }
+  & .vstage-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  & .vstage-chain {
+    display: grid;
+    gap: 16px;
+    align-content: center;
+  }
+  & .vstage-chain-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  & .vstage-chain-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: calc(11px * var(--type-scale));
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  & .vstage-chain-week {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: calc(20px * var(--type-scale));
+    color: var(--text);
+  }
+  & .vstage-chain-warmth {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: 'Instrument Sans', sans-serif;
+  }
+  & .vstage-chain-warmth-before {
+    font-size: calc(20px * var(--type-scale));
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  & .vstage-chain-warmth-arrow { color: var(--rule); }
+  & .vstage-chain-warmth-after {
+    font-size: calc(40px * var(--type-scale));
+    color: var(--text);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  & .vstage-chain-warmth-delta {
+    margin-left: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: calc(12px * var(--type-scale));
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  & .vstage-chain-row {
+    display: grid;
+    gap: 4px;
+  }
+  & .vstage-chain-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: calc(10px * var(--type-scale));
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  & .vstage-chain-value {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: calc(14px * var(--type-scale));
+    line-height: 1.45;
+    color: var(--text-2);
+  }
+  & .vstage-chain-value b {
+    display: block;
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 2px;
+    font-size: calc(15px * var(--type-scale));
+  }
+  & .vstage-chain-dims {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  & .vstage-chain-dim {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: calc(10.5px * var(--type-scale));
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    padding: 4px 8px;
+    border: 1px solid var(--accent);
+  }
+
+  /* ============ FRVRD RADAR (desktop) ============ */
+  & .frvrd-radar {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 24px 20px 20px;
+    display: grid;
+    gap: 14px;
+  }
+  & .frvrd-radar-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-align: center;
+  }
+  & .frvrd-radar-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  & .frvrd-warmth {
+    display: grid;
+    gap: 2px;
+    text-align: center;
+    padding-top: 14px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  & .frvrd-warmth-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  & .frvrd-warmth-value {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: calc(40px * var(--type-scale));
+    line-height: 1;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  & .frvrd-warmth-stage {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ============ FRVRD RADAR (mobile sticky band) ============ */
+  & .frvrd-mobile {
+    display: none;
+  }
+  @media (max-width: 1099px) {
+    & .frvrd-mobile {
+      display: grid;
+      grid-template-columns: 60px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      padding: 8px 14px;
+      margin-bottom: 16px;
+    }
+  }
+  & .frvrd-mobile-svg {
+    width: 60px;
+    height: 60px;
+  }
+  & .frvrd-mobile-stage {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text);
+  }
+  & .frvrd-mobile-warmth {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  & .frvrd-mobile-warmth b {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+  & .frvrd-mobile-warmth span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+
+  /* ============ MOCKS — shared ============ */
+  & .mock {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(20, 30, 40, 0.04), 0 8px 24px rgba(20, 30, 40, 0.06);
+    width: 100%;
+    max-width: 480px;
+  }
+  & .mock-inmark {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+  }
+  & .mock-divider {
+    height: 1px;
+    background: var(--rule-soft);
+    margin: 8px 0;
+  }
+  & .mock-avatar {
+    border-radius: 50%;
+    background: var(--bg-alt);
+    border: 1px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 600;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+  & .mock-avatar--xs { width: 24px; height: 24px; font-size: 10px; }
+  & .mock-avatar--sm { width: 28px; height: 28px; font-size: 11px; }
+  & .mock-avatar--md { width: 36px; height: 36px; font-size: 13px; }
+  & .mock-avatar--lg { width: 40px; height: 40px; font-size: 14px; }
+
+  /* ============ MOCK — LinkedIn post ============ */
+  & .mock-linkedin-post { padding: 20px 22px 14px; }
+  & .mock-linkedin-head {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  & .mock-linkedin-id { display: grid; gap: 2px; }
+  & .mock-linkedin-name {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+  }
+  & .mock-linkedin-meta {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.2;
+  }
+  & .mock-linkedin-body {
+    margin: 0 0 14px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--text);
+  }
+  & .mock-linkedin-reactions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--rule-soft);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  & .mock-linkedin-count { color: var(--text-2); font-weight: 500; }
+  & .mock-linkedin-spacer { flex: 1; }
+  & .mock-linkedin-action {
+    transition: color 150ms;
+    cursor: default;
+  }
+  & .mock-linkedin-action:hover { color: #0A66C2; }
+
+  /* ============ MOCK — LinkedIn comment ============ */
+  & .mock-linkedin-comment { padding: 18px 22px 16px; }
+  & .mock-linkedin-truncated {
+    margin-bottom: 8px;
+  }
+  & .mock-linkedin-truncated-head {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  & .mock-linkedin-truncated-name {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  & .mock-linkedin-truncated-meta {
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+  & .mock-linkedin-truncated-body {
+    margin: 0;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--text-2);
+  }
+  & .mock-linkedin-seemore {
+    color: var(--text-muted);
+    cursor: default;
+  }
+  & .mock-linkedin-comment-body {
+    display: flex;
+    gap: 12px;
+    padding-left: 12px;
+  }
+  & .mock-linkedin-comment-content {
+    flex: 1;
+    background: var(--bg);
+    border-radius: 6px;
+    padding: 10px 14px;
+  }
+  & .mock-linkedin-comment-text {
+    margin: 6px 0 0;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--text);
+  }
+  & .mock-linkedin-comment-actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 6px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* ============ MOCK — Browser ============ */
+  & .mock-browser {
+    overflow: hidden;
+  }
+  & .mock-browser-chrome {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule-soft);
+    background: var(--bg-alt);
+  }
+  & .mock-browser-dots {
+    display: flex;
+    gap: 6px;
+  }
+  & .mock-browser-dots span {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  & .mock-browser-url {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  & .mock-browser-url svg { color: var(--text-muted); }
+  & .mock-browser-spacer { width: 36px; }
+  & .mock-browser-body {
+    position: relative;
+    padding: 28px 32px 32px;
+    min-height: 240px;
+    background: var(--bg);
+  }
+  & .mock-browser-line {
+    background: var(--rule);
+    height: 14px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+  }
+  & .mock-browser-line--xl { width: 70%; height: 22px; background: var(--text); opacity: 0.85; }
+  & .mock-browser-line--lg { width: 55%; height: 22px; background: var(--text); opacity: 0.45; }
+  & .mock-browser-line--accent { width: 28%; height: 14px; background: var(--accent); margin-top: 6px; margin-bottom: 18px; }
+  & .mock-browser-meta { display: grid; gap: 8px; margin-bottom: 14px; max-width: 70%; }
+  & .mock-browser-line--sm { height: 8px; width: 100%; }
+  & .mock-browser-line--sm:last-child { width: 75%; }
+  & .mock-browser-cta { display: flex; gap: 10px; }
+  & .mock-browser-pill {
+    width: 110px;
+    height: 32px;
+    border-radius: 2px;
+    border: 1px solid var(--accent);
+  }
+  & .mock-browser-pill--filled {
+    background: var(--accent);
+  }
+  & .mock-heat {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--magenta);
+    opacity: 0.45;
+    box-shadow: 0 0 14px 3px color-mix(in srgb, var(--magenta) 35%, transparent);
+  }
+  & .mock-heat-1 { top: 36px; left: 38px; }
+  & .mock-heat-2 { top: 50px; left: 96px; width: 18px; height: 18px; opacity: 0.5; }
+  & .mock-heat-3 { top: 100px; left: 60px; }
+  & .mock-heat-4 { bottom: 60px; left: 50px; width: 20px; height: 20px; opacity: 0.55; }
+  & .mock-browser-annotation {
+    position: absolute;
+    bottom: 10px;
+    right: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ============ MOCK — Email parallel ============ */
+  & .mock-email {
+    padding: 16px 18px 18px;
+  }
+  & .mock-email-badge {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 700;
+  }
+  & .mock-email-row {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  & .mock-email-row:last-child { border-bottom: none; }
+  & .mock-email-to {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  & .mock-email-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  & .mock-email-content {
+    flex: 1;
+    min-width: 0;
+  }
+  & .mock-email-headrow {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  & .mock-email-from {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  & .mock-email-time {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 11px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  & .mock-email-subject {
+    margin-top: 2px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  & .mock-email-preview {
+    margin-top: 2px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ============ MOCK — Calendar ============ */
+  & .mock-calendar {
+    overflow: hidden;
+  }
+  & .mock-calendar-tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--rule-soft);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  & .mock-calendar-card {
+    padding: 22px 26px 22px;
+    display: grid;
+    gap: 12px;
+  }
+  & .mock-calendar-tagline {
+    display: inline-block;
+    width: max-content;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    border: 1px solid var(--accent);
+    padding: 3px 8px;
+  }
+  & .mock-calendar-title {
+    margin: 0;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+  & .mock-calendar-when {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  & .mock-calendar-attendees {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 6px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  & .mock-calendar-attendees-label {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  & .mock-calendar-confirmed {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  & .mock-calendar-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2BA468;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    & .frvrd-radar-svg circle,
+    & .frvrd-mobile-svg polygon,
+    & .frvrd-radar-svg polygon {
+      transition: none !important;
+    }
+  }
 }
