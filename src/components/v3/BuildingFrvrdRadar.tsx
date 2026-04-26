@@ -75,14 +75,22 @@ const VERTICES: VertexLabel[] = [
   { name: 'DENSITY', side: 'left' },
 ]
 
-// Migration windows: 5 dots, sequential, 0.10 wide each.
+// Migration windows: 5 dots, sequential, 0.10 wide each. Pushed back
+// to start at 0.30 (after the Phase 1 fade-out of the big statement)
+// so the dots arrive into a cleared stage.
 const MIGRATION_WINDOWS = [
-  [0.25, 0.35],
-  [0.35, 0.45],
-  [0.45, 0.55],
-  [0.55, 0.65],
-  [0.65, 0.75],
+  [0.3, 0.4],
+  [0.4, 0.5],
+  [0.5, 0.6],
+  [0.6, 0.7],
+  [0.7, 0.8],
 ] as const
+
+// Phase 1 transition: the FRVRD dots blend in with background dots
+// before this window, then ramp to highlighted (size + opacity) by the
+// end. Pentagon stroke also begins drawing in here.
+const HIGHLIGHT_START = 0.2
+const HIGHLIGHT_END = 0.3
 
 function easeInOutCubic(t: number): number {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
@@ -268,9 +276,18 @@ export default function BuildingFrvrdRadar({
         ctx.fill()
       }
 
-      // 3. Pentagon stroke — segments fade in as both endpoints settle
+      // 3. Pentagon stroke — Phase 1 draws a faint "ghost" outline that
+      //    previews the shape; Phase 2 brightens each segment to full as
+      //    its two endpoint dots settle.
       if (vertices.length === 5) {
-        // Compute per-vertex migration progress.
+        const ghostAlpha = Math.max(
+          0,
+          Math.min(
+            0.15,
+            ((sp - HIGHLIGHT_START) / (HIGHLIGHT_END - HIGHLIGHT_START)) *
+              0.15,
+          ),
+        )
         const vertexT = frvrdDots.map((d) => {
           const t =
             (sp - d.migrationStart) /
@@ -281,7 +298,8 @@ export default function BuildingFrvrdRadar({
         ctx.strokeStyle = rgba(accent, 1)
         for (let i = 0; i < 5; i++) {
           const j = (i + 1) % 5
-          const segAlpha = Math.min(vertexT[i], vertexT[j])
+          const segArrived = Math.min(vertexT[i], vertexT[j])
+          const segAlpha = Math.max(ghostAlpha, segArrived)
           if (segAlpha <= 0) continue
           ctx.globalAlpha = segAlpha
           ctx.beginPath()
@@ -332,17 +350,36 @@ export default function BuildingFrvrdRadar({
           dot.y = y
         }
 
-        const r = dot.r * scaleBoost
+        // Phase 0/1 ramp: before HIGHLIGHT_START, the FRVRD dots blend
+        // with background dots (small radius, low opacity, no halo). They
+        // grow into their highlighted form between HIGHLIGHT_START and
+        // HIGHLIGHT_END.
+        const highlightT = Math.max(
+          0,
+          Math.min(
+            1,
+            (sp - HIGHLIGHT_START) / (HIGHLIGHT_END - HIGHLIGHT_START),
+          ),
+        )
+        const bgR = 2.5
+        const bgOp = 0.3
+        const targetR = dot.r * scaleBoost
+        const targetOp = Math.min(1, dot.baseOpacity + glowBoost)
+        const r = lerp(bgR, targetR, highlightT)
+        const coreAlpha = lerp(bgOp, targetOp, highlightT)
 
-        // Outer halo
-        ctx.globalAlpha = (dot.baseOpacity * 0.4 + glowBoost) * 0.6
-        ctx.fillStyle = rgba(accent, 1)
-        ctx.beginPath()
-        ctx.arc(x, y, r * 1.8, 0, Math.PI * 2)
-        ctx.fill()
+        // Outer halo only renders once the highlight ramp has started.
+        if (highlightT > 0) {
+          ctx.globalAlpha =
+            (dot.baseOpacity * 0.4 + glowBoost) * 0.6 * highlightT
+          ctx.fillStyle = rgba(accent, 1)
+          ctx.beginPath()
+          ctx.arc(x, y, r * 1.8, 0, Math.PI * 2)
+          ctx.fill()
+        }
 
         // Core
-        ctx.globalAlpha = Math.min(1, dot.baseOpacity + glowBoost)
+        ctx.globalAlpha = coreAlpha
         ctx.fillStyle = rgba(accent, 1)
         ctx.beginPath()
         ctx.arc(x, y, r, 0, Math.PI * 2)

@@ -2047,6 +2047,10 @@
 
   /* Static centered statement (replaces the slot-machine word + subtitle).
      Color is set inline so it can lerp with scrollProgress. */
+  /* Phase 0/1 statement — fades during 0.20–0.30 via inline opacity. */
+  & .frvrd-pinned-text {
+    transition: opacity 200ms linear;
+  }
   & .frvrd-statement {
     margin: 0;
     max-width: min(28ch, 90vw);
@@ -2088,75 +2092,45 @@
     transition: opacity 400ms ease-out;
   }
 
-  /* Right-edge dimension panel */
-  & .frvrd-panel {
+  /* Center label — Phase 2/3 slot machine that nests inside the
+     pentagon. Positioned at the polygon's centroid via inline left/top
+     style; max-width is sized to the pentagon radius so the label
+     doesn't collide with vertex labels. */
+  & .frvrd-center-label {
     position: absolute;
-    top: 50%;
-    right: var(--container-pad);
-    transform: translateY(-50%);
-    width: 340px;
-    max-width: 36vw;
-    opacity: 0;
-    transition: opacity 300ms ease-out;
     z-index: 4;
     pointer-events: none;
+    text-align: center;
+    /* Slot-window: child cards are absolutely positioned and stacked. */
+    width: max-content;
   }
-  & .frvrd-panel.is-visible { opacity: 1; }
-  @media (max-width: 1099px) {
-    & .frvrd-panel { width: 280px; }
-  }
-  @media (max-width: 819px) {
-    & .frvrd-panel { display: none; }
-  }
-  & .frvrd-panel-window {
-    position: relative;
-    height: 280px;
-    overflow: hidden;
-    background: color-mix(in srgb, var(--bg) 85%, transparent);
-    border: 1px solid var(--rule);
-    border-radius: 8px;
-    padding: 28px 24px;
-  }
-  & .frvrd-panel-card {
+  & .frvrd-center-card {
     position: absolute;
-    inset: 28px 24px;
-    display: grid;
-    gap: 12px;
-    align-content: start;
+    left: 0;
+    top: 0;
+    width: 100%;
     transition: transform 500ms cubic-bezier(0.65, 0, 0.35, 1),
-      opacity 500ms ease-out;
+      opacity 500ms ease-out, color 400ms linear;
     will-change: transform, opacity;
   }
-  & .frvrd-panel-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    font-weight: 700;
-  }
-  & .frvrd-panel-name {
-    margin: 0;
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: clamp(28px, 2.6vw, 36px);
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-  & .frvrd-panel-accent {
-    margin: 0;
+  & .frvrd-center-name {
     font-family: 'Instrument Serif', serif;
     font-style: italic;
-    font-size: 19px;
+    font-weight: 400;
+    font-size: clamp(28px, 3.2vw, 48px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+  }
+  & .frvrd-center-detail {
+    margin-top: 8px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: clamp(13px, 1vw, 16px);
+    line-height: 1.4;
     color: var(--text-muted);
   }
-  & .frvrd-panel-def {
-    margin: 0;
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
-    color: var(--text-2);
+  & .frvrd-center-card.is-closing .frvrd-center-name {
+    color: inherit;
   }
 
   /* Bottom progress bar */
@@ -2210,8 +2184,9 @@
   & .frvrd-pinned-progress-dot.is-filled { background: var(--accent); }
 
   @media (prefers-reduced-motion: reduce) {
+    & .frvrd-pinned-text,
     & .frvrd-statement,
-    & .frvrd-panel-card,
+    & .frvrd-center-card,
     & .frvrd-pinned-label,
     & .frvrd-pinned-progress-fill {
       transition: none !important;

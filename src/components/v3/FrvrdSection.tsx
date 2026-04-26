@@ -1,21 +1,27 @@
 // FrvrdSection.tsx — §02 framework section. Pinned 4×100vh container
-// that teaches FRVRD via a scroll-driven visual metaphor.
+// that teaches FRVRD via a scroll-driven visual metaphor, phased into
+// four moments timed to scrollProgress (0..1):
 //
-// The outer wrapper is 4 viewports tall. Inner content is
-// position: sticky / 100vh, freezing in place while the page scrolls
-// through the wrapper's height. scrollProgress (0..1) is computed from
-// the wrapper's bounding rect on a rAF-throttled scroll listener and
-// drives every animated element in the section:
-//   - BuildingFrvrdRadar:  noise → highlighted FRVRD dots → migrate
-//                          to pentagon → polygon completes; cold→warm
-//                          color shift across the layer.
-//   - Static headline:     "Five signals turn noise into pipeline."
-//                          Color lerps cold→warm with scrollProgress.
-//   - Static subtitle:     "FRVRD measures warmth across every named
-//                          account..."
-//   - FrvrdDimensionPanel: five dimension definitions, one per dot
-//                          arrival window.
-//   - Bottom progress bar: continuous fill on a cold→warm gradient.
+//   Phase 0 (0.00–0.20): noise + big static statement.
+//     "Five signals turn noise into pipeline." holds at full opacity.
+//     The pentagon, axis labels, and center label are all hidden. The
+//     5 FRVRD dots are visually indistinguishable from background dots.
+//
+//   Phase 1 (0.20–0.30): statement fades, pentagon previews.
+//     The statement + sub fade from 1 → 0. The 5 FRVRD dots ramp from
+//     bg-blended to highlighted (size + opacity grow). The pentagon
+//     stroke draws in faintly as a "ghost" outline (alpha 0 → 0.15).
+//
+//   Phase 2 (0.30–0.80): dimensions arrive sequentially.
+//     Each FRVRD dot owns a 0.10-wide migration window
+//     (0.30/0.40/0.50/0.60/0.70). When a dot reaches its vertex, the
+//     axis label fades in and the center label slot-machines to that
+//     dimension's name + definition.
+//
+//   Phase 3 (0.80–1.00): warmth closes.
+//     Pentagon polygon fills in (0.80–0.90). Color completes its
+//     cold→warm shift to magenta (≈0.95). Center label slot-machines
+//     to "Warmth. / Ready to close." in magenta.
 //
 // Below 820px the pin disables (height: auto) and the inner content
 // scrolls normally; the canvas still renders and the dots still
@@ -23,7 +29,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import BuildingFrvrdRadar, { VERTICES } from './BuildingFrvrdRadar'
-import FrvrdDimensionPanel from './FrvrdDimensionPanel'
 
 // Color stops for the static headline — same arc as the radar layer
 // so the word reaches magenta at the end of the section.
@@ -55,15 +60,56 @@ interface VertexPos {
   y: number
 }
 
-// Migration windows from BuildingFrvrdRadar, kept in sync via the
-// MIGRATION_WINDOWS export. Only the end values matter here so we know
-// when each dot has finished arriving (= label fades in).
-const MIGRATION_END = [0.35, 0.45, 0.55, 0.65, 0.75]
+// Migration end thresholds, kept in sync with BuildingFrvrdRadar's
+// MIGRATION_WINDOWS. Drives axis-label fade-in + bottom progress dots.
+const MIGRATION_END = [0.4, 0.5, 0.6, 0.7, 0.8]
+
+// Center-label timing: -1 (hidden) until 0.30, then 5 dimensions every
+// 0.10 of progress, then the closing card from 0.80 onward.
+const CENTER_BOUNDARIES = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+function centerCardIndex(p: number): number {
+  if (p < CENTER_BOUNDARIES[0]) return -1
+  for (let i = 0; i < CENTER_BOUNDARIES.length - 1; i++) {
+    if (p < CENTER_BOUNDARIES[i + 1]) return i
+  }
+  return 5
+}
+
+interface CenterCard {
+  name: string
+  detail: string
+  isClosing?: boolean
+}
+const CENTER_CARDS: CenterCard[] = [
+  { name: 'Frequency.', detail: 'How often the account engages.' },
+  { name: 'Recency.', detail: 'How recent the last engagement was.' },
+  { name: 'Value.', detail: 'The dollar value this account represents.' },
+  {
+    name: 'Responsiveness.',
+    detail: 'How fast they respond when reached out to.',
+  },
+  {
+    name: 'Density.',
+    detail: 'How widely the account engages across the org.',
+  },
+  { name: 'Warmth.', detail: 'Ready to close.', isClosing: true },
+]
+
+// Phase 1 statement fade: opacity ramps from 1 → 0 across this window.
+const STATEMENT_FADE_START = 0.2
+const STATEMENT_FADE_END = 0.3
+
+function statementOpacity(p: number): number {
+  if (p <= STATEMENT_FADE_START) return 1
+  if (p >= STATEMENT_FADE_END) return 0
+  return 1 - (p - STATEMENT_FADE_START) / (STATEMENT_FADE_END - STATEMENT_FADE_START)
+}
 
 export default function FrvrdSection() {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [vertices, setVertices] = useState<VertexPos[]>([])
+  const [pentagonRadius, setPentagonRadius] = useState(0)
 
   useEffect(() => {
     let rafId: number | null = null
@@ -73,8 +119,6 @@ export default function FrvrdSection() {
       const rect = node.getBoundingClientRect()
       const total = rect.height - window.innerHeight
       if (total <= 0) {
-        // Mobile / no-pin layout — derive progress from how far the
-        // wrapper has scrolled past the viewport top.
         const visible = Math.max(
           0,
           Math.min(rect.height, window.innerHeight - rect.top),
@@ -102,8 +146,20 @@ export default function FrvrdSection() {
     }
   }, [])
 
-  // Position offsets for the HTML axis labels relative to each vertex.
-  // Each side picks a translate so the label sits clear of the dot.
+  // When the canvas reports new vertex positions, also derive the
+  // pentagon radius (distance from center to any vertex) so the center
+  // label can size itself to fit inside.
+  const handleVertexPositions = (vs: VertexPos[]) => {
+    setVertices(vs)
+    if (vs.length === 5) {
+      const cx = (vs[0].x + vs[2].x + vs[3].x) / 3
+      const cy = (vs[0].y + vs[2].y + vs[3].y) / 3
+      const dx = vs[0].x - cx
+      const dy = vs[0].y - cy
+      setPentagonRadius(Math.sqrt(dx * dx + dy * dy))
+    }
+  }
+
   const labelOffset = (side: (typeof VERTICES)[number]['side']) => {
     switch (side) {
       case 'top':
@@ -119,6 +175,16 @@ export default function FrvrdSection() {
     }
   }
 
+  // Center label position = pentagon centroid; max width sized so the
+  // label nests inside the polygon without overlapping vertex labels.
+  const centerX = vertices.length === 5 ? vertices.reduce((s, v) => s + v.x, 0) / 5 : 0
+  const centerY = vertices.length === 5 ? vertices.reduce((s, v) => s + v.y, 0) / 5 : 0
+  const centerMaxWidth = pentagonRadius > 0 ? pentagonRadius * 1.2 : 320
+
+  const centerActive = centerCardIndex(scrollProgress)
+  const statementOp = statementOpacity(scrollProgress)
+  const closingColor = wordColorAt(Math.max(scrollProgress, 0.95))
+
   return (
     <div className="frvrd-pinned" ref={wrapperRef}>
       <div className="frvrd-pinned-sticky">
@@ -132,15 +198,14 @@ export default function FrvrdSection() {
         <div className="frvrd-pinned-stage">
           <BuildingFrvrdRadar
             scrollProgress={scrollProgress}
-            onVertexPositions={setVertices}
+            onVertexPositions={handleVertexPositions}
           />
 
-          {/* HTML axis labels positioned at each vertex */}
+          {/* Vertex labels — fade in when the matching dot arrives. */}
           {vertices.length === 5 && (
             <div className="frvrd-pinned-labels" aria-hidden="true">
               {VERTICES.map((v, i) => {
-                const opacity =
-                  scrollProgress >= MIGRATION_END[i] ? 1 : 0
+                const opacity = scrollProgress >= MIGRATION_END[i] ? 1 : 0
                 return (
                   <span
                     key={v.name}
@@ -159,7 +224,12 @@ export default function FrvrdSection() {
             </div>
           )}
 
-          <div className="frvrd-pinned-text">
+          {/* Phase 0 — the big statement. Fades during Phase 1. */}
+          <div
+            className="frvrd-pinned-text"
+            style={{ opacity: statementOp, pointerEvents: statementOp > 0.05 ? 'auto' : 'none' }}
+            aria-hidden={statementOp <= 0.05}
+          >
             <h2
               className="frvrd-statement"
               style={{ color: wordColorAt(scrollProgress) }}
@@ -168,14 +238,44 @@ export default function FrvrdSection() {
             </h2>
             <p className="frvrd-statement-sub">
               FRVRD measures warmth across every named account.
-              Compounding, continuous, scored automatically.
             </p>
           </div>
 
-          <FrvrdDimensionPanel
-            scrollProgress={scrollProgress}
-            visible={scrollProgress > 0.25}
-          />
+          {/* Phase 2/3 — center label nested inside the pentagon. */}
+          {vertices.length === 5 && centerActive >= 0 && (
+            <div
+              className="frvrd-center-label"
+              style={{
+                left: `${centerX}px`,
+                top: `${centerY}px`,
+                maxWidth: `${centerMaxWidth}px`,
+              }}
+              aria-live="polite"
+            >
+              {CENTER_CARDS.map((card, i) => {
+                const offset = (i - centerActive) * 100
+                const isActive = i === centerActive
+                const closing = card.isClosing && isActive
+                return (
+                  <div
+                    key={card.name}
+                    className={`frvrd-center-card${isActive ? ' is-active' : ''}${
+                      closing ? ' is-closing' : ''
+                    }`}
+                    style={{
+                      transform: `translate(-50%, calc(-50% + ${offset}%))`,
+                      opacity: isActive ? 1 : 0,
+                      color: closing ? closingColor : undefined,
+                    }}
+                    aria-hidden={!isActive}
+                  >
+                    <div className="frvrd-center-name">{card.name}</div>
+                    <div className="frvrd-center-detail">{card.detail}</div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
         </div>
 
         <div className="frvrd-pinned-progress">
