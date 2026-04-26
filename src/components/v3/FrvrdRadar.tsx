@@ -1,21 +1,22 @@
-// StickyFrvrdRadar.tsx — sticky pentagon radar that morphs as the
-// reader scrolls between InteractionStage sections. Five axes: Frequency,
-// Recency, Velocity, Density, Responsiveness. The polygon's points and
-// the warmth counter are animated via requestAnimationFrame with an
-// ease-in-out curve. When prefers-reduced-motion is set, transitions
-// snap and the warmth counter shows the new value directly.
+// FrvrdRadar.tsx — pentagon FRVRD radar (Frequency, Recency, Velocity,
+// Density, Responsiveness) used by the vertical HowItWorks layout. The
+// polygon's points and the warmth counter are animated via
+// requestAnimationFrame with an ease-in-out curve. Dimensions that
+// "moved" in the current stage briefly pulse on the axis dots.
+// Honors prefers-reduced-motion: reduce by snapping to target values.
 //
-// Per-stage values are cumulative through that stage. The dimensions
-// listed in MOVED_BY_STAGE pulse briefly as the eye lands on them.
+// Per-stage values are cumulative through that stage. The card header
+// reads "Account Warmth" — the FRVRD acronym lives only on the axis
+// labels themselves.
 
 import { useEffect, useRef, useState } from 'react'
 
 const AXIS_LABELS = [
-  'Frequency',
-  'Recency',
-  'Velocity',
-  'Density',
-  'Responsiveness',
+  'FREQUENCY',
+  'RECENCY',
+  'VELOCITY',
+  'DENSITY',
+  'RESPONSIVENESS',
 ]
 
 // Cumulative dimension values per stage. Index 0 = pre-stage-1 baseline.
@@ -30,7 +31,6 @@ const STAGE_VALUES: number[][] = [
 ]
 
 const STAGE_WARMTH = [32, 36, 45, 55, 67, 72]
-
 const STAGE_NAMES = ['Pre-loop', 'Post', 'Comment', 'Landing page', 'Email parallel', 'Meeting']
 
 // Which axis indices "move" in each stage (pulsed after a transition).
@@ -44,9 +44,7 @@ const MOVED_BY_STAGE: number[][] = [
 ]
 
 interface Props {
-  // 0..4 indicates which InteractionStage is currently in view. The
-  // radar reads "after stage N+1" — i.e. value index N+1 in the arrays
-  // above. -1 means the section hasn't reached stage 1 yet (baseline).
+  // -1 means pre-stage-1 baseline. 0..4 = after stages 1..5.
   currentStageIndex: number
   variant?: 'desktop' | 'mobile'
 }
@@ -63,7 +61,16 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-export default function StickyFrvrdRadar({ currentStageIndex, variant = 'desktop' }: Props) {
+// Pick textAnchor based on the cosine of an axis angle so labels never
+// extend past the polygon when the axis is on the left or right side.
+function anchorForAngle(angle: number): 'start' | 'middle' | 'end' {
+  const c = Math.cos(angle)
+  if (c > 0.3) return 'start'
+  if (c < -0.3) return 'end'
+  return 'middle'
+}
+
+export default function FrvrdRadar({ currentStageIndex, variant = 'desktop' }: Props) {
   // valuesIndex into STAGE_VALUES — clamp -1..4 → 0..5
   const valuesIndex = Math.min(STAGE_VALUES.length - 1, Math.max(0, currentStageIndex + 1))
 
@@ -83,7 +90,6 @@ export default function StickyFrvrdRadar({ currentStageIndex, variant = 'desktop
     const targetValues = STAGE_VALUES[valuesIndex]
     const targetWarmth = STAGE_WARMTH[valuesIndex]
 
-    // Capture starting values for interpolation.
     fromValuesRef.current = displayValues.slice()
     fromWarmthRef.current = displayWarmth
 
@@ -131,10 +137,15 @@ export default function StickyFrvrdRadar({ currentStageIndex, variant = 'desktop
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valuesIndex])
 
-  // Geometry — viewBox 240×240, center (120, 120), max radius 90.
-  const cx = 120
-  const cy = 120
-  const rMax = 90
+  // Desktop: wide viewBox so axis labels (longest = "RESPONSIVENESS",
+  // 14 chars) render fully without clipping. Mobile: square compact.
+  const isMobile = variant === 'mobile'
+  const vbWidth = isMobile ? 240 : 360
+  const vbHeight = isMobile ? 240 : 280
+  const cx = vbWidth / 2
+  const cy = vbHeight / 2
+  const rMax = isMobile ? 90 : 80
+  const labelRadius = rMax + 22
   const axisCount = 5
   const axisAngle = (i: number) => -Math.PI / 2 + (i * 2 * Math.PI) / axisCount
 
@@ -150,10 +161,10 @@ export default function StickyFrvrdRadar({ currentStageIndex, variant = 'desktop
   const warmthDisplay = Math.round(displayWarmth)
   const stageName = STAGE_NAMES[valuesIndex]
 
-  if (variant === 'mobile') {
+  if (isMobile) {
     return (
       <div className="frvrd-mobile">
-        <svg className="frvrd-mobile-svg" viewBox="0 0 240 240" aria-hidden="true">
+        <svg className="frvrd-mobile-svg" viewBox={`0 0 ${vbWidth} ${vbHeight}`} aria-hidden="true">
           <RadarGrid cx={cx} cy={cy} rMax={rMax} compact />
           <polygon
             points={polygonPoints}
@@ -174,8 +185,13 @@ export default function StickyFrvrdRadar({ currentStageIndex, variant = 'desktop
 
   return (
     <div className="frvrd-radar">
-      <div className="frvrd-radar-label">FRVRD</div>
-      <svg className="frvrd-radar-svg" viewBox="0 0 240 240" role="img" aria-label="FRVRD radar">
+      <div className="frvrd-radar-label">Account Warmth</div>
+      <svg
+        className="frvrd-radar-svg"
+        viewBox={`0 0 ${vbWidth} ${vbHeight}`}
+        role="img"
+        aria-label="Account Warmth radar"
+      >
         <RadarGrid cx={cx} cy={cy} rMax={rMax} />
         <polygon
           points={polygonPoints}
@@ -186,7 +202,8 @@ export default function StickyFrvrdRadar({ currentStageIndex, variant = 'desktop
           strokeLinejoin="round"
         />
         {/* Axis label dots */}
-        {displayValues.map((v, i) => {
+        {displayValues.map((_, i) => {
+          const v = displayValues[i]
           const r = (v / 100) * rMax
           const x = cx + r * Math.cos(axisAngle(i))
           const y = cy + r * Math.sin(axisAngle(i))
@@ -202,24 +219,24 @@ export default function StickyFrvrdRadar({ currentStageIndex, variant = 'desktop
             />
           )
         })}
-        {/* Axis labels (text) */}
+        {/* Axis labels with quadrant-aware textAnchor so they don't crop */}
         {AXIS_LABELS.map((lbl, i) => {
-          const labelR = rMax + 18
-          const x = cx + labelR * Math.cos(axisAngle(i))
-          const y = cy + labelR * Math.sin(axisAngle(i)) + 3
+          const angle = axisAngle(i)
+          const x = cx + labelRadius * Math.cos(angle)
+          const y = cy + labelRadius * Math.sin(angle) + 3
           return (
             <text
               key={lbl}
               x={x}
               y={y}
-              textAnchor="middle"
+              textAnchor={anchorForAngle(angle)}
               fontFamily="JetBrains Mono, monospace"
               fontSize="9"
               letterSpacing="0.08em"
               fill={pulseAxes.includes(i) ? 'var(--accent)' : 'var(--text-muted)'}
               fontWeight={pulseAxes.includes(i) ? 700 : 600}
             >
-              {lbl.toUpperCase()}
+              {lbl}
             </text>
           )
         })}
