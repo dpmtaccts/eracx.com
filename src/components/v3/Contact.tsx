@@ -50,21 +50,21 @@ export default function Contact() {
             <h2>
               Map the signals<br />
               <span className="slab">
-                that can drive your <span className="accent">revenue.</span>
+                that can <span className="accent">set you apart.</span>
               </span>
             </h2>
             <p className="cta-sub">
-              A four-week engagement to install the loop.{' '}
+              Install the loop. Run the signals.{' '}
               <strong>
-                Fixed scope. Named deliverables. Operator handoff at month two.
+                Compound warmth across your highest-value accounts.
               </strong>
             </p>
             <div className="cta-meta">
               <div>
-                <b>Engagement</b>From $15K/mo
+                <b>Engagement</b>From $15K/mo, ongoing
               </div>
               <div>
-                <b>Time to first results</b>4 weeks
+                <b>Time to first results</b>Months 3&ndash;4
               </div>
               <div>
                 <b>Outcome</b>Reduces 80% of wasted growth actions

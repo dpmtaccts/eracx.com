@@ -1,6 +1,6 @@
 // Operators.tsx — §06 section for the /v3 staging homepage.
 // Three-phase ongoing program structure (Design+Install / First Results /
-// Infrastructure Compounds). Replaces the prior Gantt-style sprint timeline.
+// Infrastructure Compounds). Replaces the prior Gantt-style timeline.
 // A horizontal timeline with three open-circle node markers sits above the
 // three phase cards. Below the cards, a portrait strip with operator names
 // (placeholders for now) and the "Three operators. Zero account managers."
@@ -77,7 +77,6 @@ export default function Operators() {
             className="phase-timeline-svg"
             viewBox="0 0 1000 80"
             xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
             role="presentation"
           >
             <line x1="80" y1="50" x2="920" y2="50" stroke="var(--accent)" strokeWidth="1" />
