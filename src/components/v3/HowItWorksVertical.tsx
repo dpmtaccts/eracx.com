@@ -284,7 +284,11 @@ export default function HowItWorksVertical() {
           </div>
 
           <div className="hiw-pinned-radar">
-            <FrvrdRadar currentStageIndex={activeStageDelayed} variant="desktop" />
+            <FrvrdRadar
+              scrollProgress={scrollProgress}
+              activeStage={activeStage}
+              variant="desktop"
+            />
           </div>
         </div>
 

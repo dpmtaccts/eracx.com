@@ -1,13 +1,24 @@
 // FrvrdRadar.tsx — pentagon FRVRD radar (Frequency, Recency, Velocity,
-// Density, Responsiveness) used by the vertical HowItWorks layout. The
-// polygon's points and the warmth counter are animated via
-// requestAnimationFrame with an ease-in-out curve. Dimensions that
-// "moved" in the current stage briefly pulse on the axis dots.
-// Honors prefers-reduced-motion: reduce by snapping to target values.
+// Density, Responsiveness).
 //
-// Per-stage values are cumulative through that stage. The card header
-// reads "Account Warmth" — the FRVRD acronym lives only on the axis
-// labels themselves.
+// The polygon shape and warmth number are computed CONTINUOUSLY from a
+// scrollProgress prop (0..1) that the parent passes in every render.
+// Polygon points get a fresh interpolated value each frame, so the
+// radar tracks the user's actual scroll velocity — fast scroll, fast
+// growth; backward scroll, the polygon shrinks. No CSS transition on
+// the polygon points; no count-up animation on the warmth number;
+// every render is a snapshot of the current state.
+//
+// Discrete stage transitions still drive two visual cues:
+//   - the stage label below the warmth number ("Post" / "Comment" /
+//     etc.) snaps when activeStage changes, since a name doesn't
+//     interpolate
+//   - the dimension-pulse animation on the moved axes fires when
+//     activeStage changes
+//
+// Honors prefers-reduced-motion: reduce by suppressing only the
+// dimension pulse. Polygon and warmth still flow with scroll because
+// that is data, not motion.
 
 import { useEffect, useRef, useState } from 'react'
 
@@ -19,41 +30,47 @@ const AXIS_LABELS = [
   'RESPONSIVENESS',
 ]
 
-// Cumulative dimension values per stage. Index 0 = pre-stage-1 baseline.
-// Indices 1..5 = after stages 1..5.
-const STAGE_VALUES: number[][] = [
-  [25, 40, 22, 30, 35], // pre-1 baseline
-  [32, 40, 22, 30, 35], // after stage 1
-  [40, 40, 22, 30, 48], // after stage 2
-  [40, 55, 22, 50, 48], // after stage 3
-  [40, 55, 55, 65, 60], // after stage 4
-  [55, 55, 70, 75, 60], // after stage 5
+// Cumulative dimension values at each "anchor" point. Index 0 =
+// pre-stage-1 baseline. Indices 1..5 = after stages 1..5.
+interface Anchor {
+  warmth: number
+  values: number[]
+}
+const ANCHORS: Anchor[] = [
+  { warmth: 32, values: [25, 40, 22, 30, 35] },
+  { warmth: 36, values: [32, 40, 22, 30, 35] },
+  { warmth: 45, values: [40, 40, 22, 30, 48] },
+  { warmth: 55, values: [40, 55, 22, 50, 48] },
+  { warmth: 67, values: [40, 55, 55, 65, 60] },
+  { warmth: 72, values: [55, 55, 70, 75, 60] },
 ]
 
-const STAGE_WARMTH = [32, 36, 45, 55, 67, 72]
-const STAGE_NAMES = ['Pre-loop', 'Post', 'Comment', 'Landing page', 'Email parallel', 'Meeting']
+// Stage labels (by activeStage 0..4 — i.e. the currently visible card).
+const STAGE_NAMES = ['Post', 'Comment', 'Landing page', 'Email parallel', 'Meeting']
 
-// Which axis indices "move" in each stage (pulsed after a transition).
-const MOVED_BY_STAGE: number[][] = [
-  [],          // pre
-  [0],         // stage 1: Frequency
-  [0, 4],      // stage 2: Frequency + Responsiveness
-  [1, 3],      // stage 3: Recency + Density
-  [2, 3, 4],   // stage 4: Velocity + Density + Responsiveness
-  [2, 0, 3],   // stage 5: Velocity + Frequency + Density
+// Which axis indices "move" when each anchor is reached (pulsed when
+// activeStage transitions to the corresponding card).
+const MOVED_BY_ANCHOR: number[][] = [
+  [],          // anchor 0 (baseline) — nothing moved yet
+  [0],         // anchor 1: Frequency moved in stage 1
+  [0, 4],      // anchor 2: Frequency + Responsiveness moved in stage 2
+  [1, 3],      // anchor 3: Recency + Density moved in stage 3
+  [2, 3, 4],   // anchor 4: Velocity + Density + Responsiveness moved in stage 4
+  [2, 0, 3],   // anchor 5: Velocity + Frequency + Density moved in stage 5
 ]
+
+const PULSE_DELAY_MS = 200
+const PULSE_DURATION_MS = 600
 
 interface Props {
-  // -1 means pre-stage-1 baseline. 0..4 = after stages 1..5.
-  currentStageIndex: number
+  // Continuous scroll position within the pinned section, 0..1.
+  // Polygon shape and warmth number are computed from this.
+  scrollProgress: number
+  // Discrete card index 0..4 of the currently visible stage. Drives
+  // the stage label and the dimension-pulse animation. Values < 0
+  // are clamped to 0.
+  activeStage: number
   variant?: 'desktop' | 'mobile'
-}
-
-const TRANSITION_MS = 800
-const PULSE_DELAY_MS = 200
-
-function easeInOut(t: number): number {
-  return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2
 }
 
 function prefersReducedMotion(): boolean {
@@ -61,8 +78,6 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-// Pick textAnchor based on the cosine of an axis angle so labels never
-// extend past the polygon when the axis is on the left or right side.
 function anchorForAngle(angle: number): 'start' | 'middle' | 'end' {
   const c = Math.cos(angle)
   if (c > 0.3) return 'start'
@@ -70,75 +85,62 @@ function anchorForAngle(angle: number): 'start' | 'middle' | 'end' {
   return 'middle'
 }
 
-export default function FrvrdRadar({ currentStageIndex, variant = 'desktop' }: Props) {
-  // valuesIndex into STAGE_VALUES — clamp -1..4 → 0..5
-  const valuesIndex = Math.min(STAGE_VALUES.length - 1, Math.max(0, currentStageIndex + 1))
+export default function FrvrdRadar({
+  scrollProgress,
+  activeStage,
+  variant = 'desktop',
+}: Props) {
+  // ---- Continuous interpolation from scrollProgress -----------------
+  const clamped = Math.max(0, Math.min(1, scrollProgress))
+  const fractional = clamped * (ANCHORS.length - 1)
+  const lo = Math.min(ANCHORS.length - 2, Math.floor(fractional))
+  const hi = lo + 1
+  const t = fractional - lo
+  const values = ANCHORS[lo].values.map(
+    (v, i) => v + (ANCHORS[hi].values[i] - v) * t,
+  )
+  const warmth = Math.round(
+    ANCHORS[lo].warmth + (ANCHORS[hi].warmth - ANCHORS[lo].warmth) * t,
+  )
 
-  const [displayValues, setDisplayValues] = useState<number[]>(STAGE_VALUES[valuesIndex])
-  const [displayWarmth, setDisplayWarmth] = useState<number>(STAGE_WARMTH[valuesIndex])
+  // ---- Discrete stage label + pulse trigger from activeStage --------
+  const safeStage = Math.min(STAGE_NAMES.length - 1, Math.max(0, activeStage))
+  const stageName = STAGE_NAMES[safeStage]
+
   const [pulseAxes, setPulseAxes] = useState<number[]>([])
-
-  const fromValuesRef = useRef<number[]>(STAGE_VALUES[valuesIndex])
-  const fromWarmthRef = useRef<number>(STAGE_WARMTH[valuesIndex])
-  const rafRef = useRef<number | null>(null)
+  const lastStageRef = useRef<number>(safeStage)
   const pulseTimeoutRef = useRef<number | null>(null)
-  const lastIndexRef = useRef<number>(valuesIndex)
 
   useEffect(() => {
-    if (lastIndexRef.current === valuesIndex) return
-    const reduced = prefersReducedMotion()
-    const targetValues = STAGE_VALUES[valuesIndex]
-    const targetWarmth = STAGE_WARMTH[valuesIndex]
+    if (lastStageRef.current === safeStage) return
+    lastStageRef.current = safeStage
 
-    fromValuesRef.current = displayValues.slice()
-    fromWarmthRef.current = displayWarmth
+    if (prefersReducedMotion()) return
 
-    if (reduced) {
-      setDisplayValues(targetValues)
-      setDisplayWarmth(targetWarmth)
-      setPulseAxes([])
-      lastIndexRef.current = valuesIndex
-      return
+    if (pulseTimeoutRef.current !== null) {
+      window.clearTimeout(pulseTimeoutRef.current)
     }
-
-    if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
-    if (pulseTimeoutRef.current !== null) window.clearTimeout(pulseTimeoutRef.current)
     setPulseAxes([])
 
-    const start = performance.now()
-    const tick = (now: number) => {
-      const elapsed = now - start
-      const t = Math.min(1, elapsed / TRANSITION_MS)
-      const eased = easeInOut(t)
-      const next = fromValuesRef.current.map(
-        (v, i) => v + (targetValues[i] - v) * eased,
-      )
-      const w = fromWarmthRef.current + (targetWarmth - fromWarmthRef.current) * eased
-      setDisplayValues(next)
-      setDisplayWarmth(w)
-      if (t < 1) {
-        rafRef.current = requestAnimationFrame(tick)
-      } else {
-        rafRef.current = null
-      }
-    }
-    rafRef.current = requestAnimationFrame(tick)
-
+    // Pulse the dimensions that moved during the stage that's now
+    // visible. activeStage 0 (Post) → ANCHORS[1] (after stage 1) →
+    // MOVED_BY_ANCHOR[1] = [0] = Frequency.
+    const movedIndex = Math.min(MOVED_BY_ANCHOR.length - 1, safeStage + 1)
     pulseTimeoutRef.current = window.setTimeout(() => {
-      setPulseAxes(MOVED_BY_STAGE[valuesIndex])
-      pulseTimeoutRef.current = window.setTimeout(() => setPulseAxes([]), 600)
+      setPulseAxes(MOVED_BY_ANCHOR[movedIndex])
+      pulseTimeoutRef.current = window.setTimeout(() => {
+        setPulseAxes([])
+      }, PULSE_DURATION_MS)
     }, PULSE_DELAY_MS)
 
-    lastIndexRef.current = valuesIndex
     return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
-      if (pulseTimeoutRef.current !== null) window.clearTimeout(pulseTimeoutRef.current)
+      if (pulseTimeoutRef.current !== null) {
+        window.clearTimeout(pulseTimeoutRef.current)
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [valuesIndex])
+  }, [safeStage])
 
-  // Desktop: wide viewBox so axis labels (longest = "RESPONSIVENESS",
-  // 14 chars) render fully without clipping. Mobile: square compact.
+  // ---- Geometry ------------------------------------------------------
   const isMobile = variant === 'mobile'
   const vbWidth = isMobile ? 240 : 360
   const vbHeight = isMobile ? 240 : 280
@@ -147,9 +149,10 @@ export default function FrvrdRadar({ currentStageIndex, variant = 'desktop' }: P
   const rMax = isMobile ? 90 : 80
   const labelRadius = rMax + 22
   const axisCount = 5
-  const axisAngle = (i: number) => -Math.PI / 2 + (i * 2 * Math.PI) / axisCount
+  const axisAngle = (i: number) =>
+    -Math.PI / 2 + (i * 2 * Math.PI) / axisCount
 
-  const polygonPoints = displayValues
+  const polygonPoints = values
     .map((v, i) => {
       const r = (v / 100) * rMax
       const x = cx + r * Math.cos(axisAngle(i))
@@ -158,13 +161,14 @@ export default function FrvrdRadar({ currentStageIndex, variant = 'desktop' }: P
     })
     .join(' ')
 
-  const warmthDisplay = Math.round(displayWarmth)
-  const stageName = STAGE_NAMES[valuesIndex]
-
   if (isMobile) {
     return (
       <div className="frvrd-mobile">
-        <svg className="frvrd-mobile-svg" viewBox={`0 0 ${vbWidth} ${vbHeight}`} aria-hidden="true">
+        <svg
+          className="frvrd-mobile-svg"
+          viewBox={`0 0 ${vbWidth} ${vbHeight}`}
+          aria-hidden="true"
+        >
           <RadarGrid cx={cx} cy={cy} rMax={rMax} compact />
           <polygon
             points={polygonPoints}
@@ -176,7 +180,7 @@ export default function FrvrdRadar({ currentStageIndex, variant = 'desktop' }: P
         </svg>
         <div className="frvrd-mobile-stage">{stageName}</div>
         <div className="frvrd-mobile-warmth">
-          <b>{warmthDisplay}</b>
+          <b>{warmth}</b>
           <span>warmth</span>
         </div>
       </div>
@@ -201,9 +205,8 @@ export default function FrvrdRadar({ currentStageIndex, variant = 'desktop' }: P
           strokeWidth="1.5"
           strokeLinejoin="round"
         />
-        {/* Axis label dots */}
-        {displayValues.map((_, i) => {
-          const v = displayValues[i]
+        {/* Axis dots — pulse when their dimension moved in the new stage */}
+        {values.map((v, i) => {
           const r = (v / 100) * rMax
           const x = cx + r * Math.cos(axisAngle(i))
           const y = cy + r * Math.sin(axisAngle(i))
@@ -219,7 +222,7 @@ export default function FrvrdRadar({ currentStageIndex, variant = 'desktop' }: P
             />
           )
         })}
-        {/* Axis labels with quadrant-aware textAnchor so they don't crop */}
+        {/* Axis labels with quadrant-aware textAnchor */}
         {AXIS_LABELS.map((lbl, i) => {
           const angle = axisAngle(i)
           const x = cx + labelRadius * Math.cos(angle)
@@ -243,7 +246,7 @@ export default function FrvrdRadar({ currentStageIndex, variant = 'desktop' }: P
       </svg>
       <div className="frvrd-warmth">
         <div className="frvrd-warmth-label">WARMTH</div>
-        <div className="frvrd-warmth-value">{warmthDisplay}</div>
+        <div className="frvrd-warmth-value">{warmth}</div>
         <div className="frvrd-warmth-stage">{stageName}</div>
       </div>
     </div>
@@ -263,7 +266,8 @@ function RadarGrid({
 }) {
   const rings = compact ? [0.5, 1] : [0.25, 0.5, 0.75, 1]
   const axisCount = 5
-  const axisAngle = (i: number) => -Math.PI / 2 + (i * 2 * Math.PI) / axisCount
+  const axisAngle = (i: number) =>
+    -Math.PI / 2 + (i * 2 * Math.PI) / axisCount
   return (
     <g stroke="var(--rule)" strokeWidth="0.5" fill="none">
       {rings.map((f, i) => {
@@ -275,12 +279,20 @@ function RadarGrid({
             return `${x.toFixed(2)},${y.toFixed(2)}`
           })
           .join(' ')
-        return <polygon key={i} points={points} opacity={i === rings.length - 1 ? 0.8 : 0.4} />
+        return (
+          <polygon
+            key={i}
+            points={points}
+            opacity={i === rings.length - 1 ? 0.8 : 0.4}
+          />
+        )
       })}
       {Array.from({ length: axisCount }).map((_, i) => {
         const x = cx + rMax * Math.cos(axisAngle(i))
         const y = cy + rMax * Math.sin(axisAngle(i))
-        return <line key={i} x1={cx} y1={cy} x2={x} y2={y} opacity="0.3" />
+        return (
+          <line key={i} x1={cx} y1={cy} x2={x} y2={y} opacity="0.3" />
+        )
       })}
     </g>
   )
