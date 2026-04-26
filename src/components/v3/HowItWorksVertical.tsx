@@ -13,13 +13,14 @@
 //   - update the FRVRD radar's currentStageIndex (radar morphs via
 //     requestAnimationFrame inside the component)
 //
-// Below 820px the pin disables. The five stages render stacked normally
-// (slot machine + radar collapse to a list view) so the content remains
-// readable without the scroll mechanic.
+// Syncopated timing: the action column transitions immediately on
+// activeStage changes. The center column (signal tile + chain panel)
+// and the radar both transition 250ms later via activeStageDelayed.
+// When the new signal lands, a sky-blue ring pulses around the signal
+// tile (suppressed under prefers-reduced-motion: reduce).
 //
-// Click any of the five progress dots at the top to jump to that stage.
-// On desktop, this scrolls the outer wrapper to the appropriate
-// position. On mobile, it just sets activeStage directly.
+// Below 820px the pin disables. Stages stack as radar → action →
+// signal. Dot taps drive activeStage/scrollProgress directly.
 
 import { useEffect, useRef, useState, type ComponentType } from 'react'
 import FrvrdRadar from './FrvrdRadar'
@@ -28,6 +29,11 @@ import LinkedInCommentMock from './mocks/LinkedInCommentMock'
 import BrowserMock from './mocks/BrowserMock'
 import EmailMock from './mocks/EmailMock'
 import CalendarMock from './mocks/CalendarMock'
+import LikeSignalTile from './mocks/signals/LikeSignalTile'
+import CommentSignalTile from './mocks/signals/CommentSignalTile'
+import VisitSignalTile from './mocks/signals/VisitSignalTile'
+import EmailSignalTile from './mocks/signals/EmailSignalTile'
+import MeetingSignalTile from './mocks/signals/MeetingSignalTile'
 
 interface StageDef {
   stageNumber: string
@@ -36,6 +42,7 @@ interface StageDef {
   warmthAfter: number
   delta: string
   Mock: ComponentType
+  SignalTile: ComponentType
   captured: { signal: string; source: string }
   dimensionsMoved: string[]
   firedNext: { name: string; explainer: string }
@@ -50,6 +57,7 @@ const STAGES: StageDef[] = [
     warmthAfter: 36,
     delta: '+4',
     Mock: LinkedInPostMock,
+    SignalTile: LikeSignalTile,
     captured: { signal: 'Attention signal', source: 'LinkedIn · HockeyStack' },
     dimensionsMoved: ['Frequency'],
     firedNext: {
@@ -65,6 +73,7 @@ const STAGES: StageDef[] = [
     warmthAfter: 45,
     delta: '+9',
     Mock: LinkedInCommentMock,
+    SignalTile: CommentSignalTile,
     captured: { signal: 'Reciprocation signal', source: 'LinkedIn · Clay' },
     dimensionsMoved: ['Frequency', 'Responsiveness'],
     firedNext: {
@@ -80,6 +89,7 @@ const STAGES: StageDef[] = [
     warmthAfter: 55,
     delta: '+10',
     Mock: BrowserMock,
+    SignalTile: VisitSignalTile,
     captured: { signal: 'Intent signal', source: 'HockeyStack · RB2B' },
     dimensionsMoved: ['Recency', 'Density'],
     firedNext: {
@@ -95,6 +105,7 @@ const STAGES: StageDef[] = [
     warmthAfter: 67,
     delta: '+12',
     Mock: EmailMock,
+    SignalTile: EmailSignalTile,
     captured: { signal: 'Disclosure signal', source: 'Apollo · HubSpot' },
     dimensionsMoved: ['Velocity', 'Density', 'Responsiveness'],
     firedNext: {
@@ -110,6 +121,7 @@ const STAGES: StageDef[] = [
     warmthAfter: 72,
     delta: '+5',
     Mock: CalendarMock,
+    SignalTile: MeetingSignalTile,
     captured: { signal: 'Commitment signal', source: 'HubSpot · Gong' },
     dimensionsMoved: ['Velocity', 'Frequency', 'Density'],
     firedNext: {
@@ -121,11 +133,42 @@ const STAGES: StageDef[] = [
 ]
 
 const STAGE_COUNT = STAGES.length
+const SIGNAL_DELAY_MS = 250
+
+function usePrefersReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false)
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReduced(mq.matches)
+    const onChange = () => setReduced(mq.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+  return reduced
+}
 
 export default function HowItWorksVertical() {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   const [activeStage, setActiveStage] = useState(0)
+  const [activeStageDelayed, setActiveStageDelayed] = useState(0)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const reducedMotion = usePrefersReducedMotion()
+
+  // Drive the center column + radar one beat behind the action column
+  // so the chain reads as cause → effect. Reduced motion short-circuits
+  // the delay so the columns swap in lockstep.
+  useEffect(() => {
+    if (reducedMotion) {
+      setActiveStageDelayed(activeStage)
+      return
+    }
+    const t = window.setTimeout(
+      () => setActiveStageDelayed(activeStage),
+      SIGNAL_DELAY_MS,
+    )
+    return () => window.clearTimeout(t)
+  }, [activeStage, reducedMotion])
 
   useEffect(() => {
     let rafId: number | null = null
@@ -139,9 +182,6 @@ export default function HowItWorksVertical() {
       if (total <= 0) return
       const p = Math.max(0, Math.min(1, -rect.top / total))
       setScrollProgress(p)
-      // Map continuous progress to a discrete stage with a tiny bias so
-      // the last stage activates before the wrapper finishes scrolling
-      // out of view.
       const stage = Math.min(STAGE_COUNT - 1, Math.floor(p * STAGE_COUNT))
       setActiveStage(stage)
     }
@@ -162,12 +202,7 @@ export default function HowItWorksVertical() {
     }
   }, [])
 
-  // Click a progress dot → scroll the wrapper to the corresponding
-  // position. Each stage occupies 1/STAGE_COUNT of the wrapper's
-  // scrollable range.
   const jumpToStage = (i: number) => {
-    // Sync state immediately so mobile (no pin → no scroll-driven update)
-    // gets instant feedback on tap.
     setActiveStage(i)
     setScrollProgress(i / Math.max(1, STAGE_COUNT - 1))
 
@@ -232,17 +267,24 @@ export default function HowItWorksVertical() {
           </div>
 
           <div className="hiw-pinned-signal">
+            {!reducedMotion && (
+              <span
+                className="signal-tile-pulse"
+                key={activeStageDelayed}
+                aria-hidden="true"
+              />
+            )}
             <SlotWindow>
               {STAGES.map((s, i) => (
-                <SlotCard key={i} index={i} activeIndex={activeStage}>
-                  <ChainPanel stage={s} />
+                <SlotCard key={i} index={i} activeIndex={activeStageDelayed}>
+                  <SignalPanel stage={s} />
                 </SlotCard>
               ))}
             </SlotWindow>
           </div>
 
           <div className="hiw-pinned-radar">
-            <FrvrdRadar currentStageIndex={activeStage} variant="desktop" />
+            <FrvrdRadar currentStageIndex={activeStageDelayed} variant="desktop" />
           </div>
         </div>
 
@@ -304,38 +346,44 @@ function SlotCard({
   )
 }
 
-function ChainPanel({ stage }: { stage: StageDef }) {
+function SignalPanel({ stage }: { stage: StageDef }) {
+  const SignalTile = stage.SignalTile
   return (
-    <div className={`chain-panel chain-panel--${stage.stageColor}`}>
-      <div className="chain-panel-row">
-        <div className="chain-panel-label">CAPTURED</div>
-        <div className="chain-panel-value">
-          <b>{stage.captured.signal}</b>
-          <span>{stage.captured.source}</span>
+    <div className={`signal-panel signal-panel--${stage.stageColor}`}>
+      <div className="signal-panel-tile">
+        <SignalTile />
+      </div>
+      <div className="signal-panel-rows">
+        <div className="signal-panel-row">
+          <div className="signal-panel-label">CAPTURED</div>
+          <div className="signal-panel-value">
+            <b>{stage.captured.signal}</b>
+            <span>{stage.captured.source}</span>
+          </div>
+        </div>
+        <div className="signal-panel-row">
+          <div className="signal-panel-label">DIMENSIONS MOVED</div>
+          <div className="signal-panel-dims">
+            {stage.dimensionsMoved.map((d) => (
+              <span key={d} className="signal-panel-dim">
+                {d}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="signal-panel-row">
+          <div className="signal-panel-label">FIRED NEXT</div>
+          <div className="signal-panel-value">
+            <b>{stage.firedNext.name}</b>
+            <span>{stage.firedNext.explainer}</span>
+          </div>
         </div>
       </div>
-      <div className="chain-panel-row">
-        <div className="chain-panel-label">DIMENSIONS MOVED</div>
-        <div className="chain-panel-dims">
-          {stage.dimensionsMoved.map((d) => (
-            <span key={d} className="chain-panel-dim">
-              {d}
-            </span>
-          ))}
-        </div>
-      </div>
-      <div className="chain-panel-row">
-        <div className="chain-panel-label">FIRED NEXT</div>
-        <div className="chain-panel-value">
-          <b>{stage.firedNext.name}</b>
-          <span>{stage.firedNext.explainer}</span>
-        </div>
-      </div>
-      <div className="chain-panel-warmth">
-        <span className="chain-panel-warmth-before">{stage.warmthBefore}</span>
-        <span className="chain-panel-warmth-arrow">&rarr;</span>
-        <span className="chain-panel-warmth-after">{stage.warmthAfter}</span>
-        <span className="chain-panel-warmth-delta">{stage.delta}</span>
+      <div className="signal-panel-warmth">
+        <span className="signal-panel-warmth-before">{stage.warmthBefore}</span>
+        <span className="signal-panel-warmth-arrow">&rarr;</span>
+        <span className="signal-panel-warmth-after">{stage.warmthAfter}</span>
+        <span className="signal-panel-warmth-delta">{stage.delta}</span>
       </div>
     </div>
   )

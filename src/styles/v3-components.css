@@ -2172,6 +2172,8 @@
     min-height: 0;
     min-width: 0;
   }
+  /* Anchor for the absolutely-positioned signal-tile pulse element. */
+  & .hiw-pinned-signal { position: relative; }
 
   & .hiw-pinned-action .slot-window,
   & .hiw-pinned-signal .slot-window,
@@ -2249,16 +2251,16 @@
     position: absolute;
   }
 
-  /* Chain panel rendered inside the center slot column */
-  & .chain-panel {
+  /* Signal panel — signal tile + chain text + warmth counter */
+  & .signal-panel {
     position: relative;
     width: 100%;
-    max-width: 380px;
+    max-width: 400px;
     display: grid;
     gap: 18px;
     padding-left: 16px;
   }
-  & .chain-panel::before {
+  & .signal-panel::before {
     content: '';
     position: absolute;
     top: 0;
@@ -2267,13 +2269,18 @@
     width: 3px;
     background: var(--rule);
   }
-  & .chain-panel--cold::before { background: var(--cold); }
-  & .chain-panel--warming::before { background: var(--warming); }
-  & .chain-panel--warm::before { background: var(--warm); }
-  & .chain-panel--hot::before { background: var(--hot); }
+  & .signal-panel--cold::before { background: var(--cold); }
+  & .signal-panel--warming::before { background: var(--warming); }
+  & .signal-panel--warm::before { background: var(--warm); }
+  & .signal-panel--hot::before { background: var(--hot); }
 
-  & .chain-panel-row { display: grid; gap: 4px; }
-  & .chain-panel-label {
+  & .signal-panel-tile { width: 100%; }
+  & .signal-panel-rows {
+    display: grid;
+    gap: 14px;
+  }
+  & .signal-panel-row { display: grid; gap: 4px; }
+  & .signal-panel-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     letter-spacing: 0.16em;
@@ -2281,25 +2288,25 @@
     color: var(--text-muted);
     font-weight: 700;
   }
-  & .chain-panel-value {
+  & .signal-panel-value {
     font-family: 'Instrument Sans', sans-serif;
     font-size: 14px;
     line-height: 1.45;
     color: var(--text-2);
   }
-  & .chain-panel-value b {
+  & .signal-panel-value b {
     display: block;
     color: var(--text);
     font-weight: 600;
     margin-bottom: 2px;
     font-size: 15px;
   }
-  & .chain-panel-dims {
+  & .signal-panel-dims {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
   }
-  & .chain-panel-dim {
+  & .signal-panel-dim {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10.5px;
     letter-spacing: 0.08em;
@@ -2309,7 +2316,7 @@
     padding: 4px 8px;
     border: 1px solid var(--accent);
   }
-  & .chain-panel-warmth {
+  & .signal-panel-warmth {
     display: flex;
     align-items: baseline;
     gap: 8px;
@@ -2317,19 +2324,19 @@
     border-top: 1px solid var(--rule);
     font-family: 'Instrument Sans', sans-serif;
   }
-  & .chain-panel-warmth-before {
+  & .signal-panel-warmth-before {
     font-size: 18px;
     color: var(--text-muted);
     font-weight: 500;
   }
-  & .chain-panel-warmth-arrow { color: var(--rule); }
-  & .chain-panel-warmth-after {
+  & .signal-panel-warmth-arrow { color: var(--rule); }
+  & .signal-panel-warmth-after {
     font-size: 32px;
     color: var(--text);
     font-weight: 600;
     letter-spacing: -0.02em;
   }
-  & .chain-panel-warmth-delta {
+  & .signal-panel-warmth-delta {
     margin-left: 6px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
@@ -2338,9 +2345,201 @@
     font-weight: 700;
   }
 
+  /* ============ SIGNAL TILES (5 stage-specific UI artifacts) ============ */
+  & .signal-tile {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 14px 16px;
+    width: 100%;
+  }
+  & .signal-tile--analytics {
+    /* Analytics-style tile renders header + rows directly, no avatar block. */
+    display: grid;
+    gap: 8px;
+  }
+  & .signal-tile-inmark {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    opacity: 0.6;
+  }
+  & .signal-tile-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  & .signal-tile-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-alt);
+    border: 1px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+  & .signal-tile-body {
+    flex: 1;
+    min-width: 0;
+    display: grid;
+    gap: 4px;
+  }
+  & .signal-tile-headline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+    flex-wrap: wrap;
+  }
+  & .signal-tile-headline b { font-weight: 600; }
+  & .signal-tile-subject {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  & .signal-tile-when {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  & .signal-tile-preview {
+    margin: 0;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--text-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  & .signal-tile-foot {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  & .signal-tile-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    padding: 2px 6px;
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    margin-left: auto;
+  }
+  & .signal-tile-confirmed {
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
+  }
+  & .signal-tile-confirmed-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2BA468;
+  }
+
+  /* Visit tile — inline two-dot timeline + dwell badge */
+  & .visit-line {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 4px 0 2px;
+  }
+  & .visit-timeline {
+    position: relative;
+    flex: 1;
+    height: 26px;
+  }
+  & .visit-track {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    height: 1px;
+    background: var(--rule);
+  }
+  & .visit-dot {
+    position: absolute;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1.5px solid var(--accent);
+  }
+  & .visit-dot--1 { left: 0; }
+  & .visit-dot--2 { left: 60%; }
+  & .visit-dot .visit-stamp {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  & .visit-dwell {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* Pulse halo around the signal tile when a new signal lands. The
+     element is keyed off activeStageDelayed in React, so each remount
+     replays the keyframes from the start. */
+  & .signal-tile-pulse {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 96px;
+    border: 2px solid var(--mist);
+    border-radius: 6px;
+    pointer-events: none;
+    opacity: 0;
+    animation: hiw-signal-pulse 600ms ease-out;
+    z-index: 2;
+  }
+  @keyframes hiw-signal-pulse {
+    0%   { transform: scale(1);    opacity: 1; }
+    100% { transform: scale(1.06); opacity: 0; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     & .slot-card { transition: none !important; }
     & .hiw-pinned-progress-fill { transition: none !important; }
+    & .signal-tile-pulse { animation: none !important; opacity: 0 !important; }
   }
 
   /* ============ FRVRD RADAR (desktop) ============ */

@@ -103,7 +103,11 @@
   font-family: 'Instrument Sans', sans-serif;
   font-size: var(--base-font-size);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  /* `clip` instead of `hidden` so descendants can use position: sticky.
+     `overflow-x: hidden` implicitly sets `overflow-y: auto`, which turns
+     this element into a scroll container and breaks sticky positioning
+     anywhere underneath (e.g. the pinned HowItWorks vertical layout). */
+  overflow-x: clip;
   transition: background 200ms, color 200ms;
   min-height: 100vh;
 }
