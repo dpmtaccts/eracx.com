@@ -58,7 +58,7 @@ export default function Operators() {
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">06 &nbsp; Operators</div>
+            <div className="eyebrow">07 &nbsp; Operators</div>
             <h2 className="section-h2">
               Compounding,<br />
               <span className="slab">not linear.</span>

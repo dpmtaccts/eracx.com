@@ -210,7 +210,7 @@ export default function LoopHalo() {
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">02 &nbsp; The system</div>
+            <div className="eyebrow">03 &nbsp; The system</div>
             <h2 className="section-h2">
               Run loops, not campaigns.<br />
               <span className="slab">Halo makes them visible.</span>

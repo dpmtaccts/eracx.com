@@ -58,7 +58,7 @@ const LINKS: Link[] = [
     delta: '+12',
     did: { name: 'Email · parallel', kind: 'Private  ·  multi-thread' },
     captured: { signal: 'Disclosure signal', source: 'Apollo · HubSpot' },
-    dims: ['Velocity', 'Density', 'Responsiveness'],
+    dims: ['Value', 'Density', 'Responsiveness'],
     fired: {
       name: 'Stakeholder map update',
       arrow: 'Champion + economic buyer engaged on same thread.',
@@ -70,7 +70,7 @@ const LINKS: Link[] = [
     delta: '+5',
     did: { name: 'Meeting', kind: 'Sync  ·  high-bandwidth' },
     captured: { signal: 'Commitment signal', source: 'HubSpot · Gong' },
-    dims: ['Velocity', 'Frequency', 'Density'],
+    dims: ['Value', 'Frequency', 'Density'],
     fired: {
       name: 'Trust-loop invitation',
       arrow: 'Advisor dinner, six peers. No pitch. No deck.',

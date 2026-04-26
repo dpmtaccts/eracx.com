@@ -107,7 +107,7 @@ const STAGES: StageDef[] = [
     Mock: EmailMock,
     SignalTile: EmailSignalTile,
     captured: { signal: 'Disclosure signal', source: 'Apollo · HubSpot' },
-    dimensionsMoved: ['Velocity', 'Density', 'Responsiveness'],
+    dimensionsMoved: ['Value', 'Density', 'Responsiveness'],
     firedNext: {
       name: 'Stakeholder map update',
       explainer: 'Champion + economic buyer engaged on same thread.',
@@ -123,7 +123,7 @@ const STAGES: StageDef[] = [
     Mock: CalendarMock,
     SignalTile: MeetingSignalTile,
     captured: { signal: 'Commitment signal', source: 'HubSpot · Gong' },
-    dimensionsMoved: ['Velocity', 'Frequency', 'Density'],
+    dimensionsMoved: ['Value', 'Frequency', 'Density'],
     firedNext: {
       name: 'Trust-loop invitation',
       explainer: 'Advisor dinner, six peers. No pitch. No deck.',

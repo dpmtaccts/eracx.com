@@ -45,7 +45,7 @@ export default function Contact() {
         <div className="cta-grid">
           <div>
             <div className="eyebrow" style={{ color: '#C4D5DE' }}>
-              08 &nbsp; Start here
+              09 &nbsp; Start here
             </div>
             <h2>
               Map the signals<br />

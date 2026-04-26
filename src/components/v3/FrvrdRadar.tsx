@@ -1,5 +1,5 @@
-// FrvrdRadar.tsx — pentagon FRVRD radar (Frequency, Recency, Velocity,
-// Density, Responsiveness).
+// FrvrdRadar.tsx — pentagon FRVRD radar (Frequency, Recency, Value,
+// Responsiveness, Density). Axis order matches the FRVRD acronym.
 //
 // The polygon shape and warmth number are computed CONTINUOUSLY from a
 // scrollProgress prop (0..1) that the parent passes in every render.
@@ -25,38 +25,40 @@ import { useEffect, useRef, useState } from 'react'
 const AXIS_LABELS = [
   'FREQUENCY',
   'RECENCY',
-  'VELOCITY',
-  'DENSITY',
+  'VALUE',
   'RESPONSIVENESS',
+  'DENSITY',
 ]
 
 // Cumulative dimension values at each "anchor" point. Index 0 =
-// pre-stage-1 baseline. Indices 1..5 = after stages 1..5.
+// pre-stage-1 baseline. Indices 1..5 = after stages 1..5. Order matches
+// AXIS_LABELS: [Frequency, Recency, Value, Responsiveness, Density].
 interface Anchor {
   warmth: number
   values: number[]
 }
 const ANCHORS: Anchor[] = [
-  { warmth: 32, values: [25, 40, 22, 30, 35] },
-  { warmth: 36, values: [32, 40, 22, 30, 35] },
-  { warmth: 45, values: [40, 40, 22, 30, 48] },
-  { warmth: 55, values: [40, 55, 22, 50, 48] },
-  { warmth: 67, values: [40, 55, 55, 65, 60] },
-  { warmth: 72, values: [55, 55, 70, 75, 60] },
+  { warmth: 32, values: [25, 40, 22, 35, 30] },
+  { warmth: 36, values: [32, 40, 22, 35, 30] },
+  { warmth: 45, values: [40, 40, 22, 48, 30] },
+  { warmth: 55, values: [40, 55, 22, 48, 50] },
+  { warmth: 67, values: [40, 55, 55, 60, 65] },
+  { warmth: 72, values: [55, 55, 70, 60, 75] },
 ]
 
 // Stage labels (by activeStage 0..4 — i.e. the currently visible card).
 const STAGE_NAMES = ['Post', 'Comment', 'Landing page', 'Email parallel', 'Meeting']
 
 // Which axis indices "move" when each anchor is reached (pulsed when
-// activeStage transitions to the corresponding card).
+// activeStage transitions to the corresponding card). Indices map to
+// the FRVRD axis order: 0=F, 1=R, 2=V, 3=R(esp), 4=D.
 const MOVED_BY_ANCHOR: number[][] = [
   [],          // anchor 0 (baseline) — nothing moved yet
   [0],         // anchor 1: Frequency moved in stage 1
-  [0, 4],      // anchor 2: Frequency + Responsiveness moved in stage 2
-  [1, 3],      // anchor 3: Recency + Density moved in stage 3
-  [2, 3, 4],   // anchor 4: Velocity + Density + Responsiveness moved in stage 4
-  [2, 0, 3],   // anchor 5: Velocity + Frequency + Density moved in stage 5
+  [0, 3],      // anchor 2: Frequency + Responsiveness moved in stage 2
+  [1, 4],      // anchor 3: Recency + Density moved in stage 3
+  [2, 4, 3],   // anchor 4: Value + Density + Responsiveness moved in stage 4
+  [2, 0, 4],   // anchor 5: Value + Frequency + Density moved in stage 5
 ]
 
 const PULSE_DELAY_MS = 200

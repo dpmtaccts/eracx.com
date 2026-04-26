@@ -124,7 +124,7 @@ export default function Evidence() {
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">05 &nbsp; Evidence</div>
+            <div className="eyebrow">06 &nbsp; Evidence</div>
             <h2 className="section-h2">
               The numbers<br />
               <span className="slab">

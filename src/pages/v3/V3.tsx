@@ -10,6 +10,7 @@ import StagingLayout from '../../components/StagingLayout'
 import Nav from '../../components/v3/Nav'
 import Hero from '../../components/v3/Hero'
 import Thesis from '../../components/v3/Thesis'
+import FrvrdSection from '../../components/v3/FrvrdSection'
 import LoopHalo from '../../components/v3/LoopHalo'
 import HowItWorks from '../../components/v3/HowItWorks'
 import SignalRiver from '../../components/v3/SignalRiver'
@@ -26,6 +27,7 @@ export default function V3() {
       <Nav />
       <Hero />
       <Thesis />
+      <FrvrdSection />
       <LoopHalo />
       <HowItWorks />
       <SignalRiver />

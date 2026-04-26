@@ -44,7 +44,7 @@ export default function HowItWorks() {
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">03 &nbsp; How it works</div>
+            <div className="eyebrow">04 &nbsp; How it works</div>
             <h2 className="section-h2">
               Five touches.<br />
               <span className="slab">Six weeks.</span>
