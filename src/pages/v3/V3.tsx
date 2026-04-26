@@ -11,13 +11,14 @@ import Nav from '../../components/v3/Nav'
 import Hero from '../../components/v3/Hero'
 import Thesis from '../../components/v3/Thesis'
 import FrvrdSection from '../../components/v3/FrvrdSection'
-import LoopHalo from '../../components/v3/LoopHalo'
 import HowItWorks from '../../components/v3/HowItWorks'
 import SignalRiver from '../../components/v3/SignalRiver'
+import Loop from '../../components/v3/Loop'
 import Evidence from '../../components/v3/Evidence'
 import PointOfView from '../../components/v3/PointOfView'
-import Operators from '../../components/v3/Operators'
-import Contact from '../../components/v3/Contact'
+import WhatToExpect from '../../components/v3/WhatToExpect'
+import Team from '../../components/v3/Team'
+import StartHere from '../../components/v3/StartHere'
 import Footer from '../../components/v3/Footer'
 import Fixer from '../../components/v3/Fixer'
 
@@ -28,13 +29,14 @@ export default function V3() {
       <Hero />
       <Thesis />
       <FrvrdSection />
-      <LoopHalo />
       <HowItWorks />
       <SignalRiver />
+      <Loop />
       <Evidence />
       <PointOfView />
-      <Operators />
-      <Contact />
+      <WhatToExpect />
+      <Team />
+      <StartHere />
       <Footer />
       <Fixer />
     </StagingLayout>

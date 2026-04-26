@@ -1,4 +1,5 @@
-// Contact.tsx — §05 section for the /v3 staging homepage.
+// StartHere.tsx — §10 section for the /v3 staging homepage.
+// Renamed from Contact in commit 11; same form + meta tiles.
 // Dark ink section, two-column grid. Left: eyebrow + headline + sub + 3
 // meta tiles. Right: the contact form.
 //
@@ -11,7 +12,7 @@ import { useState, type FormEvent } from 'react'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
-export default function Contact() {
+export default function StartHere() {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState<string>('')
 
@@ -45,7 +46,7 @@ export default function Contact() {
         <div className="cta-grid">
           <div>
             <div className="eyebrow" style={{ color: '#C4D5DE' }}>
-              09 &nbsp; Start here
+              10 &nbsp; Start here
             </div>
             <h2>
               Map the signals<br />

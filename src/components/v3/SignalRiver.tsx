@@ -42,7 +42,7 @@ export default function SignalRiver() {
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">05 &nbsp; Signal catalog</div>
+            <div className="eyebrow">04 &nbsp; Signal catalog</div>
             <h2 className="section-h2">
               Twenty-four signals,<br />
               <span className="slab">constantly listening.</span>

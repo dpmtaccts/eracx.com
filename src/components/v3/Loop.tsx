@@ -1,10 +1,9 @@
-// LoopHalo.tsx — §02 centerpiece for the /v3 staging homepage.
+// Loop.tsx — §05 centerpiece for the /v3 staging homepage.
 // Two-column layout at desktop (loop diagram on left, interactive stage
-// detail card on right). Stacks on mobile. Loop is a concentric three-ring
-// SVG: hairline outer Halo ring, middle Loop ring with 9 evenly-spaced
-// stage nodes, inner negative space. Halo annotation lives outside the
-// outer ring (top-right at desktop, above on mobile) — Tufte-style minimal
-// ink. Card content updates on click/dot/keyboard. No auto-advance.
+// detail card on right). Stacks on mobile. Single ring with 9 evenly-
+// spaced stage nodes. Card content updates on click/dot/keyboard. No
+// auto-advance. The prior outer "Halo" ring + annotation + channel list
+// were removed in commit 11.
 
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 
@@ -131,7 +130,7 @@ const STAGES: Stage[] = [
     overline: 'TRUST',
     claim: "Stays useful when they're not ready.",
     body:
-      "Buyers who aren't buying this quarter still need value. Halo posts, AEO content, peer intros. Warmth that compounds.",
+      "Buyers who aren't buying this quarter still need value. LinkedIn posts, AEO content, peer intros. Warmth that compounds.",
     paths: nurturePaths,
   },
   {
@@ -160,7 +159,7 @@ const STAGES: Stage[] = [
   },
 ]
 
-export default function LoopHalo() {
+export default function Loop() {
   const [active, setActive] = useState(0)
   const sectionRef = useRef<HTMLElement | null>(null)
   const [inView, setInView] = useState(false)
@@ -196,7 +195,6 @@ export default function LoopHalo() {
   // Geometry — viewBox 720x720, center (360, 360).
   const cx = 360
   const cy = 360
-  const rOuter = 320
   const rInner = 220
   const rLoop = 270
   const nodeR = 32
@@ -210,22 +208,18 @@ export default function LoopHalo() {
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">03 &nbsp; The system</div>
+            <div className="eyebrow">05 &nbsp; The loop</div>
             <h2 className="section-h2">
-              Run loops, not campaigns.<br />
-              <span className="slab">Halo makes them visible.</span>
+              Run loops, not campaigns.
             </h2>
           </div>
           <p className="section-lede">
-            Nine stages compound into warmth. Halo is the upper-funnel layer
-            that amplifies the loop across LinkedIn, AEO, PR, and events.{' '}
-            <strong>Signals from every stage feed back into the system.</strong>
+            Nine stages, end to end. From detect to retain.{' '}
+            <strong>
+              Each stage feeds the next, and warmth compounds across all of
+              them.
+            </strong>
           </p>
-        </div>
-
-        {/* Mobile-only halo annotation, single line above the diagram */}
-        <div className="loop-halo-mobile" aria-hidden="true">
-          HALO &middot; LinkedIn &middot; AEO &middot; PR &middot; Events
         </div>
 
         <div className="loop-layout">
@@ -235,19 +229,9 @@ export default function LoopHalo() {
               viewBox="0 0 720 720"
               xmlns="http://www.w3.org/2000/svg"
               role="img"
-              aria-label="ERA loop with Halo amplification ring"
+              aria-label="ERA loop, nine stages"
             >
-              {/* Halo outer ring: hairline stroke, very subtle fill */}
-              <circle
-                cx={cx}
-                cy={cy}
-                r={rOuter}
-                fill="var(--bg-alt)"
-                fillOpacity="0.4"
-                stroke="var(--accent)"
-                strokeWidth="1"
-              />
-              {/* Inner ring */}
+              {/* Inner reference ring — keeps the nodes visually anchored */}
               <circle
                 cx={cx}
                 cy={cy}
@@ -316,14 +300,6 @@ export default function LoopHalo() {
                 )
               })}
             </svg>
-
-            {/* Desktop-only halo annotation, top-right outside the ring */}
-            <div className="loop-halo-annotation" aria-hidden="true">
-              <div className="loop-halo-mark">HALO</div>
-              <div className="loop-halo-channels">
-                LinkedIn &middot; AEO &middot; PR &middot; Events
-              </div>
-            </div>
           </div>
 
           <div className="loop-card" aria-live="polite">

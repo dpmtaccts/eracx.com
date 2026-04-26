@@ -1,4 +1,5 @@
-// Operators.tsx — §06 section for the /v3 staging homepage.
+// WhatToExpect.tsx — §08 section for the /v3 staging homepage.
+// Renamed from Operators in commit 11; same three-phase content.
 // Three-phase ongoing program structure (Design+Install / First Results /
 // Infrastructure Compounds). Replaces the prior Gantt-style timeline.
 // A horizontal timeline with three open-circle node markers sits above the
@@ -52,22 +53,21 @@ const PHASES: Phase[] = [
   },
 ]
 
-export default function Operators() {
+export default function WhatToExpect() {
   return (
-    <section id="operators">
+    <section id="what-to-expect">
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">07 &nbsp; Operators</div>
+            <div className="eyebrow">08 &nbsp; What to expect</div>
             <h2 className="section-h2">
-              Compounding,<br />
-              <span className="slab">not linear.</span>
+              What the first year<br />
+              <span className="slab">looks like.</span>
             </h2>
           </div>
           <p className="section-lede">
-            This is <strong>infrastructure, not a sprint.</strong> The system
-            compounds. The return in month ten is structurally different from
-            month three.
+            <strong>Three phases. Twelve months.</strong> Compounding warmth
+            across your highest-value accounts.
           </p>
         </div>
 

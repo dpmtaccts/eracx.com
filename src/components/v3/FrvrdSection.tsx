@@ -9,9 +9,10 @@
 //   - BuildingFrvrdRadar:  noise → highlighted FRVRD dots → migrate
 //                          to pentagon → polygon completes; cold→warm
 //                          color shift across the layer.
-//   - FrvrdSlotWord:       slot-machines through Noise / Signal /
-//                          Warmth.
-//   - FrvrdSubtitle:       three matching subtitles.
+//   - Static headline:     "Five signals turn noise into pipeline."
+//                          Color lerps cold→warm with scrollProgress.
+//   - Static subtitle:     "FRVRD measures warmth across every named
+//                          account..."
 //   - FrvrdDimensionPanel: five dimension definitions, one per dot
 //                          arrival window.
 //   - Bottom progress bar: continuous fill on a cold→warm gradient.
@@ -22,9 +23,32 @@
 
 import { useEffect, useRef, useState } from 'react'
 import BuildingFrvrdRadar, { VERTICES } from './BuildingFrvrdRadar'
-import FrvrdSlotWord from './FrvrdSlotWord'
-import FrvrdSubtitle from './FrvrdSubtitle'
 import FrvrdDimensionPanel from './FrvrdDimensionPanel'
+
+// Color stops for the static headline — same arc as the radar layer
+// so the word reaches magenta at the end of the section.
+const WORD_STOPS: { p: number; rgb: [number, number, number] }[] = [
+  { p: 0.0, rgb: [53, 80, 95] }, // deep steel
+  { p: 0.7, rgb: [53, 80, 95] }, // hold
+  { p: 1.0, rgb: [196, 74, 122] }, // hot magenta
+]
+
+function wordColorAt(progress: number): string {
+  const x = Math.max(0, Math.min(1, progress))
+  for (let i = 0; i < WORD_STOPS.length - 1; i++) {
+    const a = WORD_STOPS[i]
+    const b = WORD_STOPS[i + 1]
+    if (x <= b.p) {
+      const t = (x - a.p) / Math.max(1e-6, b.p - a.p)
+      const r = Math.round(a.rgb[0] + (b.rgb[0] - a.rgb[0]) * t)
+      const g = Math.round(a.rgb[1] + (b.rgb[1] - a.rgb[1]) * t)
+      const bl = Math.round(a.rgb[2] + (b.rgb[2] - a.rgb[2]) * t)
+      return `rgb(${r}, ${g}, ${bl})`
+    }
+  }
+  const last = WORD_STOPS[WORD_STOPS.length - 1].rgb
+  return `rgb(${last[0]}, ${last[1]}, ${last[2]})`
+}
 
 interface VertexPos {
   x: number
@@ -136,8 +160,16 @@ export default function FrvrdSection() {
           )}
 
           <div className="frvrd-pinned-text">
-            <FrvrdSlotWord scrollProgress={scrollProgress} />
-            <FrvrdSubtitle scrollProgress={scrollProgress} />
+            <h2
+              className="frvrd-statement"
+              style={{ color: wordColorAt(scrollProgress) }}
+            >
+              Five signals turn noise into pipeline.
+            </h2>
+            <p className="frvrd-statement-sub">
+              FRVRD measures warmth across every named account.
+              Compounding, continuous, scored automatically.
+            </p>
           </div>
 
           <FrvrdDimensionPanel
