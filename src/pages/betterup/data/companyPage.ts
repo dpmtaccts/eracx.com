@@ -23,7 +23,7 @@ export const COMPANY_PAGE = {
 
 export const ALGORITHM_HIERARCHY = {
   headline: 'LinkedIn ranks people over pages.',
-  body: 'Person-to-person posts get 5-10x the organic reach of brand page posts. BetterUp is investing in the company page (241K followers) while the personal profiles of the people closest to the buyer are generating single-digit engagement. The highest-leverage investment is not more company page content. It is activating the humans in the signal chain.',
+  body: 'Person-to-person posts pull five to ten times the organic reach of brand-handle posts, which means BetterUp is pouring effort into its LinkedIn company page (241K followers) while the personal profiles of the people closest to the buyer are stuck at single-digit engagement. The highest-leverage move is not more LinkedIn page content; it is activating the humans in the signal chain.',
   ratio: { person: 10, page: 1 },
   brandReach: 241000,
   topPersonAvgReactions: 270,

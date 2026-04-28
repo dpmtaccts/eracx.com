@@ -28,7 +28,7 @@ export const PHASES: Phase[] = [
     title: 'Content & Executive Activation',
     items: [
       'Executive content calendars for CEO and four additional leaders',
-      'Company page content strategy shift to 40/35/25 funnel mix',
+      'BetterUp\'s LinkedIn company page content strategy shifts to a 40/35/25 funnel mix',
       'Competitive positioning content development',
       'Audience-aligned messaging framework using operational language',
       'Coach ambassador program design',

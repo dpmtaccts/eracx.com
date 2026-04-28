@@ -61,10 +61,22 @@ function ExecutiveSummary() {
         >
           Revenue Signal Audit · {COMPANY.date}
         </div>
+        <p
+          style={{
+            fontFamily: FONT.body,
+            fontSize: 15,
+            lineHeight: 1.6,
+            color: '#6B6760',
+            margin: '0 0 28px',
+            maxWidth: 720,
+          }}
+        >
+          This report analyzes how BetterUp's brand, content, leadership presence, and go-to-market signals are being received and interpreted across LinkedIn, review platforms, competitive analysis, audience intelligence, and generative AI search. It maps where those signals connect to pipeline and where they break.
+        </p>
         <img
           src="/images/betterup/bu_logo_black.svg"
           alt="BetterUp"
-          style={{ height: 'clamp(48px, 6vw, 72px)', width: 'auto', display: 'block', marginTop: 8 }}
+          style={{ height: 'clamp(48px, 6vw, 72px)', width: 'auto', display: 'block' }}
         />
         <h1 style={{ position: 'absolute', left: -9999 }}>BetterUp</h1>
       </Reveal>
@@ -104,7 +116,7 @@ function BentoHero() {
     >
       <BentoGaugeTile
         onClick={() => goto('cascade')}
-        label="Brand Conviction Cascade"
+        label="Brand Cascade"
         score={41}
         benchmark={57}
         benchmarkLabel="category avg"
@@ -128,7 +140,7 @@ function BentoHero() {
       />
 
       <BentoTile onClick={() => goto('cascade')} column="span 6" tone="light">
-        <BentoEyebrow>Where the conviction breaks</BentoEyebrow>
+        <BentoEyebrow>Where the cascade breaks</BentoEyebrow>
         <CascadeBreakVisual />
       </BentoTile>
 
@@ -179,7 +191,7 @@ function BentoHero() {
             marginTop: 10,
           }}
         >
-          "A category pioneer leaking pipeline not because the product fails, but because the go-to-market doesn't carry the conviction far enough."
+          "A category pioneer leaking pipeline not because the product fails, but because the CEO talks about human potential while the sales team has zero content addressing the CHRO's Monday morning budget meeting."
         </div>
       </BentoTile>
     </div>
@@ -556,7 +568,7 @@ function AIMirror() {
     <Section id="mirror">
       <SectionHeader
         kicker="The AI Mirror"
-        headline="When your buyer asks an AI about you, does the answer reflect your conviction or your cascade failure?"
+        headline="When your buyer asks an AI about you, does the answer help or hurt?"
         shareId="mirror"
       />
 
