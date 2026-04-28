@@ -14,9 +14,9 @@ export const COMPANY = {
 
 export const HERO_GAUGES = [
   {
-    label: 'Brand Conviction Cascade',
+    label: 'Brand Cascade',
     score: 41,
-    description: 'Does what you believe flow through everything you do?',
+    description: 'Does what you believe show up in what you do?',
   },
   {
     label: 'GTM Signal Chain',
@@ -34,7 +34,8 @@ export const CORE_FINDING_PARAGRAPHS: string[] = [
   'BetterUp built something real. The coaching delivers outcomes users call transformative, the AI was developed with patience and rigor no competitor can match, and the behavioral science underneath it all is legitimate.',
   'None of that is in question.',
   'What\'s in question is whether any of it reaches the buyer before the deal is lost.',
-  'The CEO speaks in philosophy when the CHRO needs a business case for Monday morning. The company page talks to people who already believe, not the budget holders who don\'t. The sellers and account managers closest to the customer are invisible on LinkedIn, or worse, reinforcing a narrative the brand can\'t afford.',
+  'The CEO speaks in philosophy when the CHRO needs a business case for Monday morning. When Alexi posts about "inner work" and "human potential," there is genuine overlap with what CHROs care about, but the translation is missing. The CHRO reading that post needs it to land as "coaching reduced our leadership turnover by 23% in 12 months," not "the path to performance runs through purpose." The insight is real. The language isn\'t doing the work.',
+  'BetterUp\'s LinkedIn company page talks to people who already believe, not the budget holders who don\'t. The sellers and account managers closest to the customer are invisible on LinkedIn, or worse, reinforcing a narrative the brand can\'t afford.',
   'When a CHRO asks an AI about BetterUp, it reads everything: the Glassdoor scores, the coach complaints, the pricing speculation, the competitor comparison pages. It synthesizes all of it into one answer balanced toward caution.',
 ]
 
@@ -42,7 +43,7 @@ export const PULL_QUOTE_1 =
   'What\'s in question is whether any of it reaches the buyer before the deal is lost.'
 
 export const PULL_QUOTE_2 =
-  'A category pioneer leaking pipeline not because the product fails, but because the go-to-market doesn\'t carry the conviction far enough.'
+  'A category pioneer leaking pipeline not because the product fails, but because the CEO talks about human potential while the sales team has zero content addressing the CHRO\'s Monday morning budget meeting.'
 
 /* Retained for the Summary page (single-paragraph version). */
 export const CORE_FINDING = CORE_FINDING_PARAGRAPHS.join(' ')

@@ -28,7 +28,7 @@ export const GTM_COMPOSITE_SCORE = 24
 
 export const GTM_HEADLINE = 'Your buyer encounters your brand through people, not through pages, and the people they meet on the way to a purchase decision are deciding whether the rest of the conversation is worth having.'
 
-export const GTM_REFRAME = `This is less a CEO LinkedIn audit than a survey of the entire human surface area BetterUp presents to a buyer in due diligence. The question worth asking is not whether one executive is posting well, but whether the chain of people a CHRO will inevitably encounter (the CEO, the marketing leader, the seller assigned to the account, the account manager who will own the relationship after close, the coaches who will deliver the work, the client champions whose names appear in case studies) collectively builds the conviction the product deserves. Across six profiles and several months of activity, the chain is broken in nearly every link, and the breakage is consistent enough to read as a pattern rather than a personal failure.`
+export const GTM_REFRAME = `This is less a CEO LinkedIn audit than a survey of the entire human surface area BetterUp presents to a buyer in due diligence. The question worth asking is not whether any one executive is posting well, but whether the chain of people a CHRO will inevitably encounter — the CEO, the marketing leader, the seller assigned to the account, the account manager who will own the relationship after close, the coaches who will deliver the work, the client champions whose names appear in the case studies — collectively builds the trust the product deserves. Across six profiles and several months of activity, the chain breaks in nearly every link, and the pattern is consistent enough to read as design rather than personal failure.`
 
 export const CHANNELS: GTMChannel[] = [
   {
@@ -125,7 +125,7 @@ export const CHANNELS: GTMChannel[] = [
     threeThings: [
       'Post one client outcome story per month, anonymized if needed. "A Fortune 500 CHRO told me..." is more valuable than any company repost.',
       'Comment on three to five CHRO or CLO posts per week. Substantive comments (50+ words) that demonstrate understanding of their challenges.',
-      'Share the "why BetterUp" story in his own words. Not the company page version. His version, informed by the conversations he has with buyers every day.',
+      'Share the "why BetterUp" story in his own words. Not the LinkedIn page version. His version, informed by the conversations he has with buyers every day.',
     ],
   },
   {

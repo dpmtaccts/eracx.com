@@ -22,7 +22,7 @@ export const CURRENT_RETURNS = [
 export const CONNECTED_CHANGES = [
   'CEO content shifts from philosophy to outcome language. CHRO engagement rises.',
   '5-7 executives carrying the brand, not just the CEO. Distributed trust.',
-  'Company page funnel mix shifts to 40/35/25. Consideration content reaches undecided buyers.',
+  'BetterUp\'s LinkedIn company page funnel mix shifts to 40/35/25, and consideration content begins reaching the undecided buyers it was meant for.',
   'Competitive positioning content published. BetterUp owns the comparison narrative.',
   'Coach ambassador program launched. 4,000 organic advocates instead of 4,000 detractors.',
   'Pricing transparency introduced. Self-directed buyer research unblocked.',
@@ -31,7 +31,7 @@ export const CONNECTED_CHANGES = [
 ]
 
 export const PROJECTED_IMPACT = [
-  { label: 'Brand Conviction Cascade', current: 41, projected: 62 },
+  { label: 'Brand Cascade', current: 41, projected: 62 },
   { label: 'GTM Signal Chain',         current: 24, projected: 58 },
   { label: 'Content-to-Pipeline',      current: 29, projected: 55 },
   { label: 'AI Mirror',                current: 38, projected: 58 },

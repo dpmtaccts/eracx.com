@@ -40,6 +40,18 @@ export function SummaryView() {
             <div style={{ fontFamily: FONT.mono, fontSize: 13, color: palette.textMuted }}>
               {COMPANY.url} · {COMPANY.date}
             </div>
+            <p
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 15,
+                lineHeight: 1.6,
+                color: palette.textMuted,
+                marginTop: 20,
+                maxWidth: 720,
+              }}
+            >
+              This report analyzes how BetterUp's brand, content, leadership presence, and go-to-market signals are being received, interpreted, and discussed across LinkedIn, review platforms, competitive analysis, audience intelligence, and generative AI search. It maps where those signals connect to pipeline and where they break.
+            </p>
           </div>
         </Reveal>
 
@@ -98,7 +110,7 @@ export function SummaryView() {
 
         {/* Cascade scores */}
         <Reveal>
-          <SectionLabel palette={palette}>Brand Conviction Cascade</SectionLabel>
+          <SectionLabel palette={palette}>Brand Cascade</SectionLabel>
           <div
             style={{
               background: palette.card, border: `1px solid ${palette.border}`,
@@ -149,8 +161,8 @@ export function SummaryView() {
             <div style={{ flex: 1, minWidth: 240 }}>
               <p style={{ fontFamily: FONT.body, fontSize: 14, lineHeight: 1.6, color: palette.textMuted, margin: 0 }}>
                 Across six profiles closest to the buyer (CEO, marketing leadership, sales, account management,
-                coaches, client champions), the conviction that drives the product does not show up where the
-                buyer looks.
+                coaches, client champions), what drives the product does not show up where the
+                buyer is looking.
               </p>
               <div
                 style={{

@@ -1,6 +1,6 @@
 export const AI_MIRROR_SCORE = 38
 
-export const AI_MIRROR_CONTEXT = `An increasing share of enterprise buyers now begin a vendor evaluation by typing a question into ChatGPT, Claude, Perplexity, or Google's AI Overview, and the answer they receive is not a recitation of BetterUp's marketing copy. It is a composite the model assembles in real time from the website, Glassdoor, G2, press archives, competitor comparison pages, LinkedIn, Reddit, and analyst commentary, weighted by what the broader internet appears to believe. For a CHRO weighing a platform priced north of $499 per seat, that composite is often the first impression of BetterUp she will form, and she will form it before anyone in your sales organization has a chance to shape it.`
+export const AI_MIRROR_CONTEXT = `More enterprise buyers now begin a vendor evaluation by typing a question into ChatGPT, Claude, Perplexity, or Google's AI Overview, and the answer that comes back is not a recitation of BetterUp's marketing copy. The model assembles a composite in real time from the website, Glassdoor, G2, press archives, competitor comparison pages, LinkedIn, Reddit, and analyst commentary, weighted by whatever the broader internet appears to believe. For a CHRO weighing a platform priced north of $499 per seat, that composite is often the first impression she will form of BetterUp, and she forms it before anyone on your sales team has a chance to shape it.`
 
 export const WANTS_TO_SAY = [
   'Category pioneer in digital coaching',
@@ -23,7 +23,7 @@ export const ACTUALLY_SAYS = [
   { tone: 'summary', text: 'Net AI impression: strong product, questionable organizational integrity, proceed with caution.' },
 ] as const
 
-export const WHY_IT_MATTERS = `What the AI does, in effect, is collapse every layer of the cascade into a single paragraph delivered to your buyer at the worst possible moment, which is before she has met you. The product conviction in Layer 3 shows up as praise; the frontline failure in Layer 4 shows up as a counterweight, and the model balances them honestly. There is no version of this in which the model can be argued with or briefed; it reads what is publicly true and reports it back, and the only real lever you have is to change what it can read.`
+export const WHY_IT_MATTERS = `What the AI does, in effect, is collapse every layer of the cascade into a single paragraph and hand it to your buyer at the worst possible moment, before anyone on your team has met her. The product strength in Layer 3 shows up as praise, the frontline failure in Layer 4 shows up as a counterweight, and the model balances the two honestly. The model cannot be argued with or briefed; it reads what is publicly true and reports it back, which means the only lever you actually have is to change what it can read.`
 
 export const TEST_QUERIES = [
   'Tell me about BetterUp',
