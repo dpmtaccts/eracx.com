@@ -1,0 +1,145 @@
+{
+  "client_slug": "roesler",
+  "version": "seed",
+  "_version_note": "Seed = generated from skill file + transcript before Stephen completes voice discovery. Replaced by 'calibrated' version after discovery.",
+  "generated_from": [
+    "/data/roesler/stephen_voice_skill.md",
+    "Justin/Stephen call transcript 2026-04-17",
+    "miniac.com/projects/pro-viz article"
+  ],
+  "generated_at": "2026-04-28",
+  "confidence_overall": "low_to_moderate",
+  "_confidence_note": "Seed values are inferred, not chosen. Discovery overrides any of these on completion. Treat as a starting hypothesis, not a profile.",
+
+  "preferences": {
+    "hook_type": {
+      "preference": "statement",
+      "confidence": "moderate",
+      "_note": "Pro-Viz article opens with declaratives. Transcript has Stephen using rhetorical-question-then-answer structure occasionally. Default to statement, let discovery confirm."
+    },
+    "entry_mode": {
+      "preference": "professional_observation",
+      "confidence": "moderate",
+      "_note": "Stephen has not posted personal stories on LinkedIn. Pro-Viz reads as professional observation. Personal mode may emerge in discovery."
+    },
+    "specificity_of_opening": {
+      "preference": "named_specific",
+      "confidence": "strong",
+      "_note": "Three frames in an edit suite. A teenager learns to drive in twenty hours. San Vicente in Tribeca. Pattern is consistent."
+    },
+    "tension_vs_clarity": {
+      "preference": "clarity_first",
+      "confidence": "moderate",
+      "_note": "Pro-Viz article leads with the point. Stephen on the call also leads with the answer then explains. May modulate to tension on AGI/AI commentary posts."
+    },
+    "sentence_rhythm": {
+      "preference": "flowing",
+      "confidence": "strong",
+      "_note": "Stephen explicit on April 17 call: 'I write longer sentences with commas. I like to breathe and think. I think like that.' Strong signal."
+    },
+    "evidence_style": {
+      "preference": "anecdote",
+      "confidence": "moderate",
+      "_note": "Pro-Viz article mixes anecdote with light data (the Super Bowl spot, the founder approval). Lean anecdote, allow blend on industry posts."
+    },
+    "vulnerability_depth": {
+      "preference": "surface",
+      "confidence": "low",
+      "_note": "No data. Stephen has not posted vulnerable content. Discovery is the only way to find this. Default to surface to avoid forcing."
+    },
+    "expertise_display": {
+      "preference": "implicit_narrative",
+      "confidence": "moderate",
+      "_note": "Stephen does not credentialize on the call. Lets the work speak. 'I never wanted to be an email guy' shows experience through admission, not title."
+    },
+    "complexity_handling": {
+      "preference": "holds_complexity",
+      "confidence": "strong",
+      "_note": "JEPA reference, ARC-AGI test, Pro-Viz technical depth. Stephen trusts the reader. Does not oversimplify."
+    },
+    "closing_style": {
+      "preference": "takeaway",
+      "confidence": "moderate",
+      "_note": "Pro-Viz article lands on 'It needs more certainty.' Calendar drafts land on observations. Closer to takeaway than open-ended."
+    },
+    "call_to_engagement": {
+      "preference": "no_explicit_ask",
+      "confidence": "strong",
+      "_note": "Anti-rule from skill file. Hard preference. Exception is the AICP community post."
+    },
+    "last_line_energy": {
+      "preference": "reflective",
+      "confidence": "moderate",
+      "_note": "'See you there.' 'It needs more certainty.' 'That conversation is the film.' All reflective, not forward-driving."
+    },
+    "humor": {
+      "preference": "dry_understated",
+      "confidence": "moderate",
+      "_note": "Stephen swears in person and is dryly self-deprecating ('I never wanted to be an email guy'). On LinkedIn this should translate to dry observation, not punchlines."
+    },
+    "audience_relationship": {
+      "preference": "peer",
+      "confidence": "strong",
+      "_note": "Stephen is a working co-founder talking to other working creatives. Never mentor or guide. Skill file anti-rule confirms."
+    },
+    "register": {
+      "preference": "conversational",
+      "confidence": "moderate",
+      "_note": "Pro-Viz article is more polished than the transcript. Default to conversational, allow polished on BOFU posts."
+    }
+  },
+
+  "funnel_overrides": {
+    "tofu": {
+      "vulnerability_depth": "moderate",
+      "_note": "TOFU posts (texture, dinner photos, set photos) earn permission for slightly more personal entry. Still surface-level until discovery confirms otherwise.",
+      "evidence_style": "anecdote",
+      "specificity": "named_specific",
+      "entry_mode": "professional_observation"
+    },
+    "mofu": {
+      "expertise_display": "blend",
+      "evidence_style": "blend",
+      "complexity_handling": "holds_complexity",
+      "_note": "MOFU posts (Pro-Viz thesis, JEPA, three frames) can blend anecdote with light technical reference."
+    },
+    "bofu": {
+      "vulnerability_depth": "surface",
+      "specificity": "named_specific",
+      "register": "polished",
+      "call_to_engagement": "soft_invitation",
+      "_note": "BOFU is community/AICP. Soft invitations OK (drop their name below). Stay specific (named people, named venues)."
+    }
+  },
+
+  "neither_flags": [],
+  "_neither_note": "Empty in seed. Populated when Stephen rejects both options on a discovery round.",
+
+  "draft_prompt_natural_language": [
+    "Open with a statement, not a question. Use a question-then-answer structure occasionally if the topic warrants it.",
+    "Lead with a specific scene, number, or named place. Three frames. Twenty hours. San Vicente.",
+    "Lead with the point first, then explain. Reserve tension-first openings for AGI or AI commentary.",
+    "Write longer flowing sentences with commas. Avoid short punchy fragments.",
+    "Build credibility through anecdote and observation, not data dumps. Allow light data on industry posts.",
+    "Keep vulnerability surface-level until calibrated otherwise. No forced personal stories.",
+    "Show expertise through what Stephen noticed, not by stating credentials.",
+    "Trust the reader to handle complexity. Do not oversimplify technical references like JEPA or ARC-AGI.",
+    "End on a takeaway that lands. Reflective, not forward-driving.",
+    "No explicit engagement asks. Exception is the AICP community post.",
+    "Last line should carry weight, not push to action.",
+    "Dry, understated humor. Self-aware, not self-deprecating-as-performance.",
+    "Peer-to-peer. Never mentor, never teacher, never guide.",
+    "Conversational register. Slightly more polished on community-facing or AICP posts."
+  ],
+
+  "hard_rules": [
+    "No em dashes.",
+    "No three or more short declarative sentences in a row.",
+    "No filler intros.",
+    "No thought-leadership framing.",
+    "No business-tie-in endings.",
+    "No buzzwords.",
+    "No CTAs except the AICP community post.",
+    "Under 250 words for original posts. Under 80 words for comments. Under 30 words for texture-post captions."
+  ]
+}

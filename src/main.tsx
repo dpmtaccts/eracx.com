@@ -27,6 +27,9 @@ import V4TimelineRibbon from './pages/staging/V4TimelineRibbon.tsx'
 import V5ExpandingCards from './pages/staging/V5ExpandingCards.tsx'
 import V2OperatingSystem from './pages/V2OperatingSystem/index.tsx'
 import V3 from './pages/v3/V3.tsx'
+import RoeslerHalo from './pages/halo/RoeslerHalo.tsx'
+import RoeslerVoice from './pages/halo/RoeslerVoice.tsx'
+import RoeslerDashboard from './pages/halo/RoeslerDashboard.tsx'
 
 posthog.init(import.meta.env.VITE_PUBLIC_POSTHOG_TOKEN, {
   api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
@@ -63,6 +66,9 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/linkedin" element={<LinkedIn />} />
         <Route path="/audit/navalentsummary" element={<NavalentSummary />} />
         <Route path="/audit/vik" element={<VikAudit />} />
+        <Route path="/halo/roesler" element={<RoeslerHalo />} />
+        <Route path="/halo/roesler/voice" element={<RoeslerVoice />} />
+        <Route path="/halo/roesler/calendar" element={<RoeslerDashboard />} />
       </Routes>
     </BrowserRouter>
     </PostHogErrorBoundary>

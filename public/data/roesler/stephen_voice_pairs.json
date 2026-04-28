@@ -1,0 +1,287 @@
+{
+  "client_slug": "roesler",
+  "version": "v1",
+  "_design_note": "15 rounds total. 5 use Stephen's actual calendar drafts as Option A vs deliberately wrong-flavor variants as Option B. 10 use the generic Halo defaults from spec section 4. Stephen-specific rounds are weighted 1.5x in voice_state calibration because they test his real content directly.",
+
+  "rounds": [
+    {
+      "round": 1,
+      "dimension": "hook_type",
+      "source": "stephen_specific",
+      "calendar_post_reference": 1,
+      "_test_note": "Pro-Viz post in two flavors. A = statement (current draft). B = question hook variant. Stephen seed says statement; this confirms or flips.",
+      "option_a": {
+        "label": "A",
+        "post_text": "Films are a 4D experience and the industry has been pitching them with 1D tools for fifty years.\n\nWidth, height, depth, time. That is a film. We walk into the boardroom with a mood board and a paragraph and ask a CMO to imagine the rest. That is a hard ask.",
+        "tags": ["statement_hook", "declarative_open"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "Why do so many good ideas die between approval and bid?\n\nIt is not because the idea was bad. It is because the people approving it never had a way to actually see it. We walk into boardrooms with a mood board and a paragraph and ask a CMO to imagine the rest.",
+        "tags": ["question_hook", "rhetorical_open"]
+      },
+      "weight": 1.5
+    },
+    {
+      "round": 2,
+      "dimension": "sentence_rhythm",
+      "source": "stephen_specific",
+      "calendar_post_reference": 8,
+      "_test_note": "Three Frames post. A = current flowing rhythm. B = staccato three-short-sentence variant. The B option is what the AI tells in Stephen's anti-rules look like. Strong test for the flowing preference.",
+      "option_a": {
+        "label": "A",
+        "post_text": "Spent a Tuesday afternoon in an edit suite watching a director and an editor argue over a three-frame cut. A tenth of a second.\n\nThat tenth of a second was the difference between a spot that lands and one that does not.",
+        "tags": ["flowing_rhythm", "comma_construction"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "Watched a director argue over three frames today. A tenth of a second. That argument was the film.\n\nNo AI is having that conversation. None of them know why three frames matter. The conversation is the work.",
+        "tags": ["short_punchy", "fragmented_rhythm"]
+      },
+      "weight": 1.5
+    },
+    {
+      "round": 3,
+      "dimension": "specificity_of_opening",
+      "source": "stephen_specific",
+      "calendar_post_reference": 6,
+      "_test_note": "JEPA post. A = named-specific opening (twenty hours, gravity, momentum). B = thematic-generalizable opening. Tests if Stephen actually wants the specifics or if I overshot.",
+      "option_a": {
+        "label": "A",
+        "post_text": "A teenager learns to drive in about twenty hours. They do not need to crash into a thousand trees to know that hitting a tree is bad. They have a world model. They understand gravity, weight, and momentum before they ever touch the wheel.",
+        "tags": ["named_specific", "concrete_numbers"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "Humans learn the physical world before they ever try to operate inside it. We know how things fall, how things break, what happens when force meets mass. AI models do not. That is the gap nobody talks about.",
+        "tags": ["thematic_generalizable", "abstract_framing"]
+      },
+      "weight": 1.5
+    },
+    {
+      "round": 4,
+      "dimension": "closing_style",
+      "source": "stephen_specific",
+      "calendar_post_reference": 1,
+      "_test_note": "Pro-Viz close. A = current takeaway-on-certainty. B = open-question close. Strong test for whether Stephen wants a clear point or invites the reader's interpretation.",
+      "option_a": {
+        "label": "A",
+        "post_text": "It works because it solves an old problem, not because it is new. The boardroom does not need more AI. It needs more certainty.",
+        "tags": ["clear_takeaway", "conclusive_close"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "It is solving an old problem with new tools. The boardroom is changing because of it. Where else in the industry does certainty matter more than novelty?",
+        "tags": ["open_question_close", "invites_response"]
+      },
+      "weight": 1.5
+    },
+    {
+      "round": 5,
+      "dimension": "vulnerability_depth",
+      "source": "stephen_specific",
+      "calendar_post_reference": 4,
+      "_test_note": "Where Good Ideas Go to Die. A = professional observation (current). B = personal admission variant. This is the dimension I have lowest confidence on in the seed. Discovery should produce a real signal.",
+      "option_a": {
+        "label": "A",
+        "post_text": "Good ideas almost never die in the brief. They die in the thirty days between creative approval and bid.\n\nSomeone asks for a small change that kills the moment. Someone else asks for another. By the time pre-pro starts the spot is not the spot anymore.",
+        "tags": ["professional_observation", "third_person_industry"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "I lost a spot last year that I still think about. Not on set. In a conference room, three weeks before the shoot, when the fifth small revision came in. By the time we got to the bid, the thing I had pitched was gone. The version we shot was fine. It was not the spot.",
+        "tags": ["personal_admission", "first_person_specific"]
+      },
+      "weight": 1.5
+    },
+    {
+      "round": 6,
+      "dimension": "tension_vs_clarity",
+      "source": "halo_default",
+      "_test_note": "Generic from spec section 4 round 4. Tests if Stephen leads with the point or builds tension first.",
+      "option_a": {
+        "label": "A",
+        "post_text": "Everyone in our industry is talking about generative video. Almost nobody is asking the right question about it.",
+        "tags": ["tension_first"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "Generative video is changing how spots get pitched, not how they get made. Most of the industry is mixing those two up.",
+        "tags": ["clarity_first"]
+      },
+      "weight": 1.0
+    },
+    {
+      "round": 7,
+      "dimension": "evidence_style",
+      "source": "halo_default",
+      "_test_note": "Anecdote vs data-first. From spec round 6.",
+      "option_a": {
+        "label": "A",
+        "post_text": "We ran a Pro-Viz on a Super Bowl spot for a consumer electronics brand. The founder was about to kill the campaign. After he watched the Pro-Viz he approved it in the same meeting.",
+        "tags": ["anecdote"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "Production companies that adopt AI previz tools report 40 percent faster client approvals and 28 percent lower scope-creep rates in the first six months.",
+        "tags": ["data_first"]
+      },
+      "weight": 1.0
+    },
+    {
+      "round": 8,
+      "dimension": "expertise_display",
+      "source": "halo_default",
+      "_test_note": "Showing vs telling. From spec round 7.",
+      "option_a": {
+        "label": "A",
+        "post_text": "Watching a colorist grade a spot for ninety minutes and only changing six parameters taught me more about restraint than any class would have.",
+        "tags": ["implicit_narrative"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "After fifteen years in production, I have learned that the best directors know exactly when to stop adjusting. Restraint is the most important post skill.",
+        "tags": ["explicit_teaching"]
+      },
+      "weight": 1.0
+    },
+    {
+      "round": 9,
+      "dimension": "complexity_handling",
+      "source": "halo_default",
+      "_test_note": "Holds complexity vs simplifies. From spec round 8.",
+      "option_a": {
+        "label": "A",
+        "post_text": "Generative video models are pixel-probability engines, not world-state engines. They can predict the next likely frame but not the consequences of an action. That distinction is why a glass falling looks plausible and a glass shattering does not.",
+        "tags": ["holds_complexity"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "AI video looks great until you look twice. The reason: it does not understand physics. That is why the realistic stuff still needs a human team behind it.",
+        "tags": ["simplifies"]
+      },
+      "weight": 1.0
+    },
+    {
+      "round": 10,
+      "dimension": "humor",
+      "source": "halo_default",
+      "_test_note": "Dry vs none. From spec round 11.",
+      "option_a": {
+        "label": "A",
+        "post_text": "Got asked again this week when AI is going to make a film. The honest answer is that it cannot reliably do something a fourth grader can do, but I appreciate the optimism.",
+        "tags": ["dry_understated"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "There is widespread misunderstanding about generative video capabilities. Current models cannot perform tasks that elementary-age children handle easily.",
+        "tags": ["no_humor"]
+      },
+      "weight": 1.0
+    },
+    {
+      "round": 11,
+      "dimension": "audience_relationship",
+      "source": "halo_default",
+      "_test_note": "Peer vs guide. From spec round 12.",
+      "option_a": {
+        "label": "A",
+        "post_text": "Most people in our industry are figuring this out at the same time. The ones who admit it usually get further.",
+        "tags": ["peer"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "If you are leading a creative team through this transition, here are the three things I have learned that you should be thinking about.",
+        "tags": ["mentor_guide"]
+      },
+      "weight": 1.0
+    },
+    {
+      "round": 12,
+      "dimension": "register",
+      "source": "halo_default",
+      "_test_note": "Conversational vs polished. From spec round 13.",
+      "option_a": {
+        "label": "A",
+        "post_text": "AICP Week is next Tuesday. I will be there. Honestly looking forward to seeing how much of the conversation has shifted.",
+        "tags": ["conversational"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "AICP Week NYC commences Tuesday. I look forward to the discussions and to assessing how industry posture has evolved over the past year.",
+        "tags": ["polished_formal"]
+      },
+      "weight": 1.0
+    },
+    {
+      "round": 13,
+      "dimension": "call_to_engagement",
+      "source": "halo_default",
+      "_test_note": "No ask vs explicit ask. From spec round 10.",
+      "option_a": {
+        "label": "A",
+        "post_text": "Spent a Tuesday afternoon watching a director and an editor argue over a three-frame cut. A tenth of a second. That tenth of a second was the difference between a spot that lands and one that does not.",
+        "tags": ["no_explicit_ask"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "Spent a Tuesday afternoon watching a director and an editor argue over a three-frame cut. A tenth of a second is the difference between a spot that lands and one that does not. What is the smallest detail that has changed your work? Drop it in the comments.",
+        "tags": ["explicit_ask"]
+      },
+      "weight": 1.0
+    },
+    {
+      "round": 14,
+      "dimension": "last_line_energy",
+      "source": "halo_default",
+      "_test_note": "Reflective vs forward-driving. From spec round 9.",
+      "option_a": {
+        "label": "A",
+        "post_text": "The boardroom does not need more AI. It needs more certainty.",
+        "tags": ["reflective_close"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "If you are pitching a campaign this quarter, this is the year to bring Pro-Viz into your process.",
+        "tags": ["forward_driving"]
+      },
+      "weight": 1.0
+    },
+    {
+      "round": 15,
+      "dimension": "entry_mode",
+      "source": "halo_default",
+      "_test_note": "Personal entry vs professional observation. From spec round 2. Last round so it doubles as a confirmation of round 5.",
+      "option_a": {
+        "label": "A",
+        "post_text": "I never thought I would write about AI. Two years ago I was the person at the table arguing the loudest that it would never make a film that mattered.",
+        "tags": ["personal_entry"]
+      },
+      "option_b": {
+        "label": "B",
+        "post_text": "Most production companies are still treating AI as a separate category, not a tool inside the existing process. The ones that fold it into pre-pro are pulling ahead.",
+        "tags": ["professional_observation"]
+      },
+      "weight": 1.0
+    }
+  ],
+
+  "calibration_logic": {
+    "_logic_note": "After all 15 rounds complete, the system processes choices into voice_state_calibrated.json. Stephen-specific rounds (1-5) are weighted 1.5x because they test the actual calendar drafts. Speed of choice is captured but does not weight the calibration; it only flags low-confidence dimensions for manual review.",
+
+    "preference_extraction": "For each dimension, the chosen option's tags become the preference value. If the same dimension is tested across multiple rounds (e.g., entry_mode in rounds 5 and 15), the system reconciles: matching choices = strong confidence, conflicting choices = moderate confidence with note for operator review.",
+
+    "neither_handling": "If Stephen hits 'Neither' on a round, the system generates a third option that explores middle ground, then offers it. If he rejects again, the dimension is flagged as 'low confidence, operator review' in voice_state_calibrated.",
+
+    "post_completion_action": "On round 15 completion: (1) generate voice_state_calibrated.json, (2) regenerate drafts for all unpublished posts in the calendar using the new voice state, (3) trigger Slack notification to Justin: 'Stephen completed voice discovery. 10 drafts regenerated. Review side-by-side at /halo/roesler/calendar.'"
+  },
+
+  "stephen_specific_round_design_notes": {
+    "_note": "These notes capture why each Stephen-specific A/B was constructed the way it was. Useful for operator if pairs need adjustment after Stephen runs through them once.",
+    "round_1": "A and B use the same content but different opening rhythm. Tests pure hook preference, not content preference.",
+    "round_2": "B is deliberately constructed to mimic the AI tells Stephen's anti-rules call out. If he picks B, it overrides a strong seed signal and we should ask why.",
+    "round_3": "B keeps the same JEPA frame but strips named specifics. Tests whether the credibility comes from the references or the framing.",
+    "round_4": "B replaces 'It needs more certainty' with an open question. The original is one of the most distinctive lines in the Pro-Viz article. If Stephen picks B, his voice state diverges meaningfully from the article voice.",
+    "round_5": "Highest-stakes round. B introduces personal vulnerability the seed has no data on. If Stephen picks B, vulnerability_depth flips from 'surface' to 'deep' and TOFU posts get rebuilt around personal-story openings."
+  }
+}

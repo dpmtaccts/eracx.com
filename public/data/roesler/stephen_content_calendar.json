@@ -1,0 +1,280 @@
+{
+  "client_slug": "roesler",
+  "calendar_version": "v2",
+  "calendar_window": {
+    "start": "2026-04-27",
+    "end": "2026-05-31",
+    "weeks": 5
+  },
+  "anchor_event": {
+    "name": "AICP Week NYC",
+    "dates": "June 2-4, 2026"
+  },
+  "_evolution_note": "v2 = post-April 17 call. Cuts deep-idea posts from 6 to 3, adds texture posts, reframes against Stephen's stated time budget. Replaces v1 which had 10 manifesto-tier posts.",
+
+  "format_distribution": {
+    "original_post_deep_idea": 3,
+    "comment_or_repost_with_take": 3,
+    "texture_post_photo_caption": 2,
+    "aicp_community_or_landing": 2
+  },
+
+  "posts": [
+    {
+      "post_number": 1,
+      "scheduled_date": "2026-04-28",
+      "scheduled_day": "Tuesday",
+      "pillar": "pro-viz",
+      "format": "original_post_deep_idea",
+      "funnel_tier": "MOFU",
+      "title": "From mood boards to mood worlds",
+      "draft": "Films are a 4D experience and the industry has been pitching them with 1D tools for fifty years.\n\nWidth, height, depth, time. That is a film. We walk into the boardroom with a mood board and a paragraph and ask a CMO to imagine the rest. That is a hard ask. It would be like trying to explain swimming with a drawing.\n\nA lot of good ideas die in that gap. Not because the idea was bad. Because nobody could get a real read on it before they had to sign the check.\n\nWe have started using AI to build what we are calling Pro-Viz. It is a navigable version of the spot before we shoot it. Not a mood board. A mood world. The creative team can walk a CMO through the campaign before they approve it.\n\nIt works because it solves an old problem, not because it is new. The boardroom does not need more AI. It needs more certainty.",
+      "placeholders": [],
+      "rationale": "Full thesis in 110 words. Plants the flag in week 1. Lifted from the Pro-Viz article on miniac.com but cut hard for LinkedIn cadence.",
+      "stephen_lift_minutes": 10,
+      "discovery_pair_eligible": true,
+      "_discovery_note": "Strong candidate for a discovery A/B pair. Test against a tension-first variant of the same draft."
+    },
+    {
+      "post_number": 2,
+      "scheduled_date": "2026-04-30",
+      "scheduled_day": "Thursday",
+      "pillar": "ai-agi-commentary",
+      "format": "comment_or_repost_with_take",
+      "funnel_tier": "TOFU",
+      "title": "On the Rundown AI ARC-AGI level-set",
+      "source_signal": {
+        "type": "newsletter",
+        "name": "The Rundown AI",
+        "topic": "ARC-AGI test results, average human scores 100%, frontier models score under 1%",
+        "_source_note": "Stephen mentioned this exact one on the April 17 call. 'We're in 0.5% land. It's awesome.'"
+      },
+      "draft": "A test the average person scores 100% on. The best frontier model right now scores under 1%. That is the gap.\n\nI keep getting asked when AI is going to make a film. The honest answer is that it cannot reliably do something a fourth grader can do.\n\nThat is not a knock. It is a level-set. And it is why every actual production we have done with AI in the last year has had a person with twenty years of experience standing next to it.",
+      "placeholders": [],
+      "rationale": "Maps to a post Stephen said he loved. Light lift, real signal. Pattern (repost a digest, add the level-set, end on the human) becomes repeatable.",
+      "stephen_lift_minutes": 5,
+      "discovery_pair_eligible": false
+    },
+    {
+      "post_number": 3,
+      "scheduled_date": "2026-05-05",
+      "scheduled_day": "Tuesday",
+      "pillar": "texture",
+      "format": "texture_post_photo_caption",
+      "funnel_tier": "TOFU",
+      "title": "Pre-light, pre-call",
+      "draft_caption": "Pre-light, pre-call, pre-everything. The best hour on a set is the one before anyone shows up.",
+      "photo_required": true,
+      "photo_brief": "Empty stage, monitor village before crew call, or dimly lit edit suite. No people in frame.",
+      "placeholders": [
+        {
+          "id": "photo_attachment",
+          "label": "Set or edit-room photo (no people)",
+          "required": true,
+          "fulfilled_by": "stephen_or_era",
+          "instructions": "Stephen pulls from his roll, or Era requests on Friday Tell-the-Truth call."
+        }
+      ],
+      "rationale": "Lowest-lift surface. One photo, one line. Stephen explicitly described this format on the April 17 call.",
+      "stephen_lift_minutes": 5,
+      "discovery_pair_eligible": false
+    },
+    {
+      "post_number": 4,
+      "scheduled_date": "2026-05-07",
+      "scheduled_day": "Thursday",
+      "pillar": "craft",
+      "format": "original_post_deep_idea",
+      "funnel_tier": "MOFU",
+      "title": "Where good ideas go to die",
+      "draft": "Good ideas almost never die in the brief. They die in the thirty days between creative approval and bid.\n\nSomeone asks for a small change that kills the moment. Someone else asks for another. By the time pre-pro starts the spot is not the spot anymore. It is a carefully eroded version of the spot.\n\nPart of an EP's job is to protect what is fragile. You do not always win that fight. But you have to fight it every time.",
+      "placeholders": [],
+      "rationale": "Honest observation, not thought leadership. Three short paragraphs, one specific image (the thirty days). The Bellinger model: something happens, you write the post.",
+      "stephen_lift_minutes": 10,
+      "discovery_pair_eligible": true,
+      "_discovery_note": "Test against a longer-form variant that explains 'why this matters' explicitly. Stephen should reject the explainer version."
+    },
+    {
+      "post_number": 5,
+      "scheduled_date": "2026-05-13",
+      "scheduled_day": "Tuesday",
+      "pillar": "community",
+      "format": "comment_or_repost_with_take",
+      "funnel_tier": "TOFU",
+      "title": "Comment on a Valenzuela / Michael / Mallal post",
+      "source_signal": {
+        "type": "linkedin_post_other",
+        "names": ["Cristóbal Valenzuela", "Gabe Michael", "Samir Mallal"],
+        "_source_note": "Whichever of them posts something interesting in the week of May 11. Era pre-screens."
+      },
+      "draft_template": "This is the part most coverage of generative video skips. The output of any model is raw. Lighting, continuity, weight, all still landed by humans who know what they are looking at. The VFX team isn't getting smaller. It's getting promoted.",
+      "placeholders": [
+        {
+          "id": "specific_point_from_op",
+          "label": "Reference to the original poster's specific point",
+          "required": true,
+          "fulfilled_by": "era",
+          "instructions": "Era reads the OP's post and adapts the comment template to reference what they actually said. 5 minute task."
+        }
+      ],
+      "rationale": "Stephen's strategy doc says draft off the people he believes in. Cost is five minutes. Yield is several hundred targeted impressions in a high-trust thread.",
+      "stephen_lift_minutes": 3,
+      "discovery_pair_eligible": false
+    },
+    {
+      "post_number": 6,
+      "scheduled_date": "2026-05-14",
+      "scheduled_day": "Thursday",
+      "pillar": "pro-viz-technical-defense",
+      "format": "original_post_deep_idea",
+      "funnel_tier": "MOFU",
+      "title": "The teenager and the self-driving car",
+      "draft": "A teenager learns to drive in about twenty hours. They do not need to crash into a thousand trees to know that hitting a tree is bad. They have a world model. They understand gravity, weight, and momentum before they ever touch the wheel.\n\nA self-driving car needs millions of hours of footage and thousands of simulated crashes to reach basic safety.\n\nThat is the gap with generative video right now. It is a master of pixel probability. It is illiterate about the physical world.\n\nYann LeCun calls the missing piece JEPA, joint embedding predictive architecture. The idea is to predict the meaning and consequence of an action, not just the next likely frame. If a glass falls, gravity has to pull it down. If something hits a wall, the wall has to hold.\n\nToday's models do not know any of that. They generate motion that looks plausible until you look twice.\n\nThat is why AI is not making films. It is making bursts of motion and light that a human team assembles into something that actually holds up.",
+      "placeholders": [],
+      "rationale": "The post anyone serious in the industry will save. Specific reference (LeCun), defensible technical framing. Sets Stephen up as someone who actually understands the technology.",
+      "stephen_lift_minutes": 15,
+      "discovery_pair_eligible": true,
+      "_discovery_note": "Test against a 'three short paragraphs only' variant. Stephen should reject the truncated version (preserves complexity_handling preference). Also test against a 'leads with the conclusion' variant to confirm clarity-first preference."
+    },
+    {
+      "post_number": 7,
+      "scheduled_date": "2026-05-19",
+      "scheduled_day": "Tuesday",
+      "pillar": "texture",
+      "format": "texture_post_photo_caption",
+      "funnel_tier": "TOFU",
+      "title": "San Vicente in Tribeca",
+      "draft_caption_variant_a": "Eight people, one long table, no agenda, four hours. Best version of this job.",
+      "draft_caption_variant_b": "San Vicente in Tribeca. Different week, different cast, same lesson: the best brand conversations happen at a dinner that did not need to be one.",
+      "photo_required": true,
+      "photo_brief": "April 9 IHAF dinner photo, or any client dinner photo. Venue exterior or wide shot of the table. No tagged attendees unless they approved.",
+      "placeholders": [
+        {
+          "id": "photo_attachment",
+          "label": "Dinner or venue photo",
+          "required": true,
+          "fulfilled_by": "stephen_or_era",
+          "instructions": "Pull from April 9 IHAF dinner roll, or any client dinner Stephen has. Tag venue, not people."
+        },
+        {
+          "id": "caption_variant_choice",
+          "label": "Pick variant A or B",
+          "required": true,
+          "fulfilled_by": "stephen",
+          "instructions": "Stephen picks A or B in Slack. Or Era picks based on which photo gets used."
+        }
+      ],
+      "rationale": "Retroactive dinner post lets the audience see the work without making him host another one to feed the feed.",
+      "stephen_lift_minutes": 5,
+      "discovery_pair_eligible": false
+    },
+    {
+      "post_number": 8,
+      "scheduled_date": "2026-05-21",
+      "scheduled_day": "Thursday",
+      "pillar": "craft",
+      "format": "original_post_deep_idea",
+      "funnel_tier": "MOFU",
+      "title": "Three frames",
+      "draft": "Spent a Tuesday afternoon in an edit suite watching a director and an editor argue over a three-frame cut. A tenth of a second.\n\nThat tenth of a second was the difference between a spot that lands and one that does not.\n\nNo model is having that conversation. Not yet, probably not ever. That conversation is the film.\n\nEvery time someone says AI is going to democratize direction, I think about that afternoon. Direction was never about access to a camera. It was about knowing what to take out.",
+      "placeholders": [],
+      "rationale": "Companion to post 4. Specific scene, real number, no manifesto. The Bellinger emotion-spark model.",
+      "stephen_lift_minutes": 8,
+      "discovery_pair_eligible": true,
+      "_discovery_note": "Test against a question-hook variant ('What's the difference between a great spot and a good one?'). Stephen should reject the question hook (preserves statement preference)."
+    },
+    {
+      "post_number": 9,
+      "scheduled_date": "2026-05-27",
+      "scheduled_day": "Tuesday",
+      "pillar": "community",
+      "format": "aicp_community_or_landing",
+      "funnel_tier": "BOFU",
+      "title": "People worth finding at AICP Week",
+      "draft_template": "AICP Week starts next Tuesday in NYC. A few people I am hoping to run into in person, because the conversations I have had with them over the last year have changed how I think about the job.\n\n{{person_1_name}}, for the way they framed {{person_1_specific_idea}}. I have repeated it to four clients since.\n\n{{person_2_name}}, for showing up consistently with {{person_2_specific_contribution}}. Most people in this industry are building a brand. They are building a body of work, which is harder.\n\n{{person_3_name}}, because every conversation I have had with them this year has ended with me writing something down. That is rare.\n\nIf you are going to be there next week, find them. Better than half the panels.\n\n(If I missed someone obvious, drop their name below.)",
+      "placeholders": [
+        {
+          "id": "person_1_name",
+          "label": "First named person",
+          "required": true,
+          "fulfilled_by": "stephen",
+          "instructions": "Stephen picks 3-5 people he has actually had memorable conversations with in the last year. Specificity is the whole game."
+        },
+        {
+          "id": "person_1_specific_idea",
+          "label": "What person 1 said or did that mattered",
+          "required": true,
+          "fulfilled_by": "stephen",
+          "instructions": "One specific idea, framing, or piece of work. Not a compliment. A specific thing they said or did."
+        },
+        {
+          "id": "person_2_name",
+          "label": "Second named person",
+          "required": true,
+          "fulfilled_by": "stephen"
+        },
+        {
+          "id": "person_2_specific_contribution",
+          "label": "What person 2 has been building",
+          "required": true,
+          "fulfilled_by": "stephen"
+        },
+        {
+          "id": "person_3_name",
+          "label": "Third named person",
+          "required": true,
+          "fulfilled_by": "stephen"
+        }
+      ],
+      "rationale": "Generous post. Costs Stephen nothing. Earns him social capital before he walks into AICP. Named people will engage, expanding reach without paid lift.",
+      "stephen_lift_minutes": 15,
+      "discovery_pair_eligible": false
+    },
+    {
+      "post_number": 10,
+      "scheduled_date": "2026-05-29",
+      "scheduled_day": "Thursday",
+      "pillar": "closing-posture",
+      "format": "aicp_community_or_landing",
+      "funnel_tier": "BOFU",
+      "title": "A lot has changed. Nothing has changed.",
+      "draft": "A line I keep repeating to myself this year: a lot has changed, nothing has changed.\n\nWhat changed: tools that generate images that needed a fifteen-person VFX team three years ago. The cost of pitching an idea. The speed at which a CMO can see a playable version of a spot before approving it.\n\nWhat did not change: the spot still lives or dies on a three-frame decision. Directors with a real point of view are still the scarcest resource in the building. The idea is still the asset, not the image.\n\nAICP Week starts in NYC next Tuesday. I will be paying close attention to which of those two lists the industry is paying more attention to. My hunch is the answer says a lot about who is still doing good work in five years.\n\nSee you there.",
+      "placeholders": [],
+      "rationale": "Closes the month with a posture, not an announcement. Echoes the Pro-Viz thesis from post 1 without repeating it. Lands at AICP Week with accumulated authority.",
+      "stephen_lift_minutes": 10,
+      "discovery_pair_eligible": true,
+      "_discovery_note": "Test against a single-paragraph variant. Stephen should keep the multi-paragraph version (preserves flowing rhythm with structural breaks)."
+    }
+  ],
+
+  "post_state_schema": {
+    "_note": "This is the schema for tracking each post's state through the pipeline. Storage layer fills this in.",
+    "post_id": "integer, references posts[].post_number",
+    "state": "enum: seeded | placeholders_pending | draft_ready | stephen_review | approved | scheduled | published",
+    "draft_versions": [
+      {
+        "version_number": "integer",
+        "voice_state_used": "string, references voice_state_seed.json or voice_state_calibrated.json",
+        "draft_text": "string",
+        "generated_at": "ISO 8601 datetime",
+        "stephen_chose_this_version": "boolean"
+      }
+    ],
+    "placeholders_filled": "object, keyed by placeholder id",
+    "scheduled_for": "ISO 8601 datetime, set when approved",
+    "published_at": "ISO 8601 datetime, set when posted",
+    "performance_metrics": "object, populated post-publish: impressions, comments, reactions, reposts"
+  },
+
+  "feedback_loop": {
+    "_loop_note": "After each post is published or skipped, system updates voice_state_calibrated based on Stephen's choices. Each placeholder fill, draft pick, and edit becomes a signal.",
+    "signals_tracked": [
+      "draft version selected (when multiple offered)",
+      "edit deltas between approved and published version",
+      "post skipped (rejection signal)",
+      "post performance vs prior posts in same pillar",
+      "stephen's slack feedback on drafts"
+    ],
+    "regen_trigger": "On voice_state_calibrated update, regenerate all unpublished drafts. Show Stephen original + regenerated versions side by side."
+  }
+}
