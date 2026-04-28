@@ -1,13 +1,15 @@
-export const CASCADE_HEADLINE =
-  'Most audits measure what a brand says about itself; this one measures whether what BetterUp says, what it does, and what the market actually feels are the same thing.'
+export const CASCADE_HEADLINE = 'Does What You Believe Show Up in What You Do?'
 
-export const CASCADE_INTRO = `Conviction does not stop at the tagline. It travels from leadership through the product, into the frontline teams who carry it to customers, and out into the market that decides what to feel about it. The place where the cascade stops flowing is the place where pipeline begins to leak, and in BetterUp's case the break is visible long before a buyer ever picks up the phone.`
+export const CASCADE_INTRO = `Most brand audits measure perception. This one measures whether your brand promise flows through your leadership, your product, your people, and what AI tells your buyer about you.`
 
 export type FlowStatus = 'Strong Flow' | 'Partial Flow' | 'Weak Flow' | 'Cascade Break'
 
 export interface CascadeLayer {
   number: string
   name: string
+  /** The original term Pinwheel/ERA used for this layer; surfaced as a subhead so
+   *  brand readers see the bridge between plain-language framing and category jargon. */
+  oldName?: string
   question: string
   score: number
   status: FlowStatus
@@ -19,8 +21,9 @@ export interface CascadeLayer {
 export const CASCADE_LAYERS: CascadeLayer[] = [
   {
     number: '01',
-    name: 'Declared Conviction',
-    question: 'What you say you believe.',
+    name: 'What You Say You Believe',
+    oldName: 'Declared Conviction',
+    question: 'In your marketing, website, social channels, and sales materials.',
     score: 35,
     status: 'Weak Flow',
     signals: [
@@ -29,7 +32,7 @@ export const CASCADE_LAYERS: CascadeLayer[] = [
       'Consistency across web, sales decks, and PR',
     ],
     assessment:
-      'BetterUp\'s declared conviction is "human transformation through coaching, powered by AI, at enterprise scale." The language is aspirational but rarely translated into business proof. The brand declares but does not defend.',
+      'BetterUp\'s stated promise is "human transformation through coaching, powered by AI, at enterprise scale." The language reads aspirational, but it rarely gets translated into business proof a CHRO can put in front of her CFO. The brand declares the position; it does not defend it.',
     evidence: [
       'Homepage leads with philosophy ("Live better. Lead better.") not outcomes',
       'Public POV on AI coaching is muted compared to category competitors',
@@ -38,8 +41,9 @@ export const CASCADE_LAYERS: CascadeLayer[] = [
   },
   {
     number: '02',
-    name: 'Leadership Embodiment',
-    question: 'Do your leaders live it?',
+    name: 'Do Your Leaders Live It?',
+    oldName: 'Leadership Embodiment',
+    question: 'Is leadership behavior on LinkedIn consistent with your stated brand promise?',
     score: 40,
     status: 'Weak Flow',
     signals: [
@@ -57,8 +61,9 @@ export const CASCADE_LAYERS: CascadeLayer[] = [
   },
   {
     number: '03',
-    name: 'Product Experience',
-    question: 'Does the product prove it?',
+    name: 'Does Your Product Prove It?',
+    oldName: 'Product Experience',
+    question: 'When someone uses BetterUp, do they feel what the brand promises?',
     score: 62,
     status: 'Partial Flow',
     signals: [
@@ -76,8 +81,9 @@ export const CASCADE_LAYERS: CascadeLayer[] = [
   },
   {
     number: '04',
-    name: 'Frontline Carrier',
-    question: 'Do your people carry it?',
+    name: 'Do Your People Carry It?',
+    oldName: 'Frontline Carrier',
+    question: 'Do sales reps, coaches, and account managers carry the promise into customer interactions?',
     score: 22,
     status: 'Cascade Break',
     signals: [
@@ -86,7 +92,7 @@ export const CASCADE_LAYERS: CascadeLayer[] = [
       'Customer-facing team retention',
     ],
     assessment:
-      'BetterUp sells psychological safety and human transformation. Its own employees describe neither. Glassdoor reviews explicitly name the irony. Coaches report pay disputes and communication breakdowns. Account managers churn three or more times in 12 months. The conviction dies at the frontline, and the market can see it.',
+      'BetterUp sells psychological safety and human transformation, and its own employees describe neither when asked anonymously. Glassdoor reviews call out the irony directly. Coaches report pay disputes and communication breakdowns in the same forums prospective buyers search. Account managers churn through the same accounts three or more times in twelve months. The promise dies at the frontline, and the market can see it.',
     evidence: [
       'Glassdoor 3.2/5, values-reality gap is searchable',
       'Coach loyalty scored 60/100 and declining',
@@ -95,8 +101,9 @@ export const CASCADE_LAYERS: CascadeLayer[] = [
   },
   {
     number: '05',
-    name: 'Market Resonance',
-    question: 'Does the market feel it?',
+    name: 'Does the Market Feel It?',
+    oldName: 'Market Resonance',
+    question: 'Do clients, analysts, and peers describe what you describe?',
     score: 45,
     status: 'Weak Flow',
     signals: [
@@ -114,8 +121,9 @@ export const CASCADE_LAYERS: CascadeLayer[] = [
   },
   {
     number: '06',
-    name: 'The AI Mirror',
-    question: 'What does generative search say?',
+    name: 'What Does AI Tell Your Buyer?',
+    oldName: 'The AI Mirror',
+    question: 'When a CHRO asks ChatGPT or Claude about you, does the answer help or hurt?',
     score: 38,
     status: 'Weak Flow',
     signals: [
@@ -124,7 +132,7 @@ export const CASCADE_LAYERS: CascadeLayer[] = [
       'Buyer-relevant proof points surfaced',
     ],
     assessment:
-      'When a CHRO asks ChatGPT, Claude, or Perplexity about BetterUp, the answer is balanced toward caution. Product strength surfaces. Frontline failure surfaces as a counterweight. Pricing opacity surfaces. The AI is the ultimate mirror, and it is reading the cascade break.',
+      'When a CHRO asks ChatGPT, Claude, or Perplexity about BetterUp, the answer comes back balanced toward caution: product strength shows up, frontline failure shows up as a counterweight, pricing opacity shows up alongside both. The model is reading the cascade break the same way a careful buyer would, and it is putting that read directly in front of the person you most want to convince.',
     evidence: [
       'AI summaries cite Glassdoor 3.2/5 alongside product strength',
       '14% YoY revenue decline raises stability questions in AI answers',
@@ -133,4 +141,4 @@ export const CASCADE_LAYERS: CascadeLayer[] = [
   },
 ]
 
-export const CASCADE_BREAK_CALLOUT = `The cascade breaks at Layer 4, where the people who actually carry the brand to customers stop reflecting it back. BetterUp sells psychological safety and human transformation, yet its own employees describe neither in the reviews a CHRO will read on Glassdoor before a first call. Coaches surface pay disputes and communication breakdowns in the same forums prospective buyers search; account managers churn through the same accounts three or more times in twelve months. The conviction dies at the frontline, and because every one of those signals is publicly indexed, the market can see exactly where it died.`
+export const CASCADE_BREAK_CALLOUT = `The cascade breaks at Layer 4, where the people who actually carry the brand to customers stop reflecting it back. BetterUp sells psychological safety and human transformation, yet its own employees describe neither in the reviews a CHRO will read on Glassdoor before a first call. Coaches surface pay disputes and communication breakdowns in the same forums prospective buyers search; account managers churn through the same accounts three or more times in twelve months. The promise dies at the frontline, and because every one of those signals is publicly indexed, the market can see exactly where it died.`

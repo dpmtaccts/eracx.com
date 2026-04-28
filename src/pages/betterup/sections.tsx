@@ -42,7 +42,7 @@ export function CascadeSection() {
   const { palette } = useTheme()
   return (
     <Section id="cascade">
-      <SectionHeader kicker="The Brand Conviction Cascade" headline={CASCADE_HEADLINE} intro={CASCADE_INTRO} shareId="cascade" />
+      <SectionHeader kicker="The Brand Cascade" headline={CASCADE_HEADLINE} intro={CASCADE_INTRO} shareId="cascade" />
 
       <Reveal>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 48 }}>
@@ -87,6 +87,21 @@ export function CascadeSection() {
                   {layer.number}
                 </span>
                 {layer.name}
+                {layer.oldName && (
+                  <span
+                    style={{
+                      fontFamily: FONT.body,
+                      fontSize: 11,
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      color: palette.textDim,
+                      marginLeft: 12,
+                      fontWeight: 400,
+                    }}
+                  >
+                    was "{layer.oldName}"
+                  </span>
+                )}
               </span>
             }
             meta={`${layer.question} · ${layer.score}/100 · ${layer.status}`}
@@ -223,6 +238,19 @@ function CascadeLayerRow({ layer, nextLayer, isLast }: { layer: CascadeLayer; ne
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap', marginBottom: 6 }}>
           <span style={{ fontFamily: FONT.mono, fontSize: 12, color: palette.textDim }}>{layer.number}</span>
           <span style={{ fontFamily: FONT.display, fontSize: 22, color: palette.text }}>{layer.name}</span>
+          {layer.oldName && (
+            <span
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 10,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: palette.textDim,
+              }}
+            >
+              was "{layer.oldName}"
+            </span>
+          )}
           <span
             style={{
               fontFamily: FONT.body,
@@ -260,7 +288,7 @@ export function GTMSection() {
       <SectionHeader
         kicker="Go-to-Market Signal Chain"
         headline="Your buyer is conducting due diligence on LinkedIn right now."
-        intro="They are looking at your CEO's profile, your sales team, your company page, your coaches, and your clients. Every profile is either building trust or eroding it. Here is what they find when they look at yours."
+        intro="They are looking at your CEO's profile, your sales team, BetterUp's LinkedIn company page, your coaches, and your clients. Every profile is either building trust or eroding it. Here is what they find when they look at yours."
         shareId="leaders"
       />
 
@@ -460,7 +488,7 @@ function NetworkReachVisual() {
           maxWidth: 820,
         }}
       >
-        BetterUp's 241K company page followers look impressive. The algorithm suppresses brand content. The CEO (48K), 4,000+ coaches with their own networks, sales team and account managers represent the real reach multiplier. The highest-leverage investment is not more company page content. It is activating the humans in the signal chain.
+        The LinkedIn page's 241K followers look impressive on the surface, and the algorithm quietly suppresses most of what gets posted there. The real reach multiplier is the CEO at 48K, the 4,000-plus coaches with their own networks, and the sellers and account managers a buyer is far likelier to encounter than the brand handle. The highest-leverage move is not more LinkedIn page content; it is activating the humans in the signal chain.
       </div>
     </div>
   )
