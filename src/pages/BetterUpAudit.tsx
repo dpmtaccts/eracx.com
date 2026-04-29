@@ -35,7 +35,7 @@ import {
   WHY_IT_MATTERS,
 } from './betterup/data/aiMirror'
 import { SECTIONS } from './betterup/data/sections'
-import { AudienceSection, BuildSection, CascadeSection, GTMSection, InvestmentSection, SignalsSection } from './betterup/sections'
+import { AudienceSection, BuildSection, CascadeSection, GTMSection, InvestmentSection, PopulationSection, SignalsSection } from './betterup/sections'
 import { DataLayerProvider, useDataLayer, type DataLayer } from './betterup/dataLayer'
 import { PasswordGate, isAuthed } from './betterup/PasswordGate'
 import { startSectionTimeTracker, track } from './betterup/analytics'
@@ -1009,6 +1009,7 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
                   <ExecutiveSummary />
                   <CascadeSection />
                   <GTMSection />
+                  <PopulationSection />
                   <SignalsSection />
                   <AudienceSection />
                   <AIMirror />

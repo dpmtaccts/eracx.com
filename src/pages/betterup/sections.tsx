@@ -2369,3 +2369,294 @@ export function BuildSection() {
     </Section>
   )
 }
+
+/* ──────────────────────────────────────────────
+   What Your Buyer Is Actually Seeing — 45-voice population analysis
+   ────────────────────────────────────────────── */
+import {
+  ICP_BUYERS_NAMED,
+  POPULATION_HEADLINE,
+  POPULATION_HEADLINE_METRICS,
+  POPULATION_SCOPE_NOTE,
+  SEVEN_DAMNING_FINDINGS,
+  TIER_AVERAGES,
+  TRANSLATION_BREAKDOWN,
+  VOICE_GAP_QUOTE,
+} from './data/population'
+
+export function PopulationSection() {
+  const { palette } = useTheme()
+
+  return (
+    <Section id="population">
+      <SectionHeader
+        kicker="What Your Buyer Is Actually Seeing"
+        headline={POPULATION_HEADLINE}
+        intro={POPULATION_SCOPE_NOTE}
+      />
+
+      {/* Headline metric grid */}
+      <Reveal>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: 12,
+            marginBottom: 80,
+          }}
+        >
+          {POPULATION_HEADLINE_METRICS.map((m, i) => (
+            <PopulationMetricCard key={m.label} m={m} index={i} />
+          ))}
+        </div>
+      </Reveal>
+
+      {/* Voice Gap pull quote */}
+      <Reveal>
+        <div style={{ marginBottom: 80 }}>
+          <div style={smallLabel(palette.rust)}>The Voice Gap</div>
+          <blockquote
+            style={{
+              maxWidth: 880,
+              margin: '20px 0 0',
+              padding: '0 0 0 28px',
+              borderLeft: `4px solid ${palette.rust}`,
+              fontFamily: FONT.display,
+              fontStyle: 'italic',
+              fontSize: 'clamp(24px, 3vw, 34px)',
+              lineHeight: 1.3,
+              color: palette.text,
+            }}
+          >
+            {VOICE_GAP_QUOTE}
+          </blockquote>
+        </div>
+      </Reveal>
+
+      {/* Translation breakdown */}
+      <Reveal>
+        <div style={{ marginBottom: 80 }}>
+          <div style={smallLabel(palette.rust)}>Where the 85 original posts actually land</div>
+          <div style={{ marginTop: 24 }}>
+            <TranslationStackedBar />
+          </div>
+          <div style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {TRANSLATION_BREAKDOWN.map((t) => {
+              const c = (palette as unknown as Record<string, string>)[t.color] ?? palette.textMuted
+              return (
+                <div key={t.label} style={{ display: 'flex', alignItems: 'center', gap: 12, fontFamily: FONT.body, fontSize: 14 }}>
+                  <span style={{ width: 12, height: 12, borderRadius: 2, background: c, flex: '0 0 auto' }} />
+                  <span style={{ flex: 1, color: palette.text }}>{t.label}</span>
+                  <span style={{ fontFamily: FONT.mono, color: palette.textMuted, fontSize: 13 }}>
+                    {t.count} posts · {t.pct}%
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </Reveal>
+
+      {/* Distribution by tier */}
+      <Reveal>
+        <div style={{ marginBottom: 80 }}>
+          <div style={smallLabel(palette.rust)}>Composite signal score by tier</div>
+          <div
+            style={{
+              marginTop: 20,
+              background: palette.card,
+              border: `1px solid ${palette.border}`,
+              borderRadius: 6,
+              padding: '24px 28px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 14,
+            }}
+          >
+            {TIER_AVERAGES.map((t) => (
+              <div key={t.tier} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                <span style={{ fontFamily: FONT.body, fontSize: 13, color: palette.text, width: 200, fontWeight: 500 }}>
+                  {t.tier}
+                </span>
+                <span style={{ fontFamily: FONT.mono, fontSize: 11, color: palette.textDim, width: 30 }}>n={t.n}</span>
+                <div style={{ flex: 1, height: 8, background: palette.border, borderRadius: 4, overflow: 'hidden' }}>
+                  <div
+                    style={{
+                      width: `${t.avg}%`,
+                      height: '100%',
+                      background: colorForScore(palette, t.avg),
+                      borderRadius: 4,
+                      transition: 'width 1.2s cubic-bezier(0.16,1,0.3,1)',
+                    }}
+                  />
+                </div>
+                <span style={{ fontFamily: FONT.mono, fontSize: 14, color: palette.text, width: 32, textAlign: 'right', fontWeight: 600 }}>
+                  {t.avg}
+                </span>
+                <span style={{ fontFamily: FONT.mono, fontSize: 11, color: palette.textMuted, width: 60, textAlign: 'right' }}>
+                  ({t.range})
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+
+      {/* Named ICP buyers */}
+      <Reveal>
+        <div style={{ marginBottom: 80 }}>
+          <div style={smallLabel(palette.rust)}>The 12 buyers paying attention</div>
+          <p style={{ fontFamily: FONT.body, fontSize: 15, lineHeight: 1.6, color: palette.textMuted, margin: '12px 0 24px', maxWidth: 760 }}>
+            These are the named CHROs, CPOs, and VPs of People who engage publicly with BetterUp's content. The relationships exist; they are concentrated in two voices, not distributed across the GTM team.
+          </p>
+          <div
+            style={{
+              background: palette.card,
+              border: `1px solid ${palette.border}`,
+              borderRadius: 6,
+              padding: '8px 0',
+            }}
+          >
+            {ICP_BUYERS_NAMED.map((b, i) => (
+              <div
+                key={b.name}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '32px 1fr 1.4fr 1.6fr',
+                  alignItems: 'center',
+                  padding: '14px 28px',
+                  borderBottom: i === ICP_BUYERS_NAMED.length - 1 ? 'none' : `1px solid ${palette.borderSubtle}`,
+                  gap: 16,
+                }}
+              >
+                <span style={{ fontFamily: FONT.mono, fontSize: 12, color: palette.textDim }}>{String(i + 1).padStart(2, '0')}</span>
+                <span style={{ fontFamily: FONT.body, fontSize: 14, color: palette.text, fontWeight: 600 }}>{b.name}</span>
+                <span style={{ fontFamily: FONT.body, fontSize: 13, color: palette.textMuted }}>{b.title}</span>
+                <span style={{ fontFamily: FONT.body, fontSize: 12, color: palette.textDim, fontStyle: 'italic' }}>{b.appearsOn}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+
+      {/* Seven damning findings */}
+      <Reveal>
+        <div style={smallLabel(palette.rust)}>Seven findings a CMO must address</div>
+        <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', gap: 32 }}>
+          {SEVEN_DAMNING_FINDINGS.map((f, i) => (
+            <div key={i} style={{ display: 'flex', gap: 24 }}>
+              <div
+                style={{
+                  fontFamily: FONT.display,
+                  fontStyle: 'italic',
+                  fontSize: 56,
+                  color: palette.rust,
+                  opacity: 0.25,
+                  lineHeight: 0.9,
+                  flex: '0 0 auto',
+                  width: 64,
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <p
+                style={{
+                  fontFamily: FONT.display,
+                  fontStyle: 'italic',
+                  fontSize: 'clamp(18px, 2vw, 22px)',
+                  lineHeight: 1.45,
+                  color: palette.text,
+                  margin: 0,
+                  paddingLeft: 24,
+                  borderLeft: `3px solid ${palette.rust}`,
+                  maxWidth: 880,
+                }}
+              >
+                {f}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Reveal>
+    </Section>
+  )
+}
+
+function PopulationMetricCard({ m, index }: { m: { value: string; label: string; sub: string }; index: number }) {
+  const { palette } = useTheme()
+  const accents = [palette.rust, palette.red, palette.amber, palette.magenta, palette.sky]
+  const accent = accents[index % accents.length]
+  return (
+    <div
+      style={{
+        background: palette.card,
+        border: `1px solid ${palette.border}`,
+        borderTop: `3px solid ${accent}`,
+        borderRadius: 4,
+        padding: '28px 24px 24px',
+        minHeight: 200,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <div
+        style={{
+          fontFamily: FONT.mono,
+          fontSize: 'clamp(36px, 4vw, 48px)',
+          color: accent,
+          lineHeight: 0.95,
+          fontWeight: 500,
+          letterSpacing: '-0.02em',
+        }}
+      >
+        {m.value}
+      </div>
+      <div
+        style={{
+          fontFamily: FONT.body,
+          fontSize: 13,
+          color: palette.text,
+          marginTop: 14,
+          lineHeight: 1.4,
+          fontWeight: 600,
+        }}
+      >
+        {m.label}
+      </div>
+      <div style={{ fontFamily: FONT.body, fontSize: 12, color: palette.textMuted, marginTop: 8, lineHeight: 1.5, fontStyle: 'italic' }}>
+        {m.sub}
+      </div>
+    </div>
+  )
+}
+
+function TranslationStackedBar() {
+  const { palette } = useTheme()
+  return (
+    <div
+      style={{
+        display: 'flex',
+        height: 40,
+        borderRadius: 4,
+        overflow: 'hidden',
+        background: palette.border,
+      }}
+    >
+      {TRANSLATION_BREAKDOWN.map((t) => {
+        const c = (palette as unknown as Record<string, string>)[t.color] ?? palette.textMuted
+        return (
+          <div
+            key={t.label}
+            title={`${t.label}: ${t.pct}%`}
+            style={{
+              width: `${t.pct}%`,
+              background: c,
+              transition: 'width 1.4s cubic-bezier(0.16,1,0.3,1)',
+            }}
+          />
+        )
+      })}
+    </div>
+  )
+}
