@@ -248,7 +248,7 @@ export default function FrvrdSection() {
               style={{
                 left: `${centerX}px`,
                 top: `${centerY}px`,
-                maxWidth: `${centerMaxWidth}px`,
+                width: `${centerMaxWidth}px`,
               }}
               aria-live="polite"
             >
