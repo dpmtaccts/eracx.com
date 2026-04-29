@@ -196,13 +196,18 @@ function VoiceStateModal({
 
 function OperatorPanel({
   voiceState,
+  approvedCount,
   onReset,
+  onExportApproved,
 }: {
   voiceState: VoiceState;
+  approvedCount: number;
   onReset: () => void;
+  onExportApproved: () => Promise<void>;
 }) {
   const [showJSON, setShowJSON] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [exported, setExported] = useState<"idle" | "ok" | "error">("idle");
   const [postsPublished, setPostsPublished] = useState<number>(() => {
     const stored = localStorage.getItem(POSTS_PUBLISHED_KEY);
     return stored ? parseInt(stored, 10) || 0 : 0;
@@ -217,6 +222,27 @@ function OperatorPanel({
       setCopied(false);
     }
   };
+
+  const exportApproved = async () => {
+    if (approvedCount === 0) return;
+    try {
+      await onExportApproved();
+      setExported("ok");
+      setTimeout(() => setExported("idle"), 2500);
+    } catch {
+      setExported("error");
+      setTimeout(() => setExported("idle"), 2500);
+    }
+  };
+
+  const exportLabel =
+    exported === "ok"
+      ? `Copied ${approvedCount} drafts`
+      : exported === "error"
+        ? "Copy failed"
+        : approvedCount === 0
+          ? "No approved drafts yet"
+          : `Export ${approvedCount} approved drafts`;
 
   const incrementPublished = () => {
     const next = postsPublished + 1;
@@ -249,6 +275,13 @@ function OperatorPanel({
               className="text-xs font-bold px-3 py-2 border border-[#5B6670] hover:border-[#F6F5F2] rounded transition-colors"
             >
               {copied ? "Copied" : "Copy voice state to clipboard"}
+            </button>
+            <button
+              onClick={exportApproved}
+              disabled={approvedCount === 0 && exported === "idle"}
+              className="text-xs font-bold px-3 py-2 border border-[#5B6670] hover:border-[#F6F5F2] rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {exportLabel}
             </button>
             <button
               onClick={onReset}
@@ -572,10 +605,12 @@ function ImageDropZone({
 function CalibratedDraftBlock({
   regenerated,
   isRegenerating,
+  error,
   onRegenerate,
 }: {
   regenerated: string | undefined;
   isRegenerating: boolean;
+  error: string | undefined;
   onRegenerate: () => void;
 }) {
   const buttonLabel = isRegenerating
@@ -602,13 +637,20 @@ function CalibratedDraftBlock({
           </p>
         </div>
       )}
-      <button
-        onClick={onRegenerate}
-        disabled={isRegenerating}
-        className="text-xs font-bold px-3 py-2 rounded border border-[#383838] text-[#383838] hover:bg-[#383838] hover:text-[#F6F5F2] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {buttonLabel}
-      </button>
+      <div className="flex items-start gap-3 flex-wrap">
+        <button
+          onClick={onRegenerate}
+          disabled={isRegenerating}
+          className="text-xs font-bold px-3 py-2 rounded border border-[#383838] text-[#383838] hover:bg-[#383838] hover:text-[#F6F5F2] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {buttonLabel}
+        </button>
+        {error && (
+          <p className="text-xs text-[#B85C4A] leading-relaxed flex-1 min-w-[180px]">
+            {error}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
@@ -673,6 +715,7 @@ function PostCard({
   onClearImage,
   regenerated,
   isRegenerating,
+  regenError,
   onRegenerate,
 }: {
   post: CalendarPost;
@@ -689,6 +732,7 @@ function PostCard({
   onClearImage: () => void;
   regenerated: string | undefined;
   isRegenerating: boolean;
+  regenError: string | undefined;
   onRegenerate: () => void;
 }) {
   const tier = tierColors(post.funnel_tier);
@@ -757,6 +801,7 @@ function PostCard({
           <CalibratedDraftBlock
             regenerated={regenerated}
             isRegenerating={isRegenerating}
+            error={regenError}
             onRegenerate={onRegenerate}
           />
         </div>
@@ -852,7 +897,7 @@ export default function RoeslerDashboard() {
   const [regeneratingSet, setRegeneratingSet] = useState<Set<number>>(
     () => new Set()
   );
-  const [regenError, setRegenError] = useState<string | null>(null);
+  const [regenErrors, setRegenErrors] = useState<Record<string, string>>({});
 
   // Auth + voice state checks.
   useEffect(() => {
@@ -995,15 +1040,21 @@ export default function RoeslerDashboard() {
 
   const handleRegenerate = async (post: CalendarPost) => {
     if (!voiceState) return;
-    setRegenError(null);
+    const postNumber = post.post_number;
+    const key = String(postNumber);
+
+    setRegenErrors((prev) => {
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
     setRegeneratingSet((prev) => {
       const next = new Set(prev);
-      next.add(post.post_number);
+      next.add(postNumber);
       return next;
     });
 
-    const postNumber = post.post_number;
-    const editedDraft = editedDrafts[String(postNumber)];
+    const editedDraft = editedDrafts[key];
     const seedDraft = getEffectiveSeedText(post);
     const placeholder_fills = placeholderValuesForPost(postNumber);
 
@@ -1020,19 +1071,22 @@ export default function RoeslerDashboard() {
             Object.keys(placeholder_fills).length > 0 ? placeholder_fills : undefined,
         }),
       });
+      const contentType = res.headers.get("content-type") || "";
+      if (!contentType.includes("application/json")) {
+        throw new Error(
+          `Endpoint did not return JSON (${res.status}). The /api route is only available under vercel dev, not vite dev. Switch to localhost:3000.`
+        );
+      }
       const data = await res.json();
       if (!res.ok || !data.success) {
         throw new Error(data?.error || `Request failed (${res.status})`);
       }
       const draft = data.draft as string;
-      setRegeneratedMap((prev) => ({ ...prev, [String(postNumber)]: draft }));
+      setRegeneratedMap((prev) => ({ ...prev, [key]: draft }));
       localStorage.setItem(REGEN_KEY_PREFIX + postNumber, draft);
     } catch (err) {
-      setRegenError(
-        err instanceof Error
-          ? `Post ${postNumber}: ${err.message}`
-          : `Post ${postNumber}: regen failed`
-      );
+      const msg = err instanceof Error ? err.message : "Regen failed";
+      setRegenErrors((prev) => ({ ...prev, [key]: msg }));
     } finally {
       setRegeneratingSet((prev) => {
         const next = new Set(prev);
@@ -1045,6 +1099,54 @@ export default function RoeslerDashboard() {
   const resetVoiceDiscovery = () => {
     localStorage.removeItem(VOICE_STATE_KEY);
     navigate("/halo/roesler", { replace: true });
+  };
+
+  const approvedPosts = useMemo(
+    () => orderedPosts.filter((p) => statusMap[String(p.post_number)] === "approved"),
+    [orderedPosts, statusMap]
+  );
+
+  const buildApprovedExport = (): string => {
+    const ts = new Date().toISOString();
+    const header = [
+      "# Halo / Stephen Roesler / Approved drafts",
+      `Generated ${ts}`,
+      `Voice profile generated_at: ${voiceState?.generated_at ?? "unknown"}`,
+      `Approved: ${approvedPosts.length} of ${orderedPosts.length}`,
+      "",
+    ].join("\n");
+
+    const sections = approvedPosts.map((post) => {
+      const key = String(post.post_number);
+      const regen = regeneratedMap[key];
+      const edited = editedDrafts[key];
+      const seed = getEffectiveSeedText(post);
+      const sourceLabel = regen ? "calibrated regenerated" : edited ? "edited seed" : "seed";
+      const draft = regen || edited || seed;
+
+      const placeholderEntries = Object.entries(placeholderValuesForPost(post.post_number));
+      const placeholdersBlock = placeholderEntries.length
+        ? "\n\nPlaceholder fills:\n" +
+          placeholderEntries.map(([k, v]) => `- ${k}: ${v}`).join("\n")
+        : "";
+      const imageNote = imagesMap[key] ? "\n\n[Image attached, see Stephen's browser]" : "";
+
+      return [
+        "────────────────",
+        `[Post #${post.post_number} · ${formatDate(post.scheduled_date)}, ${post.scheduled_day} · ${post.funnel_tier}]`,
+        post.title,
+        `(${sourceLabel})`,
+        "",
+        draft,
+      ].join("\n") + placeholdersBlock + imageNote;
+    });
+
+    return header + sections.join("\n\n") + "\n";
+  };
+
+  const handleExportApproved = async (): Promise<void> => {
+    const text = buildApprovedExport();
+    await navigator.clipboard.writeText(text);
   };
 
   if (loadError) {
@@ -1080,20 +1182,10 @@ export default function RoeslerDashboard() {
         {operatorMode && (
           <OperatorPanel
             voiceState={voiceState}
+            approvedCount={approvedPosts.length}
             onReset={resetVoiceDiscovery}
+            onExportApproved={handleExportApproved}
           />
-        )}
-
-        {regenError && (
-          <div className="mb-6 px-4 py-3 rounded-md border border-[#B85C4A] bg-[#F4E4DD] text-[#383838] text-sm flex items-start justify-between gap-3">
-            <span>{regenError}</span>
-            <button
-              onClick={() => setRegenError(null)}
-              className="text-xs font-bold text-[#B85C4A] hover:text-[#383838]"
-            >
-              Dismiss
-            </button>
-          </div>
         )}
 
         <div className="space-y-6">
@@ -1118,6 +1210,7 @@ export default function RoeslerDashboard() {
               onClearImage={() => handleClearImage(post.post_number)}
               regenerated={regeneratedMap[String(post.post_number)]}
               isRegenerating={regeneratingSet.has(post.post_number)}
+              regenError={regenErrors[String(post.post_number)]}
               onRegenerate={() => handleRegenerate(post)}
             />
           ))}
