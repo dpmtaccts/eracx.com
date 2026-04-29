@@ -1,34 +1,15 @@
 export const INVESTMENT_HEADLINE =
-  'BetterUp is already spending the money required to win; the question is whether the signals those investments produce are connecting to the buyers they were meant to reach, and what the return looks like if they do.'
+  'BetterUp\'s brand investment is concentrated in a small set of high-visibility surfaces. Where the halo lands is the visible signal of where the company has chosen to place its bet.'
 
-export const CURRENT_INVESTMENTS = [
-  'Uplift conference (Adam Grant, Brene Brown, Shonda Rhimes)',
-  'Mercedes-AMG F1 partnership',
-  'Prince Harry as Chief Impact Officer',
-  'Thought leadership content engine (blog, research reports)',
-  'Enterprise sales team (4-5 reorgs in recent years)',
-  'AI product development (BetterUp Grow, MCP Server)',
+export const VISIBLE_FOOTPRINT = [
+  'Uplift conference as the flagship moment, with Adam Grant, Brené Brown, and Shonda Rhimes carrying the marquee',
+  'Mercedes-AMG F1 partnership, an elite-sport adjacency placement on a global broadcast surface',
+  'Residual Prince Harry presence from the Chief Impact Officer chapter, still surfaced in search and AI summaries',
+  'Long-form thought leadership engine: research reports, original studies, and the editorial blog',
 ]
 
-export const CURRENT_RETURNS = [
-  { label: 'Category awareness',     state: 'Strong',     tone: 'positive' as const },
-  { label: 'Consideration conversion',state: 'Weak',      tone: 'negative' as const },
-  { label: 'Enterprise deal velocity', state: 'Slow (30-45 day extended cycles)', tone: 'negative' as const },
-  { label: 'Competitive win rate',   state: 'Declining',  tone: 'negative' as const },
-  { label: 'Employee advocacy',      state: 'Net detractor', tone: 'negative' as const },
-  { label: 'AI search impression',   state: 'Mixed (product praised, organization questioned)', tone: 'negative' as const },
-]
-
-export const CONNECTED_CHANGES = [
-  'CEO content shifts from philosophy to outcome language. CHRO engagement rises.',
-  '5-7 executives carrying the brand, not just the CEO. Distributed trust.',
-  'BetterUp\'s LinkedIn company page funnel mix shifts to 40/35/25, and consideration content begins reaching the undecided buyers it was meant for.',
-  'Competitive positioning content published. BetterUp owns the comparison narrative.',
-  'Coach ambassador program launched. 4,000 organic advocates instead of 4,000 detractors.',
-  'Pricing transparency introduced. Self-directed buyer research unblocked.',
-  'Glassdoor addressed operationally. AI search results shift within 6-12 months.',
-  'Content aligned to buyer journey stages. Right message reaches right buyer at right moment.',
-]
+export const FOOTPRINT_NOTE =
+  'Halo without distribution is brand without a buyer journey. The concentration above buys category recognition, which the audit confirms BetterUp still holds. What it does not buy, on the public surfaces a buyer actually checks during diligence, is presence in the comparison and consideration moments where the deal is decided.'
 
 export const PROJECTED_IMPACT = [
   { label: 'Brand Cascade', current: 41, projected: 62 },
@@ -37,8 +18,14 @@ export const PROJECTED_IMPACT = [
   { label: 'AI Mirror',                current: 38, projected: 58 },
 ]
 
-export const PIPELINE_PROJECTION =
-  '15-25% improvement in qualified opportunity conversion at the due diligence stage.'
+// PIPELINE_PROJECTION removed April 2026 after client review.
+// Reason: the audit reads only public, market-side signals. Estimating a
+// pipeline conversion lift requires internal performance data (current
+// conversion rates, deal velocity, ARR per opportunity) that this audit
+// does not have access to. Restore only when anchored to client data.
+//
+// export const PIPELINE_PROJECTION =
+//   '15-25% improvement in qualified opportunity conversion at the due diligence stage.'
 
 export const PROJECTION_CAVEAT =
-  'Projections based on ERA\'s experience with comparable B2B enterprise clients. Actual results depend on operational execution, particularly addressing the internal brand crisis (Layer 4) which is a prerequisite for sustainable signal improvement.'
+  'This section describes publicly visible brand presence, not internal spend, conversion, or program performance. The score projections are directional and based on ERA\'s pattern recognition across comparable B2B engagements, not a forecast against BetterUp\'s internal data.'

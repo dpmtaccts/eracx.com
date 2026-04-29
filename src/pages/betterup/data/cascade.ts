@@ -142,3 +142,5 @@ export const CASCADE_LAYERS: CascadeLayer[] = [
 ]
 
 export const CASCADE_BREAK_CALLOUT = `The cascade breaks at Layer 4, where the people who actually carry the brand to customers stop reflecting it back. BetterUp sells psychological safety and human transformation, yet its own employees describe neither in the reviews a CHRO will read on Glassdoor before a first call. Coaches surface pay disputes and communication breakdowns in the same forums prospective buyers search; account managers churn through the same accounts three or more times in twelve months. The promise dies at the frontline, and because every one of those signals is publicly indexed, the market can see exactly where it died.`
+
+export const CASCADE_ADOPTION_CALLOUT = `BetterUp has built a Claude-based post generator in-house, and the tool itself is sound. The constraint isn't authoring; it's adoption, which is a system problem rather than a content one. Closing that gap looks like push instead of poll: posts assigned and tracked, tagging that ties content back to campaigns, and an attribution loop that returns the engagement signal to the CRM where pipeline lives.`

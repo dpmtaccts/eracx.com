@@ -21,6 +21,7 @@ import {
 import {
   COMPANY,
   CORE_FINDING_PARAGRAPHS,
+  METHODOLOGY_NOTE,
   PULL_QUOTE_1,
   PULL_QUOTE_2,
   STRENGTHS,
@@ -81,6 +82,10 @@ function ExecutiveSummary() {
         <h1 style={{ position: 'absolute', left: -9999 }}>BetterUp</h1>
       </Reveal>
 
+      <Reveal delay={0.05}>
+        <MethodologyNote />
+      </Reveal>
+
       <Reveal delay={0.1}>
         <BentoHero />
       </Reveal>
@@ -93,6 +98,53 @@ function ExecutiveSummary() {
         <StrengthsVulnerabilities />
       </Reveal>
     </Section>
+  )
+}
+
+/* ──────────────────────────────────────────────
+   Methodology note — answers the diligence question before it's asked
+   ────────────────────────────────────────────── */
+function MethodologyNote() {
+  return (
+    <div
+      style={{
+        marginTop: 32,
+        background: '#FBF9F6',
+        border: '1px solid #E8E4DE',
+        borderLeft: '3px solid #C85A3A',
+        borderRadius: 6,
+        padding: '24px 28px',
+        maxWidth: 720,
+      }}
+    >
+      <div
+        style={{
+          fontFamily: FONT.body,
+          fontSize: 11,
+          letterSpacing: '0.16em',
+          textTransform: 'uppercase',
+          color: '#C85A3A',
+          fontWeight: 600,
+          marginBottom: 14,
+        }}
+      >
+        Methodology
+      </div>
+      {METHODOLOGY_NOTE.map((p, i) => (
+        <p
+          key={i}
+          style={{
+            fontFamily: FONT.body,
+            fontSize: 14.5,
+            lineHeight: 1.6,
+            color: '#1A1A1A',
+            margin: i === METHODOLOGY_NOTE.length - 1 ? 0 : '0 0 12px',
+          }}
+        >
+          {p}
+        </p>
+      ))}
+    </div>
   )
 }
 
@@ -1012,9 +1064,9 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
                   <PopulationSection />
                   <SignalsSection />
                   <AudienceSection />
-                  <AIMirror />
                   <InvestmentSection />
                   <BuildSection />
+                  <AIMirror />
                 </motion.div>
               )}
             </AnimatePresence>
