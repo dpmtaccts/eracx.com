@@ -115,33 +115,6 @@ export default function WhatToExpect() {
           <span className="slab">not linear.</span>
         </p>
 
-        <div className="portraits-head">
-          <div className="portraits-title">
-            <b>The team.</b> &nbsp;Three operators. Zero account managers.
-          </div>
-          <div className="portraits-count">
-            Led growth at Fortune 500s
-          </div>
-        </div>
-
-        <div className="portraits-grid">
-          <div className="portrait-card">
-            <div className="portrait-image" aria-hidden="true" />
-            <div className="portrait-name">[ Founder name ]</div>
-            <div className="portrait-role">Founder</div>
-          </div>
-          <div className="portrait-card">
-            <div className="portrait-image" aria-hidden="true" />
-            <div className="portrait-name">[ Operator name ]</div>
-            <div className="portrait-role">Operator</div>
-          </div>
-          <div className="portrait-card">
-            <div className="portrait-image" aria-hidden="true" />
-            <div className="portrait-name">[ Operator name ]</div>
-            <div className="portrait-role">Operator</div>
-          </div>
-        </div>
-
         <div className="team-panel">
           <p className="team-lede">
             ERA is built by <strong>GTM executives, business leaders, and
