@@ -17,7 +17,6 @@ import Loop from '../../components/v3/Loop'
 import Evidence from '../../components/v3/Evidence'
 import PointOfView from '../../components/v3/PointOfView'
 import WhatToExpect from '../../components/v3/WhatToExpect'
-import Team from '../../components/v3/Team'
 import StartHere from '../../components/v3/StartHere'
 import Footer from '../../components/v3/Footer'
 import Fixer from '../../components/v3/Fixer'
@@ -35,7 +34,6 @@ export default function V3() {
       <Evidence />
       <PointOfView />
       <WhatToExpect />
-      <Team />
       <StartHere />
       <Footer />
       <Fixer />

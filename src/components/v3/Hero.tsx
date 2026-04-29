@@ -10,9 +10,6 @@ export default function Hero() {
       <div className="container">
         <div className="hero-grid">
           <div>
-            <div className="eyebrow">
-              Revenue Through Subtraction
-            </div>
             <h1 className="hero-title">
               Cold outbound
               <br />
@@ -39,10 +36,10 @@ export default function Hero() {
             </div>
             <div className="hero-meta">
               <div>
-                <b>Outcome</b>Reduces 80% of wasted growth actions
+                <b>Outcome</b>Reduces eighty percent of wasted growth actions
               </div>
               <div>
-                <b>Current customers</b>Netrush · Navalent · Miniac · POP · Seismic
+                <b>POV</b>Compounding warmth beats linear spend
               </div>
             </div>
           </div>
