@@ -45,6 +45,11 @@ export const PULL_QUOTE_1 =
 export const PULL_QUOTE_2 =
   'A category pioneer leaking pipeline not because the product fails, but because the CEO talks about human potential while the sales team has zero content addressing the CHRO\'s Monday morning budget meeting.'
 
+export const METHODOLOGY_NOTE: string[] = [
+  'This audit is a mirror of what the market sees, not a measurement of what BetterUp does internally. It reads public signals: LinkedIn presence, content patterns, review platforms, competitive comparison pages, and the way generative AI describes BetterUp when a buyer asks.',
+  'Internal performance, spend, conversion rates, and program activity are out of scope by design. The gap between what the market sees and what is actually happening inside the company is usually where the work lives.',
+]
+
 /* Retained for the Summary page (single-paragraph version). */
 export const CORE_FINDING = CORE_FINDING_PARAGRAPHS.join(' ')
 

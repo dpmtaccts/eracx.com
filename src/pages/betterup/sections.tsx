@@ -13,6 +13,7 @@ import {
 } from './components'
 import { FONT, colorForScore, useTheme } from './theme'
 import {
+  CASCADE_ADOPTION_CALLOUT,
   CASCADE_BREAK_CALLOUT,
   CASCADE_HEADLINE,
   CASCADE_INTRO,
@@ -74,6 +75,27 @@ export function CascadeSection() {
           </div>
           {CASCADE_BREAK_CALLOUT}
         </Callout>
+      </Reveal>
+
+      <Reveal>
+        <div style={{ marginTop: 24 }}>
+          <Callout tone="rust">
+            <div
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 11,
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                color: palette.rust,
+                marginBottom: 12,
+                fontWeight: 600,
+              }}
+            >
+              The adoption gap
+            </div>
+            {CASCADE_ADOPTION_CALLOUT}
+          </Callout>
+        </div>
       </Reveal>
 
       <div style={{ marginTop: 56, display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -1910,131 +1932,107 @@ function ThinksVsActualCol({ label, items, tone }: { label: string; items: strin
 }
 
 /* ──────────────────────────────────────────────
-   Section 7: Investment vs. Return
+   Section: Where the brand is concentrated today
+   (was "Investment vs. Return". Reframed April 2026 to describe
+   visible footprint only, not internal spend or ROI.)
    ────────────────────────────────────────────── */
 import {
-  CONNECTED_CHANGES,
-  CURRENT_INVESTMENTS,
-  CURRENT_RETURNS,
+  FOOTPRINT_NOTE,
   INVESTMENT_HEADLINE,
   PROJECTED_IMPACT,
   PROJECTION_CAVEAT,
+  VISIBLE_FOOTPRINT,
 } from './data/investment'
 
 export function InvestmentSection() {
   const { palette } = useTheme()
   return (
     <Section id="investment">
-      <SectionHeader kicker="Investment vs. Return" headline={INVESTMENT_HEADLINE} shareId="investment" />
+      <SectionHeader
+        kicker="Where the brand is concentrated today"
+        headline={INVESTMENT_HEADLINE}
+        shareId="investment"
+      />
 
-      {/* PROJECTED IMPACT — the centerpiece, moved to the top */}
+      {/* Visible footprint */}
       <Reveal>
-        <div style={smallLabel(palette.rust)}>If the signals connect</div>
+        <div style={smallLabel(palette.rust)}>Where the halo lives</div>
         <div
           style={{
-            marginTop: 20,
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: 16,
-            marginBottom: 28,
-          }}
-        >
-          {PROJECTED_IMPACT.map((p) => <ProjectedCard key={p.label} p={p} />)}
-        </div>
-        <div
-          style={{
-            background: palette.text,
-            color: palette.bg,
-            borderRadius: 8,
-            padding: '24px 32px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 20,
-            flexWrap: 'wrap',
-            marginBottom: 80,
-          }}
-        >
-          <div
-            style={{
-              fontFamily: FONT.mono,
-              fontSize: 36,
-              color: '#D86A48',
-              lineHeight: 1,
-              fontWeight: 500,
-            }}
-          >
-            +15-25%
-          </div>
-          <div style={{ flex: 1, minWidth: 240 }}>
-            <div style={{ fontFamily: FONT.body, fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#D86A48', marginBottom: 6 }}>
-              Estimated pipeline impact
-            </div>
-            <div style={{ fontFamily: FONT.body, fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
-              Improvement in qualified opportunity conversion at the due diligence stage.
-            </div>
-          </div>
-        </div>
-      </Reveal>
-
-      {/* Current vs Connected */}
-      <Reveal>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-            gap: 24,
+            marginTop: 16,
+            background: palette.card,
+            border: `1px solid ${palette.border}`,
+            borderRadius: 6,
+            padding: '28px 32px',
             marginBottom: 32,
           }}
         >
-          {/* Current state */}
-          <div
+          <ul
             style={{
-              background: palette.cardAlt,
-              border: `1px solid ${palette.border}`,
-              borderRadius: 6,
-              padding: '28px 32px',
-              opacity: 0.92,
+              listStyle: 'none',
+              margin: 0,
+              padding: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 14,
             }}
           >
-            <div style={smallLabel(palette.textDim)}>Where the money is going today</div>
-            <ul style={{ listStyle: 'none', margin: '16px 0 28px', padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {CURRENT_INVESTMENTS.map((i, idx) => (
-                <li key={i} style={{ fontFamily: FONT.body, fontSize: 13.5, color: palette.textMuted, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                  <InvestmentIcon index={idx} color={palette.textDim} />
-                  <span style={{ marginTop: 2 }}>{i}</span>
-                </li>
-              ))}
-            </ul>
-            <div style={smallLabel(palette.textDim)}>What the return looks like</div>
-            <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {CURRENT_RETURNS.map((r) => (
-                <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
-                  <span style={{ fontFamily: FONT.body, fontSize: 13, color: palette.textMuted }}>{r.label}</span>
-                  <StatusPill state={r.state} tone={r.tone} />
-                </div>
-              ))}
-            </div>
-          </div>
+            {VISIBLE_FOOTPRINT.map((item, idx) => (
+              <li
+                key={item}
+                style={{
+                  fontFamily: FONT.body,
+                  fontSize: 15,
+                  lineHeight: 1.55,
+                  color: palette.text,
+                  display: 'flex',
+                  gap: 14,
+                  alignItems: 'flex-start',
+                }}
+              >
+                <InvestmentIcon index={idx} color={palette.rust} />
+                <span style={{ marginTop: 1 }}>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Reveal>
 
-          {/* Connected changes */}
+      {/* What concentration alone does and doesn't reach */}
+      <Reveal>
+        <Callout tone="rust">
           <div
             style={{
-              background: palette.card,
-              border: `1px solid ${palette.rust}`,
-              borderRadius: 6,
-              padding: '28px 32px',
-              boxShadow: `0 8px 32px ${palette.rustSoft}`,
+              fontFamily: FONT.body,
+              fontSize: 11,
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              color: palette.rust,
+              marginBottom: 12,
+              fontWeight: 600,
             }}
           >
-            <div style={smallLabel(palette.rust)}>What connected signals would change</div>
-            <ul style={{ listStyle: 'none', margin: '16px 0 0', padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {CONNECTED_CHANGES.map((c) => (
-                <li key={c} style={{ fontFamily: FONT.body, fontSize: 14, lineHeight: 1.5, color: palette.text, display: 'flex', gap: 10 }}>
-                  <span style={{ color: palette.rust, flex: '0 0 auto', fontWeight: 700 }}>→</span>
-                  <span>{c}</span>
-                </li>
-              ))}
-            </ul>
+            What concentration alone reaches
+          </div>
+          {FOOTPRINT_NOTE}
+        </Callout>
+      </Reveal>
+
+      {/* PROJECTED IMPACT block — kept for now pending client decision.
+          The +15-25% pipeline projection has been removed (see Edit 3 below). */}
+      <Reveal>
+        <div style={{ marginTop: 56 }}>
+          <div style={smallLabel(palette.rust)}>If the signals connect</div>
+          <div
+            style={{
+              marginTop: 20,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gap: 16,
+              marginBottom: 28,
+            }}
+          >
+            {PROJECTED_IMPACT.map((p) => <ProjectedCard key={p.label} p={p} />)}
           </div>
         </div>
       </Reveal>
@@ -2092,32 +2090,6 @@ function ProjectedCard({ p }: { p: { label: string; current: number; projected: 
         +{delta}%
       </div>
     </div>
-  )
-}
-
-function StatusPill({ state, tone }: { state: string; tone: 'positive' | 'negative' }) {
-  const { palette } = useTheme()
-  const color = tone === 'positive' ? palette.green : palette.red
-  const bg = tone === 'positive' ? 'rgba(58, 155, 110, 0.12)' : 'rgba(200, 68, 56, 0.12)'
-  return (
-    <span
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 6,
-        background: bg,
-        color: color,
-        fontFamily: FONT.mono,
-        fontSize: 11,
-        padding: '4px 10px',
-        borderRadius: 999,
-        letterSpacing: '0.04em',
-        fontWeight: 600,
-      }}
-    >
-      <span style={{ width: 6, height: 6, borderRadius: '50%', background: color }} />
-      {state}
-    </span>
   )
 }
 
