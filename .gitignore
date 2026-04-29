@@ -27,3 +27,6 @@ dist-ssr
 .vercel
 .env
 .env*.local
+
+# Raw LinkedIn research PDFs — too large for git, kept locally only
+docs/linkedin-data/cascade-audit-2026-04/
