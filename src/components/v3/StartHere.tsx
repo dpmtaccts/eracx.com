@@ -46,29 +46,29 @@ export default function StartHere() {
         <div className="cta-grid">
           <div>
             <div className="eyebrow" style={{ color: '#C4D5DE' }}>
-              10 &nbsp; Start here
+              10 &nbsp; Request your audit
             </div>
             <h2>
-              Map the signals<br />
+              See what your<br />
               <span className="slab">
-                that can <span className="accent">set you apart.</span>
+                <span className="accent">buyers actually see.</span>
               </span>
             </h2>
             <p className="cta-sub">
-              Install the loop. Run the signals.{' '}
-              <strong>
-                Compound warmth across your highest-value accounts.
-              </strong>
+              A <strong>Revenue Signal Audit</strong> maps every signal your
+              highest-value accounts encounter. What&rsquo;s converting,
+              what&rsquo;s invisible, and where pipeline is quietly leaking.
+              The same diagnostic we built for BetterUp.
             </p>
             <div className="cta-meta">
               <div>
-                <b>Engagement</b>From $15K/mo, ongoing
+                <b>Outcome</b>See exactly what your buyers see
               </div>
               <div>
-                <b>Time to first results</b>Months 3&ndash;4
+                <b>Proof</b>The same audit we built for BetterUp
               </div>
               <div>
-                <b>Outcome</b>Reduces 80% of wasted growth actions
+                <b>POV</b>Every wasted motion starts as an unmapped signal
               </div>
             </div>
           </div>
@@ -106,11 +106,11 @@ export default function StartHere() {
                 </div>
               </div>
               <div className="field">
-                <label htmlFor="message">What are you working on?</label>
+                <label htmlFor="message">What should we audit?</label>
                 <textarea
                   id="message"
                   name="message"
-                  placeholder="The shorter the better. One or two sentences."
+                  placeholder="One or two sentences on the company, market, or signal you want diagnosed."
                 />
               </div>
               <div className="contact-submit">
@@ -121,7 +121,7 @@ export default function StartHere() {
                 >
                   {status === 'submitting'
                     ? 'Sending…'
-                    : 'Get Started  →'}
+                    : 'Request audit  →'}
                 </button>
                 {status === 'idle' && (
                   <span className="cta-note">
@@ -130,7 +130,7 @@ export default function StartHere() {
                 )}
                 {status === 'success' && (
                   <span className="cta-note success">
-                    Got it. We&apos;ll be in touch.
+                    Got it. We&apos;ll be in touch within 48 hours.
                   </span>
                 )}
                 {status === 'error' && (

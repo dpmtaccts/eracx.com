@@ -1,0 +1,163 @@
+{
+  "client_slug": "roesler",
+  "client_name": "Stephen Roesler",
+  "company": "Miniac",
+  "mode": "build",
+  "_mode_note": "build = no audit data, voice discovery is the entry point. Contrast with audit_first mode used for Justin and Brian.",
+
+  "password": "previzkilledthestoryboard",
+  "_password_note": "Lowercase, no spaces, references the central messaging hook. Stephen will recognize it immediately. Change before sending if Justin prefers a different one.",
+
+  "profile": {
+    "name": "Stephen Roesler",
+    "headline": "Co-Founder, Miniac | Pro-Viz, AI in production",
+    "company": "Miniac",
+    "company_role": "Co-Founder",
+    "location": "New York, NY",
+    "linkedin_url": "https://www.linkedin.com/in/stephenroesler/",
+    "_linkedin_url_note": "Confirm exact URL slug before deploy. Placeholder pulled from naming convention.",
+    "website": "miniac.com",
+    "banner_image": "/data/roesler/screenshots/00-profile-header.png",
+    "_banner_note": "Will be empty on first deploy. Stephen has minimal LinkedIn presence. Banner can be a Miniac brand image or omitted entirely until he uploads one.",
+    "profile_photo": "/data/roesler/profile-photo.png",
+    "_photo_note": "Pull from miniac.com or his existing LinkedIn. Confirm with Stephen before publishing.",
+    "followers": null,
+    "_followers_note": "Null in build mode. Audit-mode shows this on the gate; build-mode hides it. See halo/[slug]/page.tsx logic.",
+    "connections": null,
+    "posts_published_with_us": 0,
+    "_posts_note": "Counter increments as we ship posts. Replaces the audit-mode 'posts_analyzed' stat on the gate."
+  },
+
+  "engagement": {
+    "tier": "build_starter",
+    "_tier_note": "New tier for clients with no existing content. Bypasses audit pricing flow. Stephen's actual tier gets set after the onboarding call.",
+    "started_at": "2026-04-28",
+    "primary_contact_email": "stephen@miniac.com",
+    "secondary_contact_email": "rogers.marquess@miniac.com",
+    "era_owner": "justin@dpmt.co",
+    "slack_channel_for_drafts": "TBD",
+    "_slack_note": "Set this once Justin creates the shared Slack channel with Stephen. Until then, drafts route to email."
+  },
+
+  "intelligence_inputs": {
+    "voice_skill_file": "/data/roesler/stephen_voice_skill.md",
+    "content_calendar": "/data/roesler/stephen_content_calendar.json",
+    "voice_state_seed": "/data/roesler/voice_state_seed.json",
+    "voice_state_calibrated": null,
+    "_voice_state_note": "Null until Stephen completes voice discovery. Drafts use voice_state_seed before then. After discovery, voice_state_calibrated takes precedence and seed becomes a fallback.",
+    "writing_samples": [
+      {
+        "type": "article",
+        "title": "Pro-Viz",
+        "url": "https://miniac.com/projects/pro-viz/",
+        "weight": "primary",
+        "_note": "The thesis piece. Single most important voice sample."
+      },
+      {
+        "type": "letter",
+        "title": "2025 Annual Letter",
+        "url": "https://docs.google.com/document/d/1-Dzr9TvbymmBPNWWMdDCoc13CQp70cSUmObXEzVMZTw/edit",
+        "weight": "primary",
+        "_note": "Long-form Stephen writing in his own voice. Core training input."
+      },
+      {
+        "type": "transcript",
+        "title": "Justin / Stephen, April 17 call",
+        "url": "https://app.fireflies.ai/view/01KPE9TV3FYB78X48Q6KWZHSFW",
+        "weight": "primary",
+        "_note": "Spoken voice. Where Stephen sounds most like himself. Used to seed the skill file."
+      },
+      {
+        "type": "article_pending",
+        "title": "IHAF email blast piece",
+        "url": null,
+        "weight": "secondary",
+        "_note": "Stephen mentioned this on the April 17 call. Add URL once published. Stephen action item from that call."
+      }
+    ]
+  },
+
+  "voice_proxies": [
+    {
+      "name": "Scott Galloway",
+      "linkedin_url": "https://www.linkedin.com/in/profgalloway/",
+      "rationale": "Hot takes with humor. The rhythm of opinion landed inside a longer wind-up. Stephen named him directly on the April 17 call."
+    },
+    {
+      "name": "Chris Bellinger",
+      "linkedin_url": "https://www.linkedin.com/in/chrisbellinger/",
+      "rationale": "Daily-cadence model. Stephen on the call: 'something happens. It sparks off an emotion for him and he writes a post about it.' That trigger is the mechanic to study."
+    },
+    {
+      "name": "Greg Hahn",
+      "linkedin_url": "https://www.linkedin.com/in/greghahn777/",
+      "rationale": "Working CCO at Mischief who posts observations from inside the work. Tone is 'here is what I noticed today,' not 'here is my framework.'"
+    },
+    {
+      "name": "Cristóbal Valenzuela",
+      "linkedin_url": "https://www.linkedin.com/in/cvalenzuelab/",
+      "rationale": "Runway founder. AI-and-film leader Stephen wants to draft off of. Comment-on-his-posts target."
+    },
+    {
+      "name": "Samir Mallal",
+      "linkedin_url": "https://www.linkedin.com/in/samirmallal/",
+      "rationale": "Filmmaker voice in the AI-and-film space. From the Best in Class doc."
+    }
+  ],
+
+  "icp": {
+    "company_filter": "Large B2C brand with in-house creative function. $3B+ revenue (or $7B+ for B2B that markets like consumer). IHAF universe is the core seed.",
+    "verticals_priority": [
+      "consumer devices and appliances",
+      "automotive",
+      "sports and athletic",
+      "consumer tech with physical product lines",
+      "retail with product catalogs",
+      "beauty and consumer pharma",
+      "travel and hospitality"
+    ],
+    "buyer_personas": [
+      "Creative Director",
+      "Senior Creative VP+",
+      "ECD / CCO",
+      "Head of Production",
+      "Executive Producer",
+      "Producers and Operations leads"
+    ]
+  },
+
+  "calendar_anchors": [
+    {
+      "name": "AICP Week NYC",
+      "dates": "June 2-4, 2026",
+      "weight": "primary",
+      "_note": "First five-week calendar is anchored to this. All week-5 posts orient around landing at AICP."
+    }
+  ],
+
+  "post_settings": {
+    "cadence_per_week": 2,
+    "publish_days": ["Tuesday", "Thursday"],
+    "publish_time_local": "08:30",
+    "timezone": "America/New_York",
+    "max_original_per_quarter": 3,
+    "_max_note": "Stephen's stated time budget on April 17: one substantive article a quarter, 'honestly one a month.' This caps the deep-idea pillar."
+  },
+
+  "anti_rules": [
+    "no em dashes anywhere",
+    "no three short declarative sentences in a row",
+    "no business-tie-in endings",
+    "no buzzwords (synergy, leverage, unlock, paradigm shift, game-changer, 10x)",
+    "no filler intros (hope you are well, just wanted to share, I have been thinking about)",
+    "no thought-leadership framing (Here are 5 lessons from..., The 3 things every CMO needs to know about...)",
+    "no CTA endings (what do you think, drop a comment, DM me) except the AICP community post",
+    "no numbered list hooks",
+    "no name-drops in texture posts unless attendee approved"
+  ],
+
+  "draft_quality_target": {
+    "definition": "Close enough to publish with one round of light edits from Stephen, or for Era to publish on his behalf.",
+    "_target_note": "Stephen explicit: 'the system is supposed to get us close to the final post for him to post or us to post on his behalf.' Discovery should close the gap from current seed-based drafts to publish-ready drafts."
+  }
+}

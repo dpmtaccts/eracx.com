@@ -2369,3 +2369,720 @@ export function BuildSection() {
     </Section>
   )
 }
+
+
+/* ──────────────────────────────────────────────
+   What Your Buyer Is Actually Seeing — five-stop journey
+   ────────────────────────────────────────────── */
+import {
+  AMPLIFICATION,
+  CLOSING_DIAGNOSIS,
+  CLOSING_DIAGNOSIS_KICKER,
+  GTM_GRID_FUNCTIONAL_FLOOR,
+  GTM_GRID_NOTE,
+  GTM_LEADERSHIP_GRID,
+  ICP_BUYERS_HEADLINE,
+  ICP_BUYERS_NAMED,
+  JOURNEY_STOPS,
+  SECTION_HEADLINE,
+  SECTION_INTRO,
+  SECTION_KICKER,
+  SECTION_SUBHEAD,
+  SEVEN_FINDINGS,
+  SEVEN_FINDINGS_KICKER,
+  TIER_AVERAGES,
+  type JourneyStop,
+} from './data/population'
+
+export function PopulationSection() {
+  const { palette } = useTheme()
+
+  return (
+    <Section id="population">
+      {/* Section opener */}
+      <Reveal>
+        <div style={{ marginBottom: 56 }}>
+          <div
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 12,
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color: palette.rust,
+              marginBottom: 16,
+              fontWeight: 600,
+            }}
+          >
+            {SECTION_KICKER}
+          </div>
+          <h2
+            style={{
+              fontFamily: FONT.display,
+              fontSize: 'clamp(36px, 5vw, 60px)',
+              lineHeight: 1.05,
+              color: palette.text,
+              margin: 0,
+              maxWidth: 920,
+              fontWeight: 400,
+            }}
+          >
+            {SECTION_HEADLINE}
+          </h2>
+          <blockquote
+            style={{
+              margin: '32px 0 28px',
+              padding: '4px 0 4px 28px',
+              borderLeft: `4px solid ${palette.rust}`,
+              fontFamily: FONT.display,
+              fontStyle: 'italic',
+              fontSize: 'clamp(20px, 2.4vw, 28px)',
+              lineHeight: 1.35,
+              color: palette.text,
+              maxWidth: 880,
+            }}
+          >
+            {SECTION_SUBHEAD}
+          </blockquote>
+          <p
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 17,
+              lineHeight: 1.6,
+              color: palette.textMuted,
+              margin: 0,
+              maxWidth: 760,
+            }}
+          >
+            {SECTION_INTRO}
+          </p>
+        </div>
+      </Reveal>
+
+      {/* The five journey stops */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+        {JOURNEY_STOPS.map((stop, i) => (
+          <JourneyStopCard key={stop.number} stop={stop} isLast={i === JOURNEY_STOPS.length - 1} />
+        ))}
+      </div>
+
+      {/* Closing diagnosis */}
+      <Reveal>
+        <div style={{ marginTop: 96, marginBottom: 96 }}>
+          <div style={smallLabel(palette.rust)}>{CLOSING_DIAGNOSIS_KICKER}</div>
+          <blockquote
+            style={{
+              margin: '24px 0 0',
+              padding: '8px 0 8px 32px',
+              borderLeft: `4px solid ${palette.rust}`,
+              fontFamily: FONT.display,
+              fontStyle: 'italic',
+              fontSize: 'clamp(24px, 3vw, 36px)',
+              lineHeight: 1.35,
+              color: palette.text,
+              maxWidth: 920,
+              fontWeight: 400,
+            }}
+          >
+            {CLOSING_DIAGNOSIS}
+          </blockquote>
+        </div>
+      </Reveal>
+
+      {/* 12 ICP buyers — concentration risk */}
+      <Reveal>
+        <div style={{ marginBottom: 96 }}>
+          <div style={smallLabel(palette.rust)}>The twelve buyers paying attention</div>
+          <p
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 17,
+              lineHeight: 1.6,
+              color: palette.textMuted,
+              margin: '12px 0 28px',
+              maxWidth: 880,
+            }}
+          >
+            {ICP_BUYERS_HEADLINE}
+          </p>
+          <div
+            style={{
+              background: palette.card,
+              border: `1px solid ${palette.border}`,
+              borderRadius: 6,
+              padding: '8px 0',
+            }}
+          >
+            {ICP_BUYERS_NAMED.map((b, i) => (
+              <div
+                key={b.name}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '32px 1fr 1.4fr 1.6fr',
+                  alignItems: 'center',
+                  padding: '14px 28px',
+                  borderBottom: i === ICP_BUYERS_NAMED.length - 1 ? 'none' : `1px solid ${palette.borderSubtle}`,
+                  gap: 16,
+                }}
+              >
+                <span style={{ fontFamily: FONT.mono, fontSize: 12, color: palette.textDim }}>{String(i + 1).padStart(2, '0')}</span>
+                <span style={{ fontFamily: FONT.body, fontSize: 14, color: palette.text, fontWeight: 600 }}>{b.name}</span>
+                <span style={{ fontFamily: FONT.body, fontSize: 13, color: palette.textMuted }}>{b.title}</span>
+                <span style={{ fontFamily: FONT.body, fontSize: 12, color: palette.textDim, fontStyle: 'italic' }}>{b.appearsOn}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+
+      {/* Composite signal score by tier — supporting evidence, after closing */}
+      <Reveal>
+        <div style={{ marginBottom: 96 }}>
+          <div style={smallLabel(palette.rust)}>Composite signal score by tier · supporting evidence</div>
+          <div
+            style={{
+              marginTop: 20,
+              background: palette.card,
+              border: `1px solid ${palette.border}`,
+              borderRadius: 6,
+              padding: '24px 28px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 14,
+            }}
+          >
+            {TIER_AVERAGES.map((t) => (
+              <div key={t.tier} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                <span style={{ fontFamily: FONT.body, fontSize: 13, color: palette.text, width: 200, fontWeight: 500 }}>
+                  {t.tier}
+                </span>
+                <span style={{ fontFamily: FONT.mono, fontSize: 11, color: palette.textDim, width: 30 }}>n={t.n}</span>
+                <div style={{ flex: 1, height: 8, background: palette.border, borderRadius: 4, overflow: 'hidden' }}>
+                  <div
+                    style={{
+                      width: `${t.avg}%`,
+                      height: '100%',
+                      background: colorForScore(palette, t.avg),
+                      borderRadius: 4,
+                      transition: 'width 1.2s cubic-bezier(0.16,1,0.3,1)',
+                    }}
+                  />
+                </div>
+                <span
+                  style={{
+                    fontFamily: FONT.mono,
+                    fontSize: 14,
+                    color: palette.text,
+                    width: 32,
+                    textAlign: 'right',
+                    fontWeight: 600,
+                  }}
+                >
+                  {t.avg}
+                </span>
+                <span style={{ fontFamily: FONT.mono, fontSize: 11, color: palette.textMuted, width: 60, textAlign: 'right' }}>
+                  ({t.range})
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+
+      {/* Seven things she leaves believing */}
+      <Reveal>
+        <div style={smallLabel(palette.rust)}>{SEVEN_FINDINGS_KICKER}</div>
+        <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', gap: 32 }}>
+          {SEVEN_FINDINGS.map((f, i) => (
+            <div key={i} style={{ display: 'flex', gap: 24 }}>
+              <div
+                style={{
+                  fontFamily: FONT.display,
+                  fontStyle: 'italic',
+                  fontSize: 56,
+                  color: palette.rust,
+                  opacity: 0.25,
+                  lineHeight: 0.9,
+                  flex: '0 0 auto',
+                  width: 64,
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <p
+                style={{
+                  fontFamily: FONT.display,
+                  fontStyle: 'italic',
+                  fontSize: 'clamp(18px, 2vw, 22px)',
+                  lineHeight: 1.45,
+                  color: palette.text,
+                  margin: 0,
+                  paddingLeft: 24,
+                  borderLeft: `3px solid ${palette.rust}`,
+                  maxWidth: 880,
+                }}
+              >
+                {f}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Reveal>
+    </Section>
+  )
+}
+
+function JourneyStopCard({ stop, isLast }: { stop: JourneyStop; isLast: boolean }) {
+  const { palette } = useTheme()
+  return (
+    <Reveal>
+      <div style={{ paddingBottom: isLast ? 0 : 56 }}>
+        <div
+          style={{
+            background: palette.card,
+            border: `1px solid ${palette.border}`,
+            borderRadius: 8,
+            padding: '40px 44px',
+          }}
+        >
+          {/* Stop number + title */}
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 24, marginBottom: 8 }}>
+            <span
+              style={{
+                fontFamily: FONT.display,
+                fontStyle: 'italic',
+                fontSize: 'clamp(56px, 6vw, 80px)',
+                color: palette.rust,
+                opacity: 0.18,
+                lineHeight: 0.85,
+                letterSpacing: '-0.02em',
+                flex: '0 0 auto',
+              }}
+            >
+              {stop.number}
+            </span>
+            <span
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 11,
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                color: palette.rust,
+                fontWeight: 600,
+              }}
+            >
+              Stop {stop.number}
+            </span>
+          </div>
+
+          <h3
+            style={{
+              fontFamily: FONT.display,
+              fontSize: 'clamp(28px, 3.4vw, 38px)',
+              lineHeight: 1.15,
+              color: palette.text,
+              margin: '0 0 8px',
+              fontWeight: 400,
+            }}
+          >
+            {stop.title}
+          </h3>
+
+          <div
+            style={{
+              fontFamily: FONT.mono,
+              fontSize: 12,
+              color: palette.textDim,
+              marginBottom: 36,
+              letterSpacing: '0.02em',
+            }}
+          >
+            {stop.voicesCount}
+          </div>
+
+          {/* 3-column ladder */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+              gap: 28,
+              marginBottom: 40,
+            }}
+          >
+            <LadderColumn
+              kicker="Wants felt"
+              kickerColor={palette.rust}
+              variant="serif"
+              text={stop.wantsFelt}
+            />
+            <LadderColumn
+              kicker="Finds"
+              kickerColor={palette.textMuted}
+              variant="body"
+              text={stop.finds}
+            />
+            <LadderColumn
+              kicker="The gap"
+              kickerColor={palette.red}
+              variant="gap"
+              text={stop.gap}
+            />
+          </div>
+
+          {/* Evidence — divider + visual */}
+          <div
+            style={{
+              borderTop: `1px solid ${palette.borderSubtle}`,
+              paddingTop: 32,
+            }}
+          >
+            <div
+              style={{
+                fontFamily: FONT.mono,
+                fontSize: 11,
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                color: palette.textMuted,
+                marginBottom: 20,
+              }}
+            >
+              {stop.evidenceKicker}
+            </div>
+
+            {stop.evidenceKind === 'screenshot' && stop.evidenceImage && (
+              <ScreenshotEvidence
+                src={stop.evidenceImage}
+                alt={stop.evidenceAlt ?? ''}
+                gloss={stop.evidenceGloss ?? ''}
+              />
+            )}
+
+            {stop.evidenceKind === 'population' && stop.populationViz === 'gtm-grid' && (
+              <GTMLeadershipGridViz />
+            )}
+
+            {stop.evidenceKind === 'population' && stop.populationViz === 'amplification-bars' && (
+              <AmplificationGapViz />
+            )}
+          </div>
+        </div>
+
+        {/* Connector dot between stops */}
+        {!isLast && (
+          <div
+            aria-hidden
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 4,
+              padding: '24px 0',
+            }}
+          >
+            <div style={{ width: 1, height: 24, background: palette.rust, opacity: 0.4 }} />
+            <div
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: '50%',
+                background: palette.rust,
+                opacity: 0.6,
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </Reveal>
+  )
+}
+
+function LadderColumn({
+  kicker,
+  kickerColor,
+  variant,
+  text,
+}: {
+  kicker: string
+  kickerColor: string
+  variant: 'serif' | 'body' | 'gap'
+  text: string
+}) {
+  const { palette } = useTheme()
+  const baseTextStyle =
+    variant === 'serif'
+      ? {
+          fontFamily: FONT.display,
+          fontStyle: 'italic' as const,
+          fontSize: 17,
+          lineHeight: 1.55,
+          color: palette.textMuted,
+        }
+      : variant === 'gap'
+        ? {
+            fontFamily: FONT.body,
+            fontSize: 14,
+            lineHeight: 1.6,
+            color: palette.text,
+            fontStyle: 'italic' as const,
+            paddingLeft: 14,
+            borderLeft: `3px solid ${palette.red}`,
+          }
+        : {
+            fontFamily: FONT.body,
+            fontSize: 14,
+            lineHeight: 1.6,
+            color: palette.text,
+          }
+
+  return (
+    <div>
+      <div
+        style={{
+          fontFamily: FONT.mono,
+          fontSize: 11,
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: kickerColor,
+          fontWeight: 600,
+          marginBottom: 14,
+        }}
+      >
+        {kicker}
+      </div>
+      <p style={{ ...baseTextStyle, margin: 0 }}>{text}</p>
+    </div>
+  )
+}
+
+function ScreenshotEvidence({ src, alt, gloss }: { src: string; alt: string; gloss: string }) {
+  const { palette } = useTheme()
+  return (
+    <div>
+      <div
+        style={{
+          background: palette.cardAlt,
+          border: `1px solid ${palette.border}`,
+          borderRadius: 6,
+          padding: 16,
+          maxWidth: 720,
+          margin: '0 auto',
+        }}
+      >
+        <img
+          src={src}
+          alt={alt}
+          style={{
+            width: '100%',
+            height: 'auto',
+            display: 'block',
+            borderRadius: 4,
+          }}
+        />
+      </div>
+      <p
+        style={{
+          fontFamily: FONT.display,
+          fontStyle: 'italic',
+          fontSize: 17,
+          lineHeight: 1.55,
+          color: palette.text,
+          margin: '20px auto 0',
+          maxWidth: 720,
+          textAlign: 'left',
+        }}
+      >
+        {gloss}
+      </p>
+    </div>
+  )
+}
+
+function GTMLeadershipGridViz() {
+  const { palette } = useTheme()
+  const max = 100
+  return (
+    <div>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gap: 12,
+          marginBottom: 24,
+        }}
+      >
+        {GTM_LEADERSHIP_GRID.map((leader) => {
+          const fill = colorForScore(palette, leader.score)
+          const clearsFloor = leader.score >= GTM_GRID_FUNCTIONAL_FLOOR
+          return (
+            <div
+              key={leader.id}
+              style={{
+                background: palette.cardAlt,
+                border: `1px solid ${clearsFloor ? palette.green : palette.border}`,
+                borderRadius: 6,
+                padding: '16px 18px',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 10 }}>
+                <span style={{ fontFamily: FONT.mono, fontSize: 11, color: palette.textDim, letterSpacing: '0.06em' }}>
+                  {leader.id}
+                </span>
+                <span style={{ fontFamily: FONT.mono, fontSize: 18, color: fill, fontWeight: 500 }}>{leader.score}</span>
+              </div>
+              <div style={{ position: 'relative', height: 6, background: palette.border, borderRadius: 3, overflow: 'visible' }}>
+                <div
+                  style={{
+                    width: `${(leader.score / max) * 100}%`,
+                    height: '100%',
+                    background: fill,
+                    borderRadius: 3,
+                    transition: 'width 1.2s cubic-bezier(0.16,1,0.3,1)',
+                  }}
+                />
+                {/* Functional-floor reference line */}
+                <div
+                  aria-hidden
+                  style={{
+                    position: 'absolute',
+                    left: `${GTM_GRID_FUNCTIONAL_FLOOR}%`,
+                    top: -3,
+                    width: 1,
+                    height: 12,
+                    background: palette.textMuted,
+                    opacity: 0.5,
+                  }}
+                />
+              </div>
+            </div>
+          )
+        })}
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          gap: 18,
+          alignItems: 'center',
+          marginBottom: 14,
+          fontFamily: FONT.body,
+          fontSize: 11,
+          color: palette.textMuted,
+        }}
+      >
+        <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span style={{ width: 14, height: 1, background: palette.textMuted }} />
+          Functional floor (50/100) for a senior commercial role
+        </span>
+      </div>
+      <p
+        style={{
+          fontFamily: FONT.body,
+          fontSize: 13,
+          color: palette.textMuted,
+          lineHeight: 1.55,
+          margin: 0,
+          maxWidth: 720,
+        }}
+      >
+        {GTM_GRID_NOTE}
+      </p>
+    </div>
+  )
+}
+
+function AmplificationGapViz() {
+  const { palette } = useTheme()
+  const max = AMPLIFICATION.originalAvg
+  return (
+    <div>
+      <div style={{ marginBottom: 28, maxWidth: 720 }}>
+        <AmplificationBar
+          label="Original post · avg engagement"
+          value={AMPLIFICATION.originalAvg}
+          max={max}
+          color={palette.rust}
+          palette={palette}
+        />
+        <div style={{ height: 14 }} />
+        <AmplificationBar
+          label="Repost on the same content · avg engagement on the share"
+          value={AMPLIFICATION.repostAvg}
+          max={max}
+          color={palette.textDim}
+          palette={palette}
+        />
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 18, flexWrap: 'wrap' }}>
+        <div
+          style={{
+            fontFamily: FONT.mono,
+            fontSize: 'clamp(36px, 4vw, 56px)',
+            color: palette.red,
+            lineHeight: 1,
+            fontWeight: 500,
+            letterSpacing: '-0.02em',
+          }}
+        >
+          −{AMPLIFICATION.gap}%
+        </div>
+        <div style={{ fontFamily: FONT.body, fontSize: 13, color: palette.textMuted, maxWidth: 540, lineHeight: 1.5 }}>
+          {AMPLIFICATION.caption}
+        </div>
+      </div>
+      <p
+        style={{
+          fontFamily: FONT.body,
+          fontStyle: 'italic',
+          fontSize: 12,
+          color: palette.textDim,
+          lineHeight: 1.5,
+          margin: 0,
+          maxWidth: 720,
+        }}
+      >
+        {AMPLIFICATION.note}
+      </p>
+    </div>
+  )
+}
+
+function AmplificationBar({
+  label,
+  value,
+  max,
+  color,
+  palette,
+}: {
+  label: string
+  value: number
+  max: number
+  color: string
+  palette: ThemePalette
+}) {
+  const pct = Math.max(0, Math.min(100, (value / max) * 100))
+  return (
+    <div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+          marginBottom: 6,
+        }}
+      >
+        <span style={{ fontFamily: FONT.body, fontSize: 13, color: palette.text, fontWeight: 500 }}>{label}</span>
+        <span style={{ fontFamily: FONT.mono, fontSize: 14, color: palette.text, fontWeight: 600 }}>{value}</span>
+      </div>
+      <div style={{ height: 12, background: palette.border, borderRadius: 4, overflow: 'hidden' }}>
+        <div
+          style={{
+            width: `${pct}%`,
+            height: '100%',
+            background: color,
+            borderRadius: 4,
+            transition: 'width 1.4s cubic-bezier(0.16,1,0.3,1)',
+          }}
+        />
+      </div>
+    </div>
+  )
+}
