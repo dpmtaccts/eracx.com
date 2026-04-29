@@ -2101,8 +2101,10 @@
     z-index: 4;
     pointer-events: none;
     text-align: center;
-    /* Slot-window: child cards are absolutely positioned and stacked. */
-    width: max-content;
+    /* Width is set inline from the pentagon radius so the absolute-
+       positioned slot cards (width: 100%) get a real container width
+       to fill instead of collapsing to 0. The translate(-50%, -50%) on
+       each card centers it on the polygon centroid. */
   }
   & .frvrd-center-card {
     position: absolute;
