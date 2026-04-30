@@ -1,18 +1,19 @@
 // FrvrdSection.tsx — §02.A "Why warmth" subsection. Pinned 4×100vh
 // container that teaches FRVRD via a scroll-driven visual metaphor.
-// The static "Why warmth" copy is anchored upper-left throughout — it
-// does not fade — so the argument stays in the reader's eye while the
-// FRVRD reveal plays out on the right and below.
 //
 // Animation phases (timed to scrollProgress 0..1):
 //
-//   Phase 0 (0.00–0.20): noise. Pentagon, axis labels, center label all
+//   Phase 0 (0.00–0.20): noise + centered explainer.
+//     The big italic statement, subtitle, and body paragraph hold at
+//     full opacity. Pentagon, axis labels, and center label are all
 //     hidden. The 5 FRVRD dots are visually indistinguishable from
 //     background dots.
 //
-//   Phase 1 (0.20–0.30): pentagon previews. The 5 FRVRD dots ramp from
-//     bg-blended to highlighted (size + opacity grow). The pentagon
-//     stroke draws in faintly as a "ghost" outline (alpha 0 → 0.15).
+//   Phase 1 (0.20–0.30): explainer fades, pentagon previews. The
+//     centered statement + subtitle + body paragraph fade together
+//     from 1 → 0. The 5 FRVRD dots ramp from bg-blended to
+//     highlighted. The pentagon stroke draws in faintly as a "ghost"
+//     outline (alpha 0 → 0.15).
 //
 //   Phase 2 (0.30–0.80): dimensions arrive sequentially.
 //     Each FRVRD dot owns a 0.10-wide migration window
@@ -25,8 +26,8 @@
 //     cold→warm shift to magenta (≈0.95). Center label slot-machines
 //     to "Warmth. / Ready to close." in magenta.
 //
-// Below 820px the pin disables (height: auto), the why-warmth anchor
-// goes back into normal flow above the canvas, and the dots still
+// Below 820px the pin disables (height: auto) and the inner content
+// scrolls normally; the canvas still renders and the dots still
 // migrate based on whatever scrollProgress lands on.
 
 import { useEffect, useRef, useState } from 'react'
@@ -96,6 +97,17 @@ const CENTER_CARDS: CenterCard[] = [
   },
   { name: 'Warmth.', detail: 'Ready to close.', isClosing: true },
 ]
+
+// Phase 0 → Phase 1 fade window. Statement, subtitle, and body
+// paragraph all share this opacity ramp.
+const STATEMENT_FADE_START = 0.2
+const STATEMENT_FADE_END = 0.3
+
+function statementOpacity(p: number): number {
+  if (p <= STATEMENT_FADE_START) return 1
+  if (p >= STATEMENT_FADE_END) return 0
+  return 1 - (p - STATEMENT_FADE_START) / (STATEMENT_FADE_END - STATEMENT_FADE_START)
+}
 
 export default function FrvrdSection() {
   const wrapperRef = useRef<HTMLDivElement | null>(null)
@@ -174,6 +186,7 @@ export default function FrvrdSection() {
   const centerMaxWidth = pentagonRadius > 0 ? pentagonRadius * 1.2 : 320
 
   const centerActive = centerCardIndex(scrollProgress)
+  const statementOp = statementOpacity(scrollProgress)
   const closingColor = wordColorAt(Math.max(scrollProgress, 0.95))
 
   return (
@@ -215,22 +228,30 @@ export default function FrvrdSection() {
             </div>
           )}
 
-          {/* Why warmth — static upper-left anchor. Persists through the
-              entire animation (no fade, no migration) so the argument stays
-              in the reader's eye while the FRVRD reveal plays out on the
-              right and below. */}
-          <aside className="frvrd-why-warmth">
-            <p>
+          {/* Phase 0 explainer — centered statement, subtitle, and body
+              paragraph. All three share the same opacity ramp and fade
+              together during Phase 1 (0.20–0.30) so the FRVRD reveal can
+              take the stage cleanly. */}
+          <div
+            className="frvrd-pinned-text"
+            style={{ opacity: statementOp, pointerEvents: statementOp > 0.05 ? 'auto' : 'none' }}
+            aria-hidden={statementOp <= 0.05}
+          >
+            <h2 className="frvrd-statement">
+              Five signals turn noise<br />
+              into pipeline.
+            </h2>
+            <p className="frvrd-statement-sub">
+              FRVRD measures warmth across every named account.
+              Compounding, continuous, scored automatically.
+            </p>
+            <p className="frvrd-statement-body">
               A click is a signal. So is a meeting taken, a reply sent, a
               referral made, a quiet stretch of silence. One signal is
               noise. Layered over time, they tell you which buyers are
               moving toward you, and which ones aren&rsquo;t.
             </p>
-            <p>
-              Era builds systems that turn signals into warmth with the
-              buyers who matter, not clicks that end up on a slide.
-            </p>
-          </aside>
+          </div>
 
           {/* Phase 2/3 — center label nested inside the pentagon. */}
           {vertices.length === 5 && centerActive >= 0 && (

@@ -1713,40 +1713,63 @@
     & .signal-grid { grid-template-columns: repeat(2, 1fr); }
   }
   & .signal-chip {
-    position: relative;
     background: var(--surface);
     border: 1px solid var(--rule);
-    padding: 16px 18px 16px 22px;
-    overflow: hidden;
+    border-radius: 6px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
   }
-  & .signal-chip::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--rule);
-  }
-  & .signal-chip--cold::before { background: var(--cold); }
-  & .signal-chip--warming::before { background: var(--warming); }
-  & .signal-chip--warm::before { background: var(--warm); }
-  & .signal-chip--hot::before { background: var(--hot); }
 
   & .signal-name {
     font-family: 'Instrument Sans', sans-serif;
-    font-size: calc(14px * var(--type-scale));
-    font-weight: 500;
+    font-size: calc(15px * var(--type-scale));
+    font-weight: 600;
     color: var(--text);
     letter-spacing: -0.005em;
     line-height: 1.25;
   }
   & .signal-meaning {
-    margin-top: 6px;
+    margin-top: 4px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: calc(13px * var(--type-scale));
+    line-height: 1.4;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+  & .signal-rule {
+    height: 1px;
+    background: var(--rule);
+    margin: 14px 0 0;
+  }
+  & .signal-cell {
+    margin-top: 14px;
+  }
+  & .signal-cell + .signal-cell {
+    margin-top: 12px;
+  }
+  & .signal-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  & .signal-action {
+    margin-top: 4px;
     font-family: 'Instrument Sans', sans-serif;
     font-size: calc(12px * var(--type-scale));
     line-height: 1.4;
-    color: var(--text-muted);
+    color: var(--text);
+    font-weight: 400;
+  }
+  & .signal-tech {
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--text);
     font-weight: 400;
   }
   & .signal-caption {
@@ -1941,34 +1964,52 @@
     z-index: 0;
   }
 
-  /* Why warmth — static upper-left anchor inside the pinned stage.
-     Persists through the entire animation so the argument is on screen the
-     whole time the FRVRD reveal plays out. Sits above the canvas (z-index
-     2) but below the vertex labels (z-index 3). Max-width keeps it inside
-     the upper-left third so it never overlaps the centered pentagon. */
-  & .frvrd-why-warmth {
+  /* Phase 0 centered overlay — statement, subtitle, and body paragraph.
+     Sits above the canvas (z-index 2) and below the vertex labels (z-index
+     3). Opacity ramps from 1 to 0 across scrollProgress 0.20–0.30 via the
+     inline style applied in FrvrdSection. */
+  & .frvrd-pinned-text {
     position: absolute;
-    top: 24px;
-    left: var(--container-pad);
-    max-width: min(380px, 32vw);
-    z-index: 2;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     pointer-events: none;
-    display: grid;
-    gap: 16px;
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: clamp(15px, 1vw, 17px);
-    line-height: 1.55;
+    padding: 0 var(--container-pad);
+    z-index: 2;
+    transition: opacity 200ms linear;
+  }
+  & .frvrd-statement {
+    margin: 0;
+    max-width: min(28ch, 90vw);
+    text-align: center;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(48px, 8vw, 112px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
     color: var(--text);
   }
-  & .frvrd-why-warmth p { margin: 0; }
-  @media (max-width: 819px) {
-    & .frvrd-why-warmth {
-      position: static;
-      max-width: none;
-      padding: 24px var(--container-pad) 8px;
-      font-size: 16px;
-      gap: 14px;
-    }
+  & .frvrd-statement-sub {
+    margin: 22px 0 0;
+    max-width: min(60ch, 100%);
+    text-align: center;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.5;
+    color: var(--text-2);
+  }
+  & .frvrd-statement-body {
+    margin: 22px 0 0;
+    max-width: min(60ch, 100%);
+    text-align: center;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: clamp(15px, 1.1vw, 16px);
+    line-height: 1.55;
+    color: var(--text);
   }
 
   /* Axis labels positioned at vertex coords (HTML, not canvas) */
@@ -2084,6 +2125,7 @@
   & .frvrd-pinned-progress-dot.is-filled { background: var(--accent); }
 
   @media (prefers-reduced-motion: reduce) {
+    & .frvrd-pinned-text,
     & .frvrd-center-card,
     & .frvrd-pinned-label,
     & .frvrd-pinned-progress-fill {
