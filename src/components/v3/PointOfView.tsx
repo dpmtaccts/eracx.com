@@ -1,14 +1,10 @@
 // PointOfView.tsx — §04 section for the /v3 staging homepage.
-// Five principles, each a 2-column article with a bespoke SVG on the left
-// and claim + caption + "What we do" implication on the right.
-// All SVG coordinates pasted verbatim from design/era-v3-staging.html.
-//
-// Desktop: principles live inside PointOfViewScroller — vertical scroll
-// converts to horizontal panel advancement once the section pins.
-// Mobile (≤767px): the scroller falls back to vertical stacking via CSS.
+// Five principles stacked vertically. Each is a 2-column article with a
+// bespoke SVG on the left and claim + caption + "What we do" implication
+// on the right. SVG coordinates pasted verbatim from
+// design/era-v3-staging.html.
 
 import type { ReactNode } from 'react'
-import PointOfViewScroller from './PointOfViewScroller'
 
 interface PrincipleProps {
   num: string
@@ -223,100 +219,6 @@ function DecileVisual() {
   )
 }
 
-const PRINCIPLES = [
-  <Principle
-    num="Principle 01"
-    visual={<DotGridVisual />}
-    claim={
-      <>
-        Only 3&ndash;5% are<br />
-        <span className="slab">actively buying.</span>
-      </>
-    }
-    caption={
-      <>
-        Of every 100 ideal customers, three to five are in-market right
-        now. The rest are not unqualified.{' '}
-        <strong>They are not yet.</strong>
-      </>
-    }
-    implication="Treat the 95% as the asset. Compound warmth while competitors chase the 5%."
-  />,
-  <Principle
-    num="Principle 02"
-    visual={<OrgChartVisual />}
-    claim={
-      <>
-        Nobody<br />
-        <span className="slab">buys alone.</span>
-      </>
-    }
-    caption={
-      <>
-        Every buyer has someone to answer to.{' '}
-        <strong>
-          The average B2B buying committee has 6 to 10 people.
-        </strong>{' '}
-        Solo decisions are a myth.
-      </>
-    }
-    implication="Multi-thread by default. Champion plus economic buyer plus one adjacent stakeholder, minimum."
-  />,
-  <Principle
-    num="Principle 03"
-    visual={<SplitBarVisual />}
-    claim={
-      <>
-        Decisions happen<br />
-        <span className="slab">earlier than you think.</span>
-      </>
-    }
-    caption={
-      <>
-        By the time a buyer fills out your demo form,{' '}
-        <strong>60 to 80% of the decision is already made.</strong> They
-        came to confirm a choice, not to evaluate one.
-      </>
-    }
-    implication="Instrument the months before the form. Dark activity, content engagement, peer mentions."
-  />,
-  <Principle
-    num="Principle 04"
-    visual={<ThresholdVisual />}
-    claim={
-      <>
-        Don&apos;t pitch<br />
-        <span className="slab">strangers.</span>
-      </>
-    }
-    caption={
-      <>
-        Cold outreach asks for a meeting before asking for a reason.{' '}
-        <strong>We pitch when warmth supports it.</strong> Never before.
-      </>
-    }
-    implication="Outreach fires when warmth crosses a defined threshold. Every message is earned by a prior signal."
-  />,
-  <Principle
-    num="Principle 05"
-    visual={<DecileVisual />}
-    claim={
-      <>
-        Not all customers<br />
-        <span className="slab">are equal.</span>
-      </>
-    }
-    caption={
-      <>
-        The top 20% of named accounts drive most of the revenue.{' '}
-        <strong>Headcount math is seductive and wrong.</strong> Deepen
-        the right accounts; don&apos;t widen the wrong funnel.
-      </>
-    }
-    implication="Design around 50 to 250 named accounts. Fewer accounts, higher warmth, better revenue."
-  />,
-]
-
 export default function PointOfView() {
   return (
     <section id="pov">
@@ -335,8 +237,103 @@ export default function PointOfView() {
             way we do.
           </p>
         </div>
+
+        <Principle
+          num="Principle 01"
+          visual={<DotGridVisual />}
+          claim={
+            <>
+              Only 3&ndash;5% are<br />
+              <span className="slab">actively buying.</span>
+            </>
+          }
+          caption={
+            <>
+              Of every 100 ideal customers, three to five are in-market right
+              now. The rest are not unqualified.{' '}
+              <strong>They are not yet.</strong>
+            </>
+          }
+          implication="Treat the 95% as the asset. Compound warmth while competitors chase the 5%."
+        />
+
+        <Principle
+          num="Principle 02"
+          visual={<OrgChartVisual />}
+          claim={
+            <>
+              Nobody<br />
+              <span className="slab">buys alone.</span>
+            </>
+          }
+          caption={
+            <>
+              Every buyer has someone to answer to.{' '}
+              <strong>
+                The average B2B buying committee has 6 to 10 people.
+              </strong>{' '}
+              Solo decisions are a myth.
+            </>
+          }
+          implication="Multi-thread by default. Champion plus economic buyer plus one adjacent stakeholder, minimum."
+        />
+
+        <Principle
+          num="Principle 03"
+          visual={<SplitBarVisual />}
+          claim={
+            <>
+              Decisions happen<br />
+              <span className="slab">earlier than you think.</span>
+            </>
+          }
+          caption={
+            <>
+              By the time a buyer fills out your demo form,{' '}
+              <strong>60 to 80% of the decision is already made.</strong> They
+              came to confirm a choice, not to evaluate one.
+            </>
+          }
+          implication="Instrument the months before the form. Dark activity, content engagement, peer mentions."
+        />
+
+        <Principle
+          num="Principle 04"
+          visual={<ThresholdVisual />}
+          claim={
+            <>
+              Don&apos;t pitch<br />
+              <span className="slab">strangers.</span>
+            </>
+          }
+          caption={
+            <>
+              Cold outreach asks for a meeting before asking for a reason.{' '}
+              <strong>We pitch when warmth supports it.</strong> Never before.
+            </>
+          }
+          implication="Outreach fires when warmth crosses a defined threshold. Every message is earned by a prior signal."
+        />
+
+        <Principle
+          num="Principle 05"
+          visual={<DecileVisual />}
+          claim={
+            <>
+              Not all customers<br />
+              <span className="slab">are equal.</span>
+            </>
+          }
+          caption={
+            <>
+              The top 20% of named accounts drive most of the revenue.{' '}
+              <strong>Headcount math is seductive and wrong.</strong> Deepen
+              the right accounts; don&apos;t widen the wrong funnel.
+            </>
+          }
+          implication="Design around 50 to 250 named accounts. Fewer accounts, higher warmth, better revenue."
+        />
       </div>
-      <PointOfViewScroller panels={PRINCIPLES} />
     </section>
   )
 }
