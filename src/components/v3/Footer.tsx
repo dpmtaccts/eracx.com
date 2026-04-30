@@ -14,8 +14,10 @@ export default function Footer() {
               <img src="/images/era-logo.svg" alt="ERA" />
             </a>
             <div className="footer-tagline">
-              Signal-driven ABM programs.<br />
-              Warmth is the asset.
+              Era is a new way to build pipeline.<br />
+              <span className="slab">
+                A go-to-market system for B2B companies.
+              </span>
             </div>
           </div>
           <div className="footer-col">
