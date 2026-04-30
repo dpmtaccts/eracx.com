@@ -2040,42 +2040,31 @@
     z-index: 0;
   }
 
-  /* Centered text overlay */
-  & .frvrd-pinned-text {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    pointer-events: none;
-    padding: 0 var(--container-pad);
-    z-index: 2;
-  }
-
-  /* Phase 0 fade transition — same opacity bind, new contents. */
-  & .frvrd-pinned-text {
-    transition: opacity 200ms linear;
-  }
-
-  /* WHY WARMTH copy block — Phase 0 overlay for §02.A. Body sans-serif,
-     left-aligned within a centered max-width column so the argument reads
-     as prose, not a slogan. Overrides .frvrd-pinned-text's centered text
-     for left alignment. */
+  /* Why warmth — static upper-left anchor inside the pinned stage.
+     Persists through the entire animation so the argument is on screen the
+     whole time the FRVRD reveal plays out. Sits above the canvas (z-index
+     2) but below the vertex labels (z-index 3). Max-width keeps it inside
+     the upper-left third so it never overlaps the centered pentagon. */
   & .frvrd-why-warmth {
-    max-width: min(56ch, 720px);
-    text-align: left;
+    position: absolute;
+    top: 24px;
+    left: var(--container-pad);
+    max-width: min(380px, 32vw);
+    z-index: 2;
+    pointer-events: none;
+    display: grid;
+    gap: 16px;
     font-family: 'Instrument Sans', sans-serif;
-    font-size: clamp(17px, 1.5vw, 21px);
+    font-size: clamp(15px, 1vw, 17px);
     line-height: 1.55;
     color: var(--text);
-    display: grid;
-    gap: 18px;
   }
   & .frvrd-why-warmth p { margin: 0; }
   @media (max-width: 819px) {
     & .frvrd-why-warmth {
+      position: static;
+      max-width: none;
+      padding: 24px var(--container-pad) 8px;
       font-size: 16px;
       gap: 14px;
     }
@@ -2194,7 +2183,6 @@
   & .frvrd-pinned-progress-dot.is-filled { background: var(--accent); }
 
   @media (prefers-reduced-motion: reduce) {
-    & .frvrd-pinned-text,
     & .frvrd-center-card,
     & .frvrd-pinned-label,
     & .frvrd-pinned-progress-fill {
