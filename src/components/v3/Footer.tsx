@@ -14,10 +14,7 @@ export default function Footer() {
               <img src="/images/era-logo.svg" alt="ERA" />
             </a>
             <div className="footer-tagline">
-              Era is a new way to build pipeline.<br />
-              <span className="slab">
-                A go-to-market system for B2B companies.
-              </span>
+              A new way to build pipeline.
             </div>
           </div>
           <div className="footer-col">
@@ -53,7 +50,7 @@ export default function Footer() {
         </div>
         <div className="footer-bottom">
           <div>ERA &nbsp;·&nbsp; Department of Loyalty LLC</div>
-          <div>Warmth is the asset.</div>
+          <div>A new way to build pipeline.</div>
           <div className="r">
             © 2026
           </div>
