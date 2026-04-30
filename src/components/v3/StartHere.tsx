@@ -55,17 +55,16 @@ export default function StartHere() {
               </span>
             </h2>
             <p className="cta-sub">
-              A <strong>Revenue Signal Audit</strong> maps every signal your
-              highest-value accounts encounter. What&rsquo;s converting,
-              what&rsquo;s invisible, and where pipeline is quietly leaking.
-              The same diagnostic we built for BetterUp.
+              We <strong>map every signal</strong> your highest-value accounts
+              encounter. What&rsquo;s converting, what&rsquo;s invisible, and
+              where pipeline is quietly leaking.
             </p>
             <div className="cta-meta">
               <div>
                 <b>Outcome</b>See exactly what your buyers see
               </div>
               <div>
-                <b>Proof</b>The same audit we built for BetterUp
+                <b>Proof</b>Mapped inside 48 hours
               </div>
               <div>
                 <b>POV</b>Every wasted motion starts as an unmapped signal
