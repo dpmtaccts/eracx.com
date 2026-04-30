@@ -3,7 +3,7 @@
 // four moments timed to scrollProgress (0..1):
 //
 //   Phase 0 (0.00–0.20): noise + big static statement.
-//     "Five signals turn noise into pipeline." holds at full opacity.
+//     "Clicks don't close. Relationships do." holds at full opacity.
 //     The pentagon, axis labels, and center label are all hidden. The
 //     5 FRVRD dots are visually indistinguishable from background dots.
 //
@@ -234,10 +234,12 @@ export default function FrvrdSection() {
               className="frvrd-statement"
               style={{ color: wordColorAt(scrollProgress) }}
             >
-              Five signals turn noise into pipeline.
+              Clicks don&rsquo;t close.<br />
+              Relationships do.
             </h2>
             <p className="frvrd-statement-sub">
-              FRVRD measures warmth across every named account.
+              We score the warmth of every named buyer, so you know which
+              relationships are ready to close.
             </p>
           </div>
 
