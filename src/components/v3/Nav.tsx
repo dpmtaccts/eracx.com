@@ -11,7 +11,6 @@ export default function Nav() {
           <img src="/images/era-logo.svg" alt="ERA" />
         </a>
         <div className="nav-links">
-          <a href="#thesis">Thesis</a>
           <a href="#how">How it works</a>
           <a href="#evidence">Evidence</a>
           <a href="#pov">Point of view</a>
