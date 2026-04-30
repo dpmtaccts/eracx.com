@@ -8,6 +8,6 @@ export const SECTIONS: StepperItem[] = [
   { id: 'signals', label: 'Signals' },
   { id: 'audience', label: 'Audience' },
   { id: 'investment', label: 'Concentration' },
-  { id: 'build', label: 'Build' },
   { id: 'mirror', label: 'AI Mirror' },
+  { id: 'build', label: 'Build' },
 ]

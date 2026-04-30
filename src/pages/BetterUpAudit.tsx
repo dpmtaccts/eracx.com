@@ -1065,8 +1065,8 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
                   <SignalsSection />
                   <AudienceSection />
                   <InvestmentSection />
-                  <BuildSection />
                   <AIMirror />
+                  <BuildSection />
                 </motion.div>
               )}
             </AnimatePresence>
