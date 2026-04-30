@@ -5,6 +5,20 @@ Format: `[YYYY-MM-DD] — Summary of what changed`
 
 ---
 
+## [2026-04-29] — v3 staging restructure: hero, section collapse, POV horizontal scroll
+
+Substantial restructure of `/staging/v3`. Shipped as four sequential commits so any change can be reverted independently. Six top-level sections after the restructure (was nine).
+
+- **Hero rewrite** ([0fcc7bd](#)): replaced two-column ABM-pitch hero with a single-column typographic moment. New italic-serif two-line headline ("Clicks don't close. / Relationships do."), sans-serif subhead, two CTAs (Get Started, Evaluate your GTM). No animation, no callout boxes, no FIG 1.0/2.0/3.0 row. Pruned `.hero-grid`, `.hero-side`, `.hero-meta`, `.hero-corner(s)`, `.hero-title .slab/.accent` styles.
+- **Thesis section deleted** ([d1ae42e](#)): the §01 "Forget vanity metrics / Build warmer pipeline" band was redundant with the new hero. Removed component, removed Thesis nav link, deleted dead `.thesis*` CSS.
+- **Sections 02–05 collapsed into one** ([cfdc7b0](#)): Framework, How It Works, Signal Catalog, and Loop now live under a single §02 "How it works" umbrella with a new section opener (`HowItWorksHeader`). Subsection labels: 02.A Why warmth (FrvrdSection) → 02.B What we listen for (SignalRiver) → 02.C How the loop runs (Loop) → 02.D One account, six weeks (HowItWorks). New `.subsection` class suppresses inner section borders so 02.A–C flow seamlessly; 02.D keeps its native border to separate §02 from §03. The id="how" anchor moves from HowItWorks to HowItWorksHeader. Renumbered rest: 06→03 Evidence · 07→04 Point of view · 08→05 What to expect · 10→06 Request your audit. §02.A swapped its centered Phase 0 statement (which duplicated the new hero) for the new "Why warmth" two-paragraph copy block.
+- **§04 Point of view → horizontal pinned scroll** ([85afe0a](#)): five principles now pin and convert vertical scroll input to horizontal panel advancement. Implemented with framer-motion (already in deps) — `useScroll`/`useTransform` on a 5×100vh outer with 100vh sticky inner, 500vw flex track translating 0% → -80%. Progress indicator: "01 / 05" mono counter + 5 dots (active dot tracked via `useMotionValueEvent`). Mobile (≤767px) collapses to vertical stacking via CSS only; framer's inline transform is overridden with `transform: none !important`. No JS UA detection. Section header stays in normal flow above the scroller.
+- **DECISION:** Section 02 headline shortened from spec's 16 words to 10 to fit `.section-h2` typography without wrapping past two lines. User chose the trim (option A) when offered alternatives.
+- **DECISION:** WHY WARMTH copy in §02.A rendered as a center-aligned overlay (left-aligned text inside a centered max-width block) rather than the spec's "upper-left third of the viewport," because the FrvrdSection's pinned scroll-driven canvas centers the pentagon and an upper-left overlay would have fought it. User pre-approved this fallback.
+- Verified `npx tsc -b --noEmit` clean and `npx vite build` clean across all four commits.
+
+---
+
 ## [2026-04-13] — BetterUp Revenue Signal Audit Initialized
 
 - Added design spec at `docs/betterup-audit-design-spec.md` (8 sections, light/dark theme system, stepper nav)

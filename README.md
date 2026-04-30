@@ -3,7 +3,7 @@
 > The main ERA website at eracx.com. Built with Next.js and Tailwind CSS, deployed on Vercel. This is the public-facing site for ERA's B2B revenue operations consultancy.
 
 **Status:** In Development
-**Last Updated:** 2026-03-17
+**Last Updated:** 2026-04-29
 **Deployed At:** [URL or "not yet deployed"]
 
 ---
