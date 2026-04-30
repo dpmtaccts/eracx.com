@@ -59,7 +59,7 @@ export default function WhatToExpect() {
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">05 &nbsp; What to expect</div>
+            <div className="eyebrow">07 &nbsp; What to expect</div>
             <h2 className="section-h2">
               What the first year<br />
               <span className="slab">looks like.</span>

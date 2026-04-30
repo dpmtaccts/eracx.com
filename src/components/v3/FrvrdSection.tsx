@@ -1,5 +1,5 @@
-// FrvrdSection.tsx — §02.A "Why warmth" subsection. Pinned 4×100vh
-// container that teaches FRVRD via a scroll-driven visual metaphor.
+// FrvrdSection.tsx — §01 "The framework". Pinned 4×100vh container
+// that teaches FRVRD via a scroll-driven visual metaphor.
 //
 // Animation phases (timed to scrollProgress 0..1):
 //
@@ -190,10 +190,10 @@ export default function FrvrdSection() {
   const closingColor = wordColorAt(Math.max(scrollProgress, 0.95))
 
   return (
-    <div className="frvrd-pinned" ref={wrapperRef}>
+    <div className="frvrd-pinned" id="framework" ref={wrapperRef}>
       <div className="frvrd-pinned-sticky">
         <header className="frvrd-pinned-top">
-          <div className="eyebrow">02.A &nbsp; Why warmth</div>
+          <div className="eyebrow">01 &nbsp; The framework</div>
           <a className="frvrd-pinned-skip" href="#evidence">
             Skip ahead &rarr;
           </a>

@@ -1,4 +1,4 @@
-// SignalRiver.tsx — §02.B "What we already run". Static grid of 24
+// SignalRiver.tsx — §03 "What we already run". Static grid of 24
 // signal cards. Each card now carries four pieces of content: signal
 // name, what it means, the activation ERA fires in response, and the
 // tech stack used to detect or fire it. The thin rule between the
@@ -167,11 +167,11 @@ const SIGNALS: Signal[] = [
 
 export default function SignalRiver() {
   return (
-    <section id="signal-river" className="subsection">
+    <section id="signal-river">
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">02.B &nbsp; What we already run</div>
+            <div className="eyebrow">03 &nbsp; What we already run</div>
             <h2 className="section-h2">
               Twenty-four signals,<br />
               <span className="slab">constantly listening.</span>

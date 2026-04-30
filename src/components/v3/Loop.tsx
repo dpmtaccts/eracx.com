@@ -204,11 +204,11 @@ export default function Loop() {
   const stage = STAGES[active]
 
   return (
-    <section id="loop" className="subsection" ref={sectionRef}>
+    <section id="loop" ref={sectionRef}>
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">02.C &nbsp; How the loop runs</div>
+            <div className="eyebrow">04 &nbsp; How the loop runs</div>
             <h2 className="section-h2">
               Run loops, not campaigns.
             </h2>

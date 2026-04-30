@@ -1,8 +1,9 @@
-// HowItWorks.tsx — §03 section for the /v3 staging homepage.
+// HowItWorks.tsx — §02 "How it works" section for /v3.
 // Renders the three horizontal figures (InteractionSequence +
-// InteractionChain + WarmthRadars). The vertical scrollytelling
-// alternative (HowItWorksVertical) and its dev toggle were removed
-// in commit 11; the vertical files stay on disk in case they come back.
+// InteractionChain + WarmthRadars). One named account traced end to
+// end through the loop. The vertical scrollytelling alternative
+// (HowItWorksVertical) and its dev toggle were removed in commit 11;
+// the vertical files stay on disk in case they come back.
 
 import InteractionSequence from './InteractionSequence'
 import InteractionChain from './InteractionChain'
@@ -10,21 +11,21 @@ import WarmthRadars from './WarmthRadars'
 
 export default function HowItWorks() {
   return (
-    <section id="six-weeks">
+    <section id="how">
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">02.D &nbsp; One account, six weeks</div>
+            <div className="eyebrow">02 &nbsp; How it works</div>
             <h2 className="section-h2">
-              Five touches.<br />
-              <span className="slab">Six weeks.</span>
+              Watch the loop run.
             </h2>
           </div>
           <div className="section-lede">
             <p>
-              One account, traced end to end through the loop. The
-              interactions are nothing new.{' '}
-              <strong>The capture and scoring underneath them is.</strong>
+              One named account. Six weeks. Five touches that{' '}
+              <strong className="accent">compound from cold to warm</strong>.
+              Every action generates a signal. Every signal triggers the
+              next.
             </p>
           </div>
         </div>
