@@ -9,10 +9,11 @@ import '../../styles/v3-components.css'
 import StagingLayout from '../../components/StagingLayout'
 import Nav from '../../components/v3/Nav'
 import Hero from '../../components/v3/Hero'
+import HowItWorksHeader from '../../components/v3/HowItWorksHeader'
 import FrvrdSection from '../../components/v3/FrvrdSection'
-import HowItWorks from '../../components/v3/HowItWorks'
 import SignalRiver from '../../components/v3/SignalRiver'
 import Loop from '../../components/v3/Loop'
+import HowItWorks from '../../components/v3/HowItWorks'
 import Evidence from '../../components/v3/Evidence'
 import PointOfView from '../../components/v3/PointOfView'
 import WhatToExpect from '../../components/v3/WhatToExpect'
@@ -25,10 +26,11 @@ export default function V3() {
     <StagingLayout stagingId="v3" theme="light" className="v3-root">
       <Nav />
       <Hero />
+      <HowItWorksHeader />
       <FrvrdSection />
-      <HowItWorks />
       <SignalRiver />
       <Loop />
+      <HowItWorks />
       <Evidence />
       <PointOfView />
       <WhatToExpect />

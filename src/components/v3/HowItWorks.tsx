@@ -10,11 +10,11 @@ import WarmthRadars from './WarmthRadars'
 
 export default function HowItWorks() {
   return (
-    <section id="how">
+    <section id="six-weeks">
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">03 &nbsp; How it works</div>
+            <div className="eyebrow">02.D &nbsp; One account, six weeks</div>
             <h2 className="section-h2">
               Five touches.<br />
               <span className="slab">Six weeks.</span>

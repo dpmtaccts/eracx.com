@@ -38,11 +38,11 @@ const SIGNALS: Signal[] = [
 
 export default function SignalRiver() {
   return (
-    <section id="signal-river">
+    <section id="signal-river" className="subsection">
       <div className="container">
         <div className="section-head">
           <div>
-            <div className="eyebrow">04 &nbsp; Signal catalog</div>
+            <div className="eyebrow">02.B &nbsp; What we listen for</div>
             <h2 className="section-h2">
               Twenty-four signals,<br />
               <span className="slab">constantly listening.</span>

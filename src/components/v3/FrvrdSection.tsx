@@ -189,9 +189,9 @@ export default function FrvrdSection() {
     <div className="frvrd-pinned" ref={wrapperRef}>
       <div className="frvrd-pinned-sticky">
         <header className="frvrd-pinned-top">
-          <div className="eyebrow">02 &nbsp; The framework</div>
-          <a className="frvrd-pinned-skip" href="#how">
-            Skip the framework &rarr;
+          <div className="eyebrow">02.A &nbsp; Why warmth</div>
+          <a className="frvrd-pinned-skip" href="#evidence">
+            Skip ahead &rarr;
           </a>
         </header>
 
@@ -224,23 +224,25 @@ export default function FrvrdSection() {
             </div>
           )}
 
-          {/* Phase 0 — the big statement. Fades during Phase 1. */}
+          {/* Phase 0 — Why warmth copy block. Fades during Phase 1 so the
+              FRVRD reveal can take over the stage cleanly. */}
           <div
             className="frvrd-pinned-text"
             style={{ opacity: statementOp, pointerEvents: statementOp > 0.05 ? 'auto' : 'none' }}
             aria-hidden={statementOp <= 0.05}
           >
-            <h2
-              className="frvrd-statement"
-              style={{ color: wordColorAt(scrollProgress) }}
-            >
-              Clicks don&rsquo;t close.<br />
-              Relationships do.
-            </h2>
-            <p className="frvrd-statement-sub">
-              We score the warmth of every named buyer, so you know which
-              relationships are ready to close.
-            </p>
+            <div className="frvrd-why-warmth">
+              <p>
+                A click is a signal. So is a meeting taken, a reply sent, a
+                referral made, a quiet stretch of silence. One signal is
+                noise. Layered over time, they tell you which buyers are
+                moving toward you, and which ones aren&rsquo;t.
+              </p>
+              <p>
+                Era builds systems that turn signals into warmth with the
+                buyers who matter, not clicks that end up on a slide.
+              </p>
+            </div>
           </div>
 
           {/* Phase 2/3 — center label nested inside the pentagon. */}

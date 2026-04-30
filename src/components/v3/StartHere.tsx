@@ -46,7 +46,7 @@ export default function StartHere() {
         <div className="cta-grid">
           <div>
             <div className="eyebrow" style={{ color: '#C4D5DE' }}>
-              10 &nbsp; Request your audit
+              06 &nbsp; Request your audit
             </div>
             <h2>
               See what your<br />
