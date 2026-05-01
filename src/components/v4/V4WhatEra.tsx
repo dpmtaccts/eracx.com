@@ -94,7 +94,7 @@ const STACK_ROWS = [
 
 export function V4WhatEra() {
   return (
-    <section className="v4-section v4-section--whatera" id="engagement">
+    <section className="v4-section v4-section--whatera" id="whatera">
       <V4Header
         phase="§03 · WHAT ERA IS / ISN'T"
         meta={['SITS INSIDE YOUR STACK', 'NOT REPLACING IT']}

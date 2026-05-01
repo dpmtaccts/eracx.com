@@ -29,10 +29,10 @@ export function V4Nav() {
         <a href="#warmth">Warmth</a>
         <a href="#evidence">Evidence</a>
         <a href="#how">How it works</a>
-        <a href="#engagement">Engagement</a>
         <a href="#tech">Tech</a>
+        <a href="#lab">Lab</a>
       </div>
-      <a href="#cta" className="v4-nav__cta"><span>Get started</span></a>
+      <a href="mailto:hello@eracx.com" className="v4-nav__cta"><span>Get started</span></a>
     </nav>
   )
 }
