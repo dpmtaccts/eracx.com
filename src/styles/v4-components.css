@@ -500,6 +500,262 @@
 }
 
 /* ======================================================================
+   WHAT ERA IS / ISN'T (§03)
+   ====================================================================== */
+
+.v4-root .v4-section--whatera {
+  background: var(--v4-white);
+  color: var(--v4-ink);
+}
+
+.v4-root .v4-whatera {
+  padding: 96px 48px;
+}
+
+.v4-root .v4-whatera__header {
+  margin-bottom: 64px;
+  padding-bottom: 32px;
+  border-bottom: 2px solid var(--v4-ink);
+}
+
+.v4-root .v4-whatera__display {
+  font-family: var(--v4-display);
+  font-size: clamp(72px, 9vw, 144px);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-bottom: 24px;
+  max-width: 18ch;
+}
+
+.v4-root .v4-whatera__display em {
+  font-style: normal;
+  color: var(--v4-hot);
+}
+
+.v4-root .v4-whatera__lede {
+  font-size: 19px;
+  line-height: 1.5;
+  max-width: 60ch;
+}
+
+.v4-root .v4-whatera__lede strong {
+  font-weight: 700;
+  background: var(--v4-yellow);
+  color: var(--v4-ink);
+  padding: 0 6px;
+}
+
+/* ----- IS / ISN'T two-column ----- */
+
+.v4-root .v4-isisnt {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--v4-ink);
+  border: 2px solid var(--v4-ink);
+  margin-bottom: 96px;
+}
+
+.v4-root .v4-isisnt__column {
+  background: var(--v4-white);
+  color: var(--v4-ink);
+  padding: 40px;
+}
+
+.v4-root .v4-isisnt__column--isnt {
+  background: var(--v4-ink);
+  color: var(--v4-white);
+}
+
+.v4-root .v4-isisnt__heading {
+  font-family: var(--v4-block);
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.v4-root .v4-isisnt__heading em {
+  font-style: italic;
+  color: var(--v4-hot);
+}
+
+.v4-root .v4-isisnt__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.v4-root .v4-isisnt__item {
+  padding: 16px 0;
+  border-top: 1px solid var(--v4-rule);
+  font-size: 16px;
+  line-height: 1.4;
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.v4-root .v4-isisnt__column--isnt .v4-isisnt__item {
+  border-top: 1px solid var(--v4-rule-light);
+}
+
+.v4-root .v4-isisnt__item:first-child {
+  border-top: none;
+}
+
+.v4-root .v4-isisnt__item-marker {
+  font-family: var(--v4-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v4-hot);
+  width: 24px;
+  flex-shrink: 0;
+}
+
+.v4-root .v4-isisnt__column--isnt .v4-isisnt__item-marker {
+  color: var(--v4-yellow);
+}
+
+.v4-root .v4-isisnt__item-text {
+  flex: 1;
+}
+
+.v4-root .v4-isisnt__item-text strong {
+  font-weight: 700;
+}
+
+/* ----- Content stack directory ----- */
+
+.v4-root .v4-stack-directory__header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--v4-ink);
+}
+
+.v4-root .v4-stack-directory__title {
+  font-family: var(--v4-block);
+  font-size: 36px;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.v4-root .v4-stack-directory__intro {
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 50ch;
+  color: rgba(10, 10, 10, 0.7);
+}
+
+.v4-root .v4-stack-row {
+  display: grid;
+  grid-template-columns: 32px 1.4fr 1fr 1.4fr;
+  gap: 24px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--v4-rule);
+  align-items: start;
+}
+
+.v4-root .v4-stack-row__num {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(10, 10, 10, 0.4);
+  padding-top: 4px;
+}
+
+.v4-root .v4-stack-row__source {
+  font-family: var(--v4-body);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.v4-root .v4-stack-row__source-meta {
+  display: block;
+  font-family: var(--v4-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+  color: rgba(10, 10, 10, 0.6);
+  margin-top: 4px;
+}
+
+.v4-root .v4-stack-row__signal {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--v4-hot);
+  padding-top: 2px;
+}
+
+.v4-root .v4-stack-row__signal::before {
+  content: '→ ';
+  color: rgba(10, 10, 10, 0.4);
+  margin-right: 4px;
+}
+
+.v4-root .v4-stack-row__action {
+  font-family: var(--v4-body);
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgba(10, 10, 10, 0.8);
+}
+
+/* ----- Pull quote ----- */
+
+.v4-root .v4-pullquote {
+  margin-top: 64px;
+  padding: 40px;
+  background: var(--v4-parchment);
+  border-left: 4px solid var(--v4-hot);
+}
+
+.v4-root .v4-pullquote__text {
+  font-family: var(--v4-display);
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.v4-root .v4-pullquote__text em {
+  font-style: normal;
+  color: var(--v4-hot);
+}
+
+.v4-root .v4-pullquote__attr {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--v4-rule);
+  color: rgba(10, 10, 10, 0.6);
+}
+
+/* ======================================================================
    RESPONSIVE
    ====================================================================== */
 
@@ -516,7 +772,8 @@
   .v4-root .v4-issue-bar,
   .v4-root .v4-nav,
   .v4-root .v4-statement,
-  .v4-root .v4-warmth {
+  .v4-root .v4-warmth,
+  .v4-root .v4-whatera {
     padding-left: 24px;
     padding-right: 24px;
   }
@@ -551,6 +808,25 @@
   .v4-root .v4-warmth-stats {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .v4-root .v4-isisnt {
+    grid-template-columns: 1fr;
+  }
+  .v4-root .v4-isisnt__column {
+    padding: 32px;
+  }
+  .v4-root .v4-stack-directory__header {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .v4-root .v4-stack-row {
+    grid-template-columns: 32px 1fr;
+    row-gap: 8px;
+  }
+  .v4-root .v4-stack-row__signal,
+  .v4-root .v4-stack-row__action {
+    grid-column: 2;
+  }
 }
 
 @media (max-width: 600px) {
@@ -563,5 +839,10 @@
   .v4-root .v4-warmth-stat__num { font-size: 36px; }
   .v4-root .v4-warmth-stats {
     grid-template-columns: 1fr;
+  }
+
+  .v4-root .v4-isisnt__column,
+  .v4-root .v4-pullquote {
+    padding: 24px;
   }
 }

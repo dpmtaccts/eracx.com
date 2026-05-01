@@ -12,6 +12,7 @@ import '../../styles/v4-tokens.css'
 import '../../styles/v4-components.css'
 import { V4Statement } from '../../components/v4/V4Statement'
 import { V4Warmth } from '../../components/v4/V4Warmth'
+import { V4WhatEra } from '../../components/v4/V4WhatEra'
 
 const FONT_HREF =
   'https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap'
@@ -53,6 +54,7 @@ export default function V4() {
     <div className="v4-root">
       <V4Statement />
       <V4Warmth />
+      <V4WhatEra />
     </div>
   )
 }
