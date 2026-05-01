@@ -1,8 +1,14 @@
 // V4Header.tsx — Bloomberg-style issue bar that sits above every v4 section.
 // Renders a horizontal band: phase label on the left, meta strings on the
-// right, all in JetBrains Mono uppercase 0.14em letter-spaced. Color
-// inherits from the parent section, so the same component works on white,
-// magenta, yellow, cobalt, and ink grounds.
+// right with a small ERA wordmark appended at the end. Color inherits from
+// the parent section, so the same component works on white, magenta, yellow,
+// cobalt, parchment, and ink grounds.
+//
+// The wordmark appears in every section's running head — a magazine-masthead
+// move that gives the page brand presence outside the symbol-only V4Nav and
+// the full lockup in V4Footer.
+
+import { V4Wordmark } from './V4Wordmark'
 
 interface V4HeaderProps {
   phase: string
@@ -23,6 +29,7 @@ export function V4Header({ phase, meta }: V4HeaderProps) {
         {meta.map((item) => (
           <span key={item}>{item}</span>
         ))}
+        <V4Wordmark className="v4-issue-bar__wordmark" />
       </div>
     </div>
   )

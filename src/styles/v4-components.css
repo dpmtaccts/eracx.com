@@ -26,6 +26,14 @@
 .v4-root .v4-issue-bar__group {
   display: flex;
   gap: 24px;
+  align-items: center;
+}
+
+.v4-root .v4-issue-bar__wordmark {
+  height: 11px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /* ======================================================================
@@ -170,6 +178,18 @@
 /* ======================================================================
    STATEMENT (§01)
    ====================================================================== */
+
+.v4-root .v4-statement-mast {
+  padding: 32px 48px 24px;
+  border-bottom: 1px solid var(--v4-rule);
+}
+
+.v4-root .v4-statement-mast__wordmark {
+  height: 28px;
+  width: auto;
+  display: block;
+  color: var(--v4-ink);
+}
 
 .v4-root .v4-statement {
   padding: 80px 48px 48px;
@@ -1874,6 +1894,7 @@
   }
   .v4-root .v4-issue-bar,
   .v4-root .v4-nav,
+  .v4-root .v4-statement-mast,
   .v4-root .v4-statement,
   .v4-root .v4-warmth,
   .v4-root .v4-whatera,
@@ -1885,6 +1906,13 @@
   .v4-root .v4-footer {
     padding-left: 24px;
     padding-right: 24px;
+  }
+  .v4-root .v4-statement-mast {
+    padding-top: 24px;
+    padding-bottom: 18px;
+  }
+  .v4-root .v4-statement-mast__wordmark {
+    height: 22px;
   }
 
   .v4-root .v4-warmth__header {
@@ -2080,6 +2108,10 @@
 }
 
 @media (max-width: 600px) {
+  .v4-root .v4-issue-bar__wordmark {
+    height: 10px;
+  }
+
   .v4-root .v4-frvrd-breakdown {
     grid-template-columns: repeat(5, 1fr);
     gap: 8px;

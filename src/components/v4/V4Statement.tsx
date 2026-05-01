@@ -1,11 +1,13 @@
 // V4Statement.tsx — §01 hero / statement section for the /v4 route.
-// White ground, ink type. Issue bar + nav at the top, then the two-column
-// hero (massive Anton headline left, ink-bordered sidebar with eyebrow,
-// lede, and CTA right), followed by the 4-cell meta band of FRVRD /
-// loop / signals / wasted-actions metrics.
+// White ground, ink type. Publication mast (enlarged ERA wordmark, magazine
+// cover treatment) tops the page, followed by the issue bar and nav, then
+// the two-column hero (massive Anton headline left, ink-bordered sidebar
+// with eyebrow, lede, and CTA right), followed by the 4-cell meta band of
+// FRVRD / loop / signals / wasted-actions metrics.
 
 import { V4Header } from './V4Header'
 import { V4Nav } from './V4Nav'
+import { V4Wordmark } from './V4Wordmark'
 
 const META = [
   { num: '5', label: 'Dimensions / FRVRD' },
@@ -17,9 +19,12 @@ const META = [
 export function V4Statement() {
   return (
     <section className="v4-section v4-section--hero" id="top">
+      <div className="v4-statement-mast">
+        <V4Wordmark className="v4-statement-mast__wordmark" />
+      </div>
       <V4Header
         phase="ISSUE 04 · VOL. ONE"
-        meta={['GTM SYSTEMS', 'EST. 2024', 'ERACX.COM']}
+        meta={['GTM SYSTEMS', 'EST. 2024']}
       />
       <V4Nav />
 
