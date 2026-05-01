@@ -514,7 +514,7 @@ function generateNudge(
       body: hasOutboundDecision
         ? 'The biggest gap at your stage is pipeline generation. An in-house SDR takes 3-6 months to ramp and costs $150K+ fully loaded. A managed outbound system books meetings in 2-4 weeks at a fraction of the cost.'
         : 'Multiple structural gaps will constrain your path to target. The milestones above show where to invest first.',
-      ctaLabel: 'See how Era builds pipeline infrastructure',
+      ctaLabel: 'See how ERA builds pipeline infrastructure',
     }
   }
 
@@ -524,14 +524,14 @@ function generateNudge(
       body: hasOutboundDecision
         ? 'Outbound pipeline is the most common gap between your current stage and the next one. Most companies at your size are either building in-house (slow, expensive) or outsourcing to get to first meetings faster.'
         : 'The milestones above show what changes. Companies that build ahead of the curve spend less and move faster.',
-      ctaLabel: 'Talk to Era about the next stage',
+      ctaLabel: 'Talk to ERA about the next stage',
     }
   }
 
   return {
     headline: 'Well-built foundation. Here is what comes next.',
-    body: 'Your GTM org matches the benchmark for your stage. The question is whether the current shape scales to the next milestone or needs to evolve. Era helps companies like yours design the system that compounds.',
-    ctaLabel: 'Explore Era',
+    body: 'Your GTM org matches the benchmark for your stage. The question is whether the current shape scales to the next milestone or needs to evolve. ERA helps companies like yours design the system that compounds.',
+    ctaLabel: 'Explore ERA',
   }
 }
 

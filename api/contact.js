@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           from: "onboarding@resend.dev",
           to: "hello@eracx.com",
-          subject: `New Era inquiry from ${name} at ${company}`,
+          subject: `New ERA inquiry from ${name} at ${company}`,
           text: `Name: ${name}\nCompany: ${company}\nEmail: ${email}\nMessage: ${message || "(none)"}`,
         }),
       });
@@ -43,7 +43,7 @@ export default async function handler(req, res) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          text: "New Era inquiry",
+          text: "New ERA inquiry",
           blocks: [
             {
               type: "section",

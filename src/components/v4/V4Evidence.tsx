@@ -76,7 +76,7 @@ export function V4Evidence() {
         {/* --------- Hero quote: Lara --------- */}
         <div className="v4-hero-quote">
           <p className="v4-hero-quote__text">
-            Era is an asset to any high-growth company, impacting every
+            ERA is an asset to any high-growth company, impacting every
             aspect of revenue, marketing, customer success, and account
             management.
           </p>

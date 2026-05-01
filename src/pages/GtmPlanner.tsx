@@ -514,7 +514,7 @@ export default function GtmPlanner() {
   })
 
   useEffect(() => {
-    document.title = 'GTM Investment Planner | Era'
+    document.title = 'GTM Investment Planner | ERA'
     const meta = document.querySelector('meta[name="description"]')
     if (meta) {
       meta.setAttribute('content', 'See what the GTM org looks like at each revenue stage. Plan your team, investments, and tradeoffs from where you are to where you are going.')
@@ -772,7 +772,7 @@ export default function GtmPlanner() {
             </div>
           </div>
 
-          {/* Bottom: Overall + Era Nudge */}
+          {/* Bottom: Overall + ERA Nudge */}
           <div style={{
             display: 'flex', gap: 16, flexWrap: 'wrap',
           }}>
@@ -818,7 +818,7 @@ export default function GtmPlanner() {
               </div>
             )}
 
-            {/* Era Nudge Card */}
+            {/* ERA Nudge Card */}
             <div style={{
               flex: '0 1 320px',
               background: COLORS.charcoal,

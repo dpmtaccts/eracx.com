@@ -362,7 +362,7 @@ export default function SimulatorInputs({ inputs, insight, profitComparison, inp
               fontFamily: FONT, fontWeight: 400, fontSize: 12,
               color: '#A0A0A0', textDecoration: 'none', padding: '4px 0',
             }}>
-              Learn about Era
+              Learn about ERA
             </a>
           </div>
         </div>

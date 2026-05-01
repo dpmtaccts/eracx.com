@@ -70,7 +70,7 @@ export default function OurStory() {
           </p>
 
           <p style={{ marginBottom: 32 }}>
-            We built Era to work alongside those people. Leaders who know
+            We built ERA to work alongside those people. Leaders who know
             exactly what they're building and who they're building it for.
             Executives who wake up thinking about their product, their team,
             their customers.
@@ -115,7 +115,7 @@ export default function OurStory() {
               fontSize: 20,
             }}
           >
-            That's what Era is.
+            That's what ERA is.
           </p>
 
           <p style={{ marginBottom: 32 }}>
@@ -154,7 +154,7 @@ export default function OurStory() {
               fontSize: 20,
             }}
           >
-            That's why we built Era.
+            That's why we built ERA.
           </p>
         </div>
 

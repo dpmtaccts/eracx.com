@@ -204,7 +204,7 @@ export default function Benchmark() {
 
   // ── Set page title ──
   useEffect(() => {
-    document.title = 'Mid-Market Pipeline Benchmark | Era'
+    document.title = 'Mid-Market Pipeline Benchmark | ERA'
     const meta = document.querySelector('meta[name="description"]')
     if (meta) meta.setAttribute('content', 'Six questions. Three dimensions. See how your pipeline infrastructure compares to mid-market companies selling $50K+ deals.')
   }, [])
@@ -448,7 +448,7 @@ export default function Benchmark() {
               marginBottom: 32,
             }}>
               {[
-                { value: 50, label: 'of mid-market companies redirected budget toward AI initiatives in 2024-2025', source: 'Era partner network', color: COLORS.teal },
+                { value: 50, label: 'of mid-market companies redirected budget toward AI initiatives in 2024-2025', source: 'ERA partner network', color: COLORS.teal },
                 { value: 61, label: 'of buyers complete most of their journey before contacting a vendor', source: '6sense 2025', color: COLORS.oxide },
                 { value: 73, label: 'of buyers actively avoid vendors sending irrelevant outreach', source: 'Gartner 2025', color: COLORS.sand },
               ].map((stat, i) => (
@@ -703,7 +703,7 @@ export default function Benchmark() {
       status: gtmStatus,
       title: 'GTM Dependency',
       copy: GTM_COPY[gtmStatus],
-      benchmark: 'Founders without GTM systems spend 30-40% of their week on revenue activity. Referrals close at 26% vs. significantly lower for cold outreach. Source: Era internal / Landbase 2025',
+      benchmark: 'Founders without GTM systems spend 30-40% of their week on revenue activity. Referrals close at 26% vs. significantly lower for cold outreach. Source: ERA internal / Landbase 2025',
     },
   ]
 
