@@ -959,6 +959,149 @@
 }
 
 /* ======================================================================
+   HOW IT WORKS (§05)
+   ====================================================================== */
+
+.v4-root .v4-section--howitworks {
+  background: var(--v4-cobalt);
+  color: var(--v4-white);
+}
+
+.v4-root .v4-howitworks {
+  padding: 96px 48px;
+}
+
+.v4-root .v4-howitworks__header {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 64px;
+}
+
+.v4-root .v4-howitworks__display {
+  font-family: var(--v4-display);
+  font-size: clamp(80px, 11vw, 168px);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.v4-root .v4-howitworks__lede {
+  font-size: 19px;
+  line-height: 1.5;
+  max-width: 50ch;
+}
+
+.v4-root .v4-howitworks__lede strong {
+  font-weight: 700;
+  background: var(--v4-ink);
+  color: var(--v4-white);
+  padding: 0 6px;
+}
+
+/* ----- 3 × 4 grid (3 cols, 1 header row + 3 stage rows) ----- */
+
+.v4-root .v4-loops-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  margin-bottom: 48px;
+}
+
+.v4-root .v4-loops-grid__cell {
+  padding: 32px;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.v4-root .v4-loops-grid__cell--last-col {
+  border-right: none;
+}
+
+.v4-root .v4-loops-grid__cell--last-row {
+  border-bottom: none;
+}
+
+.v4-root .v4-loop-header-cell {
+  background: rgba(255, 255, 255, 0.04);
+  min-height: 220px;
+  justify-content: flex-start;
+}
+
+.v4-root .v4-loop-header-cell__subtitle {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.v4-root .v4-loop-header-cell__name {
+  font-family: var(--v4-display);
+  font-size: clamp(48px, 5vw, 72px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--v4-white);
+}
+
+.v4-root .v4-loop-header-cell__line {
+  font-family: var(--v4-body);
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: auto;
+}
+
+.v4-root .v4-stage-cell__num {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.v4-root .v4-stage-cell__name {
+  font-family: var(--v4-block);
+  font-size: clamp(24px, 2.4vw, 32px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--v4-white);
+  margin-bottom: 4px;
+}
+
+.v4-root .v4-stage-cell__desc {
+  font-family: var(--v4-body);
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ----- Closing system summary ----- */
+
+.v4-root .v4-howitworks__summary {
+  font-family: var(--v4-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ======================================================================
    RESPONSIVE
    ====================================================================== */
 
@@ -977,7 +1120,8 @@
   .v4-root .v4-statement,
   .v4-root .v4-warmth,
   .v4-root .v4-whatera,
-  .v4-root .v4-evidence {
+  .v4-root .v4-evidence,
+  .v4-root .v4-howitworks {
     padding-left: 24px;
     padding-right: 24px;
   }
@@ -1052,6 +1196,25 @@
   .v4-root .v4-founder-inset__photo {
     max-width: 180px;
   }
+
+  .v4-root .v4-howitworks__header {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .v4-root .v4-loops-grid {
+    grid-template-columns: 1fr;
+  }
+  .v4-root .v4-loops-grid__cell {
+    border-right: none;
+    min-height: auto;
+    padding: 24px;
+  }
+  .v4-root .v4-loops-grid__cell:last-child {
+    border-bottom: none;
+  }
+  .v4-root .v4-loop-header-cell {
+    min-height: auto;
+  }
 }
 
 @media (max-width: 600px) {
@@ -1069,5 +1232,12 @@
   .v4-root .v4-isisnt__column,
   .v4-root .v4-pullquote {
     padding: 24px;
+  }
+
+  .v4-root .v4-stage-cell__name {
+    font-size: 22px;
+  }
+  .v4-root .v4-loops-grid__cell {
+    padding: 20px;
   }
 }
