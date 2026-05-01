@@ -7,9 +7,17 @@
  *
  * Form is a controlled React component with 4 required fields
  * (name, email, company, message) and a submission state machine
- * (idle / submitting / success / error). Submit handler is stubbed
- * for this commit — real backend wiring (Vercel Function or
- * external form service) is a separate concern.
+ * (idle / submitting / success / error). POSTs to /api/contact, the
+ * existing Vercel serverless function (api/contact.js) that v3
+ * StartHere and the main app CTAFooter also use. The handler emails
+ * hello@eracx.com via Resend and posts to Slack. Field shape
+ * { name, company, email, message } matches the API contract
+ * exactly; no renames required.
+ *
+ * A honeypot field (name="website", off-screen + aria-hidden) catches
+ * naive form-fill bots. If filled, the submit silently shows success
+ * without contacting the backend — bots don't retry on apparent
+ * success.
  *
  * Department of Loyalty LLC fine print appears in the bottom legal
  * bar — the only place ERA's parent legal entity is named on the
@@ -38,28 +46,59 @@ export function V4Footer() {
   const [email, setEmail] = useState('')
   const [company, setCompany] = useState('')
   const [message, setMessage] = useState('')
+  const [honeypot, setHoneypot] = useState('')
   const [status, setStatus] = useState<SubmissionState>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+  // Snapshot the email at submit time so the success block keeps
+  // displaying it even after we reset the form fields.
+  const [submittedEmail, setSubmittedEmail] = useState('')
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    // Honeypot: a bot auto-filled the hidden "website" field. Silently
+    // pretend success rather than rejecting, so the bot doesn't retry
+    // with a different strategy.
+    if (honeypot) {
+      setSubmittedEmail(email || 'your inbox')
+      setStatus('success')
+      return
+    }
+
     if (!name || !email || !company || !message) {
       setStatus('error')
+      setErrorMessage('Missing required fields. All four are required.')
       return
     }
 
     setStatus('submitting')
+    setErrorMessage('')
 
     try {
-      await new Promise((r) => setTimeout(r, 800))
-      // Stub: real backend wiring (Vercel Function, HubSpot, Formspree,
-      // or similar) is a follow-up commit. Logging so Justin can
-      // verify the payload during the v4-9.1 review.
-      // eslint-disable-next-line no-console
-      console.log('Contact form submission:', { name, email, company, message })
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, company, email, message }),
+      })
+
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}))
+        throw new Error(body.error || `Request failed (${response.status})`)
+      }
+
+      setSubmittedEmail(email)
       setStatus('success')
-    } catch {
+      setName('')
+      setEmail('')
+      setCompany('')
+      setMessage('')
+    } catch (err) {
       setStatus('error')
+      setErrorMessage(
+        err instanceof Error
+          ? err.message
+          : 'Submission failed. Please email hello@eracx.com directly.',
+      )
     }
   }
 
@@ -87,11 +126,31 @@ export function V4Footer() {
                 <div className="v4-footer__form-success-mark">→</div>
                 <h3 className="v4-footer__form-success-heading">Got it.</h3>
                 <p className="v4-footer__form-success-text">
-                  Watch for a reply at {email}. Usually same day.
+                  Watch for a reply at {submittedEmail}. Usually same day.
                 </p>
               </div>
             ) : (
               <form className="v4-footer__form" onSubmit={handleSubmit} noValidate>
+                {/* Honeypot — invisible to humans, irresistible to naive bots.
+                    If filled, handleSubmit short-circuits to success without
+                    contacting the backend. */}
+                <input
+                  type="text"
+                  name="website"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    left: '-9999px',
+                    width: '1px',
+                    height: '1px',
+                    opacity: 0,
+                    pointerEvents: 'none',
+                  }}
+                />
                 <div className="v4-footer__form-field">
                   <label className="v4-footer__form-label" htmlFor="contact-name">
                     Name *
@@ -157,7 +216,8 @@ export function V4Footer() {
                     role="alert"
                     aria-live="polite"
                   >
-                    Missing required fields. All four are required.
+                    {errorMessage ||
+                      'Submission failed. Please email hello@eracx.com directly.'}
                   </div>
                 )}
 
