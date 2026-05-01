@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERA v4 — Direction Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink: #0A0A0A;
+  --white: #FFFFFF;
+  --hot: #E6195F;
+  --yellow: #F4C430;
+  --cobalt: #1845C2;
+  --orange: #FF5C2A;
+  --rule: rgba(10, 10, 10, 0.15);
+  --rule-light: rgba(255, 255, 255, 0.2);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--ink);
+  background: var(--white);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ========================================================================
+   GLOBAL HEADER (mockup band)
+   ======================================================================== */
+
+.mockup-band {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--ink);
+  color: var(--white);
+  padding: 8px 16px;
+  z-index: 100;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mockup-band span {
+  opacity: 0.6;
+}
+
+/* ========================================================================
+   NAVIGATION
+   ======================================================================== */
+
+.nav {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 48px;
+  border-bottom: 1px solid currentColor;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+}
+
+.nav__logo {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+.nav__links {
+  display: flex;
+  gap: 32px;
+}
+
+.nav__cta {
+  background: currentColor;
+  padding: 10px 18px;
+}
+
+.nav__cta span {
+  color: var(--white);
+}
+
+.section--warmth .nav,
+.section--how .nav,
+.section--ink .nav {
+  border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+
+.section--warmth .nav__cta span,
+.section--how .nav__cta span {
+  color: var(--ink);
+}
+
+/* ========================================================================
+   SECTION SHELLS
+   ======================================================================== */
+
+.section {
+  position: relative;
+  overflow: hidden;
+}
+
+.section--hero { background: var(--white); color: var(--ink); }
+.section--warmth { background: var(--hot); color: var(--white); }
+.section--evidence { background: var(--yellow); color: var(--ink); }
+.section--how { background: var(--cobalt); color: var(--white); }
+.section--ink { background: var(--ink); color: var(--white); }
+
+/* ========================================================================
+   ISSUE LABEL (Bloomberg-style top bar)
+   ======================================================================== */
+
+.issue-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 48px;
+  border-bottom: 1px solid currentColor;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+}
+
+.issue-bar__group {
+  display: flex;
+  gap: 24px;
+}
+
+/* ========================================================================
+   HERO / STATEMENT
+   ======================================================================== */
+
+.hero {
+  padding: 80px 48px 48px;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 64px;
+  align-items: end;
+  min-height: 80vh;
+}
+
+.hero__display {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(120px, 18vw, 280px);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.hero__display em {
+  font-style: normal;
+  color: var(--hot);
+}
+
+.hero__sidebar {
+  border-left: 4px solid var(--ink);
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hero__eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hero__lede {
+  font-size: 18px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.hero__lede strong {
+  font-weight: 700;
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--ink);
+  color: var(--white);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  align-self: flex-start;
+}
+
+.hero__cta-arrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+}
+
+/* Hero meta band */
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+.hero-meta__cell {
+  padding: 24px 32px;
+  border-right: 1px solid var(--ink);
+}
+
+.hero-meta__cell:last-child {
+  border-right: none;
+}
+
+.hero-meta__num {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 56px;
+  line-height: 0.9;
+  margin-bottom: 8px;
+}
+
+.hero-meta__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+/* ========================================================================
+   WARMTH / FRVRD
+   ======================================================================== */
+
+.warmth {
+  padding: 72px 48px 96px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 64px;
+}
+
+.warmth__display {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(140px, 22vw, 360px);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+}
+
+.warmth__expand {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  border-top: 2px solid var(--white);
+  padding-top: 24px;
+  margin-bottom: 48px;
+}
+
+.warmth__dim {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.warmth__dim-letter {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 48px;
+  line-height: 1;
+}
+
+.warmth__dim-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+}
+
+.warmth__lede {
+  max-width: 50ch;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.warmth__lede strong {
+  font-weight: 700;
+  background: var(--ink);
+  padding: 0 4px;
+}
+
+/* Chart panel */
+.chart {
+  background: var(--white);
+  color: var(--ink);
+  padding: 32px;
+}
+
+.chart__title {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 22px;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.chart__subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 24px;
+  opacity: 0.6;
+}
+
+.chart__row {
+  display: grid;
+  grid-template-columns: 110px 1fr 36px;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 12px;
+}
+
+.chart__row:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.chart__name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.chart__bar-wrap {
+  height: 16px;
+  background: rgba(10, 10, 10, 0.06);
+  position: relative;
+}
+
+.chart__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--hot);
+}
+
+.chart__bar--peak {
+  background: var(--ink);
+}
+
+.chart__num {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 16px;
+  text-align: right;
+}
+
+.chart__legend {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.6;
+}
+
+.chart__caption {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  font-size: 12px;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+/* ========================================================================
+   EVIDENCE
+   ======================================================================== */
+
+.evidence {
+  padding: 72px 48px 96px;
+}
+
+.evidence__header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 64px;
+  padding-bottom: 32px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.evidence__display {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(80px, 11vw, 168px);
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.evidence__display em {
+  font-style: normal;
+  color: var(--hot);
+}
+
+.evidence__intro {
+  font-size: 17px;
+  line-height: 1.5;
+  max-width: 48ch;
+}
+
+.evidence__grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 48px;
+  margin-bottom: 64px;
+}
+
+.evidence__photo {
+  background: var(--ink);
+  color: var(--yellow);
+  aspect-ratio: 4 / 5;
+  position: relative;
+  overflow: hidden;
+}
+
+.evidence__photo-label {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  border-top: 1px solid var(--yellow);
+  padding-top: 12px;
+}
+
+.evidence__photo-marker {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.4;
+}
+
+.evidence__quote {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(36px, 4.5vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+.evidence__quote-attr {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: 32px;
+}
+
+.evidence__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.evidence__stat {
+  border-top: 2px solid var(--ink);
+  padding-top: 12px;
+}
+
+.evidence__stat-num {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 56px;
+  line-height: 0.95;
+  margin-bottom: 6px;
+}
+
+.evidence__stat-num em {
+  font-style: normal;
+  color: var(--hot);
+}
+
+.evidence__stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  max-width: 22ch;
+  line-height: 1.3;
+}
+
+/* ========================================================================
+   HOW IT WORKS — non-linear system view
+   ======================================================================== */
+
+.how {
+  padding: 72px 48px 96px;
+}
+
+.how__header {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 64px;
+}
+
+.how__display {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(100px, 13vw, 200px);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.how__display em {
+  font-style: normal;
+  color: var(--yellow);
+}
+
+.how__intro {
+  font-size: 17px;
+  line-height: 1.5;
+  max-width: 48ch;
+}
+
+.how__intro strong {
+  font-weight: 700;
+  background: var(--yellow);
+  color: var(--ink);
+  padding: 0 6px;
+}
+
+/* The phase grid: 3 phases × 3 stages each, non-linear connection lines */
+.phasegrid {
+  display: grid;
+  grid-template-columns: 130px 1fr 1fr 1fr;
+  border: 2px solid var(--white);
+  position: relative;
+}
+
+.phasegrid__phase-label {
+  padding: 24px 16px;
+  border-right: 2px solid var(--white);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.phasegrid__phase-label:last-child {
+  border-bottom: none;
+}
+
+.phasegrid__phase-num {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 32px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.phasegrid__phase-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+}
+
+.phasegrid__cell {
+  padding: 24px 20px;
+  border-right: 1px solid rgba(255,255,255,0.2);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  position: relative;
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.phasegrid__cell:nth-child(4n) {
+  border-right: none;
+}
+
+.phasegrid__cell--bottom {
+  border-bottom: none;
+}
+
+.phasegrid__stage-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.phasegrid__stage-name {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.phasegrid__stage-desc {
+  font-size: 12px;
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
+/* Annotation arrows (drawn over the grid) */
+.how__notes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,0.3);
+}
+
+.how__note {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.how__note-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--yellow);
+}
+
+.how__note-body {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ========================================================================
+   TECHNOLOGY teaser (ink black)
+   ======================================================================== */
+
+.tech {
+  padding: 72px 48px 96px;
+}
+
+.tech__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  border-bottom: 2px solid var(--white);
+  padding-bottom: 24px;
+  margin-bottom: 48px;
+}
+
+.tech__display {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(80px, 10vw, 160px);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.tech__display em {
+  font-style: normal;
+  color: var(--orange);
+}
+
+.tech__count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  text-align: right;
+}
+
+.tech__count strong {
+  display: block;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 56px;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--orange);
+}
+
+.tech__directory {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.tech__row {
+  background: var(--ink);
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 32px 1.2fr 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.tech__num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  opacity: 0.5;
+  padding-top: 2px;
+}
+
+.tech__signal {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tech__signal-name {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 14px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.tech__signal-meaning {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.tech__activation,
+.tech__stack {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+}
+
+.tech__label {
+  display: block;
+  font-weight: 600;
+  color: var(--orange);
+  margin-bottom: 4px;
+  font-size: 9px;
+}
+
+/* ========================================================================
+   FOOTER
+   ======================================================================== */
+
+.footer {
+  padding: 48px 48px;
+  background: var(--ink);
+  color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.footer__logo {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+
+/* ========================================================================
+   RESPONSIVE
+   ======================================================================== */
+
+@media (max-width: 900px) {
+  .hero, .warmth, .evidence__header, .evidence__grid, .how__header {
+    grid-template-columns: 1fr;
+  }
+  .hero-meta {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .phasegrid {
+    grid-template-columns: 100px 1fr;
+  }
+  .phasegrid__phase-label {
+    border-right: 2px solid var(--white);
+  }
+  .phasegrid__cell:nth-child(4n) {
+    border-right: 1px solid rgba(255,255,255,0.2);
+  }
+  .tech__directory {
+    grid-template-columns: 1fr;
+  }
+  .tech__row {
+    grid-template-columns: 32px 1fr;
+  }
+  .tech__activation, .tech__stack {
+    grid-column: 2;
+  }
+  .evidence__stats, .how__notes {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Mockup band at very top -->
+<div class="mockup-band">
+  <span>ERA / V4 DESIGN DIRECTION / CONCEPT MOCKUP</span>
+  <span>BLOOMBERG · TURLEY · BRUTALIST</span>
+</div>
+
+<!-- ====================================================================
+     SECTION 1: HERO / STATEMENT (white)
+     ==================================================================== -->
+<section class="section section--hero" style="margin-top: 32px;">
+
+  <div class="issue-bar">
+    <div class="issue-bar__group">
+      <span>ISSUE 04</span>
+      <span>VOL. ONE</span>
+    </div>
+    <div class="issue-bar__group">
+      <span>GTM SYSTEMS</span>
+      <span>EST. 2024</span>
+      <span>ERACX.COM</span>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="#" class="nav__logo">ERA</a>
+    <div class="nav__links">
+      <a href="#">Warmth</a>
+      <a href="#">Evidence</a>
+      <a href="#">How it works</a>
+      <a href="#">Engagement</a>
+      <a href="#">Tech</a>
+    </div>
+    <a href="#" class="nav__cta"><span>Get started</span></a>
+  </nav>
+
+  <div class="hero">
+    <div>
+      <h1 class="hero__display">Cold<br>outbound<br>is&nbsp;<em>over</em>.</h1>
+    </div>
+    <aside class="hero__sidebar">
+      <div class="hero__eyebrow">§01 · The thesis</div>
+      <p class="hero__lede">
+        ERA builds <strong>signal-driven ABM programs</strong> for B2B companies that know their next ten customers by name. We measure warmth the way investors measure returns. Compounding, not linear.
+      </p>
+      <a href="#" class="hero__cta">
+        Evaluate your GTM
+        <span class="hero__cta-arrow">→</span>
+      </a>
+    </aside>
+  </div>
+
+  <div class="hero-meta">
+    <div class="hero-meta__cell">
+      <div class="hero-meta__num">5</div>
+      <div class="hero-meta__label">DIMENSIONS / FRVRD</div>
+    </div>
+    <div class="hero-meta__cell">
+      <div class="hero-meta__num">9</div>
+      <div class="hero-meta__label">STAGES / THE LOOP</div>
+    </div>
+    <div class="hero-meta__cell">
+      <div class="hero-meta__num">24</div>
+      <div class="hero-meta__label">SIGNAL TYPES TRACKED</div>
+    </div>
+    <div class="hero-meta__cell">
+      <div class="hero-meta__num">80%</div>
+      <div class="hero-meta__label">WASTED ACTIONS REMOVED</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ====================================================================
+     SECTION 2: WARMTH / FRVRD (magenta)
+     ==================================================================== -->
+<section class="section section--warmth">
+
+  <div class="issue-bar">
+    <div class="issue-bar__group">
+      <span>§02</span>
+      <span>THE FRAMEWORK</span>
+    </div>
+    <div class="issue-bar__group">
+      <span>FRVRD SCORE</span>
+      <span>UPDATED DAILY</span>
+    </div>
+  </div>
+
+  <div class="warmth">
+    <div>
+      <h2 class="warmth__display">FRVRD.</h2>
+
+      <div class="warmth__expand">
+        <div class="warmth__dim">
+          <div class="warmth__dim-letter">F</div>
+          <div class="warmth__dim-label">Frequency</div>
+        </div>
+        <div class="warmth__dim">
+          <div class="warmth__dim-letter">R</div>
+          <div class="warmth__dim-label">Recency</div>
+        </div>
+        <div class="warmth__dim">
+          <div class="warmth__dim-letter">V</div>
+          <div class="warmth__dim-label">Value</div>
+        </div>
+        <div class="warmth__dim">
+          <div class="warmth__dim-letter">R</div>
+          <div class="warmth__dim-label">Responsiveness</div>
+        </div>
+        <div class="warmth__dim">
+          <div class="warmth__dim-letter">D</div>
+          <div class="warmth__dim-label">Density</div>
+        </div>
+      </div>
+
+      <p class="warmth__lede">
+        Five dimensions, layered over time. A click is noise. A click followed by a meeting, a referral, a reply, and a return visit is <strong>warmth</strong>. We score it on every named account, every day. The buyers who are moving toward you become visible. The ones who aren't stop wasting your reps' time.
+      </p>
+    </div>
+
+    <div class="chart">
+      <h3 class="chart__title">Top accounts, ranked by warmth</h3>
+      <div class="chart__subtitle">Sample · 30-day window · Q1 2026</div>
+
+      <div class="chart__row">
+        <div class="chart__name">Acme Corp</div>
+        <div class="chart__bar-wrap"><div class="chart__bar chart__bar--peak" style="width: 91%;"></div></div>
+        <div class="chart__num">91</div>
+      </div>
+      <div class="chart__row">
+        <div class="chart__name">Titan Industries</div>
+        <div class="chart__bar-wrap"><div class="chart__bar" style="width: 78%;"></div></div>
+        <div class="chart__num">78</div>
+      </div>
+      <div class="chart__row">
+        <div class="chart__name">Hudson &amp; Co</div>
+        <div class="chart__bar-wrap"><div class="chart__bar" style="width: 71%;"></div></div>
+        <div class="chart__num">71</div>
+      </div>
+      <div class="chart__row">
+        <div class="chart__name">Vertex Solutions</div>
+        <div class="chart__bar-wrap"><div class="chart__bar" style="width: 64%;"></div></div>
+        <div class="chart__num">64</div>
+      </div>
+      <div class="chart__row">
+        <div class="chart__name">Meridian Group</div>
+        <div class="chart__bar-wrap"><div class="chart__bar" style="width: 52%;"></div></div>
+        <div class="chart__num">52</div>
+      </div>
+      <div class="chart__row">
+        <div class="chart__name">Northpoint LLC</div>
+        <div class="chart__bar-wrap"><div class="chart__bar" style="width: 47%;"></div></div>
+        <div class="chart__num">47</div>
+      </div>
+      <div class="chart__row">
+        <div class="chart__name">Cascade Holdings</div>
+        <div class="chart__bar-wrap"><div class="chart__bar" style="width: 38%;"></div></div>
+        <div class="chart__num">38</div>
+      </div>
+      <div class="chart__row">
+        <div class="chart__name">Atlas Partners</div>
+        <div class="chart__bar-wrap"><div class="chart__bar" style="width: 22%;"></div></div>
+        <div class="chart__num">22</div>
+      </div>
+
+      <div class="chart__legend">
+        <span>Cold ← 0</span>
+        <span>50</span>
+        <span>100 → Ready to close</span>
+      </div>
+
+      <div class="chart__caption">
+        Sample data, anonymized. Real customer scores from the era platform. Top account moved from 41 to 91 in 9 weeks after running the loop.
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ====================================================================
+     SECTION 3: EVIDENCE (yellow)
+     ==================================================================== -->
+<section class="section section--evidence">
+
+  <div class="issue-bar">
+    <div class="issue-bar__group">
+      <span>§03</span>
+      <span>EVIDENCE</span>
+    </div>
+    <div class="issue-bar__group">
+      <span>NAMED CUSTOMERS</span>
+      <span>REAL NUMBERS</span>
+    </div>
+  </div>
+
+  <div class="evidence">
+
+    <div class="evidence__header">
+      <div>
+        <h2 class="evidence__display">Operators<br>who&nbsp;<em>ship</em>.</h2>
+      </div>
+      <p class="evidence__intro">
+        We don't run case studies. We run the work. The customers below sign with their names, share their numbers, and let us put their photos on the page. That's the bar.
+      </p>
+    </div>
+
+    <div class="evidence__grid">
+      <div class="evidence__photo">
+        <div class="evidence__photo-marker">PHOTO PLACEHOLDER</div>
+        <div class="evidence__photo-label">
+          NATE HOUGHTON · CEO · LORIKEET
+        </div>
+      </div>
+
+      <div>
+        <blockquote class="evidence__quote">
+          "Era turned our&nbsp;cold list into&nbsp;the only pipeline I&nbsp;trust."
+        </blockquote>
+        <div class="evidence__quote-attr">
+          NATE HOUGHTON · CEO · LORIKEET · INTERVIEWED MARCH 2026
+        </div>
+
+        <div class="evidence__stats">
+          <div class="evidence__stat">
+            <div class="evidence__stat-num"><em>+47</em></div>
+            <div class="evidence__stat-label">Avg warmth lift, top 50 accounts</div>
+          </div>
+          <div class="evidence__stat">
+            <div class="evidence__stat-num">9<span style="font-size: 0.5em;">wk</span></div>
+            <div class="evidence__stat-label">From kickoff to first signed deal</div>
+          </div>
+          <div class="evidence__stat">
+            <div class="evidence__stat-num">$2.1<span style="font-size: 0.4em;">M</span></div>
+            <div class="evidence__stat-label">Pipeline generated, months 1–4</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ====================================================================
+     SECTION 4: HOW IT WORKS - non-linear system (cobalt)
+     ==================================================================== -->
+<section class="section section--how">
+
+  <div class="issue-bar">
+    <div class="issue-bar__group">
+      <span>§04</span>
+      <span>HOW IT WORKS</span>
+    </div>
+    <div class="issue-bar__group">
+      <span>3 PHASES · 9 STAGES</span>
+      <span>NON-LINEAR</span>
+    </div>
+  </div>
+
+  <div class="how">
+
+    <div class="how__header">
+      <h2 class="how__display">The<br>loop&nbsp;<em>runs</em>.</h2>
+      <p class="how__intro">
+        Nine stages, three phases. The loop is <strong>not a sequence</strong>. Stages fire in parallel. A signal in Detect can trigger Reach, which triggers a fresh round of Score, which feeds Expand. Read it as a system, not a timeline.
+      </p>
+    </div>
+
+    <div class="phasegrid">
+      <!-- Row 1: CONNECT -->
+      <div class="phasegrid__phase-label">
+        <div class="phasegrid__phase-num">01</div>
+        <div class="phasegrid__phase-name">Connect</div>
+      </div>
+      <div class="phasegrid__cell">
+        <div>
+          <div class="phasegrid__stage-num">Stage 01</div>
+          <div class="phasegrid__stage-name">Detect</div>
+        </div>
+        <div class="phasegrid__stage-desc">Buyer signal fires. Hiring, funding, traffic, intent.</div>
+      </div>
+      <div class="phasegrid__cell">
+        <div>
+          <div class="phasegrid__stage-num">Stage 02</div>
+          <div class="phasegrid__stage-name">Enrich</div>
+        </div>
+        <div class="phasegrid__stage-desc">Account context built. Stack, headcount, exec map.</div>
+      </div>
+      <div class="phasegrid__cell">
+        <div>
+          <div class="phasegrid__stage-num">Stage 03</div>
+          <div class="phasegrid__stage-name">Score</div>
+        </div>
+        <div class="phasegrid__stage-desc">FRVRD applied. Account ranked against the book.</div>
+      </div>
+
+      <!-- Row 2: TRUST -->
+      <div class="phasegrid__phase-label">
+        <div class="phasegrid__phase-num">02</div>
+        <div class="phasegrid__phase-name">Trust</div>
+      </div>
+      <div class="phasegrid__cell">
+        <div>
+          <div class="phasegrid__stage-num">Stage 04</div>
+          <div class="phasegrid__stage-name">Reach</div>
+        </div>
+        <div class="phasegrid__stage-desc">Right channel, right voice, right moment. Not blast.</div>
+      </div>
+      <div class="phasegrid__cell">
+        <div>
+          <div class="phasegrid__stage-num">Stage 05</div>
+          <div class="phasegrid__stage-name">Respond</div>
+        </div>
+        <div class="phasegrid__stage-desc">Signal triggers next action. Within the hour, not the week.</div>
+      </div>
+      <div class="phasegrid__cell">
+        <div>
+          <div class="phasegrid__stage-num">Stage 06</div>
+          <div class="phasegrid__stage-name">Nurture</div>
+        </div>
+        <div class="phasegrid__stage-desc">Warmth maintained between buying windows.</div>
+      </div>
+
+      <!-- Row 3: LOYALTY -->
+      <div class="phasegrid__phase-label">
+        <div class="phasegrid__phase-num">03</div>
+        <div class="phasegrid__phase-name">Loyalty</div>
+      </div>
+      <div class="phasegrid__cell phasegrid__cell--bottom">
+        <div>
+          <div class="phasegrid__stage-num">Stage 07</div>
+          <div class="phasegrid__stage-name">Close</div>
+        </div>
+        <div class="phasegrid__stage-desc">Buying window opens. Deal moves on its own warmth.</div>
+      </div>
+      <div class="phasegrid__cell phasegrid__cell--bottom">
+        <div>
+          <div class="phasegrid__stage-num">Stage 08</div>
+          <div class="phasegrid__stage-name">Expand</div>
+        </div>
+        <div class="phasegrid__stage-desc">Same account, second purchase. Warmth compounds inside it.</div>
+      </div>
+      <div class="phasegrid__cell phasegrid__cell--bottom">
+        <div>
+          <div class="phasegrid__stage-num">Stage 09</div>
+          <div class="phasegrid__stage-name">Retain</div>
+        </div>
+        <div class="phasegrid__stage-desc">Renewal feeds the loop back into Detect on adjacent accounts.</div>
+      </div>
+    </div>
+
+    <div class="how__notes">
+      <div class="how__note">
+        <div class="how__note-eyebrow">Loop fact 01</div>
+        <div class="how__note-body">A signal in Stage 09 (Retain) often triggers a fresh Stage 01 (Detect) on a sister account. That's how the loop earns its name.</div>
+      </div>
+      <div class="how__note">
+        <div class="how__note-eyebrow">Loop fact 02</div>
+        <div class="how__note-body">No stage is skippable. No stage is sequential. Every named account sits in some combination of stages at any given moment.</div>
+      </div>
+      <div class="how__note">
+        <div class="how__note-eyebrow">Loop fact 03</div>
+        <div class="how__note-body">The system replaces 80% of activity that doesn't generate warmth. Reps spend their time on accounts that are actually moving.</div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ====================================================================
+     SECTION 5: TECHNOLOGY teaser (ink black)
+     ==================================================================== -->
+<section class="section section--ink">
+
+  <div class="issue-bar" style="border-bottom-color: rgba(255,255,255,0.3);">
+    <div class="issue-bar__group">
+      <span>§05</span>
+      <span>TECHNOLOGY</span>
+    </div>
+    <div class="issue-bar__group">
+      <span>STACK BAKED IN</span>
+      <span>NO ONBOARDING</span>
+    </div>
+  </div>
+
+  <div class="tech">
+
+    <div class="tech__header">
+      <h2 class="tech__display">Twenty-four<br>signals.&nbsp;<em>Running.</em></h2>
+      <div class="tech__count">
+        Every signal mapped to an activation, every activation to a tested stack.
+        <strong>24</strong>
+        Live signals
+      </div>
+    </div>
+
+    <div class="tech__directory">
+      <div class="tech__row">
+        <div class="tech__num">01</div>
+        <div class="tech__signal">
+          <div class="tech__signal-name">New CX Leader</div>
+          <div class="tech__signal-meaning">New decision-maker arrives.</div>
+        </div>
+        <div class="tech__activation">
+          <span class="tech__label">Activation</span>
+          Executive intro track
+        </div>
+        <div class="tech__stack">
+          <span class="tech__label">Stack</span>
+          Clay · Apollo
+        </div>
+      </div>
+
+      <div class="tech__row">
+        <div class="tech__num">02</div>
+        <div class="tech__signal">
+          <div class="tech__signal-name">Hiring Surge</div>
+          <div class="tech__signal-meaning">Team scaling fast.</div>
+        </div>
+        <div class="tech__activation">
+          <span class="tech__label">Activation</span>
+          Capacity expansion outreach
+        </div>
+        <div class="tech__stack">
+          <span class="tech__label">Stack</span>
+          Apollo · LinkedIn
+        </div>
+      </div>
+
+      <div class="tech__row">
+        <div class="tech__num">03</div>
+        <div class="tech__signal">
+          <div class="tech__signal-name">Tech Stack Change</div>
+          <div class="tech__signal-meaning">Just installed something new.</div>
+        </div>
+        <div class="tech__activation">
+          <span class="tech__label">Activation</span>
+          Integration partnership pitch
+        </div>
+        <div class="tech__stack">
+          <span class="tech__label">Stack</span>
+          BuiltWith · HG Insights
+        </div>
+      </div>
+
+      <div class="tech__row">
+        <div class="tech__num">04</div>
+        <div class="tech__signal">
+          <div class="tech__signal-name">Funding Round</div>
+          <div class="tech__signal-meaning">Fresh budget on the table.</div>
+        </div>
+        <div class="tech__activation">
+          <span class="tech__label">Activation</span>
+          Strategic investment outreach
+        </div>
+        <div class="tech__stack">
+          <span class="tech__label">Stack</span>
+          Crunchbase · Apollo
+        </div>
+      </div>
+
+      <div class="tech__row">
+        <div class="tech__num">05</div>
+        <div class="tech__signal">
+          <div class="tech__signal-name">Traffic Spike</div>
+          <div class="tech__signal-meaning">Buyers researching this week.</div>
+        </div>
+        <div class="tech__activation">
+          <span class="tech__label">Activation</span>
+          Warmed inbound trigger
+        </div>
+        <div class="tech__stack">
+          <span class="tech__label">Stack</span>
+          HockeyStack · RB2B
+        </div>
+      </div>
+
+      <div class="tech__row">
+        <div class="tech__num">06</div>
+        <div class="tech__signal">
+          <div class="tech__signal-name">Past Engagement</div>
+          <div class="tech__signal-meaning">Knows you. Worth re-engaging.</div>
+        </div>
+        <div class="tech__activation">
+          <span class="tech__label">Activation</span>
+          Re-engagement sequence
+        </div>
+        <div class="tech__stack">
+          <span class="tech__label">Stack</span>
+          HubSpot · Copper
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top: 32px; font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; opacity: 0.6;">
+      6 of 24 shown · See full directory →
+    </p>
+
+  </div>
+
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer__logo">ERA</div>
+  <div>
+    ERA · ERACX.COM · MOCKUP V4
+  </div>
+</footer>
+
+</body>
+</html>

@@ -19,7 +19,7 @@ export function V4Statement() {
     <section className="v4-section v4-section--hero" id="top">
       <V4Header
         phase="ISSUE 04 · VOL. ONE"
-        meta={['BAINBRIDGE ISLAND, WA', 'ESTABLISHED 2024', 'ERACX.COM']}
+        meta={['GTM SYSTEMS', 'EST. 2024', 'ERACX.COM']}
       />
       <V4Nav />
 

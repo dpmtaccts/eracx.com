@@ -47,9 +47,15 @@
 }
 
 .v4-root .v4-nav__logo {
-  font-family: var(--v4-block);
-  font-size: 18px;
-  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+}
+
+.v4-root .v4-nav__logo-mark {
+  height: 24px;
+  width: auto;
+  display: block;
 }
 
 .v4-root .v4-nav__links {
