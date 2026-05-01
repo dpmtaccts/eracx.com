@@ -1,0 +1,237 @@
+/* v4-components.css — Shared component classes for the /v4 route.
+ *
+ * Every selector is prefixed with `.v4-root` so that v4 styles cannot
+ * collide with v3, the main site, or Tailwind utilities. Sizing, spacing,
+ * and palette decisions are ported directly from
+ * design/v4-direction-mockup.html. The mockup is the spec.
+ */
+
+/* ======================================================================
+   ISSUE BAR — Bloomberg-style top band
+   ====================================================================== */
+
+.v4-root .v4-issue-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 48px;
+  border-bottom: 1px solid currentColor;
+  font-family: var(--v4-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+}
+
+.v4-root .v4-issue-bar__group {
+  display: flex;
+  gap: 24px;
+}
+
+/* ======================================================================
+   NAV — header navigation
+   ====================================================================== */
+
+.v4-root .v4-nav {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 48px;
+  border-bottom: 1px solid currentColor;
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+}
+
+.v4-root .v4-nav__logo {
+  font-family: var(--v4-block);
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+.v4-root .v4-nav__links {
+  display: flex;
+  gap: 32px;
+}
+
+.v4-root .v4-nav__cta {
+  background: currentColor;
+  padding: 10px 18px;
+}
+
+.v4-root .v4-nav__cta span {
+  color: var(--v4-white);
+}
+
+/* ======================================================================
+   DISPLAY TYPE
+   ====================================================================== */
+
+.v4-root .v4-display-mega {
+  font-family: var(--v4-display);
+  font-size: clamp(120px, 18vw, 280px);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.v4-root .v4-display-mega em {
+  font-style: normal;
+  color: var(--v4-hot);
+}
+
+.v4-root .v4-display-large {
+  font-family: var(--v4-display);
+  font-size: clamp(56px, 8vw, 120px);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.v4-root .v4-display-block {
+  font-family: var(--v4-block);
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+
+/* ======================================================================
+   EYEBROW + BODY
+   ====================================================================== */
+
+.v4-root .v4-eyebrow {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.v4-root .v4-body-large {
+  font-size: 18px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.v4-root .v4-body-large strong {
+  font-weight: 700;
+}
+
+/* ======================================================================
+   CTA
+   ====================================================================== */
+
+.v4-root .v4-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--v4-ink);
+  color: var(--v4-white);
+  font-family: var(--v4-body);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  align-self: flex-start;
+}
+
+.v4-root .v4-cta__arrow {
+  font-family: var(--v4-mono);
+  font-weight: 400;
+}
+
+/* ======================================================================
+   SECTION SHELLS
+   ====================================================================== */
+
+.v4-root .v4-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.v4-root .v4-section--hero {
+  background: var(--v4-white);
+  color: var(--v4-ink);
+}
+
+/* ======================================================================
+   STATEMENT (§01)
+   ====================================================================== */
+
+.v4-root .v4-statement {
+  padding: 80px 48px 48px;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 64px;
+  align-items: end;
+  min-height: 80vh;
+}
+
+.v4-root .v4-statement__sidebar {
+  border-left: 4px solid var(--v4-ink);
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.v4-root .v4-statement-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--v4-ink);
+  border-bottom: 1px solid var(--v4-ink);
+}
+
+.v4-root .v4-statement-meta__cell {
+  padding: 24px 32px;
+  border-right: 1px solid var(--v4-ink);
+}
+
+.v4-root .v4-statement-meta__cell:last-child {
+  border-right: none;
+}
+
+.v4-root .v4-statement-meta__num {
+  font-family: var(--v4-block);
+  font-size: 56px;
+  line-height: 0.9;
+  margin-bottom: 8px;
+}
+
+.v4-root .v4-statement-meta__label {
+  font-family: var(--v4-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+/* ======================================================================
+   RESPONSIVE
+   ====================================================================== */
+
+@media (max-width: 900px) {
+  .v4-root .v4-statement {
+    grid-template-columns: 1fr;
+  }
+  .v4-root .v4-statement-meta {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .v4-root .v4-statement-meta__cell:nth-child(2) {
+    border-right: none;
+  }
+  .v4-root .v4-issue-bar,
+  .v4-root .v4-nav,
+  .v4-root .v4-statement {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}

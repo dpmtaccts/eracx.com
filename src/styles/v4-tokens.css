@@ -1,0 +1,51 @@
+/* v4-tokens.css — Bloomberg/Turley brutalist palette for the /v4 route.
+ *
+ * Scoped under `.v4-root` so none of these custom properties, base styles,
+ * or palette values leak into other routes. Mirrors the isolation pattern
+ * used by v3 (see src/styles/v3-tokens.css). The wrapper element at
+ * src/pages/v4/V4.tsx carries `className="v4-root"`.
+ *
+ * Do not extend Tailwind's @theme. v4 lives entirely inside this scope.
+ */
+
+.v4-root {
+  /* Foundation */
+  --v4-white: #FFFFFF;
+  --v4-ink: #0A0A0A;
+
+  /* Section grounds */
+  --v4-hot: #E6195F;
+  --v4-yellow: #F4C430;
+  --v4-cobalt: #1845C2;
+  --v4-orange: #FF5C2A;
+
+  /* Rules and dividers */
+  --v4-rule: rgba(10, 10, 10, 0.15);
+  --v4-rule-light: rgba(255, 255, 255, 0.2);
+  --v4-rule-strong: rgba(255, 255, 255, 0.3);
+
+  /* Typography stacks */
+  --v4-display: 'Anton', 'Helvetica Neue Condensed', sans-serif;
+  --v4-block: 'Archivo Black', 'Helvetica Neue', sans-serif;
+  --v4-body: 'IBM Plex Sans', 'Helvetica Neue', sans-serif;
+  --v4-mono: 'JetBrains Mono', 'SF Mono', monospace;
+
+  /* Defaults */
+  font-family: var(--v4-body);
+  color: var(--v4-ink);
+  background: var(--v4-white);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.v4-root *,
+.v4-root *::before,
+.v4-root *::after {
+  box-sizing: border-box;
+}
+
+.v4-root a {
+  color: inherit;
+  text-decoration: none;
+}

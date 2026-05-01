@@ -27,6 +27,7 @@ import V4TimelineRibbon from './pages/staging/V4TimelineRibbon.tsx'
 import V5ExpandingCards from './pages/staging/V5ExpandingCards.tsx'
 import V2OperatingSystem from './pages/V2OperatingSystem/index.tsx'
 import V3 from './pages/v3/V3.tsx'
+import V4 from './pages/v4/V4.tsx'
 
 posthog.init(import.meta.env.VITE_PUBLIC_POSTHOG_TOKEN, {
   api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
@@ -45,6 +46,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/staging/v2" element={<V2OperatingSystem />} />
         <Route path="/staging/v3" element={<V3 />} />
         <Route path="/staging/v4" element={<V4TimelineRibbon />} />
+        <Route path="/v3" element={<V3 />} />
+        <Route path="/v4" element={<V4 />} />
         <Route path="/staging/v5" element={<V5ExpandingCards />} />
         <Route path="/our-story" element={<OurStory />} />
         <Route path="/admin" element={<Admin />} />
