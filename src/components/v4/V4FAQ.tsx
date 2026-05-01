@@ -23,14 +23,9 @@ interface FAQ {
 
 const FAQS: FAQ[] = [
   {
-    question: "How do I build a pipeline when my outbound isn't working?",
+    question: "Why isn't outbound working anymore?",
     answer:
-      'Most outbound fails because it targets the wrong window. Signal-based pipeline works differently. Instead of broadcasting to a static list, you monitor behavioral triggers like job changes, funding events, hiring bursts, and tech installs. When a signal fires, an outreach sequence launches automatically. ERA builds these systems for mid-market B2B companies and runs them continuously.',
-  },
-  {
-    question: 'How do tools like Clay fit into a GTM system?',
-    answer:
-      'Clay is a data enrichment and automation platform that connects signals from dozens of sources and routes them into outreach sequences. ERA uses Clay as part of a broader infrastructure that includes Apollo for sequencing, intent data for buying signals, and CRM integration so every touchpoint writes back to the account record.',
+      "Buyers are drowning in generic sequences while spam filters get smarter. The volume game worked when competition was lower, and it doesn't work in 2026. The fix isn't more outreach, it's better timing. Signal-based pipeline monitors behavioral triggers like job changes, funding events, hiring bursts, and tech installs. When a signal fires, the outreach goes out at the moment of relevance, not by accident. ERA builds these systems for mid-market B2B companies and runs them continuously.",
   },
   {
     question: 'Why do deals stall before they close?',
@@ -51,11 +46,6 @@ const FAQS: FAQ[] = [
     question: 'What does ERA actually build and run?',
     answer:
       'ERA designs, installs, and operates GTM systems for mid-market B2B companies, typically 100 to 300 employees with $15M or more in revenue. We build three types of loops: a Connection Loop for signal-based pipeline generation, a Trust Loop for buying committee engagement, and a Loyalty Loop for post-close expansion and referral.',
-  },
-  {
-    question: "Why isn't outbound working anymore?",
-    answer:
-      "Buyers are drowning in generic sequences. Spam filters are smarter. The volume game worked when competition was lower. It doesn't work in 2026. Signal-based outreach intercepts buyers at the moment of relevance. A prospect who just hired a VP of Sales or closed a Series B is in a fundamentally different state. Volume-based outreach hopes to catch them at the right time by accident.",
   },
 ]
 
