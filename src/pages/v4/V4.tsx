@@ -16,6 +16,7 @@ import { V4WhatEra } from '../../components/v4/V4WhatEra'
 import { V4Evidence } from '../../components/v4/V4Evidence'
 import { V4HowItWorks } from '../../components/v4/V4HowItWorks'
 import { V4Technology } from '../../components/v4/V4Technology'
+import { V4Lab } from '../../components/v4/V4Lab'
 
 const FONT_HREF =
   'https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap'
@@ -61,6 +62,7 @@ export default function V4() {
       <V4Evidence />
       <V4HowItWorks />
       <V4Technology />
+      <V4Lab />
     </div>
   )
 }
