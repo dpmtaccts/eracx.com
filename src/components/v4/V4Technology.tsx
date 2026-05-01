@@ -1,23 +1,24 @@
 /**
  * V4Technology — §06 of v4 marketing site.
  *
- * Ink-black-ground section. Dense Bloomberg-grid directory of all 24
- * signals ERA tracks, with their activation patterns and tech vendor
- * mappings. Magenta returns as accent here, threading visually back
- * to §02 Warmth — the section that introduced "signals compound."
+ * Ink-black-ground section. Brutalist box grid showing all 24 signals
+ * ERA tracks, with their activation patterns and tech vendor mappings.
+ * Each box has a colored top border that maps to category — magenta
+ * for INTENT (most actionable) descending through white-alpha tints
+ * for FIRMOGRAPHIC (most contextual). Scanning the grid horizontally,
+ * the top-edges form a visual category map.
+ *
+ * Magenta returns as accent here, threading visually back to §02
+ * Warmth — the section that introduced "signals compound."
  *
  * The density is the argument. Other agencies pitch their "process."
- * ERA publishes the implementation. A reader who scrolls this section
- * concludes ERA operates at a depth competitors can't match. That's
- * the entire purpose.
+ * ERA publishes the implementation.
  *
- * Signal name / meaning / activation / tech all ported verbatim from
- * src/components/v3/SignalRiver.tsx (24 signals, no fabrication).
- * Categories applied here for v4 directory scannability — v3 doesn't
- * categorize them, so the assignment is editorial. See report for
- * any signal where the category is debatable.
+ * Boxes are deliberately brutalist not SaaS: hard edges, no shadows,
+ * no rounded corners, dense per-box content, mono number prefixes.
+ * If this starts feeling like a feature grid, something has drifted.
  *
- * No card backgrounds. No zebra striping. Pure rule-separated grid.
+ * Signal list ported from src/components/v3/SignalRiver.tsx (24 rows).
  */
 
 import { V4Header } from './V4Header'
@@ -64,15 +65,16 @@ const SIGNALS: Signal[] = [
   { name: 'Renewal Window', meaning: 'Decision time approaching', category: 'FIRMOGRAPHIC', activation: 'Renewal reactivation', tech: 'HubSpot · Copper' },
 ]
 
-const CATEGORY_CLASS: Record<Category, string> = {
-  INTENT: 'v4-directory__cell--category--intent',
-  BEHAVIORAL: 'v4-directory__cell--category--behavioral',
-  NETWORK: 'v4-directory__cell--category--network',
-  TECHNOGRAPHIC: 'v4-directory__cell--category--technographic',
-  FIRMOGRAPHIC: 'v4-directory__cell--category--firmographic',
+const CATEGORY_MOD: Record<Category, string> = {
+  INTENT: 'v4-signal-box--intent',
+  BEHAVIORAL: 'v4-signal-box--behavioral',
+  NETWORK: 'v4-signal-box--network',
+  TECHNOGRAPHIC: 'v4-signal-box--technographic',
+  FIRMOGRAPHIC: 'v4-signal-box--firmographic',
 }
 
 export function V4Technology() {
+  const total = SIGNALS.length
   return (
     <section className="v4-section v4-section--technology" id="tech">
       <V4Header
@@ -94,28 +96,22 @@ export function V4Technology() {
           </p>
         </div>
 
-        <div className="v4-directory">
-          <div className="v4-directory__header-row">
-            <div className="v4-directory__col-label">Signal</div>
-            <div className="v4-directory__col-label">Category</div>
-            <div className="v4-directory__col-label">What it triggers</div>
-            <div className="v4-directory__col-label">Tech</div>
-          </div>
-
-          {SIGNALS.map((s) => (
-            <div key={s.name} className="v4-directory__row">
-              <div className="v4-directory__cell--name">
-                {s.name}
-                <span className="v4-directory__cell-meaning">{s.meaning}</span>
+        <div className="v4-signal-grid">
+          {SIGNALS.map((s, i) => (
+            <article
+              key={s.name}
+              className={`v4-signal-box ${CATEGORY_MOD[s.category]}`}
+            >
+              <div className="v4-signal-box__num">
+                {String(i + 1).padStart(2, '0')} / {total}
               </div>
-              <div
-                className={`v4-directory__cell--category ${CATEGORY_CLASS[s.category]}`}
-              >
-                {s.category}
-              </div>
-              <div className="v4-directory__cell--activation">{s.activation}</div>
-              <div className="v4-directory__cell--tech">{s.tech}</div>
-            </div>
+              <div className="v4-signal-box__name">{s.name}</div>
+              <div className="v4-signal-box__meaning">{s.meaning}</div>
+              <div className="v4-signal-box__rule" aria-hidden="true" />
+              <div className="v4-signal-box__activation">{s.activation}</div>
+              <div className="v4-signal-box__tech">{s.tech}</div>
+              <div className="v4-signal-box__category">{s.category}</div>
+            </article>
           ))}
         </div>
 
