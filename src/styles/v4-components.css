@@ -1435,6 +1435,124 @@
 }
 
 /* ======================================================================
+   FAQ (§08)
+   ====================================================================== */
+
+.v4-root .v4-section--faq {
+  background: var(--v4-white);
+  color: var(--v4-ink);
+}
+
+.v4-root .v4-faq {
+  padding: 96px 48px;
+}
+
+.v4-root .v4-faq__header {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 64px;
+  padding-bottom: 32px;
+  border-bottom: 2px solid var(--v4-ink);
+}
+
+.v4-root .v4-faq__display {
+  font-family: var(--v4-display);
+  font-size: clamp(80px, 11vw, 168px);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.v4-root .v4-faq__display em {
+  font-style: italic;
+  color: var(--v4-hot);
+}
+
+.v4-root .v4-faq__lede {
+  font-size: 19px;
+  line-height: 1.5;
+  max-width: 50ch;
+}
+
+/* ----- FAQ list ----- */
+
+.v4-root .v4-faq-list {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 64px;
+}
+
+.v4-root .v4-faq-item {
+  padding: 40px 0;
+  border-top: 2px solid var(--v4-ink);
+}
+
+.v4-root .v4-faq-item:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.v4-root .v4-faq-item:last-child {
+  padding-bottom: 0;
+}
+
+.v4-root .v4-faq-item__num {
+  font-family: var(--v4-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  color: rgba(10, 10, 10, 0.4);
+}
+
+.v4-root .v4-faq-item__question {
+  font-family: var(--v4-block);
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--v4-ink);
+  margin-top: 8px;
+  font-weight: 400;
+}
+
+.v4-root .v4-faq-item__rule {
+  height: 1px;
+  background: rgba(10, 10, 10, 0.3);
+  margin: 24px 0;
+}
+
+.v4-root .v4-faq-item__answer {
+  font-family: var(--v4-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: rgba(10, 10, 10, 0.85);
+  max-width: 70ch;
+}
+
+/* ----- Closing CTA ----- */
+
+.v4-root .v4-faq__cta {
+  font-family: var(--v4-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  color: rgba(10, 10, 10, 0.7);
+  text-align: center;
+  padding-top: 32px;
+  border-top: 1px solid rgba(10, 10, 10, 0.3);
+}
+
+.v4-root .v4-faq__cta a {
+  color: var(--v4-ink);
+  font-weight: 700;
+  border-bottom: 1px solid var(--v4-ink);
+}
+
+/* ======================================================================
    RESPONSIVE
    ====================================================================== */
 
@@ -1456,7 +1574,8 @@
   .v4-root .v4-evidence,
   .v4-root .v4-howitworks,
   .v4-root .v4-technology,
-  .v4-root .v4-lab {
+  .v4-root .v4-lab,
+  .v4-root .v4-faq {
     padding-left: 24px;
     padding-right: 24px;
   }
@@ -1577,6 +1696,11 @@
   }
   .v4-root .v4-tool-tile__name {
     font-size: clamp(40px, 8vw, 64px);
+  }
+
+  .v4-root .v4-faq__header {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 }
 
