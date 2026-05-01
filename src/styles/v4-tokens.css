@@ -19,6 +19,11 @@
   --v4-cobalt: #1845C2;
   --v4-orange: #FF5C2A;
 
+  /* Chart channel accents (Warmth timeline) */
+  --v4-email: #DD5C20;
+  --v4-amber: #B8860B;
+  --v4-green: #1F7A3D;
+
   /* Rules and dividers */
   --v4-rule: rgba(10, 10, 10, 0.15);
   --v4-rule-light: rgba(255, 255, 255, 0.2);
