@@ -32,7 +32,7 @@ export function V4Nav() {
         <a href="#tech">Tech</a>
         <a href="#lab">Lab</a>
       </div>
-      <a href="mailto:hello@eracx.com" className="v4-nav__cta"><span>Get started</span></a>
+      <a href="#contact" className="v4-nav__cta"><span>Get started</span></a>
     </nav>
   )
 }

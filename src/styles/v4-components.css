@@ -1582,7 +1582,7 @@
 }
 
 .v4-root .v4-footer {
-  padding: 96px 48px 0;
+  padding: 72px 48px 0;
 }
 
 /* ----- Two-column form section ----- */
@@ -1779,12 +1779,12 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 24px;
+  gap: 16px;
   text-align: right;
 }
 
 .v4-root .v4-footer__brand-logo {
-  height: 140px;
+  height: 80px;
   width: auto;
   color: var(--v4-white);
   display: block;
@@ -2047,7 +2047,7 @@
     text-align: left;
   }
   .v4-root .v4-footer__brand-logo {
-    height: 96px;
+    height: 60px;
   }
   .v4-root .v4-footer__base {
     grid-template-columns: 1fr;

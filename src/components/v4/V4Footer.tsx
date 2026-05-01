@@ -103,14 +103,14 @@ export function V4Footer() {
   }
 
   return (
-    <section className="v4-section v4-section--footer" id="contact">
+    <section className="v4-section v4-section--footer">
       <V4Header
         phase="§09 · CONTACT"
         meta={['DIRECT EMAIL', 'USUALLY SAME DAY', 'NO DRIP']}
       />
 
       <div className="v4-footer">
-        <div className="v4-footer__form-section">
+        <div className="v4-footer__form-section" id="contact">
           <div className="v4-footer__form-col">
             <h2 className="v4-footer__form-headline">
               Worth <em>talking</em>?
