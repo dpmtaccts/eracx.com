@@ -1,23 +1,23 @@
 /**
  * V4Lab — §07 of v4 marketing site.
  *
- * Orange-ground section showing ERA's four free tools / lab products
- * as a 2×2 tile grid. Each tile invites direct interaction: this is
- * where readers move from "I should think about ERA" to "I should
- * try ERA."
+ * Parchment-ground section showing ERA's four free tools / lab products
+ * as a 2×2 grid of ink-black tiles. Rust accents tie the tiles back to
+ * ERA's broader brand palette (rust + parchment per CLAUDE.md), while
+ * the brutalist treatment keeps them feeling editorial rather than
+ * promotional.
  *
- * The hover treatment is intentionally strong — tile inverts to ink
- * black on hover. This is the only section where a strong hover is
- * earned; the page argues for the rest of v4 with static density.
+ * Tiles default to ink ground with white type and rust accents (status
+ * pills, URLs, CTA arrows). Hover inverts the tile to parchment with
+ * ink text — accents stay rust through the transition.
+ *
+ * The hover treatment is the strongest in v4 — earned because Lab is
+ * where readers move from "I should think about ERA" to "I should try
+ * ERA."
  *
  * Tools: Halo (LinkedIn audit, BETA), Signal River (live signal feed,
  * LIVE), Map (buying committee builder, BETA), AI Mirror (buyer-side
- * audit, COMING SOON). Names and statuses pending Justin's
- * verification — placeholder copy noted in v4-7 commit.
- *
- * Per spec, the tile itself is a <div>; only the CTA is an <a> href.
- * Tile hover inverts visuals as a "there's something here" cue; the
- * CTA carries the actual navigation.
+ * audit, COMING SOON).
  */
 
 import { V4Header } from './V4Header'

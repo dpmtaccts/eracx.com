@@ -1211,7 +1211,7 @@
    ====================================================================== */
 
 .v4-root .v4-section--lab {
-  background: var(--v4-orange);
+  background: var(--v4-parchment);
   color: var(--v4-ink);
 }
 
@@ -1240,7 +1240,7 @@
 
 .v4-root .v4-lab__display em {
   font-style: italic;
-  color: var(--v4-ink);
+  color: var(--v4-orange);
 }
 
 .v4-root .v4-lab__lede {
@@ -1253,7 +1253,7 @@
   font-weight: 700;
 }
 
-/* ----- Tile grid ----- */
+/* ----- Tile grid (parchment ground, ink tiles) ----- */
 
 .v4-root .v4-tool-grid {
   display: grid;
@@ -1271,8 +1271,8 @@
   min-height: 360px;
   border-right: 2px solid var(--v4-ink);
   border-bottom: 2px solid var(--v4-ink);
-  background: var(--v4-orange);
-  color: var(--v4-ink);
+  background: var(--v4-ink);
+  color: var(--v4-white);
   text-decoration: none;
   transition: background-color 120ms ease, color 120ms ease;
 }
@@ -1308,19 +1308,19 @@
 }
 
 .v4-root .v4-tool-tile__status--live {
-  background: var(--v4-ink);
-  color: var(--v4-orange);
+  background: var(--v4-orange);
+  color: var(--v4-ink);
 }
 
 .v4-root .v4-tool-tile__status--beta {
-  background: rgba(10, 10, 10, 0.2);
-  color: var(--v4-ink);
+  background: rgba(221, 92, 32, 0.2);
+  color: var(--v4-orange);
 }
 
 .v4-root .v4-tool-tile__status--soon {
   background: transparent;
-  color: var(--v4-ink);
-  border: 1px solid rgba(10, 10, 10, 0.4);
+  color: var(--v4-orange);
+  border: 1px solid var(--v4-orange);
   padding: 3px 9px;
 }
 
@@ -1328,7 +1328,7 @@
   font-family: var(--v4-mono);
   font-size: 11px;
   letter-spacing: 0.06em;
-  color: rgba(10, 10, 10, 0.5);
+  color: rgba(255, 255, 255, 0.5);
   text-align: right;
   align-self: start;
   padding-top: 4px;
@@ -1343,7 +1343,7 @@
   letter-spacing: -0.02em;
   text-transform: uppercase;
   font-weight: 400;
-  color: var(--v4-ink);
+  color: var(--v4-white);
   margin-top: auto;
 }
 
@@ -1352,7 +1352,7 @@
 .v4-root .v4-tool-tile__bottom {
   margin-top: 32px;
   padding-top: 20px;
-  border-top: 1px solid rgba(10, 10, 10, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1363,7 +1363,7 @@
   font-size: 17px;
   line-height: 1.4;
   font-weight: 500;
-  color: var(--v4-ink);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .v4-root .v4-tool-tile__cta {
@@ -1374,28 +1374,35 @@
   text-transform: uppercase;
   letter-spacing: 0.14em;
   font-weight: 700;
+  color: var(--v4-orange);
+}
+
+/* ----- Hover: ink tile flips to parchment, rust accents preserved ----- */
+
+.v4-root .v4-tool-tile:hover {
+  background: var(--v4-parchment);
   color: var(--v4-ink);
 }
 
-/* ----- Hover (the strongest hover in v4) ----- */
-
-.v4-root .v4-tool-tile:hover {
-  background: var(--v4-ink);
-  color: var(--v4-orange);
+.v4-root .v4-tool-tile:hover .v4-tool-tile__name {
+  color: var(--v4-ink);
 }
 
-.v4-root .v4-tool-tile:hover .v4-tool-tile__name,
-.v4-root .v4-tool-tile:hover .v4-tool-tile__desc,
-.v4-root .v4-tool-tile:hover .v4-tool-tile__cta {
-  color: var(--v4-orange);
+.v4-root .v4-tool-tile:hover .v4-tool-tile__desc {
+  color: rgba(10, 10, 10, 0.85);
 }
 
 .v4-root .v4-tool-tile:hover .v4-tool-tile__url {
-  color: rgba(255, 92, 42, 0.6);
+  color: rgba(10, 10, 10, 0.5);
 }
 
 .v4-root .v4-tool-tile:hover .v4-tool-tile__bottom {
-  border-top-color: rgba(255, 92, 42, 0.4);
+  border-top-color: rgba(10, 10, 10, 0.2);
+}
+
+/* CTA + status pills keep rust through the inversion */
+.v4-root .v4-tool-tile:hover .v4-tool-tile__cta {
+  color: var(--v4-orange);
 }
 
 .v4-root .v4-tool-tile:hover .v4-tool-tile__status--live {
@@ -1404,12 +1411,12 @@
 }
 
 .v4-root .v4-tool-tile:hover .v4-tool-tile__status--beta {
-  background: rgba(255, 92, 42, 0.25);
+  background: rgba(221, 92, 32, 0.2);
   color: var(--v4-orange);
 }
 
 .v4-root .v4-tool-tile:hover .v4-tool-tile__status--soon {
-  border-color: rgba(255, 92, 42, 0.5);
+  border-color: var(--v4-orange);
   color: var(--v4-orange);
 }
 
