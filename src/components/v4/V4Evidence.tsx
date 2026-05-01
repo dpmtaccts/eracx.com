@@ -2,21 +2,20 @@
  * V4Evidence — §04 of v4 marketing site.
  *
  * Yellow-ground proof section. Customer logos render in flat ink for
- * editorial coherence (color sacrificed for visual rhythm). Hero
- * testimonial dominates, one supporting testimonial below, balanced
- * by a small founder photo inset.
+ * editorial coherence (color sacrificed for visual rhythm). Two hero
+ * testimonials stacked with a divider rule between them.
  *
- * Two confirmed testimonials (Stephen Roesler / Miniac was requested
- * but no copy exists in source — Justin redirected to Nate as hero):
- * - Hero: Nate Houghton (Lorikeet) — Head of Sales, Americas
- * - Supporting: Lara Vandenberg (Assemble) — Founder
+ * Three testimonials confirmed (third pending assets):
+ * - Nate Houghton (Lorikeet) — operator-led GTM
+ * - Lara Vandenberg (Assemble) — earlier engagement
+ * - Stephen Roesler (Miniac) — pending logo + quote, will become third
+ *   hero in the stack
  *
- * Logo wall shows four ERA customer marks (Lorikeet, Assemble,
- * Netrush, Navalent), all rendered in flat ink via filter:
- * brightness(0) + opacity 0.85 — Bloomberg/Turley editorial unity.
+ * Founder photo intentionally excluded. Personality lives in About /
+ * footer, not Evidence. Customer proof is the only argument here.
  *
- * White text is FORBIDDEN on yellow ground. Magenta accent is rested
- * for this section per the v4 color rhythm.
+ * Logo treatment uses filter: brightness(0) on color PNGs or
+ * fill="currentColor" on SVGs to render every logo in flat ink.
  */
 
 import { V4Header } from './V4Header'
@@ -57,7 +56,7 @@ export function V4Evidence() {
           ))}
         </div>
 
-        {/* --------- Hero quote --------- */}
+        {/* --------- Hero quote: Nate --------- */}
         <div className="v4-hero-quote">
           <p className="v4-hero-quote__text">
             Justin builds the thing most consultants just talk about.
@@ -74,33 +73,20 @@ export function V4Evidence() {
           </div>
         </div>
 
-        {/* --------- Supporting + founder --------- */}
-        <div className="v4-evidence-bottom">
-          <div className="v4-quote-card">
-            <p className="v4-quote-card__text">
-              Era is an asset to any high-growth company, impacting every
-              aspect of revenue, marketing, customer success, and account
-              management.
-            </p>
-            <div className="v4-quote-card__attribution">
-              <img
-                className="v4-quote-card__attribution-logo"
-                src="/images/betterup/assemble.png"
-                alt="Assemble"
-              />
-              <span>Lara Vandenberg · Founder · Assemble</span>
-            </div>
-          </div>
-
-          <div className="v4-founder-inset">
+        {/* --------- Hero quote: Lara --------- */}
+        <div className="v4-hero-quote">
+          <p className="v4-hero-quote__text">
+            Era is an asset to any high-growth company, impacting every
+            aspect of revenue, marketing, customer success, and account
+            management.
+          </p>
+          <div className="v4-hero-quote__attribution">
             <img
-              className="v4-founder-inset__photo"
-              src="/images/justinmarshall.png"
-              alt="Justin Marshall"
+              className="v4-hero-quote__attribution-logo"
+              src="/images/betterup/assemble.png"
+              alt="Assemble"
             />
-            <div className="v4-founder-inset__caption">
-              Justin Marshall<br />ERA founder
-            </div>
+            <span>Lara Vandenberg · Founder · Assemble</span>
           </div>
         </div>
       </div>

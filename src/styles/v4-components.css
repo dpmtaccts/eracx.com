@@ -830,13 +830,18 @@
   display: block;
 }
 
-/* ----- Hero quote ----- */
+/* ----- Hero quote (Nate, Lara, and any future stacked testimonial) ----- */
 
 .v4-root .v4-hero-quote {
-  margin-bottom: 64px;
-  padding: 48px 0;
+  padding: 64px 0;
   border-top: 1px solid var(--v4-ink);
   border-bottom: 1px solid var(--v4-ink);
+}
+
+/* When two hero quotes stack, collapse the shared rule so the divider
+   between them stays a clean 1px instead of doubling. */
+.v4-root .v4-hero-quote + .v4-hero-quote {
+  border-top: none;
 }
 
 .v4-root .v4-hero-quote__text {
@@ -878,84 +883,6 @@
   width: auto;
   filter: brightness(0);
   opacity: 0.85;
-}
-
-/* ----- Supporting + founder row ----- */
-
-.v4-root .v4-evidence-bottom {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 48px;
-  align-items: start;
-}
-
-.v4-root .v4-quote-card {
-  padding: 32px;
-  border: 2px solid var(--v4-ink);
-  background: transparent;
-}
-
-.v4-root .v4-quote-card__text {
-  font-family: var(--v4-body);
-  font-size: 20px;
-  line-height: 1.4;
-  font-weight: 500;
-  margin-bottom: 24px;
-}
-
-.v4-root .v4-quote-card__text::before {
-  content: '\201C';
-}
-
-.v4-root .v4-quote-card__text::after {
-  content: '\201D';
-}
-
-.v4-root .v4-quote-card__attribution {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  font-family: var(--v4-mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-weight: 700;
-  padding-top: 16px;
-  border-top: 1px solid var(--v4-ink);
-}
-
-.v4-root .v4-quote-card__attribution-logo {
-  height: 22px;
-  width: auto;
-  filter: brightness(0);
-  opacity: 0.85;
-}
-
-/* ----- Founder inset ----- */
-
-.v4-root .v4-founder-inset {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.v4-root .v4-founder-inset__photo {
-  width: 100%;
-  max-width: 220px;
-  height: auto;
-  display: block;
-  filter: grayscale(1) contrast(1.05);
-}
-
-.v4-root .v4-founder-inset__caption {
-  font-family: var(--v4-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-weight: 600;
-  color: rgba(10, 10, 10, 0.7);
-  line-height: 1.4;
-  max-width: 220px;
 }
 
 /* ======================================================================
@@ -1190,11 +1117,8 @@
     max-height: 40px;
     height: 40px;
   }
-  .v4-root .v4-evidence-bottom {
-    grid-template-columns: 1fr;
-  }
-  .v4-root .v4-founder-inset__photo {
-    max-width: 180px;
+  .v4-root .v4-hero-quote {
+    padding: 40px 0;
   }
 
   .v4-root .v4-howitworks__header {
