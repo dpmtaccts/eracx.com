@@ -315,6 +315,42 @@
   letter-spacing: -0.02em;
 }
 
+/* §02 FRVRD card heading: 3-tier editorial treatment.
+   eyebrow (mono) → title (Archivo Black, sentence case) → subhead (mono). */
+.v4-root .v4-frvrd-card__heading {
+  margin-bottom: 32px;
+}
+
+.v4-root .v4-frvrd-card__eyebrow {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.5);
+  margin: 0 0 12px 0;
+}
+
+.v4-root .v4-frvrd-card__title {
+  font-family: var(--v4-block);
+  font-size: clamp(28px, 3vw, 36px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--v4-ink);
+  margin: 0 0 12px 0;
+  font-weight: 400;
+}
+
+.v4-root .v4-frvrd-card__subhead {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.5);
+  margin: 0;
+}
+
 .v4-root .v4-chart-card__subtitle {
   font-family: var(--v4-mono);
   font-size: 11px;

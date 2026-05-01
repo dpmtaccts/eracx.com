@@ -58,16 +58,21 @@ export function V4Warmth() {
 
         {/* --------- Pentagon card --------- */}
         <div className="v4-pentagon-card">
-          <div className="v4-pentagon-card__header">
-            <div>
-              <div className="v4-pentagon-card__title">FRVRD Breakdown · Account 047</div>
-              <div className="v4-chart-card__subtitle">5 dimensions · scored daily · composite 88</div>
-            </div>
+          <div className="v4-frvrd-card__heading">
+            <p className="v4-frvrd-card__eyebrow">
+              FRVRD BREAKDOWN · ACCOUNT 047
+            </p>
+            <h3 className="v4-frvrd-card__title">
+              Relationship growth, not campaign metrics.
+            </h3>
+            <p className="v4-frvrd-card__subhead">
+              5 DIMENSIONS · SCORED DAILY · COMPOSITE 88
+            </p>
           </div>
 
           <svg
             className="v4-pentagon"
-            viewBox="0 0 480 440"
+            viewBox="-50 0 580 440"
             preserveAspectRatio="xMidYMid meet"
             xmlns="http://www.w3.org/2000/svg"
             aria-label="FRVRD pentagon for Account 047, composite warmth 88"
