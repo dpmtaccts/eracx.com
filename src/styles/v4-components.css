@@ -1094,24 +1094,22 @@
 }
 
 .v4-root .v4-technology {
-  padding: 96px 48px;
+  padding: 80px 48px 64px;
 }
 
 .v4-root .v4-technology__header {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 48px;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 64px;
   align-items: end;
-  margin-bottom: 64px;
-  padding-bottom: 32px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+  margin-bottom: 40px;
 }
 
 .v4-root .v4-technology__display {
   font-family: var(--v4-display);
-  font-size: clamp(80px, 11vw, 168px);
-  line-height: 0.85;
-  letter-spacing: -0.02em;
+  font-size: clamp(56px, 7vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   font-weight: 400;
 }
@@ -1122,9 +1120,10 @@
 }
 
 .v4-root .v4-technology__lede {
-  font-size: 19px;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.55;
   max-width: 50ch;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .v4-root .v4-technology__lede strong {
@@ -1132,47 +1131,65 @@
   color: var(--v4-hot);
 }
 
-/* ----- Signal box grid ----- */
+/* ----- Signal box bento grid -----
+   6-col layout. Default cards are 1x1 small. `--featured` cards are 2x2
+   and `order: -1` so they place at the top of the grid even though their
+   data positions are later in the SIGNALS array. Activation copy is
+   hidden on small cards (the compression that makes the section fit a
+   single viewport); only featured cards show it. */
 
 .v4-root .v4-signal-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: minmax(120px, auto);
   gap: 0;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  margin-bottom: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 40px;
 }
 
 .v4-root .v4-signal-box {
   position: relative;
-  padding: 28px 24px 56px;
-  border-top: 4px solid rgba(255, 255, 255, 0.4);
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 18px 20px 40px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 0;
-  min-height: 240px;
   background: transparent;
-  transition: background-color 120ms ease, border-top-width 120ms ease;
-}
-
-.v4-root .v4-signal-box:nth-child(3n) {
-  border-right: none;
-}
-
-.v4-root .v4-signal-box:nth-last-child(-n+3) {
-  border-bottom: none;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 120ms ease;
 }
 
 .v4-root .v4-signal-box:hover {
   background: rgba(255, 255, 255, 0.04);
-  border-top-width: 6px;
 }
 
-/* Top-border colour by category */
-.v4-root .v4-signal-box--intent { border-top-color: var(--v4-hot); }
-.v4-root .v4-signal-box--behavioral { border-top-color: rgba(230, 25, 95, 0.7); }
-.v4-root .v4-signal-box--network { border-top-color: rgba(255, 255, 255, 0.7); }
-.v4-root .v4-signal-box--technographic { border-top-color: rgba(255, 255, 255, 0.5); }
-.v4-root .v4-signal-box--firmographic { border-top-color: rgba(255, 255, 255, 0.4); }
+/* Featured cards: 2 cols × 2 rows, placed first via order: -1.
+   Two of them adjacent → top of grid is featured / featured / 4 small. */
+.v4-root .v4-signal-box--featured {
+  grid-column: span 2;
+  grid-row: span 2;
+  order: -1;
+  padding: 32px 32px 56px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.v4-root .v4-signal-box--featured:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.v4-root .v4-signal-box__spotlight {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  font-family: var(--v4-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--v4-hot);
+  text-transform: uppercase;
+  border: 1px solid var(--v4-hot);
+  padding: 4px 8px;
+}
 
 .v4-root .v4-signal-box__num {
   font-family: var(--v4-mono);
@@ -1185,35 +1202,65 @@
 
 .v4-root .v4-signal-box__name {
   font-family: var(--v4-block);
-  font-size: 22px;
+  font-size: 17px;
   line-height: 1.1;
   letter-spacing: -0.01em;
   color: var(--v4-white);
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .v4-root .v4-signal-box__meaning {
   font-family: var(--v4-mono);
   font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.55);
-  margin-top: 6px;
+  margin-top: 4px;
   line-height: 1.4;
 }
 
+/* Rule + activation hidden on small cards — the compression. */
 .v4-root .v4-signal-box__rule {
+  display: none;
   height: 1px;
   background: rgba(255, 255, 255, 0.15);
-  margin: 16px 0;
+  margin: 20px 0;
 }
 
 .v4-root .v4-signal-box__activation {
+  display: none;
   font-family: var(--v4-body);
-  font-size: 14px;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Featured: bigger type + activation copy reappears. */
+.v4-root .v4-signal-box--featured .v4-signal-box__num {
+  font-size: 11px;
+  margin-bottom: 12px;
+}
+
+.v4-root .v4-signal-box--featured .v4-signal-box__name {
+  font-size: 30px;
+  line-height: 1.05;
+  margin-top: 0;
+}
+
+.v4-root .v4-signal-box--featured .v4-signal-box__meaning {
+  font-size: 11px;
+  margin-top: 6px;
+}
+
+.v4-root .v4-signal-box--featured .v4-signal-box__rule {
+  display: block;
+  margin: 20px 0;
+}
+
+.v4-root .v4-signal-box--featured .v4-signal-box__activation {
+  display: block;
+  flex-grow: 1;
 }
 
 .v4-root .v4-signal-box__tech {
@@ -1221,7 +1268,8 @@
   font-size: 11px;
   letter-spacing: 0.06em;
   color: var(--v4-white);
-  margin-top: 12px;
+  margin-top: auto;
+  padding-top: 12px;
   font-weight: 500;
 }
 
@@ -2096,50 +2144,29 @@
   }
 }
 
-/* Signal box grid breakpoints (independent of the 900px section breakpoint
-   above, since the box geometry has its own ideal column counts). */
+/* Bento grid breakpoints. Featured cards stay 2x2 down to 700px;
+   below that they collapse to 2x1 banners spanning the 2-col layout. */
 @media (max-width: 1100px) and (min-width: 701px) {
   .v4-root .v4-signal-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
-  .v4-root .v4-signal-box {
-    border-right: 1px solid rgba(255, 255, 255, 0.2);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  .v4-root .v4-signal-box:nth-child(3n) {
-    border-right: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  .v4-root .v4-signal-box:nth-last-child(-n+3) {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  .v4-root .v4-signal-box:nth-child(2n) {
-    border-right: none;
-  }
-  .v4-root .v4-signal-box:nth-last-child(-n+2) {
-    border-bottom: none;
+  .v4-root .v4-signal-box--featured {
+    grid-column: span 2;
+    grid-row: span 2;
   }
 }
 
 @media (max-width: 700px) {
   .v4-root .v4-signal-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
   .v4-root .v4-signal-box {
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    min-height: auto;
-    padding: 24px 20px 52px;
+    padding: 18px 16px 40px;
   }
-  .v4-root .v4-signal-box:nth-child(3n),
-  .v4-root .v4-signal-box:nth-child(2n) {
-    border-right: none;
-  }
-  .v4-root .v4-signal-box:nth-last-child(-n+3),
-  .v4-root .v4-signal-box:nth-last-child(-n+2) {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  .v4-root .v4-signal-box:last-child {
-    border-bottom: none;
+  .v4-root .v4-signal-box--featured {
+    grid-column: span 2;
+    grid-row: span 1;
+    padding: 24px 20px 48px;
   }
 }
 

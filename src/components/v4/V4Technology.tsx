@@ -36,6 +36,7 @@ interface Signal {
   category: Category
   activation: string
   tech: string
+  featured?: boolean
 }
 
 const SIGNALS: Signal[] = [
@@ -60,8 +61,8 @@ const SIGNALS: Signal[] = [
   { name: 'Customer Review Theme', meaning: 'Pattern of pain showing', category: 'BEHAVIORAL', activation: 'Pain-pattern outreach', tech: 'G2 · Trustpilot' },
   { name: 'Job Description Change', meaning: 'Role expanded. New scope.', category: 'INTENT', activation: 'Role-aware approach', tech: 'Apollo · LinkedIn' },
   { name: 'Conference Attendance', meaning: 'Showed up to learn', category: 'BEHAVIORAL', activation: 'Event follow-up sequence', tech: 'LinkedIn · Apollo' },
-  { name: 'Dark Social Mention', meaning: 'Talking about you privately', category: 'NETWORK', activation: 'Insider connection', tech: 'Champify · Slack' },
-  { name: 'Referral Intro', meaning: 'Warm introduction', category: 'NETWORK', activation: 'VIP fast-track', tech: 'HubSpot · Slack' },
+  { name: 'Dark Social Mention', meaning: 'Talking about you privately', category: 'NETWORK', activation: 'Insider connection', tech: 'Champify · Slack', featured: true },
+  { name: 'Referral Intro', meaning: 'Warm introduction', category: 'NETWORK', activation: 'VIP fast-track', tech: 'HubSpot · Slack', featured: true },
   { name: 'Renewal Window', meaning: 'Decision time approaching', category: 'FIRMOGRAPHIC', activation: 'Renewal reactivation', tech: 'HubSpot · Copper' },
 ]
 
@@ -85,7 +86,7 @@ export function V4Technology() {
       <div className="v4-technology">
         <div className="v4-technology__header">
           <h2 className="v4-technology__display">
-            Twenty-four signals.<br />Zero <em>guesswork</em>.
+            24 signals. Zero <em>guesswork</em>.
           </h2>
           <p className="v4-technology__lede">
             ERA captures signals across every channel that matters and
@@ -97,22 +98,31 @@ export function V4Technology() {
         </div>
 
         <div className="v4-signal-grid">
-          {SIGNALS.map((s, i) => (
-            <article
-              key={s.name}
-              className={`v4-signal-box ${CATEGORY_MOD[s.category]}`}
-            >
-              <div className="v4-signal-box__num">
-                {String(i + 1).padStart(2, '0')} / {total}
-              </div>
-              <div className="v4-signal-box__name">{s.name}</div>
-              <div className="v4-signal-box__meaning">{s.meaning}</div>
-              <div className="v4-signal-box__rule" aria-hidden="true" />
-              <div className="v4-signal-box__activation">{s.activation}</div>
-              <div className="v4-signal-box__tech">{s.tech}</div>
-              <div className="v4-signal-box__category">{s.category}</div>
-            </article>
-          ))}
+          {SIGNALS.map((s, i) => {
+            const classes = [
+              'v4-signal-box',
+              CATEGORY_MOD[s.category],
+              s.featured ? 'v4-signal-box--featured' : '',
+            ]
+              .filter(Boolean)
+              .join(' ')
+            return (
+              <article key={s.name} className={classes}>
+                {s.featured && (
+                  <span className="v4-signal-box__spotlight">SPOTLIGHT</span>
+                )}
+                <div className="v4-signal-box__num">
+                  {String(i + 1).padStart(2, '0')} / {total}
+                </div>
+                <div className="v4-signal-box__name">{s.name}</div>
+                <div className="v4-signal-box__meaning">{s.meaning}</div>
+                <div className="v4-signal-box__rule" aria-hidden="true" />
+                <div className="v4-signal-box__activation">{s.activation}</div>
+                <div className="v4-signal-box__tech">{s.tech}</div>
+                <div className="v4-signal-box__category">{s.category}</div>
+              </article>
+            )
+          })}
         </div>
 
         <div className="v4-technology__summary">
