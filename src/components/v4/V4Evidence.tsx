@@ -23,6 +23,7 @@ import { V4Header } from './V4Header'
 const LOGOS = [
   { name: 'Lorikeet', src: '/images/navalent/Lorikeet_logo_color.png' },
   { name: 'Assemble', src: '/images/betterup/assemble.png' },
+  { name: 'Miniac', src: '/assets/clients/miniac.png' },
   { name: 'Netrush', src: '/assets/clients/netrush.webp' },
   { name: 'Navalent', src: '/images/navalent/navalent-logo.png' },
 ]
