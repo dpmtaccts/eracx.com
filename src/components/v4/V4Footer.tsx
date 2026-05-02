@@ -20,12 +20,13 @@
  * without contacting the backend — bots don't retry on apparent
  * success.
  *
- * Department of Loyalty LLC fine print appears in the bottom legal
- * bar — the only place ERA's parent legal entity is named on the
- * marketing site.
+ * Below the form, a horizontal mono band of in-page section anchors
+ * (Statement / Warmth / What we are / Evidence / How it works /
+ * Technology / Lab / FAQ) sits above a thin legal bar reading
+ * "ERA" left, "© 2026 · ALL RIGHTS RESERVED" right.
  */
 
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import type { FormEvent } from 'react'
 import { V4Header } from './V4Header'
 
@@ -243,33 +244,25 @@ export function V4Footer() {
           </div>
         </div>
 
-        <div className="v4-footer__base">
-          <div className="v4-footer__base-col">
-            <div className="v4-footer__col-header">Sections</div>
-            <ul className="v4-footer__nav-list">
-              {SECTIONS.map(({ href, label }) => (
-                <li key={href}>
-                  <a className="v4-footer__nav-link" href={href}>
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="v4-footer__base-col">
-            <div className="v4-footer__col-header">Colophon</div>
-            <p className="v4-footer__colophon">
-              Set in Anton, Archivo Black, IBM Plex Sans, and JetBrains
-              Mono. Built in Vite, React 19, and Tailwind 4. Hosted on
-              Vercel. Issue 04, Volume One. v4.0.
-            </p>
-          </div>
-        </div>
+        <nav className="v4-footer__section-nav" aria-label="Page sections">
+          {SECTIONS.map(({ href, label }, i) => (
+            <Fragment key={href}>
+              {i > 0 && (
+                <span
+                  className="v4-footer__section-nav-sep"
+                  aria-hidden="true"
+                >
+                  ·
+                </span>
+              )}
+              <a href={href}>{label}</a>
+            </Fragment>
+          ))}
+        </nav>
 
         <div className="v4-footer__legal">
           <div className="v4-footer__legal-left">
-            ERA · A PRODUCT OF DEPARTMENT OF LOYALTY LLC
+            ERA
           </div>
           <div className="v4-footer__legal-right">
             © 2026 · ALL RIGHTS RESERVED
