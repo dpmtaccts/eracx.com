@@ -20,12 +20,19 @@
 
 import { V4Header } from './V4Header'
 
+// Per-logo render heights tuned so each logo's actual graphical content
+// (measured via opaque-pixel bounding box) renders at ~32px optical height
+// across the wall. Lorikeet + Netrush have 100% content fill, so 32px height
+// puts content at 32px. Assemble + High Fidelity have ~73% content, so 44px
+// height produces 32px content. Miniac has ~67% content, so 48px → 32px.
+// Switching to flex layout (instead of equal-column grid) so wide aspect
+// ratios get their natural width and don't squash.
 const LOGOS = [
-  { name: 'Lorikeet', src: '/images/navalent/Lorikeet_logo_color.png' },
-  { name: 'Assemble', src: '/images/betterup/assemble.png' },
-  { name: 'Miniac', src: '/assets/clients/miniac.png' },
-  { name: 'Netrush', src: '/assets/clients/netrush.webp' },
-  { name: 'High Fidelity', src: '/assets/clients/highfidelity.png' },
+  { name: 'Lorikeet', src: '/images/navalent/Lorikeet_logo_color.png', height: 32 },
+  { name: 'Assemble', src: '/images/betterup/assemble.png', height: 44 },
+  { name: 'Miniac', src: '/assets/clients/miniac.png', height: 48 },
+  { name: 'Netrush', src: '/assets/clients/netrush.webp', height: 32 },
+  { name: 'High Fidelity', src: '/assets/clients/highfidelity.png', height: 44 },
 ]
 
 export function V4Evidence() {
@@ -50,9 +57,14 @@ export function V4Evidence() {
 
         {/* --------- Logo wall --------- */}
         <div className="v4-logo-wall">
-          {LOGOS.map(({ name, src }) => (
+          {LOGOS.map(({ name, src, height }) => (
             <div key={name} className="v4-logo-wall__item">
-              <img className="v4-logo-wall__img" src={src} alt={name} />
+              <img
+                className="v4-logo-wall__img"
+                src={src}
+                alt={name}
+                style={{ height: `${height}px` }}
+              />
             </div>
           ))}
         </div>

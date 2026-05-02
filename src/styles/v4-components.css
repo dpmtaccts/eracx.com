@@ -857,12 +857,12 @@
 /* ----- Logo wall ----- */
 
 .v4-root .v4-logo-wall {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 40px;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-items: center;
-  padding: 48px 0;
+  justify-content: space-between;
+  gap: 24px 32px;
+  padding: 56px 0;
   margin-bottom: 64px;
   border-top: 1px solid var(--v4-ink);
   border-bottom: 1px solid var(--v4-ink);
@@ -871,16 +871,12 @@
 .v4-root .v4-logo-wall__item {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 64px;
-  width: 100%;
+  flex: 0 0 auto;
 }
 
 .v4-root .v4-logo-wall__img {
-  max-height: 64px;
-  max-width: 100%;
   width: auto;
-  height: auto;
+  max-width: 100%;
   filter: brightness(0);
   opacity: 0.85;
   display: block;
@@ -2012,14 +2008,12 @@
     gap: 24px;
   }
   .v4-root .v4-logo-wall {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
-    padding: 32px 0;
+    justify-content: center;
+    gap: 24px 32px;
+    padding: 40px 0;
   }
-  .v4-root .v4-logo-wall__img,
-  .v4-root .v4-logo-wall__item {
-    max-height: 40px;
-    height: 40px;
+  .v4-root .v4-logo-wall__img {
+    height: 28px !important;
   }
   .v4-root .v4-hero-quote {
     padding: 40px 0;
