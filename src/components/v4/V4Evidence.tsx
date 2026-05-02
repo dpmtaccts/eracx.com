@@ -25,7 +25,7 @@ const LOGOS = [
   { name: 'Assemble', src: '/images/betterup/assemble.png' },
   { name: 'Miniac', src: '/assets/clients/miniac.png' },
   { name: 'Netrush', src: '/assets/clients/netrush.webp' },
-  { name: 'Navalent', src: '/images/navalent/navalent-logo.png' },
+  { name: 'High Fidelity', src: '/assets/clients/highfidelity.png' },
 ]
 
 export function V4Evidence() {
