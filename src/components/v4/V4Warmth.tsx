@@ -292,11 +292,12 @@ export function V4Warmth() {
               <text x="562" y="600" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="#0A0A0A" fontWeight="700" letterSpacing="0.08em">LINKEDIN COMMENT</text>
               <text x="562" y="615" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.6)" fontWeight="500">+5</text>
 
-              {/* W7 Signal cooling */}
+              {/* W7 Signal cooling — pushed lower than W6 LINKEDIN COMMENT
+                  so the two below-line labels don't horizontally collide. */}
               <circle cx="654" cy="512" r="6" fill="#999" stroke="white" strokeWidth="2" />
-              <line x1="654" y1="519" x2="654" y2="582" stroke="rgba(10,10,10,0.25)" strokeWidth="1" strokeDasharray="2,2" />
-              <text x="654" y="600" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="rgba(10,10,10,0.55)" fontWeight="700" letterSpacing="0.08em">SIGNAL COOLING</text>
-              <text x="654" y="615" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.5)" fontWeight="500">−2</text>
+              <line x1="654" y1="519" x2="654" y2="625" stroke="rgba(10,10,10,0.25)" strokeWidth="1" strokeDasharray="2,2" />
+              <text x="654" y="640" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="rgba(10,10,10,0.55)" fontWeight="700" letterSpacing="0.08em">SIGNAL COOLING</text>
+              <text x="654" y="655" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.5)" fontWeight="500">−2</text>
 
               {/* W8 Newsletter (small) */}
               <circle cx="746" cy="480" r="6" fill="#1845C2" stroke="white" strokeWidth="2" />
@@ -325,11 +326,12 @@ export function V4Warmth() {
               <text x="1115" y="322" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="#0A0A0A" fontWeight="700" letterSpacing="0.08em">REFERRAL INTRO</text>
               <text x="1115" y="337" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.6)" fontWeight="500">+15</text>
 
-              {/* W13 Meeting */}
+              {/* W13 Meeting — label flipped below the marker so the
+                  Anton "DEAL MOVING" terminus owns the top-right corner. */}
               <circle cx="1208" cy="188" r="7" fill="#0A0A0A" stroke="white" strokeWidth="2" />
-              <line x1="1208" y1="181" x2="1208" y2="120" stroke="rgba(10,10,10,0.3)" strokeWidth="1" strokeDasharray="2,2" />
-              <text x="1208" y="105" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="#0A0A0A" fontWeight="700" letterSpacing="0.08em">MEETING SCHEDULED</text>
-              <text x="1208" y="90" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.6)" fontWeight="500">+12</text>
+              <line x1="1208" y1="195" x2="1208" y2="215" stroke="rgba(10,10,10,0.3)" strokeWidth="1" strokeDasharray="2,2" />
+              <text x="1208" y="232" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="#0A0A0A" fontWeight="700" letterSpacing="0.08em">MEETING SCHEDULED</text>
+              <text x="1208" y="247" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.6)" fontWeight="500">+12</text>
 
               {/* W14 Terminus */}
               <circle cx="1300" cy="145" r="10" fill="#E6195F" stroke="#0A0A0A" strokeWidth="2" />
@@ -339,9 +341,6 @@ export function V4Warmth() {
           </div>
 
           <div className="v4-chart-card__caption">
-            <div className="v4-chart-card__caption-text">
-              One real-world account, anonymized. Started cold. Earned warmth across newsletters, webinars, downloaded reports, LinkedIn engagement, a conference touchpoint, and a referral. Some weeks were quiet. Some signals cooled. The line still bent toward warm because the inputs compounded.
-            </div>
             <div className="v4-chart-card__caption-tag">
               SAMPLE TRAJECTORY<br />SYNTHETIC DATA
             </div>

@@ -9,8 +9,8 @@
  * 1. IS/ISN'T two-column grid (white card vs ink-black card)
  * 2. Content stack directory (6 rows mapping content channels to
  *    signals to ERA actions)
- * 3. Closing pull quote: "Your content makes the warmth. We make the
- *    warmth visible."
+ * 3. Closing pull quote: "Your content makes the warmth. We make it
+ *    visible."
  *
  * Strategic purpose: position ERA as a layer that captures and
  * activates what existing content produces, not a content replacement.
@@ -176,7 +176,7 @@ export function V4WhatEra() {
         <div className="v4-pullquote">
           <div className="v4-pullquote__text">
             Your content makes the warmth.<br />
-            <em>We make the warmth visible.</em>
+            <em>We make it visible.</em>
           </div>
           <div className="v4-pullquote__attr">
             WHAT ERA DOES IN ONE LINE
