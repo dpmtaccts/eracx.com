@@ -67,7 +67,7 @@ export function V4HowItWorks() {
       <div className="v4-howitworks">
         <div className="v4-howitworks__header">
           <h2 className="v4-howitworks__display">
-            Three loops.<br />Always running.
+            Run loops,<br />not campaigns.
           </h2>
           <p className="v4-howitworks__lede">
             All nine stages run in parallel on every named account, every
