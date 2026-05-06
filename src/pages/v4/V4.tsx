@@ -11,6 +11,7 @@ import { useEffect } from 'react'
 import '../../styles/v4-tokens.css'
 import '../../styles/v4-components.css'
 import { V4Statement } from '../../components/v4/V4Statement'
+import { V4Interstitial } from '../../components/v4/V4Interstitial'
 import { V4Warmth } from '../../components/v4/V4Warmth'
 import { V4WhatEra } from '../../components/v4/V4WhatEra'
 import { V4Evidence } from '../../components/v4/V4Evidence'
@@ -71,6 +72,7 @@ export default function V4() {
   return (
     <div className="v4-root">
       <V4Statement />
+      <V4Interstitial />
       <V4Warmth />
       <V4WhatEra />
       <V4Evidence />
