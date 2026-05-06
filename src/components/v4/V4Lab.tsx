@@ -89,7 +89,7 @@ export function V4Lab() {
       <div className="v4-lab">
         <div className="v4-lab__header">
           <h2 className="v4-lab__display">
-            Tools we built<br />so you can <em>try us</em>.
+            Tools in our <em>lab</em>
           </h2>
           <p className="v4-lab__lede">
             Instead of asking you to trust ERA on faith, we built free

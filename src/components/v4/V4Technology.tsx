@@ -86,7 +86,7 @@ export function V4Technology() {
       <div className="v4-technology">
         <div className="v4-technology__header">
           <h2 className="v4-technology__display">
-            24 signals. Zero <em>guesswork</em>.
+            24 <em>live</em> data signals
           </h2>
           <p className="v4-technology__lede">
             ERA captures signals across every channel that matters and
