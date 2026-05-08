@@ -121,7 +121,7 @@ export function V4Lab() {
         </div>
 
         <div className="v4-lab__closing">
-          USE THEM · NO LOGIN · NO SALES PITCH
+          USE THEM · NO LOGIN
         </div>
       </div>
     </section>

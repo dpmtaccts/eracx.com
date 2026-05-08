@@ -14,7 +14,7 @@ export function V4PullQuote() {
       <div className="v4-customer-quote">
         <p className="v4-customer-quote__eyebrow">WHAT CUSTOMERS SAY</p>
         <p className="v4-customer-quote__text">
-          Justin builds the thing most consultants just talk about.
+          ERA builds things most consultants just talk about.
         </p>
         <div className="v4-customer-quote__attr">
           NATE HOUGHTON / LORIKEET

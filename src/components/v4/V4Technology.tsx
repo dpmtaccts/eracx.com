@@ -40,15 +40,15 @@ interface Signal {
 }
 
 const SIGNALS: Signal[] = [
-  { name: 'New CX Leader', meaning: 'New decision-maker arrives', category: 'INTENT', activation: 'Executive intro track', tech: 'Clay · Apollo' },
-  { name: 'Hiring Surge', meaning: 'Team scaling fast', category: 'INTENT', activation: 'Capacity expansion outreach', tech: 'Apollo · LinkedIn' },
+  { name: 'New C-Level Exec Hire', meaning: 'New exec. New priorities.', category: 'INTENT', activation: 'Executive intro track', tech: 'Clay · Apollo' },
+  { name: 'Hiring Surge', meaning: 'Team scaling fast', category: 'INTENT', activation: 'Capacity expansion outreach', tech: 'Apollo · LinkedIn', featured: true },
   { name: 'Tech Stack Change', meaning: 'Just installed something new', category: 'TECHNOGRAPHIC', activation: 'Integration partnership pitch', tech: 'BuiltWith · HG Insights' },
   { name: 'Funding Round', meaning: 'Fresh budget on the table', category: 'INTENT', activation: 'Strategic investment outreach', tech: 'Crunchbase · Apollo' },
   { name: 'Traffic Spike', meaning: 'Buyers researching this week', category: 'BEHAVIORAL', activation: 'Warmed inbound trigger', tech: 'HockeyStack · RB2B' },
   { name: 'Review Sentiment', meaning: 'Customers complaining publicly', category: 'BEHAVIORAL', activation: 'Switch pitch sequence', tech: 'G2 · Trustpilot' },
   { name: 'Press Announcement', meaning: 'New strategic direction', category: 'INTENT', activation: 'Strategic alignment outreach', tech: 'Clay · Crunchbase' },
   { name: 'Social Complaint', meaning: 'Pain showing in public', category: 'BEHAVIORAL', activation: 'Reactive support pitch', tech: 'LinkedIn · Champify' },
-  { name: 'Website Visit', meaning: 'Researching your solution', category: 'BEHAVIORAL', activation: 'Warm follow-up sequence', tech: 'HockeyStack · RB2B' },
+  { name: 'Website Visit', meaning: 'Researching your solution', category: 'BEHAVIORAL', activation: 'Warm follow-up sequence', tech: 'HockeyStack · RB2B', featured: true },
   { name: 'Past Engagement', meaning: 'Knows you. Worth re-engaging.', category: 'BEHAVIORAL', activation: 'Re-engagement sequence', tech: 'HubSpot · Copper' },
   { name: 'Content Download', meaning: 'Exploring a solution', category: 'BEHAVIORAL', activation: 'Value-driven nurture', tech: 'HubSpot · HockeyStack' },
   { name: 'LinkedIn Post Reaction', meaning: 'Interested in the topic', category: 'BEHAVIORAL', activation: 'Topic-aligned outreach', tech: 'Dripify · Clay' },
@@ -61,8 +61,8 @@ const SIGNALS: Signal[] = [
   { name: 'Customer Review Theme', meaning: 'Pattern of pain showing', category: 'BEHAVIORAL', activation: 'Pain-pattern outreach', tech: 'G2 · Trustpilot' },
   { name: 'Job Description Change', meaning: 'Role expanded. New scope.', category: 'INTENT', activation: 'Role-aware approach', tech: 'Apollo · LinkedIn' },
   { name: 'Conference Attendance', meaning: 'Showed up to learn', category: 'BEHAVIORAL', activation: 'Event follow-up sequence', tech: 'LinkedIn · Apollo' },
-  { name: 'Dark Social Mention', meaning: 'Talking about you privately', category: 'NETWORK', activation: 'Insider connection', tech: 'Champify · Slack', featured: true },
-  { name: 'Referral Intro', meaning: 'Warm introduction', category: 'NETWORK', activation: 'VIP fast-track', tech: 'HubSpot · Slack', featured: true },
+  { name: 'Dark Social Mention', meaning: 'Talking about you privately', category: 'NETWORK', activation: 'Insider connection', tech: 'Champify · Slack' },
+  { name: 'Referral Intro', meaning: 'Warm introduction', category: 'NETWORK', activation: 'VIP fast-track', tech: 'HubSpot · Slack' },
   { name: 'Renewal Window', meaning: 'Decision time approaching', category: 'FIRMOGRAPHIC', activation: 'Renewal reactivation', tech: 'HubSpot · Copper' },
 ]
 

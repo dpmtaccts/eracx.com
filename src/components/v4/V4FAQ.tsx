@@ -45,7 +45,7 @@ const FAQS: FAQ[] = [
   {
     question: 'What does ERA actually build and run?',
     answer:
-      'ERA designs, installs, and operates GTM systems for mid-market B2B companies, typically 100 to 300 employees with $15M or more in revenue. We build three types of loops: a Connection Loop for signal-based pipeline generation, a Trust Loop for buying committee engagement, and a Loyalty Loop for post-close expansion and referral.',
+      "ERA runs the operating layer between your market and your sellers. We capture buying signals across your accounts, route the right plays to the right buyer at the right moment, and run the loop with your team every week. Your sellers walk into conversations that started warming weeks before they arrived.",
   },
 ]
 

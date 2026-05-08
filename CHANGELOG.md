@@ -5,6 +5,45 @@ Format: `[YYYY-MM-DD] — Summary of what changed`
 
 ---
 
+## [2026-05-08] — Live-site fixes (round 1)
+
+Bounded fixes from the post-launch live-site review. The larger items
+(side-by-side pentagon+timeline with scroll-driven animation, Halo
+linkedin.eracx.com build, /gtmplaybook page, sitewide link audit) are
+deferred to follow-up commits.
+
+- **Pull-quote rewrite**: "Justin builds the thing most consultants
+  just talk about." → "ERA builds things most consultants just talk
+  about." Attribution stays `NATE HOUGHTON / LORIKEET`.
+- **§06 spotlight reorder**: Hiring Surge and Website Visit promoted to
+  the two SPOTLIGHT (2×2) positions in the 24-signal bento grid.
+  Dark Social Mention and Referral Intro returned to standard 1×1
+  cells. New CX Leader renamed to New C-Level Exec Hire (descriptor
+  also tightened).
+- **"No sales pitch" removed** from the §07 LAB closing line.
+  ("USE THEM · NO LOGIN · NO SALES PITCH" → "USE THEM · NO LOGIN".)
+  INDEX.md updated to match.
+- **FAQ rewrite**: "What does ERA actually build and run?" answer
+  rewritten to lead with the operating-layer framing instead of the
+  "designs, installs, and operates" copy. JSON-LD in `index.html` kept
+  in sync.
+- **Top nav trimmed**: Tech link removed from V4Nav per the new
+  required-items list (Warmth · Evidence · How it works · Lab ·
+  Get started). Section still exists at #tech and is reachable from
+  the footer section-nav.
+- **#warmth anchor fixed**: V4System id changed from "system" to
+  "warmth" so the existing nav anchors resolve. No content change.
+- **§02 BRAND icon fix**: STEP 02 label was visually crowded by the
+  BRAND tower's broadcast arcs in both the campaign and loop halves.
+  Removed the two arcs and shortened the antenna pole. Antenna +
+  cross-pieces remain so the broadcast metaphor is intact.
+- **LinkedIn link added**: in two places. Inline next to the email
+  fallback under the contact form, and as a dedicated mono-uppercase
+  external-links row above the footer legal bar (`▸ LinkedIn`).
+  URL: `https://www.linkedin.com/company/eracx/` — verify before push.
+
+---
+
 ## [2026-05-08] — v4 promoted to /, pre-launch fixes
 
 V4 is now the default eracx.com homepage. The legacy `App` is preserved at `/legacy` so revert is one commit away; `/v4` stays as an alias so existing inbound links still resolve.

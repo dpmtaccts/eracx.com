@@ -29,7 +29,6 @@ export function V4Nav() {
         <a href="#warmth">Warmth</a>
         <a href="#evidence">Evidence</a>
         <a href="#how">How it works</a>
-        <a href="#tech">Tech</a>
         <a href="#lab">Lab</a>
       </div>
       <a href="#contact" className="v4-nav__cta"><span>Get started</span></a>

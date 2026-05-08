@@ -236,7 +236,15 @@ export function V4Footer() {
                   <div className="v4-footer__form-fallback">
                     Or email{' '}
                     <a href="mailto:hello@eracx.com">hello@eracx.com</a>{' '}
-                    directly.
+                    directly. Or follow us on{' '}
+                    <a
+                      href="https://www.linkedin.com/company/eracx/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      LinkedIn
+                    </a>
+                    .
                   </div>
                 </div>
               </form>
@@ -258,6 +266,16 @@ export function V4Footer() {
               <a href={href}>{label}</a>
             </Fragment>
           ))}
+        </nav>
+
+        <nav className="v4-footer__external-nav" aria-label="External links">
+          <a
+            href="https://www.linkedin.com/company/eracx/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ▸ LinkedIn
+          </a>
         </nav>
 
         <div className="v4-footer__legal">

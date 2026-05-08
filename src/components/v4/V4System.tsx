@@ -18,7 +18,7 @@ import { V4Header } from './V4Header'
 
 export function V4System() {
   return (
-    <section className="v4-section v4-section--system" id="system">
+    <section className="v4-section v4-section--system" id="warmth">
       <V4Header
         phase="▸02 · APPROACH TO GROWTH"
         meta={['ACCOUNT 047', 'WARMTH 88', '90 DAY VIEW']}
@@ -57,13 +57,11 @@ export function V4System() {
             <text x="640" y="120" textAnchor="middle" className="v4-card-step-prefix">STEP 02</text>
             <text x="1120" y="120" textAnchor="middle" className="v4-card-step-prefix">STEP 03</text>
 
-            {/* BRAND icon */}
+            {/* BRAND icon — antenna shortened, broadcast arcs removed so STEP 02 label sits cleanly above */}
             <g transform="translate(160, 200)">
-              <line x1="0" y1="-72" x2="0" y2="-44" stroke="#0A0A0A" strokeWidth="3.5" />
-              <rect x="-10" y="-50" width="20" height="3" fill="#0A0A0A" />
-              <rect x="-7" y="-44" width="14" height="3" fill="#0A0A0A" />
-              <path d="M -18 -76 Q 0 -94 18 -76" stroke="#0A0A0A" strokeWidth="2.5" fill="none" />
-              <path d="M -28 -78 Q 0 -106 28 -78" stroke="#0A0A0A" strokeWidth="2" fill="none" strokeOpacity="0.6" />
+              <line x1="0" y1="-60" x2="0" y2="-44" stroke="#0A0A0A" strokeWidth="3.5" />
+              <rect x="-10" y="-54" width="20" height="3" fill="#0A0A0A" />
+              <rect x="-7" y="-48" width="14" height="3" fill="#0A0A0A" />
               <rect x="-32" y="-44" width="64" height="64" fill="#0A0A0A" />
               <rect x="-22" y="-34" width="10" height="10" fill="#F4F1EA" />
               <rect x="-5" y="-34" width="10" height="10" fill="#F4F1EA" />
@@ -149,13 +147,11 @@ export function V4System() {
               <circle cx="0" cy="-10" r="3.5" fill="#0A0A0A" />
             </g>
 
-            {/* BRAND icon */}
+            {/* BRAND icon — antenna shortened, broadcast arcs removed so STEP 02 label sits cleanly above */}
             <g transform="translate(500, 220)">
-              <line x1="0" y1="-72" x2="0" y2="-44" stroke="#0A0A0A" strokeWidth="3.5" />
-              <rect x="-10" y="-50" width="20" height="3" fill="#0A0A0A" />
-              <rect x="-7" y="-44" width="14" height="3" fill="#0A0A0A" />
-              <path d="M -18 -76 Q 0 -94 18 -76" stroke="#0A0A0A" strokeWidth="2.5" fill="none" />
-              <path d="M -28 -78 Q 0 -106 28 -78" stroke="#0A0A0A" strokeWidth="2" fill="none" strokeOpacity="0.6" />
+              <line x1="0" y1="-60" x2="0" y2="-44" stroke="#0A0A0A" strokeWidth="3.5" />
+              <rect x="-10" y="-54" width="20" height="3" fill="#0A0A0A" />
+              <rect x="-7" y="-48" width="14" height="3" fill="#0A0A0A" />
               <rect x="-32" y="-44" width="64" height="64" fill="#0A0A0A" />
               <rect x="-22" y="-34" width="10" height="10" fill="#F4F1EA" />
               <rect x="-5" y="-34" width="10" height="10" fill="#F4F1EA" />
