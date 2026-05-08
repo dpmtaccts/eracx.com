@@ -96,11 +96,17 @@ export function V4WhatEra() {
   return (
     <section className="v4-section v4-section--whatera" id="whatera">
       <V4Header
-        phase="§03 · WHAT ERA IS / ISN'T"
+        phase="▸03 · WHAT ERA IS / ISN'T"
         meta={['SITS INSIDE YOUR STACK', 'NOT REPLACING IT']}
       />
 
       <div className="v4-whatera">
+        <div className="v4-whatera__opener">
+          <h2 className="v4-whatera__opener-display">
+            We don't build and leave.<br />We run the loop with your team.
+          </h2>
+        </div>
+
         <div className="v4-whatera__header">
           <h2 className="v4-whatera__display">
             ERA doesn't replace<br />your <em>content</em>.

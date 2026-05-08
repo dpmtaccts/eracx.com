@@ -40,7 +40,11 @@ createRoot(document.getElementById('root')!).render(
     <PostHogErrorBoundary>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
+        {/* V4 is now the default eracx.com homepage. The legacy App is
+            preserved at /legacy for one-commit revert; /v4 stays as an
+            alias so existing inbound links still resolve. */}
+        <Route path="/" element={<V4 />} />
+        <Route path="/legacy" element={<App />} />
         <Route path="/staging" element={<Staging />} />
         <Route path="/staging/v1" element={<V1RingZoom />} />
         <Route path="/staging/v2" element={<V2OperatingSystem />} />

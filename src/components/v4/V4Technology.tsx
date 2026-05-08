@@ -79,7 +79,7 @@ export function V4Technology() {
   return (
     <section className="v4-section v4-section--technology" id="tech">
       <V4Header
-        phase="§06 · TECHNOLOGY"
+        phase="▸06 · TECHNOLOGY"
         meta={['24 SIGNALS', '24 ACTIVATIONS', 'ZERO MANUAL TRIGGERS']}
       />
 

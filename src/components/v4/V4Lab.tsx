@@ -82,7 +82,7 @@ export function V4Lab() {
   return (
     <section className="v4-section v4-section--lab" id="lab">
       <V4Header
-        phase="§07 · LAB"
+        phase="▸07 · LAB"
         meta={['4 TOOLS', '3 LIVE', 'MORE COMING']}
       />
 

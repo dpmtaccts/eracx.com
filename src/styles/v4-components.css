@@ -240,105 +240,260 @@
   opacity: 0.7;
 }
 
+/* ----- ICP qualifier line beneath ▸01 stats row ----- */
+
+.v4-root .v4-statement__icp {
+  font-family: var(--v4-mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--v4-ink);
+  padding: 32px 48px 48px;
+}
+
 /* ======================================================================
-   INTERSTITIAL — pull-quote bridge between §01 and §02
+   CUSTOMER QUOTE BAND — between ▸01 and ▸02.
+   White ground, type only. Pulls the strongest line of the §04 Lorikeet
+   testimonial forward as an editorial declaration.
    ====================================================================== */
 
-.v4-root .v4-section--interstitial {
+.v4-root .v4-section--customer-quote {
   background: var(--v4-white);
   color: var(--v4-ink);
 }
 
-.v4-root .v4-interstitial {
-  min-height: 60vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 96px 48px;
+.v4-root .v4-customer-quote {
+  padding: 80px 48px;
 }
 
-.v4-root .v4-interstitial__eyebrow {
+.v4-root .v4-customer-quote__eyebrow {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.55);
+  margin: 0 0 32px;
+}
+
+.v4-root .v4-customer-quote__text {
+  font-family: var(--v4-block);
+  font-size: clamp(28px, 3.5vw, 40px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--v4-ink);
+  margin: 0 0 32px;
+  max-width: 70%;
+}
+
+.v4-root .v4-customer-quote__attr {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.55);
+}
+
+/* ======================================================================
+   SYSTEM (▸02) — magenta-ground "APPROACH TO GROWTH" section.
+   Tight headline + subhead pair, then three full-width parchment cards
+   stacked: campaign vs. loop, FRVRD pentagon, account timeline.
+   ====================================================================== */
+
+.v4-root .v4-section--system {
+  background: var(--v4-hot);
+  color: var(--v4-white);
+}
+
+.v4-root .v4-system {
+  padding: 72px 48px 96px;
+}
+
+/* ----- Approach header (sentence-case headline + IBM Plex subhead) ----- */
+
+.v4-root .v4-approach__header {
+  margin-bottom: 64px;
+}
+
+.v4-root .v4-approach__display {
+  font-family: var(--v4-block);
+  font-size: clamp(40px, 5.5vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--v4-white);
+  margin: 0 0 24px;
+  max-width: 18ch;
+}
+
+.v4-root .v4-approach__subhead {
+  font-family: var(--v4-body);
+  font-size: clamp(18px, 1.75vw, 22px);
+  line-height: 1.5;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* ----- Parchment cards: top-of-card label band + footnote + spacing ----- */
+
+.v4-root .v4-system-card--parchment + .v4-system-card--parchment {
+  margin-top: 48px;
+}
+
+.v4-root .v4-system-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.15);
+  padding-bottom: 16px;
+  margin-bottom: 40px;
+}
+
+.v4-root .v4-system-card__label {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.72);
+}
+
+/* Pentagon container: keeps the radar at a sensible size, centered. */
+.v4-root .v4-system-card__pentagon-frame {
+  display: flex;
+  justify-content: center;
+}
+
+.v4-root .v4-system-card__footnote {
   font-family: var(--v4-mono);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(10, 10, 10, 0.5);
-  margin: 0 0 32px;
+  line-height: 1.55;
+  color: rgba(10, 10, 10, 0.72);
+  margin: 32px 0 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(10, 10, 10, 0.15);
+  max-width: 900px;
 }
 
-.v4-root .v4-interstitial__display {
-  font-family: var(--v4-display);
-  font-size: clamp(72px, 12vw, 200px);
-  line-height: 0.9;
-  letter-spacing: -0.02em;
+/* ----- Parchment card surface -----
+   Brutalist editorial surface. Sharp corners. No shadow. Ink + parchment
+   only, with one yellow column behind SIGNAL in the loop. */
+
+.v4-root .v4-system-card--parchment {
+  background-color: var(--v4-parchment);
+  width: 100%;
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0;
+}
+
+.v4-root .v4-system-card__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Horizontal divider between the campaign half and the loop half. */
+.v4-root .v4-system-card__divider {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(10, 10, 10, 0.15);
+  margin: 40px 0;
+}
+
+/* SVG element styles inside the parchment card. */
+
+.v4-root .v4-section-rule {
+  stroke: #0A0A0A;
+  stroke-width: 4;
+}
+
+.v4-root .v4-hairline {
+  stroke: #0A0A0A;
+  stroke-width: 1;
+  stroke-opacity: 0.25;
+}
+
+.v4-root .v4-card-title {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  font-weight: 400;
-  color: var(--v4-ink);
-  margin: 0;
+  fill: #0A0A0A;
 }
 
-.v4-root .v4-interstitial__display em {
-  font-style: normal;
-  color: var(--v4-hot);
-}
-
-/* ======================================================================
-   WARMTH (§02)
-   ====================================================================== */
-
-.v4-root .v4-section--warmth {
-  background: var(--v4-hot);
-  color: var(--v4-white);
-}
-
-.v4-root .v4-warmth {
-  padding: 72px 48px 96px;
-}
-
-.v4-root .v4-warmth__header {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 48px;
-  align-items: end;
-  margin-bottom: 48px;
-}
-
-.v4-root .v4-warmth__display {
-  font-family: var(--v4-display);
-  font-size: clamp(80px, 11vw, 168px);
-  line-height: 0.85;
-  letter-spacing: -0.02em;
+.v4-root .v4-card-footnote {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  font-weight: 400;
+  fill: rgba(10, 10, 10, 0.55);
 }
 
-.v4-root .v4-warmth__lede {
-  font-size: 17px;
-  line-height: 1.5;
-  max-width: 50ch;
-}
-
-.v4-root .v4-warmth__lede strong {
+.v4-root .v4-card-step-prefix {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
   font-weight: 700;
-  background: var(--v4-ink);
-  color: var(--v4-white);
-  padding: 0 6px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  fill: rgba(10, 10, 10, 0.45);
 }
 
-/* ----- White card surfaces on magenta ----- */
+.v4-root .v4-card-node-label {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  fill: #0A0A0A;
+}
+
+.v4-root .v4-card-node-descriptor {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  fill: rgba(10, 10, 10, 0.55);
+}
+
+.v4-root .v4-card-caption {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  fill: #0A0A0A;
+}
+
+.v4-root .v4-card-start-marker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  fill: #0A0A0A;
+}
+
+/* ----- White card surfaces on magenta (pentagon + chart) ----- */
 
 .v4-root .v4-pentagon-card,
 .v4-root .v4-chart-card {
   background: var(--v4-white);
   color: var(--v4-ink);
   padding: 40px;
-}
-
-.v4-root .v4-pentagon-card {
-  margin-bottom: 32px;
 }
 
 .v4-root .v4-pentagon-card__header,
@@ -564,49 +719,110 @@
   line-height: 1.4;
 }
 
-/* ----- Stat band on magenta ----- */
+/* ======================================================================
+   WHAT YOU GET (▸02b) — parchment-ground deliverables band.
+   Sits between ▸02 (magenta) and ▸03 (white). Four week-range rows
+   under a sentence-case headline + subhead.
+   ====================================================================== */
 
-.v4-root .v4-warmth-stats {
-  margin-top: 48px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+.v4-root .v4-section--whatyouget {
+  background: var(--v4-parchment);
+  color: var(--v4-ink);
 }
 
-.v4-root .v4-warmth-stat {
-  background: var(--v4-hot);
-  padding: 24px;
+.v4-root .v4-whatyouget {
+  padding: 96px 48px;
 }
 
-.v4-root .v4-warmth-stat__num {
+.v4-root .v4-whatyouget__header {
+  margin-bottom: 64px;
+  padding-bottom: 32px;
+  border-bottom: 2px solid var(--v4-ink);
+}
+
+.v4-root .v4-whatyouget__display {
   font-family: var(--v4-block);
-  font-size: 48px;
-  line-height: 0.95;
-  letter-spacing: -0.02em;
-  margin-bottom: 8px;
-  color: var(--v4-white);
+  font-size: clamp(36px, 4.5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--v4-ink);
+  margin: 0 0 24px;
+  max-width: 18ch;
 }
 
-.v4-root .v4-warmth-stat__label {
+.v4-root .v4-whatyouget__subhead {
+  font-family: var(--v4-body);
+  font-size: clamp(18px, 1.75vw, 22px);
+  line-height: 1.5;
+  font-weight: 400;
+  color: rgba(10, 10, 10, 0.85);
+  margin: 0;
+  max-width: 60ch;
+}
+
+.v4-root .v4-whatyouget__timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.v4-root .v4-whatyouget__row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 48px;
+  padding: 32px 0;
+  border-top: 1px solid rgba(10, 10, 10, 0.2);
+  align-items: start;
+}
+
+.v4-root .v4-whatyouget__row:last-child {
+  border-bottom: 1px solid rgba(10, 10, 10, 0.2);
+}
+
+.v4-root .v4-whatyouget__label {
   font-family: var(--v4-mono);
-  font-size: 10px;
-  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 700;
   letter-spacing: 0.14em;
-  font-weight: 600;
-  line-height: 1.4;
-  max-width: 22ch;
-  color: var(--v4-white);
+  text-transform: uppercase;
+  color: var(--v4-ink);
+  padding-top: 4px;
+}
+
+.v4-root .v4-whatyouget__body {
+  font-family: var(--v4-body);
+  font-size: 18px;
+  line-height: 1.55;
+  color: rgba(10, 10, 10, 0.88);
+  max-width: 60ch;
 }
 
 /* ======================================================================
-   WHAT ERA IS / ISN'T (§03)
+   WHAT ERA IS / ISN'T (▸03)
    ====================================================================== */
 
 .v4-root .v4-section--whatera {
   background: var(--v4-white);
   color: var(--v4-ink);
+}
+
+/* ----- Operating-model opener (preempts the consulting assumption) ----- */
+
+.v4-root .v4-whatera__opener {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.2);
+}
+
+.v4-root .v4-whatera__opener-display {
+  font-family: var(--v4-block);
+  font-size: clamp(28px, 3.5vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--v4-ink);
+  margin: 0;
+  max-width: 24ch;
 }
 
 .v4-root .v4-whatera {
@@ -1979,7 +2195,9 @@
   .v4-root .v4-nav,
   .v4-root .v4-statement-mast,
   .v4-root .v4-statement,
-  .v4-root .v4-warmth,
+  .v4-root .v4-customer-quote,
+  .v4-root .v4-system,
+  .v4-root .v4-whatyouget,
   .v4-root .v4-whatera,
   .v4-root .v4-evidence,
   .v4-root .v4-howitworks,
@@ -1990,6 +2208,39 @@
     padding-left: 24px;
     padding-right: 24px;
   }
+  .v4-root .v4-statement__icp {
+    padding-top: 24px;
+    padding-bottom: 32px;
+    font-size: 12px;
+  }
+  .v4-root .v4-customer-quote {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+  .v4-root .v4-customer-quote__text {
+    max-width: 100%;
+    margin-bottom: 24px;
+  }
+  .v4-root .v4-customer-quote__eyebrow {
+    margin-bottom: 24px;
+  }
+  .v4-root .v4-whatyouget {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  .v4-root .v4-whatyouget__header {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+  }
+  .v4-root .v4-whatyouget__row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 24px 0;
+  }
+  .v4-root .v4-whatera__opener {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+  }
   .v4-root .v4-statement-mast {
     padding-top: 24px;
     padding-bottom: 18px;
@@ -1998,13 +2249,23 @@
     height: 22px;
   }
 
-  .v4-root .v4-interstitial {
-    min-height: 50vh;
-    padding: 64px 24px;
+  .v4-root .v4-approach__header {
+    margin-bottom: 48px;
   }
-
-  .v4-root .v4-warmth__header {
-    grid-template-columns: 1fr;
+  .v4-root .v4-system-card--parchment + .v4-system-card--parchment {
+    margin-top: 32px;
+  }
+  .v4-root .v4-system-card--parchment {
+    padding: 32px 24px;
+  }
+  .v4-root .v4-system-card__header {
+    margin-bottom: 28px;
+  }
+  .v4-root .v4-system-card__divider {
+    margin: 28px 0;
+  }
+  .v4-root .v4-system-card__footnote {
+    margin-top: 24px;
   }
   .v4-root .v4-pentagon-card,
   .v4-root .v4-chart-card {
@@ -2029,9 +2290,6 @@
   }
   .v4-root .v4-chart-scroll-hint {
     display: block;
-  }
-  .v4-root .v4-warmth-stats {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .v4-root .v4-isisnt {
@@ -2180,10 +2438,6 @@
   }
   .v4-root .v4-frvrd-cell__letter { font-size: 24px; }
   .v4-root .v4-frvrd-cell__score { font-size: 20px; }
-  .v4-root .v4-warmth-stat__num { font-size: 36px; }
-  .v4-root .v4-warmth-stats {
-    grid-template-columns: 1fr;
-  }
 
   .v4-root .v4-isisnt__column,
   .v4-root .v4-pullquote {

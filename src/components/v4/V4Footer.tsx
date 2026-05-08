@@ -107,7 +107,7 @@ export function V4Footer() {
   return (
     <section className="v4-section v4-section--footer">
       <V4Header
-        phase="§09 · CONTACT"
+        phase="▸09 · CONTACT"
         meta={['DIRECT EMAIL', 'USUALLY SAME DAY', 'NO DRIP']}
       />
 

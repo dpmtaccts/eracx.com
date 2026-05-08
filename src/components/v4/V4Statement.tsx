@@ -33,7 +33,7 @@ export function V4Statement() {
           </h1>
         </div>
         <aside className="v4-statement__sidebar">
-          <div className="v4-eyebrow">§01 · The thesis</div>
+          <div className="v4-eyebrow">▸01 · The thesis</div>
           <p className="v4-body-large">
             ERA builds <strong>signal-driven ABM programs</strong> for B2B companies that know their next ten customers by name. We measure warmth the way investors measure returns. Compounding, not linear.
           </p>
@@ -51,6 +51,10 @@ export function V4Statement() {
             <div className="v4-statement-meta__label">{label}</div>
           </div>
         ))}
+      </div>
+
+      <div className="v4-statement__icp">
+        FOR B2B COMPANIES WITH 50 ACCOUNTS THAT MATTER AND NO RELIABLE WAY IN.
       </div>
     </section>
   )

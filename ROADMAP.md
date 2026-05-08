@@ -71,7 +71,7 @@ Updated at the end of every Claude Code session.
 > Bugs or problems discovered but not yet fixed. Include date found.
 
 - ~~[2026-03-23] Vercel build failing due to leftover Next.js files merged from old branch~~ — **FIXED**
-- [2026-04-29] `/staging/v3` §02.A WHY WARMTH copy block placement and §02 headline length need a real-browser eye on desktop and 375px mobile. The trim from spec's 16-word headline to 10 words was confirmed via question, but full-page visual flow has not been reviewed in-browser by Justin yet. Likely fine; flagging so it gets a sanity check before the v3 page is promoted.
+- [2026-04-29] `/staging/v3` ▸02.A WHY WARMTH copy block placement and ▸02 headline length need a real-browser eye on desktop and 375px mobile. The trim from spec's 16-word headline to 10 words was confirmed via question, but full-page visual flow has not been reviewed in-browser by Justin yet. Likely fine; flagging so it gets a sanity check before the v3 page is promoted.
 
 ---
 
@@ -87,7 +87,7 @@ Updated at the end of every Claude Code session.
 
 > Moved here from "Now" when shipped. Keeps a record of momentum.
 
-- [x] [2026-04-29] `/staging/v3` restructure shipped in four commits: minimal typographic hero replaces the ABM-pitch hero; Thesis section deleted; §02–§05 collapsed into a single "How it works" section with subsections 02.A–D; §04 Point of view converted to a horizontal pinned scroll (framer-motion, 5×100vh sticky pin, mobile vertical fallback). Sections 06/07/08/10 renumbered to 03/04/05/06. See CHANGELOG entry.
+- [x] [2026-04-29] `/staging/v3` restructure shipped in four commits: minimal typographic hero replaces the ABM-pitch hero; Thesis section deleted; ▸02–▸05 collapsed into a single "How it works" section with subsections 02.A–D; ▸04 Point of view converted to a horizontal pinned scroll (framer-motion, 5×100vh sticky pin, mobile vertical fallback). Sections 06/07/08/10 renumbered to 03/04/05/06. See CHANGELOG entry.
 - [x] [2026-03-23] "How It Works" radial section — interactive loop-stage diagram with auto-rotation (desktop) and stacked cards (mobile)
 - [x] [2026-03-23] Reverted hero from video background to canvas dot-sweep animation (Safari autoplay issues)
 - [x] [2026-03-23] Cleaned up ~40 leftover Next.js files breaking Vercel build (`src/app/`, old components, `postcss.config.mjs`, `metadata.ts`, etc.)

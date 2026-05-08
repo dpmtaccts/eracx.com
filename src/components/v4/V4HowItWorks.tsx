@@ -60,7 +60,7 @@ export function V4HowItWorks() {
   return (
     <section className="v4-section v4-section--howitworks" id="how">
       <V4Header
-        phase="§05 · HOW IT WORKS"
+        phase="▸05 · HOW IT WORKS"
         meta={['3 LOOPS', '9 STAGES', 'ALWAYS RUNNING']}
       />
 

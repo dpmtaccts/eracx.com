@@ -2,14 +2,13 @@
  * V4Evidence — §04 of v4 marketing site.
  *
  * Yellow-ground proof section. Customer logos render in flat ink for
- * editorial coherence (color sacrificed for visual rhythm). Two hero
- * testimonials stacked with a divider rule between them.
+ * editorial coherence (color sacrificed for visual rhythm). One hero
+ * testimonial below the logo wall.
  *
- * Three testimonials confirmed (third pending assets):
+ * Confirmed:
  * - Nate Houghton (Lorikeet) — operator-led GTM
- * - Lara Vandenberg (Assemble) — earlier engagement
- * - Stephen Roesler (Miniac) — pending logo + quote, will become third
- *   hero in the stack
+ * Pending assets:
+ * - Stephen Roesler (Miniac) — pending logo + quote
  *
  * Founder photo intentionally excluded. Personality lives in About /
  * footer, not Evidence. Customer proof is the only argument here.
@@ -39,7 +38,7 @@ export function V4Evidence() {
   return (
     <section className="v4-section v4-section--evidence" id="evidence">
       <V4Header
-        phase="§04 · EVIDENCE"
+        phase="▸04 · EVIDENCE"
         meta={['NAMED CUSTOMERS', 'REAL LOOPS RUNNING', 'REAL RESULTS']}
       />
 
@@ -86,22 +85,6 @@ export function V4Evidence() {
           </div>
         </div>
 
-        {/* --------- Hero quote: Lara --------- */}
-        <div className="v4-hero-quote">
-          <p className="v4-hero-quote__text">
-            ERA is an asset to any high-growth company, impacting every
-            aspect of revenue, marketing, customer success, and account
-            management.
-          </p>
-          <div className="v4-hero-quote__attribution">
-            <img
-              className="v4-hero-quote__attribution-logo"
-              src="/images/betterup/assemble.png"
-              alt="Assemble"
-            />
-            <span>Lara Vandenberg · Founder · Assemble</span>
-          </div>
-        </div>
       </div>
     </section>
   )

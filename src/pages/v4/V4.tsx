@@ -1,18 +1,23 @@
-// V4.tsx — Entry point for the /v4 route.
+// V4.tsx — Default eracx.com homepage. Also served at /v4 for backwards
+// compat with inbound links from earlier iterations. The legacy App is
+// preserved at /legacy.
+//
 // Bloomberg / Turley brutalist redesign. Wraps every section in `.v4-root`
 // so the v4 tokens (src/styles/v4-tokens.css) and component styles
-// (src/styles/v4-components.css) stay isolated from /v3 and the main site.
+// (src/styles/v4-components.css) stay isolated from /v3, /legacy, and
+// every other route in main.tsx.
 //
 // Google Fonts (Anton, Archivo Black, IBM Plex Sans, JetBrains Mono) are
-// injected on mount and torn down on unmount, so they never load on /v3
-// or /. Do not promote /v4 to / without Justin's approval.
+// injected on mount and torn down on unmount, so they never load on the
+// other routes.
 
 import { useEffect } from 'react'
 import '../../styles/v4-tokens.css'
 import '../../styles/v4-components.css'
 import { V4Statement } from '../../components/v4/V4Statement'
-import { V4Interstitial } from '../../components/v4/V4Interstitial'
-import { V4Warmth } from '../../components/v4/V4Warmth'
+import { V4PullQuote } from '../../components/v4/V4PullQuote'
+import { V4System } from '../../components/v4/V4System'
+import { V4WhatYouGet } from '../../components/v4/V4WhatYouGet'
 import { V4WhatEra } from '../../components/v4/V4WhatEra'
 import { V4Evidence } from '../../components/v4/V4Evidence'
 import { V4HowItWorks } from '../../components/v4/V4HowItWorks'
@@ -72,8 +77,9 @@ export default function V4() {
   return (
     <div className="v4-root">
       <V4Statement />
-      <V4Interstitial />
-      <V4Warmth />
+      <V4PullQuote />
+      <V4System />
+      <V4WhatYouGet />
       <V4WhatEra />
       <V4Evidence />
       <V4HowItWorks />

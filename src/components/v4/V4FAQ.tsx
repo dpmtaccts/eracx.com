@@ -53,7 +53,7 @@ export function V4FAQ() {
   return (
     <section className="v4-section v4-section--faq" id="faq">
       <V4Header
-        phase="§08 · FAQ"
+        phase="▸08 · FAQ"
         meta={['WORTH ASKING', 'BEFORE YOU TALK TO US']}
       />
 
