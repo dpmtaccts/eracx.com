@@ -62,6 +62,32 @@ const ROWS = [
   },
 ]
 
+// Self-select qualifier rows. Each is a single conditional sentence
+// ("If X, [ERA / the assessment] [does Y]"). Lets the buyer place
+// themselves before they request the assessment.
+const QUALIFIERS = [
+  {
+    label: '01 / FIFTY ACCOUNTS',
+    body:
+      'If you can name your next ten customers and list the fifty after that, ERA is the operating layer that warms them.',
+  },
+  {
+    label: '02 / COLD SELLERS',
+    body:
+      'If your sellers are walking into accounts that have never heard of your company, the assessment shows you why.',
+  },
+  {
+    label: '03 / OUTBOUND IS DEAD',
+    body:
+      'If cold sequences are no longer producing replies, the assessment maps the signals you are missing.',
+  },
+  {
+    label: "04 / DECKS DON'T SHIP",
+    body:
+      'If you are tired of strategy decks and want an operating layer instead, the assessment is step one.',
+  },
+]
+
 // Sample audit outputs — anonymized real screenshots from the
 // `public/images/audit_screenshots/` set, mapped to the four ROWS above
 // so each tile previews what its corresponding deliverable looks like.
@@ -218,6 +244,26 @@ export default function GtmPlaybook() {
           <p className="v4-report-preview__attr">
             SAMPLE OUTPUTS · FROM RECENT ASSESSMENTS · ANONYMIZED.
           </p>
+        </div>
+      </section>
+
+      <section className="v4-section v4-section--qualifier" id="qualifier">
+        <div className="v4-qualifier">
+          <div className="v4-qualifier__header">
+            <p className="v4-qualifier__eyebrow">▸ THIS IS FOR YOU</p>
+            <h2 className="v4-qualifier__display">
+              You see yourself<br />in these four lines.
+            </h2>
+          </div>
+
+          <div className="v4-qualifier__rows">
+            {QUALIFIERS.map(({ label, body }) => (
+              <div key={label} className="v4-qualifier__row">
+                <div className="v4-qualifier__label">{label}</div>
+                <div className="v4-qualifier__body">{body}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

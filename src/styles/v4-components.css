@@ -272,6 +272,84 @@
 }
 
 /* ======================================================================
+   QUALIFIER BAND — used on /gtmplaybook between the preview and the
+   footer. Magenta ground, four "if you are..." conditional rows so the
+   reader can self-select before requesting the assessment.
+   ====================================================================== */
+
+.v4-root .v4-section--qualifier {
+  background: var(--v4-hot);
+  color: var(--v4-white);
+}
+
+.v4-root .v4-qualifier {
+  padding: 96px 48px;
+}
+
+.v4-root .v4-qualifier__header {
+  margin-bottom: 64px;
+  padding-bottom: 32px;
+  border-bottom: 2px solid var(--v4-white);
+}
+
+.v4-root .v4-qualifier__eyebrow {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0 0 16px;
+}
+
+.v4-root .v4-qualifier__display {
+  font-family: var(--v4-block);
+  font-size: clamp(36px, 4.5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--v4-white);
+  margin: 0;
+  max-width: 22ch;
+}
+
+.v4-root .v4-qualifier__rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.v4-root .v4-qualifier__row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 48px;
+  padding: 32px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  align-items: start;
+}
+
+.v4-root .v4-qualifier__row:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.v4-root .v4-qualifier__label {
+  font-family: var(--v4-mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v4-white);
+  padding-top: 4px;
+}
+
+.v4-root .v4-qualifier__body {
+  font-family: var(--v4-body);
+  font-size: 18px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.92);
+  max-width: 60ch;
+}
+
+/* ======================================================================
    REPORT PREVIEW BAND — used on /gtmplaybook to show what the assessment
    output looks like via four anonymized audit screenshots.
    ====================================================================== */
@@ -2364,9 +2442,23 @@
   .v4-root .v4-lab,
   .v4-root .v4-faq,
   .v4-root .v4-footer,
-  .v4-root .v4-report-preview {
+  .v4-root .v4-report-preview,
+  .v4-root .v4-qualifier {
     padding-left: 24px;
     padding-right: 24px;
+  }
+  .v4-root .v4-qualifier {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  .v4-root .v4-qualifier__header {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+  }
+  .v4-root .v4-qualifier__row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 24px 0;
   }
   .v4-root .v4-report-preview {
     padding-top: 64px;
