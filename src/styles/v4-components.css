@@ -220,6 +220,28 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
+/* Compact variant used on /gtmplaybook so the whole hero (issue bar +
+   nav + headline + sidebar + stats + disclaimer) sits above the fold
+   on a standard laptop. Display-mega is shrunk and padding is tighter.
+   The marquee /v4 hero uses the default sizing and stays untouched. */
+.v4-root .v4-statement--compact {
+  padding: 40px 48px 32px;
+  min-height: auto;
+}
+
+.v4-root .v4-statement--compact .v4-display-mega {
+  font-size: clamp(48px, 5vw, 88px);
+  line-height: 0.9;
+}
+
+.v4-root .v4-statement-meta--compact .v4-statement-meta__cell {
+  padding: 16px 24px;
+}
+
+.v4-root .v4-statement-meta--compact .v4-statement-meta__num {
+  font-size: 40px;
+}
+
 .v4-root .v4-statement-meta__cell {
   padding: 24px 32px;
   border-right: 1px solid var(--v4-ink);
@@ -268,7 +290,7 @@
   text-transform: uppercase;
   line-height: 1.5;
   color: rgba(10, 10, 10, 0.6);
-  padding: 24px 48px 48px;
+  padding: 20px 48px 32px;
 }
 
 /* ======================================================================

@@ -160,7 +160,7 @@ export default function GtmPlaybook() {
         />
         <V4Nav />
 
-        <div className="v4-statement">
+        <div className="v4-statement v4-statement--compact">
           <div>
             <h1 className="v4-display-mega">
               Know where<br />
@@ -184,7 +184,7 @@ export default function GtmPlaybook() {
           </aside>
         </div>
 
-        <div className="v4-statement-meta v4-statement-meta--three">
+        <div className="v4-statement-meta v4-statement-meta--three v4-statement-meta--compact">
           {STATS.map(({ num, label }) => (
             <div key={label} className="v4-statement-meta__cell">
               <div className="v4-statement-meta__num">{num}</div>
