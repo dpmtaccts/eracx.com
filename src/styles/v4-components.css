@@ -272,6 +272,104 @@
 }
 
 /* ======================================================================
+   REPORT PREVIEW BAND — used on /gtmplaybook to show what the assessment
+   output looks like via four anonymized audit screenshots.
+   ====================================================================== */
+
+.v4-root .v4-section--report-preview {
+  background: var(--v4-white);
+  color: var(--v4-ink);
+}
+
+.v4-root .v4-report-preview {
+  padding: 96px 48px;
+}
+
+.v4-root .v4-report-preview__header {
+  margin-bottom: 56px;
+  padding-bottom: 32px;
+  border-bottom: 2px solid var(--v4-ink);
+}
+
+.v4-root .v4-report-preview__eyebrow {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.6);
+  margin: 0 0 16px;
+}
+
+.v4-root .v4-report-preview__display {
+  font-family: var(--v4-block);
+  font-size: clamp(36px, 4.5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--v4-ink);
+  margin: 0;
+  max-width: 18ch;
+}
+
+.v4-root .v4-report-preview__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border: 2px solid var(--v4-ink);
+  margin-bottom: 24px;
+}
+
+.v4-root .v4-report-preview__tile {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--v4-parchment);
+  border-right: 2px solid var(--v4-ink);
+  border-bottom: 2px solid var(--v4-ink);
+}
+
+.v4-root .v4-report-preview__tile:nth-child(2n) {
+  border-right: none;
+}
+
+.v4-root .v4-report-preview__tile:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+.v4-root .v4-report-preview__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.v4-root .v4-report-preview__caption {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v4-ink);
+  padding: 16px 20px;
+  border-top: 2px solid var(--v4-ink);
+  background: var(--v4-white);
+}
+
+.v4-root .v4-report-preview__attr {
+  font-family: var(--v4-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.55);
+  margin: 0;
+}
+
+/* ======================================================================
    CUSTOMER QUOTE BAND — between ▸01 and ▸02.
    White ground, type only. Pulls the strongest line of the §04 Lorikeet
    testimonial forward as an editorial declaration.
@@ -2265,9 +2363,34 @@
   .v4-root .v4-technology,
   .v4-root .v4-lab,
   .v4-root .v4-faq,
-  .v4-root .v4-footer {
+  .v4-root .v4-footer,
+  .v4-root .v4-report-preview {
     padding-left: 24px;
     padding-right: 24px;
+  }
+  .v4-root .v4-report-preview {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  .v4-root .v4-report-preview__header {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+  }
+  .v4-root .v4-report-preview__grid {
+    grid-template-columns: 1fr;
+  }
+  .v4-root .v4-report-preview__tile {
+    border-right: none;
+    border-bottom: 2px solid var(--v4-ink);
+  }
+  .v4-root .v4-report-preview__tile:nth-child(2n) {
+    border-right: none;
+  }
+  .v4-root .v4-report-preview__tile:nth-last-child(-n+2) {
+    border-bottom: 2px solid var(--v4-ink);
+  }
+  .v4-root .v4-report-preview__tile:last-child {
+    border-bottom: none;
   }
   .v4-root .v4-statement__icp {
     padding-top: 24px;

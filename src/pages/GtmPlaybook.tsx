@@ -62,6 +62,32 @@ const ROWS = [
   },
 ]
 
+// Sample audit outputs — anonymized real screenshots from the
+// `public/images/audit_screenshots/` set, mapped to the four ROWS above
+// so each tile previews what its corresponding deliverable looks like.
+const PREVIEW_SHOTS = [
+  {
+    src: '/images/audit_screenshots/dashboard.png',
+    caption: '01 / WARMTH SCORECARD',
+    alt: 'Sample warmth scorecard dashboard from a recent assessment, anonymized.',
+  },
+  {
+    src: '/images/audit_screenshots/from-to.png',
+    caption: '02 / LEAK POINTS',
+    alt: 'Sample funnel leak point analysis showing from/to states, anonymized.',
+  },
+  {
+    src: '/images/audit_screenshots/2x2.png',
+    caption: '03 / SIGNAL MAP',
+    alt: 'Sample 2x2 priority matrix mapping signals to actions, anonymized.',
+  },
+  {
+    src: '/images/audit_screenshots/agentic.png',
+    caption: '04 / NEXT STEPS',
+    alt: 'Sample 90-day operating plan with agentic recommendations, anonymized.',
+  },
+]
+
 export default function GtmPlaybook() {
   useEffect(() => {
     const added: HTMLLinkElement[] = []
@@ -166,6 +192,32 @@ export default function GtmPlaybook() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="v4-section v4-section--report-preview" id="preview">
+        <div className="v4-report-preview">
+          <div className="v4-report-preview__header">
+            <p className="v4-report-preview__eyebrow">▸ FROM A RECENT ASSESSMENT</p>
+            <h2 className="v4-report-preview__display">
+              What it actually<br />looks like.
+            </h2>
+          </div>
+
+          <div className="v4-report-preview__grid">
+            {PREVIEW_SHOTS.map(({ src, caption, alt }) => (
+              <figure key={src} className="v4-report-preview__tile">
+                <img src={src} alt={alt} className="v4-report-preview__img" />
+                <figcaption className="v4-report-preview__caption">
+                  {caption}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <p className="v4-report-preview__attr">
+            SAMPLE OUTPUTS · FROM RECENT ASSESSMENTS · ANONYMIZED.
+          </p>
         </div>
       </section>
 
