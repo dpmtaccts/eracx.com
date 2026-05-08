@@ -215,6 +215,11 @@
   border-bottom: 1px solid var(--v4-ink);
 }
 
+/* 3-cell variant used on /gtmplaybook (5 / 9 / 24). */
+.v4-root .v4-statement-meta--three {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .v4-root .v4-statement-meta__cell {
   padding: 24px 32px;
   border-right: 1px solid var(--v4-ink);
@@ -251,6 +256,19 @@
   line-height: 1.5;
   color: var(--v4-ink);
   padding: 32px 48px 48px;
+}
+
+/* ----- /gtmplaybook disclaimer beneath the stat band ----- */
+
+.v4-root .v4-gtmplaybook__disclaimer {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: rgba(10, 10, 10, 0.6);
+  padding: 24px 48px 48px;
 }
 
 /* ======================================================================
@@ -2216,6 +2234,23 @@
   }
   .v4-root .v4-statement-meta__cell:nth-child(2) {
     border-right: none;
+  }
+  /* On mobile the 3-cell /gtmplaybook variant collapses to a single column. */
+  .v4-root .v4-statement-meta--three {
+    grid-template-columns: 1fr;
+  }
+  .v4-root .v4-statement-meta--three .v4-statement-meta__cell {
+    border-right: none;
+    border-bottom: 1px solid var(--v4-ink);
+  }
+  .v4-root .v4-statement-meta--three .v4-statement-meta__cell:last-child {
+    border-bottom: none;
+  }
+  .v4-root .v4-gtmplaybook__disclaimer {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 20px;
+    padding-bottom: 32px;
   }
   .v4-root .v4-issue-bar,
   .v4-root .v4-nav,

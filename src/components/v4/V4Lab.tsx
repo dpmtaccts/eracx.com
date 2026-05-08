@@ -69,12 +69,12 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'AI Mirror',
-    url: 'eracx.com/mirror',
-    status: 'COMING SOON',
+    url: 'eracx.com/gtmplaybook',
+    status: 'BETA',
     description:
-      "A buyer-side audit. Most GTM tools are built for sellers. This one is built for buyers. Run it on a vendor, see what they actually look like.",
-    cta: '→ NOTIFY ME',
-    href: '#mirror-notify',
+      "A free GTM assessment. Twelve questions, ten minutes, one report. The same framework ERA uses with paying customers, pointed at yours.",
+    cta: '→ START THE ASSESSMENT',
+    href: '/gtmplaybook',
   },
 ]
 

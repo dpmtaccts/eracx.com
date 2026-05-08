@@ -26,12 +26,12 @@ export function V4Nav() {
         </svg>
       </a>
       <div className="v4-nav__links">
-        <a href="#warmth">Warmth</a>
-        <a href="#evidence">Evidence</a>
-        <a href="#how">How it works</a>
-        <a href="#lab">Lab</a>
+        <a href="/#warmth">Warmth</a>
+        <a href="/#evidence">Evidence</a>
+        <a href="/#how">How it works</a>
+        <a href="/#lab">Lab</a>
       </div>
-      <a href="#contact" className="v4-nav__cta"><span>Get started</span></a>
+      <a href="/#contact" className="v4-nav__cta"><span>Get started</span></a>
     </nav>
   )
 }

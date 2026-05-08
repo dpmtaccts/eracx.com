@@ -33,14 +33,14 @@ import { V4Header } from './V4Header'
 type SubmissionState = 'idle' | 'submitting' | 'success' | 'error'
 
 const SECTIONS = [
-  { href: '#top', label: 'Statement' },
-  { href: '#warmth', label: 'Warmth' },
-  { href: '#whatera', label: 'What we are' },
-  { href: '#evidence', label: 'Evidence' },
-  { href: '#how', label: 'How it works' },
-  { href: '#tech', label: 'Technology' },
-  { href: '#lab', label: 'Lab' },
-  { href: '#faq', label: 'FAQ' },
+  { href: '/#top', label: 'Statement' },
+  { href: '/#warmth', label: 'Warmth' },
+  { href: '/#whatera', label: 'What we are' },
+  { href: '/#evidence', label: 'Evidence' },
+  { href: '/#how', label: 'How it works' },
+  { href: '/#tech', label: 'Technology' },
+  { href: '/#lab', label: 'Lab' },
+  { href: '/#faq', label: 'FAQ' },
 ]
 
 export function V4Footer() {

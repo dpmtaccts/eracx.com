@@ -5,6 +5,35 @@ Format: `[YYYY-MM-DD] — Summary of what changed`
 
 ---
 
+## [2026-05-08] — /gtmplaybook page + cross-route nav anchors
+
+New `/gtmplaybook` route hosting the AI Mirror free GTM assessment landing
+page. v4 design system, ink-on-white hero, mailto CTA until the actual
+assessment ships. Shared V4Nav and V4Footer anchors updated to absolute
+paths so they resolve from any route.
+
+- **New page**: `src/pages/GtmPlaybook.tsx`. Issue bar `▸ GTM PLAYBOOK · A
+  FREE GTM ASSESSMENT` (meta `12 QUESTIONS · 10 MINUTES · ONE REPORT`),
+  Anton mega headline "Know where your GTM is leaking.", IBM Plex sidebar
+  with `AI Mirror` lede + `Start the assessment` mailto CTA. Three-stat
+  band (5 / 9 / 24) reuses the §01 statement-meta pattern via a new
+  `--three` modifier. Disclaimer line below the stats. Four-row
+  `What you get from the report` block reusing the v4-whatyouget styles
+  (WARMTH SCORECARD / LEAK POINTS / SIGNAL MAP / NEXT STEPS). V4Footer
+  embedded for contact form parity.
+- **Route wired** in `src/main.tsx`: `/gtmplaybook → GtmPlaybook`. Nothing
+  else moved.
+- **§07 LAB AI Mirror tile updated**: status BETA (was COMING SOON), URL
+  `eracx.com/gtmplaybook` (was `eracx.com/mirror`), CTA → /gtmplaybook
+  (was `#mirror-notify`). Description rewritten as the assessment
+  description, not the buyer-side audit copy.
+- **Cross-route anchors**: V4Nav links and V4Footer section-nav now use
+  absolute hashes (`/#warmth`, `/#evidence`, `/#contact`, etc.) so they
+  resolve cleanly from /gtmplaybook (and any future non-/v4 page). On /v4
+  itself the same anchors still smooth-scroll in-page.
+
+---
+
 ## [2026-05-08] — Live-site fixes (round 1)
 
 Bounded fixes from the post-launch live-site review. The larger items
