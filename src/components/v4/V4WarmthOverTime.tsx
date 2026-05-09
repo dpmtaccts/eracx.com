@@ -41,9 +41,16 @@ import {
   useScroll,
   useTransform,
   useMotionValueEvent,
+  useMotionValue,
   useReducedMotion,
   type MotionValue,
 } from 'framer-motion'
+
+// Cold → warm color stops. Cobalt reads cold; magenta reads hot. Pentagon
+// stroke/fill, the composite number, and the timeline polyline all
+// interpolate across these as the animation progresses.
+const COLD = '#1845C2'
+const WARM = '#E6195F'
 
 // ----- Pentagon geometry (matches the prior static pentagon's center + radius) -----
 
@@ -192,8 +199,17 @@ export function V4WarmthOverTime() {
     offset: ['start 70%', 'end 30%'],
   })
 
+  // Ratchet motion value. Tracks max progress reached; never decreases.
+  // The choreography reads from this so the animation freezes once the
+  // user has seen the full cold → warm transition, even if they scroll
+  // back up. Resets only when the component remounts (page reload).
+  const progress = useMotionValue(0)
+  useMotionValueEvent(scrollYProgress, 'change', (p) => {
+    if (p > progress.get()) progress.set(p)
+  })
+
   // Pentagon polygon points — derived from animated axis scores.
-  const polygonPoints = useTransform<number, string>(scrollYProgress, (p) => {
+  const polygonPoints = useTransform<number, string>(progress, (p) => {
     if (reducedMotion) return FINAL_POLYGON
     return pentagonPoints([
       axisAt(p, AXIS_WINDOWS.frequency, SCORES.frequency),
@@ -210,7 +226,7 @@ export function V4WarmthOverTime() {
     reducedMotion ? FINAL_SCORES : ZERO_SCORES,
   )
 
-  useMotionValueEvent(scrollYProgress, 'change', (p) => {
+  useMotionValueEvent(progress, 'change', (p) => {
     if (reducedMotion) return
     setScoreState({
       frequency:      Math.round(axisAt(p, AXIS_WINDOWS.frequency, SCORES.frequency)),
@@ -224,14 +240,19 @@ export function V4WarmthOverTime() {
 
   // Pentagon fill opacity — fades in at start so the seed pentagon doesn't
   // pop a fully-saturated fill from frame 0.
-  const polygonFillOpacity = useTransform(scrollYProgress, [0, 0.05], [0, 0.12])
+  const polygonFillOpacity = useTransform(progress, [0, 0.05], [0, 0.12])
+
+  // Cold → warm color shift. As scroll progresses the polygon, composite
+  // number, and timeline line interpolate from cobalt (cold) to magenta
+  // (warm). The pentagon starts cold and finishes hot.
+  const warmthColor = useTransform(progress, [0, 1], [COLD, WARM])
 
   // Timeline line uses stroke-dasharray + stroke-dashoffset for a draw-on
   // effect. The polyline's path length is approximately 1500 units (it's
   // 14 segments across viewBox width 1300). 2000 is a safe overshoot.
   const TIMELINE_LINE_LENGTH = 2000
   const timelineDashOffset = useTransform(
-    scrollYProgress,
+    progress,
     [0.05, 0.95],
     [TIMELINE_LINE_LENGTH, 0],
   )
@@ -268,14 +289,16 @@ export function V4WarmthOverTime() {
               strokeWidth="1"
             />
 
-            {/* Animated polygon */}
+            {/* Animated polygon — stroke + fill interpolate cobalt → magenta */}
             <motion.polygon
               points={polygonPoints}
-              fill="#0A0A0A"
-              stroke="#0A0A0A"
               strokeWidth="2.5"
               strokeLinejoin="round"
-              style={reducedMotion ? { fillOpacity: 0.12 } : { fillOpacity: polygonFillOpacity }}
+              style={
+                reducedMotion
+                  ? { fill: WARM, stroke: WARM, fillOpacity: 0.12 }
+                  : { fill: warmthColor, stroke: warmthColor, fillOpacity: polygonFillOpacity }
+              }
             />
 
             {/* Vertex circles — static positions at the FINAL polygon. They
@@ -303,8 +326,15 @@ export function V4WarmthOverTime() {
             <text x="50" y="170" textAnchor="end" fontFamily="JetBrains Mono" fontSize="11" fill="#0A0A0A" fontWeight="700" letterSpacing="0.14em">DENSITY</text>
             <text x="50" y="186" textAnchor="end" fontFamily="Archivo Black" fontSize="14" fill="#0A0A0A">{scoreState.density}</text>
 
-            {/* Composite */}
-            <text x="240" y="225" textAnchor="middle" fontFamily="Archivo Black" fontSize="72" fill="#0A0A0A" letterSpacing="-0.04em">{scoreState.composite}</text>
+            {/* Composite — color shifts cold → warm with the polygon */}
+            <motion.text
+              x="240" y="225" textAnchor="middle"
+              fontFamily="Archivo Black" fontSize="72"
+              letterSpacing="-0.04em"
+              style={reducedMotion ? { fill: WARM } : { fill: warmthColor }}
+            >
+              {scoreState.composite}
+            </motion.text>
             <text x="240" y="252" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="rgba(10,10,10,0.5)" fontWeight="700" letterSpacing="0.18em">COMPOSITE</text>
           </svg>
         </div>
@@ -346,19 +376,18 @@ export function V4WarmthOverTime() {
               <rect x="285" y="80" width="92" height="540" fill="rgba(10,10,10,0.04)" />
               <text x="331" y="675" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.4)" fontWeight="600" letterSpacing="0.14em">QUIET</text>
 
-              {/* Warmth line — animated draw-on */}
+              {/* Warmth line — animated draw-on, cold → warm color shift */}
               <motion.polyline
                 points="100,620 192,598 285,555 377,555 469,523 562,501 654,512 746,480 838,415 931,361 1023,318 1115,242 1208,188 1300,145"
                 fill="none"
-                stroke="#0A0A0A"
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeDasharray={TIMELINE_LINE_LENGTH}
                 style={
                   reducedMotion
-                    ? { strokeDashoffset: 0 }
-                    : { strokeDashoffset: timelineDashOffset }
+                    ? { stroke: WARM, strokeDashoffset: 0 }
+                    : { stroke: warmthColor, strokeDashoffset: timelineDashOffset }
                 }
               />
 
@@ -367,14 +396,14 @@ export function V4WarmthOverTime() {
                 <TimelineMarker
                   key={`${m.cx}-${m.cy}`}
                   marker={m}
-                  scrollYProgress={scrollYProgress}
+                  scrollYProgress={progress}
                   reducedMotion={!!reducedMotion}
                 />
               ))}
 
               {/* Terminus: DEAL MOVING */}
               <TimelineTerminus
-                scrollYProgress={scrollYProgress}
+                scrollYProgress={progress}
                 reducedMotion={!!reducedMotion}
               />
             </svg>
