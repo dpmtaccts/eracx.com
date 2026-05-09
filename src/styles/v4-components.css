@@ -523,6 +523,11 @@
 .v4-root .v4-section--system {
   background: var(--v4-hot);
   color: var(--v4-white);
+  /* Override the .v4-section overflow: hidden so position: sticky works
+     for V4WarmthOverTime's scrollytell pin. Without this, an
+     overflow-hidden ancestor breaks sticky and the card renders inline,
+     leaving an empty magenta column below it. */
+  overflow: visible;
 }
 
 .v4-root .v4-system {
@@ -607,9 +612,11 @@
 
 .v4-root .v4-warmth-card__sticky {
   position: sticky;
-  top: 8vh;
+  top: 0;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 /* Reduced motion + small viewports drop the scrollytell pin and render
