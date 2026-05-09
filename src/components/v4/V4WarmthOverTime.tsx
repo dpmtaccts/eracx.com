@@ -52,6 +52,16 @@ import {
 const COLD = '#1845C2'
 const WARM = '#E6195F'
 
+// Timeline pan geometry. The plot SVG is rendered at 200% of its viewport
+// container, then translated horizontally as scroll progresses so a
+// 700-SVG-unit window of content slides past. Day-0 visible at start;
+// day-90 + DEAL MOVING visible at end. Padded right by 200 units past
+// DEAL MOVING so the terminus enters the window before progress hits 1.
+const PLOT_VIEWBOX_X = 100      // viewBox starts at SVG x=100 (just past where the y-axis sits)
+const PLOT_VIEWBOX_WIDTH = 1400 // total SVG units of content (extends 200 past DEAL MOVING at x=1300)
+const PLOT_VISIBLE_WIDTH = 700  // SVG units visible at any one time
+const MARKER_FADE = 80          // SVG units of fade-in / fade-out at viewport edges
+
 // ----- Pentagon geometry (matches the prior static pentagon's center + radius) -----
 
 const PENTAGON_CX = 240
@@ -257,6 +267,12 @@ export function V4WarmthOverTime() {
     [TIMELINE_LINE_LENGTH, 0],
   )
 
+  // Timeline horizontal pan. SVG renders at 200% of its viewport container
+  // (set in CSS) and translates left from 0 to -100% of the container as
+  // scroll progresses. That slides a 700-SVG-unit window across the 1400-
+  // unit plot, finishing on day-90 + DEAL MOVING.
+  const timelinePanX = useTransform(progress, [0, 1], ['0%', '-50%'])
+
   return (
     <div ref={cardRef} className="v4-system-card v4-system-card--parchment v4-warmth-card">
       <div className="v4-system-card__header">
@@ -339,22 +355,30 @@ export function V4WarmthOverTime() {
           </svg>
         </div>
 
-        {/* ===== RIGHT: Timeline ===== */}
+        {/* ===== RIGHT: Timeline =====
+            Panning treatment: the SVG renders at 200% of its viewport
+            container and translates left as scroll progresses, sliding a
+            700-SVG-unit window across the 1400-unit plot. Markers fade in
+            from the right edge and fade out as they pass the left edge of
+            the viewport. Reduced-motion: no pan, full SVG fits in
+            container, all markers visible. */}
         <div className="v4-warmth-card__timeline">
-          <div className="v4-chart-svg-wrap">
-            <svg
-              className="v4-chart-svg"
-              viewBox="0 0 1400 720"
+          <div className="v4-warmth-card__timeline-viewport">
+            <motion.svg
+              className="v4-warmth-card__timeline-svg"
+              viewBox={`${PLOT_VIEWBOX_X} 0 ${PLOT_VIEWBOX_WIDTH} 720`}
               xmlns="http://www.w3.org/2000/svg"
               role="img"
               aria-label="Account 047 trajectory across 90 days, rising from cold to warm with discrete signal events ending in DEAL MOVING"
+              style={reducedMotion ? undefined : { x: timelinePanX }}
             >
-              {/* Grid lines */}
-              <line x1="100" y1="80"  x2="1300" y2="80"  stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
-              <line x1="100" y1="215" x2="1300" y2="215" stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
-              <line x1="100" y1="350" x2="1300" y2="350" stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
-              <line x1="100" y1="485" x2="1300" y2="485" stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
-              <line x1="100" y1="620" x2="1300" y2="620" stroke="rgba(10,10,10,0.4)" strokeWidth="1.5" />
+              {/* Grid lines — extended to x=1500 so they fill the right
+                  pan padding (the 200 units past DEAL MOVING). */}
+              <line x1="100" y1="80"  x2="1500" y2="80"  stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
+              <line x1="100" y1="215" x2="1500" y2="215" stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
+              <line x1="100" y1="350" x2="1500" y2="350" stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
+              <line x1="100" y1="485" x2="1500" y2="485" stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
+              <line x1="100" y1="620" x2="1500" y2="620" stroke="rgba(10,10,10,0.4)" strokeWidth="1.5" />
 
               {/* Y-axis labels */}
               <text x="80" y="84"  textAnchor="end" fontFamily="JetBrains Mono" fontSize="11" fill="rgba(10,10,10,0.5)" fontWeight="600">100</text>
@@ -406,7 +430,7 @@ export function V4WarmthOverTime() {
                 scrollYProgress={progress}
                 reducedMotion={!!reducedMotion}
               />
-            </svg>
+            </motion.svg>
           </div>
         </div>
       </div>
@@ -429,11 +453,19 @@ function TimelineMarker({
   scrollYProgress: MotionValue<number>
   reducedMotion: boolean
 }) {
-  const opacity = useTransform(
-    scrollYProgress,
-    [m.progressIn, m.progressIn + 0.04],
-    [0, 1],
-  )
+  // Opacity tied to the marker's cx position vs the panning window:
+  // fades in as the right edge of the window passes the marker, holds
+  // full opacity through the middle, fades out as the left edge of the
+  // window approaches.
+  const opacity = useTransform(scrollYProgress, (p) => {
+    const windowLeft = PLOT_VIEWBOX_X + p * (PLOT_VIEWBOX_WIDTH - PLOT_VISIBLE_WIDTH)
+    const windowRight = windowLeft + PLOT_VISIBLE_WIDTH
+    if (m.cx <= windowLeft) return 0
+    if (m.cx <= windowLeft + MARKER_FADE) return (m.cx - windowLeft) / MARKER_FADE
+    if (m.cx >= windowRight) return 0
+    if (m.cx >= windowRight - MARKER_FADE) return (windowRight - m.cx) / MARKER_FADE
+    return 1
+  })
 
   const fill = m.cooling ? 'rgba(10,10,10,0.5)' : '#0A0A0A'
   const labelFill = m.cooling ? 'rgba(10,10,10,0.55)' : '#0A0A0A'
@@ -494,7 +526,18 @@ function TimelineTerminus({
   scrollYProgress: MotionValue<number>
   reducedMotion: boolean
 }) {
-  const opacity = useTransform(scrollYProgress, [TERMINUS.progressIn, TERMINUS.progressIn + 0.05], [0, 1])
+  // DEAL MOVING uses the same panning window opacity logic as the other
+  // markers — appears once the window's right edge crosses cx=1300,
+  // fully visible thereafter.
+  const opacity = useTransform(scrollYProgress, (p) => {
+    const windowLeft = PLOT_VIEWBOX_X + p * (PLOT_VIEWBOX_WIDTH - PLOT_VISIBLE_WIDTH)
+    const windowRight = windowLeft + PLOT_VISIBLE_WIDTH
+    if (TERMINUS.cx <= windowLeft) return 0
+    if (TERMINUS.cx <= windowLeft + MARKER_FADE) return (TERMINUS.cx - windowLeft) / MARKER_FADE
+    if (TERMINUS.cx >= windowRight) return 0
+    if (TERMINUS.cx >= windowRight - MARKER_FADE) return (windowRight - TERMINUS.cx) / MARKER_FADE
+    return 1
+  })
 
   return (
     <motion.g style={reducedMotion ? { opacity: 1 } : { opacity }}>

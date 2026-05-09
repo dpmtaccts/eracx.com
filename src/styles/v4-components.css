@@ -610,6 +610,39 @@
   width: 100%;
 }
 
+/* Panning timeline: the SVG renders at 200% of this viewport so it can
+   translate left during scroll without showing empty space. The left edge
+   of the visible window acts like a fixed y-axis — markers that pass it
+   fade out via opacity transforms in V4WarmthOverTime.tsx. */
+.v4-root .v4-warmth-card__timeline-viewport {
+  width: 100%;
+  overflow: hidden;
+  /* Shows the plot area at a roughly square aspect — 700 SVG units wide
+     by 720 SVG units tall, which is the visible window of the panning
+     SVG. */
+  aspect-ratio: 700 / 720;
+}
+
+.v4-root .v4-warmth-card__timeline-svg {
+  width: 200%;
+  height: 100%;
+  display: block;
+  /* will-change hints for GPU compositing; the translateX runs every
+     scroll frame. */
+  will-change: transform;
+}
+
+/* Reduced motion: render the full timeline in the viewport, no pan. */
+@media (prefers-reduced-motion: reduce) {
+  .v4-root .v4-warmth-card__timeline-svg {
+    width: 100%;
+    will-change: auto;
+  }
+  .v4-root .v4-warmth-card__timeline-viewport {
+    aspect-ratio: 1400 / 720;
+  }
+}
+
 .v4-root .v4-system-card__footnote {
   font-family: var(--v4-mono);
   font-size: 11px;
