@@ -81,6 +81,135 @@
 }
 
 /* ======================================================================
+   MOBILE NAV — replaces V4Nav at <=768px viewports.
+   Closed: era logo + MENU label, single row, white ground.
+   Open:   full-screen parchment overlay with five large stacked items.
+   ====================================================================== */
+
+.v4-root .v4-mobile-nav {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid currentColor;
+  font-family: var(--v4-mono);
+  position: relative;
+  z-index: 50;
+}
+
+.v4-root .v4-mobile-nav__logo {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+}
+
+.v4-root .v4-mobile-nav__logo-mark {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+
+.v4-root .v4-mobile-nav__trigger {
+  background: none;
+  border: 0;
+  padding: 12px;
+  margin: -12px;
+  min-height: 44px;
+  font-family: var(--v4-mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: currentColor;
+  cursor: pointer;
+}
+
+.v4-root .v4-mobile-nav__overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--v4-parchment);
+  color: var(--v4-ink);
+  z-index: 100;
+  animation: v4-mobile-nav-fade 150ms ease-out;
+  overflow-y: auto;
+}
+
+@keyframes v4-mobile-nav-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.v4-root .v4-mobile-nav__overlay-inner {
+  padding: 14px 16px env(safe-area-inset-bottom);
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.v4-root .v4-mobile-nav__overlay-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--v4-ink);
+  margin-bottom: 24px;
+}
+
+.v4-root .v4-mobile-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.v4-root .v4-mobile-nav__item {
+  border-bottom: 1px solid rgba(10, 10, 10, 0.2);
+}
+
+.v4-root .v4-mobile-nav__item-link {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 8px;
+  min-height: 64px;
+  text-decoration: none;
+  color: var(--v4-ink);
+}
+
+.v4-root .v4-mobile-nav__item--cta {
+  background: var(--v4-hot);
+  border-bottom: none;
+  margin-top: 24px;
+}
+
+.v4-root .v4-mobile-nav__item--cta .v4-mobile-nav__item-link {
+  color: var(--v4-white);
+  padding: 24px 16px;
+}
+
+.v4-root .v4-mobile-nav__item-title {
+  font-family: var(--v4-block);
+  font-size: 36px;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.v4-root .v4-mobile-nav__item-desc {
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.6);
+}
+
+.v4-root .v4-mobile-nav__item--cta .v4-mobile-nav__item-desc {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ======================================================================
    DISPLAY TYPE
    ====================================================================== */
 
@@ -96,6 +225,18 @@
 .v4-root .v4-display-mega em {
   font-style: normal;
   color: var(--v4-hot);
+}
+
+/* Hero word stack. Default (desktop): each .v4-hero-word is its own
+   block, so "Cold" / "outbound" each take a line. The last two spans
+   ("is&nbsp;" + "<em>over.</em>") stay inline so they share a line:
+   "Cold / outbound / is over." Mobile (<768px) overrides those two to
+   block as well, giving "Cold / outbound / is / over." */
+.v4-root .v4-display-mega .v4-hero-word {
+  display: block;
+}
+.v4-root .v4-display-mega .v4-hero-word:nth-last-child(-n+2) {
+  display: inline;
 }
 
 .v4-root .v4-display-large {
@@ -2863,5 +3004,66 @@
   }
   .v4-root .v4-loops-grid__cell {
     padding: 20px;
+  }
+}
+
+/* ======================================================================
+   MOBILE PASS — <=768px overrides for the four critical bugs from the
+   live-site review:
+   1. Hero Anton headline overflows (clamp shrinks, all 4 words stack)
+   2. Top nav collisions (V4Nav hidden, MobileNav shown)
+   3. Issue bar wraps awkwardly (right-side meta drops, wordmark stays)
+   4. §01 body copy overflows + CTA full-width
+   ====================================================================== */
+
+@media (max-width: 768px) {
+  /* 1. Hero word stack: every word on its own line. */
+  .v4-root .v4-display-mega .v4-hero-word:nth-last-child(-n+2) {
+    display: block;
+  }
+  .v4-root .v4-display-mega {
+    font-size: clamp(72px, 18vw, 140px);
+    line-height: 0.92;
+  }
+
+  /* 2. Nav swap: hide horizontal V4Nav, show MobileNav. */
+  .v4-root .v4-nav {
+    display: none;
+  }
+  .v4-root .v4-mobile-nav {
+    display: flex;
+  }
+
+  /* 3. Issue bar: drop right-side meta, keep wordmark. The :last-child
+        group is the right one; phase parts on the left keep rendering. */
+  .v4-root .v4-issue-bar {
+    padding: 12px 16px;
+  }
+  .v4-root .v4-issue-bar__group:last-child > span {
+    display: none;
+  }
+
+  /* 4. §01 body + CTA: tighter padding, full-width CTA. */
+  .v4-root .v4-statement {
+    padding: 32px 16px 32px;
+    min-height: auto;
+  }
+  .v4-root .v4-statement__sidebar {
+    padding-left: 16px;
+  }
+  .v4-root .v4-statement__sidebar .v4-cta {
+    align-self: stretch;
+    justify-content: center;
+    padding: 18px 24px;
+  }
+  .v4-root .v4-body-large {
+    font-size: 18px;
+  }
+  .v4-root .v4-statement__icp {
+    font-size: 12px;
+    padding: 24px 16px 32px;
+  }
+  .v4-root .v4-statement-mast {
+    padding: 20px 16px 14px;
   }
 }

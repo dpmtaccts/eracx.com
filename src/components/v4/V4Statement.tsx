@@ -7,6 +7,7 @@
 
 import { V4Header } from './V4Header'
 import { V4Nav } from './V4Nav'
+import { MobileNav } from './MobileNav'
 
 const META = [
   { num: '5', label: 'Dimensions / FRVRD' },
@@ -23,13 +24,19 @@ export function V4Statement() {
         meta={['GTM SYSTEMS', 'EST. 2024']}
       />
       <V4Nav />
+      <MobileNav />
 
       <div className="v4-statement">
         <div>
+          {/* Hero headline. Each word is its own span so the layout can
+              shift between desktop (3 lines: "Cold" / "outbound" / "is over.")
+              and mobile (4 lines: "Cold" / "outbound" / "is" / "over.") via
+              CSS `display` toggles on a 768px breakpoint. */}
           <h1 className="v4-display-mega">
-            Cold<br />
-            outbound<br />
-            is&nbsp;<em>over.</em>
+            <span className="v4-hero-word">Cold</span>
+            <span className="v4-hero-word">outbound</span>
+            <span className="v4-hero-word">is&nbsp;</span>
+            <span className="v4-hero-word"><em>over.</em></span>
           </h1>
         </div>
         <aside className="v4-statement__sidebar">
