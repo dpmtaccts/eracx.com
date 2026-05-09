@@ -89,14 +89,20 @@ const SCORES = {
 }
 
 // Scroll-progress window for each axis, in the order spec calls out:
-// Frequency → Value → Recency → Density → Responsiveness → Composite.
+// Frequency → Value → Recency → Density → Responsiveness.
+//
+// Composite has no window of its own. It's computed as the running
+// average of the five axis values at each frame, so it climbs smoothly
+// from ~4 (all axes at seed) to 88 (all axes at target) as each axis
+// fills in. Without this, the composite would sit at the seed floor for
+// the first 80% of scroll and then jump 4 → 88 in the last 15%, which
+// reads as broken.
 const AXIS_WINDOWS = {
   frequency:      [0.05, 0.20] as const,
   value:          [0.20, 0.35] as const,
   recency:        [0.35, 0.50] as const,
   density:        [0.50, 0.65] as const,
   responsiveness: [0.65, 0.80] as const,
-  composite:      [0.80, 0.95] as const,
 }
 
 // Tiny floor so the pentagon starts as a small visible shape, not a literal dot.
@@ -243,13 +249,20 @@ export function V4WarmthOverTime() {
 
   useMotionValueEvent(progress, 'change', (p) => {
     if (reducedMotion) return
+    const f  = axisAt(p, AXIS_WINDOWS.frequency, SCORES.frequency)
+    const v  = axisAt(p, AXIS_WINDOWS.value, SCORES.value)
+    const r  = axisAt(p, AXIS_WINDOWS.recency, SCORES.recency)
+    const d  = axisAt(p, AXIS_WINDOWS.density, SCORES.density)
+    const re = axisAt(p, AXIS_WINDOWS.responsiveness, SCORES.responsiveness)
     setScoreState({
-      frequency:      Math.round(axisAt(p, AXIS_WINDOWS.frequency, SCORES.frequency)),
-      value:          Math.round(axisAt(p, AXIS_WINDOWS.value, SCORES.value)),
-      recency:        Math.round(axisAt(p, AXIS_WINDOWS.recency, SCORES.recency)),
-      density:        Math.round(axisAt(p, AXIS_WINDOWS.density, SCORES.density)),
-      responsiveness: Math.round(axisAt(p, AXIS_WINDOWS.responsiveness, SCORES.responsiveness)),
-      composite:      Math.round(axisAt(p, AXIS_WINDOWS.composite, SCORES.composite)),
+      frequency:      Math.round(f),
+      value:          Math.round(v),
+      recency:        Math.round(r),
+      density:        Math.round(d),
+      responsiveness: Math.round(re),
+      // Composite is the running average — climbs smoothly through the
+      // intermediate values rather than jumping at the end.
+      composite:      Math.round((f + v + r + d + re) / 5),
     })
   })
 
