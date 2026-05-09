@@ -587,6 +587,29 @@
   justify-content: center;
 }
 
+/* Side-by-side pentagon + timeline composition for V4WarmthOverTime.
+   Desktop: pentagon ≈40% / timeline ≈60%. Mobile: stacked. */
+.v4-root .v4-warmth-card__grid {
+  display: grid;
+  grid-template-columns: 4fr 6fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.v4-root .v4-warmth-card__pentagon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.v4-root .v4-warmth-card__pentagon .v4-pentagon {
+  max-width: 100%;
+}
+
+.v4-root .v4-warmth-card__timeline {
+  width: 100%;
+}
+
 .v4-root .v4-system-card__footnote {
   font-family: var(--v4-mono);
   font-size: 11px;
@@ -2561,6 +2584,10 @@
   }
   .v4-root .v4-system-card__divider {
     margin: 28px 0;
+  }
+  .v4-root .v4-warmth-card__grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
   .v4-root .v4-system-card__footnote {
     margin-top: 24px;
