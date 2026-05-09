@@ -11,7 +11,14 @@ export default async function handler(req, res) {
 
   const errors = [];
 
-  // Send email via Resend
+  // Send email via Resend.
+  //
+  // The `from` address must use a domain verified on the Resend dashboard
+  // (Resend → Domains → eracx.com). The previous `onboarding@resend.dev`
+  // is a sandbox-only sender that silently drops mail to non-verified
+  // recipients, which is why hello@eracx.com wasn't receiving form
+  // submissions. Setting `reply_to: email` so hitting reply on the
+  // notification goes straight to the submitter, not to ERA's own inbox.
   if (process.env.RESEND_API_KEY) {
     try {
       const emailRes = await fetch("https://api.resend.com/emails", {
@@ -21,8 +28,9 @@ export default async function handler(req, res) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "onboarding@resend.dev",
+          from: "ERA Contact Form <noreply@eracx.com>",
           to: "hello@eracx.com",
+          reply_to: email,
           subject: `New ERA inquiry from ${name} at ${company}`,
           text: `Name: ${name}\nCompany: ${company}\nEmail: ${email}\nMessage: ${message || "(none)"}`,
         }),
