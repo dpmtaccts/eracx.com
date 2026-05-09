@@ -14,9 +14,9 @@
 //   7. V4Footer         shared with /v4 (contact form + LinkedIn)
 //
 // "AI Mirror" is the product name (preserved). "GTM Playbook" is the
-// buyer-legible label for the page itself. CTA mailto goes to hello@eracx.com
-// with a prefilled subject so the assessment request can be processed
-// manually until the actual flow ships.
+// buyer-legible label for the page itself. CTA scrolls to the in-page
+// contact form (V4Footer #contact). Submissions hit /api/contact and
+// notify ERA via Slack — same path as the homepage form.
 
 import { useEffect } from 'react'
 import '../styles/v4-tokens.css'
@@ -175,7 +175,7 @@ export default function GtmPlaybook() {
               customers. Twelve questions, ten minutes, one report.
             </p>
             <a
-              href="mailto:hello@eracx.com?subject=GTM%20Playbook%20Assessment"
+              href="#contact"
               className="v4-cta"
             >
               Start the assessment

@@ -81,7 +81,13 @@ export function V4FAQ() {
 
         <div className="v4-faq__cta">
           More questions?{' '}
-          <a href="mailto:hello@eracx.com">hello@eracx.com</a>
+          <a
+            href="https://www.linkedin.com/company/eracx/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Find us on LinkedIn
+          </a>
         </div>
       </div>
     </section>

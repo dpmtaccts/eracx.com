@@ -99,7 +99,7 @@ export function V4Footer() {
       setErrorMessage(
         err instanceof Error
           ? err.message
-          : 'Submission failed. Please email hello@eracx.com directly.',
+          : 'Submission failed. Try again, or follow us on LinkedIn.',
       )
     }
   }
@@ -221,7 +221,7 @@ export function V4Footer() {
                     aria-live="polite"
                   >
                     {errorMessage ||
-                      'Submission failed. Please email hello@eracx.com directly.'}
+                      'Submission failed. Try again, or follow us on LinkedIn.'}
                   </div>
                 )}
 
@@ -234,9 +234,7 @@ export function V4Footer() {
                     {status === 'submitting' ? '· · · SENDING' : '→ SEND'}
                   </button>
                   <div className="v4-footer__form-fallback">
-                    Or email{' '}
-                    <a href="mailto:hello@eracx.com">hello@eracx.com</a>{' '}
-                    directly. Or follow us on{' '}
+                    Or follow us on{' '}
                     <a
                       href="https://www.linkedin.com/company/eracx/"
                       target="_blank"
