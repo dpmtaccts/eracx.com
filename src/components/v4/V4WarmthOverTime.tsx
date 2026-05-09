@@ -201,12 +201,17 @@ const FINAL_SCORES: ScoreState = {
 }
 
 export function V4WarmthOverTime() {
-  const cardRef = useRef<HTMLDivElement>(null)
+  // Outer wrapper drives the scroll-progress window; inner card is sticky
+  // and pins to the viewport while the outer scrolls past. That gives the
+  // animation a guaranteed dwell time on screen — it never finishes
+  // off-screen because the card can't leave until the outer's bottom
+  // clears the viewport. Wrapper height + sticky offset are tuned in CSS.
+  const wrapperRef = useRef<HTMLDivElement>(null)
   const reducedMotion = useReducedMotion()
 
   const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ['start 70%', 'end 30%'],
+    target: wrapperRef,
+    offset: ['start start', 'end end'],
   })
 
   // Ratchet motion value. Tracks max progress reached; never decreases.
@@ -274,11 +279,13 @@ export function V4WarmthOverTime() {
   const timelinePanX = useTransform(progress, [0, 1], ['0%', '-50%'])
 
   return (
-    <div ref={cardRef} className="v4-system-card v4-system-card--parchment v4-warmth-card">
-      <div className="v4-system-card__header">
-        <span className="v4-system-card__label">FIG.02 / WARMTH OVER TIME</span>
-        <span className="v4-system-card__label">FRVRD · 90 DAYS</span>
-      </div>
+    <div ref={wrapperRef} className="v4-warmth-card__scrollytell">
+      <div className="v4-warmth-card__sticky">
+        <div className="v4-system-card v4-system-card--parchment v4-warmth-card">
+          <div className="v4-system-card__header">
+            <span className="v4-system-card__label">FIG.02 / WARMTH OVER TIME</span>
+            <span className="v4-system-card__label">FRVRD · 90 DAYS</span>
+          </div>
 
       <div className="v4-warmth-card__grid">
         {/* ===== LEFT: Pentagon ===== */}
@@ -435,9 +442,11 @@ export function V4WarmthOverTime() {
         </div>
       </div>
 
-      <p className="v4-system-card__footnote">
-        FIVE DIMENSIONS. ONE WARMTH SCORE. NINETY DAYS OF COMPOUND.
-      </p>
+          <p className="v4-system-card__footnote">
+            FIVE DIMENSIONS. ONE WARMTH SCORE. NINETY DAYS OF COMPOUND.
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

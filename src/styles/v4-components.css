@@ -587,6 +587,55 @@
   justify-content: center;
 }
 
+/* Scrollytell wrapper for V4WarmthOverTime. The outer is tall (height
+   below) and drives scroll progress. The inner pins to the top of the
+   viewport via position: sticky while the outer scrolls past — that
+   guarantees the animation never finishes off-screen.
+
+   Tuning:
+   - Wrapper height = 250vh → ~150vh of pinned scroll once viewport is
+     filled. At normal scroll cadence that's ~3 seconds, matching the
+     2–3s choreography target.
+   - Sticky `top: 8vh` lets the issue bar above (▸02 · APPROACH TO
+     GROWTH) stay readable while the card is pinned. Adjust if the
+     section above changes height.
+*/
+.v4-root .v4-warmth-card__scrollytell {
+  position: relative;
+  height: 250vh;
+}
+
+.v4-root .v4-warmth-card__sticky {
+  position: sticky;
+  top: 8vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Reduced motion + small viewports drop the scrollytell pin and render
+   the card in normal flow. The animation still runs (driven by scroll
+   over the card itself in non-pin mode), but the visual is the same as
+   the prior non-sticky behavior. */
+@media (prefers-reduced-motion: reduce) {
+  .v4-root .v4-warmth-card__scrollytell {
+    height: auto;
+  }
+  .v4-root .v4-warmth-card__sticky {
+    position: static;
+    top: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .v4-root .v4-warmth-card__scrollytell {
+    height: auto;
+  }
+  .v4-root .v4-warmth-card__sticky {
+    position: static;
+    top: auto;
+  }
+}
+
 /* Side-by-side pentagon + timeline composition for V4WarmthOverTime.
    Desktop: pentagon ≈40% / timeline ≈60%. Mobile: stacked. */
 .v4-root .v4-warmth-card__grid {
