@@ -34,11 +34,11 @@ const LOGOS = [
   { name: 'High Fidelity', src: '/assets/clients/highfidelity.png', height: 44 },
 ]
 
-export function V4Evidence() {
+export function V4Evidence({ phase = '▸04 · EVIDENCE' }: { phase?: string } = {}) {
   return (
     <section className="v4-section v4-section--evidence" id="evidence">
       <V4Header
-        phase="▸04 · EVIDENCE"
+        phase={phase}
         meta={['NAMED CUSTOMERS', 'REAL LOOPS RUNNING', 'REAL RESULTS']}
       />
 

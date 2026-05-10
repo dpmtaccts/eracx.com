@@ -78,11 +78,11 @@ const TOOLS: Tool[] = [
   },
 ]
 
-export function V4Lab() {
+export function V4Lab({ phase = '▸07 · LAB' }: { phase?: string } = {}) {
   return (
     <section className="v4-section v4-section--lab" id="lab">
       <V4Header
-        phase="▸07 · LAB"
+        phase={phase}
         meta={['4 TOOLS', '3 LIVE', 'MORE COMING']}
       />
 

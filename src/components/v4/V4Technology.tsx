@@ -74,12 +74,12 @@ const CATEGORY_MOD: Record<Category, string> = {
   FIRMOGRAPHIC: 'v4-signal-box--firmographic',
 }
 
-export function V4Technology() {
+export function V4Technology({ phase = '▸06 · TECHNOLOGY' }: { phase?: string } = {}) {
   const total = SIGNALS.length
   return (
     <section className="v4-section v4-section--technology" id="tech">
       <V4Header
-        phase="▸06 · TECHNOLOGY"
+        phase={phase}
         meta={['24 SIGNALS', '24 ACTIVATIONS', 'ZERO MANUAL TRIGGERS']}
       />
 

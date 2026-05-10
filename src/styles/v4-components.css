@@ -3008,6 +3008,276 @@
 }
 
 /* ======================================================================
+   /v4-preview only — SectionTheWork (consolidated §02 absorbing §02,
+   §03, §05). Adds:
+     - opening claim block above FIG.01
+     - FIG.02 pentagon-with-FRVRD-sidebar grid
+     - FIG.03 wrapper for the static Lorikeet timeline
+     - FIG.04 cadence rows + 9-stage operational line
+     - floating "compare to /v4" link
+   None of these classes appear in production /v4 markup.
+   ====================================================================== */
+
+.v4-root .v4-the-work__opening {
+  max-width: 1200px;
+  margin: 0 auto 64px;
+  padding: 0 48px;
+}
+
+.v4-root .v4-the-work__opening .v4-eyebrow {
+  margin-bottom: 24px;
+}
+
+.v4-root .v4-the-work__opening .v4-approach__display {
+  margin-bottom: 32px;
+}
+
+.v4-root .v4-the-work__lede {
+  font-family: var(--v4-body);
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* ----- FIG.02 pentagon + FRVRD sidebar ----- */
+
+.v4-root .v4-fig02-grid {
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.v4-root .v4-fig02-grid__pentagon {
+  width: 100%;
+}
+
+.v4-root .v4-fig02-grid__pentagon .v4-pentagon {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.v4-root .v4-fig02-grid__sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.v4-root .v4-fig02-sidebar-head {
+  display: grid;
+  grid-template-columns: 1fr 32px 1fr;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 2px solid var(--v4-ink);
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: rgba(10, 10, 10, 0.5);
+}
+
+.v4-root .v4-fig02-sidebar-head > span:first-child {
+  grid-column: 1;
+}
+
+.v4-root .v4-fig02-sidebar-head > span:last-child {
+  grid-column: 3;
+}
+
+.v4-root .v4-fig02-sidebar-row {
+  display: grid;
+  grid-template-columns: 1fr 32px 1fr;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.18);
+  gap: 8px;
+}
+
+.v4-root .v4-fig02-sidebar-row__label {
+  font-family: var(--v4-mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--v4-ink);
+}
+
+.v4-root .v4-fig02-sidebar-row__arrow {
+  font-family: var(--v4-mono);
+  font-size: 13px;
+  color: rgba(10, 10, 10, 0.4);
+  text-align: center;
+}
+
+.v4-root .v4-fig02-sidebar-row__means {
+  font-family: var(--v4-body);
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--v4-ink);
+}
+
+/* ----- FIG.03 Lorikeet timeline wrapper ----- */
+
+.v4-root .v4-fig03-timeline-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.v4-root .v4-fig03-timeline-wrapper .v4-system-card__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ----- FIG.04 cadence rows + nine-stage line ----- */
+
+.v4-root .v4-fig04-cadence {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32px;
+}
+
+.v4-root .v4-fig04-row {
+  display: grid;
+  grid-template-columns: 180px 160px 1fr;
+  gap: 32px;
+  align-items: start;
+  padding: 24px 0;
+  border-top: 1px solid rgba(10, 10, 10, 0.2);
+}
+
+.v4-root .v4-fig04-row:last-child {
+  border-bottom: 1px solid rgba(10, 10, 10, 0.2);
+}
+
+.v4-root .v4-fig04-row__weeks {
+  font-family: var(--v4-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.55);
+  padding-top: 4px;
+}
+
+.v4-root .v4-fig04-row__verb {
+  font-family: var(--v4-block);
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--v4-ink);
+  padding-top: 2px;
+}
+
+.v4-root .v4-fig04-row__body {
+  font-family: var(--v4-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: rgba(10, 10, 10, 0.9);
+  max-width: 60ch;
+}
+
+.v4-root .v4-fig04-stages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  padding: 24px 0 8px;
+  border-top: 2px solid var(--v4-ink);
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--v4-ink);
+}
+
+.v4-root .v4-fig04-stages__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.v4-root .v4-fig04-stages__sep {
+  color: rgba(10, 10, 10, 0.4);
+  font-weight: 400;
+}
+
+/* ----- Floating "compare to /v4" link (preview-only) ----- */
+
+.v4-root .v4-preview-compare {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 50;
+  font-family: var(--v4-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v4-ink);
+  background: var(--v4-white);
+  border: 1px solid var(--v4-ink);
+  padding: 10px 14px;
+  text-decoration: none;
+}
+
+.v4-root .v4-preview-compare:hover {
+  background: var(--v4-yellow);
+}
+
+@media (max-width: 768px) {
+  .v4-root .v4-the-work__opening {
+    padding: 0 16px;
+    margin-bottom: 40px;
+  }
+
+  .v4-root .v4-fig02-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .v4-root .v4-fig02-sidebar-row {
+    grid-template-columns: 1fr 24px 1fr;
+    padding: 14px 0;
+    gap: 4px;
+  }
+
+  .v4-root .v4-fig02-sidebar-row__label {
+    font-size: 11px;
+  }
+
+  .v4-root .v4-fig02-sidebar-row__means {
+    font-size: 14px;
+  }
+
+  .v4-root .v4-fig04-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 20px 0;
+  }
+
+  .v4-root .v4-fig04-stages {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    gap: 6px 10px;
+  }
+
+  .v4-root .v4-fig04-stages__item {
+    gap: 10px;
+  }
+
+  .v4-root .v4-preview-compare {
+    right: 12px;
+    bottom: 12px;
+    font-size: 10px;
+    padding: 8px 10px;
+  }
+}
+
+/* ======================================================================
    MOBILE PASS — <=768px overrides for the four critical bugs from the
    live-site review:
    1. Hero Anton headline overflows (clamp shrinks, all 4 words stack)

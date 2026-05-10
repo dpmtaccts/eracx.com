@@ -49,11 +49,11 @@ const FAQS: FAQ[] = [
   },
 ]
 
-export function V4FAQ() {
+export function V4FAQ({ phase = '▸08 · FAQ' }: { phase?: string } = {}) {
   return (
     <section className="v4-section v4-section--faq" id="faq">
       <V4Header
-        phase="▸08 · FAQ"
+        phase={phase}
         meta={['WORTH ASKING', 'BEFORE YOU TALK TO US']}
       />
 
