@@ -4,12 +4,18 @@
 // (What ERA Is/Isn't), and §05 (How it works). All other sections
 // render identically to /v4.
 //
-// Renumbered phases on the surviving sections:
-//   §03 · Evidence       (was §04)
-//   §04 · Live Data Signals  (was §06 / "Technology")
-//   §05 · Lab            (was §07)
-//   §06 · FAQ            (was §08)
-// Footer is unchanged.
+// Section flow after refinements:
+//   §01  Hero
+//        Lorikeet pull-quote
+//   §02  THE WORK              (new consolidated section)
+//   §03  HOW IT WORKS          (restored cobalt 9-stage grid; was §05)
+//   §04  EVIDENCE              (was §04)
+//   §05  LIVE DATA SIGNALS     (was §06 / "Technology")
+//   §06  LAB                   (was §07)
+//   §07  FAQ                   (was §08)
+//        Footer
+//
+// "What ERA Is/Isn't" stays cut. Its content does not render here.
 //
 // /v4 is intentionally untouched. The same imports are used; the four
 // renumbered sections accept an optional `phase` prop that overrides
@@ -25,6 +31,7 @@ import '../../styles/v4-components.css'
 import { V4Statement } from '../../components/v4/V4Statement'
 import { V4PullQuote } from '../../components/v4/V4PullQuote'
 import { SectionTheWork } from '../../components/v4/SectionTheWork'
+import { V4HowItWorks } from '../../components/v4/V4HowItWorks'
 import { V4Evidence } from '../../components/v4/V4Evidence'
 import { V4Technology } from '../../components/v4/V4Technology'
 import { V4Lab } from '../../components/v4/V4Lab'
@@ -99,10 +106,11 @@ export default function V4Preview() {
       <V4Statement />
       <V4PullQuote />
       <SectionTheWork />
-      <V4Evidence  phase="▸03 · EVIDENCE" />
-      <V4Technology phase="▸04 · LIVE DATA SIGNALS" />
-      <V4Lab        phase="▸05 · LAB" />
-      <V4FAQ        phase="▸06 · FAQ" />
+      <V4HowItWorks phase="▸03 · HOW IT WORKS" />
+      <V4Evidence   phase="▸04 · EVIDENCE" />
+      <V4Technology phase="▸05 · LIVE DATA SIGNALS" />
+      <V4Lab        phase="▸06 · LAB" />
+      <V4FAQ        phase="▸07 · FAQ" />
       <V4Footer />
 
       <a

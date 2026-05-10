@@ -56,11 +56,11 @@ const LOOPS: Loop[] = [
   },
 ]
 
-export function V4HowItWorks() {
+export function V4HowItWorks({ phase = '▸05 · HOW IT WORKS' }: { phase?: string } = {}) {
   return (
     <section className="v4-section v4-section--howitworks" id="how">
       <V4Header
-        phase="▸05 · HOW IT WORKS"
+        phase={phase}
         meta={['3 LOOPS', '9 STAGES', 'ALWAYS RUNNING']}
       />
 

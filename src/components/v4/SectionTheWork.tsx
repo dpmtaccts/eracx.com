@@ -333,16 +333,15 @@ export function SectionTheWork() {
             <span className="v4-system-card__label">FRVRD</span>
           </div>
 
-          <div className="v4-fig02-grid">
-            <div className="v4-fig02-grid__pentagon">
-              <svg
-                className="v4-pentagon"
-                viewBox="-50 0 580 440"
-                preserveAspectRatio="xMidYMid meet"
-                xmlns="http://www.w3.org/2000/svg"
-                role="img"
-                aria-label="FRVRD pentagon: frequency 92, recency 88, value 90, responsiveness 84, density 86, composite 88"
-              >
+          <div className="v4-fig02-pentagon-wrap">
+            <svg
+              className="v4-pentagon"
+              viewBox="-50 0 580 440"
+              preserveAspectRatio="xMidYMid meet"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="FRVRD pentagon: frequency 92, recency 88, value 90, responsiveness 84, density 86, composite 88"
+            >
                 {/* Reference rings */}
                 <polygon points="240,40 411,164 346,376 134,376 69,164" fill="none" stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
                 <polygon points="240,130 326,192 293,298 187,298 154,192" fill="none" stroke="rgba(10,10,10,0.08)" strokeWidth="1" />
@@ -379,24 +378,22 @@ export function SectionTheWork() {
                 <text x="50" y="170" textAnchor="end" fontFamily="JetBrains Mono" fontSize="11" fill="#0A0A0A" fontWeight="700" letterSpacing="0.14em">DENSITY</text>
                 <text x="50" y="186" textAnchor="end" fontFamily="Archivo Black" fontSize="14" fill="#0A0A0A">{SCORES[4]}</text>
 
-                <text x="240" y="225" textAnchor="middle" fontFamily="Archivo Black" fontSize="72" letterSpacing="-0.04em" fill="#E6195F">{COMPOSITE}</text>
-                <text x="240" y="252" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="rgba(10,10,10,0.5)" fontWeight="700" letterSpacing="0.18em">COMPOSITE</text>
-              </svg>
-            </div>
+              <text x="240" y="225" textAnchor="middle" fontFamily="Archivo Black" fontSize="72" letterSpacing="-0.04em" fill="#E6195F">{COMPOSITE}</text>
+              <text x="240" y="252" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="rgba(10,10,10,0.5)" fontWeight="700" letterSpacing="0.18em">COMPOSITE</text>
+            </svg>
+          </div>
 
-            <div className="v4-fig02-grid__sidebar">
-              <div className="v4-fig02-sidebar-head">
-                <span>FRVRD</span>
-                <span>MEANS</span>
+          {/* Thin rule between the pentagon and the translation list. */}
+          <div className="v4-fig02-rule" aria-hidden="true" />
+
+          <div className="v4-fig02-list">
+            {FRVRD_ROWS.map(({ label, means }) => (
+              <div key={label} className="v4-fig02-list__row">
+                <span className="v4-fig02-list__label">{label}</span>
+                <span className="v4-fig02-list__arrow" aria-hidden="true">→</span>
+                <span className="v4-fig02-list__means">{means}</span>
               </div>
-              {FRVRD_ROWS.map(({ label, means }) => (
-                <div key={label} className="v4-fig02-sidebar-row">
-                  <span className="v4-fig02-sidebar-row__label">{label}</span>
-                  <span className="v4-fig02-sidebar-row__arrow" aria-hidden="true">→</span>
-                  <span className="v4-fig02-sidebar-row__means">{means}</span>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
 
           <p className="v4-system-card__footnote">
