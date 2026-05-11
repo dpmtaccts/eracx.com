@@ -7,7 +7,6 @@
 //
 // Section flow:
 //   §01  Hero (V4Statement)
-//        Lorikeet pull-quote
 //   §02  THE WORK            (SectionTheWork: opening claim,
 //                             FIG.01 campaign vs loop, FIG.02
 //                             pentagon + FRVRD list + timeline,
@@ -30,7 +29,6 @@ import { useEffect } from 'react'
 import '../../styles/v4-tokens.css'
 import '../../styles/v4-components.css'
 import { V4Statement } from '../../components/v4/V4Statement'
-import { V4PullQuote } from '../../components/v4/V4PullQuote'
 import { SectionTheWork } from '../../components/v4/SectionTheWork'
 import { V4HowItWorks } from '../../components/v4/V4HowItWorks'
 import { V4Evidence } from '../../components/v4/V4Evidence'
@@ -90,7 +88,6 @@ export default function V4() {
   return (
     <div className="v4-root">
       <V4Statement />
-      <V4PullQuote />
       <SectionTheWork />
       <V4HowItWorks phase="▸03 · HOW IT WORKS" />
       <V4Evidence   phase="▸04 · EVIDENCE" />
