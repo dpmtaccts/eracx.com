@@ -10,16 +10,22 @@
  *
  * Live indicator:
  *   Each card carries a small "▌ N" indicator at top-right — a thin
- *   magenta bar (the universal "this is firing now" cue) plus a tight
- *   mono count of how many times the signal has fired today.
+ *   bar plus a tight mono count of how many times the signal has
+ *   fired today. The bar has two binary states, like a recording
+ *   light or a server status LED:
  *
- *   The bar pulses ambient (opacity 0.45 → 1 → 0.45 over 2.4s,
- *   staggered phase per card), so the section reads as alive even
- *   when no tick is currently firing. A central tick manager picks
- *   5-7 random "active" cards and ticks them on randomized 8-30s
- *   intervals; on tick, the count fades in (300ms) with the new
- *   value via key={count} remount. The category tag also pulses
- *   on tick for an additional confirmation cue.
+ *     LIVE (active rotation)  → magenta, ambient pulse, bright count
+ *     DORMANT (idle)          → muted gray, no animation, dim count
+ *
+ *   A central tick manager picks 6 cards to be "live" at a time and
+ *   ticks them on randomized 8-30s intervals. Active set rotates
+ *   every 60-90s — one card flips from live → dormant, one flips
+ *   the other way. The manager notifies cards of activation changes
+ *   via callbacks so each card can transition its indicator.
+ *
+ *   On tick, the count remounts with the new value (300ms fade-in)
+ *   and the category tag pulses for 200ms. Ambient pulse on the
+ *   bar continues independently while the card is live.
  *
  *   For featured (spotlight) cards, SPOTLIGHT moves inline next to
  *   the "01 / 24" num prefix so the top-right slot is free for the
@@ -156,25 +162,52 @@ function loadInitial(name: string, range: readonly [number, number]): number {
   return min + (seedFromName(name) % span)
 }
 
-// Live tick manager. Picks a random subset of card ids as the "active"
+// Live tick manager. Picks a random subset of card ids as the "live"
 // set and dispatches tick events to those cards via subscriber refs.
-// Rotates one card in/out of the active set every 60-90s. Pauses
+// Rotates one card in/out of the live set every 60-90s. Pauses
 // dispatch while the section is offscreen.
 type TickCallback = () => void
+type ActiveChangeCallback = (active: boolean) => void
+
+interface CardCallbacks {
+  onTick: TickCallback
+  onActiveChange: ActiveChangeCallback
+}
+
+// Seed the initial live set synchronously so cards subscribing in
+// useEffect can be told their starting state.
+function pickInitialActiveSet(signalIds: readonly string[], count: number): Set<string> {
+  const ids = [...signalIds]
+  for (let i = ids.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[ids[i], ids[j]] = [ids[j], ids[i]]
+  }
+  return new Set(ids.slice(0, count))
+}
+
+const ACTIVE_COUNT = 6
 
 function useSignalTickManager(
   signalIds: readonly string[],
   sectionRef: React.RefObject<HTMLElement | null>,
   enabled: boolean,
 ) {
-  const subscribers = useRef<Map<string, TickCallback>>(new Map())
-  const activeSet = useRef<Set<string>>(new Set())
+  const subscribers = useRef<Map<string, CardCallbacks>>(new Map())
+  // useMemo so this is stable across re-renders and available to
+  // subscribers that mount before the effect runs.
+  const initialActive = useMemo(
+    () => (enabled ? pickInitialActiveSet(signalIds, ACTIVE_COUNT) : new Set<string>()),
+    [signalIds, enabled],
+  )
+  const activeSet = useRef<Set<string>>(initialActive)
   const tickTimers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map())
   const rotateTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isVisible = useRef(false)
 
-  const subscribe = useCallback((id: string, cb: TickCallback) => {
-    subscribers.current.set(id, cb)
+  const subscribe = useCallback((id: string, cbs: CardCallbacks) => {
+    subscribers.current.set(id, cbs)
+    // Sync the new subscriber to current active state immediately.
+    cbs.onActiveChange(activeSet.current.has(id))
     return () => {
       subscribers.current.delete(id)
     }
@@ -184,28 +217,18 @@ function useSignalTickManager(
     if (!enabled) return
     if (signalIds.length === 0) return
 
-    const ACTIVE_COUNT = 6
     const TICK_MIN_MS = 8_000
     const TICK_MAX_MS = 30_000
     const ROTATE_MIN_MS = 60_000
     const ROTATE_MAX_MS = 90_000
-
-    // Seed the active subset deterministically (Fisher-Yates with
-    // Math.random — order doesn't need to persist across reloads).
-    const ids = [...signalIds]
-    for (let i = ids.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[ids[i], ids[j]] = [ids[j], ids[i]]
-    }
-    activeSet.current = new Set(ids.slice(0, ACTIVE_COUNT))
 
     const scheduleTick = (id: string) => {
       const delay = TICK_MIN_MS + Math.random() * (TICK_MAX_MS - TICK_MIN_MS)
       const t = setTimeout(() => {
         if (!activeSet.current.has(id)) return
         if (isVisible.current) {
-          const cb = subscribers.current.get(id)
-          if (cb) cb()
+          const cbs = subscribers.current.get(id)
+          if (cbs) cbs.onTick()
         }
         scheduleTick(id)
       }, delay)
@@ -223,6 +246,10 @@ function useSignalTickManager(
       tickTimers.current.delete(outId)
       activeSet.current.delete(outId)
       activeSet.current.add(inId)
+      // Notify both cards of their new state so their indicators
+      // can transition.
+      subscribers.current.get(outId)?.onActiveChange(false)
+      subscribers.current.get(inId)?.onActiveChange(true)
       scheduleTick(inId)
     }
 
@@ -260,13 +287,13 @@ function useSignalTickManager(
   return { subscribe }
 }
 
-// Individual card. Owns its own count + pulse state so a tick on
-// one card doesn't re-render the other 23.
+// Individual card. Owns its own count + pulse + active state so a
+// tick or activation change on one card doesn't re-render the other 23.
 interface SignalCardProps {
   signal: Signal
   index: number
   total: number
-  subscribe: (id: string, cb: TickCallback) => () => void
+  subscribe: (id: string, cbs: CardCallbacks) => () => void
   reducedMotion: boolean
 }
 
@@ -274,6 +301,7 @@ function SignalCard({ signal, index, total, subscribe, reducedMotion }: SignalCa
   const range = useMemo(() => rangeFor(signal), [signal])
   const [count, setCount] = useState<number>(() => loadInitial(signal.name, range))
   const [pulseKey, setPulseKey] = useState(0)
+  const [isLive, setIsLive] = useState(false)
   const isHovered = useRef(false)
 
   // Persist current count to sessionStorage so reloads inside the
@@ -286,20 +314,31 @@ function SignalCard({ signal, index, total, subscribe, reducedMotion }: SignalCa
     }
   }, [signal.name, count])
 
-  // Subscribe to the central tick manager. On each tick: skip if
-  // hovered or reduced-motion; otherwise bump count by +1, +2, or
-  // +3 (mostly +1, ~15% chance of a small burst) and trigger the
-  // category pulse.
+  // Subscribe to the central tick manager. The manager calls
+  // onActiveChange(true) when this card enters the live rotation
+  // and (false) when it leaves. On each tick: skip if hovered or
+  // reduced-motion; otherwise bump count and trigger the pulses.
   useEffect(() => {
-    if (reducedMotion) return
-    return subscribe(signal.name, () => {
-      if (isHovered.current) return
-      setCount((prev) => {
-        const burst = Math.random() < 0.15
-        const inc = burst ? (Math.random() < 0.5 ? 3 : 2) : 1
-        return Math.min(99, prev + inc)
+    if (reducedMotion) {
+      // In reduced-motion, still get the "live" flag so the
+      // indicator color matches the active set even though
+      // nothing animates.
+      return subscribe(signal.name, {
+        onTick: () => {},
+        onActiveChange: setIsLive,
       })
-      setPulseKey((k) => k + 1)
+    }
+    return subscribe(signal.name, {
+      onTick: () => {
+        if (isHovered.current) return
+        setCount((prev) => {
+          const burst = Math.random() < 0.15
+          const inc = burst ? (Math.random() < 0.5 ? 3 : 2) : 1
+          return Math.min(99, prev + inc)
+        })
+        setPulseKey((k) => k + 1)
+      },
+      onActiveChange: setIsLive,
     })
   }, [signal.name, subscribe, reducedMotion])
 
@@ -332,13 +371,19 @@ function SignalCard({ signal, index, total, subscribe, reducedMotion }: SignalCa
         )}
       </div>
 
-      {/* Live indicator: pulsing magenta bar + tight count, top-right.
-          Bar runs an ambient slow pulse via CSS keyframes; count
-          remounts with key={count} so the new value fades in. */}
-      <div className="v4-signal-box__live" aria-live="off">
+      {/* Live indicator: top-right. Two states, like a recording
+          light or server status LED:
+            LIVE     → magenta bar, ambient pulse, bright count
+            DORMANT  → muted gray bar, no animation, dim count
+          Manager flips isLive on rotation. Per-card pulse phase is
+          staggered so the live cards don't blink in unison. */}
+      <div
+        className={`v4-signal-box__live${isLive ? ' is-live' : ''}`}
+        aria-live="off"
+      >
         <span
           className="v4-signal-box__live-bar"
-          style={reducedMotion ? undefined : { animationDelay: `${pulsePhase}s` }}
+          style={isLive && !reducedMotion ? { animationDelay: `${pulsePhase}s` } : undefined}
           aria-hidden="true"
         />
         <span key={count} className="v4-signal-box__live-num">{count}</span>

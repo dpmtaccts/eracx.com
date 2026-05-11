@@ -2022,11 +2022,13 @@
   font-weight: 700;
 }
 
-/* Live indicator: top-right of each card. A small filled magenta bar
-   plus a tight mono count. The bar pulses ambient (every card,
-   staggered phase via inline animation-delay) so the section reads
-   as alive even when no tick is currently firing. The count fades in
-   on each tick via key={count} unmount/mount. */
+/* Live indicator: top-right of each card. A small filled bar plus a
+   tight mono count. Two states:
+     DORMANT (default)  → muted gray bar, no animation, dim count
+     LIVE (.is-live)    → magenta bar, ambient pulse, bright count
+   The class toggles when the manager rotates this card in or out of
+   the live set. Color/opacity transitions are smooth so the flip
+   isn't jarring. */
 .v4-root .v4-signal-box__live {
   position: absolute;
   top: 16px;
@@ -2041,6 +2043,11 @@
   display: inline-block;
   width: 3px;
   height: 13px;
+  background: rgba(255, 255, 255, 0.22);
+  transition: background-color 400ms ease, opacity 400ms ease;
+}
+
+.v4-root .v4-signal-box__live.is-live .v4-signal-box__live-bar {
   background: var(--v4-hot);
   animation: v4-signal-live-pulse 2.4s ease-in-out infinite;
 }
@@ -2051,10 +2058,15 @@
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255, 255, 255, 0.4);
   min-width: 18px;
   text-align: left;
   animation: v4-counter-in 300ms ease-out;
+  transition: color 400ms ease;
+}
+
+.v4-root .v4-signal-box__live.is-live .v4-signal-box__live-num {
+  color: rgba(255, 255, 255, 0.92);
 }
 
 @keyframes v4-signal-live-pulse {
