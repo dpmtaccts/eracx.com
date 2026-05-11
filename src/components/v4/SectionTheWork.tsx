@@ -1,93 +1,25 @@
 /**
- * SectionTheWork — /v4-preview only. Consolidated §02 absorbing the
- * production /v4's §02 (Approach), §03 (What ERA Is/Isn't), and §05
- * (How It Works).
+ * SectionTheWork — ▸02 of /v4. Consolidated section that absorbs the
+ * earlier §02 (Approach), §02b (What you get), and §03 (What ERA Is/
+ * Isn't). The "Run loops, not campaigns" 9-stage grid stays as a
+ * separate cobalt §03 (V4HowItWorks) right after this one.
  *
- * Five blocks:
+ * Four blocks:
  *   1. Opening claim   — "Don't pitch strangers." headline + lede.
- *   2. FIG.01          — Campaign vs. Loop (parchment card, duplicated
- *                        SVG from V4System so /v4 stays untouched).
- *   3. FIG.02          — Pentagon + FRVRD translation sidebar.
- *   4. FIG.03          — Lorikeet 90-day timeline (DIRECTIONAL EXAMPLE
- *                        label until customer sign-off).
- *   5. FIG.04          — Cadence: four phases + DETECT…RETAIN line.
- *
- * Visualizations are static (no scroll choreography). The point of the
- * preview is to test consolidation, not to re-implement animation. If
- * the consolidated §02 ships, the pentagon + timeline can be promoted
- * to V4WarmthOverTime's animated variants without a layout change.
+ *   2. FIG.01          — Campaign vs. Loop (parchment card).
+ *   3. FIG.02 + FIG.03 — V4WarmthOverTime: animated pentagon with the
+ *                        FRVRD translation list below it, side-by-side
+ *                        with the panning 90-day timeline. The list
+ *                        rows brighten axis-by-axis as the matching
+ *                        axis fires on the pentagon.
+ *   4. FIG.04          — Cadence: four phases + DETECT…RETAIN line.
  *
  * Magenta section ground only. Inside cards: ink + parchment + one
  * yellow SIGNAL column in FIG.01.
  */
 
 import { V4Header } from './V4Header'
-
-// ----- FIG.03 Lorikeet account journey (8 events across 90 days) -----
-//
-// Plot geometry: x=100 is day 0, x=1208 is day 90 (~12.31 SVG units per
-// day, matching the production FIG.03 axis). Warmth on y axis: y=620 is
-// 0, y=80 is 100 (~5.4 SVG units per warmth point). Final marker at
-// day 89 emphasized with a yellow accent ring per spec.
-
-interface LorikeetMarker {
-  day: number
-  warmth: number
-  label: string
-  descriptor: string
-  highlight?: boolean
-}
-
-const LORIKEET_EVENTS: LorikeetMarker[] = [
-  { day: 3,  warmth: 14, label: 'HIRING SURGE',     descriptor: 'New CX leader joins.' },
-  { day: 11, warmth: 24, label: 'CONTENT ENGAGED',  descriptor: 'Trust report downloaded.' },
-  { day: 18, warmth: 32, label: 'LINKEDIN COMMENT', descriptor: 'Public engagement.' },
-  { day: 27, warmth: 40, label: 'REFERRAL SIGNAL',  descriptor: 'Mutual mention in Slack.' },
-  { day: 41, warmth: 50, label: 'WEBSITE RETURN',   descriptor: 'Pricing page, three sessions.' },
-  { day: 53, warmth: 60, label: 'MEETING ACCEPTED', descriptor: 'Reply within four hours.' },
-  { day: 67, warmth: 72, label: 'COMMITTEE EXPAND', descriptor: 'Two stakeholders added.' },
-  { day: 89, warmth: 88, label: 'DEAL MOVING',      descriptor: 'Pilot scoped. Warmth: 88.', highlight: true },
-]
-
-const dayToX = (day: number) => 100 + day * (1108 / 90)
-const warmthToY = (warmth: number) => 620 - warmth * 5.4
-
-// ----- FRVRD pentagon — static final state -----
-
-const PENTAGON_CX = 240
-const PENTAGON_CY = 224
-const PENTAGON_R = 183
-
-const VERTEX_ANGLES = [
-  -Math.PI / 2,
-  -Math.PI / 2 + (2 * Math.PI / 5),
-  -Math.PI / 2 + (4 * Math.PI / 5),
-  -Math.PI / 2 + (6 * Math.PI / 5),
-  -Math.PI / 2 + (8 * Math.PI / 5),
-]
-
-// Order: Frequency, Recency, Value, Responsiveness, Density.
-const SCORES = [92, 88, 90, 84, 86]
-const COMPOSITE = 88
-
-const PENTAGON_POINTS = SCORES
-  .map((score, i) => {
-    const r = (score / 100) * PENTAGON_R
-    const x = PENTAGON_CX + r * Math.cos(VERTEX_ANGLES[i])
-    const y = PENTAGON_CY + r * Math.sin(VERTEX_ANGLES[i])
-    return `${x.toFixed(1)},${y.toFixed(1)}`
-  })
-  .join(' ')
-
-// ----- FRVRD sidebar translation table -----
-
-const FRVRD_ROWS = [
-  { label: 'FREQUENCY',       means: 'Touches per quarter' },
-  { label: 'RECENCY',         means: 'Days since last reply' },
-  { label: 'VALUE',           means: 'Buying committee fit' },
-  { label: 'RESPONSIVENESS',  means: 'Reply rate and speed' },
-  { label: 'DENSITY',         means: 'Contacts per account' },
-]
+import { V4WarmthOverTime } from './V4WarmthOverTime'
 
 // ----- FIG.04 cadence rows -----
 
@@ -325,167 +257,13 @@ export function SectionTheWork() {
         </div>
 
         {/* ====================================================
-            BLOCK 3 — FIG.02 Pentagon + FRVRD sidebar
+            BLOCKS 3 + 4 — FIG.02 pentagon (with FRVRD translation
+            list below) side-by-side with FIG.03 panning timeline.
+            Single scroll-pinned card from V4WarmthOverTime. The
+            pentagon and list animate axis-by-axis on scroll; the
+            timeline pans through 90 days of signal events.
             ==================================================== */}
-        <div className="v4-system-card v4-system-card--parchment">
-          <div className="v4-system-card__header">
-            <span className="v4-system-card__label">FIG.02 / WARMTH SCORING</span>
-            <span className="v4-system-card__label">FRVRD</span>
-          </div>
-
-          <div className="v4-fig02-pentagon-wrap">
-            <svg
-              className="v4-pentagon"
-              viewBox="-50 0 580 440"
-              preserveAspectRatio="xMidYMid meet"
-              xmlns="http://www.w3.org/2000/svg"
-              role="img"
-              aria-label="FRVRD pentagon: frequency 92, recency 88, value 90, responsiveness 84, density 86, composite 88"
-            >
-                {/* Reference rings */}
-                <polygon points="240,40 411,164 346,376 134,376 69,164" fill="none" stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
-                <polygon points="240,130 326,192 293,298 187,298 154,192" fill="none" stroke="rgba(10,10,10,0.08)" strokeWidth="1" />
-
-                {/* Filled polygon at final state */}
-                <polygon
-                  points={PENTAGON_POINTS}
-                  fill="#E6195F"
-                  fillOpacity="0.12"
-                  stroke="#E6195F"
-                  strokeWidth="2.5"
-                  strokeLinejoin="round"
-                />
-
-                {/* Vertex circles */}
-                <circle cx="240" cy="54" r="6" fill="#0A0A0A" />
-                <circle cx="397" cy="170" r="6" fill="#0A0A0A" />
-                <circle cx="335" cy="358" r="6" fill="#0A0A0A" />
-                <circle cx="144" cy="355" r="6" fill="#0A0A0A" />
-                <circle cx="95" cy="170" r="6" fill="#0A0A0A" />
-
-                <text x="240" y="22" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="11" fill="#0A0A0A" fontWeight="700" letterSpacing="0.14em">FREQUENCY</text>
-                <text x="240" y="38" textAnchor="middle" fontFamily="Archivo Black" fontSize="14" fill="#0A0A0A">{SCORES[0]}</text>
-
-                <text x="430" y="170" textAnchor="start" fontFamily="JetBrains Mono" fontSize="11" fill="#0A0A0A" fontWeight="700" letterSpacing="0.14em">RECENCY</text>
-                <text x="430" y="186" textAnchor="start" fontFamily="Archivo Black" fontSize="14" fill="#0A0A0A">{SCORES[1]}</text>
-
-                <text x="365" y="395" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="11" fill="#0A0A0A" fontWeight="700" letterSpacing="0.14em">VALUE</text>
-                <text x="365" y="411" textAnchor="middle" fontFamily="Archivo Black" fontSize="14" fill="#0A0A0A">{SCORES[2]}</text>
-
-                <text x="115" y="395" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="11" fill="#0A0A0A" fontWeight="700" letterSpacing="0.14em">RESPONSIVENESS</text>
-                <text x="115" y="411" textAnchor="middle" fontFamily="Archivo Black" fontSize="14" fill="#0A0A0A">{SCORES[3]}</text>
-
-                <text x="50" y="170" textAnchor="end" fontFamily="JetBrains Mono" fontSize="11" fill="#0A0A0A" fontWeight="700" letterSpacing="0.14em">DENSITY</text>
-                <text x="50" y="186" textAnchor="end" fontFamily="Archivo Black" fontSize="14" fill="#0A0A0A">{SCORES[4]}</text>
-
-              <text x="240" y="225" textAnchor="middle" fontFamily="Archivo Black" fontSize="72" letterSpacing="-0.04em" fill="#E6195F">{COMPOSITE}</text>
-              <text x="240" y="252" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="rgba(10,10,10,0.5)" fontWeight="700" letterSpacing="0.18em">COMPOSITE</text>
-            </svg>
-          </div>
-
-          {/* Thin rule between the pentagon and the translation list. */}
-          <div className="v4-fig02-rule" aria-hidden="true" />
-
-          <div className="v4-fig02-list">
-            {FRVRD_ROWS.map(({ label, means }) => (
-              <div key={label} className="v4-fig02-list__row">
-                <span className="v4-fig02-list__label">{label}</span>
-                <span className="v4-fig02-list__arrow" aria-hidden="true">→</span>
-                <span className="v4-fig02-list__means">{means}</span>
-              </div>
-            ))}
-          </div>
-
-          <p className="v4-system-card__footnote">
-            WARMTH IS BEHAVIOR YOU CAN MEASURE. WE TRACK IT DAILY ACROSS EVERY ACCOUNT.
-          </p>
-        </div>
-
-        {/* ====================================================
-            BLOCK 4 — FIG.03 Lorikeet 90-day timeline
-            ==================================================== */}
-        <div className="v4-system-card v4-system-card--parchment">
-          <div className="v4-system-card__header">
-            <span className="v4-system-card__label">FIG.03 / ONE ACCOUNT, NINETY DAYS</span>
-            <span className="v4-system-card__label">LORIKEET</span>
-          </div>
-
-          <div className="v4-fig03-timeline-wrapper">
-            <svg
-              className="v4-system-card__svg"
-              viewBox="0 0 1280 720"
-              xmlns="http://www.w3.org/2000/svg"
-              role="img"
-              aria-label="Lorikeet account journey: eight signals across 90 days from unknown to deal moving."
-            >
-              {/* Grid lines */}
-              <line x1="100" y1="80"  x2="1240" y2="80"  stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
-              <line x1="100" y1="215" x2="1240" y2="215" stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
-              <line x1="100" y1="350" x2="1240" y2="350" stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
-              <line x1="100" y1="485" x2="1240" y2="485" stroke="rgba(10,10,10,0.1)" strokeWidth="1" />
-              <line x1="100" y1="620" x2="1240" y2="620" stroke="rgba(10,10,10,0.4)" strokeWidth="1.5" />
-
-              {/* Y-axis labels */}
-              <text x="80" y="84"  textAnchor="end" fontFamily="JetBrains Mono" fontSize="11" fill="rgba(10,10,10,0.5)" fontWeight="600">100</text>
-              <text x="80" y="219" textAnchor="end" fontFamily="JetBrains Mono" fontSize="11" fill="rgba(10,10,10,0.5)" fontWeight="600">75</text>
-              <text x="80" y="354" textAnchor="end" fontFamily="JetBrains Mono" fontSize="11" fill="rgba(10,10,10,0.5)" fontWeight="600">50</text>
-              <text x="80" y="489" textAnchor="end" fontFamily="JetBrains Mono" fontSize="11" fill="rgba(10,10,10,0.5)" fontWeight="600">25</text>
-              <text x="80" y="624" textAnchor="end" fontFamily="JetBrains Mono" fontSize="11" fill="rgba(10,10,10,0.5)" fontWeight="600">0</text>
-
-              {/* X-axis labels */}
-              <text x="100"  y="650" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.4)" fontWeight="600" letterSpacing="0.12em">DAY 0</text>
-              <text x="285"  y="650" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.4)" fontWeight="600" letterSpacing="0.12em">DAY 15</text>
-              <text x="469"  y="650" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.4)" fontWeight="600" letterSpacing="0.12em">DAY 30</text>
-              <text x="654"  y="650" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.4)" fontWeight="600" letterSpacing="0.12em">DAY 45</text>
-              <text x="838"  y="650" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.4)" fontWeight="600" letterSpacing="0.12em">DAY 60</text>
-              <text x="1023" y="650" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.4)" fontWeight="600" letterSpacing="0.12em">DAY 75</text>
-              <text x="1208" y="650" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="9" fill="rgba(10,10,10,0.4)" fontWeight="600" letterSpacing="0.12em">DAY 90</text>
-
-              {/* Warmth line through events */}
-              <polyline
-                points={`100,620 ${LORIKEET_EVENTS.map((e) => `${dayToX(e.day).toFixed(0)},${warmthToY(e.warmth).toFixed(0)}`).join(' ')}`}
-                fill="none"
-                stroke="#0A0A0A"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-
-              {/* Event markers */}
-              {LORIKEET_EVENTS.map((e) => {
-                const x = dayToX(e.day)
-                const y = warmthToY(e.warmth)
-                return (
-                  <g key={e.day}>
-                    {/* Vertical guide */}
-                    <line x1={x} y1={y} x2={x} y2={620} stroke="rgba(10,10,10,0.18)" strokeWidth="1" strokeDasharray="2,3" />
-                    {/* Day label above */}
-                    <text x={x} y={y - 38} textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="rgba(10,10,10,0.5)" fontWeight="700" letterSpacing="0.14em">DAY {String(e.day).padStart(2, '0')}</text>
-                    <text x={x} y={y - 22} textAnchor="middle" fontFamily="JetBrains Mono" fontSize="11" fill="#0A0A0A" fontWeight="700" letterSpacing="0.10em">{e.label}</text>
-                    {/* Marker */}
-                    {e.highlight ? (
-                      <>
-                        <circle cx={x} cy={y} r="14" fill="#F4C430" />
-                        <circle cx={x} cy={y} r="7" fill="#0A0A0A" stroke="#F4F1EA" strokeWidth="2" />
-                      </>
-                    ) : (
-                      <circle cx={x} cy={y} r="7" fill="#0A0A0A" stroke="#F4F1EA" strokeWidth="2" />
-                    )}
-                    {/* Descriptor below */}
-                    <text x={x} y={y + 28} textAnchor="middle" fontFamily="IBM Plex Sans" fontSize="11" fill="rgba(10,10,10,0.7)">{e.descriptor}</text>
-                  </g>
-                )
-              })}
-
-              {/* Directional-example label, bottom-right of card */}
-              <text x="1238" y="710" textAnchor="end" fontFamily="JetBrains Mono" fontSize="10" fill="rgba(10,10,10,0.45)" fontWeight="700" letterSpacing="0.18em">DIRECTIONAL EXAMPLE</text>
-            </svg>
-          </div>
-
-          <p className="v4-system-card__footnote">
-            EIGHT SIGNALS. ONE ACCOUNT. NINETY DAYS FROM UNKNOWN TO IN MOTION.
-          </p>
-        </div>
+        <V4WarmthOverTime />
 
         {/* ====================================================
             BLOCK 5 — FIG.04 The Cadence

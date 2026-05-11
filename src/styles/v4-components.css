@@ -795,12 +795,16 @@
 
 .v4-root .v4-warmth-card__pentagon {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
+  gap: 0;
 }
 
 .v4-root .v4-warmth-card__pentagon .v4-pentagon {
   max-width: 100%;
+  width: 100%;
+  align-self: center;
 }
 
 .v4-root .v4-warmth-card__timeline {
@@ -3069,12 +3073,12 @@
 
 .v4-root .v4-fig02-list__row {
   display: grid;
-  grid-template-columns: 40% 28px 1fr;
+  grid-template-columns: max-content 18px 1fr;
   align-items: center;
-  min-height: 44px;
+  min-height: 40px;
   padding: 4px 0;
   border-bottom: 1px solid rgba(10, 10, 10, 0.2);
-  gap: 8px;
+  gap: 10px;
 }
 
 .v4-root .v4-fig02-list__row:last-child {

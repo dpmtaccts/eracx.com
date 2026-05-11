@@ -373,6 +373,22 @@ export function V4WarmthOverTime() {
             </motion.text>
             <text x="240" y="252" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="10" fill="rgba(10,10,10,0.5)" fontWeight="700" letterSpacing="0.18em">COMPOSITE</text>
           </svg>
+
+          {/* Thin ink rule between pentagon and translation list */}
+          <div className="v4-fig02-rule" aria-hidden="true" />
+
+          {/* FRVRD translation list. Each row's opacity is tied to the
+              matching axis's scroll window, so a row brightens from 60%
+              to 100% as its axis fires on the pentagon. Display order
+              is FRVRD; light-up order follows the animation order
+              (Frequency → Value → Recency → Density → Responsiveness). */}
+          <div className="v4-fig02-list">
+            <FrvrdListRow progress={progress} axisWindow={AXIS_WINDOWS.frequency}      label="FREQUENCY"      means="Touches per quarter"  reducedMotion={!!reducedMotion} />
+            <FrvrdListRow progress={progress} axisWindow={AXIS_WINDOWS.recency}        label="RECENCY"        means="Days since last reply" reducedMotion={!!reducedMotion} />
+            <FrvrdListRow progress={progress} axisWindow={AXIS_WINDOWS.value}          label="VALUE"          means="Buying committee fit"  reducedMotion={!!reducedMotion} />
+            <FrvrdListRow progress={progress} axisWindow={AXIS_WINDOWS.responsiveness} label="RESPONSIVENESS" means="Reply rate and speed"  reducedMotion={!!reducedMotion} />
+            <FrvrdListRow progress={progress} axisWindow={AXIS_WINDOWS.density}        label="DENSITY"        means="Contacts per account"  reducedMotion={!!reducedMotion} />
+          </div>
         </div>
 
         {/* ===== RIGHT: Timeline =====
@@ -577,5 +593,33 @@ function TimelineTerminus({
         DEAL MOVING
       </text>
     </motion.g>
+  )
+}
+
+// FRVRD translation row. Sits beneath the pentagon, opacity tied to the
+// matching axis's scroll window. Brightens from 60% to 100% over the same
+// window in which the axis grows on the pentagon. Reduced-motion: full
+// opacity throughout.
+function FrvrdListRow({
+  progress,
+  axisWindow,
+  label,
+  means,
+  reducedMotion,
+}: {
+  progress: MotionValue<number>
+  axisWindow: readonly [number, number]
+  label: string
+  means: string
+  reducedMotion: boolean
+}) {
+  const opacity = useTransform(progress, [axisWindow[0], axisWindow[1]], [0.6, 1])
+  const style = reducedMotion ? { opacity: 1 } : { opacity }
+  return (
+    <motion.div className="v4-fig02-list__row" style={style}>
+      <span className="v4-fig02-list__label">{label}</span>
+      <span className="v4-fig02-list__arrow" aria-hidden="true">→</span>
+      <span className="v4-fig02-list__means">{means}</span>
+    </motion.div>
   )
 }

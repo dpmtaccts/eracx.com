@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-# Preview routes — not indexed.
-Disallow: /v4-preview

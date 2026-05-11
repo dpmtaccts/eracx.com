@@ -28,7 +28,6 @@ import V5ExpandingCards from './pages/staging/V5ExpandingCards.tsx'
 import V2OperatingSystem from './pages/V2OperatingSystem/index.tsx'
 import V3 from './pages/v3/V3.tsx'
 import V4 from './pages/v4/V4.tsx'
-import V4Preview from './pages/v4-preview/V4Preview.tsx'
 import GtmPlaybook from './pages/GtmPlaybook.tsx'
 
 posthog.init(import.meta.env.VITE_PUBLIC_POSTHOG_TOKEN, {
@@ -54,7 +53,6 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/staging/v4" element={<V4TimelineRibbon />} />
         <Route path="/v3" element={<V3 />} />
         <Route path="/v4" element={<V4 />} />
-        <Route path="/v4-preview" element={<V4Preview />} />
         <Route path="/gtmplaybook" element={<GtmPlaybook />} />
         <Route path="/staging/v5" element={<V5ExpandingCards />} />
         <Route path="/our-story" element={<OurStory />} />
