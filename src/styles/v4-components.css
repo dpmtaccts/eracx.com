@@ -2020,6 +2020,57 @@
   font-weight: 700;
 }
 
+/* Live tick-up counter: bottom-left of each card, mirroring the
+   category tag's vertical baseline at bottom-right. The number
+   inside fades in on every tick via key={count} unmount/mount. */
+.v4-root .v4-signal-box__counter {
+  position: absolute;
+  bottom: 18px;
+  left: 20px;
+  font-family: var(--v4-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+}
+
+.v4-root .v4-signal-box--featured .v4-signal-box__counter {
+  left: 32px;
+  font-size: 11px;
+}
+
+.v4-root .v4-signal-box__counter-num {
+  display: inline-block;
+  animation: v4-counter-in 300ms ease-out;
+}
+
+@keyframes v4-counter-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Category pulse: opacity 1 → 0.6 → 1 over 200ms, fired by remounting
+   the category node with a changing key. Each pulse re-runs the
+   animation. */
+.v4-root .v4-signal-box__category.is-pulsing {
+  animation: v4-signal-pulse 200ms ease;
+}
+
+@keyframes v4-signal-pulse {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v4-root .v4-signal-box__counter-num,
+  .v4-root .v4-signal-box__category.is-pulsing {
+    animation: none;
+  }
+}
+
 .v4-root .v4-signal-box--intent .v4-signal-box__category { color: var(--v4-hot); }
 .v4-root .v4-signal-box--behavioral .v4-signal-box__category { color: rgba(230, 25, 95, 0.7); }
 .v4-root .v4-signal-box--network .v4-signal-box__category { color: rgba(255, 255, 255, 0.7); }
@@ -2983,6 +3034,20 @@
     grid-column: span 2;
     grid-row: span 1;
     padding: 24px 20px 48px;
+  }
+  /* Tighter counter/category insets on narrow cards so they don't
+     collide along the bottom strip. Counter font shrinks slightly. */
+  .v4-root .v4-signal-box__counter {
+    left: 16px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+  .v4-root .v4-signal-box--featured .v4-signal-box__counter {
+    left: 20px;
+    font-size: 10px;
+  }
+  .v4-root .v4-signal-box__category {
+    right: 16px;
   }
 }
 

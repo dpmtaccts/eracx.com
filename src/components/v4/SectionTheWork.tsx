@@ -71,7 +71,7 @@ export function SectionTheWork() {
             Don't pitch strangers.<br />Get to know them.
           </h2>
           <p className="v4-the-work__lede">
-            ERA reads twenty-four buyer signals across your accounts every day, builds the plays, and runs the loop with your sellers every week. We don't build and leave.
+            Don't push content at strangers. Engage when their behavior tells you to. ERA reads twenty-four buyer signals across your accounts every day, builds the plays, and runs the loop with your sellers every week. We don't build and leave.
           </p>
         </div>
 
