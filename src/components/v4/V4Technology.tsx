@@ -8,14 +8,22 @@
  * for FIRMOGRAPHIC (most contextual). Scanning the grid horizontally,
  * the top-edges form a visual category map.
  *
- * Live counters:
- *   Each card carries a "FIRED N× TODAY" counter in the bottom-left.
- *   A central tick manager picks 5-7 random "active" cards and ticks
- *   them on randomized 8-30s intervals. Active set rotates every
- *   60-90s so the section feels alive without any single card
- *   dominating. Each tick pulses the card's category tag (opacity
- *   1 → 0.6 → 1 over 200ms) and fades the new counter value in over
- *   300ms via a CSS @keyframes animation.
+ * Live indicator:
+ *   Each card carries a small "▌ N" indicator at top-right — a thin
+ *   magenta bar (the universal "this is firing now" cue) plus a tight
+ *   mono count of how many times the signal has fired today.
+ *
+ *   The bar pulses ambient (opacity 0.45 → 1 → 0.45 over 2.4s,
+ *   staggered phase per card), so the section reads as alive even
+ *   when no tick is currently firing. A central tick manager picks
+ *   5-7 random "active" cards and ticks them on randomized 8-30s
+ *   intervals; on tick, the count fades in (300ms) with the new
+ *   value via key={count} remount. The category tag also pulses
+ *   on tick for an additional confirmation cue.
+ *
+ *   For featured (spotlight) cards, SPOTLIGHT moves inline next to
+ *   the "01 / 24" num prefix so the top-right slot is free for the
+ *   live indicator.
  *
  *   Pauses on hover (cursor-over-card), on touch (pointer-down), and
  *   when the section is offscreen (IntersectionObserver). Respects
@@ -303,6 +311,10 @@ function SignalCard({ signal, index, total, subscribe, reducedMotion }: SignalCa
     .filter(Boolean)
     .join(' ')
 
+  // Stagger the ambient pulse so 24 bars don't blink in unison.
+  // Negative delay starts each card mid-cycle at a different phase.
+  const pulsePhase = (index % 12) * -0.2
+
   return (
     <article
       className={classes}
@@ -313,22 +325,30 @@ function SignalCard({ signal, index, total, subscribe, reducedMotion }: SignalCa
         isHovered.current = false
       }}
     >
-      {signal.featured && (
-        <span className="v4-signal-box__spotlight">SPOTLIGHT</span>
-      )}
       <div className="v4-signal-box__num">
         {String(index + 1).padStart(2, '0')} / {total}
+        {signal.featured && (
+          <span className="v4-signal-box__spotlight">SPOTLIGHT</span>
+        )}
       </div>
+
+      {/* Live indicator: pulsing magenta bar + tight count, top-right.
+          Bar runs an ambient slow pulse via CSS keyframes; count
+          remounts with key={count} so the new value fades in. */}
+      <div className="v4-signal-box__live" aria-live="off">
+        <span
+          className="v4-signal-box__live-bar"
+          style={reducedMotion ? undefined : { animationDelay: `${pulsePhase}s` }}
+          aria-hidden="true"
+        />
+        <span key={count} className="v4-signal-box__live-num">{count}</span>
+      </div>
+
       <div className="v4-signal-box__name">{signal.name}</div>
       <div className="v4-signal-box__meaning">{signal.meaning}</div>
       <div className="v4-signal-box__rule" aria-hidden="true" />
       <div className="v4-signal-box__activation">{signal.activation}</div>
       <div className="v4-signal-box__tech">{signal.tech}</div>
-
-      {/* Live counter — fades in on every tick via key={count}. */}
-      <div className="v4-signal-box__counter" aria-live="off">
-        FIRED <span key={count} className="v4-signal-box__counter-num">{count}</span>× TODAY
-      </div>
 
       {/* Category tag — pulses for 200ms on each tick via key={pulseKey}. */}
       <div

@@ -1907,10 +1907,11 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
+/* SPOTLIGHT renders inline after the "01 / 24" num prefix on featured
+   cards. Top-right is reserved for the live indicator. */
 .v4-root .v4-signal-box__spotlight {
-  position: absolute;
-  top: 18px;
-  right: 24px;
+  display: inline-block;
+  margin-left: 12px;
   font-family: var(--v4-mono);
   font-size: 9px;
   font-weight: 700;
@@ -1918,7 +1919,8 @@
   color: var(--v4-hot);
   text-transform: uppercase;
   border: 1px solid var(--v4-hot);
-  padding: 4px 8px;
+  padding: 3px 7px;
+  vertical-align: 1px;
 }
 
 .v4-root .v4-signal-box__num {
@@ -2020,30 +2022,44 @@
   font-weight: 700;
 }
 
-/* Live tick-up counter: bottom-left of each card, mirroring the
-   category tag's vertical baseline at bottom-right. The number
-   inside fades in on every tick via key={count} unmount/mount. */
-.v4-root .v4-signal-box__counter {
+/* Live indicator: top-right of each card. A small filled magenta bar
+   plus a tight mono count. The bar pulses ambient (every card,
+   staggered phase via inline animation-delay) so the section reads
+   as alive even when no tick is currently firing. The count fades in
+   on each tick via key={count} unmount/mount. */
+.v4-root .v4-signal-box__live {
   position: absolute;
-  bottom: 18px;
-  left: 20px;
-  font-family: var(--v4-mono);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
+  top: 16px;
+  right: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   pointer-events: none;
 }
 
-.v4-root .v4-signal-box--featured .v4-signal-box__counter {
-  left: 32px;
-  font-size: 11px;
+.v4-root .v4-signal-box__live-bar {
+  display: inline-block;
+  width: 3px;
+  height: 13px;
+  background: var(--v4-hot);
+  animation: v4-signal-live-pulse 2.4s ease-in-out infinite;
 }
 
-.v4-root .v4-signal-box__counter-num {
+.v4-root .v4-signal-box__live-num {
   display: inline-block;
+  font-family: var(--v4-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.92);
+  min-width: 18px;
+  text-align: left;
   animation: v4-counter-in 300ms ease-out;
+}
+
+@keyframes v4-signal-live-pulse {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 1; }
 }
 
 @keyframes v4-counter-in {
@@ -2065,9 +2081,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .v4-root .v4-signal-box__counter-num,
+  .v4-root .v4-signal-box__live-bar,
+  .v4-root .v4-signal-box__live-num,
   .v4-root .v4-signal-box__category.is-pulsing {
     animation: none;
+  }
+  .v4-root .v4-signal-box__live-bar {
+    opacity: 1;
   }
 }
 
@@ -3035,16 +3055,14 @@
     grid-row: span 1;
     padding: 24px 20px 48px;
   }
-  /* Tighter counter/category insets on narrow cards so they don't
-     collide along the bottom strip. Counter font shrinks slightly. */
-  .v4-root .v4-signal-box__counter {
-    left: 16px;
-    font-size: 9px;
-    letter-spacing: 0.12em;
+  /* Tighter inset for the top-right live indicator on narrow cards. */
+  .v4-root .v4-signal-box__live {
+    top: 14px;
+    right: 14px;
+    gap: 6px;
   }
-  .v4-root .v4-signal-box--featured .v4-signal-box__counter {
-    left: 20px;
-    font-size: 10px;
+  .v4-root .v4-signal-box__live-num {
+    font-size: 11px;
   }
   .v4-root .v4-signal-box__category {
     right: 16px;
