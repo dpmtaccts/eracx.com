@@ -29,6 +29,7 @@ import V2OperatingSystem from './pages/V2OperatingSystem/index.tsx'
 import V3 from './pages/v3/V3.tsx'
 import V4 from './pages/v4/V4.tsx'
 import GtmPlaybook from './pages/GtmPlaybook.tsx'
+import StubAuditExample from './pages/StubAuditExample.tsx'
 
 posthog.init(import.meta.env.VITE_PUBLIC_POSTHOG_TOKEN, {
   api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
@@ -72,6 +73,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/linkedin" element={<LinkedIn />} />
         <Route path="/audit/navalentsummary" element={<NavalentSummary />} />
         <Route path="/audit/vik" element={<VikAudit />} />
+        <Route path="/audit/_stub-example" element={<StubAuditExample />} />
       </Routes>
     </BrowserRouter>
     </PostHogErrorBoundary>

@@ -1,6 +1,6 @@
-export const CASCADE_HEADLINE = 'Does What You Believe Show Up in What You Do?'
+export const CASCADE_HEADLINE = 'Does what you believe show up in what your people say about you publicly?'
 
-export const CASCADE_INTRO = `Most brand audits measure perception. This one measures whether your brand promise flows through your leadership, your product, your people, and what AI tells your buyer about you.`
+export const CASCADE_INTRO = `Your buyer checks six surfaces when she's deciding whether to engage. She reads what you say you believe, what your leaders publish, what your product actually delivers, what your own employees say on Glassdoor, what the market reflects back, and what an agent tells her when she asks. The cascade traces the brand promise across all six and finds where it breaks.`
 
 export type FlowStatus = 'Strong Flow' | 'Partial Flow' | 'Weak Flow' | 'Cascade Break'
 
@@ -107,7 +107,7 @@ export const CASCADE_LAYERS: CascadeLayer[] = [
     score: 45,
     status: 'Weak Flow',
     signals: [
-      'Engagement quality with ICP',
+      'Engagement quality with the named buyers you need to reach',
       'Share of voice in category',
       'Sentiment in third-party press',
     ],
@@ -121,7 +121,7 @@ export const CASCADE_LAYERS: CascadeLayer[] = [
   },
   {
     number: '06',
-    name: 'What Does AI Tell Your Buyer?',
+    name: 'What does an agent tell your buyer?',
     oldName: 'The AI Mirror',
     question: 'When a CHRO asks ChatGPT or Claude about you, does the answer help or hurt?',
     score: 38,
@@ -141,6 +141,6 @@ export const CASCADE_LAYERS: CascadeLayer[] = [
   },
 ]
 
-export const CASCADE_BREAK_CALLOUT = `The cascade breaks at Layer 4, where the people who actually carry the brand to customers stop reflecting it back. BetterUp sells psychological safety and human transformation, yet its own employees describe neither in the reviews a CHRO will read on Glassdoor before a first call. Coaches surface pay disputes and communication breakdowns in the same forums prospective buyers search; account managers churn through the same accounts three or more times in twelve months. The promise dies at the frontline, and because every one of those signals is publicly indexed, the market can see exactly where it died.`
+export const CASCADE_BREAK_CALLOUT = `The cascade breaks at Layer 4, where the people who actually carry the brand to customers stop reflecting it back. Your buyer reads psychological safety and human transformation in your marketing, and then she reads the opposite in your Glassdoor reviews before her first call. Coaches surface pay disputes and communication breakdowns in the same forums prospective buyers search. Account managers churn through the same accounts three or more times in twelve months. The promise dies at the frontline, and because every one of those signals is publicly indexed, the buyer can see exactly where it died.`
 
-export const CASCADE_ADOPTION_CALLOUT = `BetterUp has built a Claude-based post generator in-house, and the tool itself is sound. The constraint isn't authoring; it's adoption, which is a system problem rather than a content one. Closing that gap looks like push instead of poll: posts assigned and tracked, tagging that ties content back to campaigns, and an attribution loop that returns the engagement signal to the CRM where pipeline lives.`
+export const CASCADE_ADOPTION_CALLOUT = `The authoring tool already exists. BetterUp has built a Claude-based post generator in-house, and the tool itself is sound. The constraint isn't writing; it's adoption. Closing the gap looks like push instead of poll: posts assigned and tracked, tagging that ties content back to campaigns, and an attribution loop that returns the engagement signal to the CRM where pipeline lives.`

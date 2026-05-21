@@ -1,5 +1,5 @@
 export const AUDIENCE_HEADLINE =
-  'The market your brand thinks it\'s talking to vs. the market that\'s actually listening.'
+  "The market your brand thinks it's talking to is not the market that's actually listening."
 
 export const AUDIENCE_PROFILE = `BetterUp's actual buyer is a mid-career executive operator (CHRO, VP of Learning, Chief People Officer) who took the job believing she would be a strategic partner to the CEO and now spends most of her week defending her budget to a CFO who treats coaching as a line item to question. She is not hostile to BetterUp, but she is no longer easily moved by transformation promises from technology vendors, and her default emotional posture toward your category sits somewhere between studied neutrality and quiet exhaustion.`
 

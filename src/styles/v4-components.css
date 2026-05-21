@@ -2252,8 +2252,25 @@
   white-space: nowrap;
 }
 
-.v4-root .v4-tool-tile__name {
+.v4-root .v4-tool-tile__title {
   grid-column: 1 / -1;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.v4-root .v4-tool-tile__headline {
+  font-family: var(--v4-block);
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--v4-white);
+  margin: 0;
+}
+
+.v4-root .v4-tool-tile__name {
   font-family: var(--v4-display);
   font-size: clamp(56px, 6vw, 96px);
   line-height: 0.85;
@@ -2261,7 +2278,7 @@
   text-transform: uppercase;
   font-weight: 400;
   color: var(--v4-white);
-  margin-top: auto;
+  margin: 0;
 }
 
 /* ----- Tile bottom section ----- */
@@ -2301,7 +2318,8 @@
   color: var(--v4-ink);
 }
 
-.v4-root .v4-tool-tile:hover .v4-tool-tile__name {
+.v4-root .v4-tool-tile:hover .v4-tool-tile__name,
+.v4-root .v4-tool-tile:hover .v4-tool-tile__headline {
   color: var(--v4-ink);
 }
 
@@ -3017,6 +3035,12 @@
   }
   .v4-root .v4-tool-tile__name {
     font-size: clamp(40px, 8vw, 64px);
+  }
+  .v4-root .v4-tool-tile__headline {
+    font-size: clamp(20px, 5vw, 28px);
+  }
+  .v4-root .v4-tool-tile__title {
+    gap: 12px;
   }
 
   .v4-root .v4-faq__header {

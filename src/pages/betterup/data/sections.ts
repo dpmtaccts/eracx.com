@@ -1,13 +1,10 @@
 import type { StepperItem } from '../components'
 
+// Inverted structure with §04 removed: the diagnostic depth now lives in the
+// score breakdown drawer reachable from the gauge in §01.
 export const SECTIONS: StepperItem[] = [
-  { id: 'summary', label: 'Summary' },
-  { id: 'cascade', label: 'Cascade' },
-  { id: 'leaders', label: 'Leaders' },
-  { id: 'population', label: 'Population' },
-  { id: 'signals', label: 'Signals' },
-  { id: 'mirror', label: 'AI Mirror' },
-  { id: 'audience', label: 'Audience' },
-  { id: 'investment', label: 'Concentration' },
-  { id: 'build', label: 'Build' },
+  { id: 'recommendation', label: 'Recommendation' },
+  { id: 'do', label: 'Do' },
+  { id: 'dont', label: "Don't" },
+  { id: 'proof', label: 'Proof' },
 ]

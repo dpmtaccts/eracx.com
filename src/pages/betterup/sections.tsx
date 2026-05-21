@@ -41,9 +41,13 @@ import { SIGNALS, SIGNALS_AVG_ALIGNMENT, SIGNALS_CRITICAL_GAPS, SIGNALS_FINDING,
    ────────────────────────────────────────────── */
 export function CascadeSection() {
   const { palette } = useTheme()
+  const opener = betterupAudit.openers?.cascade
   return (
-    <Section id="cascade">
-      <SectionHeader kicker="The Brand Cascade" headline={CASCADE_HEADLINE} intro={CASCADE_INTRO} shareId="cascade" />
+    <Section id="cascade" background={palette.parchment}>
+      <IssueBar number="§05.1" name="What employees say about you" meta={[{ label: 'Score', value: '41' }, { label: 'Weight', value: '25%' }, 'BetterUp']} />
+      {opener && <SectionOpener {...opener} />}
+      <SectionAnalysisDisclosure>
+      <SectionHeader kicker="What employees say about you" headline={CASCADE_HEADLINE} intro={CASCADE_INTRO} shareId="cascade" />
 
       <Reveal>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 48 }}>
@@ -149,6 +153,7 @@ export function CascadeSection() {
           </ExpandableCard>
         ))}
       </div>
+      </SectionAnalysisDisclosure>
     </Section>
   )
 }
@@ -304,13 +309,17 @@ export function GTMSection() {
   const { palette } = useTheme()
   const [activeTab, setActiveTab] = useState<GTMChannel['id']>('ceo')
   const channel = CHANNELS.find((c) => c.id === activeTab)!
+  const opener = betterupAudit.openers?.leaders
 
   return (
     <Section id="leaders">
+      <IssueBar number="§05.2" name="What your leaders publish" meta={[{ label: 'Score', value: '24' }, { label: 'Weight', value: '35%' }, 'BetterUp']} />
+      {opener && <SectionOpener {...opener} />}
+      <SectionAnalysisDisclosure>
       <SectionHeader
-        kicker="Go-to-Market Signal Chain"
+        kicker="What your leaders publish"
         headline="Your buyer is conducting due diligence on LinkedIn right now."
-        intro="They are looking at your CEO's profile, your sales team, BetterUp's LinkedIn company page, your coaches, and your clients. Every profile is either building trust or eroding it. Here is what they find when they look at yours."
+        intro="She is looking at your CEO's profile, your sales team, BetterUp's company page, your coaches, and your clients. Each of those profiles is either building trust or eroding it depending on what she finds. What follows is the chain she actually encounters when she goes looking."
         shareId="leaders"
       />
 
@@ -366,6 +375,7 @@ export function GTMSection() {
           </Callout>
         </Reveal>
       </div>
+      </SectionAnalysisDisclosure>
     </Section>
   )
 }
@@ -386,7 +396,7 @@ function CompositeStrip() {
         alignItems: 'center',
       }}
     >
-      <Gauge score={GTM_COMPOSITE_SCORE} benchmark={50} benchmarkLabel="functional floor" size={130} label="Composite GTM Signal Chain" />
+      <Gauge score={GTM_COMPOSITE_SCORE} benchmark={50} benchmarkLabel="functional floor" size={130} label="Composite Leaders score" />
       <div>
         <div style={smallLabel(palette.rust)}>{GTM_HEADLINE}</div>
         <p style={{ fontFamily: FONT.body, fontSize: 15, lineHeight: 1.6, color: palette.textMuted, margin: 0 }}>
@@ -1152,9 +1162,13 @@ const smallLabel = (color: string) => ({
    ────────────────────────────────────────────── */
 export function SignalsSection() {
   const { palette } = useTheme()
+  const opener = betterupAudit.openers?.signals
   return (
     <Section id="signals">
-      <SectionHeader kicker="Content-to-Pipeline Signal Map" headline={SIGNALS_HEADLINE} shareId="signals" />
+      <IssueBar number="§05.4" name="What you publish about yourself" meta={[{ label: 'Score', value: '29' }, { label: 'Weight', value: '25%' }, 'BetterUp']} />
+      {opener && <SectionOpener {...opener} />}
+      <SectionAnalysisDisclosure>
+      <SectionHeader kicker="What you publish about yourself" headline={SIGNALS_HEADLINE} shareId="signals" />
 
       <Reveal>
         <div
@@ -1180,6 +1194,7 @@ export function SignalsSection() {
           <SignalCard key={s.name} signal={s} />
         ))}
       </div>
+      </SectionAnalysisDisclosure>
     </Section>
   )
 }
@@ -1314,8 +1329,12 @@ import {
 
 export function AudienceSection() {
   const { palette } = useTheme()
+  const opener = betterupAudit.openers?.audience
   return (
-    <Section id="audience">
+    <Section id="audience" background={palette.yellow}>
+      <IssueBar number="§05.6" name="Audience Reality" meta={['BetterUp', 'CHRO buyer']} />
+      {opener && <SectionOpener {...opener} />}
+      <SectionAnalysisDisclosure>
       <SectionHeader kicker="Audience Reality" headline={AUDIENCE_HEADLINE} shareId="audience" />
 
       {/* Persona card — visual, not prose */}
@@ -1578,6 +1597,7 @@ export function AudienceSection() {
           tone="red"
         />
       </Reveal>
+      </SectionAnalysisDisclosure>
     </Section>
   )
 }
@@ -1939,15 +1959,21 @@ function ThinksVsActualCol({ label, items, tone }: { label: string; items: strin
 import {
   FOOTPRINT_NOTE,
   INVESTMENT_HEADLINE,
-  PROJECTED_IMPACT,
   PROJECTION_CAVEAT,
   VISIBLE_FOOTPRINT,
 } from './data/investment'
+import { betterupAudit } from '../../data/audits/betterup'
+import { SignalConnectionProjection } from '../../components/revenueSignal'
+import { SectionOpener } from '../../components/audit/SectionOpener'
+import { IssueBar } from '../../components/audit/IssueBar'
+import { SectionAnalysisDisclosure } from '../../components/audit/SectionAnalysisDisclosure'
+import { EditorialClosingDiagnosis } from '../../components/audit/EditorialClosingDiagnosis'
 
 export function InvestmentSection() {
   const { palette } = useTheme()
   return (
     <Section id="investment">
+      <IssueBar number="§05.7" name="Concentration" meta={['BetterUp']} />
       <SectionHeader
         kicker="Where the brand is concentrated today"
         headline={INVESTMENT_HEADLINE}
@@ -2018,24 +2044,12 @@ export function InvestmentSection() {
         </Callout>
       </Reveal>
 
-      {/* PROJECTED IMPACT block — kept for now pending client decision.
-          The +15-25% pipeline projection has been removed (see Edit 3 below). */}
-      <Reveal>
-        <div style={{ marginTop: 56 }}>
-          <div style={smallLabel(palette.rust)}>If the signals connect</div>
-          <div
-            style={{
-              marginTop: 20,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-              gap: 16,
-              marginBottom: 28,
-            }}
-          >
-            {PROJECTED_IMPACT.map((p) => <ProjectedCard key={p.label} p={p} />)}
-          </div>
-        </div>
-      </Reveal>
+      <div style={{ marginTop: 56 }}>
+        <SignalConnectionProjection
+          currentScores={betterupAudit.currentScores}
+          projectedScores={betterupAudit.projectedScores}
+        />
+      </div>
 
       <Reveal>
         <p style={{ marginTop: 24, fontFamily: FONT.body, fontSize: 12, color: palette.textDim, lineHeight: 1.5, fontStyle: 'italic' }}>
@@ -2043,53 +2057,6 @@ export function InvestmentSection() {
         </p>
       </Reveal>
     </Section>
-  )
-}
-
-function ProjectedCard({ p }: { p: { label: string; current: number; projected: number } }) {
-  const { palette } = useTheme()
-  const delta = Math.round(((p.projected - p.current) / p.current) * 100)
-  return (
-    <div
-      style={{
-        background: palette.card,
-        border: `1px solid ${palette.border}`,
-        borderTop: `3px solid ${palette.rust}`,
-        borderRadius: 4,
-        padding: '28px 28px 24px',
-      }}
-    >
-      <div style={{ fontFamily: FONT.body, fontSize: 12, color: palette.textMuted, marginBottom: 18, letterSpacing: '0.04em' }}>
-        {p.label}
-      </div>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, flexWrap: 'wrap' }}>
-        <span style={{ fontFamily: FONT.mono, fontSize: 22, color: palette.textDim, textDecoration: 'line-through' }}>
-          {p.current}
-        </span>
-        <svg width="20" height="14" viewBox="0 0 24 14" fill="none" stroke={palette.rust} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="3" y1="7" x2="20" y2="7" />
-          <polyline points="14 1 20 7 14 13" />
-        </svg>
-        <span style={{ fontFamily: FONT.mono, fontSize: 'clamp(48px, 5vw, 64px)', color: palette.rust, fontWeight: 500, lineHeight: 0.95 }}>
-          {p.projected}
-        </span>
-      </div>
-      <div
-        style={{
-          marginTop: 16,
-          display: 'inline-block',
-          background: 'rgba(58, 155, 110, 0.12)',
-          color: palette.green,
-          fontFamily: FONT.mono,
-          fontSize: 13,
-          padding: '4px 10px',
-          borderRadius: 999,
-          fontWeight: 600,
-        }}
-      >
-        +{delta}%
-      </div>
-    </div>
   )
 }
 
@@ -2114,113 +2081,22 @@ function InvestmentIcon({ index, color }: { index: number; color: string }) {
 /* ──────────────────────────────────────────────
    Section 8: What We'd Build Together
    ────────────────────────────────────────────── */
-import { BUILD_HEADLINE, CONTACTS, CTA_BODY, PHASES, TEAM } from './data/build'
+import { CONTACTS, CTA_BODY, TEAM } from './data/build'
+import { AuditRoadmap } from '../../components/audit/AuditRoadmap'
 
 export function BuildSection() {
   const posthog = usePostHog()
   const { palette } = useTheme()
+  const roadmap = betterupAudit.roadmap
   return (
     <Section id="build">
-      <SectionHeader kicker="What We'd Build Together" headline={BUILD_HEADLINE} shareId="build" />
-
-      {/* Phases — with connector arrows */}
-      <Reveal>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: 16,
-            marginBottom: 56,
-            position: 'relative',
-          }}
-        >
-          {PHASES.map((phase, i) => (
-            <div key={phase.number} style={{ position: 'relative', display: 'flex' }}>
-              {i < PHASES.length - 1 && (
-                <div
-                  aria-hidden
-                  style={{
-                    position: 'absolute',
-                    right: -22,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    color: palette.rust,
-                    zIndex: 2,
-                    background: palette.bg,
-                    width: 28,
-                    height: 28,
-                    borderRadius: '50%',
-                    border: `1px solid ${palette.rust}`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </div>
-              )}
-            <div
-              style={{
-                background: palette.card,
-                border: `1px solid ${palette.border}`,
-                borderTop: `3px solid ${palette.rust}`,
-                borderRadius: 4,
-                padding: '28px 28px',
-                display: 'flex',
-                flexDirection: 'column',
-                width: '100%',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 4 }}>
-                <span style={{ fontFamily: FONT.mono, fontSize: 28, color: palette.rust, fontWeight: 500 }}>
-                  {phase.number}
-                </span>
-                <span
-                  style={{
-                    fontFamily: FONT.body,
-                    fontSize: 11,
-                    letterSpacing: '0.14em',
-                    textTransform: 'uppercase',
-                    color: palette.textMuted,
-                  }}
-                >
-                  {phase.weeks}
-                </span>
-              </div>
-              <div style={{ fontFamily: FONT.display, fontSize: 22, color: palette.text, marginBottom: 18, lineHeight: 1.2 }}>
-                {phase.title}
-              </div>
-              <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
-                {phase.items.map((item) => (
-                  <li key={item} style={{ fontFamily: FONT.body, fontSize: 14, lineHeight: 1.5, color: palette.textMuted, display: 'flex', gap: 10 }}>
-                    <span style={{ color: palette.rust, flex: '0 0 auto' }}>›</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              {phase.deliverable && (
-                <div
-                  style={{
-                    marginTop: 20,
-                    paddingTop: 16,
-                    borderTop: `1px solid ${palette.border}`,
-                    fontFamily: FONT.body,
-                    fontSize: 12,
-                    color: palette.text,
-                  }}
-                >
-                  <span style={{ color: palette.rust, fontWeight: 600 }}>Deliverable. </span>
-                  {phase.deliverable}
-                </div>
-              )}
-            </div>
-            </div>
-          ))}
-        </div>
-      </Reveal>
+      <IssueBar number="§05.8" name="What we'd build" meta={['BetterUp', 'MVP · THEN · FULL BUILD']} />
+      {/* Prescriptive roadmap (MVP → Then → Full Build) */}
+      {roadmap && (
+        <Reveal>
+          <AuditRoadmap {...roadmap} />
+        </Reveal>
+      )}
 
       {/* Team */}
       <Reveal>
@@ -2348,7 +2224,6 @@ export function BuildSection() {
    ────────────────────────────────────────────── */
 import {
   AMPLIFICATION,
-  CLOSING_DIAGNOSIS,
   CLOSING_DIAGNOSIS_KICKER,
   GTM_GRID_FUNCTIONAL_FLOOR,
   GTM_GRID_NOTE,
@@ -2370,17 +2245,20 @@ export function PopulationSection() {
   const { palette } = useTheme()
 
   return (
-    <Section id="population">
-      {/* Section opener */}
+    <Section id="population" background={palette.ink}>
+      <div style={{ color: '#FFFFFF' }}>
+      <IssueBar number="§05.3" name="Population" meta={['BetterUp', 'Commenter mix']} ground="dark" />
+      {/* Section opener — explicit white text on the ink ground to prevent
+          inline palette colors from inheriting their light-mode dark values. */}
       <Reveal>
         <div style={{ marginBottom: 56 }}>
           <div
             style={{
-              fontFamily: FONT.body,
-              fontSize: 12,
-              letterSpacing: '0.18em',
+              fontFamily: FONT.mono,
+              fontSize: 11,
+              letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              color: palette.rust,
+              color: palette.yellow,
               marginBottom: 16,
               fontWeight: 600,
             }}
@@ -2389,38 +2267,40 @@ export function PopulationSection() {
           </div>
           <h2
             style={{
-              fontFamily: FONT.display,
-              fontSize: 'clamp(36px, 5vw, 60px)',
-              lineHeight: 1.05,
-              color: palette.text,
+              fontFamily: FONT.mega,
+              fontSize: 'clamp(40px, 7vw, 96px)',
+              lineHeight: 0.95,
+              color: '#FFFFFF',
               margin: 0,
               maxWidth: 920,
               fontWeight: 400,
+              letterSpacing: '-0.01em',
+              textTransform: 'uppercase',
             }}
           >
             {SECTION_HEADLINE}
           </h2>
-          <blockquote
+          <p
             style={{
               margin: '32px 0 28px',
-              padding: '4px 0 4px 28px',
+              padding: '4px 0 4px 24px',
               borderLeft: `4px solid ${palette.rust}`,
               fontFamily: FONT.display,
-              fontStyle: 'italic',
               fontSize: 'clamp(20px, 2.4vw, 28px)',
-              lineHeight: 1.35,
-              color: palette.text,
+              lineHeight: 1.25,
+              color: '#FFFFFF',
               maxWidth: 880,
+              letterSpacing: '-0.005em',
             }}
           >
             {SECTION_SUBHEAD}
-          </blockquote>
+          </p>
           <p
             style={{
               fontFamily: FONT.body,
               fontSize: 17,
               lineHeight: 1.6,
-              color: palette.textMuted,
+              color: 'rgba(255, 255, 255, 0.75)',
               margin: 0,
               maxWidth: 760,
             }}
@@ -2437,28 +2317,21 @@ export function PopulationSection() {
         ))}
       </div>
 
-      {/* Closing diagnosis */}
+      {/* Closing diagnosis — editorial pull-quote with ratio visual */}
       <Reveal>
-        <div style={{ marginTop: 96, marginBottom: 96 }}>
-          <div style={smallLabel(palette.rust)}>{CLOSING_DIAGNOSIS_KICKER}</div>
-          <blockquote
-            style={{
-              margin: '24px 0 0',
-              padding: '8px 0 8px 32px',
-              borderLeft: `4px solid ${palette.rust}`,
-              fontFamily: FONT.display,
-              fontStyle: 'italic',
-              fontSize: 'clamp(24px, 3vw, 36px)',
-              lineHeight: 1.35,
-              color: palette.text,
-              maxWidth: 920,
-              fontWeight: 400,
-            }}
-          >
-            {CLOSING_DIAGNOSIS}
-          </blockquote>
-        </div>
+        <EditorialClosingDiagnosis
+          kicker={CLOSING_DIAGNOSIS_KICKER}
+          headline="The product is real, the expertise is real, and the relationships are real. They all live in two or three voices instead of twenty-one."
+          headlineAccent="two or three voices instead of twenty-one"
+          bodyLines={[
+            'BetterUp sells the practice of continuous human contact at scale.',
+            'The audit found a sales and marketing organization where that practice shows up in some places, with some people, on some threads, but not at the scale the brand promise requires.',
+            'The buyer doing her due diligence today is not landing on the two or three voices that do carry the promise, because there are not enough of them and they are not on the surfaces she checks.',
+          ]}
+          ratio={{ heard: 2, total: 21, label: 'The brand promise needs twenty-one voices on the surfaces buyers check. Right now the buyer hears two.' }}
+        />
       </Reveal>
+      {/* CLOSING_DIAGNOSIS prose preserved on the data file for future surfaces; the editorial component above renders the same argument with a visual companion. */}
 
       {/* 12 ICP buyers — concentration risk */}
       <Reveal>
@@ -2560,37 +2433,50 @@ export function PopulationSection() {
         </div>
       </Reveal>
 
-      {/* Seven things she leaves believing */}
+      {/* Seven things she leaves believing — rust numerals at full opacity for
+          contrast against the ink ground; white body in IBM Plex without italic
+          since synthesized italic on Archivo Black reads as broken. */}
       <Reveal>
-        <div style={smallLabel(palette.rust)}>{SEVEN_FINDINGS_KICKER}</div>
-        <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', gap: 32 }}>
+        <div
+          style={{
+            fontFamily: FONT.mono,
+            fontSize: 11,
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: palette.yellow,
+            marginBottom: 0,
+            fontWeight: 600,
+          }}
+        >
+          {SEVEN_FINDINGS_KICKER}
+        </div>
+        <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', gap: 28 }}>
           {SEVEN_FINDINGS.map((f, i) => (
-            <div key={i} style={{ display: 'flex', gap: 24 }}>
+            <div key={i} style={{ display: 'flex', gap: 24, alignItems: 'flex-start' }}>
               <div
                 style={{
-                  fontFamily: FONT.display,
-                  fontStyle: 'italic',
-                  fontSize: 56,
-                  color: palette.rust,
-                  opacity: 0.25,
-                  lineHeight: 0.9,
+                  fontFamily: FONT.mono,
+                  fontSize: 32,
+                  color: '#DD5C20',
+                  lineHeight: 1,
                   flex: '0 0 auto',
-                  width: 64,
-                  letterSpacing: '-0.02em',
+                  width: 56,
+                  fontWeight: 700,
+                  letterSpacing: '0.02em',
+                  paddingTop: 4,
                 }}
               >
                 {String(i + 1).padStart(2, '0')}
               </div>
               <p
                 style={{
-                  fontFamily: FONT.display,
-                  fontStyle: 'italic',
-                  fontSize: 'clamp(18px, 2vw, 22px)',
-                  lineHeight: 1.45,
-                  color: palette.text,
+                  fontFamily: FONT.body,
+                  fontSize: 'clamp(16px, 1.6vw, 18px)',
+                  lineHeight: 1.55,
+                  color: 'rgba(255, 255, 255, 0.92)',
                   margin: 0,
                   paddingLeft: 24,
-                  borderLeft: `3px solid ${palette.rust}`,
+                  borderLeft: `3px solid #DD5C20`,
                   maxWidth: 880,
                 }}
               >
@@ -2600,6 +2486,7 @@ export function PopulationSection() {
           ))}
         </div>
       </Reveal>
+      </div>
     </Section>
   )
 }
@@ -2889,25 +2776,24 @@ function GTMLeadershipGridViz() {
             <div
               key={leader.id}
               style={{
-                background: palette.cardAlt,
-                border: `1px solid ${clearsFloor ? palette.green : palette.border}`,
-                borderRadius: 6,
+                background: '#1A1A1A',
+                border: `1px solid ${clearsFloor ? fill : 'rgba(255, 255, 255, 0.15)'}`,
                 padding: '16px 18px',
+                color: '#FFFFFF',
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 10 }}>
-                <span style={{ fontFamily: FONT.mono, fontSize: 11, color: palette.textDim, letterSpacing: '0.06em' }}>
+                <span style={{ fontFamily: FONT.mono, fontSize: 11, color: 'rgba(255, 255, 255, 0.7)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
                   {leader.id}
                 </span>
-                <span style={{ fontFamily: FONT.mono, fontSize: 18, color: fill, fontWeight: 500 }}>{leader.score}</span>
+                <span style={{ fontFamily: FONT.mono, fontSize: 18, color: fill, fontWeight: 600 }}>{leader.score}</span>
               </div>
-              <div style={{ position: 'relative', height: 6, background: palette.border, borderRadius: 3, overflow: 'visible' }}>
+              <div style={{ position: 'relative', height: 6, background: 'rgba(255, 255, 255, 0.15)', overflow: 'visible' }}>
                 <div
                   style={{
                     width: `${(leader.score / max) * 100}%`,
                     height: '100%',
                     background: fill,
-                    borderRadius: 3,
                     transition: 'width 1.2s cubic-bezier(0.16,1,0.3,1)',
                   }}
                 />
@@ -2920,8 +2806,7 @@ function GTMLeadershipGridViz() {
                     top: -3,
                     width: 1,
                     height: 12,
-                    background: palette.textMuted,
-                    opacity: 0.5,
+                    background: 'rgba(255, 255, 255, 0.35)',
                   }}
                 />
               </div>

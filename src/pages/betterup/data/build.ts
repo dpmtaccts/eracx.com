@@ -41,7 +41,7 @@ export const PHASES: Phase[] = [
     items: [
       'Signal scorecard tracking, monthly cadence',
       'AI mirror monitoring across ChatGPT, Claude, Perplexity, quarterly',
-      'Engagement quality reporting (ICP engagement rate, not vanity metrics)',
+      'Engagement quality reporting (named-buyer engagement rate, not vanity metrics)',
       'Buyer journey content mapping and optimization',
       'ROI framework for CFO-ready budget justification',
     ],

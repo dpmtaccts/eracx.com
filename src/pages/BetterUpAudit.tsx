@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 import { usePostHog } from '@posthog/react'
+// v4 design system tokens. Scoped under `.v4-root` (applied below on the
+// audit shell) so they coexist with other routes that ship their own theme.
+import '../styles/v4-tokens.css'
 import {
   Callout,
   Gauge,
@@ -8,25 +11,15 @@ import {
   Reveal,
   Section,
   SectionHeader,
-  ShareButton,
   StepperNav,
 } from './betterup/components'
-import { CASCADE_LAYERS } from './betterup/data/cascade'
 import {
   FONT,
   ThemeContext,
   loadBetterUpFonts,
+  useTheme,
   useThemeState,
 } from './betterup/theme'
-import {
-  COMPANY,
-  CORE_FINDING_PARAGRAPHS,
-  METHODOLOGY_NOTE,
-  PULL_QUOTE_1,
-  PULL_QUOTE_2,
-  STRENGTHS,
-  VULNERABILITIES,
-} from './betterup/data/executive'
 import {
   ACTUALLY_SAYS,
   AI_MIRROR_CONTEXT,
@@ -42,573 +35,497 @@ import { PasswordGate, isAuthed } from './betterup/PasswordGate'
 import { startSectionTimeTracker, track } from './betterup/analytics'
 import { SummaryView } from './betterup/SummaryView'
 import { AnimatePresence, motion } from 'framer-motion'
+import { betterupAudit } from '../data/audits/betterup'
+import { SectionOpener } from '../components/audit/SectionOpener'
+import { IssueBar } from '../components/audit/IssueBar'
+import { SectionAnalysisDisclosure } from '../components/audit/SectionAnalysisDisclosure'
+import { RecommendationHero } from '../components/audit/RecommendationHero'
+import { ImpactCardGrid, type ImpactCard } from '../components/audit/ImpactCardGrid'
+import {
+  CadenceTimeline,
+  CardParagraph,
+  CardVisual,
+  CountSplit,
+  DiagnosticBar,
+  DiminishingReturns,
+  NoiseSignal,
+  QuarterlyTrajectory,
+  StruckRows,
+  Underline,
+} from '../components/audit/InlineVisuals'
+import { PartnershipSection } from '../components/audit/PartnershipSection'
+import { ScoreDrawerProvider } from '../components/audit/ScoreDrawerContext'
+import { ScoreBreakdownDrawer } from '../components/audit/ScoreBreakdownDrawer'
+import { CONTACTS as BETTERUP_CONTACTS } from './betterup/data/build'
 
 /* ──────────────────────────────────────────────
-   Section 1: Executive Summary
+   §01 — THE RECOMMENDATION
    ────────────────────────────────────────────── */
-function ExecutiveSummary() {
+export function RecommendationSection() {
   return (
-    <Section id="summary">
+    <Section id="recommendation">
+      <IssueBar
+        number="§01"
+        name="The recommendation"
+        meta={['BetterUp', betterupAudit.reportDate]}
+      />
       <Reveal>
-        <div
-          style={{
-            fontFamily: FONT.body,
-            fontSize: 12,
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color: '#C85A3A',
-            marginBottom: 16,
-          }}
-        >
-          Revenue Signal Audit · {COMPANY.date}
-        </div>
-        <p
-          style={{
-            fontFamily: FONT.body,
-            fontSize: 15,
-            lineHeight: 1.6,
-            color: '#6B6760',
-            margin: '0 0 28px',
-            maxWidth: 720,
-          }}
-        >
-          This report analyzes how BetterUp's brand, content, leadership presence, and go-to-market signals are being received and interpreted across LinkedIn, review platforms, competitive analysis, audience intelligence, and generative AI search. It maps where those signals connect to pipeline and where they break.
-        </p>
-        <img
-          src="/images/betterup/bu_logo_black.svg"
-          alt="BetterUp"
-          style={{ height: 'clamp(48px, 6vw, 72px)', width: 'auto', display: 'block' }}
+        <RecommendationHero
+          eyebrow="Revenue Signal Audit"
+          headlineLine1="Your buyer made up her mind"
+          headlineLine2="before she ever talked to you."
+          standfirst="Your buyer is doing more research before she ever talks to you, and most of it happens on surfaces you don't control. She's checking what your employees say on Glassdoor. She's reading what your executives publish on LinkedIn. She's asking peer networks and AI agents what they know about you. By the time she reaches out, she's already formed most of her opinion. The marketing team is investing where the team can see the activity. The buyer is making her decision somewhere else."
+          scores={betterupAudit.currentScores}
+          scoreContextLine="Typical of category leaders investing heavily in awareness while losing trust in the surfaces buyers actually use."
+          scoreAnchorId="why"
         />
-        <h1 style={{ position: 'absolute', left: -9999 }}>BetterUp</h1>
-      </Reveal>
-
-      <Reveal delay={0.05}>
-        <MethodologyNote />
-      </Reveal>
-
-      <Reveal delay={0.1}>
-        <BentoHero />
-      </Reveal>
-
-      <CoreFindingEditorial />
-
-      <div style={{ height: 96 }} />
-
-      <Reveal delay={0.1}>
-        <StrengthsVulnerabilities />
       </Reveal>
     </Section>
   )
 }
 
 /* ──────────────────────────────────────────────
-   Methodology note — answers the diligence question before it's asked
+   §02 — WHAT TO DO (Maximum Impact)
    ────────────────────────────────────────────── */
-function MethodologyNote() {
+// Each Maximum Impact card is color-coded to the diagnostic that produced
+// the recommendation, so the reader can trace recommendation back to
+// evidence. The evidenceAnchor scrolls to the matching §05 sub-section.
+const COLOR_LEADERS = '#1845C2'
+const COLOR_AGENTS = '#E6195F'
+const COLOR_YOUR_CONTENT = '#F4C430'
+const COLOR_EMPLOYEES = '#DD5C20'
+
+const MAX_IMPACT_CARDS: ImpactCard[] = [
+  {
+    ordinal: '01',
+    ordinalLabel: 'Maximum impact',
+    headline: 'Get your executives publishing original content on LinkedIn.',
+    body: "When a buyer asks an AI agent about BetterUp, the agent reads your executives' LinkedIn activity as a signal of who you are. Today, only two of your executives publish original content. Five publish reposts or nothing at all. The agent reads this as inconsistency and lowers its confidence in your brand. The fix is to get five to seven executives posting original content weekly, with the new exec comms hire owning the program.",
+    richContent: (
+      <>
+        <CardParagraph ground="ink">
+          When a buyer asks an AI agent about BetterUp, the agent reads your executives' LinkedIn activity as a signal of who you are.
+        </CardParagraph>
+        <CardVisual>
+          <DiagnosticBar label="Leaders" score={24} accent={COLOR_LEADERS} ground="ink" />
+        </CardVisual>
+        <CardParagraph ground="ink" marginTop={16}>
+          Today,{' '}
+          <Underline color={COLOR_LEADERS}>only two of your executives publish original content</Underline>. Five publish reposts or nothing at all.
+        </CardParagraph>
+        <CardVisual>
+          <CountSplit
+            leftCount={2}
+            leftLabel="Original"
+            rightCount={7}
+            rightLabel="Repost or silent"
+            accent={COLOR_LEADERS}
+            ground="ink"
+          />
+        </CardVisual>
+        <CardParagraph ground="ink" marginTop={16}>
+          The agent reads this as inconsistency and lowers its confidence in your brand.
+        </CardParagraph>
+        <CardParagraph ground="ink" marginTop={24}>
+          The fix is to get five to seven executives posting original content weekly, with the new exec comms hire owning the program.
+        </CardParagraph>
+      </>
+    ),
+    indicator: '~30% reach lift · Originals vs. reshares',
+    accentColor: COLOR_LEADERS,
+    evidenceAnchor: 'leaders',
+  },
+  {
+    ordinal: '02',
+    ordinalLabel: 'Maximum impact',
+    headline: 'Fix the wrong data that agents are repeating.',
+    body: "Agents pull from public sources, then synthesize. Right now they're pulling discontinued D2C offerings, wrong employee counts, and outdated client logos. The buyer who asks Perplexity about BetterUp encounters those inaccuracies before she ever sees the website. The fix is a data hygiene pass on the high-traffic public sources: Crunchbase, LinkedIn company page, Wikipedia, G2, and the BetterUp website's structured data. It's cheap, it's high-leverage, and it changes the answer the buyer gets.",
+    richContent: (
+      <>
+        <CardParagraph ground="ink">
+          Agents pull from public sources, then synthesize.
+        </CardParagraph>
+        <CardVisual>
+          <DiagnosticBar label="Agents" score={38} accent={COLOR_AGENTS} ground="ink" />
+        </CardVisual>
+        <CardParagraph ground="ink" marginTop={16}>
+          Right now they're pulling{' '}
+          <Underline color={COLOR_AGENTS}>discontinued D2C offerings, wrong employee counts, and outdated client logos</Underline>. The buyer who asks Perplexity about BetterUp encounters those inaccuracies before she ever sees the website.
+        </CardParagraph>
+        <CardVisual>
+          <StruckRows
+            rows={[
+              'D2C offerings — discontinued',
+              '800 employees — actual 1,200+',
+              'Legacy logos — updated roster missing',
+            ]}
+            accent={COLOR_AGENTS}
+            ground="ink"
+          />
+        </CardVisual>
+        <CardParagraph ground="ink" marginTop={16}>
+          The fix is a data hygiene pass on the high-traffic public sources: Crunchbase, LinkedIn company page, Wikipedia, G2, and the BetterUp website's structured data.
+        </CardParagraph>
+        <CardParagraph ground="ink" marginTop={24}>
+          It's cheap, it's high-leverage, and it changes the answer the buyer gets.
+        </CardParagraph>
+      </>
+    ),
+    indicator: 'Agents score +15 projected · Data hygiene only',
+    accentColor: COLOR_AGENTS,
+    evidenceAnchor: 'mirror',
+  },
+  {
+    ordinal: '03',
+    ordinalLabel: 'Maximum impact',
+    headline: 'Make it easy for your people to publish.',
+    body: "The reason your executives and sellers aren't publishing isn't lack of ideas. It's lack of time. Sales reps prioritize closing, not writing. A weekly ghostwritten post per key executive and rep, distributed through BetterUp's existing Claude tool with vertical-specific templates, removes the writing burden. The cascade you've already built starts working because adoption stops being the bottleneck.",
+    richContent: (
+      <>
+        <CardParagraph ground="ink">
+          The reason your executives and sellers aren't publishing isn't lack of ideas. It's lack of time.
+        </CardParagraph>
+        <CardVisual>
+          <DiagnosticBar label="Your content" score={29} accent={COLOR_YOUR_CONTENT} ground="ink" />
+        </CardVisual>
+        <CardParagraph ground="ink" marginTop={16}>
+          Sales reps prioritize closing, not writing.{' '}
+          <Underline color={COLOR_YOUR_CONTENT}>A weekly ghostwritten post per key executive and rep</Underline>, distributed through BetterUp's existing Claude tool with vertical-specific templates, removes the writing burden.
+        </CardParagraph>
+        <CardVisual>
+          <CadenceTimeline
+            points={['Week 1', 'Week 2', 'Week 3', 'Week 4']}
+            caption="Per executive · 5–10 execs"
+            captionPosition="above"
+            accent={COLOR_YOUR_CONTENT}
+            ground="ink"
+          />
+        </CardVisual>
+        <CardParagraph ground="ink" marginTop={16}>
+          The cascade you've already built starts working because adoption stops being the bottleneck.
+        </CardParagraph>
+      </>
+    ),
+    indicator: '5–10 execs · Weekly cadence · Tool already in production',
+    accentColor: COLOR_YOUR_CONTENT,
+    evidenceAnchor: 'signals',
+  },
+  {
+    ordinal: '04',
+    ordinalLabel: 'Maximum impact',
+    headline: 'Treat this as a measurement, not a project.',
+    body: 'A one-time audit catches a moment. Trust drifts over time, and the surfaces that produce it (Glassdoor reviews, LinkedIn activity, AI agent answers) change continuously. A quarterly re-measurement turns the audit from a one-time exercise into a governance system. The board can budget against the score the way it budgets against revenue. The CMO can defend marketing spend with a quantitative read on whether trust is rising or falling.',
+    richContent: (
+      <>
+        <CardParagraph ground="ink">
+          A one-time audit catches a moment. Trust drifts over time, and the surfaces that produce it (Glassdoor reviews, LinkedIn activity, AI agent answers) change continuously.
+        </CardParagraph>
+        <CardVisual>
+          <DiagnosticBar label="Employees" score={41} accent={COLOR_EMPLOYEES} ground="ink" />
+        </CardVisual>
+        <CardParagraph ground="ink" marginTop={16}>
+          A quarterly re-measurement turns the audit from a one-time exercise into a governance system.{' '}
+          <Underline color={COLOR_EMPLOYEES}>The board can budget against the score the way it budgets against revenue</Underline>.
+        </CardParagraph>
+        <CardVisual>
+          <QuarterlyTrajectory
+            points={[
+              { label: 'Q1', value: 32 },
+              { label: 'Q2', value: 41 },
+              { label: 'Q3', value: 51 },
+              { label: 'Q4', value: 58 },
+            ]}
+            accent={COLOR_EMPLOYEES}
+            ground="ink"
+          />
+        </CardVisual>
+        <CardParagraph ground="ink" marginTop={16}>
+          The CMO can defend marketing spend with a quantitative read on whether trust is rising or falling.
+        </CardParagraph>
+      </>
+    ),
+    indicator: 'Quarterly cadence · Governance artifact',
+    accentColor: COLOR_EMPLOYEES,
+    evidenceAnchor: 'cascade',
+  },
+]
+
+export function MaximumImpactSection() {
   return (
-    <div
-      style={{
-        marginTop: 32,
-        background: '#FBF9F6',
-        border: '1px solid #E8E4DE',
-        borderLeft: '3px solid #C85A3A',
-        borderRadius: 6,
-        padding: '24px 28px',
-        maxWidth: 720,
-      }}
-    >
-      <div
-        style={{
-          fontFamily: FONT.body,
-          fontSize: 11,
-          letterSpacing: '0.16em',
-          textTransform: 'uppercase',
-          color: '#C85A3A',
-          fontWeight: 600,
-          marginBottom: 14,
-        }}
-      >
-        Methodology
+    <Section id="do" background="#0A0A0A">
+      <div style={{ color: '#FFFFFF' }}>
+        <IssueBar
+          number="§02"
+          name="Maximum impact"
+          meta={['BetterUp', '4 of 4 fixes']}
+          ground="dark"
+        />
+        <Reveal>
+          <ImpactCardGrid
+            eyebrow="§02 · MAXIMUM IMPACT"
+            headline="The four moves with the most leverage on what your buyer reads."
+            cards={MAX_IMPACT_CARDS}
+            ground="ink"
+          />
+        </Reveal>
       </div>
-      {METHODOLOGY_NOTE.map((p, i) => (
-        <p
-          key={i}
-          style={{
-            fontFamily: FONT.body,
-            fontSize: 14.5,
-            lineHeight: 1.6,
-            color: '#1A1A1A',
-            margin: i === METHODOLOGY_NOTE.length - 1 ? 0 : '0 0 12px',
-          }}
-        >
-          {p}
-        </p>
-      ))}
-    </div>
+    </Section>
   )
 }
 
 /* ──────────────────────────────────────────────
-   Bento hero — six tiles, one viewport, clickable deep-links
+   §03 — WHAT NOT TO DO (Minimum Impact)
    ────────────────────────────────────────────── */
-function BentoHero() {
-  const goto = (id: string) => {
-    void track('bento_tile_click', id, 'full')
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-  }
+// §03 cards do not get diagnostic colors. A single muted-ink accent reads as
+// "this is the resist column," visually distinct from the §02 maximum cards.
+const COLOR_MIN_ACCENT = 'rgba(10, 10, 10, 0.55)'
+
+const MIN_IMPACT_CARDS: ImpactCard[] = [
+  {
+    ordinal: '01',
+    ordinalLabel: 'Minimum impact',
+    headline: 'More MQL tuning or vanity dashboard work.',
+    body: "Without a way to attribute revenue to specific buyers, optimizing further on MQLs just adds noise. The team is already over-instrumented at the form-fill stage. Tightening that further produces cleaner reports about a model that doesn't capture how the buyer actually decides. The work doesn't move the needle on what's broken.",
+    richContent: (
+      <>
+        <CardParagraph ground="parchment">
+          Without a way to attribute revenue to specific buyers, optimizing further on MQLs just adds noise.
+        </CardParagraph>
+        <CardVisual>
+          <DiminishingReturns
+            topLabel="MQL volume"
+            bottomLabel="Qualified pipeline"
+            ground="parchment"
+          />
+        </CardVisual>
+        <CardParagraph ground="parchment" marginTop={16}>
+          The team is already over-instrumented at the form-fill stage.{' '}
+          <Underline color={COLOR_MIN_ACCENT}>Tightening that further produces cleaner reports about a model that doesn't capture how the buyer actually decides</Underline>.
+        </CardParagraph>
+        <CardParagraph ground="parchment" marginTop={24}>
+          The work doesn't move the needle on what's broken.
+        </CardParagraph>
+      </>
+    ),
+    indicator: 'Attribution before trust signal repair inverts the order. Fix what the agent reads first, then measure what arrives.',
+    indicatorLabel: 'Why not now',
+  },
+  {
+    ordinal: '02',
+    ordinalLabel: 'Minimum impact',
+    headline: 'Hiring 3 to 4 more social media specialists immediately.',
+    body: "More headcount can't fix an adoption problem. The bottleneck isn't capacity, it's that executives and sellers aren't publishing. Adding specialists who write on behalf of the brand doesn't move the signal that an agent reads as authoritative, which is the individual executive's voice. Scale staffing into a system that's already working, not into a system that hasn't started yet.",
+    richContent: (
+      <>
+        <CardParagraph ground="parchment">
+          More headcount can't fix an adoption problem.
+        </CardParagraph>
+        <CardVisual>
+          <DiminishingReturns
+            topLabel="Headcount"
+            bottomLabel="Executive activity"
+            ground="parchment"
+          />
+        </CardVisual>
+        <CardParagraph ground="parchment" marginTop={16}>
+          The bottleneck isn't capacity,{' '}
+          <Underline color={COLOR_MIN_ACCENT}>it's that executives and sellers aren't publishing</Underline>. Adding specialists who write on behalf of the brand doesn't move the signal that an agent reads as authoritative, which is the individual executive's voice.
+        </CardParagraph>
+        <CardParagraph ground="parchment" marginTop={24}>
+          Scale staffing into a system that's already working, not into a system that hasn't started yet.
+        </CardParagraph>
+      </>
+    ),
+    indicator: 'Headcount before adoption produces a bigger team executing the same broken motion.',
+    indicatorLabel: 'Why not now',
+  },
+  {
+    ordinal: '03',
+    ordinalLabel: 'Minimum impact',
+    headline: 'More events and webinars layered on top of the existing cadence.',
+    body: "Events drive leads, and BetterUp's existing event cadence is doing its job. But events don't fix the trust signal that an agent reads when it researches you. The buyer who's been to your event still asks Perplexity about you before she reaches out. Doubling event spend doesn't change what Perplexity sees.",
+    richContent: (
+      <>
+        <CardParagraph ground="parchment">
+          Events drive leads, and BetterUp's existing event cadence is doing its job.
+        </CardParagraph>
+        <CardVisual>
+          <CadenceTimeline
+            points={['Q1 event', 'Q2 event', 'Q3 event', 'Q4 event']}
+            caption="Existing cadence · working"
+            captionPosition="below"
+            accent={COLOR_MIN_ACCENT}
+            ground="parchment"
+          />
+        </CardVisual>
+        <CardParagraph ground="parchment" marginTop={16}>
+          But events don't fix the trust signal that an agent reads when it researches you.{' '}
+          <Underline color={COLOR_MIN_ACCENT}>The buyer who's been to your event still asks Perplexity about you before she reaches out</Underline>.
+        </CardParagraph>
+        <CardParagraph ground="parchment" marginTop={24}>
+          Doubling event spend doesn't change what Perplexity sees.
+        </CardParagraph>
+      </>
+    ),
+    indicator: "Events are downstream of trust. The agent's read is upstream of the event.",
+    indicatorLabel: 'Why not now',
+  },
+  {
+    ordinal: '04',
+    ordinalLabel: 'Minimum impact',
+    headline: 'Trying to perfectly attribute the $30M marketing spend to new logos.',
+    body: "The attribution model you'd need to perfectly trace $30M to new logos requires a longer feedback loop than your current trust signals have produced. You can't attribute revenue to signals you haven't fixed yet. Build the score-movement read first, then layer attribution on top of a signal infrastructure that's known to be working.",
+    richContent: (
+      <>
+        <CardParagraph ground="parchment">
+          The attribution model you'd need to perfectly trace $30M to new logos requires a longer feedback loop than your current trust signals have produced.
+        </CardParagraph>
+        <CardVisual>
+          <NoiseSignal
+            topLabel="Attribution input"
+            bottomLabel="Signal output"
+            ground="parchment"
+          />
+        </CardVisual>
+        <CardParagraph ground="parchment" marginTop={16}>
+          You can't attribute revenue to signals you haven't fixed yet.{' '}
+          <Underline color={COLOR_MIN_ACCENT}>Build the score-movement read first</Underline>, then layer attribution on top of a signal infrastructure that's known to be working.
+        </CardParagraph>
+      </>
+    ),
+    indicator: 'Attribution before signal repair is precision applied to noise.',
+    indicatorLabel: 'Why not now',
+  },
+]
+
+export function MinimumImpactSection() {
   return (
-    <div
-      style={{
-        marginTop: 40,
-        display: 'grid',
-        gridTemplateColumns: 'repeat(12, 1fr)',
-        gridAutoRows: 'minmax(0, auto)',
-        gap: 16,
-      }}
-    >
-      <BentoGaugeTile
-        onClick={() => goto('cascade')}
-        label="Brand Cascade"
-        score={41}
-        benchmark={57}
-        benchmarkLabel="category avg"
-        column="span 4"
-      />
-      <BentoGaugeTile
-        onClick={() => goto('leaders')}
-        label="GTM Signal Chain"
-        score={24}
-        benchmark={50}
-        benchmarkLabel="functional floor"
-        column="span 4"
-      />
-      <BentoGaugeTile
-        onClick={() => goto('signals')}
-        label="Content-to-Pipeline"
-        score={29}
-        benchmark={45}
-        benchmarkLabel="functional floor"
-        column="span 4"
-      />
-
-      <BentoTile onClick={() => goto('cascade')} column="span 6" tone="light">
-        <BentoEyebrow>Where the cascade breaks</BentoEyebrow>
-        <CascadeBreakVisual />
-      </BentoTile>
-
-      <BentoTile onClick={() => goto('audience')} column="span 6" tone="rust">
-        <BentoEyebrow light>Employee Brand Health</BentoEyebrow>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 20, marginTop: 8 }}>
-          <div style={{ fontFamily: FONT.display, fontSize: 72, lineHeight: 1, color: '#F7F5F2' }}>
-            32
-          </div>
-          <div style={{ fontFamily: FONT.body, fontSize: 14, color: '#F7F5F2', opacity: 0.85 }}>
-            BetterUp
-            <div style={{ opacity: 0.65, fontSize: 12 }}>vs. Torch 82 · category avg 62</div>
-          </div>
-        </div>
-        <div style={{ fontFamily: FONT.display, fontStyle: 'italic', fontSize: 20, color: '#F7F5F2', marginTop: 16, lineHeight: 1.3 }}>
-          Your competitor's greatest strength is your greatest weakness.
-        </div>
-      </BentoTile>
-
-      <BentoTile onClick={() => goto('mirror')} column="span 4" tone="dark">
-        <BentoEyebrow light>AI Mirror</BentoEyebrow>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginTop: 8 }}>
-          <div style={{ fontFamily: FONT.display, fontSize: 64, lineHeight: 1, color: '#D86A48' }}>38</div>
-          <div style={{ fontFamily: FONT.mono, fontSize: 11, color: '#F7F5F2', opacity: 0.55 }}>/ 100</div>
-        </div>
-        <div style={{ fontFamily: FONT.body, fontSize: 14, color: '#F7F5F2', marginTop: 14, lineHeight: 1.45 }}>
-          Product praised, organization questioned. That's what your buyer's AI search returns.
-        </div>
-      </BentoTile>
-
-      <BentoTile onClick={() => goto('leaders')} column="span 4" tone="light">
-        <BentoEyebrow>GTM Signal Chain</BentoEyebrow>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 10 }}>
-          <BentoBigStat value="6%" label="of commenters on CEO content match the buyer profile" />
-          <BentoBigStat value="0%" label="of sales team content addresses buyer pain points" />
-        </div>
-      </BentoTile>
-
-      <BentoTile column="span 4" tone="quote">
-        <BentoEyebrow>Core finding</BentoEyebrow>
-        <div
-          style={{
-            fontFamily: FONT.display,
-            fontStyle: 'italic',
-            fontSize: 18,
-            lineHeight: 1.35,
-            color: '#1A1A1A',
-            marginTop: 10,
-          }}
-        >
-          "A category pioneer leaking pipeline not because the product fails, but because the CEO talks about human potential while the sales team has zero content addressing the CHRO's Monday morning budget meeting."
-        </div>
-      </BentoTile>
-    </div>
-  )
-}
-
-function BentoTile({
-  onClick,
-  children,
-  column,
-  tone = 'light',
-}: {
-  onClick?: () => void
-  children: React.ReactNode
-  column: string
-  tone?: 'light' | 'dark' | 'rust' | 'quote'
-}) {
-  const bg = tone === 'dark' ? '#1A1A1A' : tone === 'rust' ? '#C85A3A' : tone === 'quote' ? '#F0EDEA' : '#FFFFFF'
-  const border = tone === 'light' || tone === 'quote' ? '1px solid #E8E4DE' : 'none'
-  return (
-    <div
-      onClick={onClick}
-      role={onClick ? 'button' : undefined}
-      tabIndex={onClick ? 0 : undefined}
-      onKeyDown={(e) => { if (onClick && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onClick() } }}
-      style={{
-        gridColumn: column,
-        background: bg,
-        border,
-        borderRadius: 8,
-        padding: '20px 22px',
-        cursor: onClick ? 'pointer' : 'default',
-        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-        minHeight: 160,
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-      onMouseEnter={(e) => {
-        if (onClick) {
-          e.currentTarget.style.transform = 'translateY(-2px)'
-          e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.10)'
-        }
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)'
-        e.currentTarget.style.boxShadow = 'none'
-      }}
-    >
-      {children}
-    </div>
-  )
-}
-
-function BentoEyebrow({ children, light }: { children: React.ReactNode; light?: boolean }) {
-  return (
-    <div
-      style={{
-        fontFamily: FONT.body,
-        fontSize: 10,
-        letterSpacing: '0.16em',
-        textTransform: 'uppercase',
-        color: light ? 'rgba(247,245,242,0.75)' : '#9A958C',
-        fontWeight: 600,
-      }}
-    >
-      {children}
-    </div>
-  )
-}
-
-function BentoGaugeTile({
-  label,
-  score,
-  benchmark,
-  benchmarkLabel,
-  column,
-  onClick,
-}: {
-  label: string
-  score: number
-  benchmark: number
-  benchmarkLabel: string
-  column: string
-  onClick: () => void
-}) {
-  return (
-    <BentoTile onClick={onClick} column={column} tone="light">
-      <BentoEyebrow>{label}</BentoEyebrow>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, paddingTop: 8 }}>
-        <Gauge score={score} benchmark={benchmark} benchmarkLabel={benchmarkLabel} size={140} />
-      </div>
-    </BentoTile>
-  )
-}
-
-function BentoBigStat({ value, label }: { value: string; label: string }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-      <div style={{ fontFamily: FONT.display, fontSize: 34, color: '#C85A3A', lineHeight: 1 }}>{value}</div>
-      <div style={{ fontFamily: FONT.body, fontSize: 12, color: '#1A1A1A', lineHeight: 1.4 }}>{label}</div>
-    </div>
-  )
-}
-
-function CascadeBreakVisual() {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 12 }}>
-      {CASCADE_LAYERS.map((layer) => {
-        const color = layer.score >= 60 ? '#3A9B6E' : layer.score >= 40 ? '#C85A3A' : '#C84438'
-        const isBreak = layer.status === 'Cascade Break'
-        return (
-          <div key={layer.number} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ fontFamily: FONT.mono, fontSize: 10, color: '#9A958C', width: 18 }}>{layer.number}</span>
-            <span style={{ fontFamily: FONT.body, fontSize: 12, color: isBreak ? '#C84438' : '#1A1A1A', flex: 1, fontWeight: isBreak ? 600 : 400 }}>
-              {layer.name}
-            </span>
-            <div style={{ flex: 2, height: 6, background: '#E8E4DE', borderRadius: 3, overflow: 'hidden' }}>
-              <div style={{ width: `${layer.score}%`, height: '100%', background: color, borderRadius: 3 }} />
-            </div>
-            <span style={{ fontFamily: FONT.mono, fontSize: 11, color: isBreak ? '#C84438' : '#1A1A1A', width: 28, textAlign: 'right', fontWeight: isBreak ? 600 : 400 }}>
-              {layer.score}
-            </span>
-          </div>
-        )
-      })}
-    </div>
-  )
-}
-
-function CoreFindingEditorial() {
-  const beforePullQuote1 = CORE_FINDING_PARAGRAPHS.slice(0, 3)
-  const afterPullQuote1 = CORE_FINDING_PARAGRAPHS.slice(3)
-
-  // Break out of the Section container's 32px horizontal padding to make this feel
-  // like a band running across the page.
-  return (
-    <div
-      style={{
-        background: '#F0EDEA',
-        marginTop: 112,
-        marginLeft: 'calc(-1 * (50vw - 50%))',
-        marginRight: 'calc(-1 * (50vw - 50%))',
-        paddingLeft: 'calc(50vw - 50%)',
-        paddingRight: 'calc(50vw - 50%)',
-        paddingTop: 96,
-        paddingBottom: 96,
-        position: 'relative',
-      }}
-    >
-      {/* Inner column for body text */}
-      <div style={{ maxWidth: 680, margin: '0 auto', position: 'relative' }}>
-        {/* Section number kicker */}
-        <Reveal>
-          <div style={{ position: 'relative', marginBottom: 32 }}>
-            <div
-              style={{
-                width: 64,
-                height: 2,
-                background: '#C85A3A',
-                marginBottom: 24,
-              }}
-            />
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 24 }}>
-              <span
-                style={{
-                  fontFamily: FONT.display,
-                  fontStyle: 'italic',
-                  fontSize: 'clamp(72px, 9vw, 112px)',
-                  color: '#C85A3A',
-                  opacity: 0.18,
-                  lineHeight: 0.9,
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                01
-              </span>
-              <span
-                style={{
-                  fontFamily: FONT.body,
-                  fontSize: 12,
-                  letterSpacing: '0.2em',
-                  textTransform: 'uppercase',
-                  color: '#C85A3A',
-                  fontWeight: 600,
-                }}
-              >
-                Core finding
-              </span>
-            </div>
-          </div>
-        </Reveal>
-
-        {/* Paragraphs before pull quote 1 — tight spacing */}
-        {beforePullQuote1.map((p, i) => (
-          <Reveal key={`pre-${i}`} delay={i * 0.04}>
-            <p
-              style={{
-                fontFamily: FONT.body,
-                fontSize: 19,
-                lineHeight: 1.65,
-                color: '#1A1A1A',
-                margin: '0 0 18px',
-              }}
-            >
-              {p}
-            </p>
-          </Reveal>
-        ))}
-      </div>
-
-      {/* Pull quote 1 — wider than body, breaks out of the column */}
+    <Section id="dont" background="#F4F1EA">
+      <IssueBar number="§03" name="Minimum impact" meta={['BetterUp', 'Resist these']} />
       <Reveal>
-        <PullQuote text={PULL_QUOTE_1} anchorId="quote-1" />
+        <ImpactCardGrid
+          eyebrow="§03 · MINIMUM IMPACT"
+          headline="The four motions that look productive and don't move what the buyer reads."
+          cards={MIN_IMPACT_CARDS}
+          ground="parchment"
+        />
       </Reveal>
+    </Section>
+  )
+}
 
-      {/* Paragraphs after pull quote 1 — tight spacing */}
-      <div style={{ maxWidth: 680, margin: '0 auto' }}>
-        {afterPullQuote1.map((p, i) => (
-          <Reveal key={`post-${i}`} delay={i * 0.04}>
-            <p
-              style={{
-                fontFamily: FONT.body,
-                fontSize: 19,
-                lineHeight: 1.65,
-                color: '#1A1A1A',
-                margin: '0 0 18px',
-              }}
-            >
-              {p}
-            </p>
-          </Reveal>
-        ))}
-      </div>
 
-      {/* Pull quote 2 — closer */}
-      <Reveal>
-        <PullQuote text={PULL_QUOTE_2} anchorId="quote-2" />
-      </Reveal>
-
-      {/* Bottom rust rule as transition out */}
-      <div
-        style={{
-          maxWidth: 680,
-          margin: '64px auto 0',
-          height: 1,
-          background: 'linear-gradient(90deg, transparent, #C85A3A 30%, #C85A3A 70%, transparent)',
-          opacity: 0.4,
-        }}
+/* ──────────────────────────────────────────────
+   §05 — THE PROOF intro (sub-sections render after)
+   ────────────────────────────────────────────── */
+function ProofSectionIntro() {
+  const { palette } = useTheme()
+  return (
+    <Section id="proof">
+      <IssueBar
+        number="§05"
+        name="The proof"
+        meta={['BetterUp', 'Forensic record']}
       />
-    </div>
-  )
-}
-
-function PullQuote({ text, anchorId }: { text: string; anchorId?: string }) {
-  return (
-    <blockquote
-      id={anchorId}
-      style={{
-        maxWidth: 880,
-        margin: '72px auto',
-        padding: '0 32px 0 56px',
-        position: 'relative',
-        fontFamily: FONT.display,
-        fontStyle: 'italic',
-        fontSize: 'clamp(30px, 4vw, 46px)',
-        lineHeight: 1.2,
-        color: '#1A1A1A',
-        fontWeight: 400,
-      }}
-    >
-      {/* Oversized opening quote mark */}
-      <span
-        aria-hidden
-        style={{
-          position: 'absolute',
-          left: 0,
-          top: -8,
-          fontFamily: FONT.display,
-          fontStyle: 'italic',
-          fontSize: 96,
-          color: '#C85A3A',
-          lineHeight: 1,
-          opacity: 0.55,
-        }}
-      >
-        “
-      </span>
-      {text}
-      {anchorId && (
-        <div style={{ marginTop: 24, display: 'flex', justifyContent: 'flex-end' }}>
-          <ShareButton anchorId={anchorId} label="this quote" size="sm" />
-        </div>
-      )}
-    </blockquote>
-  )
-}
-
-function StrengthsVulnerabilities() {
-  return (
-    <div
-      style={{
-        marginTop: 56,
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-        gap: 24,
-      }}
-    >
-      <Column title="Top 3 Strengths" items={STRENGTHS} accent="#3A9B6E" />
-      <Column title="Top 3 Vulnerabilities" items={VULNERABILITIES} accent="#C84438" />
-    </div>
-  )
-}
-
-function Column({ title, items, accent }: { title: string; items: string[]; accent: string }) {
-  return (
-    <div
-      style={{
-        background: '#FFFFFF',
-        border: '1px solid #E8E4DE',
-        borderRadius: 6,
-        padding: '28px 32px',
-      }}
-    >
-      <div
-        style={{
-          fontFamily: FONT.body,
-          fontSize: 11,
-          letterSpacing: '0.16em',
-          textTransform: 'uppercase',
-          color: accent,
-          marginBottom: 20,
-          fontWeight: 600,
-        }}
-      >
-        {title}
-      </div>
-      <ol style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 18 }}>
-        {items.map((item, i) => (
-          <li
-            key={i}
+      <Reveal>
+        <div style={{ maxWidth: 760 }}>
+          <div
             style={{
-              fontFamily: FONT.body,
-              fontSize: 15,
-              lineHeight: 1.55,
-              color: '#1A1A1A',
-              display: 'flex',
-              gap: 14,
+              fontFamily: FONT.mono,
+              fontSize: 11,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: palette.textDim,
+              fontWeight: 600,
+              marginBottom: 18,
             }}
           >
-            <span
-              style={{
-                fontFamily: FONT.mono,
-                fontSize: 13,
-                color: accent,
-                flex: '0 0 auto',
-                paddingTop: 2,
-              }}
-            >
-              0{i + 1}
-            </span>
-            <span>{item}</span>
-          </li>
-        ))}
-      </ol>
-    </div>
+            §05 · The proof
+          </div>
+          <h2
+            style={{
+              fontFamily: FONT.mega,
+              fontSize: 'clamp(40px, 7vw, 96px)',
+              fontWeight: 400,
+              lineHeight: 0.95,
+              letterSpacing: '-0.01em',
+              textTransform: 'uppercase',
+              color: palette.text,
+              margin: '0 0 20px',
+            }}
+          >
+            Four separate readings of what the buyer is encountering. They all point the same way.
+          </h2>
+          <p
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 18,
+              lineHeight: 1.55,
+              color: palette.text,
+              margin: 0,
+              maxWidth: 640,
+            }}
+          >
+            Each sub-section opens with what the buyer finds today, what it looks like when the chain is intact, and what to do first. The detailed evidence sits beneath. The roadmap at §05.8 lands the four Maximum Impact moves above.
+          </p>
+        </div>
+      </Reveal>
+    </Section>
+  )
+}
+
+/* ──────────────────────────────────────────────
+   §06 — WHAT WE'D DO NEXT TOGETHER
+   ────────────────────────────────────────────── */
+export function NextTogetherSection() {
+  const posthog = usePostHog()
+  return (
+    <Section id="together" background="#0A0A0A">
+      <div style={{ color: '#FFFFFF' }}>
+        <IssueBar
+          number="§06"
+          name="What we'd do next together"
+          meta={['BetterUp', '90-day pilot · Quarterly rhythm']}
+          ground="dark"
+        />
+        <Reveal>
+          <PartnershipSection
+            eyebrow="§06 · WHAT WE'D DO NEXT TOGETHER"
+            headline="A 90-day pilot to prove the score moves, and a quarterly rhythm to keep it moving."
+            blocks={[
+              {
+                eyebrow: 'The 90-day pilot',
+                headline: 'Stand up the four Maximum Impact moves and measure what they actually move.',
+                items: [
+                  'Fix the inaccurate public data',
+                  'Activate three executives with ghostwritten posts',
+                  'Measure engagement lift across the activated voices',
+                  'Re-run the audit and report the score movement',
+                ],
+              },
+              {
+                eyebrow: 'The quarterly rhythm',
+                headline: 'Convert the audit from a moment into the governance system the board can budget against.',
+                items: [
+                  'Audit re-runs every quarter against the same scoring model',
+                  'Ghostwriting service for 5 to 10 named executives and reps',
+                  'Quarterly score readout to leadership with prioritized actions',
+                  'The audit becomes the trust-signal governance artifact',
+                ],
+              },
+            ]}
+            contacts={BETTERUP_CONTACTS}
+            onContactClick={(c) =>
+              posthog?.capture('audit_partnership_email_clicked', {
+                contact_name: c.name,
+                contact_role: c.role,
+                email: c.email,
+              })
+            }
+          />
+        </Reveal>
+      </div>
+    </Section>
   )
 }
 
@@ -616,11 +533,17 @@ function Column({ title, items, accent }: { title: string; items: string[]; acce
    Section 6: AI Mirror
    ────────────────────────────────────────────── */
 function AIMirror() {
+  const { palette } = useTheme()
+  const opener = betterupAudit.openers?.mirror
   return (
-    <Section id="mirror">
+    <Section id="mirror" background={palette.cobalt}>
+      <div style={{ color: '#FFFFFF' }}>
+      <IssueBar number="§05.5" name="What agents say about you" meta={[{ label: 'Score', value: '38' }, { label: 'Weight', value: '15%' }, 'BetterUp']} ground="dark" />
+      {opener && <SectionOpener {...opener} ground="dark" />}
+      <SectionAnalysisDisclosure ground="dark">
       <SectionHeader
-        kicker="The AI Mirror"
-        headline="When your buyer asks an AI about you, does the answer help or hurt?"
+        kicker="What agents say about you"
+        headline="When a CHRO asks ChatGPT or Claude about BetterUp, the answer balances praise with caution."
         shareId="mirror"
       />
 
@@ -629,7 +552,7 @@ function AIMirror() {
           style={{
             background: '#FFFFFF',
             border: '1px solid #E8E4DE',
-            borderRadius: 6,
+            borderRadius: 0,
             padding: '28px 32px',
             fontFamily: FONT.body,
             fontSize: 16,
@@ -652,12 +575,12 @@ function AIMirror() {
         >
           <ChatColumn
             tone="aspirational"
-            title="What BetterUp wants the AI to say"
+            title="What you want the agent to say"
             items={WANTS_TO_SAY.map((t) => ({ tone: 'aspirational', text: t }))}
           />
           <ChatColumn
             tone="real"
-            title="What the AI actually says"
+            title="What the agent actually says"
             items={[...ACTUALLY_SAYS]}
           />
         </div>
@@ -671,7 +594,7 @@ function AIMirror() {
             justifyContent: 'center',
           }}
         >
-          <Gauge score={AI_MIRROR_SCORE} benchmark={65} benchmarkLabel="high-performing floor" label="AI Mirror Score" size={180} />
+          <Gauge score={AI_MIRROR_SCORE} benchmark={65} benchmarkLabel="high-performing floor" label="Agents score" size={180} />
         </div>
       </Reveal>
 
@@ -702,6 +625,8 @@ function AIMirror() {
       <Reveal delay={0.1}>
         <TestYourself />
       </Reveal>
+      </SectionAnalysisDisclosure>
+      </div>
     </Section>
   )
 }
@@ -722,7 +647,7 @@ function BuyerPromptCard() {
         marginTop: 48,
         background: '#FBF9F6',
         border: '1px solid #E8E4DE',
-        borderRadius: 10,
+        borderRadius: 0,
         padding: '28px 32px',
       }}
     >
@@ -741,7 +666,7 @@ function BuyerPromptCard() {
             background: '#1A1A1A',
             color: '#F7F5F2',
             border: 'none',
-            borderRadius: 6,
+            borderRadius: 0,
             padding: '10px 18px',
             fontFamily: FONT.body,
             fontSize: 12,
@@ -762,7 +687,7 @@ function BuyerPromptCard() {
           color: '#1A1A1A',
           background: '#FFFFFF',
           border: '1px solid #E8E4DE',
-          borderRadius: 6,
+          borderRadius: 0,
           padding: '20px 24px',
           whiteSpace: 'pre-wrap',
         }}
@@ -793,7 +718,7 @@ function ChatColumn({
       style={{
         background: isAspirational ? '#FBF9F6' : '#FFFFFF',
         border: `1px solid #E8E4DE`,
-        borderRadius: 12,
+        borderRadius: 0,
         padding: '24px 26px 28px',
         display: 'flex',
         flexDirection: 'column',
@@ -891,7 +816,7 @@ function ChatColumn({
             padding: '16px 18px',
             background: '#1A1A1A',
             color: '#FFFFFF',
-            borderRadius: 8,
+            borderRadius: 0,
             fontFamily: FONT.body,
             fontSize: 14,
             lineHeight: 1.5,
@@ -923,7 +848,7 @@ function TestYourself() {
         marginTop: 48,
         background: '#1A1A1A',
         color: '#F7F5F2',
-        borderRadius: 6,
+        borderRadius: 0,
         padding: '32px 36px',
       }}
     >
@@ -952,7 +877,7 @@ function TestYourself() {
               padding: '14px 18px',
               background: 'rgba(255,255,255,0.04)',
               border: '1px solid rgba(255,255,255,0.08)',
-              borderRadius: 4,
+              borderRadius: 0,
             }}
           >
             <span style={{ color: '#D86A48', marginRight: 12 }}>›</span>
@@ -1029,49 +954,66 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
   return (
     <ThemeContext.Provider value={theme}>
       <DataLayerProvider defaultLayer={eraMode ? 'era' : 'era-plus-bh'} showLayerToggle={eraMode}>
-        <DataLayerSync layer={layer} setLayer={setLayer} />
-        <div style={{ background: theme.palette.bg, minHeight: '100vh', color: theme.palette.text, fontFamily: FONT.body }}>
-          <StepperNav
-            items={SECTIONS}
-            onToggleTheme={handleThemeToggle}
-            themeMode={theme.mode}
-            layerToggle={eraMode ? { layer, onSet: handleLayerSet } : undefined}
-            viewModeToggle={!eraMode ? { mode: viewMode, onSet: handleViewModeSet } : undefined}
-          />
-          <div style={{ paddingTop: 60 }}>
-            <AnimatePresence mode="wait">
-              {!eraMode && viewMode === 'summary' ? (
-                <motion.div
-                  key="summary"
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <SummaryView />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="full"
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <ExecutiveSummary />
-                  <CascadeSection />
-                  <GTMSection />
-                  <PopulationSection />
-                  <SignalsSection />
-                  <AIMirror />
-                  <AudienceSection />
-                  <InvestmentSection />
-                  <BuildSection />
-                </motion.div>
-              )}
-            </AnimatePresence>
+        <ScoreDrawerProvider>
+          <DataLayerSync layer={layer} setLayer={setLayer} />
+          <div className="v4-root" style={{ background: theme.palette.bg, minHeight: '100vh', color: theme.palette.text, fontFamily: FONT.body }}>
+            <StepperNav
+              items={SECTIONS}
+              onToggleTheme={handleThemeToggle}
+              themeMode={theme.mode}
+              layerToggle={eraMode ? { layer, onSet: handleLayerSet } : undefined}
+              viewModeToggle={!eraMode ? { mode: viewMode, onSet: handleViewModeSet } : undefined}
+            />
+            <div style={{ paddingTop: 60 }}>
+              <AnimatePresence mode="wait">
+                {!eraMode && viewMode === 'summary' ? (
+                  <motion.div
+                    key="summary"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <SummaryView />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="full"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    {/* §01 — Recommendation lead. The gauge here opens a drawer
+                       carrying the diagnostic depth that used to live in §04. */}
+                    <RecommendationSection />
+                    {/* §02 — Maximum impact (do this) */}
+                    <MaximumImpactSection />
+                    {/* §03 — Minimum impact (don't do this) */}
+                    <MinimumImpactSection />
+                    {/* §05 — Full forensic record, with existing analytical sections as §05.1–§05.8 */}
+                    <ProofSectionIntro />
+                    <CascadeSection />
+                    <GTMSection />
+                    <PopulationSection />
+                    <SignalsSection />
+                    <AIMirror />
+                    <AudienceSection />
+                    <InvestmentSection />
+                    <BuildSection />
+                    {/* §06 — Partnership ask */}
+                    <NextTogetherSection />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+            <ScoreBreakdownDrawer
+              scores={betterupAudit.currentScores}
+              projectedScores={betterupAudit.projectedScores}
+              roadmapAnchor="build"
+            />
           </div>
-        </div>
+        </ScoreDrawerProvider>
       </DataLayerProvider>
     </ThemeContext.Provider>
   )

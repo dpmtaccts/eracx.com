@@ -35,8 +35,9 @@
  * static pentagon's vertex order so the visual identity carries over.
  */
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
+  animate,
   motion,
   useScroll,
   useTransform,
@@ -177,6 +178,26 @@ const MARKERS: Marker[] = [
 // Final terminus marker (DEAL MOVING) animates in last.
 const TERMINUS = { cx: 1300, cy: 145, r: 10, progressIn: 0.90 }
 
+// Matches the (max-width: 767px) breakpoint used elsewhere on /v4 for the
+// "mobile" boundary. Tracks live so a window resize across the boundary
+// flips animation modes on next render.
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return false
+    return window.matchMedia('(max-width: 767px)').matches
+  })
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return
+    const mq = window.matchMedia('(max-width: 767px)')
+    const onChange = () => setIsMobile(mq.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+
+  return isMobile
+}
+
 // ----- Component -----
 
 interface ScoreState {
@@ -214,6 +235,7 @@ export function V4WarmthOverTime() {
   // clears the viewport. Wrapper height + sticky offset are tuned in CSS.
   const wrapperRef = useRef<HTMLDivElement>(null)
   const reducedMotion = useReducedMotion()
+  const isMobile = useIsMobile()
 
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
@@ -226,8 +248,62 @@ export function V4WarmthOverTime() {
   // back up. Resets only when the component remounts (page reload).
   const progress = useMotionValue(0)
   useMotionValueEvent(scrollYProgress, 'change', (p) => {
+    // Mobile drives `progress` from a fixed-duration timer instead of
+    // scroll position (see effect below). Skip the scroll ratchet there
+    // so the two drivers don't fight.
+    if (isMobile) return
     if (p > progress.get()) progress.set(p)
   })
+
+  // Mobile: time-based playback. Scroll velocity on phones is too high
+  // for the desktop scroll-driven choreography to read — users flick
+  // past the section before any of it plays. Instead, an
+  // IntersectionObserver fires once ~100px of the section is visible
+  // and an animate() call runs `progress` 0 → 1 over 1.2s on a fixed
+  // cubic-bezier curve, independent of further scrolling. Exiting the
+  // viewport resets so re-entry replays.
+  useEffect(() => {
+    if (!isMobile || reducedMotion) return
+    const node = wrapperRef.current
+    if (!node) return
+
+    let controls: ReturnType<typeof animate> | null = null
+    let isPlaying = false
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        if (!entry) return
+        if (entry.isIntersecting) {
+          if (isPlaying) return
+          isPlaying = true
+          progress.set(0)
+          controls = animate(progress, 1, {
+            duration: 1.2,
+            ease: [0.4, 0, 0.2, 1],
+          })
+        } else {
+          isPlaying = false
+          controls?.stop()
+          controls = null
+          progress.set(0)
+        }
+      },
+      {
+        // Trigger when ~100px of the section has scrolled into the
+        // viewport from the bottom. Equivalent to "5–10% in view" for
+        // the typical section height on a phone.
+        rootMargin: '0px 0px -100px 0px',
+        threshold: 0,
+      },
+    )
+
+    observer.observe(node)
+    return () => {
+      observer.disconnect()
+      controls?.stop()
+    }
+  }, [isMobile, reducedMotion, progress])
 
   // Pentagon polygon points — derived from animated axis scores.
   const polygonPoints = useTransform<number, string>(progress, (p) => {

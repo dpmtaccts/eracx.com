@@ -28,7 +28,7 @@ export const GTM_COMPOSITE_SCORE = 24
 
 export const GTM_HEADLINE = 'Your buyer encounters your brand through people, not through pages, and the people they meet on the way to a purchase decision are deciding whether the rest of the conversation is worth having.'
 
-export const GTM_REFRAME = `This is less a CEO LinkedIn audit than a survey of the entire human surface area BetterUp presents to a buyer in due diligence. The question worth asking is not whether any one executive is posting well, but whether the chain of people a CHRO will inevitably encounter — the CEO, the marketing leader, the seller assigned to the account, the account manager who will own the relationship after close, the coaches who will deliver the work, the client champions whose names appear in the case studies — collectively builds the trust the product deserves. Across six profiles and several months of activity, the chain breaks in nearly every link, and the pattern is consistent enough to read as design rather than personal failure.`
+export const GTM_REFRAME = `This is less a CEO LinkedIn audit than a survey of the entire human surface area BetterUp presents to a buyer in due diligence. The question worth asking is not whether any one executive is posting well, but whether the chain of people a CHRO will inevitably encounter (the CEO, the marketing leader, the seller assigned to the account, the account manager who will own the relationship after close, the coaches who will deliver the work, and the client champions whose names appear in the case studies) collectively builds the trust the product deserves. Across six profiles and several months of activity, the chain breaks in nearly every link, and the pattern is consistent enough to read as design rather than personal failure.`
 
 export const CHANNELS: GTMChannel[] = [
   {
@@ -41,7 +41,7 @@ export const CHANNELS: GTMChannel[] = [
     metrics: [
       { value: '~11', label: 'Posts (12 mo)' },
       { value: '270', label: 'Avg reactions' },
-      { value: '6%', label: 'ICP commenter match' },
+      { value: '6%', label: 'Named-buyer match' },
       { value: '2', label: 'Original posts' },
     ],
     dimensions: [
@@ -56,7 +56,7 @@ export const CHANNELS: GTMChannel[] = [
       'Alexi\'s conviction is real. His attention is inward. 62% of his comment engagement goes to current or former BetterUp employees. The enterprise buyer who would write a $2M check does not appear in his engagement data.',
     commenterSample: {
       label: 'Sample of recent commenters on Alexi\'s posts',
-      note: '6% ICP match. Coaches and former employees dominate. One verified buyer (Manjuri Sinha, VP HR at Miro) across the entire dataset.',
+      note: '6% named-buyer match. Coaches and former employees dominate. One verified buyer (Manjuri Sinha, VP HR at Miro) across the entire dataset.',
       list: [
         { name: 'Joe Komara', title: 'BetterUp Coach', tag: 'coach' },
         { name: 'Sukh Mishraa', title: 'BetterUp Coach', tag: 'coach' },
@@ -81,7 +81,7 @@ export const CHANNELS: GTMChannel[] = [
     metrics: [
       { value: '3', label: 'Posts (12 mo)' },
       { value: '44', label: 'Avg reactions' },
-      { value: '0%', label: 'ICP commenter match' },
+      { value: '0%', label: 'Named-buyer match' },
       { value: '0', label: 'Original (12+ mo)' },
     ],
     dimensions: [
@@ -109,14 +109,14 @@ export const CHANNELS: GTMChannel[] = [
     metrics: [
       { value: '3', label: 'Posts (12 mo)' },
       { value: '80', label: 'Avg reactions' },
-      { value: '0%', label: 'ICP match post-hire' },
+      { value: '0%', label: 'Named-buyer match post-hire' },
       { value: '1', label: 'Original post' },
     ],
     dimensions: [
       { label: 'Authority', score: 10, note: 'No visible expertise on coaching, leadership development, or enterprise HR.' },
       { label: 'Trust', score: 8, note: 'No content that would make a CHRO take a meeting.' },
       { label: 'Distribution', score: 10, note: 'Posting too infrequently for algorithmic reach.' },
-      { label: 'Relationship', score: 20, note: 'New-position commenters include ICP-adjacent contacts he has not engaged with since.' },
+      { label: 'Relationship', score: 20, note: 'New-position commenters include named-buyer-adjacent contacts he has not engaged with since.' },
       { label: 'Funnel Mix', score: 5, note: 'No funnel-relevant content.' },
       { label: 'Business Impact', score: 5, note: 'Zero client outcomes, zero ROI content.' },
     ],
@@ -137,7 +137,7 @@ export const CHANNELS: GTMChannel[] = [
     metrics: [
       { value: '~10', label: 'Posts (18 mo)' },
       { value: '48', label: 'Avg reactions' },
-      { value: '0%', label: 'ICP commenter match' },
+      { value: '0%', label: 'Named-buyer match' },
       { value: '2', label: 'Original posts' },
     ],
     dimensions: [
@@ -192,7 +192,7 @@ export const CHANNELS: GTMChannel[] = [
     score: 20,
     metrics: [
       { value: '750+', label: 'Enterprise clients' },
-      { value: '1', label: 'Verified ICP commenter (across all profiles)' },
+      { value: '1', label: 'Verified named-buyer commenter (across all profiles)' },
       { value: '0', label: 'Active advocacy program' },
       { value: '25', label: 'High-leverage targets' },
     ],
@@ -205,7 +205,7 @@ export const CHANNELS: GTMChannel[] = [
       { label: 'Business Impact', score: 15, note: 'Outcomes are not being told publicly by the people who lived them.' },
     ],
     keyFinding:
-      'Client champions are the most credible voice in BetterUp\'s go-to-market. A CHRO at Pfizer posting about coaching outcomes carries more weight with a peer CHRO than any BetterUp employee post. This channel exists in theory but is not being activated on LinkedIn.',
+      "Client champions are the most credible voice in BetterUp's sales and marketing motion. A CHRO at Pfizer posting about coaching outcomes carries more weight with a peer CHRO than any BetterUp employee post. This channel exists in theory but is not being activated on LinkedIn.",
     threeThings: [
       'Identify 25 client-side champions (CHROs, CLOs, VP Talent at current accounts). Build a quarterly engagement cadence.',
       'Launch a Client Voices content program: co-authored posts, case study spotlights, Uplift recap content featuring their perspective.',
