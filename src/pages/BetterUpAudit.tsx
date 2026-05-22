@@ -53,10 +53,8 @@ import {
   StruckRows,
   Underline,
 } from '../components/audit/InlineVisuals'
-import { PartnershipSection } from '../components/audit/PartnershipSection'
 import { ScoreDrawerProvider } from '../components/audit/ScoreDrawerContext'
 import { ScoreBreakdownDrawer } from '../components/audit/ScoreBreakdownDrawer'
-import { CONTACTS as BETTERUP_CONTACTS } from './betterup/data/build'
 
 /* ──────────────────────────────────────────────
    §01 — THE RECOMMENDATION
@@ -475,57 +473,152 @@ function ProofSectionIntro() {
 }
 
 /* ──────────────────────────────────────────────
-   §06 — WHAT WE'D DO NEXT TOGETHER
+   §06 — THE CONNECTION
+   Close on parchment so the two firm marks at the foot sit on a calm,
+   native-color ground rather than fighting an ink background. Argument
+   structure: BetterUp already owns the parts. The work is the connection.
    ────────────────────────────────────────────── */
 export function NextTogetherSection() {
-  const posthog = usePostHog()
   return (
-    <Section id="together" background="#0A0A0A">
-      <div style={{ color: '#FFFFFF' }}>
-        <IssueBar
-          number="§06"
-          name="What we'd do next together"
-          meta={['BetterUp', '90-day pilot · Quarterly rhythm']}
-          ground="dark"
-        />
-        <Reveal>
-          <PartnershipSection
-            eyebrow="§06 · WHAT WE'D DO NEXT TOGETHER"
-            headline="A 90-day pilot to prove the score moves, and a quarterly rhythm to keep it moving."
-            blocks={[
-              {
-                eyebrow: 'The 90-day pilot',
-                headline: 'Stand up the four Maximum Impact moves and measure what they actually move.',
-                items: [
-                  'Fix the inaccurate public data',
-                  'Activate three executives with ghostwritten posts',
-                  'Measure engagement lift across the activated voices',
-                  'Re-run the audit and report the score movement',
-                ],
-              },
-              {
-                eyebrow: 'The quarterly rhythm',
-                headline: 'Convert the audit from a moment into the governance system the board can budget against.',
-                items: [
-                  'Audit re-runs every quarter against the same scoring model',
-                  'Ghostwriting service for 5 to 10 named executives and reps',
-                  'Quarterly score readout to leadership with prioritized actions',
-                  'The audit becomes the trust-signal governance artifact',
-                ],
-              },
-            ]}
-            contacts={BETTERUP_CONTACTS}
-            onContactClick={(c) =>
-              posthog?.capture('audit_partnership_email_clicked', {
-                contact_name: c.name,
-                contact_role: c.role,
-                email: c.email,
-              })
-            }
-          />
-        </Reveal>
-      </div>
+    <Section id="together" background="#F4F1EA">
+      <IssueBar
+        number="§06"
+        name="The connection"
+        meta={['BetterUp', betterupAudit.reportDate]}
+      />
+      <Reveal>
+        <div style={{ maxWidth: 880 }}>
+          {/* Headline — Anton mega, sentence case with period */}
+          <h2
+            style={{
+              fontFamily: FONT.mega,
+              fontSize: 'clamp(56px, 10vw, 144px)',
+              fontWeight: 400,
+              lineHeight: 0.92,
+              letterSpacing: '-0.01em',
+              textTransform: 'uppercase',
+              color: '#0A0A0A',
+              margin: '0 0 40px',
+            }}
+          >
+            You are one connection away.
+          </h2>
+
+          {/* Body — the parts-versus-connection argument */}
+          <p
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 22,
+              lineHeight: 1.55,
+              color: '#0A0A0A',
+              margin: '0 0 28px',
+              maxWidth: 720,
+            }}
+          >
+            You already have the content. Pinwheel produces it, and it is good. You already have the intent, executives with a real point of view, and buyers who are already paying attention, as the last twelve names showed. What you do not have yet is the system that connects them. Something that carries the right content to the surfaces your buyer actually uses, on a cadence she can trust, without taking hours back from the people whose time is worth the most.
+          </p>
+          <p
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 22,
+              lineHeight: 1.55,
+              color: '#0A0A0A',
+              margin: '0 0 40px',
+              maxWidth: 720,
+            }}
+          >
+            The parts are not the problem. The connection is. That is the work, and it is the part that compounds.
+          </p>
+
+          {/* Quiet handoff line, set apart visually */}
+          <p
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 17,
+              lineHeight: 1.55,
+              color: 'rgba(10, 10, 10, 0.65)',
+              margin: '0 0 64px',
+              paddingTop: 24,
+              borderTop: '1px solid rgba(10, 10, 10, 0.18)',
+              maxWidth: 640,
+            }}
+          >
+            Moving this is a program, not a campaign. It runs in quarters, and it gets stronger the longer it runs.
+          </p>
+
+          {/* Co-sign block — two firm marks as peers, ERA symbol + Pinwheel logo */}
+          <CoSign />
+        </div>
+      </Reveal>
     </Section>
+  )
+}
+
+function CoSign() {
+  return (
+    <div style={{ paddingTop: 48, borderTop: '2px solid #0A0A0A' }}>
+      <div
+        style={{
+          fontFamily: FONT.mono,
+          fontSize: 10,
+          letterSpacing: '0.18em',
+          textTransform: 'uppercase',
+          color: 'rgba(10, 10, 10, 0.6)',
+          fontWeight: 600,
+          marginBottom: 24,
+        }}
+      >
+        Co-signed by
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 32,
+          flexWrap: 'wrap',
+        }}
+      >
+        <img
+          src="/images/era_symbol.svg"
+          alt="ERA"
+          style={{
+            height: 56,
+            width: 'auto',
+            display: 'block',
+          }}
+        />
+        <div
+          aria-hidden
+          style={{
+            width: 1,
+            height: 56,
+            background: 'rgba(10, 10, 10, 0.25)',
+          }}
+        />
+        <img
+          src="/assets/pinwheel_agency_logo.jpg"
+          alt="Pinwheel"
+          style={{
+            height: 56,
+            width: 'auto',
+            display: 'block',
+          }}
+        />
+      </div>
+      <div
+        style={{
+          fontFamily: FONT.mono,
+          fontSize: 11,
+          letterSpacing: '0.18em',
+          textTransform: 'uppercase',
+          color: 'rgba(10, 10, 10, 0.55)',
+          fontWeight: 600,
+          marginTop: 20,
+        }}
+      >
+        ERA · Pinwheel
+      </div>
+    </div>
   )
 }
 
