@@ -504,7 +504,10 @@ export function NextTogetherSection() {
             You are one connection away.
           </h2>
 
-          {/* Body — the parts-versus-connection argument */}
+          {/* Body — parts-versus-connection argument, with the reallocation
+              cue threaded in: every part on the list is already a budget
+              line, so the connection is a small share of money already in
+              motion rather than a new ask. */}
           <p
             style={{
               fontFamily: FONT.body,
@@ -527,7 +530,7 @@ export function NextTogetherSection() {
               maxWidth: 720,
             }}
           >
-            The parts are not the problem. The connection is. That is the work, and it is the part that compounds.
+            Every part on that list is already a line in the budget. The connection costs a fraction of any one of them, and it is the line that decides whether the rest land in front of the buyer. The parts are not the problem. The connection is. That is the work, and it is the part that compounds.
           </p>
 
           {/* Quiet handoff line, set apart visually */}
