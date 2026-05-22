@@ -537,7 +537,7 @@ export function NextTogetherSection() {
               fontSize: 17,
               lineHeight: 1.55,
               color: 'rgba(10, 10, 10, 0.65)',
-              margin: '0 0 64px',
+              margin: '0 0 56px',
               paddingTop: 24,
               borderTop: '1px solid rgba(10, 10, 10, 0.18)',
               maxWidth: 640,
@@ -546,11 +546,102 @@ export function NextTogetherSection() {
             Moving this is a program, not a campaign. It runs in quarters, and it gets stronger the longer it runs.
           </p>
 
+          {/* 90-day plan — what the first quarter actually looks like */}
+          <NinetyDayPlan />
+
           {/* Co-sign block — two firm marks as peers, ERA symbol + Pinwheel logo */}
           <CoSign />
         </div>
       </Reveal>
     </Section>
+  )
+}
+
+function NinetyDayPlan() {
+  const items = [
+    'Fix the inaccurate public data so the agent stops repeating it.',
+    'Activate three executives with ghostwritten posts on a weekly cadence.',
+    'Measure engagement lift across the activated voices and the data hygiene pass.',
+    'Re-run the audit at week 12 and report the Buyer Trust Score movement.',
+  ] as const
+  return (
+    <div style={{ marginBottom: 64 }}>
+      <div
+        style={{
+          fontFamily: FONT.mono,
+          fontSize: 10,
+          letterSpacing: '0.18em',
+          textTransform: 'uppercase',
+          color: 'rgba(10, 10, 10, 0.6)',
+          fontWeight: 600,
+          marginBottom: 16,
+        }}
+      >
+        The 90-day plan
+      </div>
+      <h3
+        style={{
+          fontFamily: FONT.display,
+          fontSize: 'clamp(24px, 3vw, 32px)',
+          fontWeight: 400,
+          lineHeight: 1.18,
+          letterSpacing: '-0.005em',
+          color: '#0A0A0A',
+          margin: '0 0 28px',
+          maxWidth: 720,
+        }}
+      >
+        Stand up the four Maximum Impact moves and measure what they actually move.
+      </h3>
+      <ol
+        style={{
+          margin: 0,
+          padding: 0,
+          listStyle: 'none',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 14,
+          maxWidth: 720,
+        }}
+      >
+        {items.map((item, i) => (
+          <li
+            key={i}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '36px 1fr',
+              alignItems: 'baseline',
+              gap: 16,
+              paddingTop: 14,
+              borderTop: '1px solid rgba(10, 10, 10, 0.15)',
+            }}
+          >
+            <span
+              style={{
+                fontFamily: FONT.mono,
+                fontSize: 11,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: 'rgba(10, 10, 10, 0.55)',
+                fontWeight: 600,
+              }}
+            >
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 17,
+                lineHeight: 1.5,
+                color: '#0A0A0A',
+              }}
+            >
+              {item}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
   )
 }
 

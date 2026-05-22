@@ -2081,7 +2081,7 @@ function InvestmentIcon({ index, color }: { index: number; color: string }) {
 /* ──────────────────────────────────────────────
    Section 8: What We'd Build Together
    ────────────────────────────────────────────── */
-import { CONTACTS, CTA_BODY, TEAM } from './data/build'
+import { CONTACTS, TEAM } from './data/build'
 import { AuditRoadmap } from '../../components/audit/AuditRoadmap'
 
 export function BuildSection() {
@@ -2110,13 +2110,13 @@ export function BuildSection() {
         >
           {TEAM.map((t, i) => {
             const accent = i === 0 ? palette.rust : palette.magenta
+            const logoSrc = t.org === 'ERA' ? '/images/era_symbol.svg' : '/assets/pinwheel_agency_logo.jpg'
             return (
               <div
                 key={t.org}
                 style={{
                   background: palette.cardAlt,
                   border: `1px solid ${palette.border}`,
-                  borderRadius: 6,
                   padding: '28px 32px',
                   display: 'flex',
                   gap: 20,
@@ -2127,20 +2127,27 @@ export function BuildSection() {
                   style={{
                     width: 56,
                     height: 56,
-                    borderRadius: '50%',
-                    background: accent,
-                    color: '#FFFFFF',
+                    background: '#FFFFFF',
+                    border: `1px solid ${palette.border}`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontFamily: FONT.display,
-                    fontStyle: 'italic',
-                    fontSize: 24,
-                    fontWeight: 400,
                     flex: '0 0 auto',
+                    overflow: 'hidden',
                   }}
                 >
-                  {t.org === 'ERA' ? 'E' : 'P'}
+                  <img
+                    src={logoSrc}
+                    alt={t.org}
+                    style={{
+                      maxWidth: '72%',
+                      maxHeight: '72%',
+                      width: 'auto',
+                      height: 'auto',
+                      display: 'block',
+                      objectFit: 'contain',
+                    }}
+                  />
                 </div>
                 <div>
                   <div style={{ fontFamily: FONT.display, fontSize: 22, color: palette.text, marginBottom: 4 }}>{t.org}</div>
@@ -2174,21 +2181,16 @@ export function BuildSection() {
               letterSpacing: '0.16em',
               textTransform: 'uppercase',
               color: '#D86A48',
-              marginBottom: 18,
+              marginBottom: 24,
             }}
           >
             Next step
           </div>
-          <p style={{ fontFamily: FONT.display, fontSize: 26, lineHeight: 1.35, margin: '0 0 32px', maxWidth: 800 }}>
-            {CTA_BODY}
-          </p>
           <div
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
               gap: 16,
-              paddingTop: 24,
-              borderTop: '1px solid rgba(255,255,255,0.1)',
             }}
           >
             {CONTACTS.map((c) => (
