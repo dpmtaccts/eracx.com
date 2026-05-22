@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react'
+import type { CSSProperties } from 'react'
 import { usePostHog } from '@posthog/react'
 import { FONT } from './theme'
 import { getStoredEmail, setStoredEmail, track, type AuditPage } from './analytics'
 
 const SESSION_KEY = 'betterup-audit-auth'
 const PASSWORD = 'transformation'
+
+// v4 tokens. Kept local to the gate so this page is self-contained.
+const PARCHMENT = '#F4F1EA'
+const INK = '#0A0A0A'
+const HOT = '#E6195F'
+const RULE_INK = 'rgba(10, 10, 10, 0.15)'
+const MUTED = 'rgba(10, 10, 10, 0.55)'
 
 const isValidEmail = (s: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)
 
@@ -22,7 +30,6 @@ export function PasswordGate({ onAuth, page }: { onAuth: () => void; page: Audit
   const [password, setPassword] = useState('')
   const [error, setError] = useState<'email' | 'password' | null>(null)
 
-  // Pre-fill from storage if user has been here before
   useEffect(() => {
     const stored = getStoredEmail()
     if (stored) setEmail(stored)
@@ -53,100 +60,267 @@ export function PasswordGate({ onAuth, page }: { onAuth: () => void; page: Audit
     <div
       style={{
         minHeight: '100vh',
-        background: '#F7F5F2',
+        background: PARCHMENT,
+        color: INK,
+        fontFamily: FONT.body,
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 24,
+        flexDirection: 'column',
       }}
     >
-      <div style={{ maxWidth: 380, width: '100%', textAlign: 'center', fontFamily: FONT.body }}>
-        <div
-          style={{
-            fontFamily: FONT.body,
-            fontSize: 12,
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color: '#6B6760',
-            marginBottom: 18,
-          }}
-        >
-          The Buyer View built for
+      {/* Issue bar — full width, mono uppercase, the v4 publication signature */}
+      <header
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '16px 32px',
+          fontFamily: FONT.mono,
+          fontSize: 11,
+          fontWeight: 600,
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: MUTED,
+          borderBottom: `1px solid ${RULE_INK}`,
+          flexWrap: 'wrap',
+          gap: 12,
+        }}
+      >
+        <div>§ · Access · BetterUp</div>
+        <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+          <span>The BetterUp Buyer View</span>
+          <span>ERA</span>
         </div>
-        <div style={{ marginBottom: 36, display: 'flex', justifyContent: 'center' }}>
-          <img
-            src="/images/betterup/bu_logo_black.svg"
-            alt="BetterUp"
-            style={{ height: 36, width: 'auto', display: 'block' }}
-          />
+      </header>
+
+      {/* Centered editorial form */}
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '48px 24px',
+        }}
+      >
+        <div style={{ maxWidth: 480, width: '100%' }}>
+          {/* Publication nameplate */}
+          <div style={{ marginBottom: 36 }}>
+            <div
+              style={{
+                fontFamily: FONT.mega,
+                fontSize: 'clamp(36px, 6vw, 56px)',
+                fontWeight: 400,
+                lineHeight: 0.95,
+                letterSpacing: '-0.005em',
+                textTransform: 'uppercase',
+                color: INK,
+              }}
+            >
+              The BetterUp Buyer View
+            </div>
+            <div aria-hidden style={{ height: 3, background: INK, marginTop: 14 }} />
+            <div
+              style={{
+                fontFamily: FONT.mono,
+                fontSize: 11,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: MUTED,
+                fontWeight: 600,
+                marginTop: 12,
+              }}
+            >
+              A Revenue Signal Instrument by ERA
+            </div>
+          </div>
+
+          {/* Built for / BetterUp logo lockup */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 16,
+              marginBottom: 48,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: FONT.mono,
+                fontSize: 10,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: MUTED,
+                fontWeight: 600,
+              }}
+            >
+              Built for
+            </span>
+            <img
+              src="/images/betterup/bu_logo_black.svg"
+              alt="BetterUp"
+              style={{ height: 28, width: 'auto', display: 'block' }}
+            />
+          </div>
+
+          {/* Brutalist underline-only form */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              submit()
+            }}
+            noValidate
+          >
+            <BrutalistField
+              label="Work email"
+              type="email"
+              autoComplete="email"
+              value={email}
+              onChange={setEmail}
+              onEnter={submit}
+              hasError={error === 'email'}
+            />
+            <BrutalistField
+              label="Access code"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={setPassword}
+              onEnter={submit}
+              hasError={error === 'password'}
+            />
+
+            <BrutalistSubmit label="Open the view" />
+          </form>
         </div>
-
-        <input
-          type="email"
-          autoComplete="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && submit()}
-          placeholder="Your work email"
-          style={{
-            width: '100%',
-            padding: '14px 18px',
-            background: '#FFFFFF',
-            border: `1px solid ${error === 'email' ? '#C84438' : '#E8E4DE'}`,
-            borderRadius: 4,
-            fontFamily: FONT.body,
-            fontSize: 15,
-            color: '#1A1A1A',
-            outline: 'none',
-            marginBottom: 10,
-            transition: 'border-color 0.3s',
-            boxSizing: 'border-box',
-          }}
-        />
-
-        <input
-          type="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && submit()}
-          placeholder="Password"
-          style={{
-            width: '100%',
-            padding: '14px 18px',
-            background: '#FFFFFF',
-            border: `1px solid ${error === 'password' ? '#C84438' : '#E8E4DE'}`,
-            borderRadius: 4,
-            fontFamily: FONT.body,
-            fontSize: 15,
-            color: '#1A1A1A',
-            outline: 'none',
-            marginBottom: 12,
-            transition: 'border-color 0.3s',
-            boxSizing: 'border-box',
-          }}
-        />
-
-        <button
-          onClick={submit}
-          style={{
-            width: '100%',
-            padding: '14px',
-            background: '#C85A3A',
-            color: '#FFFFFF',
-            border: 'none',
-            borderRadius: 4,
-            fontFamily: FONT.body,
-            fontSize: 13,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            cursor: 'pointer',
-            fontWeight: 600,
-          }}
-        >
-          Enter
-        </button>
       </div>
+
+      {/* Footer issue line — completes the publication feel */}
+      <footer
+        style={{
+          padding: '14px 32px',
+          fontFamily: FONT.mono,
+          fontSize: 10,
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: MUTED,
+          fontWeight: 600,
+          borderTop: `1px solid ${RULE_INK}`,
+          display: 'flex',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: 12,
+        }}
+      >
+        <span>eracx.com</span>
+        <span>Restricted preview</span>
+      </footer>
     </div>
+  )
+}
+
+function BrutalistField({
+  label,
+  type,
+  autoComplete,
+  value,
+  onChange,
+  onEnter,
+  hasError,
+}: {
+  label: string
+  type: 'email' | 'password'
+  autoComplete: string
+  value: string
+  onChange: (v: string) => void
+  onEnter: () => void
+  hasError: boolean
+}) {
+  const borderColor = hasError ? HOT : 'rgba(10, 10, 10, 0.3)'
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <label
+        style={{
+          display: 'block',
+          fontFamily: FONT.mono,
+          fontSize: 10,
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: hasError ? HOT : MUTED,
+          fontWeight: 600,
+          marginBottom: 10,
+          transition: 'color 120ms ease',
+        }}
+      >
+        {label}
+      </label>
+      <input
+        type={type}
+        autoComplete={autoComplete}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault()
+            onEnter()
+          }
+        }}
+        style={{
+          width: '100%',
+          background: 'transparent',
+          border: 'none',
+          borderBottom: `1px solid ${borderColor}`,
+          color: INK,
+          fontFamily: FONT.body,
+          fontSize: 18,
+          padding: '8px 0 12px',
+          outline: 'none',
+          borderRadius: 0,
+          transition: 'border-bottom-color 120ms ease',
+          boxSizing: 'border-box',
+        }}
+        onFocus={(e) => {
+          if (!hasError) e.currentTarget.style.borderBottomColor = INK
+        }}
+        onBlur={(e) => {
+          if (!hasError) e.currentTarget.style.borderBottomColor = 'rgba(10, 10, 10, 0.3)'
+        }}
+      />
+    </div>
+  )
+}
+
+function BrutalistSubmit({ label }: { label: string }) {
+  const base: CSSProperties = {
+    marginTop: 12,
+    all: 'unset',
+    cursor: 'pointer',
+    fontFamily: FONT.mono,
+    fontSize: 12,
+    fontWeight: 700,
+    letterSpacing: '0.14em',
+    textTransform: 'uppercase',
+    color: INK,
+    border: `2px solid ${INK}`,
+    padding: '14px 24px',
+    display: 'inline-block',
+    transition: 'background 120ms ease, color 120ms ease, border-color 120ms ease',
+  }
+  return (
+    <button
+      type="submit"
+      style={base}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = HOT
+        e.currentTarget.style.color = '#FFFFFF'
+        e.currentTarget.style.borderColor = HOT
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = 'transparent'
+        e.currentTarget.style.color = INK
+        e.currentTarget.style.borderColor = INK
+      }}
+    >
+      → {label}
+    </button>
   )
 }
