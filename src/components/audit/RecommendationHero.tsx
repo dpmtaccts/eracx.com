@@ -56,19 +56,46 @@ export function RecommendationHero({
 
   return (
     <div style={{ marginBottom: 64 }}>
-      <div
-        style={{
-          fontFamily: FONT.mono,
-          fontSize: 11,
-          letterSpacing: '0.14em',
-          textTransform: 'uppercase',
-          color: palette.textDim,
-          fontWeight: 600,
-          marginBottom: 32,
-        }}
-      >
-        {eyebrow}
-      </div>
+      {/* Publication nameplate. The eyebrow text composes "The {Company} Buyer
+          View" upstream, so the company name is derived from the audit
+          instance rather than hardcoded here. Set large enough to read as a
+          masthead, capped on a heavy ink rule like a front-page nameplate. */}
+      <header style={{ marginBottom: 40 }}>
+        <div
+          style={{
+            fontFamily: FONT.mega,
+            fontSize: 'clamp(40px, 7vw, 72px)',
+            fontWeight: 400,
+            lineHeight: 0.95,
+            letterSpacing: '-0.005em',
+            textTransform: 'uppercase',
+            color: palette.text,
+          }}
+        >
+          {eyebrow}
+        </div>
+        <div
+          aria-hidden
+          style={{
+            height: 3,
+            background: palette.text,
+            marginTop: 14,
+          }}
+        />
+        <div
+          style={{
+            fontFamily: FONT.mono,
+            fontSize: 11,
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: palette.textMuted,
+            fontWeight: 600,
+            marginTop: 12,
+          }}
+        >
+          A Revenue Signal Instrument by ERA
+        </div>
+      </header>
 
       <div
         style={{

@@ -63,7 +63,7 @@ import { CONTACTS as BETTERUP_CONTACTS } from './betterup/data/build'
    ────────────────────────────────────────────── */
 export function RecommendationSection() {
   return (
-    <Section id="recommendation">
+    <Section id="recommendation" paddingTop={64}>
       <IssueBar
         number="§01"
         name="The recommendation"

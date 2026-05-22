@@ -788,18 +788,25 @@ export function Section({
   id,
   children,
   background,
+  paddingTop,
 }: {
   id: string
   children: ReactNode
   background?: string
+  /** Override the section's top padding. Default 160px matches every other
+   *  section; §01 uses a tighter value so the masthead nameplate sits up
+   *  against the top of the page like a front-page banner. */
+  paddingTop?: number | string
 }) {
   const { palette } = useTheme()
+  const top = paddingTop ?? 160
   return (
     <section
       id={id}
       style={{
         background: background ?? palette.bg,
-        padding: '160px 0',
+        paddingTop: typeof top === 'number' ? `${top}px` : top,
+        paddingBottom: '160px',
         scrollMarginTop: 80,
       }}
     >
