@@ -25,7 +25,7 @@ type Props = {
   scoreAnchorId?: string
 }
 
-// §01 hero. White ground. Two-line Anton mega headline with magenta accent
+// ▶︎01 hero. White ground. Two-line Anton mega headline with magenta accent
 // in the second line. Right column carries a compressed score callout: mini
 // gauge, band label, drag line, anchor to the diagnosis section.
 export function RecommendationHero({

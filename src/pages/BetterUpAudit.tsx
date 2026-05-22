@@ -57,13 +57,13 @@ import { ScoreDrawerProvider } from '../components/audit/ScoreDrawerContext'
 import { ScoreBreakdownDrawer } from '../components/audit/ScoreBreakdownDrawer'
 
 /* ──────────────────────────────────────────────
-   §01 — THE RECOMMENDATION
+   ▶︎01 — THE RECOMMENDATION
    ────────────────────────────────────────────── */
 export function RecommendationSection() {
   return (
     <Section id="recommendation" paddingTop={64}>
       <IssueBar
-        number="§01"
+        number="▶︎01"
         name="The recommendation"
         meta={['BetterUp', betterupAudit.reportDate]}
       />
@@ -83,11 +83,11 @@ export function RecommendationSection() {
 }
 
 /* ──────────────────────────────────────────────
-   §02 — WHAT TO DO (Maximum Impact)
+   ▶︎02 — WHAT TO DO (Maximum Impact)
    ────────────────────────────────────────────── */
 // Each Maximum Impact card is color-coded to the diagnostic that produced
 // the recommendation, so the reader can trace recommendation back to
-// evidence. The evidenceAnchor scrolls to the matching §05 sub-section.
+// evidence. The evidenceAnchor scrolls to the matching ▶︎05 sub-section.
 const COLOR_LEADERS = '#1845C2'
 const COLOR_AGENTS = '#E6195F'
 const COLOR_YOUR_CONTENT = '#F4C430'
@@ -253,14 +253,14 @@ export function MaximumImpactSection() {
     <Section id="do" background="#0A0A0A">
       <div style={{ color: '#FFFFFF' }}>
         <IssueBar
-          number="§02"
+          number="▶︎02"
           name="Maximum impact"
           meta={['BetterUp', '4 of 4 fixes']}
           ground="dark"
         />
         <Reveal>
           <ImpactCardGrid
-            eyebrow="§02 · MAXIMUM IMPACT"
+            eyebrow="▶︎02 · MAXIMUM IMPACT"
             headline="The four moves with the most leverage on what your buyer reads."
             cards={MAX_IMPACT_CARDS}
             ground="ink"
@@ -272,10 +272,10 @@ export function MaximumImpactSection() {
 }
 
 /* ──────────────────────────────────────────────
-   §03 — WHAT NOT TO DO (Minimum Impact)
+   ▶︎03 — WHAT NOT TO DO (Minimum Impact)
    ────────────────────────────────────────────── */
-// §03 cards do not get diagnostic colors. A single muted-ink accent reads as
-// "this is the resist column," visually distinct from the §02 maximum cards.
+// ▶︎03 cards do not get diagnostic colors. A single muted-ink accent reads as
+// "this is the resist column," visually distinct from the ▶︎02 maximum cards.
 const COLOR_MIN_ACCENT = 'rgba(10, 10, 10, 0.55)'
 
 const MIN_IMPACT_CARDS: ImpactCard[] = [
@@ -399,10 +399,10 @@ const MIN_IMPACT_CARDS: ImpactCard[] = [
 export function MinimumImpactSection() {
   return (
     <Section id="dont" background="#F4F1EA">
-      <IssueBar number="§03" name="Minimum impact" meta={['BetterUp', 'Resist these']} />
+      <IssueBar number="▶︎03" name="Minimum impact" meta={['BetterUp', 'Resist these']} />
       <Reveal>
         <ImpactCardGrid
-          eyebrow="§03 · MINIMUM IMPACT"
+          eyebrow="▶︎03 · MINIMUM IMPACT"
           headline="The four motions that look productive and don't move what the buyer reads."
           cards={MIN_IMPACT_CARDS}
           ground="parchment"
@@ -414,14 +414,14 @@ export function MinimumImpactSection() {
 
 
 /* ──────────────────────────────────────────────
-   §05 — THE PROOF intro (sub-sections render after)
+   ▶︎05 — THE PROOF intro (sub-sections render after)
    ────────────────────────────────────────────── */
 function ProofSectionIntro() {
   const { palette } = useTheme()
   return (
     <Section id="proof">
       <IssueBar
-        number="§05"
+        number="▶︎05"
         name="The proof"
         meta={['BetterUp', 'Forensic record']}
       />
@@ -438,7 +438,7 @@ function ProofSectionIntro() {
               marginBottom: 18,
             }}
           >
-            §05 · The proof
+            ▶︎05 · The proof
           </div>
           <h2
             style={{
@@ -464,7 +464,7 @@ function ProofSectionIntro() {
               maxWidth: 640,
             }}
           >
-            Each sub-section opens with what the buyer finds today, what it looks like when the chain is intact, and what to do first. The detailed evidence sits beneath. The roadmap at §05.8 lands the four Maximum Impact moves above.
+            Each sub-section opens with what the buyer finds today, what it looks like when the chain is intact, and what to do first. The detailed evidence sits beneath. The roadmap at ▶︎05.8 lands the four Maximum Impact moves above.
           </p>
         </div>
       </Reveal>
@@ -473,7 +473,7 @@ function ProofSectionIntro() {
 }
 
 /* ──────────────────────────────────────────────
-   §06 — THE CONNECTION
+   ▶︎06 — THE CONNECTION
    Close on parchment so the two firm marks at the foot sit on a calm,
    native-color ground rather than fighting an ink background. Argument
    structure: BetterUp already owns the parts. The work is the connection.
@@ -482,7 +482,7 @@ export function NextTogetherSection() {
   return (
     <Section id="together" background="#F4F1EA">
       <IssueBar
-        number="§06"
+        number="▶︎06"
         name="The connection"
         meta={['BetterUp', betterupAudit.reportDate]}
       />
@@ -631,7 +631,7 @@ function AIMirror() {
   return (
     <Section id="mirror" background={palette.cobalt}>
       <div style={{ color: '#FFFFFF' }}>
-      <IssueBar number="§05.5" name="What agents say about you" meta={[{ label: 'Score', value: '38' }, { label: 'Weight', value: '15%' }, 'BetterUp']} ground="dark" />
+      <IssueBar number="▶︎05.5" name="What agents say about you" meta={[{ label: 'Score', value: '38' }, { label: 'Weight', value: '15%' }, 'BetterUp']} ground="dark" />
       {opener && <SectionOpener {...opener} ground="dark" />}
       <SectionAnalysisDisclosure ground="dark">
       <SectionHeader
@@ -1080,14 +1080,14 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    {/* §01 — Recommendation lead. The gauge here opens a drawer
-                       carrying the diagnostic depth that used to live in §04. */}
+                    {/* ▶︎01 — Recommendation lead. The gauge here opens a drawer
+                       carrying the diagnostic depth that used to live in ▶︎04. */}
                     <RecommendationSection />
-                    {/* §02 — Maximum impact (do this) */}
+                    {/* ▶︎02 — Maximum impact (do this) */}
                     <MaximumImpactSection />
-                    {/* §03 — Minimum impact (don't do this) */}
+                    {/* ▶︎03 — Minimum impact (don't do this) */}
                     <MinimumImpactSection />
-                    {/* §05 — Full forensic record, with existing analytical sections as §05.1–§05.8 */}
+                    {/* ▶︎05 — Full forensic record, with existing analytical sections as ▶︎05.1–▶︎05.8 */}
                     <ProofSectionIntro />
                     <CascadeSection />
                     <GTMSection />
@@ -1097,7 +1097,7 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
                     <AudienceSection />
                     <InvestmentSection />
                     <BuildSection />
-                    {/* §06 — Partnership ask */}
+                    {/* ▶︎06 — Partnership ask */}
                     <NextTogetherSection />
                   </motion.div>
                 )}

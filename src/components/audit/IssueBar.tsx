@@ -3,7 +3,7 @@ import { FONT, useTheme } from '../../pages/betterup/theme'
 type Meta = string | { label: string; value?: string }
 
 type Props = {
-  /** e.g. "§02" */
+  /** e.g. "▶︎02" */
   number: string
   /** Section name. Uppercased automatically. */
   name: string

@@ -41,7 +41,7 @@ export function ScoreAnatomy({ scores }: Props) {
             marginBottom: 14,
           }}
         >
-          § Score Anatomy
+          ▶︎ Score Anatomy
         </div>
         <h2
           style={{

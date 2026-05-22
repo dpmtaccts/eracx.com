@@ -102,7 +102,7 @@ export function AuditRoadmap(props: AuditRoadmapProps) {
             marginBottom: 20,
           }}
         >
-          §·{sectionEyebrow}
+          ▶︎·{sectionEyebrow}
         </div>
         <h2
           style={{
@@ -723,7 +723,7 @@ export function AuditRoadmapCondensed({ roadmap }: { roadmap: AuditRoadmapProps 
             marginBottom: 16,
           }}
         >
-          §·{roadmap.sectionEyebrow ?? 'What to build'}
+          ▶︎·{roadmap.sectionEyebrow ?? 'What to build'}
         </div>
         <h2
           style={{

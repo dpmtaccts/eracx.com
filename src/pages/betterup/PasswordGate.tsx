@@ -69,7 +69,7 @@ export function PasswordGate({ onAuth, page }: { onAuth: () => void; page: Audit
       }}
     >
       {/* Issue bar — full width, mono uppercase, the v4 publication signature.
-          ERA wordmark sits where the § number normally lives; the right side
+          ERA wordmark sits where the ▶︎ number normally lives; the right side
           carries the publication title. */}
       <header
         style={{

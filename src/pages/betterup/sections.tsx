@@ -44,7 +44,7 @@ export function CascadeSection() {
   const opener = betterupAudit.openers?.cascade
   return (
     <Section id="cascade" background={palette.parchment}>
-      <IssueBar number="§05.1" name="What employees say about you" meta={[{ label: 'Score', value: '41' }, { label: 'Weight', value: '25%' }, 'BetterUp']} />
+      <IssueBar number="▶︎05.1" name="What employees say about you" meta={[{ label: 'Score', value: '41' }, { label: 'Weight', value: '25%' }, 'BetterUp']} />
       {opener && <SectionOpener {...opener} />}
       <SectionAnalysisDisclosure>
       <SectionHeader kicker="What employees say about you" headline={CASCADE_HEADLINE} intro={CASCADE_INTRO} shareId="cascade" />
@@ -313,7 +313,7 @@ export function GTMSection() {
 
   return (
     <Section id="leaders">
-      <IssueBar number="§05.2" name="What your leaders publish" meta={[{ label: 'Score', value: '24' }, { label: 'Weight', value: '35%' }, 'BetterUp']} />
+      <IssueBar number="▶︎05.2" name="What your leaders publish" meta={[{ label: 'Score', value: '24' }, { label: 'Weight', value: '35%' }, 'BetterUp']} />
       {opener && <SectionOpener {...opener} />}
       <SectionAnalysisDisclosure>
       <SectionHeader
@@ -1165,7 +1165,7 @@ export function SignalsSection() {
   const opener = betterupAudit.openers?.signals
   return (
     <Section id="signals">
-      <IssueBar number="§05.4" name="What you publish about yourself" meta={[{ label: 'Score', value: '29' }, { label: 'Weight', value: '25%' }, 'BetterUp']} />
+      <IssueBar number="▶︎05.4" name="What you publish about yourself" meta={[{ label: 'Score', value: '29' }, { label: 'Weight', value: '25%' }, 'BetterUp']} />
       {opener && <SectionOpener {...opener} />}
       <SectionAnalysisDisclosure>
       <SectionHeader kicker="What you publish about yourself" headline={SIGNALS_HEADLINE} shareId="signals" />
@@ -1332,7 +1332,7 @@ export function AudienceSection() {
   const opener = betterupAudit.openers?.audience
   return (
     <Section id="audience" background={palette.yellow}>
-      <IssueBar number="§05.6" name="Audience Reality" meta={['BetterUp', 'CHRO buyer']} />
+      <IssueBar number="▶︎05.6" name="Audience Reality" meta={['BetterUp', 'CHRO buyer']} />
       {opener && <SectionOpener {...opener} />}
       <SectionAnalysisDisclosure>
       <SectionHeader kicker="Audience Reality" headline={AUDIENCE_HEADLINE} shareId="audience" />
@@ -1973,7 +1973,7 @@ export function InvestmentSection() {
   const { palette } = useTheme()
   return (
     <Section id="investment">
-      <IssueBar number="§05.7" name="Concentration" meta={['BetterUp']} />
+      <IssueBar number="▶︎05.7" name="Concentration" meta={['BetterUp']} />
       <SectionHeader
         kicker="Where the brand is concentrated today"
         headline={INVESTMENT_HEADLINE}
@@ -2090,7 +2090,7 @@ export function BuildSection() {
   const roadmap = betterupAudit.roadmap
   return (
     <Section id="build">
-      <IssueBar number="§05.8" name="What we'd build" meta={['BetterUp', 'MVP · THEN · FULL BUILD']} />
+      <IssueBar number="▶︎05.8" name="What we'd build" meta={['BetterUp', 'MVP · THEN · FULL BUILD']} />
       {/* Prescriptive roadmap (MVP → Then → Full Build) */}
       {roadmap && (
         <Reveal>
@@ -2246,7 +2246,7 @@ export function PopulationSection() {
   return (
     <Section id="population" background={palette.ink}>
       <div style={{ color: '#FFFFFF' }}>
-      <IssueBar number="§05.3" name="Population" meta={['BetterUp', 'Commenter mix']} ground="dark" />
+      <IssueBar number="▶︎05.3" name="Population" meta={['BetterUp', 'Commenter mix']} ground="dark" />
       {/* Section opener — explicit white text on the ink ground to prevent
           inline palette colors from inheriting their light-mode dark values. */}
       <Reveal>

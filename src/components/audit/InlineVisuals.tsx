@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react'
 import { FONT } from '../../pages/betterup/theme'
 
-// Reusable inline visuals for the §02 / §03 impact cards. Brutalist
+// Reusable inline visuals for the ▶︎02 / ▶︎03 impact cards. Brutalist
 // treatment: hairline rules, square corners, no shadows, no gradients,
 // single-accent-color per visual. Each visual carries its own aria-label so
 // screen readers receive the same information sighted readers do.

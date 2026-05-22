@@ -95,7 +95,7 @@ export function SectionOpener(props: SectionOpenerProps) {
             marginBottom: 18,
           }}
         >
-          §·{eyebrow}
+          ▶︎·{eyebrow}
         </div>
         <h2
           style={{

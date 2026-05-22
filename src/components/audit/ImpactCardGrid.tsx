@@ -25,15 +25,15 @@ export type ImpactCard = {
   indicatorLabel?: string
   /** Diagnostic accent color. When set, the eyebrow, ordinal, indicator, and
    *  evidence link all render in this color, tying the card visually to its
-   *  matching §05 evidence sub-section. */
+   *  matching ▶︎05 evidence sub-section. */
   accentColor?: string
-  /** Anchor id of the §05 sub-section that produced this recommendation. When
+  /** Anchor id of the ▶︎05 sub-section that produced this recommendation. When
    *  set, a "→ SEE THE EVIDENCE" link appears beneath the indicator. */
   evidenceAnchor?: string
 }
 
 type Props = {
-  /** Section eyebrow, e.g. "§02 · MAXIMUM IMPACT". */
+  /** Section eyebrow, e.g. "▶︎02 · MAXIMUM IMPACT". */
   eyebrow: string
   /** Anton headline, e.g. "Four moves. In order." */
   headline: string

@@ -794,7 +794,7 @@ export function Section({
   children: ReactNode
   background?: string
   /** Override the section's top padding. Default 160px matches every other
-   *  section; §01 uses a tighter value so the masthead nameplate sits up
+   *  section; ▶︎01 uses a tighter value so the masthead nameplate sits up
    *  against the top of the page like a front-page banner. */
   paddingTop?: number | string
 }) {

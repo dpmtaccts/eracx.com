@@ -26,7 +26,7 @@ type Props = {
   onContactClick?: (contact: PartnershipContact) => void
 }
 
-// §06: closes the audit on the offer. Ink ground, three vertically-stacked
+// ▶︎06: closes the audit on the offer. Ink ground, three vertically-stacked
 // blocks. The two engagement blocks read as a peer-to-peer brief; the contact
 // row converts the brief into an ask.
 export function PartnershipSection({
