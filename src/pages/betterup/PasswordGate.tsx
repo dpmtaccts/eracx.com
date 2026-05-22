@@ -87,7 +87,7 @@ export function PasswordGate({ onAuth, page }: { onAuth: () => void; page: Audit
       >
         <div>§ · Access · BetterUp</div>
         <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
-          <span>The BetterUp Buyer View</span>
+          <span>The Buyer View</span>
           <span>ERA</span>
         </div>
       </header>
@@ -116,7 +116,7 @@ export function PasswordGate({ onAuth, page }: { onAuth: () => void; page: Audit
                 color: INK,
               }}
             >
-              The BetterUp Buyer View
+              The Buyer View
             </div>
             <div aria-hidden style={{ height: 3, background: INK, marginTop: 14 }} />
             <div

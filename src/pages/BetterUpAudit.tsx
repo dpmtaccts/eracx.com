@@ -71,7 +71,7 @@ export function RecommendationSection() {
       />
       <Reveal>
         <RecommendationHero
-          eyebrow={`The ${betterupAudit.companyName} Buyer View`}
+          eyebrow="The Buyer View"
           headlineLine1="Your buyer made up her mind"
           headlineLine2="before she ever talked to you."
           standfirst="Your buyer is doing more research before she ever talks to you, and most of it happens on surfaces you don't control. She's checking what your employees say on Glassdoor. She's reading what your executives publish on LinkedIn. She's asking peer networks and AI agents what they know about you. By the time she reaches out, she's already formed most of her opinion. The marketing team is investing where the team can see the activity. The buyer is making her decision somewhere else."
@@ -923,12 +923,12 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
     document.body.style.color = theme.palette.text
   }, [theme.palette])
 
-  // Browser tab title derived from the audit instance company name so future
-  // audits render as "The [Company] Buyer View" without code changes. Reset to
-  // the site default on unmount.
+  // Browser tab title: the publication name is fixed as "The Buyer View"
+  // across every instance. Company ownership is established by the "Built
+  // for" lockup, not by the title itself.
   useEffect(() => {
     const previous = document.title
-    document.title = `The ${betterupAudit.companyName} Buyer View`
+    document.title = 'The Buyer View'
     return () => {
       document.title = previous
     }
