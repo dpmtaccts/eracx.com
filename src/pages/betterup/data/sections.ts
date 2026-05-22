@@ -1,10 +1,14 @@
 import type { StepperItem } from '../components'
 
-// Inverted structure with ▶︎04 removed: the diagnostic depth now lives in the
-// score breakdown drawer reachable from the gauge in ▶︎01.
+// Five-section spine for the Buyer View. The Problems section names what
+// is broken at priority level (P1–P4) before the P1/P2 recommendation tiers
+// explain how to address it. The "do" / "dont" anchor IDs are kept for
+// backwards compatibility with existing scroll targets even though the nav
+// labels now read P1 / P2.
 export const SECTIONS: StepperItem[] = [
   { id: 'recommendation', label: 'Recommendation' },
-  { id: 'do', label: 'Do' },
-  { id: 'dont', label: "Don't" },
+  { id: 'problems', label: 'Problems' },
+  { id: 'do', label: 'P1' },
+  { id: 'dont', label: 'P2' },
   { id: 'proof', label: 'Proof' },
 ]

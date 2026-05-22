@@ -88,9 +88,156 @@ export function RecommendationSection() {
 }
 
 /* ──────────────────────────────────────────────
-   ▶︎02 — WHAT TO DO (Maximum Impact)
+   ▶︎02 — THE PROBLEMS
+   A priority-ranked inventory of what the audit found. Names the four
+   problems without forensic detail or proposed fixes. P1 is the most
+   severe; P4 is the lowest of the four critical issues. Muted ink only;
+   diagnostic colors stay in §03 where the responses live.
    ────────────────────────────────────────────── */
-// Each Maximum Impact card is color-coded to the diagnostic that produced
+type Problem = {
+  id: 'P1' | 'P2' | 'P3' | 'P4'
+  statement: string
+  elaboration: string
+}
+
+const PROBLEMS: ReadonlyArray<Problem> = [
+  {
+    id: 'P1',
+    statement: 'Your executives are not publishing on the surfaces your buyer uses.',
+    elaboration: 'When she searches LinkedIn for your team, she finds your CEO and almost no one else.',
+  },
+  {
+    id: 'P2',
+    statement: 'Your own employees publicly contradict the promise.',
+    elaboration: "She finds Glassdoor before she finds you, and Glassdoor does not match your marketing.",
+  },
+  {
+    id: 'P3',
+    statement: 'Your content is not reaching buyers at the decision stage.',
+    elaboration: 'What you publish is built for the audience that already believes, not the one still deciding.',
+  },
+  {
+    id: 'P4',
+    statement: 'AI agents are repeating out-of-date data about you.',
+    elaboration: 'When she asks Perplexity about BetterUp, the answer cites offerings you discontinued and logos you no longer have.',
+  },
+]
+
+export function ProblemsSection() {
+  const { palette } = useTheme()
+  return (
+    <Section id="problems">
+      <IssueBar
+        number="▶︎02"
+        name="The problems"
+        meta={['BetterUp', 'Buyer-view diagnosis']}
+      />
+      <Reveal>
+        <div style={{ maxWidth: 880, marginBottom: 56 }}>
+          <h2
+            style={{
+              fontFamily: FONT.display,
+              fontSize: 'clamp(32px, 5vw, 52px)',
+              fontWeight: 400,
+              lineHeight: 1.1,
+              letterSpacing: '-0.005em',
+              color: palette.text,
+              margin: '0 0 20px',
+              maxWidth: 760,
+            }}
+          >
+            We identified four problems from the buyer's view.
+          </h2>
+          <p
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 18,
+              lineHeight: 1.55,
+              color: palette.textMuted,
+              margin: 0,
+              maxWidth: 640,
+            }}
+          >
+            These are the gaps between what your buyer researches and what you are showing her.
+          </p>
+        </div>
+
+        <div
+          style={{
+            maxWidth: 960,
+            borderTop: `1px solid ${palette.rule}`,
+          }}
+        >
+          {PROBLEMS.map((p) => (
+            <ProblemRow key={p.id} problem={p} />
+          ))}
+        </div>
+      </Reveal>
+    </Section>
+  )
+}
+
+function ProblemRow({ problem }: { problem: Problem }) {
+  const { palette } = useTheme()
+  return (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'minmax(72px, 96px) 1fr',
+        gap: 32,
+        padding: '28px 0 30px',
+        borderBottom: `1px solid ${palette.rule}`,
+        alignItems: 'baseline',
+      }}
+    >
+      <span
+        style={{
+          fontFamily: FONT.mono,
+          fontSize: 13,
+          letterSpacing: '0.18em',
+          textTransform: 'uppercase',
+          color: palette.textDim,
+          fontWeight: 600,
+        }}
+      >
+        {problem.id}
+      </span>
+      <div>
+        <h3
+          style={{
+            fontFamily: FONT.display,
+            fontSize: 'clamp(20px, 2.4vw, 26px)',
+            fontWeight: 400,
+            lineHeight: 1.25,
+            letterSpacing: '-0.005em',
+            color: palette.text,
+            margin: '0 0 10px',
+            maxWidth: 760,
+          }}
+        >
+          {problem.statement}
+        </h3>
+        <p
+          style={{
+            fontFamily: FONT.body,
+            fontSize: 16,
+            lineHeight: 1.55,
+            color: palette.textMuted,
+            margin: 0,
+            maxWidth: 720,
+          }}
+        >
+          {problem.elaboration}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+/* ──────────────────────────────────────────────
+   ▶︎03 — P1 RESPONSES (formerly Maximum Impact)
+   ────────────────────────────────────────────── */
+// Each P1 response card is color-coded to the diagnostic that produced
 // the recommendation, so the reader can trace recommendation back to
 // evidence. The evidenceAnchor scrolls to the matching ▶︎05 sub-section.
 const COLOR_LEADERS = '#1845C2'
@@ -101,7 +248,7 @@ const COLOR_EMPLOYEES = '#DD5C20'
 const MAX_IMPACT_CARDS: ImpactCard[] = [
   {
     ordinal: '01',
-    ordinalLabel: 'Maximum impact',
+    ordinalLabel: 'P1',
     headline: 'Get your executives publishing original content on LinkedIn.',
     body: "When a buyer asks an AI agent about BetterUp, the agent reads your executives' LinkedIn activity as a signal of who you are. Today, only two of your executives publish original content. Five publish reposts or nothing at all. The agent reads this as inconsistency and lowers its confidence in your brand. The fix is to get five to seven executives posting original content weekly, with the new exec comms hire owning the program.",
     richContent: (
@@ -140,7 +287,7 @@ const MAX_IMPACT_CARDS: ImpactCard[] = [
   },
   {
     ordinal: '02',
-    ordinalLabel: 'Maximum impact',
+    ordinalLabel: 'P1',
     headline: 'Fix the wrong data that agents are repeating.',
     body: "Agents pull from public sources, then synthesize. Right now they're pulling discontinued D2C offerings, wrong employee counts, and outdated client logos. The buyer who asks Perplexity about BetterUp encounters those inaccuracies before she ever sees the website. The fix is a data hygiene pass on the high-traffic public sources: Crunchbase, LinkedIn company page, Wikipedia, G2, and the BetterUp website's structured data. It's cheap, it's high-leverage, and it changes the answer the buyer gets.",
     richContent: (
@@ -180,7 +327,7 @@ const MAX_IMPACT_CARDS: ImpactCard[] = [
   },
   {
     ordinal: '03',
-    ordinalLabel: 'Maximum impact',
+    ordinalLabel: 'P1',
     headline: 'Make it easy for your people to publish.',
     body: "The reason your executives and sellers aren't publishing isn't lack of ideas. It's lack of time. Sales reps prioritize closing, not writing. A weekly ghostwritten post per key executive and rep, distributed through BetterUp's existing Claude tool with vertical-specific templates, removes the writing burden. The cascade you've already built starts working because adoption stops being the bottleneck.",
     richContent: (
@@ -215,7 +362,7 @@ const MAX_IMPACT_CARDS: ImpactCard[] = [
   },
   {
     ordinal: '04',
-    ordinalLabel: 'Maximum impact',
+    ordinalLabel: 'P1',
     headline: 'Treat this as a measurement, not a project.',
     body: 'A one-time audit catches a moment. Trust drifts over time, and the surfaces that produce it (Glassdoor reviews, LinkedIn activity, AI agent answers) change continuously. A quarterly re-measurement turns the audit from a one-time exercise into a governance system. The board can budget against the score the way it budgets against revenue. The CMO can defend marketing spend with a quantitative read on whether trust is rising or falling.',
     richContent: (
@@ -258,14 +405,14 @@ export function MaximumImpactSection() {
     <Section id="do" background="#0A0A0A">
       <div style={{ color: '#FFFFFF' }}>
         <IssueBar
-          number="▶︎02"
-          name="Maximum impact"
+          number="▶︎03"
+          name="P1"
           meta={['BetterUp', '4 of 4 fixes']}
           ground="dark"
         />
         <Reveal>
           <ImpactCardGrid
-            eyebrow="▶︎02 · MAXIMUM IMPACT"
+            eyebrow="▶︎03 · P1"
             headline="The four moves with the most leverage on what your buyer reads."
             cards={MAX_IMPACT_CARDS}
             ground="ink"
@@ -277,16 +424,16 @@ export function MaximumImpactSection() {
 }
 
 /* ──────────────────────────────────────────────
-   ▶︎03 — WHAT NOT TO DO (Minimum Impact)
+   ▶︎04 — P2 (formerly Minimum Impact)
    ────────────────────────────────────────────── */
-// ▶︎03 cards do not get diagnostic colors. A single muted-ink accent reads as
-// "this is the resist column," visually distinct from the ▶︎02 maximum cards.
+// P2 cards do not get diagnostic colors. A single muted-ink accent reads as
+// "this is the resist column," visually distinct from the ▶︎03 P1 cards.
 const COLOR_MIN_ACCENT = 'rgba(10, 10, 10, 0.55)'
 
 const MIN_IMPACT_CARDS: ImpactCard[] = [
   {
     ordinal: '01',
-    ordinalLabel: 'Minimum impact',
+    ordinalLabel: 'P2',
     headline: 'More MQL tuning or vanity dashboard work.',
     body: "Without a way to attribute revenue to specific buyers, optimizing further on MQLs just adds noise. The team is already over-instrumented at the form-fill stage. Tightening that further produces cleaner reports about a model that doesn't capture how the buyer actually decides. The work doesn't move the needle on what's broken.",
     richContent: (
@@ -315,7 +462,7 @@ const MIN_IMPACT_CARDS: ImpactCard[] = [
   },
   {
     ordinal: '02',
-    ordinalLabel: 'Minimum impact',
+    ordinalLabel: 'P2',
     headline: 'Hiring 3 to 4 more social media specialists immediately.',
     body: "More headcount can't fix an adoption problem. The bottleneck isn't capacity, it's that executives and sellers aren't publishing. Adding specialists who write on behalf of the brand doesn't move the signal that an agent reads as authoritative, which is the individual executive's voice. Scale staffing into a system that's already working, not into a system that hasn't started yet.",
     richContent: (
@@ -344,7 +491,7 @@ const MIN_IMPACT_CARDS: ImpactCard[] = [
   },
   {
     ordinal: '03',
-    ordinalLabel: 'Minimum impact',
+    ordinalLabel: 'P2',
     headline: 'More events and webinars layered on top of the existing cadence.',
     body: "Events drive leads, and BetterUp's existing event cadence is doing its job. But events don't fix the trust signal that an agent reads when it researches you. The buyer who's been to your event still asks Perplexity about you before she reaches out. Doubling event spend doesn't change what Perplexity sees.",
     richContent: (
@@ -375,7 +522,7 @@ const MIN_IMPACT_CARDS: ImpactCard[] = [
   },
   {
     ordinal: '04',
-    ordinalLabel: 'Minimum impact',
+    ordinalLabel: 'P2',
     headline: 'Trying to perfectly attribute the $30M marketing spend to new logos.',
     body: "The attribution model you'd need to perfectly trace $30M to new logos requires a longer feedback loop than your current trust signals have produced. You can't attribute revenue to signals you haven't fixed yet. Build the score-movement read first, then layer attribution on top of a signal infrastructure that's known to be working.",
     richContent: (
@@ -404,10 +551,10 @@ const MIN_IMPACT_CARDS: ImpactCard[] = [
 export function MinimumImpactSection() {
   return (
     <Section id="dont" background="#F4F1EA">
-      <IssueBar number="▶︎03" name="Minimum impact" meta={['BetterUp', 'Resist these']} />
+      <IssueBar number="▶︎04" name="P2" meta={['BetterUp', 'Resist these']} />
       <Reveal>
         <ImpactCardGrid
-          eyebrow="▶︎03 · MINIMUM IMPACT"
+          eyebrow="▶︎04 · P2"
           headline="The four motions that look productive and don't move what the buyer reads."
           cards={MIN_IMPACT_CARDS}
           ground="parchment"
@@ -472,7 +619,7 @@ function ProofSectionIntro() {
               maxWidth: 640,
             }}
           >
-            Each sub-section opens with what the buyer finds today, what it looks like when the chain is intact, and what to do first. The detailed evidence sits beneath. The roadmap at ▶︎05.8 lands the four Maximum Impact moves above.
+            Each sub-section opens with what the buyer finds today, what it looks like when the chain is intact, and what to do first. The detailed evidence sits beneath. The roadmap at ▶︎05.8 lands the four P1 moves above.
           </p>
         </div>
       </Reveal>
@@ -679,7 +826,7 @@ function NinetyDayPlan() {
           maxWidth: 720,
         }}
       >
-        Stand up the four Maximum Impact moves and measure what they actually move.
+        Stand up the four P1 moves and measure what they actually move.
       </h3>
       <ol
         style={{
@@ -1262,9 +1409,11 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
                       right column of the hero carries the full score breakdown
                       inline; methodology and band legend live in ▶︎05. */}
                   <RecommendationSection />
-                  {/* ▶︎02 — Maximum impact (do this) */}
+                  {/* ▶︎02 — The problems (named, no fixes) */}
+                  <ProblemsSection />
+                  {/* ▶︎03 — P1 (do this) */}
                   <MaximumImpactSection />
-                  {/* ▶︎03 — Minimum impact (don't do this) */}
+                  {/* ▶︎04 — P2 (don't do this) */}
                   <MinimumImpactSection />
                   {/* ▶︎05 — Full forensic record, with existing analytical sections as ▶︎05.1–▶︎05.8 */}
                   <ProofSectionIntro />

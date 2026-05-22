@@ -10,7 +10,7 @@ const CREAM_WHITE = '#FFFFFF'
 export type ImpactCard = {
   /** Two-digit ordinal like "01". */
   ordinal: string
-  /** Label shown next to the ordinal, e.g. "MAXIMUM IMPACT" or "MINIMUM IMPACT". */
+  /** Label shown next to the ordinal, e.g. "P1" or "P2". */
   ordinalLabel: string
   headline: string
   body: string
@@ -33,7 +33,7 @@ export type ImpactCard = {
 }
 
 type Props = {
-  /** Section eyebrow, e.g. "▶︎02 · MAXIMUM IMPACT". */
+  /** Section eyebrow, e.g. "▶︎03 · P1". */
   eyebrow: string
   /** Anton headline, e.g. "Four moves. In order." */
   headline: string
