@@ -942,13 +942,6 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
     }
   }, [page, viewMode, eraMode])
 
-  const handleThemeToggle = () => {
-    const newMode = theme.mode === 'light' ? 'dark' : 'light'
-    void track('theme_toggle', newMode, page)
-    posthog?.capture('audit_theme_toggled', { theme: newMode, audit_page: page })
-    theme.toggle()
-  }
-
   const handleLayerSet = (l: DataLayer) => {
     void track('layer_toggle', l, page)
     posthog?.capture('audit_data_layer_changed', { layer: l, audit_page: page })
@@ -970,7 +963,6 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
           <div className="v4-root" style={{ background: theme.palette.bg, minHeight: '100vh', color: theme.palette.text, fontFamily: FONT.body }}>
             <StepperNav
               items={SECTIONS}
-              onToggleTheme={handleThemeToggle}
               themeMode={theme.mode}
               layerToggle={eraMode ? { layer, onSet: handleLayerSet } : undefined}
               viewModeToggle={!eraMode ? { mode: viewMode, onSet: handleViewModeSet } : undefined}

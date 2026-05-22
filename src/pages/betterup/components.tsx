@@ -861,13 +861,11 @@ export interface StepperItem {
 
 export function StepperNav({
   items,
-  onToggleTheme,
   themeMode,
   layerToggle,
   viewModeToggle,
 }: {
   items: StepperItem[]
-  onToggleTheme: () => void
   themeMode: 'light' | 'dark'
   layerToggle?: { layer: 'era' | 'era-plus-bh'; onSet: (l: 'era' | 'era-plus-bh') => void }
   viewModeToggle?: { mode: 'summary' | 'full'; onSet: (m: 'summary' | 'full') => void }
@@ -1000,37 +998,6 @@ export function StepperNav({
           />
         )}
         {layerToggle && <LayerTogglePill layer={layerToggle.layer} onSet={layerToggle.onSet} />}
-        <button
-          onClick={onToggleTheme}
-          aria-label={themeMode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
-          style={{
-            background: 'transparent',
-            border: `1px solid ${palette.border}`,
-            borderRadius: '50%',
-            width: 32,
-            height: 32,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            color: palette.textMuted,
-            transition: 'all 0.2s',
-            flex: '0 0 auto',
-          }}
-        >
-          {themeMode === 'light' ? (
-            // Sun icon (currently light, click to go dark)
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="4" />
-              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-            </svg>
-          ) : (
-            // Moon icon (currently dark, click to go light)
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-            </svg>
-          )}
-        </button>
       </div>
     </nav>
   )
