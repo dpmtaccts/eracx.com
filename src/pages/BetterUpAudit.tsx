@@ -36,6 +36,13 @@ import { startSectionTimeTracker, track } from './betterup/analytics'
 import { SummaryView } from './betterup/SummaryView'
 import { AnimatePresence, motion } from 'framer-motion'
 import { betterupAudit } from '../data/audits/betterup'
+import {
+  BAND_COLORS,
+  SCORE_BANDS,
+  computeBuyerTrustScore,
+  getScoreBand,
+} from '../lib/buyerTrustScore'
+import { ScoreAnatomy } from '../components/revenueSignal/ScoreAnatomy'
 import { SectionOpener } from '../components/audit/SectionOpener'
 import { IssueBar } from '../components/audit/IssueBar'
 import { SectionAnalysisDisclosure } from '../components/audit/SectionAnalysisDisclosure'
@@ -53,8 +60,6 @@ import {
   StruckRows,
   Underline,
 } from '../components/audit/InlineVisuals'
-import { ScoreDrawerProvider } from '../components/audit/ScoreDrawerContext'
-import { ScoreBreakdownDrawer } from '../components/audit/ScoreBreakdownDrawer'
 
 /* ──────────────────────────────────────────────
    ▶︎01 — THE RECOMMENDATION
@@ -415,6 +420,9 @@ export function MinimumImpactSection() {
 
 /* ──────────────────────────────────────────────
    ▶︎05 — THE PROOF intro (sub-sections render after)
+   The methodology rows and band legend live here, not behind a drawer in
+   ▶︎01. They sit at the head of the forensic record because that is where
+   the reader who wants to verify the scoring math is already looking.
    ────────────────────────────────────────────── */
 function ProofSectionIntro() {
   const { palette } = useTheme()
@@ -468,7 +476,84 @@ function ProofSectionIntro() {
           </p>
         </div>
       </Reveal>
+
+      {/* Methodology and band legend, surfaced from the old ▶︎01 drawer. */}
+      <div style={{ marginTop: 64 }}>
+        <ScoreAnatomy scores={betterupAudit.currentScores} />
+        <BandLegendStrip currentScore={computeBuyerTrustScore(betterupAudit.currentScores)} />
+      </div>
     </Section>
+  )
+}
+
+function BandLegendStrip({ currentScore }: { currentScore: number }) {
+  const { palette } = useTheme()
+  const activeBand = getScoreBand(currentScore).id
+  return (
+    <div style={{ marginTop: 48 }}>
+      <div
+        style={{
+          fontFamily: FONT.mono,
+          fontSize: 11,
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: palette.textDim,
+          fontWeight: 600,
+          marginBottom: 14,
+        }}
+      >
+        The band system
+      </div>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${SCORE_BANDS.length}, minmax(0, 1fr))`,
+          gap: 6,
+          maxWidth: 760,
+        }}
+      >
+        {SCORE_BANDS.map((b) => {
+          const isActive = b.id === activeBand
+          const color = BAND_COLORS[b.id]
+          return (
+            <div
+              key={b.id}
+              style={{
+                border: `1px solid ${isActive ? color : palette.rule}`,
+                background: isActive ? `${color}14` : 'transparent',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <div style={{ height: 4, background: color }} />
+              <div style={{ padding: '10px 10px 12px' }}>
+                <div
+                  style={{
+                    fontFamily: FONT.body,
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: isActive ? color : palette.text,
+                    marginBottom: 4,
+                  }}
+                >
+                  {b.label}
+                </div>
+                <div
+                  style={{
+                    fontFamily: FONT.mono,
+                    fontSize: 10,
+                    letterSpacing: '0.04em',
+                    color: palette.textMuted,
+                  }}
+                >
+                  {b.range[0]}&ndash;{b.range[1]}
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
   )
 }
 
@@ -1145,65 +1230,59 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
   return (
     <ThemeContext.Provider value={theme}>
       <DataLayerProvider defaultLayer={eraMode ? 'era' : 'era-plus-bh'} showLayerToggle={eraMode}>
-        <ScoreDrawerProvider>
-          <DataLayerSync layer={layer} setLayer={setLayer} />
-          <div className="v4-root" style={{ background: theme.palette.bg, minHeight: '100vh', color: theme.palette.text, fontFamily: FONT.body }}>
-            <StepperNav
-              items={SECTIONS}
-              themeMode={theme.mode}
-              layerToggle={eraMode ? { layer, onSet: handleLayerSet } : undefined}
-              viewModeToggle={!eraMode ? { mode: viewMode, onSet: handleViewModeSet } : undefined}
-            />
-            <div style={{ paddingTop: 60 }}>
-              <AnimatePresence mode="wait">
-                {!eraMode && viewMode === 'summary' ? (
-                  <motion.div
-                    key="summary"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <SummaryView />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="full"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    {/* ▶︎01 — Recommendation lead. The gauge here opens a drawer
-                       carrying the diagnostic depth that used to live in ▶︎04. */}
-                    <RecommendationSection />
-                    {/* ▶︎02 — Maximum impact (do this) */}
-                    <MaximumImpactSection />
-                    {/* ▶︎03 — Minimum impact (don't do this) */}
-                    <MinimumImpactSection />
-                    {/* ▶︎05 — Full forensic record, with existing analytical sections as ▶︎05.1–▶︎05.8 */}
-                    <ProofSectionIntro />
-                    <CascadeSection />
-                    <GTMSection />
-                    <PopulationSection />
-                    <SignalsSection />
-                    <AIMirror />
-                    <AudienceSection />
-                    <InvestmentSection />
-                    <BuildSection />
-                    {/* ▶︎06 — Partnership ask */}
-                    <NextTogetherSection />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-            <ScoreBreakdownDrawer
-              scores={betterupAudit.currentScores}
-              projectedScores={betterupAudit.projectedScores}
-              roadmapAnchor="build"
-            />
+        <DataLayerSync layer={layer} setLayer={setLayer} />
+        <div className="v4-root" style={{ background: theme.palette.bg, minHeight: '100vh', color: theme.palette.text, fontFamily: FONT.body }}>
+          <StepperNav
+            items={SECTIONS}
+            themeMode={theme.mode}
+            layerToggle={eraMode ? { layer, onSet: handleLayerSet } : undefined}
+            viewModeToggle={!eraMode ? { mode: viewMode, onSet: handleViewModeSet } : undefined}
+          />
+          <div style={{ paddingTop: 60 }}>
+            <AnimatePresence mode="wait">
+              {!eraMode && viewMode === 'summary' ? (
+                <motion.div
+                  key="summary"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <SummaryView />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="full"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  {/* ▶︎01 — Recommendation lead. The integrated bento on the
+                      right column of the hero carries the full score breakdown
+                      inline; methodology and band legend live in ▶︎05. */}
+                  <RecommendationSection />
+                  {/* ▶︎02 — Maximum impact (do this) */}
+                  <MaximumImpactSection />
+                  {/* ▶︎03 — Minimum impact (don't do this) */}
+                  <MinimumImpactSection />
+                  {/* ▶︎05 — Full forensic record, with existing analytical sections as ▶︎05.1–▶︎05.8 */}
+                  <ProofSectionIntro />
+                  <CascadeSection />
+                  <GTMSection />
+                  <PopulationSection />
+                  <SignalsSection />
+                  <AIMirror />
+                  <AudienceSection />
+                  <InvestmentSection />
+                  <BuildSection />
+                  {/* ▶︎06 — Partnership ask */}
+                  <NextTogetherSection />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-        </ScoreDrawerProvider>
+        </div>
       </DataLayerProvider>
     </ThemeContext.Provider>
   )
