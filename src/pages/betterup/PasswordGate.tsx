@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react'
 import { usePostHog } from '@posthog/react'
 import { FONT } from './theme'
 import { getStoredEmail, setStoredEmail, track, type AuditPage } from './analytics'
+import { V4Wordmark } from '../../components/v4/V4Wordmark'
 
 const SESSION_KEY = 'betterup-audit-auth'
 const PASSWORD = 'transformation'
@@ -67,7 +68,9 @@ export function PasswordGate({ onAuth, page }: { onAuth: () => void; page: Audit
         flexDirection: 'column',
       }}
     >
-      {/* Issue bar — full width, mono uppercase, the v4 publication signature */}
+      {/* Issue bar — full width, mono uppercase, the v4 publication signature.
+          ERA wordmark sits where the § number normally lives; the right side
+          carries the publication title. */}
       <header
         style={{
           display: 'flex',
@@ -85,11 +88,10 @@ export function PasswordGate({ onAuth, page }: { onAuth: () => void; page: Audit
           gap: 12,
         }}
       >
-        <div>§ · Access · BetterUp</div>
-        <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
-          <span>The Buyer View</span>
-          <span>ERA</span>
+        <div style={{ color: INK, display: 'inline-flex', alignItems: 'center' }}>
+          <V4Wordmark style={{ height: 18, width: 'auto', display: 'block' }} />
         </div>
+        <span>The Buyer View</span>
       </header>
 
       {/* Centered editorial form */}

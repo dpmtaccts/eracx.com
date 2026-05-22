@@ -8,12 +8,14 @@
 
 interface V4WordmarkProps {
   className?: string
+  style?: React.CSSProperties
 }
 
-export function V4Wordmark({ className }: V4WordmarkProps) {
+export function V4Wordmark({ className, style }: V4WordmarkProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="6744 0 13458 4387"
       xmlns="http://www.w3.org/2000/svg"
       aria-label="ERA"
