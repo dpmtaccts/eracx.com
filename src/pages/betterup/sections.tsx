@@ -2228,7 +2228,6 @@ import {
   GTM_GRID_FUNCTIONAL_FLOOR,
   GTM_GRID_NOTE,
   GTM_LEADERSHIP_GRID,
-  ICP_BUYERS_HEADLINE,
   ICP_BUYERS_NAMED,
   JOURNEY_STOPS,
   SECTION_HEADLINE,
@@ -2333,27 +2332,56 @@ export function PopulationSection() {
       </Reveal>
       {/* CLOSING_DIAGNOSIS prose preserved on the data file for future surfaces; the editorial component above renders the same argument with a visual companion. */}
 
-      {/* 12 ICP buyers — concentration risk */}
+      {/* 12 named buyers — reframed from concentration risk to existing demand */}
       <Reveal>
         <div style={{ marginBottom: 96 }}>
-          <div style={smallLabel(palette.rust)}>The twelve buyers paying attention</div>
+          {/* Anton mega headline + standfirst */}
+          <h3
+            style={{
+              fontFamily: FONT.mega,
+              fontSize: 'clamp(36px, 5.5vw, 76px)',
+              lineHeight: 0.98,
+              letterSpacing: '-0.01em',
+              textTransform: 'uppercase',
+              color: '#FFFFFF',
+              margin: '0 0 24px',
+              fontWeight: 400,
+              maxWidth: 1000,
+            }}
+          >
+            Twelve senior buyers are already paying attention.
+          </h3>
           <p
             style={{
               fontFamily: FONT.body,
               fontSize: 17,
               lineHeight: 1.6,
-              color: palette.textMuted,
-              margin: '12px 0 28px',
+              color: 'rgba(255, 255, 255, 0.78)',
+              margin: '0 0 40px',
               maxWidth: 880,
             }}
           >
-            {ICP_BUYERS_HEADLINE}
+            These are not researchers poking around. They are VPs of HR, Chief People Officers, and a sitting CEO, the exact people BetterUp sells to, and they are engaging unprompted, today, with no cold outreach. The attention already exists. The problem is what they find when they look. Six voices are catching all of it, and every one of them sits above the leadership line.
           </p>
+
+          {/* Concentration callout — two stacked stats on the section ground */}
+          <div
+            style={{
+              border: `1px solid rgba(255, 255, 255, 0.25)`,
+              marginBottom: 32,
+              maxWidth: 720,
+            }}
+          >
+            <ConcentrationStat value="12" label="Senior buyers paying attention" />
+            <div style={{ borderTop: `1px solid rgba(255, 255, 255, 0.18)` }} />
+            <ConcentrationStat value="6" label="BetterUp voices catching them, all above the leadership line" />
+          </div>
+
+          {/* The twelve, with the buyer as the heaviest element */}
           <div
             style={{
               background: palette.card,
               border: `1px solid ${palette.border}`,
-              borderRadius: 6,
               padding: '8px 0',
             }}
           >
@@ -2362,20 +2390,78 @@ export function PopulationSection() {
                 key={b.name}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '32px 1fr 1.4fr 1.6fr',
+                  gridTemplateColumns: '36px minmax(0, 1.4fr) minmax(0, 1fr)',
                   alignItems: 'center',
-                  padding: '14px 28px',
+                  padding: '20px 28px',
                   borderBottom: i === ICP_BUYERS_NAMED.length - 1 ? 'none' : `1px solid ${palette.borderSubtle}`,
-                  gap: 16,
+                  gap: 20,
                 }}
               >
-                <span style={{ fontFamily: FONT.mono, fontSize: 12, color: palette.textDim }}>{String(i + 1).padStart(2, '0')}</span>
-                <span style={{ fontFamily: FONT.body, fontSize: 14, color: palette.text, fontWeight: 600 }}>{b.name}</span>
-                <span style={{ fontFamily: FONT.body, fontSize: 13, color: palette.textMuted }}>{b.title}</span>
-                <span style={{ fontFamily: FONT.body, fontSize: 12, color: palette.textDim, fontStyle: 'italic' }}>{b.appearsOn}</span>
+                <span
+                  style={{
+                    fontFamily: FONT.mono,
+                    fontSize: 11,
+                    color: palette.textDim,
+                    letterSpacing: '0.04em',
+                  }}
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4, minWidth: 0 }}>
+                  <span
+                    style={{
+                      fontFamily: FONT.display,
+                      fontSize: 'clamp(18px, 2vw, 22px)',
+                      color: palette.text,
+                      fontWeight: 700,
+                      lineHeight: 1.15,
+                      letterSpacing: '-0.005em',
+                    }}
+                  >
+                    {b.name}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: FONT.body,
+                      fontSize: 14,
+                      color: palette.textMuted,
+                      lineHeight: 1.45,
+                    }}
+                  >
+                    {b.title}
+                  </span>
+                </div>
+                <span
+                  style={{
+                    fontFamily: FONT.mono,
+                    fontSize: 10,
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: palette.textDim,
+                    textAlign: 'right',
+                    fontWeight: 600,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  {b.appearsOn}
+                </span>
               </div>
             ))}
           </div>
+
+          {/* Bridge line connecting the table to the recommendation */}
+          <p
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 17,
+              lineHeight: 1.6,
+              color: 'rgba(255, 255, 255, 0.78)',
+              margin: '40px 0 0',
+              maxWidth: 880,
+            }}
+          >
+            These twelve are doing the watching. Nobody at BetterUp is doing the catching. The fix is not more names. It is more people worth watching, so the buyers who are already here have somewhere to land.
+          </p>
         </div>
       </Reveal>
 
@@ -2652,6 +2738,49 @@ function JourneyStopCard({ stop, isLast }: { stop: JourneyStop; isLast: boolean 
         )}
       </div>
     </Reveal>
+  )
+}
+
+// Brutalist stat row used inside the concentration callout above the
+// twelve-buyers table. Renders on the section's dark ink ground, so the
+// numerals and labels are white with hairline rules separating the rows.
+function ConcentrationStat({ value, label }: { value: string; label: string }) {
+  return (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'minmax(120px, 160px) 1fr',
+        alignItems: 'center',
+        gap: 32,
+        padding: '24px 28px',
+      }}
+    >
+      <div
+        style={{
+          fontFamily: FONT.mega,
+          fontSize: 'clamp(64px, 7vw, 96px)',
+          fontWeight: 400,
+          lineHeight: 0.9,
+          letterSpacing: '-0.02em',
+          color: '#FFFFFF',
+        }}
+      >
+        {value}
+      </div>
+      <div
+        style={{
+          fontFamily: FONT.mono,
+          fontSize: 11,
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: 'rgba(255, 255, 255, 0.72)',
+          fontWeight: 600,
+          lineHeight: 1.55,
+        }}
+      >
+        {label}
+      </div>
+    </div>
   )
 }
 
