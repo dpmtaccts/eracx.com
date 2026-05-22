@@ -1,10 +1,10 @@
 import { FONT, useTheme } from '../../pages/betterup/theme'
 import { RevenueSignalGauge } from '../revenueSignal/RevenueSignalGauge'
 import {
-  computeRevenueSignalScore,
+  computeBuyerTrustScore,
   getScoreBand,
   type DiagnosticScores,
-} from '../../lib/revenueSignalScore'
+} from '../../lib/buyerTrustScore'
 import { useScoreDrawer } from './ScoreDrawerContext'
 
 const HOT = '#E6195F'
@@ -40,7 +40,7 @@ export function RecommendationHero({
 }: Props) {
   const { palette } = useTheme()
   const { setOpen: openDrawer } = useScoreDrawer()
-  const score = computeRevenueSignalScore(scores)
+  const score = computeBuyerTrustScore(scores)
   const band = getScoreBand(score)
   const contextLine =
     scoreContextLine ??
@@ -161,7 +161,7 @@ export function RecommendationHero({
               fontWeight: 600,
             }}
           >
-            Revenue Signal Score
+            Buyer Trust Score
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
             <RevenueSignalGauge

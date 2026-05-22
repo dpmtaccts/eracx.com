@@ -71,7 +71,7 @@ export function PasswordGate({ onAuth, page }: { onAuth: () => void; page: Audit
             marginBottom: 18,
           }}
         >
-          Revenue Signal Audit built for
+          The Buyer View built for
         </div>
         <div style={{ marginBottom: 36, display: 'flex', justifyContent: 'center' }}>
           <img

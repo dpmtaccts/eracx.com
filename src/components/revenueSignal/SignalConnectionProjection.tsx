@@ -2,12 +2,12 @@ import { FONT } from '../../pages/betterup/theme'
 import { Reveal } from '../../pages/betterup/components'
 import {
   DIAGNOSTIC_COLORS,
-  computeRevenueSignalScore,
+  computeBuyerTrustScore,
   diagnosticRows,
   percentDelta,
   type DiagnosticKey,
   type DiagnosticScores,
-} from '../../lib/revenueSignalScore'
+} from '../../lib/buyerTrustScore'
 import { RevenueSignalGauge } from './RevenueSignalGauge'
 
 const INK = '#0A0A0A'
@@ -23,8 +23,8 @@ type Props = {
 // warm sections. Diagnostic accent colors are applied to component cards as
 // the only color call-outs; body text stays in standard ink/muted treatments.
 export function SignalConnectionProjection({ currentScores, projectedScores }: Props) {
-  const currentTotal = computeRevenueSignalScore(currentScores)
-  const projectedTotal = computeRevenueSignalScore(projectedScores)
+  const currentTotal = computeBuyerTrustScore(currentScores)
+  const projectedTotal = computeBuyerTrustScore(projectedScores)
   const totalDelta = percentDelta(currentTotal, projectedTotal)
 
   const currentRows = diagnosticRows(currentScores)
@@ -84,7 +84,7 @@ export function SignalConnectionProjection({ currentScores, projectedScores }: P
               margin: 0,
             }}
           >
-            The Revenue Signal Score moves from {currentTotal} to {projectedTotal} when the three Maximum Impact decisions land. That score movement maps to recovering 12 to 18 percentage points of qualified pipeline that's currently leaking before sales contact. For BetterUp, that's a defensible business case: the marketing investment that has been hard to attribute now has a measurement that moves with executive activity, employee experience repair, and content-to-agent alignment.
+            The Buyer Trust Score moves from {currentTotal} to {projectedTotal} when the three Maximum Impact decisions land. That score movement maps to recovering 12 to 18 percentage points of qualified pipeline that's currently leaking before sales contact. For BetterUp, that's a defensible business case: the marketing investment that has been hard to attribute now has a measurement that moves with executive activity, employee experience repair, and content-to-agent alignment.
           </p>
           <p
             style={{
@@ -123,7 +123,7 @@ export function SignalConnectionProjection({ currentScores, projectedScores }: P
                 fontWeight: 600,
               }}
             >
-              Revenue Signal Score
+              Buyer Trust Score
             </div>
             <div
               style={{

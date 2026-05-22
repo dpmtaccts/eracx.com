@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { FONT, useTheme } from '../../pages/betterup/theme'
-import { getScoreBand, getBandColor } from '../../lib/revenueSignalScore'
+import { getScoreBand, getBandColor } from '../../lib/buyerTrustScore'
 import { Disclosure } from './Disclosure'
 
 const INK = '#0A0A0A'

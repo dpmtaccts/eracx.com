@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { FONT, useTheme } from '../../pages/betterup/theme'
 import { Reveal } from '../../pages/betterup/components'
-import { diagnosticRows, type DiagnosticScores } from '../../lib/revenueSignalScore'
+import { diagnosticRows, type DiagnosticScores } from '../../lib/buyerTrustScore'
 import { Disclosure } from '../audit/Disclosure'
 
 const EXPLAINER =
-  'The Revenue Signal Score is a weighted composite of four diagnostic readings. Leaders carries the heaviest weight because the buyer encounters your leadership voices first when she opens LinkedIn. Employees and Your content are weighted equally as the upstream signals that produce what the buyer reads about you. Agents sits lightest because the AI answer is largely the synthesis of the other three. The weights are calibrated against ERA’s pattern recognition across comparable B2B engagements and updated as the dataset grows.'
+  'The Buyer Trust Score is a weighted composite of four diagnostic readings. Leaders carries the heaviest weight because the buyer encounters your leadership voices first when she opens LinkedIn. Employees and Your content are weighted equally as the upstream signals that produce what the buyer reads about you. Agents sits lightest because the AI answer is largely the synthesis of the other three. The weights are calibrated against ERA’s pattern recognition across comparable B2B engagements and updated as the dataset grows.'
 
 type Props = {
   scores: DiagnosticScores

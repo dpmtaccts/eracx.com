@@ -1,7 +1,7 @@
-import { SCORE_BANDS, BAND_COLORS, type ScoreBand } from '../../lib/revenueSignalScore'
+import { SCORE_BANDS, BAND_COLORS, type ScoreBand } from '../../lib/buyerTrustScore'
 
 /**
- * Semicircular gauge used in the Revenue Signal Score hero and in the
+ * Semicircular gauge used in the Buyer Trust Score hero and in the
  * If-the-Signals-Connect mini view.
  *
  * Geometry (in SVG userspace, viewBox 0 0 460 240):
@@ -91,7 +91,7 @@ export function RevenueSignalGauge({
       className={className}
       style={{ display: 'block', overflow: 'visible' }}
       role="img"
-      aria-label={`Revenue Signal Score gauge showing ${score} of 100`}
+      aria-label={`Buyer Trust Score gauge showing ${score} of 100`}
     >
       {/* Band segments */}
       {segments.map((seg) => (

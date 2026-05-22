@@ -62,7 +62,7 @@ export default function StubAuditExample() {
               marginBottom: 40,
             }}
           >
-            This page renders the Revenue Signal Score template for the stub audit instance.
+            This page renders the Buyer Trust Score template for the stub audit instance.
             It exists to verify the template is fully data-driven. No content edits, no overrides.
           </p>
 

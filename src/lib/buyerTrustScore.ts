@@ -1,11 +1,11 @@
-export const REVENUE_SIGNAL_WEIGHTS = {
+export const BUYER_TRUST_WEIGHTS = {
   brandCascade: 0.25,
   gtmSignalChain: 0.35,
   contentToPipeline: 0.25,
   aiMirror: 0.15,
 } as const
 
-export type DiagnosticKey = keyof typeof REVENUE_SIGNAL_WEIGHTS
+export type DiagnosticKey = keyof typeof BUYER_TRUST_WEIGHTS
 
 export type DiagnosticScores = {
   brandCascade: number
@@ -148,18 +148,18 @@ export const DIAGNOSTIC_META: Record<
   DiagnosticKey,
   { label: string; weight: number; order: number }
 > = {
-  gtmSignalChain: { label: DIAGNOSTIC_LABELS.gtmSignalChain.short, weight: REVENUE_SIGNAL_WEIGHTS.gtmSignalChain, order: 1 },
-  brandCascade: { label: DIAGNOSTIC_LABELS.brandCascade.short, weight: REVENUE_SIGNAL_WEIGHTS.brandCascade, order: 2 },
-  contentToPipeline: { label: DIAGNOSTIC_LABELS.contentToPipeline.short, weight: REVENUE_SIGNAL_WEIGHTS.contentToPipeline, order: 3 },
-  aiMirror: { label: DIAGNOSTIC_LABELS.aiMirror.short, weight: REVENUE_SIGNAL_WEIGHTS.aiMirror, order: 4 },
+  gtmSignalChain: { label: DIAGNOSTIC_LABELS.gtmSignalChain.short, weight: BUYER_TRUST_WEIGHTS.gtmSignalChain, order: 1 },
+  brandCascade: { label: DIAGNOSTIC_LABELS.brandCascade.short, weight: BUYER_TRUST_WEIGHTS.brandCascade, order: 2 },
+  contentToPipeline: { label: DIAGNOSTIC_LABELS.contentToPipeline.short, weight: BUYER_TRUST_WEIGHTS.contentToPipeline, order: 3 },
+  aiMirror: { label: DIAGNOSTIC_LABELS.aiMirror.short, weight: BUYER_TRUST_WEIGHTS.aiMirror, order: 4 },
 }
 
-export function computeRevenueSignalScore(scores: DiagnosticScores): number {
+export function computeBuyerTrustScore(scores: DiagnosticScores): number {
   return Math.round(
-    scores.brandCascade * REVENUE_SIGNAL_WEIGHTS.brandCascade +
-      scores.gtmSignalChain * REVENUE_SIGNAL_WEIGHTS.gtmSignalChain +
-      scores.contentToPipeline * REVENUE_SIGNAL_WEIGHTS.contentToPipeline +
-      scores.aiMirror * REVENUE_SIGNAL_WEIGHTS.aiMirror
+    scores.brandCascade * BUYER_TRUST_WEIGHTS.brandCascade +
+      scores.gtmSignalChain * BUYER_TRUST_WEIGHTS.gtmSignalChain +
+      scores.contentToPipeline * BUYER_TRUST_WEIGHTS.contentToPipeline +
+      scores.aiMirror * BUYER_TRUST_WEIGHTS.aiMirror
   )
 }
 
@@ -178,7 +178,7 @@ export function getBandVerdictColor(score: number): string {
 }
 
 export function computeWeightedContribution(diagnostic: DiagnosticKey, score: number): number {
-  return Math.round(score * REVENUE_SIGNAL_WEIGHTS[diagnostic] * 100) / 100
+  return Math.round(score * BUYER_TRUST_WEIGHTS[diagnostic] * 100) / 100
 }
 
 export type DiagnosticRow = {
@@ -198,7 +198,7 @@ export function diagnosticRows(scores: DiagnosticScores): DiagnosticRow[] {
     key,
     label: DIAGNOSTIC_META[key].label,
     score: scores[key],
-    weight: REVENUE_SIGNAL_WEIGHTS[key],
+    weight: BUYER_TRUST_WEIGHTS[key],
     contribution: computeWeightedContribution(key, scores[key]),
     bandColor: getBandColor(scores[key]),
   }))

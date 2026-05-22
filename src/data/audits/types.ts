@@ -1,4 +1,4 @@
-import type { DiagnosticScores } from '../../lib/revenueSignalScore'
+import type { DiagnosticScores } from '../../lib/buyerTrustScore'
 import type { SectionOpenerProps } from '../../components/audit/SectionOpener'
 import type { AuditRoadmapProps } from '../../components/audit/AuditRoadmap'
 

@@ -3,12 +3,12 @@ import { Reveal } from '../../pages/betterup/components'
 import {
   SCORE_BANDS,
   BAND_COLORS,
-  computeRevenueSignalScore,
+  computeBuyerTrustScore,
   getScoreBand,
   getBandVerdictColor,
   type DiagnosticScores,
   type ScoreBand,
-} from '../../lib/revenueSignalScore'
+} from '../../lib/buyerTrustScore'
 import { RevenueSignalGauge } from './RevenueSignalGauge'
 
 type Props = {
@@ -26,7 +26,7 @@ export function RevenueSignalScoreHero({
   verdictOverride,
 }: Props) {
   const { palette } = useTheme()
-  const score = computeRevenueSignalScore(scores)
+  const score = computeBuyerTrustScore(scores)
   const band = getScoreBand(score)
   const verdictColor = getBandVerdictColor(score)
 
@@ -54,7 +54,7 @@ export function RevenueSignalScoreHero({
             marginBottom: 18,
           }}
         >
-          Revenue Signal Score
+          Buyer Trust Score
         </div>
 
         {/* B. Verdict headline — Anton mega */}

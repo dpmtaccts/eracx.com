@@ -15,7 +15,7 @@ export const PHASES: Phase[] = [
     weeks: 'Weeks 1-4',
     title: 'Signal Diagnostic & Strategy',
     items: [
-      'Complete Revenue Signal Audit (this document)',
+      'Complete Buyer View (this document)',
       'LinkedIn leadership audit for top 5 executives, not just the CEO',
       'Content-to-pipeline gap analysis with buyer journey mapping',
       'Competitive positioning strategy',

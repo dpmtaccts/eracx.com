@@ -2,10 +2,10 @@ import { FONT } from '../../pages/betterup/theme'
 import {
   BAND_COLORS,
   SCORE_BANDS,
-  computeRevenueSignalScore,
+  computeBuyerTrustScore,
   getScoreBand,
   type DiagnosticScores,
-} from '../../lib/revenueSignalScore'
+} from '../../lib/buyerTrustScore'
 import { useScoreDrawer } from './ScoreDrawerContext'
 import { ScoreAnatomy } from '../revenueSignal/ScoreAnatomy'
 
@@ -46,7 +46,7 @@ const BRIDGE: BridgeParagraph[] = [
 ]
 
 const METHODOLOGY =
-  "The Revenue Signal Score is a weighted composite of four diagnostic readings. Leaders carries the heaviest weight because the buyer encounters your leadership voices first when she opens LinkedIn. Employees and Your content are weighted equally as the upstream signals that produce what she reads about you. Agents sits lightest because the AI answer is largely the synthesis of the other three. The weights are calibrated against ERA's pattern recognition across comparable B2B engagements and updated as the dataset grows."
+  "The Buyer Trust Score is a weighted composite of four diagnostic readings. Leaders carries the heaviest weight because the buyer encounters your leadership voices first when she opens LinkedIn. Employees and Your content are weighted equally as the upstream signals that produce what she reads about you. Agents sits lightest because the AI answer is largely the synthesis of the other three. The weights are calibrated against ERA's pattern recognition across comparable B2B engagements and updated as the dataset grows."
 
 type Props = {
   scores: DiagnosticScores
@@ -57,9 +57,9 @@ type Props = {
 
 export function ScoreBreakdownDrawer({ scores, projectedScores, roadmapAnchor = 'proof' }: Props) {
   const { open, setOpen } = useScoreDrawer()
-  const score = computeRevenueSignalScore(scores)
+  const score = computeBuyerTrustScore(scores)
   const band = getScoreBand(score)
-  const projected = computeRevenueSignalScore(projectedScores)
+  const projected = computeBuyerTrustScore(projectedScores)
   const mvpScore = 41 // declared in roadmap stages — surfaced here for the trajectory
   const thenScore = 51
 
@@ -92,7 +92,7 @@ export function ScoreBreakdownDrawer({ scores, projectedScores, roadmapAnchor = 
         role="dialog"
         aria-modal="true"
         aria-hidden={!open}
-        aria-label="Revenue Signal Score breakdown"
+        aria-label="Buyer Trust Score breakdown"
         style={{
           position: 'fixed',
           top: 0,
@@ -132,7 +132,7 @@ export function ScoreBreakdownDrawer({ scores, projectedScores, roadmapAnchor = 
               fontWeight: 600,
             }}
           >
-            Revenue Signal Score · Breakdown
+            Buyer Trust Score · Breakdown
           </div>
           <button
             type="button"
