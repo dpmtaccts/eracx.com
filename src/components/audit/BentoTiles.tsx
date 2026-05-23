@@ -73,15 +73,17 @@ export function BentoTile({
         minWidth: 0,
       }}
     >
-      <div
-        style={{
-          ...monoEyebrow,
-          color: accent,
-          marginBottom: 16,
-        }}
-      >
-        {renderedEyebrow}
-      </div>
+      {renderedEyebrow && (
+        <div
+          style={{
+            ...monoEyebrow,
+            color: accent,
+            marginBottom: 16,
+          }}
+        >
+          {renderedEyebrow}
+        </div>
+      )}
       {children}
     </article>
   )
