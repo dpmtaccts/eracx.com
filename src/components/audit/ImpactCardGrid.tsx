@@ -75,7 +75,50 @@ export function ImpactCardGrid({ eyebrow, headline, cards, ground }: Props) {
           background: isInk ? ruleColor : 'transparent',
         }}
       >
-        {cards.map((card) => {
+        {/* Headline tile — bottom-left, spans 2 cols × 2 rows. Rendered
+            first in DOM for semantic order; CSS Grid places it via explicit
+            gridColumn/gridRow. Type fills the tile; tile sized by the row
+            heights of cards 03 and 04 to its right. */}
+        <div
+          style={{
+            gridColumn: '1 / span 2',
+            gridRow: '2 / span 2',
+            background: bg,
+            padding: '40px 36px',
+            display: 'flex',
+            alignItems: 'center',
+            border: isInk ? 'none' : `1px solid ${ruleColor}`,
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: FONT.mega,
+              fontSize: 'clamp(48px, 7vw, 96px)',
+              fontWeight: 400,
+              lineHeight: 0.95,
+              letterSpacing: '-0.01em',
+              textTransform: 'uppercase',
+              color: textColor,
+              margin: 0,
+            }}
+          >
+            {headline}
+          </h2>
+        </div>
+
+        {cards.map((card, i) => {
+          // Cards wrap an L around the headline tile:
+          //   0 = top-left   (cols 1-2, row 1)
+          //   1 = top-right  (cols 3-4, row 1)
+          //   2 = mid-right  (cols 3-4, row 2)
+          //   3 = bot-right  (cols 3-4, row 3)
+          const positions: ReadonlyArray<{ gridColumn: string; gridRow: string }> = [
+            { gridColumn: '1 / span 2', gridRow: '1' },
+            { gridColumn: '3 / span 2', gridRow: '1' },
+            { gridColumn: '3 / span 2', gridRow: '2' },
+            { gridColumn: '3 / span 2', gridRow: '3' },
+          ]
+          const pos = positions[i] ?? { gridColumn: 'auto', gridRow: 'auto' }
           const cardAccent = card.accentColor
           const cardEyebrowColor = cardAccent ?? eyebrowColor
           const cardIndicatorColor = cardAccent ?? indicatorColor
@@ -83,6 +126,7 @@ export function ImpactCardGrid({ eyebrow, headline, cards, ground }: Props) {
             <article
               key={card.ordinal}
               style={{
+                ...pos,
                 background: bg,
                 padding: '28px 28px 26px',
                 display: 'flex',
@@ -174,35 +218,6 @@ export function ImpactCardGrid({ eyebrow, headline, cards, ground }: Props) {
             </article>
           )
         })}
-        {/* Headline band — 5th cell, spans all 4 columns, sits beneath the
-            cards. Matches the section's ground and carries the largest type
-            in the section. Type fills the band; band is contained to the
-            grid, not the viewport. */}
-        <div
-          style={{
-            gridColumn: 'span 4',
-            background: bg,
-            padding: '64px 32px 60px',
-            border: isInk ? 'none' : `1px solid ${ruleColor}`,
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: FONT.mega,
-              fontSize: 'clamp(56px, 9vw, 128px)',
-              fontWeight: 400,
-              lineHeight: 0.94,
-              letterSpacing: '-0.01em',
-              textTransform: 'uppercase',
-              color: textColor,
-              margin: 0,
-            }}
-          >
-            {headline}
-          </h2>
-        </div>
       </div>
     </section>
   )
