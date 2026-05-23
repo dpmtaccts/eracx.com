@@ -10,8 +10,9 @@ const CREAM_WHITE = '#FFFFFF'
 export type ImpactCard = {
   /** Two-digit ordinal like "01". */
   ordinal: string
-  /** Label shown next to the ordinal, e.g. "P1" or "P2". */
-  ordinalLabel: string
+  /** Optional label shown next to the ordinal (e.g. the diagnostic each move
+   *  repairs). When omitted, the eyebrow renders the ordinal alone. */
+  ordinalLabel?: string
   headline: string
   body: string
   /** Optional rich JSX content that replaces the plain body paragraph. Use
@@ -33,7 +34,7 @@ export type ImpactCard = {
 }
 
 type Props = {
-  /** Section eyebrow, e.g. "▶︎03 · P1". */
+  /** Section eyebrow, e.g. "▶︎03 · The Four Moves". */
   eyebrow: string
   /** Anton headline, e.g. "Four moves. In order." */
   headline: string
@@ -126,7 +127,8 @@ export function ImpactCardGrid({ eyebrow, headline, cards, ground }: Props) {
                   fontWeight: 600,
                 }}
               >
-                <span style={{ color: cardEyebrowColor }}>{card.ordinal}</span> · {card.ordinalLabel}
+                <span style={{ color: cardEyebrowColor }}>{card.ordinal}</span>
+                {card.ordinalLabel ? ` · ${card.ordinalLabel}` : null}
               </div>
               <h3
                 style={{

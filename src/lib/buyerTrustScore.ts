@@ -135,7 +135,7 @@ export const DIAGNOSTIC_LABELS: Record<DiagnosticKey, { full: string; short: str
   },
 } as const
 
-// Diagnostic accent colors, one per diagnostic, used to tie ▶︎02 Maximum Impact
+// Diagnostic accent colors, one per diagnostic, used to tie ▶︎03 move
 // cards to their ▶︎05 evidence sub-sections.
 export const DIAGNOSTIC_COLORS: Record<DiagnosticKey, string> = {
   brandCascade: '#DD5C20', // rust

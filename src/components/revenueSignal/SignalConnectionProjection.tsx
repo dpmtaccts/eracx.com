@@ -84,7 +84,7 @@ export function SignalConnectionProjection({ currentScores, projectedScores }: P
               margin: 0,
             }}
           >
-            The Buyer Trust Score moves from {currentTotal} to {projectedTotal} when the three P1 decisions land. That score movement maps to recovering 12 to 18 percentage points of qualified pipeline that's currently leaking before sales contact. For BetterUp, that's a defensible business case: the marketing investment that has been hard to attribute now has a measurement that moves with executive activity, employee experience repair, and content-to-agent alignment.
+            The Buyer Trust Score moves from {currentTotal} to {projectedTotal} when the three decisions land. That score movement maps to recovering 12 to 18 percentage points of qualified pipeline that's currently leaking before sales contact. For BetterUp, that's a defensible business case: the marketing investment that has been hard to attribute now has a measurement that moves with executive activity, employee experience repair, and content-to-agent alignment.
           </p>
           <p
             style={{
