@@ -34,9 +34,12 @@ export type ImpactCard = {
 }
 
 type Props = {
-  /** Section eyebrow, e.g. "▶︎03 · The Four Moves". */
-  eyebrow: string
-  /** Anton headline, e.g. "Four moves. In order." */
+  /** Retained for prop-shape compatibility with existing call sites.
+   *  No longer rendered — the section identifier lives in the section's
+   *  IssueBar, and the layout now places the headline as a band beneath the
+   *  cards rather than above them. */
+  eyebrow?: string
+  /** Anton mega headline that renders as a full-width band beneath the cards. */
   headline: string
   cards: readonly ImpactCard[]
   /** Ink = loud (Maximum). Parchment = quiet (Minimum). */
@@ -53,6 +56,7 @@ export function ImpactCardGrid({ eyebrow, headline, cards, ground }: Props) {
   const ruleColor = isInk ? 'rgba(255, 255, 255, 0.12)' : palette.rule
   const eyebrowColor = isInk ? YELLOW : mutedColor
   const indicatorColor = isInk ? HOT : mutedColor
+  void eyebrow
 
   return (
     <section
@@ -63,40 +67,10 @@ export function ImpactCardGrid({ eyebrow, headline, cards, ground }: Props) {
         padding: '96px max(32px, calc(50vw - 600px))',
       }}
     >
-      <div style={{ marginBottom: 48, maxWidth: 760 }}>
-        <div
-          style={{
-            fontFamily: FONT.mono,
-            fontSize: 11,
-            letterSpacing: '0.14em',
-            textTransform: 'uppercase',
-            color: eyebrowColor,
-            fontWeight: 600,
-            marginBottom: 20,
-          }}
-        >
-          {eyebrow}
-        </div>
-        <h2
-          style={{
-            fontFamily: FONT.mega,
-            fontSize: 'clamp(48px, 8vw, 112px)',
-            fontWeight: 400,
-            lineHeight: 0.94,
-            letterSpacing: '-0.01em',
-            textTransform: 'uppercase',
-            color: textColor,
-            margin: 0,
-          }}
-        >
-          {headline}
-        </h2>
-      </div>
-
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
           gap: isInk ? 1 : 16,
           background: isInk ? ruleColor : 'transparent',
         }}
@@ -200,6 +174,35 @@ export function ImpactCardGrid({ eyebrow, headline, cards, ground }: Props) {
             </article>
           )
         })}
+        {/* Headline band — 5th cell, spans all 4 columns, sits beneath the
+            cards. Matches the section's ground and carries the largest type
+            in the section. Type fills the band; band is contained to the
+            grid, not the viewport. */}
+        <div
+          style={{
+            gridColumn: 'span 4',
+            background: bg,
+            padding: '64px 32px 60px',
+            border: isInk ? 'none' : `1px solid ${ruleColor}`,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: FONT.mega,
+              fontSize: 'clamp(56px, 9vw, 128px)',
+              fontWeight: 400,
+              lineHeight: 0.94,
+              letterSpacing: '-0.01em',
+              textTransform: 'uppercase',
+              color: textColor,
+              margin: 0,
+            }}
+          >
+            {headline}
+          </h2>
+        </div>
       </div>
     </section>
   )
