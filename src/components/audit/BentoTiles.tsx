@@ -42,18 +42,23 @@ export function BentoTile({
   accent,
   priority,
   diagnostic,
+  eyebrow,
   colSpan,
   rowSpan = 1,
   children,
 }: {
   accent: string
-  priority: string
-  diagnostic: string
+  /** Optional eyebrow override. When set, supersedes priority/diagnostic. */
+  eyebrow?: string
+  priority?: string
+  diagnostic?: string
   colSpan: number
   rowSpan?: number
   children: ReactNode
 }) {
   const { palette } = useTheme()
+  const renderedEyebrow =
+    eyebrow ?? (priority && diagnostic ? `${priority} · ${diagnostic}` : priority || diagnostic || '')
   return (
     <article
       style={{
@@ -75,7 +80,7 @@ export function BentoTile({
           marginBottom: 16,
         }}
       >
-        {priority} · {diagnostic}
+        {renderedEyebrow}
       </div>
       {children}
     </article>
@@ -479,6 +484,87 @@ function Star({ color, size }: { color: string; size: number }) {
     <svg width={size} height={size} viewBox="0 0 24 24" fill={color} stroke="none">
       <polygon points="12 2 14.84 8.74 22 9.27 16.5 14.14 18.18 21 12 17.27 5.82 21 7.5 14.14 2 9.27 9.16 8.74 12 2" />
     </svg>
+  )
+}
+
+/* ──────────────────────────────────────────────
+   SiteVsAgentContrast — 3-row side-by-side compare:
+   what your marketing publishes vs what the agent tells the buyer
+   ────────────────────────────────────────────── */
+
+type ContrastRow = {
+  yours: string
+  theirs: string
+}
+
+const SITE_VS_AGENT_ROWS: ReadonlyArray<ContrastRow> = [
+  { yours: 'Enterprise coaching platform', theirs: 'D2C app at $14/month' },
+  { yours: '~1,200 employees', theirs: '~800 employees' },
+  { yours: 'Microsoft, Salesforce, NASA', theirs: 'Logos that left in 2023' },
+]
+
+export function SiteVsAgentContrast({ accent }: { accent: string }) {
+  const { palette } = useTheme()
+  return (
+    <div
+      role="img"
+      aria-label={`Three side-by-side rows comparing what your site publishes with what an agent tells the buyer.`}
+      style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}
+    >
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: 14,
+          paddingBottom: 10,
+          borderBottom: `1px solid ${palette.rule}`,
+          marginBottom: 6,
+        }}
+      >
+        <div style={{ ...monoMicro, color: palette.textDim }}>What your site says</div>
+        <div style={{ ...monoMicro, color: accent }}>What Perplexity told her</div>
+      </div>
+      {SITE_VS_AGENT_ROWS.map((row, i) => (
+        <div
+          key={i}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 14,
+            padding: '10px 0',
+            borderBottom:
+              i === SITE_VS_AGENT_ROWS.length - 1 ? 'none' : `1px solid ${palette.rule}`,
+            alignItems: 'baseline',
+          }}
+        >
+          <span
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 13,
+              lineHeight: 1.4,
+              color: palette.text,
+              fontWeight: 500,
+            }}
+          >
+            {row.yours}
+          </span>
+          <span
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 13,
+              lineHeight: 1.4,
+              color: accent,
+              fontWeight: 600,
+              textDecoration: 'line-through',
+              textDecorationColor: `${accent}80`,
+              textDecorationThickness: '1px',
+            }}
+          >
+            {row.theirs}
+          </span>
+        </div>
+      ))}
+    </div>
   )
 }
 

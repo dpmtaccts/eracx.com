@@ -1,11 +1,5 @@
 import { FONT, useTheme } from '../../pages/betterup/theme'
-import {
-  computeBuyerTrustScore,
-  getScoreBand,
-  type DiagnosticScores,
-} from '../../lib/buyerTrustScore'
-import { RevenueSignalGauge } from '../revenueSignal/RevenueSignalGauge'
-import { ScoreColumnGraph4 } from './BentoTiles'
+import type { DiagnosticScores } from '../../lib/buyerTrustScore'
 
 const HOT = '#E6195F'
 
@@ -15,15 +9,18 @@ type Props = {
   headlineLine2: string
   accentInLine2?: string
   standfirst: string
-  scores: DiagnosticScores
+  /** Retained for backwards-compatible call sites. The score visual now lives
+   *  inside the §02 bento, so the hero no longer reads `scores` directly. */
+  scores?: DiagnosticScores
+  /** Retained for backwards compatibility; no longer rendered. */
   scoreContextLine?: string
   scoreAnchorId?: string
 }
 
-// §01 hero. Publication masthead at the top, then a single-column composition:
-// Anton headline (tightened one clamp step) → standfirst → full-width
-// horizontal score band carrying the Buyer Trust Score dial paired with the
-// 4-bar column graph of the diagnostic readings.
+// §01 hero. Tight: publication nameplate + Anton headline + IBM Plex Sans
+// standfirst. The score visual (dial + 4-bar column graph) now lives at the
+// top of the §02 bento as the score anchor row, so it sits with the rest of
+// the evidence rather than as a standalone band.
 export function RecommendationHero({
   eyebrow,
   headlineLine1,
@@ -35,21 +32,17 @@ export function RecommendationHero({
   scoreAnchorId,
 }: Props) {
   const { palette } = useTheme()
-  const score = computeBuyerTrustScore(scores)
-  const band = getScoreBand(score)
-  const contextLine =
-    scoreContextLine ??
-    `Typical of category leaders losing ${band.dragLow}-${band.dragHigh}% of qualified pipeline before sales contact.`
+  void scores
+  void scoreContextLine
+  void scoreAnchorId
 
   const accentParts =
     accentInLine2 && headlineLine2.includes(accentInLine2)
       ? splitAround(headlineLine2, accentInLine2)
       : null
 
-  void scoreAnchorId
-
   return (
-    <div style={{ marginBottom: 64 }}>
+    <div style={{ marginBottom: 24 }}>
       {/* Publication nameplate */}
       <header style={{ marginBottom: 40 }}>
         <div
@@ -81,154 +74,46 @@ export function RecommendationHero({
         </div>
       </header>
 
-      {/* Headline + standfirst, single column. Headline tightened one clamp
-          step so the score band lands inside the first viewport. */}
-      <div style={{ marginBottom: 48 }}>
-        <h1
-          style={{
-            fontFamily: FONT.mega,
-            fontSize: 'clamp(48px, 9vw, 128px)',
-            fontWeight: 400,
-            lineHeight: 0.92,
-            letterSpacing: '-0.01em',
-            textTransform: 'uppercase',
-            color: palette.text,
-            margin: '0 0 28px',
-          }}
-        >
-          <span style={{ display: 'block' }}>{headlineLine1}</span>
-          <span style={{ display: 'block' }}>
-            {accentParts ? (
-              <>
-                {accentParts[0]}
-                <span style={{ color: HOT }}>{accentParts[1]}</span>
-                {accentParts[2]}
-              </>
-            ) : (
-              headlineLine2
-            )}
-          </span>
-        </h1>
+      {/* Headline + standfirst, single column. */}
+      <h1
+        style={{
+          fontFamily: FONT.mega,
+          fontSize: 'clamp(48px, 9vw, 128px)',
+          fontWeight: 400,
+          lineHeight: 0.92,
+          letterSpacing: '-0.01em',
+          textTransform: 'uppercase',
+          color: palette.text,
+          margin: '0 0 28px',
+        }}
+      >
+        <span style={{ display: 'block' }}>{headlineLine1}</span>
+        <span style={{ display: 'block' }}>
+          {accentParts ? (
+            <>
+              {accentParts[0]}
+              <span style={{ color: HOT }}>{accentParts[1]}</span>
+              {accentParts[2]}
+            </>
+          ) : (
+            headlineLine2
+          )}
+        </span>
+      </h1>
 
-        <p
-          style={{
-            fontFamily: FONT.body,
-            fontSize: 20,
-            lineHeight: 1.55,
-            color: palette.text,
-            margin: 0,
-            maxWidth: 720,
-          }}
-        >
-          {standfirst}
-        </p>
-      </div>
-
-      {/* Score band — horizontal, full-width. Dial on the left, 4-bar
-          column graph on the right. */}
-      <ScoreBand score={score} bandLabel={band.label} scores={scores} contextLine={contextLine} />
+      <p
+        style={{
+          fontFamily: FONT.body,
+          fontSize: 20,
+          lineHeight: 1.55,
+          color: palette.text,
+          margin: 0,
+          maxWidth: 720,
+        }}
+      >
+        {standfirst}
+      </p>
     </div>
-  )
-}
-
-function ScoreBand({
-  score,
-  bandLabel,
-  scores,
-  contextLine,
-}: {
-  score: number
-  bandLabel: string
-  scores: DiagnosticScores
-  contextLine: string
-}) {
-  const { palette } = useTheme()
-  return (
-    <aside
-      aria-label="Buyer Trust Score and component breakdown"
-      style={{
-        border: `1px solid ${palette.rule}`,
-        background: palette.card,
-        padding: '32px 36px',
-        display: 'grid',
-        gridTemplateColumns: 'minmax(280px, 0.85fr) minmax(360px, 1.4fr)',
-        gap: 40,
-        alignItems: 'center',
-      }}
-    >
-      {/* Left: dial + readout */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <div
-          style={{
-            fontFamily: FONT.mono,
-            fontSize: 10,
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color: palette.textDim,
-            fontWeight: 600,
-          }}
-        >
-          Buyer Trust Score
-        </div>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap' }}>
-          <span
-            style={{
-              fontFamily: FONT.mega,
-              fontSize: 'clamp(72px, 9vw, 104px)',
-              lineHeight: 0.9,
-              color: palette.text,
-              letterSpacing: '-0.02em',
-            }}
-          >
-            {score}
-          </span>
-          <span
-            style={{
-              fontFamily: FONT.mono,
-              fontSize: 12,
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              color: HOT,
-              fontWeight: 600,
-            }}
-          >
-            / 100 · {bandLabel}
-          </span>
-        </div>
-        <div style={{ marginTop: 4, maxWidth: 360 }}>
-          <RevenueSignalGauge score={score} width={360} showScoreReadout={false} showTicks={false} />
-        </div>
-        <p
-          style={{
-            fontFamily: FONT.body,
-            fontSize: 13,
-            lineHeight: 1.55,
-            color: palette.textMuted,
-            margin: 0,
-            maxWidth: 380,
-          }}
-        >
-          {contextLine}
-        </p>
-      </div>
-
-      {/* Right: 4-bar component column graph */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 14, minWidth: 0 }}>
-        <div
-          style={{
-            fontFamily: FONT.mono,
-            fontSize: 10,
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color: palette.textDim,
-            fontWeight: 600,
-          }}
-        >
-          What she encountered, scored
-        </div>
-        <ScoreColumnGraph4 scores={scores} height={200} />
-      </div>
-    </aside>
   )
 }
 

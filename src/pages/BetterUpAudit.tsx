@@ -64,9 +64,11 @@ import {
   BentoTile,
   CascadeBreakStack,
   ContentColumnGraph8,
-  GaugeDial,
+  ScoreColumnGraph4,
+  SiteVsAgentContrast,
   StarRating,
 } from '../components/audit/BentoTiles'
+import { RevenueSignalGauge } from '../components/revenueSignal/RevenueSignalGauge'
 
 /* ──────────────────────────────────────────────
    ▶︎01 — THE RECOMMENDATION
@@ -96,15 +98,17 @@ export function RecommendationSection() {
 
 /* ──────────────────────────────────────────────
    ▶︎02 — THE PROBLEMS (bento evidence board)
-   Five tiles arranged horizontally across the desktop canvas: a 12-col
-   grid with mixed widths (3 / 4 / 5 / 5 / 7) and two rows of varied
-   heights. Each tile carries its diagnostic color as a 3px top accent
-   and frames the finding from the buyer's first-person view.
+   Score anchor + 5 evidence tiles arranged horizontally across the
+   desktop canvas. Row 1 carries the overall Buyer Trust Score (dial +
+   4-bar component breakdown) in two ink-accent tiles. Rows 2 and 3
+   carry the buyer-view findings, each tile color-coded to its
+   diagnostic. Every tile is framed from the buyer's first-person view.
    ────────────────────────────────────────────── */
 const COBALT = '#1845C2'
 const RUST = '#DD5C20'
 const YELLOW = '#F4C430'
 const MAGENTA = '#E6195F'
+const INK_ACCENT = '#0A0A0A'
 
 export function ProblemsSection() {
   const { palette } = useTheme()
@@ -143,6 +147,71 @@ export function ProblemsSection() {
           >
             These are the gaps between what your buyer researches and what you are showing her.
           </p>
+        </div>
+
+        {/* Score anchor row — overall Buyer Trust Score dial + 4-bar
+            component breakdown. Ink accent because these are the composite,
+            not a single diagnostic. */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
+            gap: 16,
+            marginBottom: 16,
+          }}
+        >
+          {/* Score dial */}
+          <BentoTile accent={INK_ACCENT} eyebrow="Buyer Trust Score" colSpan={5}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 8 }}>
+              <span
+                style={{
+                  fontFamily: FONT.mega,
+                  fontSize: 'clamp(64px, 8vw, 96px)',
+                  color: palette.text,
+                  lineHeight: 0.9,
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                {computeBuyerTrustScore(betterupAudit.currentScores)}
+              </span>
+              <span
+                style={{
+                  fontFamily: FONT.mono,
+                  fontSize: 12,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: '#E6195F',
+                  fontWeight: 600,
+                }}
+              >
+                / 100 · {getScoreBand(computeBuyerTrustScore(betterupAudit.currentScores)).label}
+              </span>
+            </div>
+            <div style={{ marginTop: 8 }}>
+              <RevenueSignalGauge
+                score={computeBuyerTrustScore(betterupAudit.currentScores)}
+                width={360}
+                showScoreReadout={false}
+                showTicks={false}
+              />
+            </div>
+            <p
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 13,
+                lineHeight: 1.55,
+                color: palette.textMuted,
+                margin: '12px 0 0',
+              }}
+            >
+              Typical of category leaders losing 15–25% of qualified pipeline before sales contact.
+            </p>
+          </BentoTile>
+
+          {/* 4-bar component breakdown */}
+          <BentoTile accent={INK_ACCENT} eyebrow="What she encountered, scored" colSpan={7}>
+            <ScoreColumnGraph4 scores={betterupAudit.currentScores} height={220} />
+          </BentoTile>
         </div>
 
         {/* Row 1 — three tall tiles */}
@@ -246,7 +315,8 @@ export function ProblemsSection() {
             </p>
           </BentoTile>
 
-          {/* Tile C — Agents gauge (span 3) */}
+          {/* Tile C — Agents contrast (span 3): evidence-based site-vs-agent
+              comparison, not an abstract score. */}
           <BentoTile accent={MAGENTA} priority="P4" diagnostic="Agents" colSpan={3}>
             <h3
               style={{
@@ -256,25 +326,22 @@ export function ProblemsSection() {
                 lineHeight: 1.3,
                 letterSpacing: '-0.005em',
                 color: palette.text,
-                margin: '0 0 14px',
+                margin: '0 0 16px',
               }}
             >
-              She asked Perplexity. The answer cited offerings you no longer sell.
+              She asked Perplexity about you. Here is what it said back.
             </h3>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: 'auto' }}>
-              <GaugeDial score={38} benchmark={65} benchmarkLabel="floor" size={140} />
-            </div>
+            <SiteVsAgentContrast accent={MAGENTA} />
             <p
               style={{
                 fontFamily: FONT.body,
                 fontSize: 12,
                 lineHeight: 1.5,
                 color: palette.textMuted,
-                margin: '12px 0 0',
-                textAlign: 'center',
+                margin: '14px 0 0',
               }}
             >
-              What an AI tells her, before any human on your team does.
+              The agent is quoting offerings you discontinued and logos that left. She reads that before any human on your team does.
             </p>
           </BentoTile>
         </div>
@@ -287,7 +354,9 @@ export function ProblemsSection() {
             gap: 16,
           }}
         >
-          {/* Tile D — Employees Glassdoor (span 5) */}
+          {/* Tile D — Employees Glassdoor (span 5): the rating is the lead,
+              not the abstract score. The framing emphasizes that the issues
+              behind the rating are unresolved and still public. */}
           <BentoTile accent={RUST} priority="P2" diagnostic="Employees" colSpan={5}>
             <h3
               style={{
@@ -297,60 +366,49 @@ export function ProblemsSection() {
                 lineHeight: 1.25,
                 letterSpacing: '-0.005em',
                 color: palette.text,
-                margin: '0 0 18px',
+                margin: '0 0 22px',
               }}
             >
               Before she called you, she checked Glassdoor.
             </h3>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, flexWrap: 'wrap', marginBottom: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, flexWrap: 'wrap', marginBottom: 12 }}>
               <span
                 style={{
                   fontFamily: FONT.mega,
-                  fontSize: 'clamp(48px, 6vw, 72px)',
+                  fontSize: 'clamp(56px, 7vw, 84px)',
                   color: RUST,
                   lineHeight: 0.9,
                   letterSpacing: '-0.02em',
                 }}
               >
-                41
+                3.2
               </span>
               <span
                 style={{
                   fontFamily: FONT.mono,
-                  fontSize: 11,
+                  fontSize: 12,
                   letterSpacing: '0.14em',
                   textTransform: 'uppercase',
                   color: palette.textDim,
                   fontWeight: 600,
                 }}
               >
-                / 100
+                / 5 · Glassdoor
               </span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
-              <StarRating value={3.2} color={RUST} size={20} />
-              <span
-                style={{
-                  fontFamily: FONT.mono,
-                  fontSize: 13,
-                  color: RUST,
-                  fontWeight: 600,
-                  letterSpacing: '0.04em',
-                }}
-              >
-                3.2 / 5 Glassdoor
-              </span>
+            <div style={{ marginBottom: 16 }}>
+              <StarRating value={3.2} color={RUST} size={22} />
             </div>
             <p
               style={{
                 fontFamily: FONT.body,
-                fontSize: 13,
+                fontSize: 14,
                 lineHeight: 1.55,
-                color: palette.textMuted,
+                color: palette.text,
                 margin: 0,
               }}
             >
-              The reviews were searchable. They did not match your marketing.
+              The pay disputes and coach complaints behind that rating are still public, still searchable, and still unresolved.
             </p>
           </BentoTile>
 
