@@ -60,6 +60,13 @@ import {
   StruckRows,
   Underline,
 } from '../components/audit/InlineVisuals'
+import {
+  BentoTile,
+  CascadeBreakStack,
+  ContentColumnGraph8,
+  GaugeDial,
+  StarRating,
+} from '../components/audit/BentoTiles'
 
 /* ──────────────────────────────────────────────
    ▶︎01 — THE RECOMMENDATION
@@ -88,40 +95,16 @@ export function RecommendationSection() {
 }
 
 /* ──────────────────────────────────────────────
-   ▶︎02 — THE PROBLEMS
-   A priority-ranked inventory of what the audit found. Names the four
-   problems without forensic detail or proposed fixes. P1 is the most
-   severe; P4 is the lowest of the four critical issues. Muted ink only;
-   diagnostic colors stay in §03 where the responses live.
+   ▶︎02 — THE PROBLEMS (bento evidence board)
+   Five tiles arranged horizontally across the desktop canvas: a 12-col
+   grid with mixed widths (3 / 4 / 5 / 5 / 7) and two rows of varied
+   heights. Each tile carries its diagnostic color as a 3px top accent
+   and frames the finding from the buyer's first-person view.
    ────────────────────────────────────────────── */
-type Problem = {
-  id: 'P1' | 'P2' | 'P3' | 'P4'
-  statement: string
-  elaboration: string
-}
-
-const PROBLEMS: ReadonlyArray<Problem> = [
-  {
-    id: 'P1',
-    statement: 'Your executives are not publishing on the surfaces your buyer uses.',
-    elaboration: 'When she searches LinkedIn for your team, she finds your CEO and almost no one else.',
-  },
-  {
-    id: 'P2',
-    statement: 'Your own employees publicly contradict the promise.',
-    elaboration: "She finds Glassdoor before she finds you, and Glassdoor does not match your marketing.",
-  },
-  {
-    id: 'P3',
-    statement: 'Your content is not reaching buyers at the decision stage.',
-    elaboration: 'What you publish is built for the audience that already believes, not the one still deciding.',
-  },
-  {
-    id: 'P4',
-    statement: 'AI agents are repeating out-of-date data about you.',
-    elaboration: 'When she asks Perplexity about BetterUp, the answer cites offerings you discontinued and logos you no longer have.',
-  },
-]
+const COBALT = '#1845C2'
+const RUST = '#DD5C20'
+const YELLOW = '#F4C430'
+const MAGENTA = '#E6195F'
 
 export function ProblemsSection() {
   const { palette } = useTheme()
@@ -133,7 +116,7 @@ export function ProblemsSection() {
         meta={['BetterUp', 'Buyer-view diagnosis']}
       />
       <Reveal>
-        <div style={{ maxWidth: 880, marginBottom: 56 }}>
+        <div style={{ maxWidth: 880, marginBottom: 48 }}>
           <h2
             style={{
               fontFamily: FONT.display,
@@ -146,7 +129,7 @@ export function ProblemsSection() {
               maxWidth: 760,
             }}
           >
-            We identified four problems from the buyer's view.
+            We found four problems, from the buyer's view.
           </h2>
           <p
             style={{
@@ -162,75 +145,273 @@ export function ProblemsSection() {
           </p>
         </div>
 
+        {/* Row 1 — three tall tiles */}
         <div
           style={{
-            maxWidth: 960,
-            borderTop: `1px solid ${palette.rule}`,
+            display: 'grid',
+            gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
+            gap: 16,
+            marginBottom: 16,
           }}
         >
-          {PROBLEMS.map((p) => (
-            <ProblemRow key={p.id} problem={p} />
-          ))}
+          {/* Tile A — Leaders headline (span 5) */}
+          <BentoTile accent={COBALT} priority="P1" diagnostic="Leaders" colSpan={5}>
+            <h3
+              style={{
+                fontFamily: FONT.display,
+                fontSize: 'clamp(20px, 2vw, 26px)',
+                fontWeight: 400,
+                lineHeight: 1.25,
+                letterSpacing: '-0.005em',
+                color: palette.text,
+                margin: '0 0 24px',
+              }}
+            >
+              She searched for your team on LinkedIn. She found your CEO. After that, the trail went cold.
+            </h3>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 22 }}>
+              <span
+                style={{
+                  fontFamily: FONT.mega,
+                  fontSize: 'clamp(64px, 8vw, 96px)',
+                  color: COBALT,
+                  lineHeight: 0.9,
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                24
+              </span>
+              <span
+                style={{
+                  fontFamily: FONT.mono,
+                  fontSize: 11,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: palette.textDim,
+                  fontWeight: 600,
+                }}
+              >
+                / 100
+              </span>
+            </div>
+            <div style={{ marginTop: 'auto' }}>
+              <CountSplit
+                leftCount={2}
+                leftLabel="Original"
+                rightCount={7}
+                rightLabel="Reposting or silent"
+                accent={COBALT}
+                ground="parchment"
+              />
+              <p
+                style={{
+                  fontFamily: FONT.body,
+                  fontSize: 13,
+                  lineHeight: 1.5,
+                  color: palette.textMuted,
+                  margin: '14px 0 0',
+                }}
+              >
+                Two voices know what they are saying. Seven echo the company page.
+              </p>
+            </div>
+          </BentoTile>
+
+          {/* Tile B — Employees cascade (span 4) */}
+          <BentoTile accent={RUST} priority="P2" diagnostic="Employees" colSpan={4}>
+            <h3
+              style={{
+                fontFamily: FONT.display,
+                fontSize: 'clamp(18px, 1.8vw, 22px)',
+                fontWeight: 400,
+                lineHeight: 1.25,
+                letterSpacing: '-0.005em',
+                color: palette.text,
+                margin: '0 0 18px',
+              }}
+            >
+              Where her trust gave way.
+            </h3>
+            <CascadeBreakStack accent={RUST} />
+            <p
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 13,
+                lineHeight: 1.5,
+                color: palette.textMuted,
+                margin: '16px 0 0',
+              }}
+            >
+              Layer 4 is where the chain broke. Your own people are where she stopped trusting.
+            </p>
+          </BentoTile>
+
+          {/* Tile C — Agents gauge (span 3) */}
+          <BentoTile accent={MAGENTA} priority="P4" diagnostic="Agents" colSpan={3}>
+            <h3
+              style={{
+                fontFamily: FONT.display,
+                fontSize: 'clamp(16px, 1.6vw, 19px)',
+                fontWeight: 400,
+                lineHeight: 1.3,
+                letterSpacing: '-0.005em',
+                color: palette.text,
+                margin: '0 0 14px',
+              }}
+            >
+              She asked Perplexity. The answer cited offerings you no longer sell.
+            </h3>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: 'auto' }}>
+              <GaugeDial score={38} benchmark={65} benchmarkLabel="floor" size={140} />
+            </div>
+            <p
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 12,
+                lineHeight: 1.5,
+                color: palette.textMuted,
+                margin: '12px 0 0',
+                textAlign: 'center',
+              }}
+            >
+              What an AI tells her, before any human on your team does.
+            </p>
+          </BentoTile>
+        </div>
+
+        {/* Row 2 — two wider tiles */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
+            gap: 16,
+          }}
+        >
+          {/* Tile D — Employees Glassdoor (span 5) */}
+          <BentoTile accent={RUST} priority="P2" diagnostic="Employees" colSpan={5}>
+            <h3
+              style={{
+                fontFamily: FONT.display,
+                fontSize: 'clamp(18px, 1.8vw, 22px)',
+                fontWeight: 400,
+                lineHeight: 1.25,
+                letterSpacing: '-0.005em',
+                color: palette.text,
+                margin: '0 0 18px',
+              }}
+            >
+              Before she called you, she checked Glassdoor.
+            </h3>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, flexWrap: 'wrap', marginBottom: 14 }}>
+              <span
+                style={{
+                  fontFamily: FONT.mega,
+                  fontSize: 'clamp(48px, 6vw, 72px)',
+                  color: RUST,
+                  lineHeight: 0.9,
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                41
+              </span>
+              <span
+                style={{
+                  fontFamily: FONT.mono,
+                  fontSize: 11,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: palette.textDim,
+                  fontWeight: 600,
+                }}
+              >
+                / 100
+              </span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+              <StarRating value={3.2} color={RUST} size={20} />
+              <span
+                style={{
+                  fontFamily: FONT.mono,
+                  fontSize: 13,
+                  color: RUST,
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
+                }}
+              >
+                3.2 / 5 Glassdoor
+              </span>
+            </div>
+            <p
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 13,
+                lineHeight: 1.55,
+                color: palette.textMuted,
+                margin: 0,
+              }}
+            >
+              The reviews were searchable. They did not match your marketing.
+            </p>
+          </BentoTile>
+
+          {/* Tile E — Your content column graph (span 7) */}
+          <BentoTile accent={YELLOW} priority="P3" diagnostic="Your content" colSpan={7}>
+            <h3
+              style={{
+                fontFamily: FONT.display,
+                fontSize: 'clamp(18px, 1.8vw, 22px)',
+                fontWeight: 400,
+                lineHeight: 1.25,
+                letterSpacing: '-0.005em',
+                color: palette.text,
+                margin: '0 0 18px',
+              }}
+            >
+              How her questions matched the categories you publish.
+            </h3>
+            <ContentColumnGraph8 accent={YELLOW} />
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', marginTop: 16 }}>
+              <span
+                style={{
+                  fontFamily: FONT.mega,
+                  fontSize: 'clamp(32px, 4vw, 44px)',
+                  color: YELLOW,
+                  lineHeight: 0.9,
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                29
+              </span>
+              <span
+                style={{
+                  fontFamily: FONT.mono,
+                  fontSize: 11,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: palette.textDim,
+                  fontWeight: 600,
+                }}
+              >
+                / 100 avg
+              </span>
+              <span
+                style={{
+                  fontFamily: FONT.body,
+                  fontSize: 13,
+                  lineHeight: 1.5,
+                  color: palette.textMuted,
+                  margin: 0,
+                  flex: '1 1 220px',
+                  minWidth: 220,
+                }}
+              >
+                Seven of eight categories landed below the line she was researching from.
+              </span>
+            </div>
+          </BentoTile>
         </div>
       </Reveal>
     </Section>
-  )
-}
-
-function ProblemRow({ problem }: { problem: Problem }) {
-  const { palette } = useTheme()
-  return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'minmax(72px, 96px) 1fr',
-        gap: 32,
-        padding: '28px 0 30px',
-        borderBottom: `1px solid ${palette.rule}`,
-        alignItems: 'baseline',
-      }}
-    >
-      <span
-        style={{
-          fontFamily: FONT.mono,
-          fontSize: 13,
-          letterSpacing: '0.18em',
-          textTransform: 'uppercase',
-          color: palette.textDim,
-          fontWeight: 600,
-        }}
-      >
-        {problem.id}
-      </span>
-      <div>
-        <h3
-          style={{
-            fontFamily: FONT.display,
-            fontSize: 'clamp(20px, 2.4vw, 26px)',
-            fontWeight: 400,
-            lineHeight: 1.25,
-            letterSpacing: '-0.005em',
-            color: palette.text,
-            margin: '0 0 10px',
-            maxWidth: 760,
-          }}
-        >
-          {problem.statement}
-        </h3>
-        <p
-          style={{
-            fontFamily: FONT.body,
-            fontSize: 16,
-            lineHeight: 1.55,
-            color: palette.textMuted,
-            margin: 0,
-            maxWidth: 720,
-          }}
-        >
-          {problem.elaboration}
-        </p>
-      </div>
-    </div>
   )
 }
 
