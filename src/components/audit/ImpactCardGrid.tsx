@@ -34,19 +34,22 @@ export type ImpactCard = {
 }
 
 type Props = {
-  /** Retained for prop-shape compatibility with existing call sites.
-   *  No longer rendered — the section identifier lives in the section's
-   *  IssueBar, and the layout now places the headline as a band beneath the
-   *  cards rather than above them. */
+  /** Retained for prop-shape compatibility with existing call sites. No
+   *  longer rendered — the section identifier lives in the section's
+   *  IssueBar. */
   eyebrow?: string
-  /** Anton mega headline that renders as a full-width band beneath the cards. */
+  /** Short Anton mega phrase that fills the 2×2 headline tile, ideally
+   *  2–3 lines of caps at desktop widths. */
   headline: string
+  /** Optional one-line standfirst that sits beneath the big phrase inside
+   *  the same tile, in body-adjacent size. */
+  standfirst?: string
   cards: readonly ImpactCard[]
   /** Ink = loud (Maximum). Parchment = quiet (Minimum). */
   ground: 'ink' | 'parchment'
 }
 
-export function ImpactCardGrid({ eyebrow, headline, cards, ground }: Props) {
+export function ImpactCardGrid({ eyebrow, headline, standfirst, cards, ground }: Props) {
   const { palette } = useTheme()
   const isInk = ground === 'ink'
   const bg = isInk ? INK : PARCHMENT
@@ -75,10 +78,10 @@ export function ImpactCardGrid({ eyebrow, headline, cards, ground }: Props) {
           background: isInk ? ruleColor : 'transparent',
         }}
       >
-        {/* Headline tile — bottom-left, spans 2 cols × 2 rows. Rendered
-            first in DOM for semantic order; CSS Grid places it via explicit
-            gridColumn/gridRow. Type fills the tile; tile sized by the row
-            heights of cards 03 and 04 to its right. */}
+        {/* Headline tile — bottom-left, spans 2 cols × 2 rows. Holds a
+            short Anton phrase that fills the tile width at 2–3 lines, plus
+            a one-line standfirst beneath in body-adjacent size. Rendered
+            first in DOM for semantic order; CSS Grid places it visually. */}
         <div
           style={{
             gridColumn: '1 / span 2',
@@ -86,14 +89,16 @@ export function ImpactCardGrid({ eyebrow, headline, cards, ground }: Props) {
             background: bg,
             padding: '40px 36px',
             display: 'flex',
-            alignItems: 'center',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            gap: 20,
             border: isInk ? 'none' : `1px solid ${ruleColor}`,
           }}
         >
           <h2
             style={{
               fontFamily: FONT.mega,
-              fontSize: 'clamp(48px, 7vw, 96px)',
+              fontSize: 'clamp(40px, 5.5vw, 76px)',
               fontWeight: 400,
               lineHeight: 0.95,
               letterSpacing: '-0.01em',
@@ -104,6 +109,20 @@ export function ImpactCardGrid({ eyebrow, headline, cards, ground }: Props) {
           >
             {headline}
           </h2>
+          {standfirst && (
+            <p
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 17,
+                lineHeight: 1.45,
+                color: bodyColor,
+                margin: 0,
+                maxWidth: 520,
+              }}
+            >
+              {standfirst}
+            </p>
+          )}
         </div>
 
         {cards.map((card, i) => {

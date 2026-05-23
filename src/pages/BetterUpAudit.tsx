@@ -635,7 +635,8 @@ export function MaximumImpactSection() {
         <Reveal>
           <ImpactCardGrid
             eyebrow="▶︎03 · The Four Moves"
-            headline="The four moves with the most leverage on what your buyer reads."
+            headline="The four moves with the most leverage."
+            standfirst="The fixes with the most leverage on what your buyer reads."
             cards={MAX_IMPACT_CARDS}
             ground="ink"
           />
@@ -774,7 +775,8 @@ export function MinimumImpactSection() {
       <Reveal>
         <ImpactCardGrid
           eyebrow="▶︎04 · The Four Motions"
-          headline="The four motions that look productive and don't move what the buyer reads."
+          headline="Four motions that don't move the buyer."
+          standfirst="They look productive, and not one of them moves what the buyer reads."
           cards={MIN_IMPACT_CARDS}
           ground="parchment"
         />
