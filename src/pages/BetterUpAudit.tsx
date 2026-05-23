@@ -130,7 +130,7 @@ export function RecommendationSection() {
           </div>
         </header>
 
-        {/* Top row — score anchor across the page */}
+        {/* Top row — buyer thesis (left 8 cols) + Buyer Trust Score gauge (right 4 cols) */}
         <div
           style={{
             display: 'grid',
@@ -139,7 +139,38 @@ export function RecommendationSection() {
             marginBottom: 16,
           }}
         >
-          {/* Score dial */}
+          {/* Headline + standfirst (2/3 width) */}
+          <BentoTile accent={INK_ACCENT} colSpan={8}>
+            <h1
+              style={{
+                fontFamily: FONT.mega,
+                fontSize: 'clamp(32px, 5vw, 64px)',
+                fontWeight: 400,
+                lineHeight: 0.95,
+                letterSpacing: '-0.01em',
+                textTransform: 'uppercase',
+                color: palette.text,
+                margin: '0 0 20px',
+              }}
+            >
+              <span style={{ display: 'block' }}>Your buyer made up her mind</span>
+              <span style={{ display: 'block' }}>before she ever talked to you.</span>
+            </h1>
+            <p
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 16,
+                lineHeight: 1.55,
+                color: palette.text,
+                margin: 0,
+                maxWidth: 720,
+              }}
+            >
+              Your buyer is doing more research before she ever talks to you, and most of it happens on surfaces you don't control. She is checking what your employees say on Glassdoor. She is reading what your executives publish on LinkedIn. She is asking peer networks and AI agents what they know about you. By the time she reaches out, she has already formed most of her opinion.
+            </p>
+          </BentoTile>
+
+          {/* Buyer Trust Score gauge (1/3 width) */}
           <BentoTile accent={INK_ACCENT} eyebrow="Buyer Trust Score" colSpan={4}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 4 }}>
               <span
@@ -175,14 +206,24 @@ export function RecommendationSection() {
               />
             </div>
           </BentoTile>
+        </div>
 
+        {/* Evidence row 1 — 4-bar component breakdown + cascade break + Glassdoor */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
+            gap: 16,
+            marginBottom: 16,
+          }}
+        >
           {/* 4-bar component breakdown */}
           <BentoTile accent={INK_ACCENT} eyebrow="What she encountered, scored" colSpan={5}>
             <ScoreColumnGraph4 scores={betterupAudit.currentScores} height={180} />
           </BentoTile>
 
           {/* Cascade break — Employees evidence */}
-          <BentoTile accent={RUST} priority="P2" diagnostic="Employees" colSpan={3}>
+          <BentoTile accent={RUST} priority="P2" diagnostic="Employees" colSpan={4}>
             <h3
               style={{
                 fontFamily: FONT.display,
@@ -198,18 +239,73 @@ export function RecommendationSection() {
             </h3>
             <CascadeBreakStack accent={RUST} />
           </BentoTile>
+
+          {/* Glassdoor 3.2/5 */}
+          <BentoTile accent={RUST} priority="P2" diagnostic="Employees" colSpan={3}>
+            <h3
+              style={{
+                fontFamily: FONT.display,
+                fontSize: 'clamp(15px, 1.5vw, 17px)',
+                fontWeight: 400,
+                lineHeight: 1.25,
+                letterSpacing: '-0.005em',
+                color: palette.text,
+                margin: '0 0 18px',
+              }}
+            >
+              Before she called you, she checked Glassdoor.
+            </h3>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 10 }}>
+              <span
+                style={{
+                  fontFamily: FONT.mega,
+                  fontSize: 'clamp(48px, 6vw, 72px)',
+                  color: RUST,
+                  lineHeight: 0.9,
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                3.2
+              </span>
+              <span
+                style={{
+                  fontFamily: FONT.mono,
+                  fontSize: 10,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: palette.textDim,
+                  fontWeight: 600,
+                }}
+              >
+                / 5
+              </span>
+            </div>
+            <div style={{ marginBottom: 14 }}>
+              <StarRating value={3.2} color={RUST} size={20} />
+            </div>
+            <p
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 12,
+                lineHeight: 1.5,
+                color: palette.text,
+                margin: 0,
+              }}
+            >
+              The pay disputes behind that rating are still public, still searchable, still unresolved.
+            </p>
+          </BentoTile>
         </div>
 
-        {/* Middle row — headline centerpiece flanked by Leaders + Glassdoor */}
+        {/* Evidence row 2 — Leaders count split + Your content + Agents */}
         <div
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
             gap: 16,
-            marginBottom: 16,
           }}
         >
-          {/* Leaders count split (left flank) */}
+          {/* Leaders count split */}
           <BentoTile accent={COBALT} priority="P1" diagnostic="Leaders" colSpan={3}>
             <h3
               style={{
@@ -270,103 +366,8 @@ export function RecommendationSection() {
             </p>
           </BentoTile>
 
-          {/* Centerpiece — Anton headline + standfirst, no eyebrow */}
-          <BentoTile accent={INK_ACCENT} colSpan={6}>
-            <h1
-              style={{
-                fontFamily: FONT.mega,
-                fontSize: 'clamp(32px, 5vw, 64px)',
-                fontWeight: 400,
-                lineHeight: 0.95,
-                letterSpacing: '-0.01em',
-                textTransform: 'uppercase',
-                color: palette.text,
-                margin: '0 0 20px',
-              }}
-            >
-              <span style={{ display: 'block' }}>Your buyer made up her mind</span>
-              <span style={{ display: 'block' }}>before she ever talked to you.</span>
-            </h1>
-            <p
-              style={{
-                fontFamily: FONT.body,
-                fontSize: 16,
-                lineHeight: 1.55,
-                color: palette.text,
-                margin: 0,
-              }}
-            >
-              Your buyer is doing more research before she ever talks to you, and most of it happens on surfaces you don't control. She is checking what your employees say on Glassdoor. She is reading what your executives publish on LinkedIn. She is asking peer networks and AI agents what they know about you. By the time she reaches out, she has already formed most of her opinion.
-            </p>
-          </BentoTile>
-
-          {/* Glassdoor 3.2/5 (right flank) */}
-          <BentoTile accent={RUST} priority="P2" diagnostic="Employees" colSpan={3}>
-            <h3
-              style={{
-                fontFamily: FONT.display,
-                fontSize: 'clamp(15px, 1.5vw, 17px)',
-                fontWeight: 400,
-                lineHeight: 1.25,
-                letterSpacing: '-0.005em',
-                color: palette.text,
-                margin: '0 0 18px',
-              }}
-            >
-              Before she called you, she checked Glassdoor.
-            </h3>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 10 }}>
-              <span
-                style={{
-                  fontFamily: FONT.mega,
-                  fontSize: 'clamp(48px, 6vw, 72px)',
-                  color: RUST,
-                  lineHeight: 0.9,
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                3.2
-              </span>
-              <span
-                style={{
-                  fontFamily: FONT.mono,
-                  fontSize: 10,
-                  letterSpacing: '0.14em',
-                  textTransform: 'uppercase',
-                  color: palette.textDim,
-                  fontWeight: 600,
-                }}
-              >
-                / 5
-              </span>
-            </div>
-            <div style={{ marginBottom: 14 }}>
-              <StarRating value={3.2} color={RUST} size={20} />
-            </div>
-            <p
-              style={{
-                fontFamily: FONT.body,
-                fontSize: 12,
-                lineHeight: 1.5,
-                color: palette.text,
-                margin: 0,
-              }}
-            >
-              The pay disputes behind that rating are still public, still searchable, still unresolved.
-            </p>
-          </BentoTile>
-        </div>
-
-        {/* Bottom row — Your content + Agents close the page */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
-            gap: 16,
-          }}
-        >
           {/* Your content 8-bar */}
-          <BentoTile accent={YELLOW} priority="P3" diagnostic="Your content" colSpan={7}>
+          <BentoTile accent={YELLOW} priority="P3" diagnostic="Your content" colSpan={5}>
             <h3
               style={{
                 fontFamily: FONT.display,
@@ -421,7 +422,7 @@ export function RecommendationSection() {
           </BentoTile>
 
           {/* Agents site-vs-Perplexity contrast */}
-          <BentoTile accent={MAGENTA} priority="P4" diagnostic="Agents" colSpan={5}>
+          <BentoTile accent={MAGENTA} priority="P4" diagnostic="Agents" colSpan={4}>
             <h3
               style={{
                 fontFamily: FONT.display,
