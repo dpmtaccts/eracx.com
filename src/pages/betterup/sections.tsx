@@ -520,7 +520,7 @@ function NetworkReachVisual() {
           maxWidth: 820,
         }}
       >
-        The LinkedIn page's 241K followers look impressive on the surface, and the algorithm quietly suppresses most of what gets posted there. The real reach multiplier is the CEO at 48K, the 4,000-plus coaches with their own networks, and the sellers and account managers a buyer is far likelier to encounter than the brand handle. The highest-leverage move is not more LinkedIn page content; it is activating the humans in the signal chain.
+        The LinkedIn page's 241K followers look impressive on the surface, and the algorithm quietly suppresses most of what gets posted there. The real reach multiplier is the CEO at 48K, the 4,000-plus coaches with their own networks, and the sellers and account managers a buyer is far likelier to encounter than the brand handle. What matters most is not more LinkedIn page content; it is activating the humans in the signal chain.
       </div>
     </div>
   )

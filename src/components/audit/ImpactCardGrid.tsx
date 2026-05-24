@@ -20,7 +20,7 @@ export type ImpactCard = {
    *  layout still controls outer spacing; the rich content controls its own
    *  inner spacing between paragraphs and visuals. */
   richContent?: ReactNode
-  /** Magenta leverage indicator on Maximum cards; muted "Why not now" on Minimum cards. */
+  /** Magenta indicator on the decision cards; muted "Why not now" on the motion cards. */
   indicator: string
   /** Optional label that precedes the indicator. Defaults differ by ground. */
   indicatorLabel?: string

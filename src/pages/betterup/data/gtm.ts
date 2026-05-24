@@ -188,13 +188,13 @@ export const CHANNELS: GTMChannel[] = [
     id: 'champions',
     tab: 'CHAMPIONS',
     name: 'Client Champions',
-    title: '750+ enterprise clients, ~25 high-leverage CHRO advocates',
+    title: '750+ enterprise clients, ~25 well-placed CHRO advocates',
     score: 20,
     metrics: [
       { value: '750+', label: 'Enterprise clients' },
       { value: '1', label: 'Verified named-buyer commenter (across all profiles)' },
       { value: '0', label: 'Active advocacy program' },
-      { value: '25', label: 'High-leverage targets' },
+      { value: '25', label: 'Priority targets' },
     ],
     dimensions: [
       { label: 'Authority', score: 55, note: 'CHROs at Pfizer, Lumen, Patagonia carry peer credibility.' },

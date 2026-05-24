@@ -511,7 +511,7 @@ const MAX_IMPACT_CARDS: ImpactCard[] = [
     ordinal: '02',
     ordinalLabel: 'Agents',
     headline: 'Fix the wrong data that agents are repeating.',
-    body: "Agents pull from public sources, then synthesize. Right now they're pulling discontinued D2C offerings, wrong employee counts, and outdated client logos. The buyer who asks Perplexity about BetterUp encounters those inaccuracies before she ever sees the website. The fix is a data hygiene pass on the high-traffic public sources: Crunchbase, LinkedIn company page, Wikipedia, G2, and the BetterUp website's structured data. It's cheap, it's high-leverage, and it changes the answer the buyer gets.",
+    body: "Agents pull from public sources, then synthesize. Right now they're pulling discontinued D2C offerings, wrong employee counts, and outdated client logos. The buyer who asks Perplexity about BetterUp encounters those inaccuracies before she ever sees the website. The fix is a data hygiene pass on the high-traffic public sources: Crunchbase, LinkedIn company page, Wikipedia, G2, and the BetterUp website's structured data. It's cheap, and it changes the answer the buyer gets.",
     richContent: (
       <>
         <CardParagraph ground="ink">
@@ -539,7 +539,7 @@ const MAX_IMPACT_CARDS: ImpactCard[] = [
           The fix is a data hygiene pass on the high-traffic public sources: Crunchbase, LinkedIn company page, Wikipedia, G2, and the BetterUp website's structured data.
         </CardParagraph>
         <CardParagraph ground="ink" marginTop={24}>
-          It's cheap, it's high-leverage, and it changes the answer the buyer gets.
+          It's cheap, and it changes the answer the buyer gets.
         </CardParagraph>
       </>
     ),
@@ -628,15 +628,15 @@ export function MaximumImpactSection() {
       <div style={{ color: '#FFFFFF' }}>
         <IssueBar
           number="▶︎03"
-          name="The Four Moves"
+          name="The Four Decisions"
           meta={['BetterUp', '4 of 4 fixes']}
           ground="dark"
         />
         <Reveal>
           <ImpactCardGrid
-            eyebrow="▶︎03 · The Four Moves"
-            headline="The four moves with the most leverage."
-            standfirst="The fixes with the most leverage on what your buyer reads."
+            eyebrow="▶︎03 · The Four Decisions"
+            headline="The four decisions that matter most."
+            standfirst="The decisions with the most weight on what your buyer reads."
             cards={MAX_IMPACT_CARDS}
             ground="ink"
           />
@@ -776,7 +776,7 @@ export function MinimumImpactSection() {
         <ImpactCardGrid
           eyebrow="▶︎04 · The Four Motions"
           headline="Four motions that don't move the buyer."
-          standfirst="They look productive, and not one of them moves what the buyer reads."
+          standfirst="They look productive, and not one of them changes what the buyer reads."
           cards={MIN_IMPACT_CARDS}
           ground="parchment"
         />
@@ -840,7 +840,7 @@ function ProofSectionIntro() {
               maxWidth: 640,
             }}
           >
-            Each sub-section opens with what the buyer finds today, what it looks like when the chain is intact, and what to do first. The detailed evidence sits beneath. The roadmap at ▶︎05.8 lands the four moves above.
+            Each sub-section opens with what the buyer finds today, what it looks like when the chain is intact, and what to do first. The detailed evidence sits beneath. The roadmap at ▶︎05.8 lands the four decisions above.
           </p>
         </div>
       </Reveal>
@@ -1047,7 +1047,7 @@ function NinetyDayPlan() {
           maxWidth: 720,
         }}
       >
-        Stand up the four moves and measure what they actually move.
+        Stand up the four decisions and measure what actually changes.
       </h3>
       <ol
         style={{
@@ -1631,7 +1631,7 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
                       as the diagnostic tiles wrapping it, and the overall
                       Buyer Trust Score in the anchor row. */}
                   <RecommendationSection />
-                  {/* ▶︎03 — The Four Moves (do this) */}
+                  {/* ▶︎03 — The Four Decisions (do this) */}
                   <MaximumImpactSection />
                   {/* ▶︎04 — The Four Motions (don't do this) */}
                   <MinimumImpactSection />

@@ -19,7 +19,7 @@ export const BETTERUP_ROADMAP: AuditRoadmapProps = {
       id: 'mvp',
       headline: "Reframe the CEO's content from philosophy to operational outcomes.",
       scope:
-        "The CEO's content engine is the single highest-leverage repair in the audit, so the work is to shift 60% of CEO posts from human-potential framing to retention, manager effectiveness, and coaching ROI, then build a CHRO 100 list of named enterprise buyers and engage substantively with their content before expecting any engagement back.",
+        "The CEO's content engine is the single most important repair in the audit, so the work is to shift 60% of CEO posts from human-potential framing to retention, manager effectiveness, and coaching ROI, then build a CHRO 100 list of named enterprise buyers and engage substantively with their content before expecting any engagement back.",
       size: 'small',
       duration: '4 weeks',
       scoreTarget: {
