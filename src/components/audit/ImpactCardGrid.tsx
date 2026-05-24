@@ -1,8 +1,6 @@
 import type { ReactNode } from 'react'
 import { FONT, useTheme } from '../../pages/betterup/theme'
 
-const HOT = '#E6195F'
-const YELLOW = '#F4C430'
 const INK = '#0A0A0A'
 const PARCHMENT = '#F4F1EA'
 const CREAM_WHITE = '#FFFFFF'
@@ -10,64 +8,78 @@ const CREAM_WHITE = '#FFFFFF'
 export type ImpactCard = {
   /** Two-digit ordinal like "01". */
   ordinal: string
-  /** Optional label shown next to the ordinal (e.g. the diagnostic each move
-   *  repairs). When omitted, the eyebrow renders the ordinal alone. */
+  /** Optional label shown next to the ordinal (e.g. the diagnostic each
+   *  decision repairs). When omitted, the eyebrow renders the ordinal alone. */
   ordinalLabel?: string
   headline: string
   body: string
-  /** Optional rich JSX content that replaces the plain body paragraph. Use
-   *  this for cards that interleave prose with inline visuals. The card
-   *  layout still controls outer spacing; the rich content controls its own
-   *  inner spacing between paragraphs and visuals. */
+  /** Optional rich JSX content that replaces the plain body paragraph. */
   richContent?: ReactNode
-  /** Magenta indicator on the decision cards; muted "Why not now" on the motion cards. */
+  /** Mono indicator strip along the foot of the card. */
   indicator: string
-  /** Optional label that precedes the indicator. Defaults differ by ground. */
+  /** Optional label that precedes the indicator. */
   indicatorLabel?: string
-  /** Diagnostic accent color. When set, the eyebrow, ordinal, indicator, and
-   *  evidence link all render in this color, tying the card visually to its
-   *  matching ▶︎05 evidence sub-section. */
+  /** Diagnostic accent color. When set, the eyebrow and evidence link
+   *  render in this color, tying the card to its matching §05 sub-section. */
   accentColor?: string
-  /** Anchor id of the ▶︎05 sub-section that produced this recommendation. When
-   *  set, a "→ SEE THE EVIDENCE" link appears beneath the indicator. */
+  /** Anchor id of the §05 sub-section that produced this recommendation. */
   evidenceAnchor?: string
 }
 
 type Props = {
-  /** Retained for prop-shape compatibility with existing call sites. No
-   *  longer rendered — the section identifier lives in the section's
-   *  IssueBar. */
+  /** No longer rendered. Section identifier lives in the IssueBar above. */
   eyebrow?: string
-  /** Short Anton mega phrase that fills the 2×2 headline tile, ideally
-   *  2–3 lines of caps at desktop widths. */
-  headline: string
-  /** Optional one-line standfirst that sits beneath the big phrase inside
-   *  the same tile, in body-adjacent size. */
+  /** No longer rendered. Section name lives in the IssueBar above. */
+  headline?: string
+  /** No longer rendered. */
   standfirst?: string
   cards: readonly ImpactCard[]
-  /** Ink = loud (Maximum). Parchment = quiet (Minimum). */
+  /** Ink ground = ▶︎03 decisions (active, full contrast).
+   *  Parchment ground = ▶︎04 motions (muted, set-aside). */
   ground: 'ink' | 'parchment'
 }
 
+// Cards-as-hero layout. The section title lives in the IssueBar above this
+// component, so nothing renders above the grid here. Four equal cards in a
+// row, each card driven by its h3 headline. Body / indicator / evidence
+// link are recessive — they catch the second pass, not the first.
+//
+// Ink ground (▶︎03) is high-contrast and active: white headline, white-65
+// body, accent-color eyebrow, hot-magenta indicator.
+//
+// Parchment ground (▶︎04) is muted and set-aside: ink-70 headline,
+// ink-45 body, ink-40 eyebrow, lighter borders. The do/don't binary
+// reads from peripheral vision before the reader engages.
 export function ImpactCardGrid({ eyebrow, headline, standfirst, cards, ground }: Props) {
   const { palette } = useTheme()
   const isInk = ground === 'ink'
   const bg = isInk ? INK : PARCHMENT
-  const textColor = isInk ? CREAM_WHITE : palette.text
-  const mutedColor = isInk ? 'rgba(255, 255, 255, 0.6)' : 'rgba(10, 10, 10, 0.6)'
-  const bodyColor = isInk ? 'rgba(255, 255, 255, 0.82)' : palette.text
-  const ruleColor = isInk ? 'rgba(255, 255, 255, 0.12)' : palette.rule
-  const eyebrowColor = isInk ? YELLOW : mutedColor
-  const indicatorColor = isInk ? HOT : mutedColor
+
+  // Hero (headline) colors — the loudest thing in each card.
+  const heroColor = isInk ? CREAM_WHITE : 'rgba(10, 10, 10, 0.78)'
+
+  // Recessive (body, indicator, evidence) colors.
+  const bodyColor = isInk ? 'rgba(255, 255, 255, 0.62)' : 'rgba(10, 10, 10, 0.5)'
+  const recessiveColor = isInk ? 'rgba(255, 255, 255, 0.45)' : 'rgba(10, 10, 10, 0.4)'
+
+  // Rule colors between cards.
+  const ruleColor = isInk ? 'rgba(255, 255, 255, 0.12)' : 'rgba(10, 10, 10, 0.08)'
+
+  // Eyebrow falls back to the recessive tone when a card has no accent.
+  const eyebrowFallback = recessiveColor
+
   void eyebrow
+  void headline
+  void standfirst
+  void palette
 
   return (
     <section
       style={{
         background: bg,
-        color: textColor,
+        color: heroColor,
         margin: '0 calc(-1 * (50vw - 50%)) 0',
-        padding: '96px max(32px, calc(50vw - 600px))',
+        padding: '72px max(32px, calc(50vw - 600px))',
       }}
     >
       <div
@@ -78,82 +90,26 @@ export function ImpactCardGrid({ eyebrow, headline, standfirst, cards, ground }:
           background: isInk ? ruleColor : 'transparent',
         }}
       >
-        {/* Headline tile — bottom-left, spans 2 cols × 2 rows. Holds a
-            short Anton phrase that fills the tile width at 2–3 lines, plus
-            a one-line standfirst beneath in body-adjacent size. Rendered
-            first in DOM for semantic order; CSS Grid places it visually. */}
-        <div
-          style={{
-            gridColumn: '1 / span 2',
-            gridRow: '2 / span 2',
-            background: bg,
-            padding: '40px 36px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            gap: 20,
-            border: isInk ? 'none' : `1px solid ${ruleColor}`,
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: FONT.mega,
-              fontSize: 'clamp(40px, 5.5vw, 76px)',
-              fontWeight: 400,
-              lineHeight: 0.95,
-              letterSpacing: '-0.01em',
-              textTransform: 'uppercase',
-              color: textColor,
-              margin: 0,
-            }}
-          >
-            {headline}
-          </h2>
-          {standfirst && (
-            <p
-              style={{
-                fontFamily: FONT.body,
-                fontSize: 17,
-                lineHeight: 1.45,
-                color: bodyColor,
-                margin: 0,
-                maxWidth: 520,
-              }}
-            >
-              {standfirst}
-            </p>
-          )}
-        </div>
-
-        {cards.map((card, i) => {
-          // Cards wrap an L around the headline tile:
-          //   0 = top-left   (cols 1-2, row 1)
-          //   1 = top-right  (cols 3-4, row 1)
-          //   2 = mid-right  (cols 3-4, row 2)
-          //   3 = bot-right  (cols 3-4, row 3)
-          const positions: ReadonlyArray<{ gridColumn: string; gridRow: string }> = [
-            { gridColumn: '1 / span 2', gridRow: '1' },
-            { gridColumn: '3 / span 2', gridRow: '1' },
-            { gridColumn: '3 / span 2', gridRow: '2' },
-            { gridColumn: '3 / span 2', gridRow: '3' },
-          ]
-          const pos = positions[i] ?? { gridColumn: 'auto', gridRow: 'auto' }
+        {cards.map((card) => {
           const cardAccent = card.accentColor
-          const cardEyebrowColor = cardAccent ?? eyebrowColor
-          const cardIndicatorColor = cardAccent ?? indicatorColor
+          const cardEyebrowColor = cardAccent ?? eyebrowFallback
+          // On ink ground the evidence link reads in the accent; on parchment
+          // it stays recessive so it doesn't compete with the headline.
+          const evidenceLinkColor = isInk ? cardEyebrowColor : recessiveColor
+
           return (
             <article
               key={card.ordinal}
               style={{
-                ...pos,
                 background: bg,
-                padding: '28px 28px 26px',
+                padding: '32px 28px 28px',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: 14,
+                gap: 18,
                 border: isInk ? 'none' : `1px solid ${ruleColor}`,
               }}
             >
+              {/* Eyebrow — small, accent or recessive. */}
               <div
                 style={{
                   fontFamily: FONT.mono,
@@ -164,30 +120,35 @@ export function ImpactCardGrid({ eyebrow, headline, standfirst, cards, ground }:
                   fontWeight: 600,
                 }}
               >
-                <span style={{ color: cardEyebrowColor }}>{card.ordinal}</span>
+                <span>{card.ordinal}</span>
                 {card.ordinalLabel ? ` · ${card.ordinalLabel}` : null}
               </div>
+
+              {/* Headline — the hero. Reads on its own if she skips
+                  everything else. */}
               <h3
                 style={{
                   fontFamily: FONT.display,
-                  fontSize: 24,
+                  fontSize: 'clamp(22px, 1.9vw, 30px)',
                   fontWeight: 400,
-                  lineHeight: 1.18,
+                  lineHeight: 1.12,
                   letterSpacing: '-0.01em',
-                  color: textColor,
+                  color: heroColor,
                   margin: 0,
                 }}
               >
                 {card.headline}
               </h3>
+
+              {/* Body / richContent — recessive. */}
               {card.richContent ? (
-                <div>{card.richContent}</div>
+                <div style={{ opacity: isInk ? 0.92 : 0.78 }}>{card.richContent}</div>
               ) : (
                 <p
                   style={{
                     fontFamily: FONT.body,
-                    fontSize: 15,
-                    lineHeight: 1.55,
+                    fontSize: 13.5,
+                    lineHeight: 1.5,
                     color: bodyColor,
                     margin: 0,
                   }}
@@ -195,22 +156,26 @@ export function ImpactCardGrid({ eyebrow, headline, standfirst, cards, ground }:
                   {card.body}
                 </p>
               )}
+
+              {/* Indicator strip — small, recessive. */}
               <div
                 style={{
                   marginTop: 'auto',
                   paddingTop: 14,
                   borderTop: `1px solid ${ruleColor}`,
                   fontFamily: FONT.mono,
-                  fontSize: 11,
+                  fontSize: 10,
                   letterSpacing: '0.14em',
                   textTransform: 'uppercase',
-                  color: cardIndicatorColor,
+                  color: recessiveColor,
                   fontWeight: 600,
                 }}
               >
                 {card.indicatorLabel ? `${card.indicatorLabel} · ` : ''}
                 {card.indicator}
               </div>
+
+              {/* Evidence link — small, recessive on parchment, accent on ink. */}
               {card.evidenceAnchor && (
                 <a
                   href={`#${card.evidenceAnchor}`}
@@ -219,12 +184,12 @@ export function ImpactCardGrid({ eyebrow, headline, standfirst, cards, ground }:
                     document.getElementById(card.evidenceAnchor!)?.scrollIntoView({ behavior: 'smooth' })
                   }}
                   style={{
-                    marginTop: 4,
+                    marginTop: 2,
                     fontFamily: FONT.mono,
-                    fontSize: 11,
+                    fontSize: 10,
                     letterSpacing: '0.14em',
                     textTransform: 'uppercase',
-                    color: cardEyebrowColor,
+                    color: evidenceLinkColor,
                     fontWeight: 600,
                     textDecoration: 'none',
                     alignSelf: 'flex-start',
