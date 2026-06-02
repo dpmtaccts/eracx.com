@@ -11,6 +11,7 @@ import {
   Reveal,
   Section,
   SectionHeader,
+  StepperNav,
 } from './betterup/components'
 import {
   FONT,
@@ -28,12 +29,12 @@ import {
   WHY_IT_MATTERS,
 } from './betterup/data/aiMirror'
 import { SECTIONS } from './betterup/data/sections'
-// Forensic section components — currently unused at top level. Available
-// for import into bento variants during the Phase 2 migration.
-// import { AudienceSection, BuildSection, CascadeSection, GTMSection, InvestmentSection, PopulationSection, SignalsSection } from './betterup/sections'
+import { AudienceSection, BuildSection, CascadeSection, GTMSection, InvestmentSection, PopulationSection, SignalsSection } from './betterup/sections'
 import { DataLayerProvider, useDataLayer, type DataLayer } from './betterup/dataLayer'
 import { PasswordGate, isAuthed } from './betterup/PasswordGate'
 import { startSectionTimeTracker, track } from './betterup/analytics'
+import { SummaryView } from './betterup/SummaryView'
+import { AnimatePresence, motion } from 'framer-motion'
 import { betterupAudit } from '../data/audits/betterup'
 import {
   BAND_COLORS,
@@ -67,8 +68,6 @@ import {
   StarRating,
 } from '../components/audit/BentoTiles'
 import { RevenueSignalGauge } from '../components/revenueSignal/RevenueSignalGauge'
-import { PeripheralViewHero } from './betterup/PeripheralSeismograph'
-import { InsightList } from './betterup/insights/InsightList'
 
 /* ──────────────────────────────────────────────
    ▶︎01 — THE RECOMMENDATION (one-page bento)
@@ -130,20 +129,6 @@ export function RecommendationSection() {
             A Revenue Signal Instrument by ERA
           </div>
         </header>
-
-        {/* Hero row — The Buyer's Peripheral View seismograph (full width). */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
-            gap: 16,
-            marginBottom: 16,
-          }}
-        >
-          <BentoTile accent={MAGENTA} eyebrow="The buyer's peripheral view" colSpan={12}>
-            <PeripheralViewHero />
-          </BentoTile>
-        </div>
 
         {/* Top row — buyer thesis (left 8 cols) + Buyer Trust Score gauge (right 4 cols) */}
         <div
@@ -484,7 +469,6 @@ const COLOR_EMPLOYEES = '#DD5C20'
 
 const MAX_IMPACT_CARDS: ImpactCard[] = [
   {
-    id: 'rec-leaders',
     ordinal: '01',
     ordinalLabel: 'Leaders',
     headline: 'Get your executives publishing original content on LinkedIn.',
@@ -524,7 +508,6 @@ const MAX_IMPACT_CARDS: ImpactCard[] = [
     evidenceAnchor: 'leaders',
   },
   {
-    id: 'rec-agents',
     ordinal: '02',
     ordinalLabel: 'Agents',
     headline: 'Fix the wrong data that agents are repeating.',
@@ -565,7 +548,6 @@ const MAX_IMPACT_CARDS: ImpactCard[] = [
     evidenceAnchor: 'mirror',
   },
   {
-    id: 'rec-content',
     ordinal: '03',
     ordinalLabel: 'Your content',
     headline: 'Make it easy for your people to publish.',
@@ -601,7 +583,6 @@ const MAX_IMPACT_CARDS: ImpactCard[] = [
     evidenceAnchor: 'signals',
   },
   {
-    id: 'rec-employees',
     ordinal: '04',
     ordinalLabel: 'Employees',
     headline: 'Treat this as a measurement, not a project.',
@@ -811,7 +792,7 @@ export function MinimumImpactSection() {
    ▶︎01. They sit at the head of the forensic record because that is where
    the reader who wants to verify the scoring math is already looking.
    ────────────────────────────────────────────── */
-export function ProofSectionIntro() {
+function ProofSectionIntro() {
   const { palette } = useTheme()
   return (
     <Section id="proof">
@@ -1191,7 +1172,7 @@ function CoSign() {
 /* ──────────────────────────────────────────────
    Section 6: AI Mirror
    ────────────────────────────────────────────── */
-export function AIMirror() {
+function AIMirror() {
   const { palette } = useTheme()
   const opener = betterupAudit.openers?.mirror
   return (
@@ -1552,12 +1533,29 @@ function TestYourself() {
 /* ──────────────────────────────────────────────
    Page shell
    ────────────────────────────────────────────── */
+const VIEW_MODE_KEY = 'betterup-audit-view-mode'
 
 function AuditShell({ eraMode }: { eraMode: boolean }) {
-  void usePostHog()
+  const posthog = usePostHog()
   const theme = useThemeState()
   const [layer, setLayer] = useState<DataLayer>(eraMode ? 'era' : 'era-plus-bh')
   const page = eraMode ? 'era' : 'full'
+
+  // View mode (Summary | Full) — only used on the main route. Default Summary on first visit.
+  const [viewMode, setViewMode] = useState<'summary' | 'full'>(() => {
+    if (eraMode) return 'full'
+    try {
+      const stored = localStorage.getItem(VIEW_MODE_KEY)
+      if (stored === 'summary' || stored === 'full') return stored
+    } catch {}
+    return 'full'
+  })
+
+  useEffect(() => {
+    if (!eraMode) {
+      try { localStorage.setItem(VIEW_MODE_KEY, viewMode) } catch {}
+    }
+  }, [viewMode, eraMode])
 
   useEffect(() => {
     document.documentElement.style.background = theme.palette.bg
@@ -1576,21 +1574,83 @@ function AuditShell({ eraMode }: { eraMode: boolean }) {
     }
   }, [])
 
-  // Behavioral analytics: track time across the insight-list anchors.
+  // Behavioral analytics: only run the section observer when the full sections are mounted.
   useEffect(() => {
-    const cleanup = startSectionTimeTracker(SECTIONS.map((s) => s.id), page)
-    return cleanup
-  }, [page])
+    if (eraMode || viewMode === 'full') {
+      const cleanup = startSectionTimeTracker(SECTIONS.map((s) => s.id), page)
+      return cleanup
+    }
+  }, [page, viewMode, eraMode])
+
+  const handleLayerSet = (l: DataLayer) => {
+    void track('layer_toggle', l, page)
+    posthog?.capture('audit_data_layer_changed', { layer: l, audit_page: page })
+    setLayer(l)
+  }
+
+  const handleViewModeSet = (m: 'summary' | 'full') => {
+    void track('view_mode_toggle', m, page)
+    posthog?.capture('audit_view_mode_changed', { view_mode: m, audit_page: page })
+    setViewMode(m)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   return (
     <ThemeContext.Provider value={theme}>
       <DataLayerProvider defaultLayer={eraMode ? 'era' : 'era-plus-bh'} showLayerToggle={eraMode}>
         <DataLayerSync layer={layer} setLayer={setLayer} />
         <div className="v4-root" style={{ background: theme.palette.bg, minHeight: '100vh', color: theme.palette.text, fontFamily: FONT.body }}>
-          {/* v5 — Insight list. Seven statements, collapsed by default,
-              expand for forensic evidence. The sticky ScoreStrip handles
-              orientation; the legacy StepperNav is no longer rendered. */}
-          <InsightList />
+          <StepperNav
+            items={SECTIONS}
+            themeMode={theme.mode}
+            layerToggle={eraMode ? { layer, onSet: handleLayerSet } : undefined}
+            viewModeToggle={!eraMode ? { mode: viewMode, onSet: handleViewModeSet } : undefined}
+          />
+          <div style={{ paddingTop: 60 }}>
+            <AnimatePresence mode="wait">
+              {!eraMode && viewMode === 'summary' ? (
+                <motion.div
+                  key="summary"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <SummaryView />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="full"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  {/* ▶︎01 — Recommendation lead. The one-page bento carries
+                      the headline as the centerpiece tile, the four problems
+                      as the diagnostic tiles wrapping it, and the overall
+                      Buyer Trust Score in the anchor row. */}
+                  <RecommendationSection />
+                  {/* ▶︎03 — The Four Decisions (do this) */}
+                  <MaximumImpactSection />
+                  {/* ▶︎04 — The Four Motions (don't do this) */}
+                  <MinimumImpactSection />
+                  {/* ▶︎05 — Full forensic record, with existing analytical sections as ▶︎05.1–▶︎05.8 */}
+                  <ProofSectionIntro />
+                  <CascadeSection />
+                  <GTMSection />
+                  <PopulationSection />
+                  <SignalsSection />
+                  <AIMirror />
+                  <AudienceSection />
+                  <InvestmentSection />
+                  <BuildSection />
+                  {/* ▶︎06 — Partnership ask */}
+                  <NextTogetherSection />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </DataLayerProvider>
     </ThemeContext.Provider>
