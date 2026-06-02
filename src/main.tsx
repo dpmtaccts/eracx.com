@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, type Location } from 'react-router-dom'
 import posthog from 'posthog-js'
 import { PostHogErrorBoundary, PostHogProvider } from '@posthog/react'
 import './index.css'
@@ -14,6 +14,7 @@ import GtmPlanner from './pages/GtmPlanner.tsx'
 import GrowthSimulator from './pages/GrowthSimulator.tsx'
 import NavalentAudit from './pages/NavalentAudit.tsx'
 import BetterUpAudit, { BetterUpAuditEra } from './pages/BetterUpAudit.tsx'
+import BetterUpAuditV2, { BetterUpAuditV2Era } from './pages/BetterUpAuditV2.tsx'
 import BetterUpAdmin from './pages/BetterUpAdmin.tsx'
 import SampleAssessment from './pages/SampleAssessment.tsx'
 import BGLinkedInAudit from './pages/bg-audit/BGLinkedInAudit.tsx'
@@ -30,18 +31,26 @@ import V3 from './pages/v3/V3.tsx'
 import V4 from './pages/v4/V4.tsx'
 import GtmPlaybook from './pages/GtmPlaybook.tsx'
 import StubAuditExample from './pages/StubAuditExample.tsx'
+import Methodology from './pages/Methodology.tsx'
+import MethodologyDrawer from './components/MethodologyDrawer.tsx'
 
 posthog.init(import.meta.env.VITE_PUBLIC_POSTHOG_TOKEN, {
   api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
   defaults: '2026-01-30',
 })
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <PostHogProvider client={posthog}>
-    <PostHogErrorBoundary>
-    <BrowserRouter>
-      <Routes>
+function AppRoutes() {
+  const location = useLocation()
+  // backgroundLocation is set by the in-app trigger link. When present, the
+  // underlying route stays mounted and /methodology renders as a drawer on
+  // top. When absent (direct hit, shared link, crawler), /methodology
+  // renders as the full standalone page.
+  const state = location.state as { backgroundLocation?: Location } | null
+  const backgroundLocation = state?.backgroundLocation
+
+  return (
+    <>
+      <Routes location={backgroundLocation ?? location}>
         {/* V4 is now the default eracx.com homepage. The legacy App is
             preserved at /legacy for one-commit revert; /v4 stays as an
             alias so existing inbound links still resolve. */}
@@ -66,6 +75,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/audit/navalent" element={<NavalentAudit />} />
         <Route path="/audit/betterup" element={<BetterUpAudit />} />
         <Route path="/audit/betterup/era" element={<BetterUpAuditEra />} />
+        <Route path="/audit/betterupv2" element={<BetterUpAuditV2 />} />
+        <Route path="/audit/betterupv2/era" element={<BetterUpAuditV2Era />} />
         <Route path="/audit/betterup/admin" element={<BetterUpAdmin />} />
         <Route path="/audit/tidera" element={<SampleAssessment />} />
         <Route path="/audit/brian-gonsalves" element={<BGLinkedInAuditV2 />} />
@@ -74,7 +85,25 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/audit/navalentsummary" element={<NavalentSummary />} />
         <Route path="/audit/vik" element={<VikAudit />} />
         <Route path="/audit/_stub-example" element={<StubAuditExample />} />
+        <Route path="/methodology" element={<Methodology />} />
       </Routes>
+
+      {/* Overlay routes — only resolve when backgroundLocation is set. */}
+      {backgroundLocation && (
+        <Routes>
+          <Route path="/methodology" element={<MethodologyDrawer />} />
+        </Routes>
+      )}
+    </>
+  )
+}
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <PostHogProvider client={posthog}>
+    <PostHogErrorBoundary>
+    <BrowserRouter>
+      <AppRoutes />
     </BrowserRouter>
     </PostHogErrorBoundary>
     </PostHogProvider>

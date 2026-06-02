@@ -6,6 +6,9 @@ const PARCHMENT = '#F4F1EA'
 const CREAM_WHITE = '#FFFFFF'
 
 export type ImpactCard = {
+  /** Stable DOM id for the rendered article. Used for moment-level
+   *  recommendation linkage from the §02 Buyer View seismograph. */
+  id?: string
   /** Two-digit ordinal like "01". */
   ordinal: string
   /** Optional label shown next to the ordinal (e.g. the diagnostic each
@@ -100,6 +103,7 @@ export function ImpactCardGrid({ eyebrow, headline, standfirst, cards, ground }:
           return (
             <article
               key={card.ordinal}
+              id={card.id}
               style={{
                 background: bg,
                 padding: '32px 28px 28px',
