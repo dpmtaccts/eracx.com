@@ -57,6 +57,7 @@ export function InsightList() {
         ))}
       </main>
       <MethodologyFooter />
+      <CoSign />
       <ExpandAllControl allOpen={allOpen} onToggleAll={() => setAll(!allOpen)} />
     </div>
   )
@@ -213,6 +214,129 @@ function MethodologyFooter() {
         </p>
       </div>
     </footer>
+  )
+}
+
+function CoSign() {
+  return (
+    <section
+      style={{
+        background: C.paper,
+        borderTop: `1px solid ${PAGE_LINE}`,
+        padding: '72px 0 96px',
+      }}
+    >
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 32px' }}>
+        <div style={{ ...mono(10, C.muted, 700), marginBottom: 28 }}>
+          BUILT TOGETHER BY
+        </div>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 1fr) 1px minmax(0, 1fr)',
+            gap: 48,
+            alignItems: 'stretch',
+          }}
+        >
+          {/* ERA */}
+          <article style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <img
+              src="/images/era_symbol.svg"
+              alt="ERA"
+              style={{ height: 56, width: 'auto', display: 'block' }}
+            />
+            <div style={mono(11, C.ink, 700)}>ERA</div>
+            <p
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 16,
+                lineHeight: 1.55,
+                color: C.ink,
+                margin: 0,
+                maxWidth: 480,
+              }}
+            >
+              ERA builds signal-driven growth systems for B2B revenue teams, from LinkedIn
+              intelligence to executive content, brand presence coaching, and signal measurement.
+            </p>
+            <div
+              style={{
+                paddingTop: 18,
+                borderTop: `1px solid ${PAGE_LINE}`,
+                marginTop: 'auto',
+              }}
+            >
+              <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 600, color: C.ink, marginBottom: 4 }}>
+                Justin Marshall
+              </div>
+              <a
+                href="mailto:justin@eracx.com"
+                style={{
+                  fontFamily: FONT.body,
+                  fontSize: 14,
+                  color: '#E6195F',
+                  textDecoration: 'none',
+                  borderBottom: '1px solid #E6195F',
+                  paddingBottom: 1,
+                }}
+              >
+                justin@eracx.com
+              </a>
+            </div>
+          </article>
+
+          {/* Vertical separator */}
+          <div aria-hidden style={{ background: PAGE_LINE, width: 1, height: '100%' }} />
+
+          {/* Pinwheel */}
+          <article style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <img
+              src="/assets/pinwheel_agency_logo.jpg"
+              alt="Pinwheel Creative"
+              style={{ height: 56, width: 'auto', display: 'block' }}
+            />
+            <div style={mono(11, C.ink, 700)}>Pinwheel Creative</div>
+            <p
+              style={{
+                fontFamily: FONT.body,
+                fontSize: 16,
+                lineHeight: 1.55,
+                color: C.ink,
+                margin: 0,
+                maxWidth: 480,
+              }}
+            >
+              Pinwheel Creative builds brand strategy, thought-leadership content, design, and
+              campaigns for technology and finance brands ready to be readable.
+            </p>
+            <div
+              style={{
+                paddingTop: 18,
+                borderTop: `1px solid ${PAGE_LINE}`,
+                marginTop: 'auto',
+              }}
+            >
+              <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 600, color: C.ink, marginBottom: 4 }}>
+                S. Todd Anthony
+              </div>
+              <a
+                href="mailto:todd@pinwheelcreative.com"
+                style={{
+                  fontFamily: FONT.body,
+                  fontSize: 14,
+                  color: '#E6195F',
+                  textDecoration: 'none',
+                  borderBottom: '1px solid #E6195F',
+                  paddingBottom: 1,
+                }}
+              >
+                todd@pinwheelcreative.com
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
   )
 }
 
