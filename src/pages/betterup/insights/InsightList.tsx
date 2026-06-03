@@ -256,8 +256,8 @@ function CoSign() {
                 maxWidth: 480,
               }}
             >
-              ERA builds signal-driven growth systems for B2B revenue teams, from LinkedIn
-              intelligence to executive content, brand presence coaching, and signal measurement.
+              ERA reads twenty-four buyer signals across your target accounts daily, builds the
+              plays, and runs the loop with your sellers every week.
             </p>
             <div
               style={{
