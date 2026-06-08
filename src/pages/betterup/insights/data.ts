@@ -10,15 +10,15 @@ export const STATEMENTS: readonly Statement[] = [
     anchor: 'frame',
     headline: 'Your buyer decides across eleven surfaces before they ever talk to you.',
     leadLine:
-      'Composite Buyer Trust Score 32 of 100, leaky. Most of these surfaces you do not control. Trust is built or broken in the center, where the buyer’s attention lands.',
+      'Buyer Trust Score: 32 of 100. The buyer reaches a verdict across eleven surfaces before first contact, and most of them you do not control. Trust holds or breaks in the center, where attention lands.',
     impact: null,
     scope: null,
     verdict: 'THE FRAME · EVERY STATEMENT BELOW NESTS UNDER THIS ONE',
     drawer: {
       insight:
-        'Across eleven surfaces the buyer checks before first contact, buyer trust reads at 32. The strongest signals sit at the credible center: LinkedIn personal, AI agents, reviews. The center is where promise breaks the loudest.',
+        'The buyer checks eleven surfaces before anyone from your team is in the room. Trust across them reads 32 of 100, the score of a brand that looks unproven the moment a buyer looks closely. The most credible surfaces sit in the center, where attention concentrates: personal LinkedIn, AI agents, reviews. That center is exactly where the promise breaks loudest.',
       meaning:
-        'The buyer forms most of their opinion before sales is in the room. Around 77 percent of buyers finish the decision in twelve weeks, mostly before first contact. The chart is what they encountered while you were not watching.',
+        'The opinion is set before sales ever gets a turn. Roughly 77 percent of buyers finish the decision inside twelve weeks, most of it before first contact. This chart is what they saw while you were not watching.',
       execute: {
         from: 'A buyer view of 32 scattered across surfaces you do not control.',
         to: 'A center the buyer can verify, repaired in the order the rest of this list sets.',
@@ -46,9 +46,9 @@ export const STATEMENTS: readonly Statement[] = [
     highestLeverage: true,
     drawer: {
       insight:
-        'Five of six profile types the buyer expects to find are silent or invisible. Two of twenty-one voices publish original content. The rest repost or say nothing.',
+        'The buyer looks for your leadership on LinkedIn and finds one voice. Five of the six profile types they expect are silent or invisible. Of twenty-one senior voices, two publish anything original. The rest repost or say nothing.',
       meaning:
-        'The agent reads the silence as inconsistency and lowers its confidence in you. The buyer finds titles, not perspectives.',
+        'A buyer reads that silence as a company with little to say. The AI agent reads it the same way and lowers its confidence in you. They came looking for perspectives and found titles.',
       execute: {
         from:
           'The CEO posts into a room of the company’s own employees and alumni, zero enterprise buyers in the comments, while twenty of twenty-one senior voices stay silent.',
@@ -97,9 +97,9 @@ export const STATEMENTS: readonly Statement[] = [
     verdict: 'HIGH IMPACT · LOW EFFORT',
     drawer: {
       insight:
-        'Sharing accurate data is table stakes. The problem is not the absence of truth, it is the presence of skew: stale and wrong data already in the world that the models gather and repeat. Correcting your own pages does not fix that, because the stale source still sits in the corpus the model reads. A majority of buyers now start at an AI agent, and most rank vendors before they ever contact sales. The model’s answer is the buyer’s first impression, formed before your team is in the room.',
+        'Ask any of four AI agents about you and they answer with a dead product, a stale headcount, and 2023 logos. The problem is not missing truth, it is skew: wrong data already in the world that the models gather and repeat. Correcting your own pages does not fix it, because the stale source still sits in the corpus the model reads. Most buyers now start at an agent and rank vendors before they ever contact sales. Its answer is your first impression, written before your team walks in.',
       meaning:
-        'You do not control the model. You control what it weights. Models resolve conflicting claims by source agreement, recency, and authority. So you win the synthesis by making the truth the most authoritative, most recent, and most cross-referenced signal in the corpus. When every legitimate source agrees on the same true fact, the lone stale source becomes the outlier the model discounts. AI synthesis exposes inconsistency, so make the truth so consistent across sources that the synthesis exposes the stale data as the inconsistency, not you.',
+        'You cannot control the model, but you control what it weighs. Models settle conflicting claims by source agreement, recency, and authority. Make the truth the most recent, most authoritative, most repeated signal in the corpus, and the lone stale source becomes the outlier the model discounts. Consistency is the whole game. Get every legitimate source saying the same true thing, and the synthesis exposes the stale data, not you.',
       execute: {
         from:
           'Four agents repeat a dead $14 app, stale headcount, and 2023 logos because the false signal in the corpus outweighs the true one. Mirror Score 38.',
@@ -171,9 +171,9 @@ export const STATEMENTS: readonly Statement[] = [
     verdict: 'MEDIUM IMPACT · MEDIUM EFFORT',
     drawer: {
       insight:
-        'Seven of eight content categories score below 50 percent alignment with what buyers actually search at the decision stage. The content investment reaches the audience that already believes in coaching, not the one still deciding.',
+        'Seven of eight content categories score below 50 percent alignment with what buyers actually search at the decision stage. The content gets reach. It reaches the people who already believe in coaching, not the buyer still deciding. You are publishing to the converted while the person who controls the budget reads someone else.',
       meaning:
-        '84 percent of category conversation is emotionally neutral, curiosity not enthusiasm. The buyer reads every pitch through that flatline. Content that opens with "AI-powered" lands as someone who drank the Kool-Aid.',
+        '84 percent of the category conversation is emotionally flat, curiosity rather than enthusiasm. The buyer reads every pitch through that flatline. Open with "AI-powered" and you sound like someone who believed the hype. Lead with proof and you sound like the one who has done this before.',
       execute: {
         from:
           'Content averages 29 of 100, plays to an audience that already bought, and leads with "AI-powered" to a buyer who has heard it two hundred times.',
@@ -228,9 +228,9 @@ export const STATEMENTS: readonly Statement[] = [
     verdict: 'HIGH IMPACT · HIGH EFFORT · STRUCTURAL',
     drawer: {
       insight:
-        'The buyer checks Glassdoor before ever talking to sales. They find a 3.2, coaches surfacing pay disputes in the same forums they search, and account managers churning through accounts three or more times in twelve months.',
+        'Glassdoor tells a buyer what a company actually values, not what it claims. Your buyer checks it before talking to sales and finds a 3.2, coaches airing pay disputes in the same forums, and account managers turning over three or more times in twelve months. The promise says one thing. The people who live it say another.',
       meaning:
-        'The contradiction between your brand promise and what your own people say is public, searchable, and currently unanswered.',
+        'That contradiction is public, searchable, and right now unanswered. A buyer who finds it does not raise it on a call. They quietly discount everything else you claim.',
       execute: {
         from:
           'The careers page and executive posts lead with "elevate the employee experience" while the most-read reviews say the opposite, and a buyer finds the gap in one search.',
@@ -286,9 +286,9 @@ export const STATEMENTS: readonly Statement[] = [
     verdict: 'HIGH IMPACT · LOW EFFORT · WHY NOW',
     drawer: {
       insight:
-        'Twelve named buyers, VPs of HR, Chief People Officers, and a sitting CEO, engaged with BetterUp content unprompted in the window. The relationships concentrate on two or three voices, primarily Jolen Anderson, Chief People and Community Officer.',
+        'Twelve named buyers engaged with your content unprompted in the window: VPs of HR, Chief People Officers, a sitting CEO. This is live interest, not a list you bought. Almost all of it lands on two or three voices, primarily Jolen Anderson, Chief People and Community Officer.',
       meaning:
-        'The demand is live right now, not next quarter. The buyers exist and the interest exists. The infrastructure to receive it does not. If the two voices carrying these relationships left, the public-facing buyer relationships would collapse with them.',
+        'The demand is live right now, not next quarter. What is missing is any system to receive it. If the two voices carrying these relationships left tomorrow, the buyer relationships would leave with them. You are one resignation away from losing your warmest pipeline.',
       execute: {
         from:
           'Twelve named buyers are engaging unprompted, six of them concentrated on a single executive’s feed, with no system to receive or route the attention.',
@@ -339,7 +339,7 @@ export const STATEMENTS: readonly Statement[] = [
       insight:
         'Three decisions move the Buyer Trust Score from 32 to 58 and recover 12 to 18 points of qualified-stage pipeline leaking before sales contact. The fourth decision, treating it as a measurement, is what makes the movement repeatable.',
       meaning:
-        'Without the quarterly read, the score moves once and drifts back. With it, the score becomes a governance artifact the board can budget against, and the CMO defends marketing spend with a quantitative read on whether trust is rising or falling.',
+        'Without a quarterly read, the score moves once and drifts back. With it, the number becomes something the board can budget against, and the CMO defends marketing spend on whether trust is rising, not on activity. Trust becomes a line you manage like revenue.',
       execute: {
         from: 'A one-time read of 32.',
         to: 'A standing instrument that reaches 58 and holds.',
