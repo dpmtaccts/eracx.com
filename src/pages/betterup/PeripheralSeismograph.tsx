@@ -92,9 +92,9 @@ function bellFillPath(): string {
 
 /* Identify the single tallest priority break — used as the "↓ Where trust
    breaks" annotation anchor. */
-function findPeakBreak(): Moment | null {
+function findPeakBreak(moments: readonly Moment[]): Moment | null {
   let peak: Moment | null = null
-  for (const m of MOMENTS) {
+  for (const m of moments) {
     if (!m.isPriority) continue
     if (!peak || m.magnitude > peak.magnitude) peak = m
   }
@@ -108,9 +108,9 @@ type BarVisualGroups = {
   priorities: Moment[]
 }
 
-function groupByChannel(): BarVisualGroups[] {
+function groupByChannel(moments: readonly Moment[]): BarVisualGroups[] {
   return CHANNELS.map((ch) => {
-    const inCh = MOMENTS.filter((m) => m.channelId === ch.id)
+    const inCh = moments.filter((m) => m.channelId === ch.id)
     return {
       channel: ch,
       reinforces: inCh.filter((m) => m.reinforces),
@@ -124,8 +124,17 @@ const CHANNEL_META_FOR_PANEL = Object.fromEntries(
   CHANNELS.map((c) => [c.id, { label: c.label, zone: c.zone }]),
 ) as Record<string, { label: string; zone: Zone }>
 
-export function PeripheralSeismograph() {
-  const grouped = useMemo(groupByChannel, [])
+export function PeripheralSeismograph({
+  moments,
+}: {
+  /** Optional override for the moments dataset. When omitted, the
+   *  audit's own MOMENTS are used. Lets a brand-agnostic surface (e.g.
+   *  /buyer-view-system) feed illustrative composite data without
+   *  forking the chart. */
+  moments?: readonly Moment[]
+} = {}) {
+  const data = moments ?? MOMENTS
+  const grouped = useMemo(() => groupByChannel(data), [data])
   const wrapRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
   const [hovered, setHovered] = useState<Moment | null>(null)
@@ -147,7 +156,7 @@ export function PeripheralSeismograph() {
 
   const bellPath = useMemo(bellFillPath, [])
   const bellOutline = useMemo(bellOutlinePath, [])
-  const peakBreak = useMemo(findPeakBreak, [])
+  const peakBreak = useMemo(() => findPeakBreak(data), [data])
 
   const onBarEnter = (m: Moment, ev: React.MouseEvent<SVGRectElement>) => {
     if (!wrapRef.current) return
@@ -189,7 +198,7 @@ export function PeripheralSeismograph() {
     return (
       <>
         <style>{recommendationPulseKeyframes}</style>
-        <ChannelCardList onSelect={setSelected} />
+        <ChannelCardList onSelect={setSelected} moments={data} />
         <MomentDetailPanel
           moment={selected}
           channelMeta={CHANNEL_META_FOR_PANEL}
@@ -543,16 +552,22 @@ function recencyLabel(capturedDay: number): string {
   return `${Math.round(daysAgo / 30)} months ago`
 }
 
-function ChannelCardList({ onSelect }: { onSelect: (m: Moment) => void }) {
+function ChannelCardList({
+  onSelect,
+  moments,
+}: {
+  onSelect: (m: Moment) => void
+  moments: readonly Moment[]
+}) {
   // Mobile: show one card per channel, summarizing magnitude + priority count
   const byChannel = useMemo(() => {
     return CHANNELS.map((ch) => {
-      const inCh = MOMENTS.filter((m) => m.channelId === ch.id)
+      const inCh = moments.filter((m) => m.channelId === ch.id)
       const priorities = inCh.filter((m) => m.isPriority)
       const contradicts = inCh.filter((m) => !m.reinforces)
       return { channel: ch, inCh, priorities, contradicts }
     })
-  }, [])
+  }, [moments])
   return (
     <ul style={{ listStyle: 'none', margin: '8px 0 0', padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
       {byChannel.map(({ channel: ch, priorities, contradicts }) => {

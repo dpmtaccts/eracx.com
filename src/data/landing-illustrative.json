@@ -1,0 +1,20 @@
+{
+  "canonicalPromise": "We put the customer at the center.",
+  "channels": [
+    { "id": "ads",         "label": "Ads",                 "zone": "Periphery",  "centerX": 175,  "color": "#8E8C88",            "count": 28, "contradictionRate": 0.20, "priorityRate": 0.00 },
+    { "id": "sponsored",   "label": "Sponsored",           "zone": "Periphery",  "centerX": 305,  "color": "#8E8C88",            "count": 24, "contradictionRate": 0.25, "priorityRate": 0.00 },
+    { "id": "owned",       "label": "Owned",               "zone": "Mid",        "centerX": 435,  "color": "#F4C430",            "count": 22, "contradictionRate": 0.30, "priorityRate": 0.00 },
+    { "id": "linkedin",    "label": "LinkedIn · Personal", "zone": "Core",       "centerX": 590,  "color": "#1845C2",            "count": 20, "contradictionRate": 0.20, "priorityRate": 0.00 },
+    { "id": "agents",      "label": "AI Agents",           "zone": "Core break", "centerX": 745,  "color": "#E6195F",            "count": 16, "contradictionRate": 0.75, "priorityRate": 0.85 },
+    { "id": "reviews",     "label": "Reviews",             "zone": "Core break", "centerX": 880,  "color": "#DD5C20",            "count": 18, "contradictionRate": 0.70, "priorityRate": 0.80 },
+    { "id": "company",     "label": "Company",             "zone": "Mid",        "centerX": 1015, "color": "rgba(24,69,194,.78)", "count": 22, "contradictionRate": 0.35, "priorityRate": 0.00 },
+    { "id": "instagram",   "label": "Instagram",           "zone": "Periphery",  "centerX": 1135, "color": "#8E8C88",            "count": 16, "contradictionRate": 0.30, "priorityRate": 0.00 },
+    { "id": "twitter",     "label": "Twitter / X",         "zone": "Periphery",  "centerX": 1255, "color": "#0A0A0A",            "count": 20, "contradictionRate": 0.40, "priorityRate": 0.00 },
+    { "id": "communities", "label": "Communities",         "zone": "Periphery",  "centerX": 1370, "color": "#0A0A0A",            "count": 22, "contradictionRate": 0.45, "priorityRate": 0.00 },
+    { "id": "thirdparty",  "label": "Third-party",         "zone": "Periphery",  "centerX": 1485, "color": "#8E8C88",            "count": 24, "contradictionRate": 0.35, "priorityRate": 0.00 }
+  ],
+  "captions": {
+    "agents":  "Promise: category leader. Proof: the agent names two rivals first.",
+    "reviews": "Promise: customer at the center. Proof: the public rating says otherwise."
+  }
+}

@@ -30,6 +30,7 @@ import V2OperatingSystem from './pages/V2OperatingSystem/index.tsx'
 import V3 from './pages/v3/V3.tsx'
 import V4 from './pages/v4/V4.tsx'
 import GtmPlaybook from './pages/GtmPlaybook.tsx'
+import BuyerViewSystem from './pages/BuyerViewSystem.tsx'
 import StubAuditExample from './pages/StubAuditExample.tsx'
 import Methodology from './pages/Methodology.tsx'
 import MethodologyDrawer from './components/MethodologyDrawer.tsx'
@@ -63,7 +64,12 @@ function AppRoutes() {
         <Route path="/staging/v4" element={<V4TimelineRibbon />} />
         <Route path="/v3" element={<V3 />} />
         <Route path="/v4" element={<V4 />} />
-        <Route path="/gtmplaybook" element={<GtmPlaybook />} />
+        {/* /gtmplaybook moved to /buyer-view-system; the 301 lives in
+            vercel.json so the SPA does not also own the old path. The
+            AI Mirror component is parked at /ai-mirror as a lead-magnet
+            target without a nav link. */}
+        <Route path="/buyer-view-system" element={<BuyerViewSystem />} />
+        <Route path="/ai-mirror" element={<GtmPlaybook />} />
         <Route path="/staging/v5" element={<V5ExpandingCards />} />
         <Route path="/our-story" element={<OurStory />} />
         <Route path="/admin" element={<Admin />} />

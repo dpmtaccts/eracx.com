@@ -1,0 +1,51 @@
+{
+  "compositionBar": {
+    "segments": [
+      { "label": "Own employees",           "pct": 41, "color": "#1845C2", "opacity": 1.0 },
+      { "label": "Former employees",        "pct": 23, "color": "#E6195F", "opacity": 1.0 },
+      { "label": "Personal network",        "pct": 12, "color": "#F4C430", "opacity": 1.0 },
+      { "label": "Investors",               "pct":  9, "color": "#8E8C88", "opacity": 1.0 },
+      { "label": "Advisors and coaches",    "pct":  8, "color": "#8E8C88", "opacity": 0.7 },
+      { "label": "Other practitioners",     "pct":  7, "color": "#8E8C88", "opacity": 0.45 }
+    ],
+    "ghost": { "label": "Enterprise buyers", "pct": 0 },
+    "punchline": "ENTERPRISE BUYERS · 0% · THE AUDIENCE YOU NEED, ABSENT."
+  },
+  "silenceMap": {
+    "cards": [
+      { "title": "Chief Executive Officer", "total": 9, "status": "REPOSTS ONLY", "cadence": [0, 1, 0, 2, 0, 0, 1, 0, 3, 1, 0, 1], "barColor": "#1845C2" },
+      { "title": "Chief Revenue Officer",   "total": 0, "status": "SILENT",       "cadence": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "barColor": "#8E8C88" },
+      { "title": "Chief Marketing Officer", "total": 4, "status": "REPOSTS ONLY", "cadence": [0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1], "barColor": "#1845C2" },
+      { "title": "Chief People Officer",    "total": 0, "status": "SILENT",       "cadence": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "barColor": "#8E8C88" },
+      { "title": "Chief Technology Officer","total": 0, "status": "SILENT",       "cadence": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "barColor": "#8E8C88" },
+      { "title": "VP Product",              "total": 0, "status": "SILENT",       "cadence": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "barColor": "#8E8C88" },
+      { "title": "VP Customer Success",     "total": 0, "status": "SILENT",       "cadence": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "barColor": "#8E8C88" }
+    ]
+  },
+  "alignment": {
+    "rows": [
+      { "label": "Leadership Visibility", "pct": 18, "tier": "Critical Gap" },
+      { "label": "Thought Leadership",    "pct": 35, "tier": "High Gap"     },
+      { "label": "Brand Narrative",       "pct": 25, "tier": "Critical Gap" },
+      { "label": "Competitive Signal",    "pct": 40, "tier": "High Gap"     },
+      { "label": "Employee Signal",       "pct": 12, "tier": "Critical Gap" },
+      { "label": "AI and Product Signal", "pct": 65, "tier": "Strength"     },
+      { "label": "Pricing Signal",        "pct": 15, "tier": "Critical Gap" },
+      { "label": "Community Signal",      "pct": 20, "tier": "Critical Gap" }
+    ],
+    "legend": [
+      { "tier": "Critical Gap", "color": "#E6195F" },
+      { "tier": "High Gap",     "color": "#DD5C20" },
+      { "tier": "Strength",     "color": "#1845C2" }
+    ]
+  },
+  "benchmark": {
+    "axis": [0, 25, 50, 75, 100],
+    "band": { "from": 28, "to": 36, "label": "MOST BRANDS" },
+    "markers": [
+      { "at": 48, "label": "MEDIAN CHALLENGER", "color": "#0A0A0A" },
+      { "at": 65, "label": "CATEGORY LEADER",   "color": "#1845C2" },
+      { "at": 72, "label": "TOP DECILE",        "color": "#1845C2" }
+    ]
+  }
+}
