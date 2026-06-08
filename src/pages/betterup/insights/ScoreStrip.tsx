@@ -7,7 +7,7 @@ const PAPER = '#FFFFFF'
 const MUTED = 'rgba(10, 10, 10, 0.55)'
 
 /* Scale-of-the-evidence stats. Tells the CMO at a glance what the audit
-   read, not what it concluded. The composite score lives in §01's dial
+   read, not what it concluded. The composite score lives in ▸ 01's dial
    now; this strip carries brand + scale only. */
 const SCALE_STATS = [
   { label: 'Moments', value: '232', sub: 'captured' },

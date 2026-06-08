@@ -13,7 +13,6 @@ import Benchmark from './pages/Benchmark.tsx'
 import GtmPlanner from './pages/GtmPlanner.tsx'
 import GrowthSimulator from './pages/GrowthSimulator.tsx'
 import NavalentAudit from './pages/NavalentAudit.tsx'
-import BetterUpAudit, { BetterUpAuditEra } from './pages/BetterUpAudit.tsx'
 import BetterUpAuditV2, { BetterUpAuditV2Era } from './pages/BetterUpAuditV2.tsx'
 import BetterUpAdmin from './pages/BetterUpAdmin.tsx'
 import SampleAssessment from './pages/SampleAssessment.tsx'
@@ -64,11 +63,11 @@ function AppRoutes() {
         <Route path="/staging/v4" element={<V4TimelineRibbon />} />
         <Route path="/v3" element={<V3 />} />
         <Route path="/v4" element={<V4 />} />
-        {/* /gtmplaybook moved to /buyer-view-system; the 301 lives in
-            vercel.json so the SPA does not also own the old path. The
-            AI Mirror component is parked at /ai-mirror as a lead-magnet
-            target without a nav link. */}
-        <Route path="/buyer-view-system" element={<BuyerViewSystem />} />
+        {/* /buyer-view-system is archived at /archive/buyer-view-system to
+            preserve its history off any nav. /gtmplaybook 301-redirects
+            there via vercel.json. The AI Mirror component is parked at
+            /ai-mirror as a lead-magnet target without a nav link. */}
+        <Route path="/archive/buyer-view-system" element={<BuyerViewSystem />} />
         <Route path="/ai-mirror" element={<GtmPlaybook />} />
         <Route path="/staging/v5" element={<V5ExpandingCards />} />
         <Route path="/our-story" element={<OurStory />} />
@@ -79,10 +78,13 @@ function AppRoutes() {
         <Route path="/gtm-planner" element={<GtmPlanner />} />
         <Route path="/growth-simulator" element={<GrowthSimulator />} />
         <Route path="/audit/navalent" element={<NavalentAudit />} />
-        <Route path="/audit/betterup" element={<BetterUpAudit />} />
-        <Route path="/audit/betterup/era" element={<BetterUpAuditEra />} />
-        <Route path="/audit/betterupv2" element={<BetterUpAuditV2 />} />
-        <Route path="/audit/betterupv2/era" element={<BetterUpAuditV2Era />} />
+        {/* v2 (the seven-statement insight list) is now the canonical
+            BetterUp audit at /audit/betterup. The old 8-section version
+            (BetterUpAudit.tsx) is no longer routed; its shared exports
+            still feed SummaryView. /audit/betterupv2 301-redirects here
+            via vercel.json. */}
+        <Route path="/audit/betterup" element={<BetterUpAuditV2 />} />
+        <Route path="/audit/betterup/era" element={<BetterUpAuditV2Era />} />
         <Route path="/audit/betterup/admin" element={<BetterUpAdmin />} />
         <Route path="/audit/tidera" element={<SampleAssessment />} />
         <Route path="/audit/brian-gonsalves" element={<BGLinkedInAuditV2 />} />

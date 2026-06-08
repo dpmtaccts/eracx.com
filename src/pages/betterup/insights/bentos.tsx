@@ -299,7 +299,7 @@ function mono(size: number, color: string = INK, weight: number = 600): CSSPrope
 }
 
 /* ──────────────────────────────────────────────
-   §02 — LEADERS
+   ▸ 02 — LEADERS
    Voice census · CEO comment behavior · Share of Voice
    ────────────────────────────────────────────── */
 
@@ -327,7 +327,7 @@ function LeadersBento() {
           <ArtifactImage
             src="/images/betterup/cascade/crop-a-alexi-departures.png"
             alt="CEO comment stream showing short congratulations on departures to BCG, IBM, ServiceNow, and Workday"
-            gloss="Graceful, generous, and disproportionate. The CEO is visible to alumni; he is not visible to the buyers he needs to win."
+            gloss="Graceful, generous, and disproportionate. The CEO is visible to alumni, invisible to the buyers the company needs to win."
           />
         </Card>
       </Grid>
@@ -434,8 +434,8 @@ function LeadersBento() {
           <div style={{ gridColumn: 'span 5', display: 'flex', flexDirection: 'column', gap: 14 }}>
             <Body color={INK}>
               Zero percent of the commenters on the CEO’s posts are enterprise buyers. Forty
-              percent are BetterUp employees. The conversation is internal, the audience he needs
-              is absent.
+              percent are BetterUp employees. The conversation is internal, and the audience the
+              company needs is absent.
             </Body>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {ALEXI_COMMENTER_MIX.map((m) => (
@@ -873,7 +873,7 @@ function CompareRow({
 }
 
 /* ──────────────────────────────────────────────
-   §03 — AGENTS
+   ▸ 03 — AGENTS
    AI Mirror score · Promise vs Proof · test queries
    ────────────────────────────────────────────── */
 
@@ -1062,7 +1062,7 @@ const OUTDATED_FACTS: { label: string; quoted: string; actual: string }[] = [
 ]
 
 /* ──────────────────────────────────────────────
-   §04 — CONTENT
+   ▸ 04 — CONTENT
    Category alignment chart · the one opportunity · keely reposts
    ────────────────────────────────────────────── */
 
@@ -1210,7 +1210,7 @@ function ContentBento() {
 }
 
 /* ──────────────────────────────────────────────
-   §05 — EMPLOYEES
+   ▸ 05 — EMPLOYEES
    Glassdoor 3.2 · Cascade break · pay-dispute themes
    ────────────────────────────────────────────── */
 
@@ -1326,7 +1326,7 @@ function EmployeesBento() {
 }
 
 /* ──────────────────────────────────────────────
-   §06 — THE BUYERS ARE ALREADY HERE
+   ▸ 06 — THE BUYERS ARE ALREADY HERE
    12 named buyers · concentration map · tier averages
    ────────────────────────────────────────────── */
 
@@ -1465,7 +1465,7 @@ function BuyersBento() {
 }
 
 /* ──────────────────────────────────────────────
-   §07 — THE CLOSER
+   ▸ 07 — THE CLOSER
    Per-pillar projection · visible footprint · projection caveat
    ────────────────────────────────────────────── */
 

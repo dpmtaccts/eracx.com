@@ -16,8 +16,9 @@ import { startSectionTimeTracker } from './betterup/analytics'
 import { InsightList } from './betterup/insights/InsightList'
 
 /* BetterUp audit, v2.
-   The seven-statement insight list, mounted at /audit/betterupv2.
-   The original audit at /audit/betterup stays unchanged. */
+   The seven-statement insight list. Now the canonical BetterUp audit at
+   /audit/betterup; /audit/betterupv2 301-redirects there (vercel.json).
+   The original 8-section audit (BetterUpAudit.tsx) is no longer routed. */
 
 function AuditShell({ eraMode }: { eraMode: boolean }) {
   void usePostHog()

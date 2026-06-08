@@ -5,7 +5,17 @@
   "redirects": [
     {
       "source": "/gtmplaybook",
-      "destination": "/buyer-view-system",
+      "destination": "/archive/buyer-view-system",
+      "statusCode": 301
+    },
+    {
+      "source": "/audit/betterupv2/era",
+      "destination": "/audit/betterup/era",
+      "statusCode": 301
+    },
+    {
+      "source": "/audit/betterupv2",
+      "destination": "/audit/betterup",
       "statusCode": 301
     }
   ],

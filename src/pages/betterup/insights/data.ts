@@ -51,17 +51,17 @@ export const STATEMENTS: readonly Statement[] = [
         'The agent reads the silence as inconsistency and lowers its confidence in you. The buyer finds titles, not perspectives.',
       execute: {
         from:
-          'The CEO posts into a room of his own employees and alumni, zero enterprise buyers in the comments, while twenty of twenty-one senior voices stay silent.',
+          'The CEO posts into a room of the company’s own employees and alumni, zero enterprise buyers in the comments, while twenty of twenty-one senior voices stay silent.',
         to:
           'Five to seven executive voices publish on a cadence, the named buyers in Statement 06 show up in the comments, and the buyer can triangulate more than one perspective before first contact.',
         steps: [
           {
             title: 'Reframe the CEO’s content from philosophy to operational outcomes.',
             body:
-              'His audience is currently internal. Outcome stories and category point of view are what a CHRO engages, not transformation language his own employees applaud. Cadence: one original post a week, plus three substantive peer comments a week on buyers’ and category content.',
+              'That audience is currently internal. Outcome stories and a category point of view are what a CHRO engages, not the abstract uplift language those same employees applaud. Cadence: one original post a week, plus three substantive peer comments a week on buyers’ and category content.',
           },
           {
-            title: 'Activate five to seven executive voices beyond him.',
+            title: 'Activate five to seven executive voices beyond the CEO.',
             body:
               'Two of twenty-one publish originals today. Stand up a weekly cadence for the senior People, Sales, and Product voices: roughly one post every other week each, plus five peer comments a week, so the buyer can find more than one perspective.',
           },

@@ -11,7 +11,7 @@ export type ExecuteBlock = {
   steps: readonly ExecuteStep[]
   /** Derived effort line, anchored to the card's scope bar. */
   effort?: string
-  /** Optional boundary statement (used on §03 — the integrity guardrail). */
+  /** Optional boundary statement (used on ▸ 03 — the integrity guardrail). */
   boundary?: string
 }
 

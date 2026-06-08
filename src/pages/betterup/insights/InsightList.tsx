@@ -150,7 +150,8 @@ function MethodologyLink() {
         paddingBottom: 3,
       }}
     >
-      35,000 Buyers · 9 Studies
+      Inside the Buyer View
+      <span style={{ color: C.muted, fontWeight: 600 }}>· 35,000 buyers across 9 studies</span>
       <span aria-hidden>→</span>
     </Link>
   )

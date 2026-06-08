@@ -28,7 +28,7 @@ const BODY = "'IBM Plex Sans', system-ui, sans-serif"
 const FONT_HREF =
   'https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap'
 
-const CANONICAL = 'https://eracx.com/buyer-view-system'
+const CANONICAL = 'https://eracx.com/archive/buyer-view-system'
 
 export default function BuyerViewSystem() {
   // Inject fonts + set SEO meta (canonical, og:url, twitter:url) for this
