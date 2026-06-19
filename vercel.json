@@ -5,7 +5,7 @@
   "redirects": [
     {
       "source": "/gtmplaybook",
-      "destination": "/archive/buyer-view-system",
+      "destination": "/buyerview",
       "statusCode": 301
     },
     {

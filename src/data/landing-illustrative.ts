@@ -18,9 +18,21 @@ function mulberry32(seed: number) {
   }
 }
 
+// Per-channel content artifact (a buyer-POV screenshot plus its promise and
+// proof) attached to every moment in the channel. The four wired channels
+// trace the buyer's journey — first impression, hunting, actively buying,
+// building a case — so inspecting any bar shows the kind of content the buyer
+// sees at that stage. Lives in the JSON's `artifacts` map.
+type ArtifactConfig = {
+  artifactPath?: string
+  artifactName?: string
+  description?: string
+  promise?: string
+  proof?: string
+}
+
 // Magnitude ranges mirror the audit defaults — only the channel counts,
-// contradiction rates, and priority rates differ. Captions on the breaks
-// come from the JSON's `captions` map.
+// contradiction rates, and priority rates differ.
 const MAGNITUDE_RANGES: Record<string, [number, number]> = {
   ads: [1, 3],
   sponsored: [2, 4],
@@ -45,14 +57,15 @@ function generate(): Moment[] {
   const rand = mulberry32(2026)
   const rnd = (a: number, b: number) => a + rand() * (b - a)
   const out: Moment[] = []
+  const artifacts = config.artifacts as Record<string, ArtifactConfig | undefined>
   for (const ch of config.channels) {
     const range = MAGNITUDE_RANGES[ch.id] ?? [2, 6]
     const spread = SPREADS[ch.id] ?? 50
+    const art = artifacts[ch.id]
     for (let i = 0; i < ch.count; i++) {
       const magnitude = rnd(range[0], range[1])
       const reinforces = rand() >= ch.contradictionRate
       const x = ch.centerX + rnd(-spread, spread)
-      const caption = (config.captions as Record<string, string>)[ch.id]
       out.push({
         id: `illustrative-${ch.id}-${String(i).padStart(3, '0')}`,
         channelId: ch.id as ChannelId,
@@ -61,8 +74,14 @@ function generate(): Moment[] {
         reinforces,
         isPriority: false,
         capturedDay: Math.ceil(rand() * 90),
-        // Generic per-channel description used in the hover tooltip + panel
-        description: caption,
+        // Per-channel content artifact: the same representative capture,
+        // promise, and proof for every moment in the channel, so any bar the
+        // buyer inspects shows the kind of content visible from their POV.
+        description: art?.description,
+        promise: art?.promise,
+        proof: art?.proof,
+        artifactPath: art?.artifactPath,
+        artifactName: art?.artifactName,
       })
     }
   }

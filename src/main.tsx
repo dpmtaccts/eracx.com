@@ -32,6 +32,7 @@ import GtmPlaybook from './pages/GtmPlaybook.tsx'
 import BuyerViewSystem from './pages/BuyerViewSystem.tsx'
 import StubAuditExample from './pages/StubAuditExample.tsx'
 import Methodology from './pages/Methodology.tsx'
+import { PersonFirstFramework } from './pages/PersonFirstFramework.tsx'
 import MethodologyDrawer from './components/MethodologyDrawer.tsx'
 
 posthog.init(import.meta.env.VITE_PUBLIC_POSTHOG_TOKEN, {
@@ -63,10 +64,12 @@ function AppRoutes() {
         <Route path="/staging/v4" element={<V4TimelineRibbon />} />
         <Route path="/v3" element={<V3 />} />
         <Route path="/v4" element={<V4 />} />
-        {/* /buyer-view-system is archived at /archive/buyer-view-system to
-            preserve its history off any nav. /gtmplaybook 301-redirects
-            there via vercel.json. The AI Mirror component is parked at
+        {/* /buyerview is the canonical Buyer View landing page (soft launch
+            Jun 23 2026). /gtmplaybook 301-redirects here via vercel.json.
+            /archive/buyer-view-system stays as a live alias so older inbound
+            links still resolve. The AI Mirror component is parked at
             /ai-mirror as a lead-magnet target without a nav link. */}
+        <Route path="/buyerview" element={<BuyerViewSystem />} />
         <Route path="/archive/buyer-view-system" element={<BuyerViewSystem />} />
         <Route path="/ai-mirror" element={<GtmPlaybook />} />
         <Route path="/staging/v5" element={<V5ExpandingCards />} />
@@ -94,6 +97,7 @@ function AppRoutes() {
         <Route path="/audit/vik" element={<VikAudit />} />
         <Route path="/audit/_stub-example" element={<StubAuditExample />} />
         <Route path="/methodology" element={<Methodology />} />
+        <Route path="/person-first-framework" element={<PersonFirstFramework />} />
       </Routes>
 
       {/* Overlay routes — only resolve when backgroundLocation is set. */}

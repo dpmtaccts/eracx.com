@@ -13,8 +13,34 @@
     { "id": "communities", "label": "Communities",         "zone": "Periphery",  "centerX": 1370, "color": "#0A0A0A",            "count": 22, "contradictionRate": 0.45, "priorityRate": 0.00 },
     { "id": "thirdparty",  "label": "Third-party",         "zone": "Periphery",  "centerX": 1485, "color": "#8E8C88",            "count": 24, "contradictionRate": 0.35, "priorityRate": 0.00 }
   ],
-  "captions": {
-    "agents":  "Promise: category leader. Proof: the agent names two rivals first.",
-    "reviews": "Promise: customer at the center. Proof: the public rating says otherwise."
+  "artifacts": {
+    "linkedin": {
+      "artifactPath": "/images/buyerview/linkedin.png",
+      "artifactName": "First impression · Executive on LinkedIn",
+      "description": "The buyer's first contact with your brand is an executive's post in their feed. They read the claim and the most-liked reply in the same glance.",
+      "promise": "A culture-first employer.",
+      "proof": "The most-liked reply is a former employee pushing back."
+    },
+    "communities": {
+      "artifactPath": "/images/buyerview/communities.png",
+      "artifactName": "Hunting · Peer thread on Reddit",
+      "description": "When the buyer starts looking in earnest, they ask peers before they ask you. This is where your reputation is set in a room you are not in.",
+      "promise": "Trusted by people teams.",
+      "proof": "The peer thread sends them to Glassdoor and to a rival."
+    },
+    "agents": {
+      "artifactPath": "/images/buyerview/agents.png",
+      "artifactName": "Actively buying · Buyer-mode AI chat",
+      "description": "As the buyer narrows the field, an AI agent builds the shortlist for them and answers the risk question before your team gets the chance.",
+      "promise": "The obvious enterprise choice.",
+      "proof": "The model shortlists two rivals and lists your risks unprompted."
+    },
+    "reviews": {
+      "artifactPath": "/images/buyerview/reviews.png",
+      "artifactName": "Building a case · Employer reviews on Glassdoor",
+      "description": "Before they commit, the buyer builds the internal case and pressure-tests your promise against the public record.",
+      "promise": "Elevate the employee experience.",
+      "proof": "2.8 stars, and the top review names the say-do gap."
+    }
   }
 }

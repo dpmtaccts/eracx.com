@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  // Soft access guard. Direct hits without the gate's session key bounce
+  // back to the password gate at /person-first-framework. Same-origin
+  // sessionStorage is shared with the gate, so the iframe load passes.
+  (function () {
+    try {
+      if (sessionStorage.getItem('pff-auth') !== '1') {
+        window.location.replace('/person-first-framework');
+      }
+    } catch (e) {
+      window.location.replace('/person-first-framework');
+    }
+  })();
+</script>
+<title>The Buyer View · Prepared for Dan Pearce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF;
+    --ink:#0A0A0A;
+    --parchment:#F4F1EA;
+    --hot:#E6195F;
+    --yellow:#F4C430;
+    --cobalt:#1845C2;
+    --rust:#DD5C20;
+    --rule:rgba(10,10,10,0.15);
+    --rule-soft:rgba(10,10,10,0.08);
+    --rule-dark:rgba(255,255,255,0.15);
+    --ink-50:rgba(10,10,10,0.5);
+    --ink-60:rgba(10,10,10,0.62);
+    --w-50:rgba(255,255,255,0.5);
+    --w-60:rgba(255,255,255,0.62);
+    --display:'Anton',sans-serif;
+    --mid:'Archivo Black',sans-serif;
+    --body:'IBM Plex Sans',system-ui,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;overflow-x:clip}
+  body{
+    font-family:var(--body);background:var(--white);color:var(--ink);
+    line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  ::selection{background:var(--hot);color:var(--white)}
+
+  .mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:0.14em}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 48px}
+
+  /* ---------- STATUS / ISSUE BAR ---------- */
+  .status{
+    position:sticky;top:0;z-index:60;background:var(--white);
+    border-bottom:1px solid var(--rule);
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 48px;font-family:var(--mono);font-size:11px;font-weight:600;
+    letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-50);
+  }
+  .status__left{display:flex;align-items:center;gap:16px}
+  .status__mark{width:18px;height:18px;display:inline-block}
+  .status__principle{color:var(--ink)}
+  .status__right{display:flex;gap:22px;flex-wrap:wrap}
+  .status__right b{color:var(--ink);font-weight:600}
+  @media(max-width:760px){.status__right{display:none}}
+
+  /* ---------- MASTHEAD ---------- */
+  .masthead{padding:64px 0 40px}
+  .masthead__top{
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:40px;
+    font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--ink);
+  }
+  .masthead__client{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-60);line-height:1.6;margin-bottom:26px;max-width:60ch}
+  .masthead__title{
+    font-family:var(--display);text-transform:uppercase;
+    font-size:clamp(60px,12.5vw,176px);line-height:0.9;letter-spacing:-0.015em;
+    margin:0 0 36px;
+  }
+  .masthead__lead{font-family:var(--mid);font-size:clamp(24px,3.4vw,40px);line-height:1.12;letter-spacing:-0.01em;color:var(--ink);max-width:20ch;margin-bottom:28px}
+  .masthead__sf{font-size:20px;line-height:1.6;max-width:64ch;color:var(--ink)}
+
+  /* guiding question device */
+  .gq{margin-top:48px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:24px 0;display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap}
+  .gq .gq-k{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--hot);white-space:nowrap;padding-top:5px}
+  .gq .gq-q{font-family:var(--mid);font-size:clamp(18px,2.4vw,26px);line-height:1.22;color:var(--ink);max-width:30ch}
+
+  /* ---------- SURFACES INTERSTITIAL (ink) ---------- */
+  .surfaces{background:var(--ink);color:var(--white);padding:72px 0}
+  .surfaces .eyebrow{color:var(--w-50);font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:26px}
+  .surfaces .eyebrow::before{content:"";width:26px;height:1px;background:var(--hot)}
+  .surfaces h2{font-family:var(--mid);font-size:clamp(26px,3.6vw,38px);line-height:1.08;letter-spacing:-0.01em;max-width:20ch;margin-bottom:18px}
+  .surfaces p{max-width:62ch;color:var(--w-60);font-size:17px;margin-bottom:42px}
+  .surface-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule-dark);border:1px solid var(--rule-dark)}
+  .surface{background:var(--ink);padding:22px 20px}
+  .surface .n{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:var(--hot);display:block;margin-bottom:10px}
+  .surface .t{display:block;font-family:var(--mid);font-size:15px;line-height:1.25;margin-bottom:10px}
+  .surface .d{display:block;font-size:12.5px;color:var(--w-50);line-height:1.5}
+  .surfaces .foot{margin-top:24px;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--w-50)}
+  @media(max-width:760px){.surface-row{grid-template-columns:repeat(2,1fr)}}
+
+  /* ---------- STATEMENTS ---------- */
+  .report{padding:24px 0 0}
+  .stmt{position:relative;border-bottom:1px solid var(--rule);padding:72px 0}
+  .stmt::before{content:"";position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:100vw;background:var(--parchment);opacity:0;transition:opacity .45s ease;z-index:-1;pointer-events:none}
+  .stmt[aria-expanded="true"]::before{opacity:1}
+  .stmt__ghost{
+    position:absolute;left:-12px;top:40px;font-family:var(--display);
+    font-size:clamp(120px,20vw,300px);line-height:0.8;color:rgba(10,10,10,0.045);
+    z-index:0;pointer-events:none;user-select:none;
+  }
+  .stmt__inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 360px;gap:56px;align-items:start}
+  .stmt__eyebrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+  .stmt__tag{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-60);display:flex;align-items:center;gap:12px}
+  .stmt__tag::before{content:"";width:24px;height:2px;background:var(--accent)}
+  .stmt__share{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-50)}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;background:var(--accent);color:var(--white);padding:6px 12px;margin-bottom:18px}
+  .stmt h3{font-family:var(--display);text-transform:uppercase;font-size:clamp(30px,4.6vw,56px);line-height:0.96;letter-spacing:-0.01em;margin-bottom:20px}
+  .stmt h3 em{color:var(--accent);font-style:normal}
+  .stmt__sf{font-size:17px;line-height:1.55;color:var(--ink-60);max-width:54ch}
+
+  /* right rail: hero stat + buyer-loop stage marker */
+  .rail{align-self:start}
+  .herostat{margin-bottom:26px;padding-bottom:24px;border-bottom:1px solid var(--rule-soft)}
+  .herostat .n{font-family:var(--display);font-size:clamp(58px,8vw,92px);line-height:0.82;letter-spacing:-0.01em;color:var(--accent)}
+  .herostat .c{font-family:var(--body);font-size:13.5px;color:var(--ink-60);line-height:1.45;margin-top:12px;max-width:34ch}
+  .tier{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-50);border:1px solid var(--rule);padding:2px 7px;margin-top:12px}
+  .loopwrap{display:flex;align-items:center;gap:16px}
+  .loopring{position:relative;width:96px;height:96px;flex:none}
+  .loopring__ring{position:absolute;inset:0;border-radius:50%;
+    background:conic-gradient(from var(--rot,0deg),var(--accent) 0 13%,var(--rule) 13% 100%);
+    -webkit-mask:radial-gradient(circle,transparent 57%,#000 58%);mask:radial-gradient(circle,transparent 57%,#000 58%)}
+  .loopring--all .loopring__ring{background:conic-gradient(var(--accent),var(--accent))}
+  .loopring__core{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:20px;color:var(--ink)}
+  .loopcap .h{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-50);margin-bottom:5px}
+  .loopcap .t{font-family:var(--mid);font-size:15px;line-height:1.15}
+  .loopcap p{font-size:12px;line-height:1.45;color:var(--ink-60);margin-top:5px;max-width:24ch}
+
+  /* expand control */
+  .expander{display:block;margin:36px auto 0;background:transparent;border:none;cursor:pointer;
+    font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-50);}
+  .expander:hover{color:var(--ink)}
+  .expander .chev{display:inline-block;margin-left:6px;transition:transform .2s}
+  .stmt[aria-expanded="true"] .expander .chev{transform:rotate(180deg)}
+
+  /* expanded buyer panel */
+  .panel{max-height:0;overflow:hidden;transition:max-height .4s ease}
+  .panel__inner{padding-top:44px;border-top:1px solid var(--rule-soft);margin-top:36px}
+  .block{margin-bottom:34px}
+  .block__eye{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-50);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .block__eye::before{content:"";width:18px;height:1px;background:var(--accent)}
+  .block p{font-size:16px;line-height:1.62;max-width:70ch;color:var(--ink);margin-bottom:14px}
+  .block p:last-child{margin-bottom:0}
+
+  .evidence{display:grid;grid-template-columns:300px 1fr;gap:32px;border:1px solid var(--rule);background:var(--white);padding:30px;align-items:center;margin-top:8px}
+  .evidence .big{font-family:var(--display);font-size:clamp(64px,11vw,128px);line-height:0.85;color:var(--accent);letter-spacing:-0.01em}
+  .evidence .big .u{font-family:var(--mono);font-size:13px;letter-spacing:0.1em;color:var(--ink-50);display:block;margin-top:10px;text-transform:uppercase}
+  .evidence .etxt p{font-size:15px;line-height:1.55;margin-bottom:10px}
+  .evidence .etxt cite{font-family:var(--mono);font-style:normal;font-size:11px;letter-spacing:0.06em;color:var(--ink-50);line-height:1.5}
+  @media(max-width:880px){.evidence{grid-template-columns:1fr}}
+
+  /* illustrative query map */
+  .queries{border:1px solid var(--rule);background:var(--white);padding:22px 24px;margin-top:8px}
+  .queries .qh{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-50);margin-bottom:14px}
+  .queries ul{list-style:none}
+  .queries li{display:grid;grid-template-columns:1fr auto;gap:18px;padding:11px 0;border-top:1px solid var(--rule-soft);align-items:baseline}
+  .queries li:first-child{border-top:none}
+  .queries .q{font-family:var(--body);font-size:15px;color:var(--ink)}
+  .queries .cat{font-family:var(--mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--hot);white-space:nowrap}
+
+  /* one-line buyer implication */
+  .principle{border-left:3px solid var(--accent);padding:4px 0 4px 22px;margin-top:30px;max-width:70ch}
+  .principle .h{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-50);margin-bottom:8px}
+  .principle p{font-size:15px;line-height:1.55;color:var(--ink)}
+
+  /* boundary callout */
+  .boundary{background:var(--white);border:1px solid var(--rule);border-left:3px solid var(--hot);padding:18px 22px;margin-top:30px}
+  .boundary .h{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--hot);margin-bottom:8px;font-weight:600}
+  .boundary p{font-size:14px;line-height:1.55;color:var(--ink-60);max-width:66ch}
+
+  /* ---------- CLOSER ---------- */
+  .closer{background:var(--parchment);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:88px 0}
+  .closer__tag{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-60);display:flex;align-items:center;gap:12px;margin-bottom:22px}
+  .closer__tag::before{content:"";width:24px;height:2px;background:var(--hot)}
+  .closer h2{font-family:var(--display);text-transform:uppercase;font-size:clamp(32px,5vw,64px);line-height:0.95;letter-spacing:-0.012em;margin-bottom:22px;max-width:18ch}
+  .closer h2 em{color:var(--hot);font-style:normal}
+  .closer__grid{display:grid;grid-template-columns:1fr 360px;gap:56px;align-items:center;margin-top:8px}
+  .closer__body p{font-size:17px;line-height:1.62;color:var(--ink);max-width:60ch;margin-bottom:16px}
+  .ring{position:relative;width:min(360px,80vw);height:min(360px,80vw);margin:0 auto}
+  .ring__band{position:absolute;inset:0;border-radius:50%;
+    background:conic-gradient(var(--hot) 0 14.28%,var(--cobalt) 14.28% 28.57%,var(--rust) 28.57% 42.85%,var(--hot) 42.85% 57.14%,var(--cobalt) 57.14% 71.42%,var(--rust) 71.42% 85.71%,var(--hot) 85.71% 100%);
+    -webkit-mask:radial-gradient(circle,transparent 60%,#000 61%);mask:radial-gradient(circle,transparent 60%,#000 61%)}
+  .ring__core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;width:46%}
+  .ring__core span{display:block;font-family:var(--mid);font-size:clamp(15px,4.5vw,19px);line-height:1.1;margin-bottom:6px}
+  .ring__core em{font-family:var(--mono);font-style:normal;font-size:9.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-50)}
+  .rn{position:absolute;transform:translate(-50%,-50%);background:var(--white);border:1px solid var(--rule);padding:5px 9px;font-family:var(--mono);font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
+
+  /* ---------- METHODOLOGY ---------- */
+  .method{background:var(--white);padding:88px 0;border-top:1px solid var(--rule)}
+  .method h2{font-family:var(--display);text-transform:uppercase;font-size:clamp(36px,6vw,72px);line-height:0.92;letter-spacing:-0.01em;margin:16px 0 26px}
+  .method .sf{font-size:18px;line-height:1.6;max-width:660px;color:var(--ink);margin-bottom:36px}
+  .weights{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--rule)}
+  .weights .w{padding:26px 24px;border-right:1px solid var(--rule)}
+  .weights .w:last-child{border-right:none}
+  .weights .wl{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-50);margin-bottom:14px}
+  .weights .wt{font-family:var(--mid);font-size:17px;line-height:1.2;margin-bottom:8px}
+  .weights .wd{font-size:13.5px;color:var(--ink-60);line-height:1.5}
+  @media(max-width:760px){.weights{grid-template-columns:1fr}.weights .w{border-right:none;border-bottom:1px solid var(--rule)}}
+
+  /* ---------- SOURCES ---------- */
+  .sources{background:var(--ink);color:var(--white);padding:80px 0}
+  .sources .eyebrow{color:var(--w-50);font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:18px;display:block}
+  .sources h2{font-family:var(--mid);font-size:clamp(24px,3.4vw,34px);letter-spacing:-0.01em;margin-bottom:18px}
+  .sources .note{color:var(--w-60);font-size:15px;line-height:1.6;max-width:76ch;margin-bottom:36px}
+  .src-list{border-top:1px solid var(--rule-dark)}
+  .src-item{display:grid;grid-template-columns:170px 1fr;gap:24px;padding:18px 0;border-bottom:1px solid var(--rule-dark);align-items:baseline}
+  .src-item .tag{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--hot)}
+  .src-item .ref{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.82)}
+  .src-item .ref b{color:var(--white);font-weight:600}
+  @media(max-width:760px){.src-item{grid-template-columns:1fr;gap:5px}}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink);color:var(--w-50);padding:56px 0;border-top:1px solid var(--rule-dark)}
+  .foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+  .foot-logo{height:30px;width:auto;display:block;margin-bottom:16px;filter:invert(1) brightness(2)}
+  .foot-grid .word{font-family:var(--mid);font-size:22px;color:var(--white);letter-spacing:-0.01em;margin-bottom:14px}
+  .foot-grid p{font-size:14px;line-height:1.6;color:var(--w-60);max-width:42ch;margin-bottom:16px}
+  .foot-grid .name{font-family:var(--mid);font-size:14px;color:var(--white);margin-bottom:2px}
+  .foot-grid a{color:var(--hot);text-decoration:none;font-size:14px;border-bottom:1px solid rgba(230,25,95,0.4)}
+  .foot-rule{border-top:1px solid var(--rule-dark);margin-top:44px;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--w-50)}
+  @media(max-width:760px){.foot-grid{grid-template-columns:1fr}}
+
+  /* ---------- EXPAND ALL TAB ---------- */
+  .expandall{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:55;
+    writing-mode:vertical-rl;background:var(--ink);color:var(--white);border:none;cursor:pointer;
+    font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+    padding:18px 8px;}
+  .expandall:hover{background:var(--hot)}
+  @media(max-width:900px){.expandall{display:none}}
+
+  /* responsive */
+  @media(max-width:880px){
+    .wrap{padding:0 24px}.status{padding:12px 24px}
+    .stmt__inner{grid-template-columns:1fr;gap:36px}
+    .rail{max-width:420px}
+    .closer__grid{grid-template-columns:1fr;gap:36px}
+  }
+  button:focus-visible,a:focus-visible{outline:2px solid var(--hot);outline-offset:3px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+  /* ---------- PRINT / PDF CAPTURE ---------- */
+  @media print{
+    *{transition:none!important;animation:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    html{overflow-x:visible}
+    .status{position:static!important}
+    .expandall,.expander,.stmt__share{display:none!important}
+    .panel{max-height:none!important;overflow:visible!important}
+    .stmt::before{display:none!important}
+    .stmt,.block,.evidence,.queries,.boundary,.surface,.src-item{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<!-- STATUS / ISSUE BAR -->
+<div class="status">
+  <div class="status__left">
+    <img class="status__mark" src="/era-symbol.png" alt="ERA" />
+    <span class="status__principle">Don't pitch strangers.</span>
+  </div>
+  <div class="status__right">
+    <span>LENSES <b>6</b></span>
+    <span>SUBJECT <b>THE BUYER</b></span>
+    <span>CATEGORY <b>SUPPLEMENTS</b></span>
+    <span>WINDOW <b>2024–26</b></span>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<section class="masthead">
+  <div class="wrap">
+    <div class="masthead__top">
+      <span>01 · The buyer view</span>
+      <span>June 2026</span>
+    </div>
+    <div class="masthead__client">Prepared for Dan Pearce · mineral and natural-products category (Sovereign Silver)</div>
+    <h1 class="masthead__title">The buyer<br>view.</h1>
+    <p class="masthead__lead">Empathy is the input, not the output.</p>
+    <p class="masthead__sf">This is a portrait of the person who buys mineral and natural-products supplements. Who they are, what they feel, where they look, what they ask a machine, what comes back, why they trust, and why they quit. It is a read of how this category's buyer behaves, not a claim about any product. Seven statements follow, each stating a behavior while collapsed and opening to the research underneath.</p>
+    <div class="gq">
+      <span class="gq-k">The question under every page</span>
+      <span class="gq-q">Does this decision improve the buyer's real experience and outcome?</span>
+    </div>
+  </div>
+</section>
+
+<!-- SURFACES INTERSTITIAL -->
+<section class="surfaces">
+  <div class="wrap">
+    <span class="eyebrow">What the buyer encounters</span>
+    <h2>The verdict forms across surfaces they do not control.</h2>
+    <p>Before the first dose, the buyer assembles an opinion from whatever they find. Most of it is not your website. Belief is built or broken in the places they already trust, then carried into the purchase.</p>
+    <div class="surface-row">
+      <div class="surface"><span class="n">01</span><span class="t">Search and AI answers</span><span class="d">The first read, now often a synthesized summary the buyer takes as neutral.</span></div>
+      <div class="surface"><span class="n">02</span><span class="t">Reviews and ratings</span><span class="d">Strangers who already tried it. Weighted heavily, hard to counter.</span></div>
+      <div class="surface"><span class="n">03</span><span class="t">The label and claims</span><span class="d">Read fast, interpreted loosely, believed more than intended.</span></div>
+      <div class="surface"><span class="n">04</span><span class="t">A practitioner or a friend</span><span class="d">The single most persuasive surface, and the least controllable.</span></div>
+    </div>
+    <p class="foot" style="margin-top:0">Fig · where the decision is actually made</p>
+  </div>
+</section>
+
+<!-- REPORT -->
+<div class="report wrap">
+
+  <!-- STATEMENT 01 -->
+  <article class="stmt" aria-expanded="false" style="--accent:var(--hot)">
+    <span class="stmt__ghost">01</span>
+    <div class="stmt__inner">
+      <div class="stmt__main">
+        <div class="stmt__eyebrow">
+          <span class="stmt__tag">Statement 01 · The frame</span>
+          <span class="stmt__share">→ Share</span>
+        </div>
+        <h3>Your buyer reaches a verdict before the first <em>dose</em>.</h3>
+        <p class="stmt__sf">They are more than a man aged 35 to 55. They are a person managing energy, sleep, longevity, or a chronic condition, weighing trust against cost and convenience. The verdict forms across surfaces they do not control, search and AI answers, reviews, the label, a practitioner or a friend, before they ever hold the bottle.</p>
+        <button class="expander" aria-label="Expand statement 01">expand <span class="chev">↓</span></button>
+        <div class="panel">
+          <div class="panel__inner">
+            <div class="block">
+              <div class="block__eye">What they do</div>
+              <p>They assemble an opinion from whatever they encounter first. Three in four American adults take supplements and most users call them essential, so the buyer is rarely starting from zero (Survey, CRN 2024). They gather fragments from a search result, a review, a glance at the label, and a trusted voice, then carry that assembled verdict into the purchase.</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">How they read it</div>
+              <p>They do not arrive neutral and get persuaded. They arrive with a verdict already in motion and look for confirmation. Among adults who do not take supplements, the most common reason is not distrust of a brand, it is no perceived need, a conclusion reached before any product entered the frame.</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">The evidence</div>
+              <div class="evidence">
+                <div class="big">41%<span class="u">of non-users</span></div>
+                <div class="etxt">
+                  <p>cite no perceived need as their main reason for not taking supplements, ahead of cost at 27 percent. Three in four adults use supplements and 91 percent of users call them essential, so the verdict is usually set before trial.</p>
+                  <cite>Survey · CRN 2024 Consumer Survey, conducted by Ipsos</cite>
+                </div>
+              </div>
+            </div>
+            <div class="principle">
+              <div class="h">What this means for whoever wants to reach them</div>
+              <p>Be present and verifiable where the verdict forms, not after it has already formed.</p>
+            </div>
+            <div class="boundary">
+              <div class="h">The boundary</div>
+              <p>This is published research on how buyers in this category behave. It is not a captured audit of Sovereign Silver, and it makes no claim about the efficacy of silver or any ingredient. Every figure is cited at the foot of the page.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="rail">
+        <div class="herostat"><div class="n">41%</div><div class="c">of non-users cite no perceived need, a verdict reached before any product enters the picture</div><span class="tier">Survey · CRN 2024</span></div>
+        <div class="loopwrap">
+          <div class="loopring" style="--rot:0deg"><div class="loopring__ring"></div><div class="loopring__core">01</div></div>
+          <div class="loopcap"><div class="h">Stage in the buyer loop</div><div class="t">Encounter</div><p>Search, AI answers, and reviews form the verdict.</p></div>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <!-- STATEMENT 02 -->
+  <article class="stmt" aria-expanded="false" style="--accent:var(--cobalt)">
+    <span class="stmt__ghost">02</span>
+    <div class="stmt__inner">
+      <div class="stmt__main">
+        <div class="stmt__eyebrow">
+          <span class="stmt__tag">Statement 02 · What they feel</span>
+          <span class="stmt__share">→ Share</span>
+        </div>
+        <h3>Underneath the demographics, they feel fatigue, confusion, and <em>doubt</em>.</h3>
+        <p class="stmt__sf">Beyond age and income is an emotional state. They feel tired and unsure which product to trust. They struggle with inconsistent results, complexity, and a quiet distrust of bold claims. They value clarity, simplicity, transparency, and proof they can check.</p>
+        <button class="expander" aria-label="Expand statement 02">expand <span class="chev">↓</span></button>
+        <div class="panel">
+          <div class="panel__inner">
+            <div class="block">
+              <div class="block__eye">What they do</div>
+              <p>They look for the simplest credible path through a crowded shelf. They reward the brand that lowers confusion and respects their doubt, and they tune out the one that shouts. The decision is filtered through how they feel long before a feature list reaches them.</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">How they read it</div>
+              <p>Emotion sits underneath the choice. Fatigue, confusion, and skepticism shape what they notice and believe. They read transparency as respect and overclaim as a warning, which is why the same words land differently depending on the state they arrive in.</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">The evidence</div>
+              <div class="evidence">
+                <div class="big">91%<span class="u">call them essential</span></div>
+                <div class="etxt">
+                  <p>of supplement users consider them essential, even as many stay unsure which to trust. Adherence tells the same story from the other side, since 67 percent are highly adherent to at least one product and far fewer to the rest.</p>
+                  <cite>Survey · CRN 2024 Consumer Survey, Ipsos. Adherence: Peer-reviewed · Liu et al., Nutrients, 2024</cite>
+                </div>
+              </div>
+            </div>
+            <div class="principle">
+              <div class="h">What this means for whoever wants to reach them</div>
+              <p>Reduce confusion and show proof before asking for belief.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="rail">
+        <div class="herostat"><div class="n">91%</div><div class="c">of users call supplements essential, even as many stay unsure which to trust</div><span class="tier">Survey · CRN 2024</span></div>
+        <div class="loopwrap">
+          <div class="loopring" style="--rot:51deg"><div class="loopring__ring"></div><div class="loopring__core">02</div></div>
+          <div class="loopcap"><div class="h">Stage in the buyer loop</div><div class="t">Consider</div><p>How they feel shapes what they will believe.</p></div>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <!-- STATEMENT 03 -->
+  <article class="stmt" aria-expanded="false" style="--accent:var(--rust)">
+    <span class="stmt__ghost">03</span>
+    <div class="stmt__inner">
+      <div class="stmt__main">
+        <div class="stmt__eyebrow">
+          <span class="stmt__tag">Statement 03 · The new shelf</span>
+          <span class="stmt__share">→ Share</span>
+        </div>
+        <h3>They ask a machine before they ask <em>you</em>.</h3>
+        <p class="stmt__sf">The buyer now researches with an AI assistant before they reach a brand, a store, or an expert. Availability used to mean the shelf and the search result. The answer the machine assembles is the new shelf, and being present means being legible to it.</p>
+        <button class="expander" aria-label="Expand statement 03">expand <span class="chev">↓</span></button>
+        <div class="panel">
+          <div class="panel__inner">
+            <div class="block">
+              <div class="block__eye">What they do</div>
+              <p>They ask the assistant the things they once typed into a search bar. The most frequent health queries are treatment for a known issue at 59 percent, symptoms at 56 percent, fact checking drugs and side effects at 55 percent, lifestyle and prevention at 46 percent, and logistics at 28 percent (Survey, Rock Health 2025). Among those who use AI for health, 64 percent do so weekly or more. More than five percent of all ChatGPT messages worldwide are health related, and about 70 percent of those happen outside clinic hours (Company-reported, OpenAI 2025).</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">How they read it</div>
+              <p>This is availability reframed. The buyer treats the assembled answer as a neutral shelf, so presence now means being citable, structured, and current where the answer is built, rather than louder in an ad. The honest counterweight is that only seven percent of adults use chatbots often for health and 59 percent never do, which ranks chatbots last among seven sources, so this is a fast-growing habit and not yet the dominant one (Survey, Pew, October 2025). After an AI answer, 42 percent search elsewhere to verify and 40 percent consult a provider (Survey, Rock Health 2025).</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">What they ask</div>
+              <div class="queries">
+                <div class="qh">Illustrative, mapped to measured query categories, not a query log</div>
+                <ul>
+                  <li><span class="q">what helps with low energy and afternoon crashes</span><span class="cat">Lifestyle and prevention</span></li>
+                  <li><span class="q">is colloidal silver safe with my medication</span><span class="cat">Drugs and side effects</span></li>
+                  <li><span class="q">why am I still tired after taking supplements</span><span class="cat">Symptoms</span></li>
+                  <li><span class="q">best form of magnesium for sleep</span><span class="cat">Treatment for a known issue</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <div class="block__eye">The evidence</div>
+              <div class="evidence">
+                <div class="big">32%<span class="u">of U.S. adults</span></div>
+                <div class="etxt">
+                  <p>used an AI chatbot for health information in late 2025, up from 16 percent in 2024. About a third of adults now turn to AI for health information, and roughly 31 percent of the U.S. population is forecast to use generative AI search in 2026.</p>
+                  <cite>Survey · Rock Health 2025 (8,000 U.S. adults); Survey · KFF 2026; Forecast · EMARKETER</cite>
+                </div>
+              </div>
+            </div>
+            <div class="principle">
+              <div class="h">What this means for whoever wants to reach them</div>
+              <p>Presence on the new shelf is being legible to the machine, not louder to the person.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="rail">
+        <div class="herostat"><div class="n">32%</div><div class="c">of U.S. adults used an AI chatbot for health info in late 2025, up from 16 percent in 2024</div><span class="tier">Survey · Rock Health 2025</span></div>
+        <div class="loopwrap">
+          <div class="loopring" style="--rot:309deg"><div class="loopring__ring"></div><div class="loopring__core">03</div></div>
+          <div class="loopcap"><div class="h">Stage in the buyer loop</div><div class="t">Reach</div><p>The AI answer is the shelf they look at first.</p></div>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <!-- STATEMENT 04 -->
+  <article class="stmt" aria-expanded="false" style="--accent:var(--hot)">
+    <span class="stmt__ghost">04</span>
+    <div class="stmt__inner">
+      <div class="stmt__main">
+        <div class="stmt__eyebrow">
+          <span class="stmt__tag">Statement 04 · The answer</span>
+          <span class="stmt__share">→ Share</span>
+        </div>
+        <h3>The machine answers with confidence it has not <em>earned</em>.</h3>
+        <p class="stmt__sf">What comes back is fluent, certain, and often wrong. It is assembled from sources the brand does not control, it shifts from one run to the next, and it tends to agree with whatever the buyer seemed to want.</p>
+        <button class="expander" aria-label="Expand statement 04">expand <span class="chev">↓</span></button>
+        <div class="panel">
+          <div class="panel__inner">
+            <div class="block">
+              <div class="block__eye">What they do</div>
+              <p>They take the fluent answer largely at face value, though many sense the uncertainty and go looking for a second opinion. The confident single answer reads as authoritative even when it is not, which is why what the machine cites becomes what the buyer believes.</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">How they read it</div>
+              <p>Accuracy is unreliable. An AI search engine answering supplement questions frequently cited noncredible sources, gave ambiguous or inaccurate information, and aligned its answers with what the user appeared to want (Peer-reviewed, Liu et al., JMIR AI 2025). Chatbot nutrition advice scored between 21 and 67 percent in one study and cleared 50 percent in none in another, with answers changing across days (Peer-reviewed, PMC 2024 to 2025). Drug information ran 10 to 60 percent against a clinical reference and was inconsistent on retest (Peer-reviewed, Khatri et al., JACCP 2025). Four major chatbots gave over-restrictive dietary guidance and made dangerous omissions of high-risk foods (Peer-reviewed brief, psychiatrist.com 2026).</p>
+              <p>The mechanism explains the instability. Answer engines retrieve sources, rank them on relevance, authority, recency, and structure, then rewrite the top few into one reply, and AI-surfaced pages run about 26 percent fresher than traditional search (Industry research, Frase 2026). Traditional search strength barely predicts this, since 83 percent of AI Overview citations come from pages outside the traditional top ten (Industry research, Seer and BrightEdge 2025). And the output moves, with only about 30 percent of brands staying visible from one answer to the next and 20 percent across five runs (Industry research, AirOps 2026).</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">The evidence</div>
+              <div class="evidence">
+                <div class="big">21–67%<span class="u">answer accuracy</span></div>
+                <div class="etxt">
+                  <p>the range of chatbot nutrition-advice accuracy in testing, with no tool clearing 50 percent in a second study and answers shifting across days. Drug-information accuracy ran 10 to 60 percent against a clinical reference.</p>
+                  <cite>Peer-reviewed · PMC nutrition comparison, 2024 to 2025; Peer-reviewed · Khatri et al., JACCP, 2025</cite>
+                </div>
+              </div>
+            </div>
+            <div class="principle">
+              <div class="h">What this means for whoever wants to reach them</div>
+              <p>The buyer is being briefed by a confident, unstable intermediary, so the work is to be the credible source it keeps citing.</p>
+            </div>
+            <div class="boundary">
+              <div class="h">The boundary</div>
+              <p>These findings describe AI systems answering category and health questions in published evaluations. They are not a test of any Sovereign Silver content, and nothing here claims that a product works.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="rail">
+        <div class="herostat"><div class="n">21–67%</div><div class="c">chatbot nutrition-advice accuracy in testing, inconsistent from one day to the next</div><span class="tier">Peer-reviewed · PMC 2024–25</span></div>
+        <div class="loopwrap">
+          <div class="loopring" style="--rot:103deg"><div class="loopring__ring"></div><div class="loopring__core">04</div></div>
+          <div class="loopcap"><div class="h">Stage in the buyer loop</div><div class="t">Trust</div><p>What the machine cites is what they come to believe.</p></div>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <!-- STATEMENT 05 -->
+  <article class="stmt" aria-expanded="false" style="--accent:var(--cobalt)">
+    <span class="stmt__ghost">05</span>
+    <div class="stmt__inner">
+      <div class="stmt__main">
+        <div class="stmt__eyebrow">
+          <span class="stmt__tag">Statement 05 · The job</span>
+          <span class="stmt__share">→ Share</span>
+        </div>
+        <h3>They hire an outcome, not a <em>mineral</em>.</h3>
+        <p class="stmt__sf">Nobody wants silver, or magnesium, or any ingredient. They want to stay well before a trip, to feel steady, to recover faster. The ingredient is the means, the felt job is the reason, and they fire a product the moment it stops doing that job.</p>
+        <button class="expander" aria-label="Expand statement 05">expand <span class="chev">↓</span></button>
+        <div class="panel">
+          <div class="panel__inner">
+            <div class="block">
+              <div class="block__eye">What they do</div>
+              <p>They buy for a job they can feel and keep what delivers it. The reorder buyer is a different animal from the one-time trier. The trier is testing a promise, the reorder buyer has felt a result and folded the product into a routine, and the two evaluate on completely different evidence.</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">How they read it</div>
+              <p>They file a product under a need they recognize, not a compound they have to research. An ingredient-first description asks them to translate from silver to what it does for me, and most will not make that leap, so the product that names the job and the moment is the one that earns the second purchase.</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">The evidence</div>
+              <div class="evidence">
+                <div class="big">67%<span class="u">adherent to one</span></div>
+                <div class="etxt">
+                  <p>of supplement users are highly adherent to at least one product, which means adherence falls away for the others. People keep the one that does a felt job and drift from the rest. Separately, 92 percent value supplements for the benefits they expect.</p>
+                  <cite>Peer-reviewed · Liu et al., NHANES 2011 to 2018, Nutrients, 2024. Value: Industry research · Radicle Science, 2024</cite>
+                </div>
+              </div>
+            </div>
+            <div class="principle">
+              <div class="h">What this means for whoever wants to reach them</div>
+              <p>The felt job earns the reorder, and the ingredient is the proof, not the headline.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="rail">
+        <div class="herostat"><div class="n">67%</div><div class="c">of users are highly adherent to at least one product, far fewer to the rest</div><span class="tier">Peer-reviewed · Liu et al., 2024</span></div>
+        <div class="loopwrap">
+          <div class="loopring" style="--rot:257deg"><div class="loopring__ring"></div><div class="loopring__core">05</div></div>
+          <div class="loopcap"><div class="h">Stage in the buyer loop</div><div class="t">Reorder</div><p>The felt job, not the ingredient, earns the next purchase.</p></div>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <!-- STATEMENT 06 -->
+  <article class="stmt" aria-expanded="false" style="--accent:var(--rust)">
+    <span class="stmt__ghost">06</span>
+    <div class="stmt__inner">
+      <div class="stmt__main">
+        <div class="stmt__eyebrow">
+          <span class="stmt__tag">Statement 06 · The friction</span>
+          <span class="stmt__share">→ Share</span>
+        </div>
+        <span class="badge">★ Highest leverage</span>
+        <h3>They quit on friction, not on <em>belief</em>.</h3>
+        <p class="stmt__sf">The buyer believes in the product and still stops taking it. Not because they changed their mind, but because the bottle lost to a busy week. The drop-off is a design problem wearing a willpower costume.</p>
+        <button class="expander" aria-label="Expand statement 06">expand <span class="chev">↓</span></button>
+        <div class="panel">
+          <div class="panel__inner">
+            <div class="block">
+              <div class="block__eye">What they do</div>
+              <p>They intend to take it, then real life intervenes. An unclear dose, an awkward time of day, a routine that never formed, and each small friction becomes a skipped day. Skipped days are benefit they never feel and a reorder that never happens.</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">How they read it</div>
+              <p>When a person fails to use something correctly, the design is usually at fault, not the person. The buyer reads a complicated regimen as the product's failing even when they blame themselves, and a product anchored to a habit they already keep reads as effortless.</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">The evidence</div>
+              <div class="evidence">
+                <div class="big">92%<span class="u">value, fewer keep</span></div>
+                <div class="etxt">
+                  <p>of supplement users value their products for the benefits they expect, yet poor day-to-day adherence keeps many from ever feeling those benefits, which undercuts repeat purchase. The gap between valuing and taking is the design surface.</p>
+                  <cite>Industry research · Radicle Science, 2024. Adherence pattern: Peer-reviewed · Liu et al., Nutrients, 2024</cite>
+                </div>
+              </div>
+            </div>
+            <div class="principle">
+              <div class="h">What this means for whoever wants to reach them</div>
+              <p>This is the highest-leverage behavior, because adherence is where belief becomes a felt result, and removing steps is fully within reach.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="rail">
+        <div class="herostat"><div class="n">92%</div><div class="c">value the product, yet weak day-to-day adherence keeps many from ever feeling it</div><span class="tier">Industry research · Radicle, 2024</span></div>
+        <div class="loopwrap">
+          <div class="loopring" style="--rot:206deg"><div class="loopring__ring"></div><div class="loopring__core">06</div></div>
+          <div class="loopcap"><div class="h">Stage in the buyer loop</div><div class="t">Adhere</div><p>Friction, not doubt, ends most of the habit.</p></div>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <!-- STATEMENT 07 -->
+  <article class="stmt" aria-expanded="false" style="--accent:var(--hot)">
+    <span class="stmt__ghost">07</span>
+    <div class="stmt__inner">
+      <div class="stmt__main">
+        <div class="stmt__eyebrow">
+          <span class="stmt__tag">Statement 07 · The proof</span>
+          <span class="stmt__share">→ Share</span>
+        </div>
+        <h3>Skepticism is the default, proof is the <em>trigger</em>.</h3>
+        <p class="stmt__sf">In a category crowded with bold claims, the buyer reads skeptically first. What moves them is not a louder promise. It is proof they can verify and a claim that matches what they actually feel.</p>
+        <button class="expander" aria-label="Expand statement 07">expand <span class="chev">↓</span></button>
+        <div class="panel">
+          <div class="panel__inner">
+            <div class="block">
+              <div class="block__eye">What they do</div>
+              <p>They check. After a confident answer they go looking for a second opinion, and they read vague label language loosely, tending to assume more than was stated. So an overclaim does not simply fail to persuade, it erodes trust the moment experience does not match it.</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">How they read it</div>
+              <p>Honesty is the strongest trigger here. Trust in the category is real but fragile, spent whenever a claim outruns the evidence and earned whenever the proof is in plain sight. Verifiable proof, third-party testing, and naming the objection before they raise it all read as respect rather than marketing.</p>
+            </div>
+            <div class="block">
+              <div class="block__eye">The evidence</div>
+              <div class="evidence">
+                <div class="big">42%<span class="u">verify the answer</span></div>
+                <div class="etxt">
+                  <p>of people search elsewhere to verify after an AI health answer, and 40 percent go on to consult a provider. The reflex to check is the buyer's default, which is exactly why proof they can confirm is the thing that converts them.</p>
+                  <cite>Survey · Rock Health 2025 Consumer Adoption of Digital Health Survey</cite>
+                </div>
+              </div>
+            </div>
+            <div class="principle">
+              <div class="h">What this means for whoever wants to reach them</div>
+              <p>Put the proof where the doubt is, and match the claim to the felt result.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="rail">
+        <div class="herostat"><div class="n">42%</div><div class="c">search elsewhere to verify after an AI answer, and 40 percent consult a provider</div><span class="tier">Survey · Rock Health 2025</span></div>
+        <div class="loopwrap">
+          <div class="loopring" style="--rot:154deg"><div class="loopring__ring"></div><div class="loopring__core">07</div></div>
+          <div class="loopcap"><div class="h">Stage in the buyer loop</div><div class="t">Trial</div><p>Verifiable proof is what converts the skeptic.</p></div>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+</div>
+
+<!-- CLOSER -->
+<section class="closer">
+  <div class="wrap">
+    <div class="closer__tag">The closer</div>
+    <h2>Understanding the buyer is a measurement you hold, not a campaign you <em>run</em>.</h2>
+    <div class="closer__grid">
+      <div class="closer__body">
+        <p>Empathy that lives in one person's head does not scale, and a one-time read drifts. The buyer keeps moving, and the machine that briefs them changes from one answer to the next, so the advantage belongs to whoever turns understanding into a standing instrument and keeps reading it.</p>
+        <p>The loop is the frame. Encounter, consider, trust, trial, adhere, reorder, and reach are not a funnel that ends at a sale, they feed one another, and a satisfied buyer sends the next one in. Read the whole circle on a cadence rather than a single step, because the picture shifts. Only about 30 percent of brands stay visible from one AI answer to the next (Industry research, AirOps 2026), inside a category moving from 64 billion dollars toward a projected 124 billion by 2033 (Market analysis, Grand View Research 2024).</p>
+        <div class="gq">
+          <span class="gq-k">The question under every decision</span>
+          <span class="gq-q">Does this decision improve the buyer's real experience and outcome?</span>
+        </div>
+      </div>
+      <div class="ring">
+        <div class="ring__band"></div>
+        <div class="ring__core"><span>The buyer</span><em>read across the loop</em></div>
+        <span class="rn" style="left:50%;top:8.3%">Encounter</span>
+        <span class="rn" style="left:82.5%;top:23.9%">Consider</span>
+        <span class="rn" style="left:90.6%;top:59.2%">Trust</span>
+        <span class="rn" style="left:68.1%;top:87.5%">Trial</span>
+        <span class="rn" style="left:31.9%;top:87.5%">Adhere</span>
+        <span class="rn" style="left:9.4%;top:59.2%">Reorder</span>
+        <span class="rn" style="left:17.5%;top:23.9%">Reach</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="method">
+  <div class="wrap">
+    <div class="masthead__top" style="margin-bottom:36px">
+      <span>02 · Methodology</span>
+      <span>How this read is built</span>
+    </div>
+    <h2>How this read is<br>built.</h2>
+    <p class="sf">This is a behavioral read of how the natural-products buyer decides, assembled from six frameworks and from current research on the category and on how buyers now use AI to inform health decisions. It is not a captured audit of Sovereign Silver's channels, and it makes no claim about the efficacy of silver or any ingredient.</p>
+    <div class="weights">
+      <div class="w"><div class="wl">The frameworks</div><div class="wt">Six books, six lenses.</div><div class="wd">Christensen, Fader, Norman, Bates, Sharp, and Sugarman. They are pointed at the buyer's psychology, not at a media plan.</div></div>
+      <div class="w"><div class="wl">The evidence</div><div class="wt">Cited and tagged.</div><div class="wd">Every figure is labeled by tier, peer-reviewed, survey, industry research, or forecast, and traces to a named source at the foot of the page. Example queries are illustrative, mapped to measured categories, not a query log.</div></div>
+      <div class="w"><div class="wl">The boundary</div><div class="wt">No claims on the product.</div><div class="wd">Nothing here asserts the efficacy of any ingredient. The subject is the buyer's behavior, what they see, how they read it, and why they decide.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section class="sources" id="sources">
+  <div class="wrap">
+    <span class="eyebrow">03 · Sources</span>
+    <h2>What is behind the numbers.</h2>
+    <p class="note">Books are cited as the original frameworks and are exempt from the recency rule. Studies, surveys, industry research, and forecasts are labeled by type so you know which carries peer review and which is credible industry reporting. This page makes no claim about the efficacy of any ingredient or product.</p>
+    <div class="src-list">
+      <div class="src-item"><span class="tag">Survey</span><span class="ref"><b>Rock Health.</b> 2025 Consumer Adoption of Digital Health Survey, 8,000 U.S. adults. 32% used an AI chatbot for health info in late 2025, up from 16% in 2024; 64% of those weekly or more; query mix and 42% verify, 40% consult a provider after an AI answer.</span></div>
+      <div class="src-item"><span class="tag">Survey</span><span class="ref"><b>KFF.</b> Tracking Poll on Health Information and Trust, 2026. About a third of adults turn to AI for health information.</span></div>
+      <div class="src-item"><span class="tag">Survey</span><span class="ref"><b>Pew Research Center.</b> Where Do Americans Get Health Information, October 2025, n=5,111. 7% use AI chatbots often, 59% never; chatbots rank last among seven sources.</span></div>
+      <div class="src-item"><span class="tag">Survey</span><span class="ref"><b>Council for Responsible Nutrition (CRN).</b> 2024 Consumer Survey, conducted by Ipsos. 75% of Americans use supplements, 91% of users call them essential, non-users cite no perceived need (41%) and cost (27%).</span></div>
+      <div class="src-item"><span class="tag">Company-reported</span><span class="ref"><b>OpenAI.</b> Late 2025. More than 5% of all ChatGPT messages globally are health related; about 70% of health conversations occur outside clinic hours.</span></div>
+      <div class="src-item"><span class="tag">Peer-reviewed</span><span class="ref"><b>Liu et al.</b> JMIR AI, October 2025, University of Tokyo. An AI search engine answering dietary-supplement questions frequently cited noncredible sources, gave ambiguous or inaccurate information, and aligned answers with what the user seemed to want.</span></div>
+      <div class="src-item"><span class="tag">Peer-reviewed</span><span class="ref"><b>Nutrition-advice comparison.</b> PMC, 2024 to 2025. Chatbot accuracy ranged 21% to 67% in one case and no tool cleared 50% in another, with inconsistent answers across days.</span></div>
+      <div class="src-item"><span class="tag">Peer-reviewed</span><span class="ref"><b>Khatri et al.</b> JACCP, 2025. ChatGPT drug-information accuracy ran 10% to 60% against a clinical reference and was inconsistent on retest.</span></div>
+      <div class="src-item"><span class="tag">Peer-reviewed brief</span><span class="ref"><b>psychiatrist.com.</b> Clinical evaluation, 2026. Four major chatbots gave over-restrictive dietary guidance and made dangerous omissions of high-risk foods.</span></div>
+      <div class="src-item"><span class="tag">Peer-reviewed</span><span class="ref"><b>Liu, L. et al.</b> Quantity, Duration, Adherence, and Reasons for Dietary Supplement Use among Adults, NHANES 2011 to 2018. <em>Nutrients</em>, 2024. Analysis of 12,529 U.S. adults. 67% highly adherent to at least one product.</span></div>
+      <div class="src-item"><span class="tag">Industry research</span><span class="ref"><b>Frase.</b> Answer-engine optimization analysis citing 17M AI citations, 2026. Answer engines rank sources on relevance, authority, recency, and structure; AI-surfaced pages run about 26% fresher than traditional search.</span></div>
+      <div class="src-item"><span class="tag">Industry research</span><span class="ref"><b>Seer Interactive and BrightEdge.</b> 2025. Traditional SEO strength correlates little with AI brand mentions; 83% of AI Overview citations came from pages outside the traditional top ten.</span></div>
+      <div class="src-item"><span class="tag">Industry research</span><span class="ref"><b>AirOps.</b> 2026 State of AI Search. Only about 30% of brands stay visible from one answer to the next, and 20% across five runs.</span></div>
+      <div class="src-item"><span class="tag">Forecast</span><span class="ref"><b>EMARKETER.</b> About 31% of the U.S. population will use generative AI search in 2026.</span></div>
+      <div class="src-item"><span class="tag">Market analysis</span><span class="ref"><b>Grand View Research.</b> U.S. dietary supplements market, estimated at $64B in 2024, projected to reach $124B by 2033.</span></div>
+      <div class="src-item"><span class="tag">Industry research</span><span class="ref"><b>Radicle Science / Inside the Bottle.</b> 2024 dietary-supplement trend review. 92% of users value supplements for expected benefits, while poor adherence undercuts realized benefit and repeat purchase.</span></div>
+      <div class="src-item"><span class="tag">Framework</span><span class="ref"><b>Clayton Christensen et al.</b> <em>Competing Against Luck</em> (2016). Jobs to be Done.</span></div>
+      <div class="src-item"><span class="tag">Framework</span><span class="ref"><b>Peter Fader &amp; Sarah Toms.</b> <em>The Customer Centricity Playbook</em> (2018). High-value cohorts and the difference between the trier and the repeat buyer.</span></div>
+      <div class="src-item"><span class="tag">Framework</span><span class="ref"><b>Don Norman.</b> <em>The Design of Everyday Things</em> (rev. 2013). Affordances, signifiers, feedback, human-centered design.</span></div>
+      <div class="src-item"><span class="tag">Framework</span><span class="ref"><b>Tony Bates &amp; Natalie Petouhoff.</b> <em>Empathy in Action</em> (2022). Operationalizing empathy at scale.</span></div>
+      <div class="src-item"><span class="tag">Framework</span><span class="ref"><b>Byron Sharp.</b> <em>How Brands Grow</em> (2010). Mental and physical availability, being present where the buyer looks.</span></div>
+      <div class="src-item"><span class="tag">Framework</span><span class="ref"><b>Joseph Sugarman.</b> <em>Triggers</em> (2005). Psychological triggers of buying, honesty as persuasion.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img class="foot-logo" src="/erafull.png" alt="ERA" />
+        <p>ERA reads buyer behavior across your market, builds the system, and runs the loop with your team. This Buyer View was prepared for Dan Pearce as a portrait of his customer, not a pitch.</p>
+        <div class="name">Justin Marshall</div>
+        <a href="mailto:justin@eracx.com">justin@eracx.com</a>
+      </div>
+      <div>
+        <div class="word">The boundary</div>
+        <p>Every figure describes published research on category buyer behavior or on how buyers use AI, cited above. Nothing here is a captured audit of Sovereign Silver's channels, and nothing asserts the efficacy of any product. No fabrication, no manufactured sources.</p>
+      </div>
+    </div>
+    <div class="foot-rule">
+      <span>Don't pitch strangers.</span>
+      <span>The buyer view · prepared for Dan Pearce · June 2026</span>
+    </div>
+  </div>
+</footer>
+
+<button class="expandall" id="expandAll" aria-pressed="false">Expand all</button>
+
+<script>
+(function(){
+  "use strict";
+  var stmts = Array.prototype.slice.call(document.querySelectorAll('.stmt'));
+
+  function setOpen(stmt, open){
+    var panel = stmt.querySelector('.panel');
+    stmt.setAttribute('aria-expanded', open);
+    if(panel) panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+    var btn = stmt.querySelector('.expander');
+    if(btn) btn.firstChild.nodeValue = open ? 'collapse ' : 'expand ';
+  }
+  function isOpen(stmt){ return stmt.getAttribute('aria-expanded') === 'true'; }
+
+  stmts.forEach(function(stmt){
+    var btn = stmt.querySelector('.expander');
+    if(btn) btn.addEventListener('click', function(){ setOpen(stmt, !isOpen(stmt)); refreshAll(); });
+  });
+
+  // recalc open panel heights on resize
+  window.addEventListener('resize', function(){
+    stmts.forEach(function(stmt){
+      if(isOpen(stmt)){
+        var panel = stmt.querySelector('.panel');
+        if(panel){ panel.style.maxHeight = 'none'; var h = panel.scrollHeight; panel.style.maxHeight = h + 'px'; }
+      }
+    });
+  });
+
+  // expand all
+  var allBtn = document.getElementById('expandAll');
+  function refreshAll(){
+    var everyOpen = stmts.every(isOpen);
+    if(allBtn){ allBtn.setAttribute('aria-pressed', everyOpen); allBtn.textContent = everyOpen ? 'Collapse all' : 'Expand all'; }
+  }
+  if(allBtn) allBtn.addEventListener('click', function(){
+    var everyOpen = stmts.every(isOpen);
+    stmts.forEach(function(s){ setOpen(s, !everyOpen); });
+    refreshAll();
+  });
+})();
+</script>
+</body>
+</html>
