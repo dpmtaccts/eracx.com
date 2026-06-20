@@ -979,8 +979,10 @@ const THE_MOMENTS_CSS = `
 #the-read .tm-mhead-l{display:flex;align-items:center;gap:16px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;flex-wrap:wrap;}
 #the-read .tm-mhead-l .tm-n{color:#E6195F;}
 #the-read .tm-chip{display:inline-flex;align-items:center;gap:8px;}
-#the-read .tm-ico{width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+#the-read .tm-ico{width:22px;height:22px;border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 #the-read .tm-ico img{width:100%;height:100%;object-fit:contain;display:block;}
+#the-read .tm-ico-atlas{background:#0E9384;}
+#the-read .tm-ico-atlas svg{width:13px;height:13px;display:block;}
 #the-read .tm-ico-fallback{width:14px;height:14px;border:1px solid rgba(10,10,10,0.4);display:block;}
 #the-read .tm-slide.ink .tm-ico-fallback{border-color:rgba(255,255,255,0.4);}
 #the-read .tm-pnm{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;}
@@ -1042,16 +1044,21 @@ const THE_MOMENTS_CSS = `
 #the-read .tm-rd-x{font-size:13px;color:#1c1c1c;line-height:1.45;}
 #the-read .tm-rd-v{font-size:12px;font-weight:700;color:#ff4500;margin-top:5px;}
 
-#the-read .tm-ai{width:540px;max-width:100%;}
-#the-read .tm-ai-h{background:#E6195F;color:#fff;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:11px 17px;display:flex;justify-content:space-between;gap:12px;}
-#the-read .tm-ai-b{padding:17px 19px;}
-#the-read .tm-ai-lab{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(10,10,10,0.55);margin-bottom:6px;}
-#the-read .tm-ai-q{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;margin-bottom:15px;color:#0a0a0a;}
-#the-read .tm-ai-a{font-family:var(--tm-ui);font-size:14.5px;line-height:1.55;color:#26262d;margin-bottom:13px;}
-#the-read .tm-ai-a strong{font-weight:700;}
-#the-read .tm-ai-chips{display:flex;border:1px solid #e2e2e2;width:fit-content;max-width:100%;flex-wrap:wrap;}
-#the-read .tm-ai-chip{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:#777;padding:7px 13px;border-right:1px solid #e2e2e2;}
-#the-read .tm-ai-chip:last-child{border-right:none;}
+#the-read .tm-chat{width:540px;max-width:100%;background:#fff;border:1px solid #e6e6e6;border-radius:14px;font-family:var(--tm-ui);overflow:hidden;}
+#the-read .tm-chat-top{display:flex;align-items:center;gap:9px;padding:12px 16px;border-bottom:1px solid #efefef;}
+#the-read .tm-chat-mark{width:22px;height:22px;border-radius:6px;background:#0E9384;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+#the-read .tm-chat-mark svg{width:13px;height:13px;display:block;}
+#the-read .tm-chat-name{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(10,10,10,0.55);}
+#the-read .tm-chat-user{display:flex;justify-content:flex-end;padding:16px 16px 4px;}
+#the-read .tm-chat-ubub{background:#f4f4f5;border-radius:18px;padding:10px 15px;font-size:14px;line-height:1.45;color:#1d2226;max-width:84%;}
+#the-read .tm-chat-asst{display:flex;gap:10px;align-items:flex-start;padding:10px 16px 18px;}
+#the-read .tm-chat-av{width:30px;height:30px;border-radius:999px;background:#0E9384;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+#the-read .tm-chat-av svg{width:16px;height:16px;display:block;}
+#the-read .tm-chat-abody{flex:1;min-width:0;}
+#the-read .tm-chat-atext{font-size:14.5px;line-height:1.55;color:#26262d;margin:3px 0 0;}
+#the-read .tm-chat-atext strong{font-weight:700;}
+#the-read .tm-chat-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px;}
+#the-read .tm-chat-pill{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:#777;border:1px solid #e2e2e2;border-radius:999px;padding:5px 11px;}
 
 #the-read .tm-gd{font-family:var(--tm-ui);display:flex;width:540px;max-width:100%;}
 #the-read .tm-gd-s{padding:18px 24px;border-right:1px solid #e6e6e6;text-align:center;position:relative;flex-shrink:0;}
@@ -1132,10 +1139,31 @@ type TmMoment = {
   footHot: string
 }
 
-/* Platform chip icon — real SVG from /images/buyerview/icons, neutral 1px
-   outline when the file is missing. Never the colored-square placeholder. */
+/* Spark glyph — the Atlas mark, white on teal. Shared by the chip and the
+   moment-03 chat (top strip mark + assistant avatar). */
+function SparkGlyph() {
+  return (
+    <svg viewBox="0 0 72 72" aria-hidden="true">
+      <path
+        d="M36 14c1.9 14.2 5.8 18.1 20 20-14.2 1.9-18.1 5.8-20 20-1.9-14.2-5.8-18.1-20-20 14.2-1.9 18.1-5.8 20-20Z"
+        fill="#fff"
+      />
+    </svg>
+  )
+}
+
+/* Platform chip icon — real SVG from /images/buyerview/icons for the real
+   platforms. Atlas is a fictional engine with no logo, so its teal spark mark
+   is rendered inline (never the outline fallback). */
 function PlatformIcon({ name }: { name: string }) {
   const [ok, setOk] = useState(true)
+  if (name === 'atlas') {
+    return (
+      <span className="tm-ico tm-ico-atlas" aria-hidden>
+        <SparkGlyph />
+      </span>
+    )
+  }
   return (
     <span className="tm-ico">
       {ok ? (
@@ -1281,24 +1309,31 @@ function RedditCard({ cardRef, targetRef }: TmArtifactProps) {
 
 function AnswerEngineCard({ cardRef, targetRef }: TmArtifactProps) {
   return (
-    <div className="tm-card tm-ai" ref={cardRef}>
-      <div className="tm-ai-h">
-        <span>Answer Engine</span>
-        <span>Buyer-Mode Query</span>
+    <div className="tm-chat" ref={cardRef}>
+      <div className="tm-chat-top">
+        <span className="tm-chat-mark" aria-hidden>
+          <SparkGlyph />
+        </span>
+        <span className="tm-chat-name">Atlas</span>
       </div>
-      <div className="tm-ai-b">
-        <div className="tm-ai-lab">Query</div>
-        <div className="tm-ai-q">› Who leads this category?</div>
-        <div className="tm-ai-lab">Answer</div>
-        <div className="tm-ai-a" ref={targetRef}>
-          The platforms most often cited as leaders are <strong className="tm-hl">Vantage</strong> and{' '}
-          <strong className="tm-hl">Meridian</strong>, noted for breadth and enterprise adoption. A handful of smaller
-          alternatives follow.
-        </div>
-        <div className="tm-ai-chips">
-          <span className="tm-ai-chip">vantage.com</span>
-          <span className="tm-ai-chip">g2.com</span>
-          <span className="tm-ai-chip">2023 analyst note</span>
+      <div className="tm-chat-user">
+        <div className="tm-chat-ubub">What are the best platforms for employee coaching and development?</div>
+      </div>
+      <div className="tm-chat-asst">
+        <span className="tm-chat-av" aria-hidden>
+          <SparkGlyph />
+        </span>
+        <div className="tm-chat-abody">
+          <p className="tm-chat-atext" ref={targetRef}>
+            The platforms most often cited as leaders are <strong>Vantage</strong> and{' '}
+            <strong>Meridian</strong>, noted for breadth and enterprise adoption. A handful of smaller
+            alternatives follow.
+          </p>
+          <div className="tm-chat-pills">
+            <span className="tm-chat-pill">vantage.com</span>
+            <span className="tm-chat-pill">g2.com</span>
+            <span className="tm-chat-pill">analyst note</span>
+          </div>
         </div>
       </div>
     </div>
