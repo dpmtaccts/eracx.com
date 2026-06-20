@@ -147,7 +147,7 @@ function TopNav() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 22, flexWrap: 'wrap' }}>
           <a href="#why" style={{ ...mono(11, MUTED, 700), textDecoration: 'none' }}>WHY</a>
           <a href="#the-view" style={{ ...mono(11, MUTED, 700), textDecoration: 'none' }}>THE VIEW</a>
-          <a href="#the-read" style={{ ...mono(11, MUTED, 700), textDecoration: 'none' }}>THE READ</a>
+          <a href="#the-read" style={{ ...mono(11, MUTED, 700), textDecoration: 'none' }}>THE MOMENTS</a>
           <a href="#the-program" style={{ ...mono(11, MUTED, 700), textDecoration: 'none' }}>THE PROGRAM</a>
           <a href="#the-advantage" style={{ ...mono(11, MUTED, 700), textDecoration: 'none' }}>THE ADVANTAGE</a>
           <a
