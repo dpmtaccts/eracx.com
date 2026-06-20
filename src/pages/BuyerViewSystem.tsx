@@ -1803,17 +1803,63 @@ function SectionProgram() {
 }
 
 /* ──────────────────────────────────────────────
-   ▸ 05 THE UNFAIR ADVANTAGE (ink, text-only)
-   The benchmark visual moved to row 06 in ▶︎03 THE READ. This section
-   stays a text-only beat — headline + body + citation strip.
+   ▸ 05 THE UNFAIR ADVANTAGE (ink)
+   Ported from bv-advantage.html: headline + short lede + a "you vs the
+   field" index comparison (Ascend vs the three composite rivals) + the Bain
+   credibility strip. All styling is section-scoped in ADV_CSS; shared tokens
+   untouched. The comparison data is illustrative composite.
    ────────────────────────────────────────────── */
+
+const ADV_CSS = `
+#the-advantage .adv-cmp{border-top:1px solid rgba(255,255,255,0.22);padding-top:38px;}
+#the-advantage .adv-grid{display:grid;grid-template-columns:300px 1fr;gap:64px;align-items:start;}
+#the-advantage .adv-kick{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:20px;}
+#the-advantage .adv-read{font-size:16px;line-height:1.62;color:rgba(255,255,255,0.82);margin-bottom:30px;font-family:'IBM Plex Sans',system-ui,sans-serif;}
+#the-advantage .adv-read b{color:#fff;font-weight:600;}
+#the-advantage .adv-read .h{color:#E6195F;font-weight:600;}
+#the-advantage .adv-legend{display:flex;flex-direction:column;gap:13px;}
+#the-advantage .adv-legend span{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:10px;}
+#the-advantage .adv-legend i{width:11px;height:11px;display:inline-block;flex-shrink:0;}
+#the-advantage .adv-legend .la{background:#E6195F;}
+#the-advantage .adv-legend .lv{background:#fff;}
+#the-advantage .adv-legend .lm{background:#8E8C88;}
+#the-advantage .adv-legend .lx{background:#F4C430;}
+#the-advantage .adv-brow{margin-bottom:19px;}
+#the-advantage .adv-brow-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;gap:14px;}
+#the-advantage .adv-bname{font-size:15px;font-weight:500;color:#fff;font-family:'IBM Plex Sans',system-ui,sans-serif;}
+#the-advantage .adv-bscore{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.07em;color:rgba(255,255,255,0.42);white-space:nowrap;}
+#the-advantage .adv-bscore b{color:#E6195F;font-weight:600;}
+#the-advantage .adv-btrack{position:relative;height:15px;background:rgba(255,255,255,0.055);}
+#the-advantage .adv-bfill{position:absolute;left:0;top:0;bottom:0;background:rgba(230,25,95,0.30);border-right:2px solid #E6195F;}
+#the-advantage .adv-btick{position:absolute;top:-2px;bottom:-2px;width:2px;}
+#the-advantage .adv-btick.v{background:#fff;}
+#the-advantage .adv-btick.m{background:#8E8C88;}
+#the-advantage .adv-btick.x{background:#F4C430;}
+#the-advantage .adv-strip{margin-top:52px;padding-top:22px;border-top:1px solid rgba(255,255,255,0.22);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);}
+@media (max-width:860px){
+  #the-advantage .adv-grid{grid-template-columns:1fr;gap:36px;}
+}
+`
+
+// You vs the field, by index. Ascend (you) is the magenta bar; the three
+// composite rivals ride as tick markers. Illustrative composite.
+const ADV_ROWS = [
+  { name: 'Awareness', you: 72, v: 58, m: 42, x: 48 },
+  { name: 'Share of voice', you: 67, v: 55, m: 38, x: 42 },
+  { name: 'Perception', you: 55, v: 60, m: 58, x: 62 },
+  { name: 'Customer experience', you: 58, v: 62, m: 65, x: 60 },
+  { name: 'Consistency', you: 52, v: 60, m: 64, x: 66 },
+  { name: 'Employee brand', you: 32, v: 55, m: 62, x: 58 },
+  { name: 'Vulnerability', you: 41, v: 55, m: 60, x: 62 },
+]
 
 function SectionAdvantage() {
   return (
     <section
       id="the-advantage"
-      style={{ background: INK, color: PAPER, padding: '96px 32px 88px', borderBottom: `1px solid ${INK}` }}
+      style={{ background: INK, color: PAPER, padding: '90px 32px 84px', borderBottom: `1px solid ${INK}` }}
     >
+      <style>{ADV_CSS}</style>
       <Container>
         <div style={mono(11, CREAM_MUTED, 700)}>{formatSectionLabel('05', 'THE UNFAIR ADVANTAGE')}</div>
         <h2
@@ -1825,33 +1871,75 @@ function SectionAdvantage() {
             letterSpacing: '-0.018em',
             textTransform: 'uppercase',
             color: PAPER,
-            margin: '24px 0 28px',
+            margin: '24px 0 26px',
             maxWidth: 1100,
           }}
         >
-          Consistency is the moat.
+          Consistency
+          <br />
+          is the moat.
         </h2>
         <p
           style={{
             fontFamily: BODY,
-            fontSize: 18,
+            fontSize: 19,
             lineHeight: 1.6,
             color: CREAM,
-            maxWidth: 880,
-            margin: '0 0 28px',
+            maxWidth: 720,
+            margin: '0 0 56px',
           }}
         >
-          It is expensive to be consistent across every surface a buyer touches, which is exactly
-          why it works. It is the one signal AI cannot fabricate. Bain found companies with clarity
-          grow revenue 19 percent against 12 percent for those without it, and only 4 percent of
-          executives believe their organization has it. A competitor can copy a campaign. It cannot
-          copy a system that reads the surfaces it cannot see, scored on an axis it does not
-          measure, held long enough to compound. Most marketing teams will never build this
-          themselves. The team that holds its own buyer view fixes the breaks its rivals cannot
-          even detect, and keeps fixing them while the rivals guess.
+          It is expensive to stay consistent across every surface a buyer touches, which is exactly
+          why it works. A rival can copy your campaign. It cannot copy the surfaces it cannot see.
         </p>
-        <div style={{ ...mono(10, CREAM_MUTED, 700), maxWidth: 880, lineHeight: 1.7 }}>
-          19% VS 12% REVENUE GROWTH · 4% OF EXECUTIVES REPORT CLARITY · BAIN 2026 B2B GROWTH AGENDA.
+
+        <div className="adv-cmp">
+          <div className="adv-grid">
+            <div>
+              <div className="adv-kick">▸ You vs the field, by index</div>
+              <div className="adv-read">
+                <b>Ascend leads on awareness and share of voice.</b> It trails the field on{' '}
+                <span className="h">consistency, employee brand, and vulnerability.</span> The brand is
+                louder than its peers, and more fragile.
+              </div>
+              <div className="adv-legend">
+                <span>
+                  <i className="la" />Ascend (you)
+                </span>
+                <span>
+                  <i className="lv" />Vantage
+                </span>
+                <span>
+                  <i className="lm" />Meridian
+                </span>
+                <span>
+                  <i className="lx" />Apex
+                </span>
+              </div>
+            </div>
+            <div>
+              {ADV_ROWS.map((r) => (
+                <div className="adv-brow" key={r.name}>
+                  <div className="adv-brow-h">
+                    <span className="adv-bname">{r.name}</span>
+                    <span className="adv-bscore">
+                      <b>{r.you}</b> · {r.v} · {r.m} · {r.x}
+                    </span>
+                  </div>
+                  <div className="adv-btrack">
+                    <div className="adv-bfill" style={{ width: `${r.you}%` }} />
+                    <span className="adv-btick v" style={{ left: `${r.v}%` }} />
+                    <span className="adv-btick m" style={{ left: `${r.m}%` }} />
+                    <span className="adv-btick x" style={{ left: `${r.x}%` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="adv-strip">
+          19% vs 12% revenue growth · 4% of executives report clarity · Bain 2026 B2B Growth Agenda
         </div>
       </Container>
     </section>
