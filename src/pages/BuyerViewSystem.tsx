@@ -1989,10 +1989,9 @@ function SectionClose() {
             <div>
               <div style={{ ...mono(11, INK, 700), marginBottom: 10 }}>Operates the measurement</div>
               <p style={{ fontFamily: BODY, fontSize: 15, lineHeight: 1.55, color: INK, margin: 0, maxWidth: 480 }}>
-                ERA reads the eleven surfaces your buyer actually meets, scores the gap between what you
-                promise and what each one proves, and tracks the Buyer Trust Score quarter over quarter.
-                It finds the breaks and ranks them by what they cost in pipeline. ERA is the instrument
-                and the standing read.
+                ERA is a B2B revenue operations consultancy that builds signal-driven go-to-market
+                systems. It reads the surfaces your buyer meets, scores the gap between promise and
+                proof, and tracks it quarter over quarter.
               </p>
             </div>
             <div style={{ paddingTop: 18, borderTop: `1px solid ${LINE}`, marginTop: 'auto' }}>
@@ -2011,9 +2010,9 @@ function SectionClose() {
             <div>
               <div style={{ ...mono(11, INK, 700), marginBottom: 10 }}>Produces the proof</div>
               <p style={{ fontFamily: BODY, fontSize: 15, lineHeight: 1.55, color: INK, margin: 0, maxWidth: 480 }}>
-                Pinwheel closes the breaks ERA finds. It makes the proof: executive content, editorial,
-                and design that get each surface backing the promise instead of contradicting it, in the
-                brand's own voice, on the surfaces the buyer trusts.
+                Pinwheel is a creative marketing and content agency that partners with B2B brands to
+                delight, persuade, and educate their audiences. It produces the executive content,
+                editorial, and design that get each surface backing the promise.
               </p>
             </div>
             <div style={{ paddingTop: 18, borderTop: `1px solid ${LINE}`, marginTop: 'auto' }}>
