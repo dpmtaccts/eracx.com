@@ -1988,9 +1988,8 @@ function SectionClose() {
             <div>
               <div style={{ ...mono(11, INK, 700), marginBottom: 10 }}>Operates the measurement</div>
               <p style={{ fontFamily: BODY, fontSize: 15, lineHeight: 1.55, color: INK, margin: 0, maxWidth: 480 }}>
-                ERA is a B2B revenue operations consultancy that builds signal-driven go-to-market
-                systems. It reads the surfaces your buyer meets, scores the gap between promise and
-                proof, and tracks it quarter over quarter.
+                ERA reads the surfaces your buyer sees, analyzes the gap between promise and proof,
+                and builds the system to improve pipeline velocity through every channel.
               </p>
             </div>
             <div style={{ paddingTop: 18, borderTop: `1px solid ${LINE}`, marginTop: 'auto' }}>
