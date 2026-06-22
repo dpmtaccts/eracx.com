@@ -1986,9 +1986,15 @@ function SectionClose() {
             <div style={{ height: 48, display: 'flex', alignItems: 'center' }}>
               <img src="/erafull.png" alt="ERA" style={{ height: 38, width: 'auto', display: 'block' }} />
             </div>
-            <p style={{ fontFamily: BODY, fontSize: 16, lineHeight: 1.55, color: INK, margin: 0, maxWidth: 480 }}>
-              Operates the connection and the measurement.
-            </p>
+            <div>
+              <div style={{ ...mono(11, INK, 700), marginBottom: 10 }}>Operates the measurement</div>
+              <p style={{ fontFamily: BODY, fontSize: 15, lineHeight: 1.55, color: INK, margin: 0, maxWidth: 480 }}>
+                ERA reads the eleven surfaces your buyer actually meets, scores the gap between what you
+                promise and what each one proves, and tracks the Buyer Trust Score quarter over quarter.
+                It finds the breaks and ranks them by what they cost in pipeline. ERA is the instrument
+                and the standing read.
+              </p>
+            </div>
             <div style={{ paddingTop: 18, borderTop: `1px solid ${LINE}`, marginTop: 'auto' }}>
               <div style={{ ...mono(11, INK, 700), marginBottom: 6 }}>Justin Marshall</div>
               <a href="mailto:justin@eracx.com" style={{ ...mono(11, HOT, 700), textDecoration: 'none' }}>
@@ -2002,9 +2008,14 @@ function SectionClose() {
             <div style={{ height: 48, display: 'flex', alignItems: 'center' }}>
               <img src="/assets/pinwheel-logo.png" alt="Pinwheel" style={{ height: 34, width: 'auto', display: 'block' }} />
             </div>
-            <p style={{ fontFamily: BODY, fontSize: 16, lineHeight: 1.55, color: INK, margin: 0, maxWidth: 480 }}>
-              Produces the proof.
-            </p>
+            <div>
+              <div style={{ ...mono(11, INK, 700), marginBottom: 10 }}>Produces the proof</div>
+              <p style={{ fontFamily: BODY, fontSize: 15, lineHeight: 1.55, color: INK, margin: 0, maxWidth: 480 }}>
+                Pinwheel closes the breaks ERA finds. It makes the proof: executive content, editorial,
+                and design that get each surface backing the promise instead of contradicting it, in the
+                brand's own voice, on the surfaces the buyer trusts.
+              </p>
+            </div>
             <div style={{ paddingTop: 18, borderTop: `1px solid ${LINE}`, marginTop: 'auto' }}>
               <div style={{ ...mono(11, INK, 700), marginBottom: 6 }}>Todd Anthony</div>
               <a href="mailto:todd@pinwheelagency.com" style={{ ...mono(11, HOT, 700), textDecoration: 'none' }}>
@@ -2013,6 +2024,9 @@ function SectionClose() {
             </div>
           </article>
         </div>
+        <p style={{ fontFamily: BODY, fontSize: 17, lineHeight: 1.55, color: INK, margin: '24px 0 0', maxWidth: 760 }}>
+          One reads the gap. One closes it. Between them, the buyer meets a brand that proves itself.
+        </p>
       </Container>
     </section>
   )
