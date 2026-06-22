@@ -231,10 +231,10 @@ function Hero() {
                 fontWeight: 400,
               }}
             >
-              Before a buyer ever talks to you, they have met your brand across a dozen surfaces your
-              reporting does not read. The Buyer View shows you those surfaces the way the buyer
-              encounters them, including what an AI agent now says about you when no one is in the
-              room.
+              Before a buyer ever talks to you, they have met your brand across a dozen places your
+              reporting does not see: the review sites, the peer threads, the AI answers, the feeds.
+              The Buyer View shows you those surfaces the way the buyer encounters them, including
+              what an AI agent now says about you when no one is in the room.
             </p>
             <div style={{ ...mono(10, MUTED, 700), lineHeight: 1.7 }}>
               300+ DATA POINTS · 11 SURFACES READ · A 90-DAY ROLLING WINDOW
@@ -477,7 +477,7 @@ type ScopeCell = {
 const SCOPE_CELLS: ScopeCell[] = [
   { finalText: '300+', target: 300, suffix: '+', label: 'DATA POINTS PER READ, EVERY QUARTER', size: 'anchor' },
   { finalText: '11',   target: 11,  suffix: '',  label: 'SURFACES READ',                       size: 'cell' },
-  { finalText: '5',    target: 5,   suffix: '',  label: 'WALLED GARDENS',                      size: 'cell' },
+  { finalText: '5',    target: 5,   suffix: '',  label: 'LOGGED-IN PLATFORMS',                 size: 'cell' },
   { finalText: '8',    target: 8,   suffix: '',  label: 'BUYER INTENT CATEGORIES',             size: 'cell' },
   { finalText: '4',    target: 4,   suffix: '',  label: 'AI AGENTS QUERIED',                   size: 'cell' },
   { finalText: '90D',  target: 90,  suffix: 'D', label: 'ROLLING WINDOW',                      size: 'cell' },
@@ -572,8 +572,8 @@ function ScopeReadout() {
         <div style={{ ...mono(11, INK, 700), marginBottom: 16 }}>▸ THE SCOPE OF THE READ</div>
         <p style={{ fontFamily: BODY, fontSize: 18, lineHeight: 1.6, color: INK, maxWidth: 900, margin: 0 }}>
           The reading runs on a 90-day rolling window across the surfaces the buyer actually visits:
-          the walled gardens, the owned pages, the review sites, the communities, and the AI agents
-          answering on your behalf.
+          the logged-in platforms like LinkedIn and Glassdoor, your own pages, the review sites, the
+          peer communities, and the AI agents answering on your behalf.
         </p>
       </div>
 
@@ -768,7 +768,7 @@ function SectionWhyNow() {
             maxWidth: 1100,
           }}
         >
-          Your buyer decides in the dark.
+          The buyer is not in the dark. You are.
         </h2>
         <p
           style={{
@@ -788,8 +788,7 @@ function SectionWhyNow() {
           that formed it.
         </p>
         <div style={{ ...mono(10, CREAM_MUTED, 700), maxWidth: 880, lineHeight: 1.7 }}>
-          77% · EMARKETER CITING GOOGLE + NRG. 58% OF BUYERS SWITCHED VENDORS IN SIX MONTHS · ERA
-          BUYER RESEARCH 2026.
+          77% · EMARKETER CITING GOOGLE + NRG.
         </div>
       </Container>
     </section>
