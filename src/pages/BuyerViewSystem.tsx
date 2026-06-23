@@ -1,6 +1,17 @@
-import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
-import { PeripheralSeismograph } from './betterup/PeripheralSeismograph'
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent } from 'react'
+import {
+  PeripheralSeismograph,
+  CHANNEL_CENTERS,
+  congruenceEnvelope,
+  congruenceDownScale,
+} from './betterup/PeripheralSeismograph'
 import { ILLUSTRATIVE_MOMENTS } from '../data/landing-illustrative'
+import {
+  COMPETITORS,
+  STATUS_COLOR,
+  STATUS_ARROW,
+  type Competitor,
+} from '../data/competitors-composite'
 import { formatSectionLabel } from '../lib/section-label'
 
 /* /buyer-view-system
@@ -16,8 +27,8 @@ const INK = '#0A0A0A'
 const LINE = 'rgba(10, 10, 10, 0.15)'
 const MUTED = 'rgba(10, 10, 10, 0.55)'
 const HOT = '#E6195F'
-const CREAM = 'rgba(255, 255, 255, 0.78)'
-const CREAM_MUTED = 'rgba(255, 255, 255, 0.55)'
+const CREAM = 'rgba(255, 255, 255, 0.92)'
+const CREAM_MUTED = 'rgba(255, 255, 255, 0.72)'
 const INK_LINE = 'rgba(255, 255, 255, 0.18)'
 
 const DISPLAY = "'Anton', sans-serif"
@@ -95,12 +106,11 @@ export default function BuyerViewSystem() {
     <div style={{ background: PAPER, color: INK, fontFamily: BODY }}>
       <TopNav />
       <Hero />
-      <ScopeReadout />
-      <SectionWhyNow />
       <SectionBuyerView />
+      <ScopeReadout />
       <SectionTheRead />
-      <SectionProgram />
       <SectionAdvantage />
+      <SectionProgram />
       <SectionClose />
     </div>
   )
@@ -139,13 +149,10 @@ function TopNav() {
         >
           <img src="/era-symbol.png" alt="ERA" style={{ height: 22, width: 'auto', display: 'block' }} />
           <span style={{ width: 1, height: 18, background: 'rgba(10,10,10,0.22)' }} aria-hidden />
-          <span style={mono(11, INK, 700)}>
-            ▸ THE BUYER VIEW · AN INTELLIGENCE SYSTEM FOR MARKETING LEADERS
-          </span>
+          <span style={{ ...mono(11, INK, 700), whiteSpace: 'nowrap' }}>▸ THE BUYER VIEW</span>
         </a>
         <span style={{ flex: 1 }} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: 22, flexWrap: 'wrap' }}>
-          <a href="#why" style={{ ...mono(11, MUTED, 700), textDecoration: 'none' }}>WHY</a>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
           <a href="#the-view" style={{ ...mono(11, MUTED, 700), textDecoration: 'none' }}>THE VIEW</a>
           <a href="#the-read" style={{ ...mono(11, MUTED, 700), textDecoration: 'none' }}>THE MOMENTS</a>
           <a href="#the-program" style={{ ...mono(11, MUTED, 700), textDecoration: 'none' }}>THE PROGRAM</a>
@@ -153,14 +160,15 @@ function TopNav() {
           <a
             href="#gain-access"
             style={{
-              ...mono(11, PAPER, 700),
+              ...mono(13, PAPER, 700),
               background: INK,
               color: PAPER,
-              padding: '10px 16px',
+              padding: '10px 20px',
               textDecoration: 'none',
+              whiteSpace: 'nowrap',
             }}
           >
-            GET YOUR REPORT
+            GET YOUR FIRST REPORT FREE
           </a>
         </div>
       </div>
@@ -172,14 +180,6 @@ function TopNav() {
    HERO
    ────────────────────────────────────────────── */
 
-// Company-size bands for the qualifier. QUALIFY_FLOOR_INDEX is the single
-// configurable threshold: bands at this index and above route to the full
-// reading; bands below route to the graceful "on the house" path. Default
-// floor is 51–200 (mid-market and up). Justin: adjust this one number to
-// move the floor. No dollar figures live in visible copy.
-const SIZE_BANDS = ['1–10', '11–50', '51–200', '201–1,000', '1,000+'] as const
-const QUALIFY_FLOOR_INDEX = 2
-
 const HERO_CSS = `
 @container (max-width: 920px) {
   [data-hero-grid] { grid-template-columns: minmax(0, 1fr) !important; }
@@ -189,7 +189,7 @@ const HERO_CSS = `
 
 function Hero() {
   return (
-    <section style={{ background: PAPER, padding: '96px 32px 112px', containerType: 'inline-size' }}>
+    <section style={{ background: PAPER, padding: '88px 32px 64px', containerType: 'inline-size' }}>
       <style>{HERO_CSS}</style>
       <Container>
         <div
@@ -226,15 +226,15 @@ function Hero() {
                 fontSize: 20,
                 lineHeight: 1.5,
                 color: INK,
-                maxWidth: 720,
-                margin: '0 0 36px',
+                maxWidth: 640,
+                margin: '0 0 28px',
                 fontWeight: 400,
               }}
             >
               Before a buyer ever talks to you, they have met your brand across a dozen places your
-              reporting does not see: the review sites, the peer threads, the AI answers, the feeds.
-              The Buyer View shows you those surfaces the way the buyer encounters them, including
-              what an AI agent now says about you when no one is in the room.
+              reporting cannot see, from review sites and peer threads to AI answers, and the Buyer
+              View shows you those surfaces the way the buyer meets them, including what an AI agent
+              says when no one is in the room.
             </p>
             <div style={{ ...mono(10, MUTED, 700), lineHeight: 1.7 }}>
               300+ DATA POINTS · 11 SURFACES READ · A 90-DAY ROLLING WINDOW
@@ -252,24 +252,19 @@ function Hero() {
 }
 
 /* ──────────────────────────────────────────────
-   BUYER VIEW FORM — in-hero qualifier
+   BUYER VIEW FORM — in-hero request
    Reuses the existing eracx.com contact backend (POST /api/contact with
-   { name, company, email, message }). Role and company-size band fold
-   into message. The size band decides which post-submit path renders:
-   the full reading, or the graceful "on the house" short version for
-   brands below the floor. Either path still posts the lead. Honeypot
-   ("website") silently absorbs naive bots. v4 tokens only: 1px rule, no
-   rounded corners, no shadow.
+   { name, company, email, message }). The company website folds into the
+   company field and the message. Honeypot ("website" field) silently absorbs
+   naive bots. v4 tokens only: 1px rule, no rounded corners, no shadow.
    ────────────────────────────────────────────── */
 
-type FormState = 'idle' | 'submitting' | 'qualified' | 'belowThreshold' | 'error'
+type FormState = 'idle' | 'submitting' | 'qualified' | 'error'
 
 function BuyerViewForm() {
   const [firstName, setFirstName] = useState('')
   const [email, setEmail] = useState('')
-  const [company, setCompany] = useState('')
-  const [role, setRole] = useState('')
-  const [size, setSize] = useState('')
+  const [companyWebsite, setCompanyWebsite] = useState('')
   const [honeypot, setHoneypot] = useState('')
   const [status, setStatus] = useState<FormState>('idle')
   const [errorMessage, setErrorMessage] = useState('')
@@ -286,13 +281,11 @@ function BuyerViewForm() {
       return
     }
 
-    if (!firstName || !email || !company || !role || !size) {
+    if (!firstName || !email || !companyWebsite) {
       setStatus('error')
       setErrorMessage('Every field is required.')
       return
     }
-
-    const qualifies = SIZE_BANDS.indexOf(size as (typeof SIZE_BANDS)[number]) >= QUALIFY_FLOOR_INDEX
 
     setStatus('submitting')
     setErrorMessage('')
@@ -303,9 +296,9 @@ function BuyerViewForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: firstName,
-          company,
+          company: companyWebsite,
           email,
-          message: `Buyer View request (/buyerview)\nRole: ${role}\nCompany size: ${size} employees\nQualification: ${qualifies ? 'full reading' : 'below threshold'}`,
+          message: `Buyer View request (/buyerview)\nCompany website: ${companyWebsite}`,
         }),
       })
       if (!response.ok) {
@@ -313,12 +306,10 @@ function BuyerViewForm() {
         throw new Error(body.error || `Request failed (${response.status})`)
       }
       setSubmittedEmail(email)
-      setStatus(qualifies ? 'qualified' : 'belowThreshold')
+      setStatus('qualified')
       setFirstName('')
       setEmail('')
-      setCompany('')
-      setRole('')
-      setSize('')
+      setCompanyWebsite('')
     } catch (err) {
       setStatus('error')
       setErrorMessage(
@@ -341,22 +332,6 @@ function BuyerViewForm() {
           We read your category before we reply, so the first note lands with something in it. Watch
           for it at {submittedEmail}.
         </p>
-      </div>
-    )
-  }
-
-  if (status === 'belowThreshold') {
-    return (
-      <div id="gain-access" style={wrap}>
-        <div style={{ ...mono(11, HOT, 700), marginBottom: 14 }}>▸ THE SHORT VERSION, ON THE HOUSE</div>
-        <p style={{ fontFamily: BODY, fontSize: 16, lineHeight: 1.55, color: INK, margin: '0 0 16px' }}>
-          The Buyer View is built for brands selling into enterprise and mid-market buyers. Based on
-          what you have shared, a full reading would not earn its keep yet. Here is the short version
-          of how the surfaces work, on the house.
-        </p>
-        <a href="#the-view" style={{ ...mono(11, INK, 700), textDecoration: 'none', borderBottom: `1px solid ${INK}`, paddingBottom: 2 }}>
-          ▸ READ HOW THE SURFACES WORK
-        </a>
       </div>
     )
   }
@@ -386,19 +361,8 @@ function BuyerViewForm() {
       <FormField label="Work email" htmlFor="bv-email">
         <input id="bv-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" required style={inputStyle} />
       </FormField>
-      <FormField label="Company" htmlFor="bv-company">
-        <input id="bv-company" type="text" value={company} onChange={(e) => setCompany(e.target.value)} autoComplete="organization" required style={inputStyle} />
-      </FormField>
-      <FormField label="Role" htmlFor="bv-role">
-        <input id="bv-role" type="text" value={role} onChange={(e) => setRole(e.target.value)} autoComplete="organization-title" required style={inputStyle} />
-      </FormField>
-      <FormField label="Company size" htmlFor="bv-size">
-        <select id="bv-size" value={size} onChange={(e) => setSize(e.target.value)} required style={{ ...inputStyle, appearance: 'none' }}>
-          <option value="" disabled>Select a band</option>
-          {SIZE_BANDS.map((b) => (
-            <option key={b} value={b}>{b} employees</option>
-          ))}
-        </select>
+      <FormField label="Company website" htmlFor="bv-website">
+        <input id="bv-website" type="url" inputMode="url" placeholder="https://" value={companyWebsite} onChange={(e) => setCompanyWebsite(e.target.value)} autoComplete="url" required style={inputStyle} />
       </FormField>
 
       {status === 'error' && (
@@ -411,7 +375,7 @@ function BuyerViewForm() {
         type="submit"
         disabled={status === 'submitting'}
         style={{
-          ...mono(11, PAPER, 700),
+          ...mono(13, PAPER, 700),
           background: INK,
           color: PAPER,
           border: 'none',
@@ -420,7 +384,7 @@ function BuyerViewForm() {
           cursor: status === 'submitting' ? 'default' : 'pointer',
         }}
       >
-        {status === 'submitting' ? '· · · SENDING' : 'GET YOUR REPORT'}
+        {status === 'submitting' ? '· · · SENDING' : 'GET YOUR FIRST REPORT FREE'}
       </button>
     </form>
   )
@@ -569,7 +533,7 @@ function ScopeReadout() {
 
       {/* Intro — frames the read before the numbers. */}
       <div style={{ padding: '40px 36px 34px', borderBottom: `1px solid ${INK}` }}>
-        <div style={{ ...mono(11, INK, 700), marginBottom: 16 }}>▸ THE SCOPE OF THE READ</div>
+        <div style={{ ...mono(11, INK, 700), marginBottom: 16 }}>▸ WHAT EVERY READ MEASURES</div>
         <p style={{ fontFamily: BODY, fontSize: 18, lineHeight: 1.6, color: INK, maxWidth: 900, margin: 0 }}>
           The reading runs on a 90-day rolling window across the surfaces the buyer actually visits:
           the logged-in platforms like LinkedIn and Glassdoor, your own pages, the review sites, the
@@ -744,59 +708,148 @@ function useCountUp(target: number, animate: boolean, delayMs: number) {
 }
 
 /* ──────────────────────────────────────────────
-   ▸ 01 WHY NOW (ink)
+   COMPETITORS — stacked full-density mini seismographs
+   Three illustrative-composite silhouettes shown beside the hero chart. Each
+   mini reuses the hero's channel x-positions (CHANNEL_CENTERS, 1600-wide
+   space) and the same congruence envelope, drawn at full line density (~11
+   lines per channel cluster) so it reads as the real instrument shrunk down,
+   not a simplified mock. Cropped to the bars only — no axis labels, no
+   annotations, no card. Seeded jitter keeps each silhouette stable.
    ────────────────────────────────────────────── */
 
-function SectionWhyNow() {
+const MINI_VIEWBOX = '110 20 1440 360'
+const MINI_BASE = 190
+const MINI_MAXUP = 150
+const MINI_MAXDOWN = 165
+const MINI_BARW = 5
+const MINI_SPREAD = 90
+const MINI_LINES = 11 // lines per channel cluster — matches the hero's density
+
+const COMP_CHANNEL_X: Record<string, number> = Object.fromEntries(
+  CHANNEL_CENTERS.map((c) => [c.id, c.x]),
+)
+
+// Deterministic PRNG so the scattered lines stay put across renders.
+function mulberry32(seed: number) {
+  let s = seed
+  return function () {
+    s = (s + 0x6d2b79f5) | 0
+    let t = s
+    t = Math.imul(t ^ (t >>> 15), t | 1)
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+type MiniBar = { x: number; mag: number; d: 1 | -1 }
+
+function buildMiniBars(competitor: Competitor, seed: number): MiniBar[] {
+  const rand = mulberry32(seed)
+  const bars: MiniBar[] = []
+  for (const ch of competitor.channels) {
+    const cx = COMP_CHANNEL_X[ch.id]
+    if (cx === undefined) continue
+    for (let i = 0; i < MINI_LINES; i++) {
+      const x = cx + (rand() * 2 - 1) * MINI_SPREAD
+      const magFactor = 0.6 + 0.4 * rand() // texture; tallest line ≈ the channel's m
+      bars.push({ x, mag: ch.m * magFactor, d: ch.d })
+    }
+  }
+  return bars
+}
+
+function MiniSeismograph({ competitor, color, seed }: { competitor: Competitor; color: string; seed: number }) {
+  const bars = useMemo(() => buildMiniBars(competitor, seed), [competitor, seed])
   return (
-    <section
-      id="why"
-      style={{ background: INK, color: PAPER, padding: '96px 32px 88px', borderBottom: `1px solid ${INK}` }}
+    <svg
+      viewBox={MINI_VIEWBOX}
+      preserveAspectRatio="xMidYMid meet"
+      style={{ width: '100%', height: 'auto', display: 'block' }}
+      role="img"
+      aria-label={`${competitor.name} buyer-view silhouette`}
     >
-      <Container>
-        <div style={mono(11, CREAM_MUTED, 700)}>{formatSectionLabel('01', 'WHY THIS MATTERS NOW')}</div>
-        <h2
-          style={{
-            fontFamily: DISPLAY,
-            fontWeight: 400,
-            fontSize: 'clamp(48px, 7vw, 112px)',
-            lineHeight: 0.9,
-            letterSpacing: '-0.018em',
-            textTransform: 'uppercase',
-            color: PAPER,
-            margin: '24px 0 28px',
-            maxWidth: 1100,
-          }}
-        >
-          The buyer is not in the dark. You are.
-        </h2>
-        <p
-          style={{
-            fontFamily: BODY,
-            fontSize: 18,
-            lineHeight: 1.6,
-            color: CREAM,
-            maxWidth: 880,
-            margin: '0 0 28px',
-          }}
-        >
-          The conversation left your website. No one clicks through to book a demo anymore. They ask
-          an agent who the category leaders are, they read the reviews, they check whether your
-          executives are anyone, and they do all of it in rooms you are not in. Around 77 percent of
-          B2B buyers finish the decision in twelve weeks, most of it before first contact. By the
-          time sales is in the room, the view has already formed, and you never saw the surfaces
-          that formed it.
-        </p>
-        <div style={{ ...mono(10, CREAM_MUTED, 700), maxWidth: 880, lineHeight: 1.7 }}>
-          77% · EMARKETER CITING GOOGLE + NRG.
-        </div>
-      </Container>
-    </section>
+      {bars.map((b, i) => {
+        const h =
+          b.d === 1
+            ? b.mag * MINI_MAXUP * congruenceEnvelope(b.x)
+            : b.mag * MINI_MAXDOWN * congruenceDownScale(b.x)
+        const y = b.d === 1 ? MINI_BASE - h : MINI_BASE
+        return (
+          <rect
+            key={i}
+            x={b.x - MINI_BARW / 2}
+            y={y}
+            width={MINI_BARW}
+            height={h}
+            fill={color}
+            opacity={b.d === 1 ? 0.85 : 1}
+          />
+        )
+      })}
+    </svg>
+  )
+}
+
+// Silhouette/arrow/band color. On a dark slide "behind" (ink) would vanish,
+// so it renders white there; "ahead" stays magenta on either background.
+function statusColor(status: Competitor['status'], dark: boolean): string {
+  if (status === 'behind' && dark) return '#FFFFFF'
+  return STATUS_COLOR[status]
+}
+
+function CompetitorMini({ competitor, seed, dark = false }: { competitor: Competitor; seed: number; dark?: boolean }) {
+  const color = statusColor(competitor.status, dark)
+  const nameColor = dark ? CREAM : INK
+  return (
+    <div>
+      {/* Header — name left, status arrow right */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'baseline',
+          justifyContent: 'space-between',
+          gap: 10,
+          marginBottom: 8,
+        }}
+      >
+        <span style={mono(11, nameColor, 700)}>{competitor.name.toUpperCase()}</span>
+        <span style={mono(14, color, 700)} aria-label={competitor.status}>
+          {STATUS_ARROW[competitor.status]}
+        </span>
+      </div>
+      <MiniSeismograph competitor={competitor} color={color} seed={seed} />
+      {/* Status band */}
+      <div style={{ height: 3, background: color, marginTop: 8 }} />
+    </div>
+  )
+}
+
+const COMPETITORS_CSS = `
+.sm-comps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; }
+@media (max-width: 720px) {
+  .sm-comps { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+}
+`
+
+/* Three-across competitor comparison. Lives in the Summary slide (dark), so it
+   defaults to the dark theme; pass dark={false} to use it on a light surface. */
+function CompetitorsComparison({ dark = true }: { dark?: boolean }) {
+  const labelColor = dark ? CREAM_MUTED : MUTED
+  return (
+    <div>
+      <style>{COMPETITORS_CSS}</style>
+      <div style={{ ...mono(11, labelColor, 700), marginBottom: 18 }}>▸ COMPETITORS</div>
+      <div className="sm-comps">
+        {COMPETITORS.map((c, i) => (
+          <CompetitorMini key={c.name} competitor={c} seed={7001 + i * 1013} dark={dark} />
+        ))}
+      </div>
+    </div>
   )
 }
 
 /* ──────────────────────────────────────────────
-   ▸ 02 THE BUYER VIEW — seismograph hero (paper)
+   ▸ 01 THE BUYER VIEW — seismograph hero (paper)
    ────────────────────────────────────────────── */
 
 function SectionBuyerView() {
@@ -806,7 +859,7 @@ function SectionBuyerView() {
       style={{ background: PAPER, padding: '96px 32px 88px', borderBottom: `1px solid ${INK}` }}
     >
       <Container>
-        <div style={mono(11, MUTED, 700)}>{formatSectionLabel('02', 'THE BUYER VIEW')}</div>
+        <div style={mono(11, MUTED, 700)}>{formatSectionLabel('01', 'THE BUYER VIEW')}</div>
         <h2
           style={{
             fontFamily: DISPLAY,
@@ -858,7 +911,7 @@ function SectionBuyerView() {
           </span>
         </div>
 
-        {/* Full-bleed seismograph */}
+        {/* Full-bleed seismograph — full breadth of the read under the hero */}
         <div
           style={{
             position: 'relative',
@@ -873,45 +926,6 @@ function SectionBuyerView() {
           }}
         >
           <PeripheralSeismograph moments={ILLUSTRATIVE_MOMENTS} />
-        </div>
-
-        {/* How to read this — three rows */}
-        <div style={{ marginTop: 48 }}>
-          <div style={{ ...mono(11, MUTED, 700), marginBottom: 16 }}>HOW TO READ THIS</div>
-          <div style={{ display: 'grid', gap: 0 }}>
-            {[
-              {
-                label: 'PROMISE VS PROOF.',
-                body: 'Every surface promises something. It either proves the promise or contradicts it. The delta is the score.',
-              },
-              {
-                label: 'THE AXIS.',
-                body: 'Horizontal is attention and credibility, not time. Vertical is trust volume.',
-              },
-              {
-                label: 'THE TIERS.',
-                body: 'Low opacity up: routine reinforces. Down: routine contradicts. Full opacity down: priority break. Magenta halo: fix first.',
-              },
-            ].map((row, i, arr) => (
-              <div
-                key={row.label}
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'minmax(200px, 240px) minmax(0, 1fr)',
-                  gap: 22,
-                  padding: '18px 0',
-                  borderTop: `1px solid ${LINE}`,
-                  borderBottom: i === arr.length - 1 ? `1px solid ${LINE}` : 'none',
-                  alignItems: 'baseline',
-                }}
-              >
-                <span style={mono(11, INK, 700)}>{row.label}</span>
-                <span style={{ fontFamily: BODY, fontSize: 15, lineHeight: 1.55, color: INK }}>
-                  {row.body}
-                </span>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Honest split: most of the 11 channels are public surfaces the
@@ -960,13 +974,16 @@ const THE_MOMENTS_CSS = `
 #the-read .tm-prog-mode.passive{color:#0A0A0A;}
 #the-read .tm-prog-mode.active{color:#E6195F;}
 
-#the-read .tm-sec-head{padding-top:62px;padding-bottom:46px;border-bottom:1px solid #0A0A0A;background:#fff;}
+#the-read .tm-sec-head{padding-top:62px;padding-bottom:46px;background:#fff;}
 #the-read .tm-eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(10,10,10,0.55);margin-bottom:20px;}
 #the-read .tm-eyebrow .tm-hot{color:#E6195F;}
 #the-read .tm-h1{font-family:'Anton',sans-serif;font-size:78px;line-height:0.9;letter-spacing:-0.02em;text-transform:uppercase;margin-bottom:24px;}
 #the-read .tm-lede{font-size:18px;line-height:1.55;max-width:760px;font-family:'IBM Plex Sans',system-ui,sans-serif;}
 
-#the-read .tm-slide{border-bottom:1px solid #0A0A0A;opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease;}
+#the-read .tm-slide{position:relative;overflow:hidden;opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease;}
+#the-read .tm-slide .tm-in{position:relative;z-index:1;}
+#the-read .tm-bignum{position:absolute;top:50%;left:2.5%;transform:translateY(-50%);font-family:'Anton',sans-serif;font-size:clamp(240px,34vw,520px);line-height:0.78;letter-spacing:-0.03em;color:rgba(10,10,10,0.07);z-index:0;pointer-events:none;user-select:none;}
+@media (max-width:860px){#the-read .tm-bignum{font-size:200px;left:-6px;}}
 #the-read .tm-slide.seen{opacity:1;transform:none;}
 #the-read .tm-slide.parchment{background:#F4F1EA;}
 #the-read .tm-slide.paper{background:#fff;}
@@ -1108,6 +1125,24 @@ const THE_MOMENTS_CSS = `
   #the-read .tm-vfind{padding-left:0;border-left:none;border-top:1px solid rgba(255,255,255,0.22);margin-top:30px;padding-top:30px;}
   #the-read .tm-num{font-size:84px;}
   #the-read .tm-annot{display:none;}
+}
+
+/* Summary slide on white — re-tint the scale and dividers that were authored
+   for the ink background so they read on paper. A solid top rule sets the
+   outcome apart from the moments above. */
+#the-read .tm-slide.tm-summary{border-top:2px solid #0A0A0A;}
+#the-read .tm-slide.tm-summary .tm-in{padding-top:64px;}
+#the-read .tm-slide.tm-summary .tm-vfind{border-left-color:rgba(10,10,10,0.16);}
+#the-read .tm-slide.tm-summary .tm-scale{border-top-color:rgba(10,10,10,0.16);}
+#the-read .tm-slide.tm-summary .tm-scale-title{color:rgba(10,10,10,0.55);}
+#the-read .tm-slide.tm-summary .tm-scale-track{border-color:rgba(10,10,10,0.45);}
+#the-read .tm-slide.tm-summary .tm-scale-band{background:rgba(10,10,10,0.06);border-left-color:rgba(10,10,10,0.30);border-right-color:rgba(10,10,10,0.30);}
+#the-read .tm-slide.tm-summary .tm-scale-band span{color:rgba(10,10,10,0.55);}
+#the-read .tm-slide.tm-summary .tm-scale-mk.lead{background:#0A0A0A;}
+#the-read .tm-slide.tm-summary .tm-scale-labels .sl0,#the-read .tm-slide.tm-summary .tm-scale-labels .sl100{color:rgba(10,10,10,0.5);}
+#the-read .tm-slide.tm-summary .tm-scale-labels .sl.lead{color:#0A0A0A;}
+@media (max-width:860px){
+  #the-read .tm-slide.tm-summary .tm-vfind{border-top-color:rgba(10,10,10,0.16);}
 }
 `
 
@@ -1459,6 +1494,7 @@ function MomentSlide({
   const Artifact = data.artifact
   return (
     <section ref={slideRef} data-i={index} className={`tm-slide ${data.bg}${seen ? ' seen' : ''}`}>
+      <span className="tm-bignum" aria-hidden>{data.num}</span>
       <div className="tm-in">
         <div className="tm-mhead">
           <div className="tm-mhead-l">
@@ -1513,12 +1549,13 @@ function VerdictSlide({
   slideRef: (el: HTMLElement | null) => void
 }) {
   return (
-    <section ref={slideRef} data-i={index} className={`tm-slide ink${seen ? ' seen' : ''}`}>
+    <section ref={slideRef} data-i={index} className={`tm-slide paper tm-summary${seen ? ' seen' : ''}`}>
+      <span className="tm-bignum" aria-hidden>05</span>
       <div className="tm-in">
         <div className="tm-mhead">
           <div className="tm-mhead-l">
             <span className="tm-n">05</span>
-            <span>The verdict</span>
+            <span>Summary</span>
           </div>
           <div className="tm-mhead-r">
             <span className="tm-seenby">Seen by · the buying group, converging</span>
@@ -1565,6 +1602,11 @@ function VerdictSlide({
         <div className="tm-foot">
           Five moments, none recorded in your pipeline,{' '}
           <span className="tm-h">set the short-list before your team entered the room.</span>
+        </div>
+        {/* Competitor comparison — the same instrument shrunk, three rivals
+            beside the audited brand. Light theme to match the white slide. */}
+        <div style={{ marginTop: 44, paddingTop: 32, borderTop: '1px solid rgba(10,10,10,0.16)' }}>
+          <CompetitorsComparison dark={false} />
         </div>
       </div>
     </section>
@@ -1640,7 +1682,7 @@ function SectionTheRead() {
 
       <div className="tm-in tm-sec-head">
         <div className="tm-eyebrow">
-          ▸ 03 · <span className="tm-hot">The Moments</span>
+          ▸ 02 · <span className="tm-hot">The Moments</span>
         </div>
         <div className="tm-h1">
           The decision forms
@@ -1678,15 +1720,183 @@ function SectionTheRead() {
 }
 
 /* ──────────────────────────────────────────────
-   ▸ 04 THE PROGRAM (ink)
+   QUARTER-OVER-QUARTER TRAJECTORY (illustrative composite)
+   The baseline read (Q1) and how the Buyer Trust Score closes on the field
+   across the year. Drawn for the ink Program section.
    ────────────────────────────────────────────── */
 
+type TrajStep = { q: string; score: number; label: string; body: string }
+const TRAJ_STEPS: TrajStep[] = [
+  { q: 'Q1', score: 41, label: 'Baseline', body: 'The first read. Every break named and ranked by what it costs you in pipeline.' },
+  { q: 'Q2', score: 49, label: 'Breaks corrected', body: 'The priority contradictions are fixed first, so the most credible surfaces stop working against you.' },
+  { q: 'Q3', score: 56, label: 'Core realigned', body: 'Reviews and AI answers move into agreement with the promise, and the center starts to hold.' },
+  { q: 'Q4', score: 63, label: 'Gap closing', body: 'Trust compounds. The distance to the field narrows quarter over quarter, and the board can see it.' },
+]
+const TRAJ_QUARTERS = TRAJ_STEPS.map((s) => s.q)
+const TRAJ_YOU = TRAJ_STEPS.map((s) => s.score)
+const TRAJ_FIELD = [65, 65, 66, 67]
+
+function QuarterTrajectory({ inView }: { inView: boolean }) {
+  const VBW = 1120
+  const VBH = 440
+  const L = 72
+  const R = 122 // room for the end-of-line value callouts
+  const T = 44
+  const B = 66
+  const plotW = VBW - L - R
+  const plotH = VBH - T - B
+  const S_TOP = 80
+  const S_BOT = 30
+  const n = TRAJ_QUARTERS.length
+  const xAt = (i: number) => L + (i / (n - 1)) * plotW
+  const yAt = (s: number) => T + ((S_TOP - s) / (S_TOP - S_BOT)) * plotH
+  const line = (vals: number[]) => vals.map((s, i) => `${xAt(i).toFixed(1)},${yAt(s).toFixed(1)}`).join(' ')
+  const gridScores = [40, 50, 60, 70]
+  const m = { fontFamily: MONO, letterSpacing: 1.2, fontWeight: 600 } as const
+  return (
+    <svg
+      viewBox={`0 0 ${VBW} ${VBH}`}
+      preserveAspectRatio="xMidYMid meet"
+      style={{ width: '100%', height: 'auto', display: 'block' }}
+      role="img"
+      aria-label="Buyer Trust Score quarter over quarter: your score climbing from 41 toward the field across four quarters"
+    >
+      {gridScores.map((s) => (
+        <g key={s}>
+          <line x1={L} y1={yAt(s)} x2={VBW - R} y2={yAt(s)} stroke="rgba(255,255,255,0.10)" strokeWidth={1} />
+          <text x={L - 16} y={yAt(s) + 4} textAnchor="end" {...m} fontSize={12} fill={CREAM_MUTED}>
+            {s}
+          </text>
+        </g>
+      ))}
+      {TRAJ_QUARTERS.map((_q, i) => (
+        <line key={`v${i}`} x1={xAt(i)} y1={T} x2={xAt(i)} y2={T + plotH} stroke="rgba(255,255,255,0.06)" strokeWidth={1} />
+      ))}
+
+      {/* The field — dashed benchmark, fades in */}
+      <polyline
+        points={line(TRAJ_FIELD)}
+        fill="none"
+        stroke="rgba(255,255,255,0.55)"
+        strokeWidth={2.5}
+        strokeDasharray="7 6"
+        style={{ opacity: inView ? 1 : 0, transition: 'opacity 0.8s ease 0.2s' }}
+      />
+      {/* You — solid magenta, draws on scroll */}
+      <polyline
+        points={line(TRAJ_YOU)}
+        fill="none"
+        stroke={HOT}
+        strokeWidth={4}
+        pathLength={100}
+        style={{
+          strokeDasharray: 100,
+          strokeDashoffset: inView ? 0 : 100,
+          transition: 'stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.15s',
+        }}
+      />
+
+      {TRAJ_FIELD.map((s, i) => (
+        <circle
+          key={`f${i}`}
+          cx={xAt(i)}
+          cy={yAt(s)}
+          r={4}
+          fill={INK}
+          stroke="rgba(255,255,255,0.7)"
+          strokeWidth={1.5}
+          style={{ opacity: inView ? 1 : 0, transition: `opacity 0.4s ease ${0.3 + i * 0.18}s` }}
+        />
+      ))}
+      {TRAJ_YOU.map((s, i) => (
+        <g key={`y${i}`} style={{ opacity: inView ? 1 : 0, transition: `opacity 0.4s ease ${0.45 + i * 0.28}s` }}>
+          <circle cx={xAt(i)} cy={yAt(s)} r={6} fill={HOT} />
+          <text x={xAt(i)} y={yAt(s) - 18} textAnchor="middle" {...m} fontSize={16} fill={PAPER}>
+            {s}
+          </text>
+        </g>
+      ))}
+
+      {/* End-of-line value callouts */}
+      <text x={xAt(n - 1) + 16} y={yAt(TRAJ_FIELD[n - 1]) + 5} {...m} fontSize={13} fill="rgba(255,255,255,0.7)" style={{ opacity: inView ? 1 : 0, transition: 'opacity 0.5s ease 1s' }}>
+        FIELD · {TRAJ_FIELD[n - 1]}
+      </text>
+      <text x={xAt(n - 1) + 16} y={yAt(TRAJ_YOU[n - 1]) + 5} {...m} fontSize={13} fill={HOT} style={{ opacity: inView ? 1 : 0, transition: 'opacity 0.5s ease 1.5s' }}>
+        YOU · {TRAJ_YOU[n - 1]}
+      </text>
+
+      {TRAJ_QUARTERS.map((q, i) => (
+        <text key={q} x={xAt(i)} y={VBH - 30} textAnchor="middle" {...m} fontSize={14} fill={CREAM_MUTED}>
+          {q}
+        </text>
+      ))}
+      <text x={xAt(0)} y={VBH - 12} textAnchor="middle" {...m} fontSize={10} fill="rgba(255,255,255,0.45)">
+        BASELINE
+      </text>
+    </svg>
+  )
+}
+
+/* ──────────────────────────────────────────────
+   ▸ 04 THE PROGRAM (ink)
+   The quarter-over-quarter trajectory leads as the hero; the line draws on
+   scroll. The progression below replaces the old deliverables grid with the
+   actual quarter-by-quarter story of what improves over the year.
+   ────────────────────────────────────────────── */
+
+const PROGRAM_CSS = `
+.prog-quarters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid ${INK_LINE};margin-top:36px;}
+.prog-quarters > div{padding:26px 24px;border-right:1px solid ${INK_LINE};}
+.prog-quarters > div:last-child{border-right:none;}
+@media (max-width:900px){
+  .prog-quarters{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .prog-quarters > div:nth-child(2n){border-right:none;}
+  .prog-quarters > div:nth-child(-n+2){border-bottom:1px solid ${INK_LINE};}
+}
+@media (max-width:540px){
+  .prog-quarters{grid-template-columns:1fr;}
+  .prog-quarters > div{border-right:none;border-bottom:1px solid ${INK_LINE};}
+  .prog-quarters > div:last-child{border-bottom:none;}
+}
+`
+
 function SectionProgram() {
+  const ref = useRef<HTMLElement>(null)
+  const [inView, setInView] = useState(false)
+
+  useEffect(() => {
+    const node = ref.current
+    if (!node) return
+    const reduced =
+      typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) {
+      setInView(true)
+      return
+    }
+    let done = false
+    const obs = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting && !done) {
+            done = true
+            setInView(true)
+            obs.disconnect()
+          }
+        }
+      },
+      { threshold: 0.3 },
+    )
+    obs.observe(node)
+    return () => obs.disconnect()
+  }, [])
+
   return (
     <section
+      ref={ref}
       id="the-program"
-      style={{ background: INK, color: PAPER, padding: '96px 32px 88px', borderBottom: `1px solid ${INK}` }}
+      style={{ background: INK, color: PAPER, padding: '96px 32px 88px', borderBottom: `1px solid ${INK}`, containerType: 'inline-size' }}
     >
+      <style>{PROGRAM_CSS}</style>
       <Container>
         <div style={mono(11, CREAM_MUTED, 700)}>{formatSectionLabel('04', 'THE PROGRAM')}</div>
         <h2
@@ -1722,49 +1932,56 @@ function SectionProgram() {
           team works the evidence behind it.
         </p>
 
-        <div style={{ ...mono(11, CREAM_MUTED, 700), marginBottom: 18 }}>
-          WHAT YOU HOLD EACH QUARTER
+        {/* Quarter-over-quarter trajectory — the hero of this section */}
+        <div style={{ ...mono(11, CREAM_MUTED, 700), marginBottom: 12 }}>
+          ▸ BUYER TRUST SCORE · QUARTER OVER QUARTER
         </div>
-        <div
+        <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', marginBottom: 16 }}>
+          <span style={{ ...mono(10, CREAM, 700), display: 'inline-flex', alignItems: 'center', gap: 9 }}>
+            <span style={{ width: 18, height: 3, background: HOT, display: 'inline-block' }} />
+            YOU
+          </span>
+          <span style={{ ...mono(10, CREAM, 700), display: 'inline-flex', alignItems: 'center', gap: 9 }}>
+            <span style={{ width: 18, height: 3, background: 'rgba(255,255,255,0.6)', display: 'inline-block' }} />
+            THE FIELD
+          </span>
+        </div>
+        <QuarterTrajectory inView={inView} />
+        <p
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-            border: `1px solid ${INK_LINE}`,
+            fontFamily: BODY,
+            fontSize: 16,
+            lineHeight: 1.6,
+            color: CREAM,
+            maxWidth: 760,
+            margin: '14px 0 0',
           }}
         >
-          {[
-            {
-              label: 'THE RE-READ.',
-              body:
-                'The buyer view re-run across eleven surfaces and the executive voices indexed on the leadership graph, with the Buyer Trust Score and its movement since last quarter.',
-            },
-            {
-              label: 'THE BREAKS.',
-              body:
-                'The priority contradictions ranked by what is costing the most pipeline, each stated as a decision to make, not a metric to admire.',
-            },
-            {
-              label: 'THE TRAJECTORY.',
-              body:
-                'Where the score goes if the priorities land, quarter by quarter across the year, framed as a prognosis, not a delivery promise.',
-            },
-            {
-              label: 'THE SCORECARD.',
-              body:
-                'A read your team takes to the board, so you defend brand and marketing spend on whether trust is rising, not on activity.',
-            },
-          ].map((cell, i) => (
-            <div
-              key={cell.label}
-              style={{
-                padding: '28px 30px',
-                borderRight: i % 2 === 0 ? `1px solid ${INK_LINE}` : 'none',
-                borderBottom: i < 2 ? `1px solid ${INK_LINE}` : 'none',
-              }}
-            >
-              <div style={{ ...mono(11, HOT, 700), marginBottom: 12 }}>{cell.label}</div>
-              <div style={{ fontFamily: BODY, fontSize: 15, lineHeight: 1.6, color: CREAM }}>
-                {cell.body}
+          The first read is the baseline. Each quarter after measures movement against the field, so
+          improvement is something you can see and defend at the board, not something you assert.
+        </p>
+
+        {/* What improves, quarter by quarter */}
+        <div className="prog-quarters">
+          {TRAJ_STEPS.map((step, i) => (
+            <div key={step.q}>
+              <div style={{ ...mono(10, CREAM_MUTED, 700), marginBottom: 16 }}>
+                {step.q} · {step.label.toUpperCase()}
+              </div>
+              <div
+                style={{
+                  fontFamily: DISPLAY,
+                  fontSize: 'clamp(44px, 5vw, 60px)',
+                  lineHeight: 0.9,
+                  letterSpacing: '-0.01em',
+                  color: i === TRAJ_STEPS.length - 1 ? HOT : PAPER,
+                  marginBottom: 16,
+                }}
+              >
+                {step.score}
+              </div>
+              <div style={{ fontFamily: BODY, fontSize: 14, lineHeight: 1.55, color: CREAM }}>
+                {step.body}
               </div>
             </div>
           ))}
@@ -1802,7 +2019,7 @@ function SectionProgram() {
 }
 
 /* ──────────────────────────────────────────────
-   ▸ 05 THE UNFAIR ADVANTAGE (ink)
+   ▸ 03 THE UNFAIR ADVANTAGE (ink)
    Ported from bv-advantage.html: headline + short lede + a "you vs the
    field" index comparison (Ascend vs the three composite rivals) + the Bain
    credibility strip. All styling is section-scoped in ADV_CSS; shared tokens
@@ -1860,7 +2077,7 @@ function SectionAdvantage() {
     >
       <style>{ADV_CSS}</style>
       <Container>
-        <div style={mono(11, CREAM_MUTED, 700)}>{formatSectionLabel('05', 'THE UNFAIR ADVANTAGE')}</div>
+        <div style={mono(11, CREAM_MUTED, 700)}>{formatSectionLabel('03', 'THE UNFAIR ADVANTAGE')}</div>
         <h2
           style={{
             fontFamily: DISPLAY,
@@ -1874,9 +2091,9 @@ function SectionAdvantage() {
             maxWidth: 1100,
           }}
         >
-          Consistency
+          Make consistency
           <br />
-          is the moat.
+          your unfair advantage.
         </h2>
         <p
           style={{

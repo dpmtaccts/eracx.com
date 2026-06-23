@@ -22,20 +22,23 @@ const COBALT = '#1845C2'
 const RUST = '#DD5C20'
 
 const VB_W = 1600
-const VB_H = 820
+const VB_H = 852
 const ZERO_LINE = 440
 const MAX_HEIGHT = 280
+// Downward (contradicting / priority) bars cap shorter than the upward bars so
+// the deepest breaks clear the channel rule and leave whitespace before the
+// channel labels rather than colliding with them.
+const MAX_HEIGHT_DOWN = 205
 const BAR_WIDTH = 5
 const POPOVER_WIDTH = 240
 
 const CHART_X_START = 120
 const CHART_X_END = 1500
 const CHART_X_CENTER = (CHART_X_START + CHART_X_END) / 2
-const CHART_X_WIDTH = CHART_X_END - CHART_X_START
 
-const LABEL_Y = 720
-const SPECTRUM_Y = 800
-const CHANNEL_RULE_Y = 690
+const LABEL_Y = 748
+const SPECTRUM_Y = 830
+const CHANNEL_RULE_Y = 716
 
 type Zone = 'Periphery' | 'Mid' | 'Core' | 'Core break'
 
@@ -67,27 +70,45 @@ const CHANNELS: readonly Channel[] = [
 
 const CHANNEL_BY_ID = new Map<ChannelId, Channel>(CHANNELS.map((c) => [c.id, c]))
 
-/* Bell-curve silhouette of the ideal shape of congruence. Centered at the
-   chart midpoint, σ = chart_width / 7, peak height = MAX_HEIGHT * 0.85. */
-const BELL_SIGMA = CHART_X_WIDTH / 7
-const BELL_PEAK = MAX_HEIGHT * 0.85
+/* Channel geometry exported for the Competitors mini seismographs so they
+   share the hero's exact channel x-positions and 1600-wide coordinate space. */
+export const SEISMO_VB_W = VB_W
+export const SEISMO_X_START = CHART_X_START
+export const SEISMO_X_END = CHART_X_END
+export const CHANNEL_CENTERS: ReadonlyArray<{ id: ChannelId; x: number }> = CHANNELS.map(
+  (c) => ({ id: c.id, x: c.center }),
+)
 
-function bellHeight(x: number): number {
-  const dx = x - CHART_X_CENTER
-  return BELL_PEAK * Math.exp(-(dx * dx) / (2 * BELL_SIGMA * BELL_SIGMA))
+/* Envelope of ideal congruence — a Gaussian over the chart's x-range that
+   peaks at the credible core (the midpoint of AI Agents and Reviews) and
+   tapers to the edges, where ambient channels still render at ~12–16%.
+   Reinforcing bars are scaled by env() so the bars themselves trace the
+   bell; contradicting bars and priority halos taper more gently (downScale)
+   so core breaks still plunge while edge noise stays shallow. Exported so
+   the Competitors mini seismographs reuse the same envelope and geometry. */
+export const ENV_CX = (745 + 880) / 2 // 812.5 — midpoint of AI Agents and Reviews
+export const ENV_SIGMA = 330 // ≈ 0.21 × channel span; edges land ~12–16%
+
+export function congruenceEnvelope(x: number): number {
+  const dx = x - ENV_CX
+  return Math.exp(-(dx * dx) / (2 * ENV_SIGMA * ENV_SIGMA))
 }
 
-function bellOutlinePath(): string {
+/* Height multiplier for downward (contradicting / priority) bars and halos:
+   floored at 0.32 so edge noise stays visible, rising to 1.0 in the core. */
+export function congruenceDownScale(x: number): number {
+  return 0.32 + 0.68 * congruenceEnvelope(x)
+}
+
+/* Dashed ceiling polyline tracing y = base − env(x) · MAX_HEIGHT: the ideal
+   reinforcing height a perfectly congruent brand would reach at each x. */
+function congruenceCeilingPath(): string {
   let d = ''
   for (let x = CHART_X_START; x <= CHART_X_END; x += 4) {
-    const y = ZERO_LINE - bellHeight(x)
+    const y = ZERO_LINE - congruenceEnvelope(x) * MAX_HEIGHT
     d += x === CHART_X_START ? `M ${x.toFixed(2)} ${y.toFixed(2)}` : ` L ${x.toFixed(2)} ${y.toFixed(2)}`
   }
   return d
-}
-
-function bellFillPath(): string {
-  return `${bellOutlinePath()} L ${CHART_X_END} ${ZERO_LINE} L ${CHART_X_START} ${ZERO_LINE} Z`
 }
 
 /* Identify the single tallest priority break — used as the "↓ Where trust
@@ -154,8 +175,7 @@ export function PeripheralSeismograph({
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  const bellPath = useMemo(bellFillPath, [])
-  const bellOutline = useMemo(bellOutlinePath, [])
+  const ceilingPath = useMemo(congruenceCeilingPath, [])
   const peakBreak = useMemo(() => findPeakBreak(data), [data])
 
   const onBarEnter = (m: Moment, ev: React.MouseEvent<SVGRectElement>) => {
@@ -221,21 +241,21 @@ export function PeripheralSeismograph({
         role="img"
         aria-label="Seismograph of trust signals across eleven buyer-view channels, with the ideal shape of congruence as a silhouette"
       >
-        {/* Bell curve — ideal silhouette behind everything */}
-        <path d={bellPath} fill={PARCHMENT_DEEP} opacity={0.7} pointerEvents="none" />
+        {/* Congruence ceiling — dashed polyline tracing the ideal reinforcing
+            height at each x. The reinforcing bars rise toward this line. */}
         <path
-          d={bellOutline}
+          d={ceilingPath}
           fill="none"
           stroke={PARCHMENT_OUTLINE}
-          strokeWidth={1.2}
+          strokeWidth={1.4}
           strokeDasharray="6 4"
           pointerEvents="none"
         />
 
-        {/* Annotation — bell curve label, above the peak */}
+        {/* Annotation — congruence label, above the envelope peak */}
         <text
-          x={CHART_X_CENTER}
-          y={ZERO_LINE - BELL_PEAK - 22}
+          x={ENV_CX}
+          y={ZERO_LINE - MAX_HEIGHT - 22}
           textAnchor="middle"
           fontFamily="JetBrains Mono, monospace"
           fontSize={11}
@@ -262,7 +282,7 @@ export function PeripheralSeismograph({
             >
               {/* Halos behind priority bars */}
               {priorities.map((m) => {
-                const h = (m.magnitude / 14) * MAX_HEIGHT
+                const h = (m.magnitude / 14) * MAX_HEIGHT_DOWN * congruenceDownScale(m.x)
                 return (
                   <rect
                     key={`halo-${m.id}`}
@@ -277,9 +297,10 @@ export function PeripheralSeismograph({
                 )
               })}
 
-              {/* Reinforces — above zero */}
+              {/* Reinforces — above zero, scaled by the envelope so the bars
+                  trace the bell: tall in the core, tapering at the edges. */}
               {reinforces.map((m) => {
-                const h = (m.magnitude / 14) * MAX_HEIGHT
+                const h = (m.magnitude / 14) * MAX_HEIGHT * congruenceEnvelope(m.x)
                 return (
                   <rect
                     key={`r-${m.id}`}
@@ -298,9 +319,10 @@ export function PeripheralSeismograph({
                 )
               })}
 
-              {/* Contradicts — below zero */}
+              {/* Contradicts — below zero, gently tapered (downScale) so edge
+                  noise stays shallow while core contradictions still cut deep. */}
               {contradicts.map((m) => {
-                const h = (m.magnitude / 14) * MAX_HEIGHT
+                const h = (m.magnitude / 14) * MAX_HEIGHT_DOWN * congruenceDownScale(m.x)
                 return (
                   <rect
                     key={`c-${m.id}`}
@@ -319,9 +341,9 @@ export function PeripheralSeismograph({
                 )
               })}
 
-              {/* Priorities — below zero, full opacity */}
+              {/* Priorities — below zero, full opacity, tapered like contradicts */}
               {priorities.map((m) => {
-                const h = (m.magnitude / 14) * MAX_HEIGHT
+                const h = (m.magnitude / 14) * MAX_HEIGHT_DOWN * congruenceDownScale(m.x)
                 return (
                   <rect
                     key={`p-${m.id}`}
@@ -343,20 +365,23 @@ export function PeripheralSeismograph({
           )
         })}
 
-        {/* "Where promise breaks" annotation — points into the highest priority */}
-        {peakBreak && (
+        {/* "Where promise breaks" annotation — points into the highest priority.
+            Anchored to the scaled bar tip so it tracks the envelope. */}
+        {peakBreak && (() => {
+          const peakDepth = (peakBreak.magnitude / 14) * MAX_HEIGHT_DOWN * congruenceDownScale(peakBreak.x)
+          return (
           <g pointerEvents="none">
             <line
               x1={peakBreak.x}
-              y1={ZERO_LINE + (peakBreak.magnitude / 14) * MAX_HEIGHT + 8}
-              x2={peakBreak.x + 60}
-              y2={ZERO_LINE + (peakBreak.magnitude / 14) * MAX_HEIGHT + 56}
+              y1={ZERO_LINE + peakDepth + 6}
+              x2={peakBreak.x + 48}
+              y2={ZERO_LINE + peakDepth + 34}
               stroke={HOT}
               strokeWidth={1.5}
             />
             <text
-              x={peakBreak.x + 68}
-              y={ZERO_LINE + (peakBreak.magnitude / 14) * MAX_HEIGHT + 62}
+              x={peakBreak.x + 56}
+              y={ZERO_LINE + peakDepth + 40}
               fontFamily="JetBrains Mono, monospace"
               fontSize={11}
               letterSpacing={1.4}
@@ -366,7 +391,8 @@ export function PeripheralSeismograph({
               ↓ WHERE PROMISE BREAKS
             </text>
           </g>
-        )}
+          )
+        })()}
 
         {/* Channel labels (above the rule) */}
         <line
