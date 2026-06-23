@@ -1,4 +1,4 @@
-/* Riiser — public sample audit at /sample.
+/* Riiser — public sample audit at /buyerview/sample.
 
    Mirrors the structure of the live BetterUp Buyer View (the v2 insight list)
    with fully fictional Riiser data. No password gate: this is a public sample

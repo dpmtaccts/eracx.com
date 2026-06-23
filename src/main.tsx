@@ -72,7 +72,7 @@ function AppRoutes() {
             /ai-mirror as a lead-magnet target without a nav link. */}
         <Route path="/buyerview" element={<BuyerViewSystem />} />
         {/* Public, fully fictional sample audit backing the "See a sample" CTA. */}
-        <Route path="/sample" element={<RiiserSample />} />
+        <Route path="/buyerview/sample" element={<RiiserSample />} />
         <Route path="/archive/buyer-view-system" element={<BuyerViewSystem />} />
         <Route path="/ai-mirror" element={<GtmPlaybook />} />
         <Route path="/staging/v5" element={<V5ExpandingCards />} />
