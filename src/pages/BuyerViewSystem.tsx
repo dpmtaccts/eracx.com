@@ -1715,7 +1715,50 @@ function SectionTheRead() {
           slideEls.current[4] = el
         }}
       />
+
+      <SampleCta />
     </section>
+  )
+}
+
+/* See-a-sample CTA — links to the public Riiser sample audit. The four
+   moment cards above are drawn from that same fictional brand, so the buyer
+   can now read the full Buyer View it belongs to. */
+function SampleCta() {
+  return (
+    <div className="tm-in" style={{ padding: '0 0 96px' }}>
+      <div
+        style={{
+          borderTop: `1px solid rgba(10,10,10,0.16)`,
+          paddingTop: 40,
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 20,
+        }}
+      >
+        <div style={{ maxWidth: 560 }}>
+          <div style={{ ...mono(11, HOT, 700), marginBottom: 10 }}>SEE A SAMPLE</div>
+          <div style={{ fontFamily: "'IBM Plex Sans',system-ui,sans-serif", fontSize: 18, lineHeight: 1.5, color: INK }}>
+            These four moments belong to one fictional brand. Read the full Buyer View it adds up to, scored end to end.
+          </div>
+        </div>
+        <a
+          href="/buyerview/sample"
+          style={{
+            ...mono(13, PAPER, 700),
+            background: INK,
+            color: PAPER,
+            padding: '14px 24px',
+            textDecoration: 'none',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          SEE THE FULL SAMPLE →
+        </a>
+      </div>
+    </div>
   )
 }
 
