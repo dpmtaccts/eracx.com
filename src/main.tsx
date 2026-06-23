@@ -30,6 +30,7 @@ import V3 from './pages/v3/V3.tsx'
 import V4 from './pages/v4/V4.tsx'
 import GtmPlaybook from './pages/GtmPlaybook.tsx'
 import BuyerViewSystem from './pages/BuyerViewSystem.tsx'
+import RiiserSample from './pages/riiser/RiiserSample.tsx'
 import StubAuditExample from './pages/StubAuditExample.tsx'
 import Methodology from './pages/Methodology.tsx'
 import { PersonFirstFramework } from './pages/PersonFirstFramework.tsx'
@@ -70,6 +71,8 @@ function AppRoutes() {
             links still resolve. The AI Mirror component is parked at
             /ai-mirror as a lead-magnet target without a nav link. */}
         <Route path="/buyerview" element={<BuyerViewSystem />} />
+        {/* Public, fully fictional sample audit backing the "See a sample" CTA. */}
+        <Route path="/sample" element={<RiiserSample />} />
         <Route path="/archive/buyer-view-system" element={<BuyerViewSystem />} />
         <Route path="/ai-mirror" element={<GtmPlaybook />} />
         <Route path="/staging/v5" element={<V5ExpandingCards />} />
