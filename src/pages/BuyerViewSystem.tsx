@@ -332,6 +332,24 @@ function BuyerViewForm() {
           We read your category before we reply, so the first note lands with something in it. Watch
           for it at {submittedEmail}.
         </p>
+        <div style={{ marginTop: 20, paddingTop: 18, borderTop: `1px solid ${LINE}` }}>
+          <p style={{ fontFamily: BODY, fontSize: 14, lineHeight: 1.5, color: MUTED, margin: '0 0 12px' }}>
+            While you wait, here is a full sample Buyer View for a fictional brand.
+          </p>
+          <a
+            href="/buyerview/sample"
+            style={{
+              ...mono(12, PAPER, 700),
+              display: 'inline-block',
+              background: INK,
+              color: PAPER,
+              padding: '12px 18px',
+              textDecoration: 'none',
+            }}
+          >
+            SEE A SAMPLE →
+          </a>
+        </div>
       </div>
     )
   }
