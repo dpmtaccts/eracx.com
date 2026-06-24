@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent } from 'react'
+import { usePostHog } from '@posthog/react'
 import {
   PeripheralSeismograph,
   CHANNEL_CENTERS,
@@ -121,6 +122,7 @@ export default function BuyerViewSystem() {
    ────────────────────────────────────────────── */
 
 function TopNav() {
+  const posthog = usePostHog()
   return (
     <nav
       style={{
@@ -159,6 +161,7 @@ function TopNav() {
           <a href="#the-advantage" style={{ ...mono(11, MUTED, 700), textDecoration: 'none' }}>THE ADVANTAGE</a>
           <a
             href="#gain-access"
+            onClick={() => posthog?.capture('buyerview_cta_clicked', { location: 'nav' })}
             style={{
               ...mono(13, PAPER, 700),
               background: INK,
@@ -269,6 +272,7 @@ function BuyerViewForm() {
   const [status, setStatus] = useState<FormState>('idle')
   const [errorMessage, setErrorMessage] = useState('')
   const [submittedEmail, setSubmittedEmail] = useState('')
+  const posthog = usePostHog()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -284,11 +288,13 @@ function BuyerViewForm() {
     if (!firstName || !email || !companyWebsite) {
       setStatus('error')
       setErrorMessage('Every field is required.')
+      posthog?.capture('buyerview_report_validation_error')
       return
     }
 
     setStatus('submitting')
     setErrorMessage('')
+    posthog?.capture('buyerview_report_submitted', { company_website: companyWebsite })
 
     try {
       const response = await fetch('/api/contact', {
@@ -307,6 +313,8 @@ function BuyerViewForm() {
       }
       setSubmittedEmail(email)
       setStatus('qualified')
+      posthog?.identify(email, { email, name: firstName, company_website: companyWebsite })
+      posthog?.capture('buyerview_report_requested', { company_website: companyWebsite })
       setFirstName('')
       setEmail('')
       setCompanyWebsite('')
@@ -315,6 +323,9 @@ function BuyerViewForm() {
       setErrorMessage(
         err instanceof Error ? err.message : 'Something went wrong. Try again in a moment.',
       )
+      posthog?.capture('buyerview_report_request_failed', {
+        error: err instanceof Error ? err.message : String(err),
+      })
     }
   }
 
@@ -338,6 +349,7 @@ function BuyerViewForm() {
           </p>
           <a
             href="/buyerview/sample"
+            onClick={() => posthog?.capture('buyerview_sample_clicked', { location: 'form_success' })}
             style={{
               ...mono(12, PAPER, 700),
               display: 'inline-block',
@@ -360,7 +372,11 @@ function BuyerViewForm() {
       <p style={{ fontFamily: BODY, fontSize: 14, lineHeight: 1.5, color: MUTED, margin: '0 0 20px' }}>
         Due to high demand, we may not reply for a few days. But we're just as excited as you to see
         what your buyer sees. In the meantime,{' '}
-        <a href="/buyerview/sample" style={{ color: HOT, fontWeight: 700, textDecoration: 'underline' }}>
+        <a
+          href="/buyerview/sample"
+          onClick={() => posthog?.capture('buyerview_sample_clicked', { location: 'form_intro' })}
+          style={{ color: HOT, fontWeight: 700, textDecoration: 'underline' }}
+        >
           read a full sample report
         </a>
         .
@@ -1748,6 +1764,7 @@ function SectionTheRead() {
    moment cards above are drawn from that same fictional brand, so the buyer
    can now read the full Buyer View it belongs to. */
 function SampleCta() {
+  const posthog = usePostHog()
   return (
     <div className="tm-in" style={{ padding: '0 0 96px' }}>
       <div
@@ -1769,6 +1786,7 @@ function SampleCta() {
         </div>
         <a
           href="/buyerview/sample"
+          onClick={() => posthog?.capture('buyerview_sample_clicked', { location: 'moments' })}
           style={{
             ...mono(13, PAPER, 700),
             background: INK,
@@ -1929,6 +1947,7 @@ const PROGRAM_CSS = `
 function SectionProgram() {
   const ref = useRef<HTMLElement>(null)
   const [inView, setInView] = useState(false)
+  const posthog = usePostHog()
 
   useEffect(() => {
     const node = ref.current
@@ -2068,6 +2087,7 @@ function SectionProgram() {
 
         <a
           href="#gain-access"
+          onClick={() => posthog?.capture('buyerview_cta_clicked', { location: 'program' })}
           style={{
             ...mono(11, INK, 700),
             background: PAPER,
@@ -2269,7 +2289,7 @@ function SectionClose() {
               <img src="/erafull.png" alt="ERA" style={{ height: 38, width: 'auto', display: 'block' }} />
             </div>
             <div>
-              <div style={{ ...mono(11, INK, 700), marginBottom: 10 }}>Operates the measurement</div>
+              <div style={{ ...mono(11, INK, 700), marginBottom: 10 }}>Operates the experience</div>
               <p style={{ fontFamily: BODY, fontSize: 15, lineHeight: 1.55, color: INK, margin: 0, maxWidth: 480 }}>
                 ERA reads the surfaces your buyer sees, analyzes the gap between promise and proof,
                 and builds the system to improve pipeline velocity through every channel.
@@ -2304,9 +2324,6 @@ function SectionClose() {
             </div>
           </article>
         </div>
-        <p style={{ fontFamily: BODY, fontSize: 17, lineHeight: 1.55, color: INK, margin: '24px 0 0', maxWidth: 760 }}>
-          One reads the gap. One closes it. Between them, the buyer meets a brand that proves itself.
-        </p>
       </Container>
     </section>
   )

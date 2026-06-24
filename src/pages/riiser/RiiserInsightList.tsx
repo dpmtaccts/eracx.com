@@ -6,6 +6,7 @@
 
 import { useCallback, useEffect, useState, type CSSProperties } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { usePostHog } from '@posthog/react'
 import { FONT } from '../betterup/theme'
 import { mono, rowVisualsStyles as C } from '../betterup/insights/RowVisuals'
 import { PAGE_LINE } from '../betterup/insights/types'
@@ -14,21 +15,31 @@ import { RiiserInsightRow } from './RiiserInsightRow'
 
 export function RiiserInsightList() {
   const [openSet, setOpenSet] = useState<Set<number>>(new Set())
+  const posthog = usePostHog()
 
-  const toggle = useCallback((n: number) => {
-    setOpenSet((prev) => {
-      const next = new Set(prev)
-      if (next.has(n)) next.delete(n)
-      else next.add(n)
-      return next
-    })
-  }, [])
+  const toggle = useCallback(
+    (n: number) => {
+      const opening = !openSet.has(n)
+      setOpenSet((prev) => {
+        const next = new Set(prev)
+        if (next.has(n)) next.delete(n)
+        else next.add(n)
+        return next
+      })
+      posthog?.capture('sample_statement_toggled', { statement: n, opened: opening })
+    },
+    [openSet, posthog],
+  )
 
   const allOpen = openSet.size === STATEMENTS.length
-  const setAll = useCallback((open: boolean) => {
-    if (open) setOpenSet(new Set(STATEMENTS.map((s) => s.n)))
-    else setOpenSet(new Set())
-  }, [])
+  const setAll = useCallback(
+    (open: boolean) => {
+      if (open) setOpenSet(new Set(STATEMENTS.map((s) => s.n)))
+      else setOpenSet(new Set())
+      posthog?.capture('sample_expand_all_toggled', { opened: open })
+    },
+    [posthog],
+  )
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -142,10 +153,12 @@ function AuditHeader() {
 
 function MethodologyLink() {
   const location = useLocation()
+  const posthog = usePostHog()
   return (
     <Link
       to="/methodology"
       state={{ backgroundLocation: location }}
+      onClick={() => posthog?.capture('sample_methodology_clicked')}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
@@ -202,6 +215,7 @@ const COSIGN_CSS = `
 `
 
 function CoSign() {
+  const posthog = usePostHog()
   return (
     <section style={{ background: C.paper, borderTop: `1px solid ${C.ink}`, padding: '72px 0 96px', containerType: 'inline-size' }}>
       <style>{COSIGN_CSS}</style>
@@ -228,7 +242,11 @@ function CoSign() {
             </div>
             <div style={{ paddingTop: 18, borderTop: `1px solid rgba(10, 10, 10, 0.15)`, marginTop: 'auto' }}>
               <div style={{ ...mono(11, C.ink, 700), marginBottom: 6 }}>Justin Marshall</div>
-              <a href="mailto:justin@eracx.com" style={{ ...mono(11, C.hot, 700), textDecoration: 'none' }}>
+              <a
+                href="mailto:justin@eracx.com"
+                onClick={() => posthog?.capture('sample_cosign_email_clicked', { firm: 'era' })}
+                style={{ ...mono(11, C.hot, 700), textDecoration: 'none' }}
+              >
                 justin@eracx.com
               </a>
             </div>
@@ -249,15 +267,16 @@ function CoSign() {
             </div>
             <div style={{ paddingTop: 18, borderTop: `1px solid rgba(10, 10, 10, 0.15)`, marginTop: 'auto' }}>
               <div style={{ ...mono(11, C.ink, 700), marginBottom: 6 }}>Todd Anthony</div>
-              <a href="mailto:todd@pinwheelagency.com" style={{ ...mono(11, C.hot, 700), textDecoration: 'none' }}>
+              <a
+                href="mailto:todd@pinwheelagency.com"
+                onClick={() => posthog?.capture('sample_cosign_email_clicked', { firm: 'pinwheel' })}
+                style={{ ...mono(11, C.hot, 700), textDecoration: 'none' }}
+              >
                 todd@pinwheelagency.com
               </a>
             </div>
           </article>
         </div>
-        <p style={{ fontFamily: FONT.body, fontSize: 17, lineHeight: 1.55, color: C.ink, margin: '24px 0 0', maxWidth: 760 }}>
-          One reads the gap. One closes it. Between them, the buyer meets a brand that proves itself.
-        </p>
       </div>
     </section>
   )
