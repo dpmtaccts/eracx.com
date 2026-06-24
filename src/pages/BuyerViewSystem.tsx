@@ -358,7 +358,12 @@ function BuyerViewForm() {
     <form id="gain-access" onSubmit={handleSubmit} noValidate style={wrap}>
       <div style={{ ...mono(11, INK, 700), marginBottom: 6 }}>▸ GET YOUR REPORT</div>
       <p style={{ fontFamily: BODY, fontSize: 14, lineHeight: 1.5, color: MUTED, margin: '0 0 20px' }}>
-        We read your category, then reply directly. Usually within a few days.
+        Due to high demand, we may not reply for a few days. But we're just as excited as you to see
+        what your buyer sees. In the meantime,{' '}
+        <a href="/buyerview/sample" style={{ color: HOT, fontWeight: 700, textDecoration: 'underline' }}>
+          read a full sample report
+        </a>
+        .
       </p>
 
       {/* Honeypot */}
