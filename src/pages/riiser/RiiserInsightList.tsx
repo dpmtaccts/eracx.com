@@ -71,7 +71,7 @@ function ScoreStrip() {
           <span style={{ fontFamily: FONT.body, fontSize: 14, fontStyle: 'italic', color: STRIP_MUTED, fontWeight: 400 }}>
             Don’t pitch strangers.
           </span>
-          <span style={{ ...mono(9, STRIP_MUTED, 700), border: `1px solid ${PAGE_LINE}`, padding: '3px 7px' }}>SAMPLE · FICTIONAL</span>
+          <span style={{ ...mono(9, STRIP_MUTED, 700), border: `1px solid ${PAGE_LINE}`, padding: '3px 7px' }}>SAMPLE</span>
         </div>
         <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', gap: 20, alignItems: 'baseline', flexWrap: 'wrap' }}>
           {SCALE_STATS.map((s) => (
@@ -95,22 +95,26 @@ function AuditHeader() {
         <span style={mono(11, C.muted, 600)}>{RIISER.reportDate.toUpperCase()} · SAMPLE</span>
       </div>
       <div style={{ marginTop: 32, marginBottom: 10 }}>
-        {/* Riiser is fictional and has no real logo asset — render the wordmark. */}
-        <span
-          style={{
-            fontFamily: FONT.mega,
-            fontWeight: 400,
-            fontSize: 'clamp(28px, 3.6vw, 48px)',
-            letterSpacing: '0.02em',
-            textTransform: 'uppercase',
-            color: C.ink,
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 12,
-          }}
-        >
-          {RIISER.wordmark}
-          <span style={mono(10, C.muted, 600)}>{RIISER.domain}</span>
+        {/* Riiser brand logo — a rising-bars "riser" mark plus the riiser.co
+            wordmark, all inline so it stays crisp at any size. Fictional brand. */}
+        <span style={{ display: 'inline-flex', alignItems: 'flex-end', gap: 14 }} aria-label={RIISER.domain}>
+          <svg width="40" height="43" viewBox="0 0 26 28" fill="none" aria-hidden style={{ display: 'block' }}>
+            <rect x="0.5" y="17" width="5.5" height="10" fill={C.ink} />
+            <rect x="10.25" y="10" width="5.5" height="17" fill={C.ink} />
+            <rect x="20" y="2.5" width="5.5" height="24.5" fill={C.hot} />
+          </svg>
+          <span
+            style={{
+              fontFamily: FONT.body,
+              fontSize: 'clamp(32px, 3.8vw, 46px)',
+              fontWeight: 700,
+              letterSpacing: '-0.03em',
+              color: C.ink,
+              lineHeight: 1,
+            }}
+          >
+            riiser<span style={{ color: C.muted, fontWeight: 500 }}>.co</span>
+          </span>
         </span>
       </div>
       <h1
@@ -185,38 +189,75 @@ function MethodologyFooter() {
   )
 }
 
+// Co-sign footer, matched to the /buyerview footer: a bordered two-column grid
+// with role labels, descriptions, and contacts. Stacks to one column under 760px.
+const COSIGN_CSS = `
+@container (max-width: 760px) {
+  [data-riiser-cosign] { grid-template-columns: minmax(0, 1fr) !important; }
+  [data-riiser-cosign-left] {
+    border-right: none !important;
+    border-bottom: 1px solid #0A0A0A !important;
+  }
+}
+`
+
 function CoSign() {
   return (
-    <section style={{ background: C.paper, borderTop: `1px solid ${PAGE_LINE}`, padding: '72px 0 96px' }}>
+    <section style={{ background: C.paper, borderTop: `1px solid ${C.ink}`, padding: '72px 0 96px', containerType: 'inline-size' }}>
+      <style>{COSIGN_CSS}</style>
       <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 32px' }}>
-        <div style={{ ...mono(10, C.muted, 700), marginBottom: 28 }}>BUILT TOGETHER BY</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 1px minmax(0, 1fr)', gap: 48, alignItems: 'stretch' }}>
-          <article style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <img src="/images/era_symbol.svg" alt="ERA" style={{ height: 56, width: 'auto', display: 'block' }} />
-            <div style={mono(11, C.ink, 700)}>ERA</div>
-            <p style={{ fontFamily: FONT.body, fontSize: 16, lineHeight: 1.55, color: C.ink, margin: 0, maxWidth: 480 }}>
-              ERA reads twenty-four buyer signals across your target accounts daily, builds the plays, and runs the loop with your sellers every week.
-            </p>
-            <div style={{ paddingTop: 18, borderTop: `1px solid ${PAGE_LINE}`, marginTop: 'auto' }}>
-              <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 600, color: C.ink, marginBottom: 4 }}>Justin Marshall</div>
-              <a href="mailto:justin@eracx.com" style={{ fontFamily: FONT.body, fontSize: 14, color: '#E6195F', textDecoration: 'none', borderBottom: '1px solid #E6195F', paddingBottom: 1 }}>justin@eracx.com</a>
+        <div style={{ ...mono(11, C.muted, 700), marginBottom: 24 }}>CO-SIGNED BY</div>
+        <div
+          data-riiser-cosign
+          style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', border: `1px solid ${C.ink}` }}
+        >
+          {/* ERA */}
+          <article
+            data-riiser-cosign-left
+            style={{ display: 'flex', flexDirection: 'column', gap: 18, padding: '32px 30px', borderRight: `1px solid ${C.ink}` }}
+          >
+            <div style={{ height: 48, display: 'flex', alignItems: 'center' }}>
+              <img src="/erafull.png" alt="ERA" style={{ height: 38, width: 'auto', display: 'block' }} />
+            </div>
+            <div>
+              <div style={{ ...mono(11, C.ink, 700), marginBottom: 10 }}>Operates the experience</div>
+              <p style={{ fontFamily: FONT.body, fontSize: 15, lineHeight: 1.55, color: C.ink, margin: 0, maxWidth: 480 }}>
+                ERA reads the surfaces your buyer sees, analyzes the gap between promise and proof,
+                and builds the system to improve pipeline velocity through every channel.
+              </p>
+            </div>
+            <div style={{ paddingTop: 18, borderTop: `1px solid rgba(10, 10, 10, 0.15)`, marginTop: 'auto' }}>
+              <div style={{ ...mono(11, C.ink, 700), marginBottom: 6 }}>Justin Marshall</div>
+              <a href="mailto:justin@eracx.com" style={{ ...mono(11, C.hot, 700), textDecoration: 'none' }}>
+                justin@eracx.com
+              </a>
             </div>
           </article>
 
-          <div aria-hidden style={{ background: PAGE_LINE, width: 1, height: '100%' }} />
-
-          <article style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <img src="/assets/pinwheel_agency_logo.jpg" alt="Pinwheel Creative" style={{ height: 56, width: 'auto', display: 'block' }} />
-            <div style={mono(11, C.ink, 700)}>Pinwheel Creative</div>
-            <p style={{ fontFamily: FONT.body, fontSize: 16, lineHeight: 1.55, color: C.ink, margin: 0, maxWidth: 480 }}>
-              Pinwheel Creative builds brand strategy, thought-leadership content, design, and campaigns for technology and finance brands ready to be readable.
-            </p>
-            <div style={{ paddingTop: 18, borderTop: `1px solid ${PAGE_LINE}`, marginTop: 'auto' }}>
-              <div style={{ fontFamily: FONT.body, fontSize: 14, fontWeight: 600, color: C.ink, marginBottom: 4 }}>S. Todd Anthony</div>
-              <a href="mailto:todd@pinwheelcreative.com" style={{ fontFamily: FONT.body, fontSize: 14, color: '#E6195F', textDecoration: 'none', borderBottom: '1px solid #E6195F', paddingBottom: 1 }}>todd@pinwheelcreative.com</a>
+          {/* Pinwheel */}
+          <article style={{ display: 'flex', flexDirection: 'column', gap: 18, padding: '32px 30px' }}>
+            <div style={{ height: 48, display: 'flex', alignItems: 'center' }}>
+              <img src="/assets/pinwheel-logo.png" alt="Pinwheel" style={{ height: 34, width: 'auto', display: 'block' }} />
+            </div>
+            <div>
+              <div style={{ ...mono(11, C.ink, 700), marginBottom: 10 }}>Produces the proof</div>
+              <p style={{ fontFamily: FONT.body, fontSize: 15, lineHeight: 1.55, color: C.ink, margin: 0, maxWidth: 480 }}>
+                Pinwheel is a creative marketing and content agency that partners with B2B brands to
+                delight, persuade, and educate their audiences. It produces the executive content,
+                editorial, and design that get each surface backing the promise.
+              </p>
+            </div>
+            <div style={{ paddingTop: 18, borderTop: `1px solid rgba(10, 10, 10, 0.15)`, marginTop: 'auto' }}>
+              <div style={{ ...mono(11, C.ink, 700), marginBottom: 6 }}>Todd Anthony</div>
+              <a href="mailto:todd@pinwheelagency.com" style={{ ...mono(11, C.hot, 700), textDecoration: 'none' }}>
+                todd@pinwheelagency.com
+              </a>
             </div>
           </article>
         </div>
+        <p style={{ fontFamily: FONT.body, fontSize: 17, lineHeight: 1.55, color: C.ink, margin: '24px 0 0', maxWidth: 760 }}>
+          One reads the gap. One closes it. Between them, the buyer meets a brand that proves itself.
+        </p>
       </div>
     </section>
   )
