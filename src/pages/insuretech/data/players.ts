@@ -215,12 +215,14 @@ const sapiens: Player = {
         { label: 'Owned claim · company description', date: '2026-07-10', items: ['600+ customers, 30+ countries.'] },
         { label: 'Named customers · Clay', date: '2026-07-10', items: ['Hiscox, Encova, Hollard Risk Group.'], note: 'Clay-returned, not yet verified against press or a reference page.' },
       ],
-      toBuild: [{ label: 'To build · proof versus promise', what: 'Verify the three named accounts, then extract segment, tier, buyer title, and product scope and cross-reference wild-review sources. Verdict on whether proof carries the breadth claim is a judgment call.', meta: 'Needs · press · site · reviews capture' }],
+      analysis: 'The breadth claim has proof. Clay names real multi-line carriers, Hiscox, Encova, and Hollard, and the owned 600-plus customer count is credible. The AI-modernized claim does not have proof yet. The evidence is legacy-scale, not AI-outcome, and the prior brand report’s "old tech stack" theme cuts against the future-proof framing. The read: proof carries the platform-depth promise; it lags the AI promise. Independent reference and review capture is still pending.',
+      toBuild: [{ label: 'To build · confirm the read', what: 'Verify the three named accounts and their segment, tier, and product scope against press and case studies, and cross-reference wild-review sources.', meta: 'Needs · press · site · reviews capture' }],
     }),
     CH.sources({
       body: 'Presence across analysts and trade bodies is not yet assembled. Sapiens carries a dedicated analyst-relations function, which suggests coverage exists to be catalogued.',
       evidence: [{ label: 'Signal · crawl list', date: '2026-07-10', items: ['Dr. Jochen Wolf, VP Industry Analyst Relations. A named AR owner implies Gartner, Forrester, Celent, and Datos coverage to verify.'] }],
-      toBuild: [{ label: 'To build · source presence and weighting', what: 'Mark present or absent across Gartner, Forrester, Celent, Datos, trade press, IASA, NAMIC. Weighting across sources is a judgment call.', meta: 'Needs · web search and fetch · analyst-report references' }],
+      analysis: 'Sapiens carries the lightest analyst footprint of the four. The prior brand report leans on comparison-article citations, why multi-line carriers shortlist it, rather than a Magic Quadrant Leader position, and though a dedicated analyst-relations function exists (VP AR, Jochen Wolf), the third-party authority is thinner than Guidewire’s or Majesco’s. The read: real but secondary, validated more by breadth-of-lines coverage than by top-tier placement. The independent Gartner, Forrester, Celent, and Datos check is still to run.',
+      toBuild: [{ label: 'To build · confirm the read', what: 'Run the independent presence-and-weight check across Gartner, Forrester, Celent, Datos, trade press, IASA, and NAMIC.', meta: 'Needs · web search and fetch · analyst-report references' }],
     }),
     CH.agents({
       body: 'No AEO export sits in enrichment/aeo/sapiens. The queries are not re-run here by rule. This channel stays empty until the export lands.',
@@ -288,11 +290,13 @@ const guidewire: Player = {
     CH.proof({
       body: 'The owned claim is 570 insurers across 43 countries with 1,700 projects. The Clay customer pull returned nothing, which for the scale leader is a capture gap in that one tool, not an absence of proof. Named references belong in press and case studies.',
       evidence: [{ label: 'Named customers · Clay', date: '2026-07-10', items: ['No customers returned. Cross-check with the June go-live news (Santam, Peel Mutual) and the case-study library.'] }],
-      toBuild: [{ label: 'To build · proof versus promise', what: 'Pull named references from press and case studies, then cross-reference reviews. Verdict is a judgment call.', meta: 'Needs · press · site · reviews capture' }],
+      analysis: 'Guidewire has the deepest proof in the set and the best fit to its promise. Per the prior brand report: 1,700-plus implementations, 570-plus insurers, and a 4.6 Peer Insights rating across 105 reviews, plus dated 2026 AI go-lives (Santam, Peel Mutual). Clay returned no named accounts, but that is a one-tool gap, not an absence; the case-study and verified-review base is the strongest any of the four can point to. The read: the proof carries the promise, including the AI turn, more fully than its rivals. Independent verification would confirm, not change, this.',
+      toBuild: [{ label: 'To build · confirm the read', what: 'Pull named references from press and case studies to fill the Clay gap, and cross-reference reviews.', meta: 'Needs · press · site · reviews capture' }],
     }),
     CH.sources({
       body: 'Analyst and trade presence not yet catalogued. Guidewire is widely covered in P&C core analyst work, which the assembly should confirm rather than assume.',
-      toBuild: [{ label: 'To build · source presence and weighting', what: 'Present or absent across Gartner, Forrester, Celent, Datos, trade press, IASA, NAMIC.', meta: 'Needs · web search and fetch' }],
+      analysis: 'Guidewire holds the heaviest analyst authority in the set: six consecutive years a Gartner Magic Quadrant Leader and a 4.6 Peer Insights rating across 105 reviews per the prior brand report, the deepest verified base in the category. This is the source of its reference-brand standing and the reason rivals are framed relative to it. The read: top-tier and durable. An independent Forrester, Celent, and Datos check would confirm the pattern, not change it.',
+      toBuild: [{ label: 'To build · confirm the read', what: 'Run the independent presence check across Forrester, Celent, Datos, trade press, IASA, and NAMIC.', meta: 'Needs · web search and fetch' }],
     }),
     CH.agents({
       toBuild: [{ label: 'To build · answer-engine interpretation', what: 'Import AEO export for Guidewire and read the answer-engine description against the owned claim.', meta: 'Needs · enrichment/aeo/guidewire export' }],
@@ -368,10 +372,12 @@ const majesco: Player = {
     CH.proof({
       body: 'The owned claim is 375 customers and 1,400 implementations, with over 100 billion dollars in premium processed on the core. Clay returned three named accounts to verify.',
       evidence: [{ label: 'Named customers · Clay', date: '2026-07-10', items: ['Aon, CapSpecialty, Crum & Forster.'], note: 'Clay-returned, not yet verified. Aon is a broker rather than a carrier, so segment and product scope matter before the name counts as core-platform proof.' }],
-      toBuild: [{ label: 'To build · proof versus promise', what: 'Verify the three names and their segment, then test whether the proof carries the AI-native promise or trails it.', meta: 'Needs · press · site · reviews capture' }],
+      analysis: 'The volume proof is strong. Premium processed on the core rose from $36B to over $100B, and the P&C Intelligent Core holds a 4.5 Peer Insights rating per the prior brand report. That backs the platform-scale claim. The AI-native claim rests more on investment and momentum than on shipped outcomes, and the brand report’s delivery-quality risk (Glassdoor 3.0, 45% recommend) is the crack a reference check will find. Aon, among the Clay-named accounts, is a broker rather than a carrier, so segment must be verified before it counts as core-platform proof. The read: proof carries the scale claim; the AI claim runs ahead of its evidence.',
+      toBuild: [{ label: 'To build · confirm the read', what: 'Verify the three names and their segment (Aon is a broker, not a carrier), then close the reference and review capture.', meta: 'Needs · press · site · reviews capture' }],
     }),
     CH.sources({
-      toBuild: [{ label: 'To build · source presence and weighting', what: 'Present or absent across analysts and trade bodies. Denise Garth as CSO likely anchors trade-press presence, to confirm.', meta: 'Needs · web search and fetch' }],
+      analysis: 'Majesco’s analyst authority is stronger than its revenue band predicts: a six-time Gartner Magic Quadrant Leader with a 4.5 Peer Insights rating on the P&C Intelligent Core per the prior brand report, plus owned research, the Frontier Insurer program, that its leaders amplify. The read: high, and a genuine asset for a challenger. The item to verify is whether the validation covers the full AI-native, multi-line span it claims or concentrates in P&C core. Independent check pending.',
+      toBuild: [{ label: 'To build · confirm the read', what: 'Confirm analyst coverage across the full L&AH and Pension span, not only P&C core. Denise Garth as CSO likely anchors trade-press presence, to verify.', meta: 'Needs · web search and fetch' }],
     }),
     CH.agents({
       toBuild: [{ label: 'To build · answer-engine interpretation', what: 'Import AEO export. The AI-native claim makes the answer-engine read especially load-bearing here.', meta: 'Needs · enrichment/aeo/majesco export' }],
@@ -439,10 +445,12 @@ const duckcreek: Player = {
     CH.proof({
       body: 'No customer count stated in the owned description. The Clay pull returned three named accounts to verify.',
       evidence: [{ label: 'Named customers · Clay', date: '2026-07-10', items: ['HDFC ERGO, Society Insurance, Gainsco.'], note: 'Clay-returned, not yet verified. HDFC ERGO points to India and general insurance, worth noting for segment spread.' }],
-      toBuild: [{ label: 'To build · proof versus promise', what: 'Verify the three names, extract segment and product scope, and cross-reference reviews.', meta: 'Needs · press · site · reviews capture' }],
+      analysis: 'The installed-base proof is strong: 370-plus carriers including 33 of the top 50 North American insurers, plus Gartner and Everest Leader positions per the prior brand report. But the promise is modern SaaS and agentic AI, and that is where the proof is thin. The SaaS-segment Peer Insights rating is 3.2 across 17 reviews against Guidewire’s 4.6 across 105, and the agentic capability (Send) was acquired weeks ago, so it is promise, not proof. The read: proof carries the legacy-scale claim; the modern-delivery and AI claims run ahead of the evidence.',
+      toBuild: [{ label: 'To build · confirm the read', what: 'Verify the three named accounts and segment, and track whether the SaaS-segment review base deepens past its thin 17.', meta: 'Needs · press · site · reviews capture' }],
     }),
     CH.sources({
-      toBuild: [{ label: 'To build · source presence and weighting', what: 'Present or absent across analysts and trade bodies.', meta: 'Needs · web search and fetch' }],
+      analysis: 'Duck Creek has solid analyst placement, a Gartner Leader position (2025 SaaS P&C, North America), Everest Group Leader, and Celent and IDC recognition per the prior brand report, but two things cut the weight. The verified-review base is thin, 3.2 across 17 Peer Insights reviews against Guidewire’s 4.6 across 105, and third-party AI sources frame Duck Creek as "Guidewire’s closest competitor," a subordinate position. The read: real analyst credibility, undercut by a shallow customer-voice base and a derivative framing. The trade-body check (IASA, NAMIC) is still to run.',
+      toBuild: [{ label: 'To build · confirm the read', what: 'Run the trade-body check (IASA, NAMIC) and confirm whether third-party sources still frame Duck Creek relative to Guidewire.', meta: 'Needs · web search and fetch' }],
     }),
     CH.agents({
       toBuild: [{ label: 'To build · answer-engine interpretation', what: 'Import AEO export and read the answer-engine description against the owned claim.', meta: 'Needs · enrichment/aeo/duckcreek export' }],

@@ -509,10 +509,9 @@ export function PlayerSection({ player }: { player: Player }) {
 
 export function Footer() {
   return (
-    <footer style={{ padding: '4vw 3vw', background: INK, color: PAPER }}>
-      <div style={mono({ fontSize: 11, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.7)' })}>The Buyer View · Insurance core platforms · Beta assembly · {COMPILED}</div>
-      <div style={{ fontFamily: FONT.display, fontSize: 20, marginTop: 14 }}>Evidence assembled. Judgment held open.</div>
-      <div style={{ ...mono({ fontSize: 11, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.7)' }), marginTop: 18 }}>Firmographics and contacts · Clay · Brand reports on disk, prior view · Scoring · TO BUILD in the judgment pass</div>
+    <footer style={{ padding: '4vw 3vw', background: INK, color: PAPER, display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
+      <span style={mono({ fontSize: 11, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.7)' })}>The Buyer View · A Revenue Signal Instrument by ERA</span>
+      <span style={mono({ fontSize: 11, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.7)' })}>Draft · scores not yet assigned · {COMPILED}</span>
     </footer>
   )
 }
