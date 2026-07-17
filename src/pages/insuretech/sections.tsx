@@ -310,9 +310,14 @@ export function Rollup() {
             {CHANNEL_ORDER.map((c) => (
               <tr key={c.num}>
                 <th style={rowHeadStyle}>{c.num} {c.name}</th>
-                {PLAYERS.map((p) => (
-                  <td key={p.slug} style={tdStyle}><span style={{ ...mono({ fontSize: 10, letterSpacing: '0.1em', color: MUTED }), border: `1px dashed ${LINE}`, padding: '6px 8px', display: 'inline-block' }}>To build</span></td>
-                ))}
+                {PLAYERS.map((p) => {
+                  const cls = c.num === '01' ? p.channels.find((ch) => ch.id === 'promise')?.classification : undefined
+                  if (cls) {
+                    const col = cls.bandKey === 'boat-anchor' ? '#DD5C20' : cls.bandKey === 'convergence' ? HOT : COBALT
+                    return <td key={p.slug} style={tdStyle}><span style={{ ...mono({ fontSize: 10, letterSpacing: '0.08em' }), color: col, border: `1px solid ${col}`, padding: '6px 8px', display: 'inline-block' }}>{cls.band}</span></td>
+                  }
+                  return <td key={p.slug} style={tdStyle}><span style={{ ...mono({ fontSize: 10, letterSpacing: '0.1em', color: MUTED }), border: `1px dashed ${LINE}`, padding: '6px 8px', display: 'inline-block' }}>To build</span></td>
+                })}
               </tr>
             ))}
           </tbody>
@@ -417,6 +422,18 @@ function ChannelBlock({ ch, people, slug }: { ch: Channel; people?: Person[]; sl
             <div style={{ marginTop: 8, maxWidth: 760, lineHeight: 1.55 }}>{ch.analysis}</div>
           </div>
         )}
+        {ch.classification && (() => {
+          const c = ch.classification
+          const col = c.bandKey === 'boat-anchor' ? '#DD5C20' : c.bandKey === 'convergence' ? HOT : COBALT
+          return (
+            <div style={{ border: `2px solid ${col}`, padding: '16px 18px', margin: '12px 0' }}>
+              <div style={mono({ color: col, fontSize: 10, letterSpacing: '0.12em' })}>Transition classification · set</div>
+              <div style={{ fontFamily: FONT.display, fontSize: 19, marginTop: 8, color: col }}>{c.band}</div>
+              <div style={{ fontSize: 15, fontWeight: 600, marginTop: 8, maxWidth: 760 }}>{c.verdict}</div>
+              <div style={{ fontSize: 14, marginTop: 8, maxWidth: 760, lineHeight: 1.55, color: MUTED }}>{c.reasoning}</div>
+            </div>
+          )
+        })()}
         {ch.toBuild.map((tb, i) => <ToBuildBlock key={i} tb={tb} />)}
       </div>
     </div>

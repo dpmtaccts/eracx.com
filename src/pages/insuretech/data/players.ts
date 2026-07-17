@@ -27,6 +27,15 @@ export interface Divergence {
   text: string
 }
 
+/** A resolved judgment: the transition classification for a player. */
+export type ClassBand = 'controllable-lag' | 'boat-anchor' | 'convergence'
+export interface Classification {
+  band: string // display label
+  bandKey: ClassBand
+  verdict: string // one-line call
+  reasoning: string // grounded reasoning
+}
+
 export type ChannelId = 'promise' | 'exec' | 'proof' | 'sources' | 'agents' | 'verdict'
 
 export interface Channel {
@@ -38,6 +47,7 @@ export interface Channel {
   evidence: Evidence[]
   divergence?: Divergence
   analysis?: string // ERA read / judgment layer, rendered distinctly from raw evidence
+  classification?: Classification // resolved transition classification (was a TO BUILD block)
   toBuild: ToBuild[]
 }
 
@@ -183,7 +193,13 @@ const sapiens: Player = {
         ], note: 'The ownership change and a refreshed executive team sit directly under the transition story. A private-equity owner reframes what the AI-native claim is being built toward.' },
       ],
       divergence: { text: 'Website taxonomy leads with breadth across lines. LinkedIn, careers, and exec posts scan is TO BUILD. Do not composite the two into one message until both are captured.' },
-      toBuild: [{ label: 'To build · transition classification', what: 'Classify the promise as controllable lag, boat-anchor legacy, or competitive convergence, once the LinkedIn and careers scan confirm whether the AI-native claim is carried or contradicted, and how the Advent ownership reframes it.', meta: 'Needs · LinkedIn · careers · exec posts · press divergence scan' }],
+      classification: {
+        band: 'Boat-anchor legacy',
+        bandKey: 'boat-anchor',
+        verdict: 'The multi-line depth that is the strength is also the legacy weight. The transition is dragging on old architecture and a change of ownership at the same time.',
+        reasoning: 'Sapiens makes the widest promise, P&C, life, and reinsurance on one platform, but it grows the slowest in the set (+2.9%), carries an "old tech stack" theme and a weak employer brand, and is mid-transition under a new PE owner with a departing founder-CEO. The prior brand report rates it Vulnerable (59). The distance between the AI-modernized claim and the reality is the furthest of the four, and closing it is not a messaging fix. The legacy breadth and the organizational instability are structural drags. Advent’s investment is the lever, but the anchor is real.',
+      },
+      toBuild: [],
     }),
     CH.exec({
       body: 'The crawl list resolves to a leadership bench weighted toward Israel and the go-to-market side. The 180-day LinkedIn capture, below, shows who actually carries the voice.',
@@ -253,7 +269,13 @@ const guidewire: Player = {
           '2026-06-09 · Santam went live. 2026-06-08 · Peel Mutual expands on Guidewire Cloud.',
         ], note: 'The transition claim is carried by a steady cadence of dated product and go-live news. The tech-stack pull shows a live AI layer (OpenAI, Anthropic, LangChain, Databricks), consistent with the message.' },
       ],
-      toBuild: [{ label: 'To build · transition classification', what: 'Classify against the LinkedIn and careers scan. As benchmark, its congruence sets the reference the other three read against.', meta: 'Needs · owned-message divergence scan' }],
+      classification: {
+        band: 'Controllable lag',
+        bandKey: 'controllable-lag',
+        verdict: 'The transition is real and Guidewire sets its own pace. The only gap is a perception, not the product. This is the least-lagged of the four.',
+        reasoning: 'Guidewire is the one player whose AI claim is backed by a shipped product (ProNavigator), six straight years as a Gartner MQ Leader, and the deepest verified customer base (4.6 across 105 reviews). The promise does not outrun the reality. The drag is the competitor-fed perception that the platform is heavy, expensive, and slow to implement, which the scale and analyst record can offset over time rather than a structural anchor. As benchmark, its congruence is the reference the other three are read against.',
+      },
+      toBuild: [],
     }),
     CH.exec({
       body: 'The crawl list resolved heavily to talent-acquisition roles rather than the commercial bench, so the captured voice is thin and worth widening. The 180-day activity is below.',
@@ -327,7 +349,13 @@ const majesco: Player = {
         ], note: 'The premium-volume figure is the load-bearing proof under the AI-native claim. Majesco also grew headcount faster than the other three over the last year.' },
       ],
       divergence: { text: 'The AI-native promise sits against a 25M–75M revenue band and a Thoma Bravo ownership structure, alongside the fastest headcount growth in the set and a 100 billion dollar premium-volume claim. The signals point in different directions. Hold the gap open. Whether the claim is credible reach or overreach is a judgment call.' },
-      toBuild: [{ label: 'To build · transition classification', what: 'Classify the AI-native claim as controllable lag, boat-anchor, or convergence once the owned-message scan and proof are in.', meta: 'Needs · LinkedIn · careers · press scan' }],
+      classification: {
+        band: 'Controllable lag',
+        bandKey: 'controllable-lag',
+        verdict: 'The claim is the loudest and runs ahead of the delivery, but the momentum to close the gap is real and self-directed.',
+        reasoning: 'Majesco makes the most aggressive AI-native claim on the smallest revenue base, and the prior brand report’s sharpest risk is delivery-quality variability tied to a weak employer brand. The promise is ahead of the delivery. But the direction is right and controllable: the fastest headcount growth in the set (+19.4%), premium processed on the core rising from $36B to over $100B, active AI investment, and leaders who carry a genuine point of view rather than only promotion. The watch is whether delivery quality catches up to the ambition before a buyer notices the gap.',
+      },
+      toBuild: [],
     }),
     CH.exec({
       body: 'A compact, senior, US-weighted bench with a visible strategy voice. The 180-day activity is below.',
@@ -392,7 +420,13 @@ const duckcreek: Player = {
           "2026-04-27 · Formation '26 cited double-digit new customer wins and expansions.",
         ], note: 'Headcount is flat over the last year while the company acquires AI capability. That pairing is a signal for the transition read.' },
       ],
-      toBuild: [{ label: 'To build · transition classification', what: 'Test whether the Send acquisition is folded into the promise as capability or still sits outside it, and whether the cloud claim is carried or lagged.', meta: 'Needs · LinkedIn · careers · press scan' }],
+      classification: {
+        band: 'Competitive convergence',
+        bandKey: 'convergence',
+        verdict: 'The position is defined relative to Guidewire and the AI capability was bought in, so the promise mirrors the category rather than setting it apart. The execution is strong; the position is derivative.',
+        reasoning: 'Duck Creek executes the transition well: a coherent, CEO-led narrative around the Send acquisition and the Intelligent Core, with brand health trending up. But the agentic-AI capability is acquired (Send, July 2026) rather than native, and the prior brand report finds Duck Creek framed as "Guidewire’s closest competitor" in AI and third-party sources. The promise converges on the category leader’s rather than differentiating from it. The employer-brand drag from the Vista era is a secondary anchor.',
+      },
+      toBuild: [],
     }),
     CH.exec({
       body: 'A new CEO and a new CTO make the voice pattern a moving target worth dating carefully. The 180-day activity is below.',
