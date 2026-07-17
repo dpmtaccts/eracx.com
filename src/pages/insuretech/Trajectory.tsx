@@ -2,155 +2,168 @@ import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { FONT } from './theme'
 
-/* Congruence over time. A scroll-driven trajectory of leader-brand congruence,
-   month by month, Feb-Jul 2026. All four lines stay drawn (readable without
-   scrolling); the story spotlights one vendor per scroll step, then lands on the
-   snapshot-vs-trend reshuffle. Values are a directional index, not a measurement,
-   and most dates are derived from relative LinkedIn timestamps. */
+/* Congruence over time. Full-width, background-free line graph that draws
+   left to right when it scrolls into view. Overview shows each vendor's
+   leader-brand congruence across Feb-Jul 2026. Select a vendor to compare its
+   brand message (solid) with what its leaders carried on LinkedIn (dashed);
+   the shaded gap between the two lines is the lag. Values are a directional
+   index, not a measurement, and most dates come off relative LinkedIn stamps. */
 
 const INK = '#0A0A0A'
-const PAPER = '#FFFFFF'
-const PARCHMENT = '#F4F1EA'
-const LINE = 'rgba(10,10,10,0.15)'
 const MUTED = 'rgba(10,10,10,0.55)'
+const FAINT = 'rgba(10,10,10,0.10)'
 const HOT = '#E6195F'
 
 const mono = (extra?: CSSProperties): CSSProperties => ({ fontFamily: FONT.mono, fontSize: 11, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', ...extra })
 
 const MONTHS = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']
 
-interface VLine { slug: string; name: string; color: string; temporal: number; model: string; points: number[] }
+interface VLine {
+  slug: string; name: string; color: string; temporal: number; lag: string
+  congruence: number[]; brand: number[]; leader: number[]; note: string
+}
 const LINES: VLine[] = [
-  { slug: 'sapiens', name: 'Sapiens', color: '#1845C2', temporal: 84, model: 'Cascade', points: [40, 55, 58, 60, 80, 84] },
-  { slug: 'guidewire', name: 'Guidewire', color: '#0A0A0A', temporal: 58, model: 'Corporate-publisher', points: [46, 58, 48, 56, 50, 58] },
-  { slug: 'duckcreek', name: 'Duck Creek', color: '#DD5C20', temporal: 73, model: 'Strategic-moment', points: [28, 42, 66, 68, 54, 73] },
-  { slug: 'majesco', name: 'Majesco', color: '#E6195F', temporal: 67, model: 'Repositioning', points: [40, 52, 64, 65, 58, 67] },
+  { slug: 'sapiens', name: 'Sapiens', color: '#1845C2', temporal: 84, lag: 'about one week',
+    congruence: [40, 55, 58, 60, 80, 84], brand: [46, 56, 60, 63, 88, 86], leader: [40, 49, 55, 57, 70, 83],
+    note: 'Leaders adopt within about a week. By the June rebrand the brand and leader lines nearly meet.' },
+  { slug: 'guidewire', name: 'Guidewire', color: '#0A0A0A', temporal: 58, lag: 'often no handoff',
+    congruence: [46, 58, 48, 56, 50, 58], brand: [58, 66, 60, 64, 60, 66], leader: [40, 44, 40, 45, 42, 47],
+    note: 'The brand publishes steadily. Its executives rarely carry it. The gap does not close.' },
+  { slug: 'duckcreek', name: 'Duck Creek', color: '#DD5C20', temporal: 73, lag: 'same week around events',
+    congruence: [28, 42, 66, 68, 54, 73], brand: [38, 48, 74, 70, 56, 82], leader: [30, 38, 58, 64, 50, 68],
+    note: 'Leaders move on events, Formation and then the Send acquisition, and go quiet between them.' },
+  { slug: 'majesco', name: 'Majesco', color: '#E6195F', temporal: 67, lag: 'days to three months',
+    congruence: [40, 52, 64, 65, 58, 67], brand: [45, 58, 70, 68, 60, 74], leader: [38, 47, 58, 61, 55, 64],
+    note: 'Campaigns transfer in days. The wider repositioning takes one to three months to reach the executives.' },
 ]
 
-interface Step { emph: string | null; title: string; text: string }
-const STEPS: Step[] = [
-  { emph: null, title: 'Six months, one question', text: 'Not who is ahead, but who is gaining. Each line is a vendor’s leader-brand congruence, month by month, February to July 2026. Read it as a direction, not a measurement.' },
-  { emph: 'sapiens', title: 'Sapiens accelerates', text: 'The cascade compounds into the June rebrand. Leaders pick up hyper-relevance within the week and keep extending it. 40 to 84, and still climbing.' },
-  { emph: 'guidewire', title: 'Guidewire flatlines', text: 'The strongest corporate evidence in the set, and no cascade forms. The line never leaves the mid-50s. Ahead on the snapshot, stalled on the trend.' },
-  { emph: 'duckcreek', title: 'Duck Creek spikes on events', text: 'Formation, then the Send acquisition. Alignment jumps when there is a moment to rally around, and sags between them. Momentum you rent.' },
-  { emph: 'majesco', title: 'Majesco climbs from the bottom', text: 'The lowest base and a positive slope. Spring ’26, then the AI-native repositioning. Improving, still mid-build.' },
-  { emph: 'all', title: 'The snapshot and the trend disagree', text: 'Rank by today’s score and Guidewire is second. Rank by the slope and it is last, ahead but not moving. Sapiens is the only vendor strong on both level and trajectory.' },
-]
-
-// chart geometry
-const W = 640, H = 430, PADL = 40, PADR = 96, PADT = 28, PADB = 38
+// geometry
+const W = 1000, H = 420, PADL = 18, PADR = 128, PADT = 34, PADB = 42
 const x = (i: number) => PADL + (i / (MONTHS.length - 1)) * (W - PADL - PADR)
 const y = (v: number) => PADT + (1 - v / 100) * (H - PADT - PADB)
+const line = (pts: number[]) => pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${x(i)} ${y(p)}`).join(' ')
+const area = (a: number[], b: number[]) =>
+  a.map((p, i) => `${i === 0 ? 'M' : 'L'} ${x(i)} ${y(p)}`).join(' ') +
+  ' ' + b.map((_, i) => `L ${x(b.length - 1 - i)} ${y(b[b.length - 1 - i])}`).join(' ') + ' Z'
 
-function Chart({ emph }: { emph: string | null }) {
-  const showAll = emph === null || emph === 'all'
+function Chart({ selected, drawn }: { selected: string | null; drawn: boolean }) {
+  const one = selected ? LINES.find((l) => l.slug === selected)! : null
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: 'auto', display: 'block' }}>
-      {/* horizontal guides */}
+    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
+      <style>{`
+        @keyframes traj-draw { to { stroke-dashoffset: 0; } }
+        @keyframes traj-fade { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes traj-fade-dim { from { opacity: 0; } to { opacity: 0.85; } }
+      `}</style>
+
+      {/* faint reference lines */}
       {[40, 60, 80].map((v) => (
-        <g key={v}>
-          <line x1={PADL} y1={y(v)} x2={W - PADR} y2={y(v)} stroke={LINE} strokeWidth="1" />
-          <text x={PADL - 8} y={y(v) + 3} textAnchor="end" fontFamily="JetBrains Mono, monospace" fontSize="9" fill="#9a958c">{v}</text>
-        </g>
+        <line key={v} x1={PADL} y1={y(v)} x2={W - PADR} y2={y(v)} stroke={FAINT} strokeWidth="1" />
       ))}
-      {/* month guides + labels */}
       {MONTHS.map((m, i) => (
-        <g key={m}>
-          <line x1={x(i)} y1={PADT} x2={x(i)} y2={H - PADB} stroke="rgba(10,10,10,0.06)" strokeWidth="1" />
-          <text x={x(i)} y={H - PADB + 20} textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="10" letterSpacing="1.2" fill="#6B6760">{m.toUpperCase()}</text>
-        </g>
+        <text key={m} x={x(i)} y={H - PADB + 22} textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="11" letterSpacing="1.2" fill={MUTED}>{m.toUpperCase()}</text>
       ))}
-      {/* lines */}
-      {LINES.map((l) => {
-        const on = showAll || emph === l.slug
-        const d = l.points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${x(i)} ${y(p)}`).join(' ')
-        return (
-          <g key={l.slug} style={{ transition: 'opacity 300ms ease' }} opacity={on ? 1 : 0.16}>
-            <path d={d} fill="none" stroke={l.color} strokeWidth={emph === l.slug ? 3.2 : 2} strokeLinejoin="round" strokeLinecap="round" />
-            {/* endpoint dot + label */}
-            <circle cx={x(5)} cy={y(l.points[5])} r={emph === l.slug ? 4.5 : 3} fill={l.color} />
-            <text x={x(5) + 9} y={y(l.points[5]) + 3} fontFamily="JetBrains Mono, monospace" fontSize={emph === l.slug ? 12 : 10} fontWeight="600" fill={l.color}>
-              {l.name} {l.temporal}
-            </text>
-          </g>
-        )
-      })}
-      <text x={PADL} y={PADT - 12} fontFamily="JetBrains Mono, monospace" fontSize="9" letterSpacing="1.2" fill="#9a958c">CONGRUENCE INDEX · DIRECTIONAL</text>
+
+      {drawn && !one && (
+        <g key="all">
+          {LINES.map((l, idx) => (
+            <g key={l.slug}>
+              <path d={line(l.congruence)} pathLength={1} fill="none" stroke={l.color} strokeWidth="2.6" strokeLinejoin="round" strokeLinecap="round"
+                strokeDasharray={1} style={{ strokeDashoffset: 1, animation: `traj-draw 1100ms ease ${idx * 90}ms forwards` }} />
+              <circle cx={x(5)} cy={y(l.congruence[5])} r="3.5" fill={l.color} style={{ opacity: 0, animation: `traj-fade 300ms ease ${900 + idx * 90}ms forwards` }} />
+              <text x={x(5) + 10} y={y(l.congruence[5]) + 4} fontFamily="JetBrains Mono, monospace" fontSize="12" fontWeight="600" fill={l.color}
+                style={{ opacity: 0, animation: `traj-fade 300ms ease ${900 + idx * 90}ms forwards` }}>{l.name} {l.temporal}</text>
+            </g>
+          ))}
+        </g>
+      )}
+
+      {drawn && one && (
+        <g key={one.slug}>
+          {/* the lag: shaded gap between brand and leader */}
+          <path d={area(one.brand, one.leader)} fill={one.color} fillOpacity={0.16} style={{ opacity: 0, animation: 'traj-fade 500ms ease 700ms forwards' }} />
+          {/* brand line, solid */}
+          <path d={line(one.brand)} pathLength={1} fill="none" stroke={one.color} strokeWidth="3" strokeLinejoin="round" strokeLinecap="round"
+            strokeDasharray={1} style={{ strokeDashoffset: 1, animation: 'traj-draw 1100ms ease forwards' }} />
+          {/* leader line, dashed, trailing */}
+          <path d={line(one.leader)} fill="none" stroke={one.color} strokeWidth="2.4" strokeLinejoin="round" strokeLinecap="round"
+            style={{ strokeDasharray: '9 7', opacity: 0, animation: 'traj-fade-dim 700ms ease 500ms forwards' }} />
+          {/* end labels */}
+          <text x={x(5) + 10} y={y(one.brand[5]) + 4} fontFamily="JetBrains Mono, monospace" fontSize="12" fontWeight="600" fill={one.color}
+            style={{ opacity: 0, animation: 'traj-fade 300ms ease 1100ms forwards' }}>Brand</text>
+          <text x={x(5) + 10} y={y(one.leader[5]) + 4} fontFamily="JetBrains Mono, monospace" fontSize="12" fontWeight="600" fill={MUTED}
+            style={{ opacity: 0, animation: 'traj-fade 300ms ease 1100ms forwards' }}>Leaders</text>
+        </g>
+      )}
     </svg>
   )
 }
 
 export function Trajectory() {
-  const [active, setActive] = useState(0)
-  const [narrow, setNarrow] = useState(false)
-  const stepRefs = useRef<(HTMLDivElement | null)[]>([])
+  const [selected, setSelected] = useState<string | null>(null)
+  const [drawn, setDrawn] = useState(false)
+  const ref = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 860px)')
-    const sync = () => setNarrow(mq.matches)
-    sync()
-    mq.addEventListener('change', sync)
-    return () => mq.removeEventListener('change', sync)
-  }, [])
-
-  useEffect(() => {
+    const el = ref.current
+    if (!el) return
     const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.step))
-        })
-      },
-      { rootMargin: '-48% 0px -48% 0px', threshold: 0 },
+      (entries) => { entries.forEach((e) => { if (e.isIntersecting) setDrawn(true) }) },
+      { rootMargin: '0px 0px -25% 0px', threshold: 0.12 },
     )
-    stepRefs.current.forEach((el) => el && obs.observe(el))
+    obs.observe(el)
     return () => obs.disconnect()
   }, [])
 
-  const emph = narrow ? null : STEPS[active]?.emph ?? null
+  const one = selected ? LINES.find((l) => l.slug === selected)! : null
+
+  const chip = (active: boolean, color?: string): CSSProperties => ({
+    ...mono({ fontSize: 11, letterSpacing: '0.1em' }),
+    padding: '8px 14px', cursor: 'pointer', background: active ? (color ?? INK) : 'transparent',
+    color: active ? '#fff' : INK, border: `1px solid ${active ? (color ?? INK) : FAINT}`,
+    transition: 'all 160ms ease',
+  })
 
   return (
-    <section id="trajectory" style={{ padding: '4vw 3vw', borderBottom: `1px solid ${INK}`, background: PAPER }}>
-      <div style={{ marginBottom: 24 }}>
+    <section id="trajectory" ref={ref} style={{ padding: '4vw 3vw', borderBottom: `1px solid ${INK}`, background: '#fff' }}>
+      <div style={{ maxWidth: 820, marginBottom: 26 }}>
         <div style={mono({ color: HOT })}>▸ 04 · Congruence over time</div>
-        <h2 style={{ fontFamily: FONT.display, fontSize: 'clamp(22px,3vw,40px)', lineHeight: 1.05, maxWidth: 900, marginTop: 10 }}>Who is gaining, not just who is ahead.</h2>
-        <p style={{ fontSize: 'clamp(15px,1.3vw,18px)', color: MUTED, maxWidth: 720, marginTop: 14 }}>
-          The scores are a snapshot. The trend is the story. Each line traces a vendor’s leader-brand congruence across the six-month window. Scroll to spotlight each one.
+        <h2 style={{ fontFamily: FONT.display, fontSize: 'clamp(22px,3vw,40px)', lineHeight: 1.06, marginTop: 10 }}>
+          The gap between brand message and leader adoption is closing for three vendors, and holding for Guidewire.
+        </h2>
+        <p style={{ fontSize: 'clamp(15px,1.3vw,18px)', color: MUTED, marginTop: 14, lineHeight: 1.55 }}>
+          Each vendor publishes a position, then its executives either carry it or they do not. The distance between the two lines is the lag. Select a vendor to see how far its leaders trail and whether the gap is closing.
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: narrow ? '1fr' : 'minmax(0, 1.1fr) minmax(0, 0.9fr)', gap: '3vw', alignItems: 'start' }}>
-        {/* sticky chart */}
-        <div style={{ position: 'sticky', top: '12vh', alignSelf: 'start', zIndex: 1 }}>
-          <div style={{ border: `1px solid ${LINE}`, background: PARCHMENT, padding: '18px 18px 8px' }}>
-            <Chart emph={emph} />
-          </div>
-          <div style={{ ...mono({ fontSize: 10, letterSpacing: '0.1em', color: MUTED }), marginTop: 10 }}>
-            {emph && emph !== 'all' ? (LINES.find((l) => l.slug === emph)?.model) + ' model' : 'Feb to Jul 2026 · index 0–100'}
-          </div>
-        </div>
-
-        {/* scrolling steps */}
-        <div>
-          {STEPS.map((s, i) => (
-            <div
-              key={i}
-              data-step={i}
-              ref={(el) => { stepRefs.current[i] = el }}
-              style={{ minHeight: narrow ? 'auto' : '74vh', padding: narrow ? '18px 0' : 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', opacity: narrow ? 1 : active === i ? 1 : 0.32, transition: 'opacity 300ms ease' }}
-            >
-              <div style={mono({ color: HOT, fontSize: 10 })}>{String(i + 1).padStart(2, '0')} / {STEPS.length}</div>
-              <div style={{ fontFamily: FONT.display, fontSize: 'clamp(20px,2.4vw,30px)', lineHeight: 1.1, marginTop: 10 }}>{s.title}</div>
-              <p style={{ fontSize: 'clamp(15px,1.3vw,18px)', marginTop: 12, maxWidth: 460, lineHeight: 1.55 }}>{s.text}</p>
-            </div>
-          ))}
-        </div>
+      {/* controls */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 22 }}>
+        <button onClick={() => setSelected(null)} style={chip(selected === null)}>All vendors</button>
+        {LINES.map((l) => (
+          <button key={l.slug} onClick={() => setSelected(l.slug)} style={chip(selected === l.slug, l.color)}>{l.name}</button>
+        ))}
       </div>
 
-      <div style={{ borderTop: `1px solid ${LINE}`, marginTop: 8, paddingTop: 16, display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
-        <span style={{ fontSize: 14, maxWidth: 760, color: MUTED }}>
-          Trend ranking by trajectory: Sapiens (accelerating), Duck Creek (rising, event-driven), Majesco (rising from a low base), Guidewire (flat). The snapshot ranks who is ahead; the trend ranks who is gaining.
-        </span>
-        <span style={mono({ fontSize: 10, letterSpacing: '0.08em', color: MUTED })}>Directional index · dates approximate</span>
+      {/* full-width chart */}
+      <Chart selected={selected} drawn={drawn} />
+
+      {/* caption */}
+      <div style={{ marginTop: 18, display: 'grid', gridTemplateColumns: one ? '1fr auto' : '1fr', gap: 20, alignItems: 'start', borderTop: `1px solid ${FAINT}`, paddingTop: 16 }}>
+        <p style={{ fontSize: 15, lineHeight: 1.55, color: INK, maxWidth: 760, margin: 0 }}>
+          {one
+            ? one.note
+            : 'Each line is a vendor’s leader-brand congruence across the six-month window. Directional, not a measurement. Select a vendor to compare its brand message with what its leaders actually carried.'}
+        </p>
+        {one && (
+          <div style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
+            <div style={mono({ fontSize: 10, color: MUTED })}>Typical lag</div>
+            <div style={{ fontFamily: FONT.display, fontSize: 18, marginTop: 4, color: one.color }}>{one.lag}</div>
+          </div>
+        )}
+      </div>
+
+      <div style={{ ...mono({ fontSize: 10, letterSpacing: '0.08em', color: MUTED }), marginTop: 14 }}>
+        Directional index, 0 to 100 · monthly points interpolated from the categorical reads · dates approximate
       </div>
     </section>
   )
