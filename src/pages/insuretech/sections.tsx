@@ -424,6 +424,15 @@ function ChannelBlock({ ch, people, slug }: { ch: Channel; people?: Person[]; sl
                 </div>
               ))}
             </div>
+            {ch.temporal && (
+              <div style={{ marginTop: 16, paddingTop: 14, borderTop: `1px solid ${LINE}` }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', alignItems: 'baseline' }}>
+                  <div style={mono({ fontSize: 10, letterSpacing: '0.1em', color: MUTED })}>Temporal congruence · {ch.temporal.model}</div>
+                  <div style={{ fontFamily: FONT.display, fontSize: 20 }}>{ch.temporal.value}<span style={{ fontSize: 12, color: MUTED }}> / {ch.temporal.max}</span></div>
+                </div>
+                <div style={{ fontSize: 13, color: MUTED, marginTop: 6, maxWidth: 760 }}>Typical brand-to-leader lag: {ch.temporal.lag}. {ch.temporal.note}</div>
+              </div>
+            )}
           </div>
         )}
         {ch.evidence.map((ev, i) => <Evidence key={i} ev={ev} />)}
