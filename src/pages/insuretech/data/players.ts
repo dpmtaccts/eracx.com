@@ -166,7 +166,7 @@ const person = (
 
 // ============================ SAPIENS ============================
 const sapiens: Player = {
-  slug: 'sapiens', name: 'Sapiens', domain: 'sapiens.com', logo: '/images/insuretech/sapiens.svg', section: '04',
+  slug: 'sapiens', name: 'Sapiens', domain: 'sapiens.com', logo: '/images/insuretech/sapiens.svg', section: '05',
   ownership: 'Advent (PE)', ownershipNote: 'Acquired by Advent for ~2.5 billion dollars, closed Dec 2025, with leadership appointments announced 2025-12-17.',
   headcount: '5,265', growth12mo: '+2.9%', revenue: '500M–1B', funding: '$0 (acquired)',
   hq: 'London / Holon', customersClaimed: '600+ · 30+ countries', crawl: '80', resolved: '73',
@@ -276,7 +276,7 @@ const sapiens: Player = {
 
 // ============================ GUIDEWIRE ============================
 const guidewire: Player = {
-  slug: 'guidewire', name: 'Guidewire', domain: 'guidewire.com', logo: '/images/insuretech/guidewire.svg', section: '05', band: 'parchment',
+  slug: 'guidewire', name: 'Guidewire', domain: 'guidewire.com', logo: '/images/insuretech/guidewire.svg', section: '06', band: 'parchment',
   ownership: 'Public', ownershipNote: 'Public (NYSE: GWRE).',
   headcount: '4,329', growth12mo: '+13.5%', revenue: '1B–10B', funding: '$0',
   hq: 'San Mateo', customersClaimed: '570+ insurers · 43 countries', crawl: '96', resolved: '91',
@@ -370,7 +370,7 @@ const guidewire: Player = {
 
 // ============================ MAJESCO ============================
 const majesco: Player = {
-  slug: 'majesco', name: 'Majesco', domain: 'majesco.com', logo: '/images/insuretech/majesco.svg', section: '06',
+  slug: 'majesco', name: 'Majesco', domain: 'majesco.com', logo: '/images/insuretech/majesco.svg', section: '07',
   ownership: 'Private (Thoma Bravo)', ownershipNote: 'Thoma Bravo portfolio; A.J. Rohde, Thoma Bravo Senior Partner, appears in the crawl.',
   headcount: '2,836', growth12mo: '+19.4% (fastest)', revenue: '25M–75M', funding: '$0',
   hq: 'Morristown, NJ', customersClaimed: '375+ · 1,400+ implementations', crawl: '37', resolved: '35',
@@ -468,7 +468,7 @@ const majesco: Player = {
 
 // ============================ DUCK CREEK ============================
 const duckcreek: Player = {
-  slug: 'duckcreek', name: 'Duck Creek', domain: 'duckcreek.com', logo: '/images/insuretech/duckcreek.svg', section: '07', band: 'parchment',
+  slug: 'duckcreek', name: 'Duck Creek', domain: 'duckcreek.com', logo: '/images/insuretech/duckcreek.svg', section: '08', band: 'parchment',
   ownership: 'Private (Vista)', ownershipNote: 'Vista Equity Partners portfolio.',
   headcount: '1,873', growth12mo: 'flat', revenue: '200M–500M', funding: '$120M',
   hq: 'Boston', customersClaimed: 'P&C / general · cloud, evergreen', crawl: '57', resolved: '54',

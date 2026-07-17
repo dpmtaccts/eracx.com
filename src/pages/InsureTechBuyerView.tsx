@@ -6,6 +6,7 @@ import '../styles/v4-tokens.css'
 import { FONT, ThemeContext, loadFonts, useThemeState } from './insuretech/theme'
 import { PasswordGate, isAuthed } from './insuretech/PasswordGate'
 import { Masthead, TocBar, Situation, DataLedger, Method, Rollup, AllPlayers, Footer } from './insuretech/sections'
+import { Trajectory } from './insuretech/Trajectory'
 
 /* The InsureTech Buyer View.
    An industry Buyer View for the insurance-technology core-platform market.
@@ -37,6 +38,7 @@ function Shell() {
         <DataLedger />
         <Method />
         <Rollup />
+        <Trajectory />
         <AllPlayers />
         <Footer />
       </div>
