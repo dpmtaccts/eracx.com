@@ -222,7 +222,7 @@ export function Situation() {
       </p>
       <div style={sub}>Scope and boundaries</div>
       <p style={para}>
-        This report assembles evidence. It does not score the vendors, with one exception now set, the transition classification. The rest of the scoring is a separate judgment pass, and every open score is left as a labeled block until that pass runs. Keeping assembly and scoring apart lets a reader check the inputs before trusting a number.
+        This report assembles evidence. Two judgments are now set, the transition classification and the leader-brand congruence score. The rest of the scoring is a separate judgment pass, and every open score is left as a labeled block until that pass runs. Keeping assembly and scoring apart lets a reader check the inputs before trusting a number.
       </p>
       <div style={sub}>Coverage and open items</div>
       <p style={{ ...para, marginBottom: 0 }}>
@@ -299,7 +299,7 @@ export function Rollup() {
   return (
     <Section id="rollup">
       <SectionHead issue={formatSectionLabel('03', 'Vendor comparison')} title="The four vendors across the six channels."
-        lede="Channels down the side, vendors across the top. Guidewire is the benchmark cell for P&C core because it is the scale leader the other three are measured against. Nothing is averaged and nothing is scored here, except the transition classification, which is now set. Each remaining cell holds a labeled block until the judgment pass reaches it." />
+        lede="Channels down the side, vendors across the top. Guidewire is the benchmark cell for P&C core because it is the scale leader the other three are measured against. Nothing is averaged here. Two rows are now set, the transition classification and the leader-brand congruence score. Each remaining cell holds a labeled block until the judgment pass reaches it." />
       <div style={{ overflowX: 'auto', border: `1px solid ${INK}` }}>
         <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 720 }}>
           <thead>
@@ -316,9 +316,13 @@ export function Rollup() {
                 <th style={rowHeadStyle}>{c.num} {c.name}</th>
                 {PLAYERS.map((p) => {
                   const cls = c.num === '01' ? p.channels.find((ch) => ch.id === 'promise')?.classification : undefined
+                  const score = c.num === '02' ? p.channels.find((ch) => ch.id === 'exec')?.score : undefined
                   if (cls) {
                     const col = cls.bandKey === 'boat-anchor' ? '#DD5C20' : cls.bandKey === 'convergence' ? HOT : COBALT
                     return <td key={p.slug} style={tdStyle}><span style={{ ...mono({ fontSize: 10, letterSpacing: '0.08em' }), color: col, border: `1px solid ${col}`, padding: '6px 8px', display: 'inline-block' }}>{cls.band}</span></td>
+                  }
+                  if (score) {
+                    return <td key={p.slug} style={tdStyle}><span style={{ ...mono({ fontSize: 11, letterSpacing: '0.06em' }), color: INK, border: `1px solid ${INK}`, padding: '6px 8px', display: 'inline-block' }}>{score.value} / {score.max}</span></td>
                   }
                   return <td key={p.slug} style={tdStyle}><span style={{ ...mono({ fontSize: 10, letterSpacing: '0.1em', color: MUTED }), border: `1px dashed ${LINE}`, padding: '6px 8px', display: 'inline-block' }}>To build</span></td>
                 })}
@@ -404,6 +408,24 @@ function ChannelBlock({ ch, people, slug }: { ch: Channel; people?: Person[]; sl
       </div>
       <div>
         {ch.body && <p style={{ maxWidth: 760, marginBottom: 12 }}>{ch.body}</p>}
+        {ch.score && (
+          <div style={{ border: `2px solid ${INK}`, padding: '16px 18px', margin: '4px 0 14px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16, flexWrap: 'wrap' }}>
+              <div style={mono({ fontSize: 10, letterSpacing: '0.12em', color: MUTED })}>{ch.score.label} · score set</div>
+              <div style={{ fontFamily: FONT.mega, fontSize: 44, lineHeight: 1 }}>{ch.score.value}<span style={{ fontSize: 18, color: MUTED }}> / {ch.score.max}</span></div>
+            </div>
+            <div style={{ fontSize: 14, color: MUTED, marginTop: 8, maxWidth: 760 }}>{ch.score.interpretation}</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 14, marginTop: 16 }}>
+              {ch.score.dims.map((d) => (
+                <div key={d.name}>
+                  <div style={mono({ fontSize: 9, letterSpacing: '0.08em', color: MUTED })}>{d.name}</div>
+                  <div style={{ fontSize: 16, fontFamily: FONT.display, marginTop: 4 }}>{d.points}<span style={{ fontSize: 12, color: MUTED }}> / {d.weight}</span></div>
+                  <div style={{ height: 4, background: LINE, marginTop: 6 }}><div style={{ height: 4, background: INK, width: `${Math.round((d.points / d.weight) * 100)}%` }} /></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         {ch.evidence.map((ev, i) => <Evidence key={i} ev={ev} />)}
         {ch.divergence && (
           <div style={{ background: PARCHMENT, border: `1px solid ${LINE}`, padding: '14px 16px', margin: '10px 0' }}>

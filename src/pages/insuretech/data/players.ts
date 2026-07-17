@@ -36,6 +36,16 @@ export interface Classification {
   reasoning: string // grounded reasoning
 }
 
+/** A set score for a channel, with its weighted dimensions. */
+export interface ScoreDim { name: string; weight: number; points: number }
+export interface ChannelScore {
+  label: string
+  value: number
+  max: number
+  interpretation: string
+  dims: ScoreDim[]
+}
+
 export type ChannelId = 'promise' | 'exec' | 'proof' | 'sources' | 'agents' | 'verdict'
 
 export interface Channel {
@@ -48,6 +58,7 @@ export interface Channel {
   divergence?: Divergence
   analysis?: string // ERA read / judgment layer, rendered distinctly from raw evidence
   classification?: Classification // resolved transition classification (was a TO BUILD block)
+  score?: ChannelScore // set channel score with weighted dimensions
   toBuild: ToBuild[]
 }
 
@@ -207,6 +218,17 @@ const sapiens: Player = {
     }),
     CH.exec({
       body: 'The crawl list resolves to a leadership bench weighted toward Israel and the go-to-market side. The 180-day LinkedIn capture, below, shows who actually carries the voice.',
+      score: {
+        label: 'Leader-brand congruence', value: 76, max: 100,
+        interpretation: 'The most coordinated leadership narrative in the set. Multiple leaders carry the same thesis, though they repeat it more often than they prove it.',
+        dims: [
+          { name: 'Message alignment', weight: 25, points: 23 },
+          { name: 'Leadership participation', weight: 20, points: 18 },
+          { name: 'Independent interpretation', weight: 20, points: 14 },
+          { name: 'Evidence and behavior', weight: 25, points: 15 },
+          { name: 'Market dialogue', weight: 10, points: 6 },
+        ],
+      },
       analysis: 'Sapiens has the loudest leader presence in the set, 113 posts across seven of eight captured leaders and the most external engagers, but the volume is carried by marketing and sales, not the top. Persi Kanga (74 posts) and Jennifer Gamble (28 posts, 183 comments) drive event and product promotion, the AI Customer Experience Lab, Sapiens Decision, reinsurance, under a light thought-leadership frame. The founder-CEO, Roni Al-Dor, posted once in 180 days, to announce he is concluding his role after the Advent close. The company is audible but has no owner of an original point of view at the top, and the recurring theme is the new owner, brand, and London HQ rather than a market argument.',
       toBuild: [
         { label: 'To build · social capture', what: 'Manual pass across the bench. Follower counts, posting cadence, and whether each anchor publishes original point of view or reposts.', meta: 'Per executive · pending' },
@@ -289,6 +311,17 @@ const guidewire: Player = {
     }),
     CH.exec({
       body: 'The crawl list resolved heavily to talent-acquisition roles rather than the commercial bench, so the captured voice is thin and worth widening. The 180-day activity is below.',
+      score: {
+        label: 'Leader-brand congruence', value: 69, max: 100,
+        interpretation: 'Strong evidence instincts and a few genuinely original leaders, but an underactivated, disconnected leadership network. The most active independent voice is not carrying the insurance narrative.',
+        dims: [
+          { name: 'Message alignment', weight: 25, points: 19 },
+          { name: 'Leadership participation', weight: 20, points: 10 },
+          { name: 'Independent interpretation', weight: 20, points: 16 },
+          { name: 'Evidence and behavior', weight: 25, points: 19 },
+          { name: 'Market dialogue', weight: 10, points: 5 },
+        ],
+      },
       analysis: 'Guidewire is the scale benchmark and the quietest leader voice in the set: 15 posts from six captured leaders, most of them recruiting posts or regional event notes, insureNXT in German, a SaaS-investing webinar. No C-suite voice was captured. The company that dominates on implementation count and analyst coverage is nearly absent on the surface where a buyer looks for a human point of view. That gap is the finding. It does not prove the leaders are silent everywhere, but on the captured evidence the benchmark’s personal advocacy is thin, the opposite of its market position. The brand account is the inverse. On X and Instagram, Guidewire is the most active and most evidence-led communicator of the four, translating each theme into a specific problem, product, and number. The voice is institutional, carried by the brand channel rather than by its people. Duck Creek is the mirror image.',
       toBuild: [
         { label: 'To build · widen the anchor set', what: 'The 96-record crawl skewed to recruiters. Pull the commercial and product leadership (CEO, CFO, CRO, product) before assessing executive voice.', meta: 'Needs · targeted crawl · press' },
@@ -371,6 +404,17 @@ const majesco: Player = {
     }),
     CH.exec({
       body: 'A compact, senior, US-weighted bench with a visible strategy voice. The 180-day activity is below.',
+      score: {
+        label: 'Leader-brand congruence', value: 61, max: 100,
+        interpretation: 'Leaders support the AI-native, outcome-oriented direction, but the story is still emerging and leans on assertion, corporate amplification, events, and awards. The brand is moving faster than the proof system around it.',
+        dims: [
+          { name: 'Message alignment', weight: 25, points: 21 },
+          { name: 'Leadership participation', weight: 20, points: 11 },
+          { name: 'Independent interpretation', weight: 20, points: 10 },
+          { name: 'Evidence and behavior', weight: 25, points: 15 },
+          { name: 'Market dialogue', weight: 10, points: 4 },
+        ],
+      },
       analysis: 'Majesco’s leaders track the corporate AI-native message more closely than any other vendor’s, and the bench is anchored by a present CEO. Adam Elster posts on customer value and partnerships, Utkarsh Raka carries a genuine point of view ("Spring 26 release, so what," pressing value over feature-shipping), and Denise Garth’s Frontier Insurer research is amplified repeatedly, including the "82% believe AI will define the industry, 14% have integrated it" stat. Brian McGushin is a heavy commenter (74) more than a poster. The read: on-message, AI-forward, CEO-present, with two or three leaders producing original argument rather than promotion. The voice supports the aggressive positioning better than the revenue band would predict.',
       toBuild: [
         { label: 'To build · social capture', what: 'Follower counts and cadence per anchor. Denise Garth first, given Garth’s external profile.', meta: 'Per executive · pending' },
@@ -444,7 +488,18 @@ const duckcreek: Player = {
     }),
     CH.exec({
       body: 'A new CEO and a new CTO make the voice pattern a moving target worth dating carefully. The 180-day activity is below.',
-      analysis: 'Duck Creek has the broadest active leader bench, twelve of sixteen captured leaders posting, and the most coherent narrative: nearly every post ties to one theme, the Send acquisition, the Intelligent Core, and agentic underwriting. The new CEO, Hardeep Gulati, is genuinely active and customer-facing rather than promotional, and GTM leaders William Genard (17 posts) and Gabe Cossio carry original point of view linking AI to the core, "AI is only as powerful as the core it runs on." The read: a coordinated, CEO-led, acquisition-driven voice with the tightest message discipline in the set, consistent with the transition signal that Duck Creek is buying AI capability and building a story around it. The brand account is the inverse: on X, Duck Creek barely posts, four in the window, and much of the older data is stale. The energy sits in the people, not the brand channel. Guidewire is the mirror image, a loud brand account and quiet executives.',
+      score: {
+        label: 'Leader-brand congruence', value: 65, max: 100,
+        interpretation: 'Corporate strategy and actions are coherent, but too few leaders visibly interpret or carry the story. Broad raw activity, concentrated on one theme rather than independent argument.',
+        dims: [
+          { name: 'Message alignment', weight: 25, points: 22 },
+          { name: 'Leadership participation', weight: 20, points: 11 },
+          { name: 'Independent interpretation', weight: 20, points: 10 },
+          { name: 'Evidence and behavior', weight: 25, points: 18 },
+          { name: 'Market dialogue', weight: 10, points: 4 },
+        ],
+      },
+      analysis: 'Duck Creek shows broad raw activity, twelve of sixteen captured leaders posting, but it concentrates on one theme more than independent interpretation. Nearly every post ties to the same story: the Send acquisition, the Intelligent Core, and agentic underwriting. The new CEO, Hardeep Gulati, is genuinely active and customer-facing rather than promotional, and GTM leaders William Genard (17 posts) and Gabe Cossio carry original point of view linking AI to the core, "AI is only as powerful as the core it runs on." The read: a coordinated, CEO-led, acquisition-driven voice with the tightest message discipline in the set, consistent with the transition signal that Duck Creek is buying AI capability and building a story around it. The brand account is the inverse: on X, Duck Creek barely posts, four in the window, and much of the older data is stale. The energy sits in the people, not the brand channel. Guidewire is the mirror image, a loud brand account and quiet executives.',
       toBuild: [
         { label: 'To build · social capture', what: 'Follower counts and cadence. A new CEO and new CTO make the voice pattern a moving target. Full 57-record resolve is on disk.', meta: 'Per executive · pending' },
         { label: 'To build · audience taxonomy', what: 'Audience mix per anchor.', meta: 'Per executive · pending' },
