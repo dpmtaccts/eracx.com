@@ -216,6 +216,10 @@ export function Situation() {
       <p style={para}>
         A buyer forms most of a view before the first sales call, from sources the vendor does not control: what the vendor’s executives publish, what named customers report, what analysts and answer engines repeat. These sources are harder to manage than a website, so they expose the distance between what a vendor claims and what it can back up. This report reads those sources for each vendor across six channels.
       </p>
+      <div style={sub}>The question none of them answers yet</div>
+      <p style={para}>
+        None of the four owns the category’s most important question: what measurable change happens after the platform goes live. All four assert value. None routinely publishes verified customer economics, time to change a rate, loss ratio, quote-to-bind conversion, implementation time, the share of decisions augmented by AI. Guidewire comes closest and still talks mostly in potential. The first vendor to make post-go-live economics a consistent, published proof system, rather than an occasional case-study detail, would separate itself from the entire category. That opening is the clearest strategic finding in this assessment.
+      </p>
       <div style={sub}>Scope and boundaries</div>
       <p style={para}>
         This report assembles evidence. It does not score the vendors, with one exception now set, the transition classification. The rest of the scoring is a separate judgment pass, and every open score is left as a labeled block until that pass runs. Keeping assembly and scoring apart lets a reader check the inputs before trusting a number.

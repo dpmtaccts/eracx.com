@@ -191,6 +191,10 @@ const sapiens: Player = {
           '2025-08-13 · Agreed to be acquired by Advent at a valuation near 2.5 billion dollars.',
           '2025-12-17 · Leadership appointments following the close of the Advent acquisition.',
         ], note: 'The ownership change and a refreshed executive team sit directly under the transition story. A private-equity owner reframes what the AI-native claim is being built toward.' },
+        { label: 'Brand launch · owned social · 2026-06', items: [
+          'Introduced "hyper-relevance" and a "single insurance ontology" as the new positioning: insurance moving from periodically understanding risk to continuously understanding people, in real time.',
+          'Backed by 600+ insurers in 30 countries on one framework. The most distinctive category language of the four, but concentrated at the June launch and repeated ("risk never stands still," "a world that won’t stop").',
+        ], note: 'The freshest category concept in the set, and still an assertion. No named customer, decision, or outcome yet shows what hyper-relevance changed.' },
       ],
       divergence: { text: 'Website taxonomy leads with breadth across lines. LinkedIn, careers, and exec posts scan is TO BUILD. Do not composite the two into one message until both are captured.' },
       classification: {
@@ -270,6 +274,10 @@ const guidewire: Player = {
           '2026-04-16 · Launched ProNavigator, embedded expert AI inside insurance workflows.',
           '2026-06-09 · Santam went live. 2026-06-08 · Peel Mutual expands on Guidewire Cloud.',
         ], note: 'The transition claim is carried by a steady cadence of dated product and go-live news. The tech-stack pull shows a live AI layer (OpenAI, Anthropic, LangChain, Databricks), consistent with the message.' },
+        { label: 'Owned social · communication behavior', items: [
+          'Translates each theme into a specific operating problem, then a product and a number: pricing in minutes against a 3-to-6-month baseline (PricingCenter), ProNavigator embedded in the workflow rather than a generic chatbot, HazardHub property risk, a claims-savings calculator, a stated $220B protection gap.',
+          'Occupies the category weekly, not only at launches. The most evidence-led communicator of the four.',
+        ], note: 'The edge is a behavior, not only an asset: problem, then product, then number, repeated. It is why Guidewire reads as the category leader on its owned channel.' },
       ],
       classification: {
         band: 'Controllable lag',
@@ -281,7 +289,7 @@ const guidewire: Player = {
     }),
     CH.exec({
       body: 'The crawl list resolved heavily to talent-acquisition roles rather than the commercial bench, so the captured voice is thin and worth widening. The 180-day activity is below.',
-      analysis: 'Guidewire is the scale benchmark and the quietest leader voice in the set: 15 posts from six captured leaders, most of them recruiting posts or regional event notes, insureNXT in German, a SaaS-investing webinar. No C-suite voice was captured. The company that dominates on implementation count and analyst coverage is nearly absent on the surface where a buyer looks for a human point of view. That gap is the finding. It does not prove the leaders are silent everywhere, but on the captured evidence the benchmark’s personal advocacy is thin, the opposite of its market position.',
+      analysis: 'Guidewire is the scale benchmark and the quietest leader voice in the set: 15 posts from six captured leaders, most of them recruiting posts or regional event notes, insureNXT in German, a SaaS-investing webinar. No C-suite voice was captured. The company that dominates on implementation count and analyst coverage is nearly absent on the surface where a buyer looks for a human point of view. That gap is the finding. It does not prove the leaders are silent everywhere, but on the captured evidence the benchmark’s personal advocacy is thin, the opposite of its market position. The brand account is the inverse. On X and Instagram, Guidewire is the most active and most evidence-led communicator of the four, translating each theme into a specific problem, product, and number. The voice is institutional, carried by the brand channel rather than by its people. Duck Creek is the mirror image.',
       toBuild: [
         { label: 'To build · widen the anchor set', what: 'The 96-record crawl skewed to recruiters. Pull the commercial and product leadership (CEO, CFO, CRO, product) before assessing executive voice.', meta: 'Needs · targeted crawl · press' },
         { label: 'To build · social capture', what: 'Follower counts and posting cadence per anchor.', meta: 'Per executive · pending' },
@@ -436,7 +444,7 @@ const duckcreek: Player = {
     }),
     CH.exec({
       body: 'A new CEO and a new CTO make the voice pattern a moving target worth dating carefully. The 180-day activity is below.',
-      analysis: 'Duck Creek has the broadest active leader bench, twelve of sixteen captured leaders posting, and the most coherent narrative: nearly every post ties to one theme, the Send acquisition, the Intelligent Core, and agentic underwriting. The new CEO, Hardeep Gulati, is genuinely active and customer-facing rather than promotional, and GTM leaders William Genard (17 posts) and Gabe Cossio carry original point of view linking AI to the core, "AI is only as powerful as the core it runs on." The read: a coordinated, CEO-led, acquisition-driven voice with the tightest message discipline in the set, consistent with the transition signal that Duck Creek is buying AI capability and building a story around it.',
+      analysis: 'Duck Creek has the broadest active leader bench, twelve of sixteen captured leaders posting, and the most coherent narrative: nearly every post ties to one theme, the Send acquisition, the Intelligent Core, and agentic underwriting. The new CEO, Hardeep Gulati, is genuinely active and customer-facing rather than promotional, and GTM leaders William Genard (17 posts) and Gabe Cossio carry original point of view linking AI to the core, "AI is only as powerful as the core it runs on." The read: a coordinated, CEO-led, acquisition-driven voice with the tightest message discipline in the set, consistent with the transition signal that Duck Creek is buying AI capability and building a story around it. The brand account is the inverse: on X, Duck Creek barely posts, four in the window, and much of the older data is stale. The energy sits in the people, not the brand channel. Guidewire is the mirror image, a loud brand account and quiet executives.',
       toBuild: [
         { label: 'To build · social capture', what: 'Follower counts and cadence. A new CEO and new CTO make the voice pattern a moving target. Full 57-record resolve is on disk.', meta: 'Per executive · pending' },
         { label: 'To build · audience taxonomy', what: 'Audience mix per anchor.', meta: 'Per executive · pending' },
