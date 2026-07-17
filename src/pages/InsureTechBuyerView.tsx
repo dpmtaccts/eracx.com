@@ -6,7 +6,7 @@ import '../styles/v4-tokens.css'
 import { FONT, ThemeContext, loadFonts, useThemeState } from './insuretech/theme'
 import { PasswordGate, isAuthed } from './insuretech/PasswordGate'
 import { Masthead, TocBar, Situation, DataLedger, Method, Rollup, AllPlayers, Footer } from './insuretech/sections'
-import { Trajectory } from './insuretech/Trajectory'
+import { SignalResponse } from './insuretech/SignalResponse'
 import { InternalBrief } from './insuretech/InternalBrief'
 
 /* The InsureTech Buyer View.
@@ -40,7 +40,7 @@ function Shell({ internal }: { internal: boolean }) {
         <DataLedger />
         <Method />
         <Rollup />
-        <Trajectory />
+        <SignalResponse />
         <AllPlayers />
         <Footer />
       </div>

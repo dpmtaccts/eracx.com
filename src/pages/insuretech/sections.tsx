@@ -163,7 +163,7 @@ function SectionHead({ issue, title, lede }: { issue: string; title: string; led
 // ---------- masthead + nav ----------
 export function TocBar() {
   const links = [
-    ['#situation', 'Summary'], ['#ledger', 'Evidence base'], ['#method', 'Method'], ['#rollup', 'Comparison'], ['#trajectory', 'Trajectory'],
+    ['#situation', 'Summary'], ['#ledger', 'Evidence base'], ['#method', 'Method'], ['#rollup', 'Comparison'], ['#trajectory', 'Congruence'],
     ...PLAYERS.map((p) => [`#${p.slug}`, p.name] as [string, string]),
   ] as [string, string][]
   return (
