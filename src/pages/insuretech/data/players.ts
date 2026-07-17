@@ -273,7 +273,7 @@ const guidewire: Player = {
         band: 'Controllable lag',
         bandKey: 'controllable-lag',
         verdict: 'The transition is real and Guidewire sets its own pace. The only gap is a perception, not the product. This is the least-lagged of the four.',
-        reasoning: 'Guidewire is the one player whose AI claim is backed by a shipped product (ProNavigator), six straight years as a Gartner MQ Leader, and the deepest verified customer base (4.6 across 105 reviews). The promise does not outrun the reality. The drag is the competitor-fed perception that the platform is heavy, expensive, and slow to implement, which the scale and analyst record can offset over time rather than a structural anchor. As benchmark, its congruence is the reference the other three are read against.',
+        reasoning: 'Guidewire is the one vendor whose AI claim is backed by a shipped product (ProNavigator), six straight years as a Gartner MQ Leader, and the deepest verified customer base (4.6 across 105 reviews). The promise does not outrun the reality. The drag is the competitor-fed perception that the platform is heavy, expensive, and slow to implement, which the scale and analyst record can offset over time rather than a structural anchor. As benchmark, its congruence is the reference the other three are read against.',
       },
       toBuild: [],
     }),
@@ -359,7 +359,7 @@ const majesco: Player = {
     }),
     CH.exec({
       body: 'A compact, senior, US-weighted bench with a visible strategy voice. The 180-day activity is below.',
-      analysis: 'Majesco’s leaders track the corporate AI-native message more closely than any other player’s, and the bench is anchored by a present CEO. Adam Elster posts on customer value and partnerships, Utkarsh Raka carries a genuine point of view ("Spring 26 release, so what," pressing value over feature-shipping), and Denise Garth’s Frontier Insurer research is amplified repeatedly, including the "82% believe AI will define the industry, 14% have integrated it" stat. Brian McGushin is a heavy commenter (74) more than a poster. The read: on-message, AI-forward, CEO-present, with two or three leaders producing original argument rather than promotion. The voice supports the aggressive positioning better than the revenue band would predict.',
+      analysis: 'Majesco’s leaders track the corporate AI-native message more closely than any other vendor’s, and the bench is anchored by a present CEO. Adam Elster posts on customer value and partnerships, Utkarsh Raka carries a genuine point of view ("Spring 26 release, so what," pressing value over feature-shipping), and Denise Garth’s Frontier Insurer research is amplified repeatedly, including the "82% believe AI will define the industry, 14% have integrated it" stat. Brian McGushin is a heavy commenter (74) more than a poster. The read: on-message, AI-forward, CEO-present, with two or three leaders producing original argument rather than promotion. The voice supports the aggressive positioning better than the revenue band would predict.',
       toBuild: [
         { label: 'To build · social capture', what: 'Follower counts and cadence per anchor. Denise Garth first, given Garth’s external profile.', meta: 'Per executive · pending' },
         { label: 'To build · audience taxonomy', what: 'Audience mix per anchor.', meta: 'Per executive · pending' },
@@ -464,7 +464,7 @@ export const CHANNEL_ORDER: { num: string; name: string }[] = [
 
 export interface LedgerRow { src: string; count: string; state: BuildState; note?: string }
 export const LEDGER: LedgerRow[] = [
-  { src: 'Contact crawl lists · Clay resolve + work-history / thought-leadership', count: '253 / 270', state: 'processing', note: 'All four players resolved to LinkedIn profiles. 17 unresolved.' },
+  { src: 'Contact crawl lists · Clay resolve + work-history / thought-leadership', count: '253 / 270', state: 'processing', note: 'All four vendors resolved to LinkedIn profiles. 17 unresolved.' },
   { src: 'Company firmographics · Clay (revenue, funding, headcount, news, customers, competitors, tech stack)', count: '28 / 28', state: 'captured', note: 'All seven points complete for all four. Normalized to enrichment/companies.' },
   { src: 'Brand reports · Sapiens roadmap, Sapiens brand health, Guidewire, Majesco, Duck Creek', count: '5', state: 'captured', note: 'ERA-authored, treated as prior view.' },
   { src: 'Brand social activity · X and Instagram, one capture each per brand', count: '8 captures', state: 'captured', note: 'Cadence and engagement floors. Instagram comments mostly showed 0 captured.' },

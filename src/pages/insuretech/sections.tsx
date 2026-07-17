@@ -163,7 +163,7 @@ function SectionHead({ issue, title, lede }: { issue: string; title: string; led
 // ---------- masthead + nav ----------
 export function TocBar() {
   const links = [
-    ['#situation', 'Situation'], ['#ledger', 'Data ledger'], ['#method', 'Method'], ['#rollup', 'Rollup'],
+    ['#situation', 'Summary'], ['#ledger', 'Evidence base'], ['#method', 'Method'], ['#rollup', 'Comparison'],
     ...PLAYERS.map((p) => [`#${p.slug}`, p.name] as [string, string]),
   ] as [string, string][]
   return (
@@ -181,16 +181,16 @@ export function Masthead() {
     <header style={{ borderBottom: `3px solid ${INK}`, padding: '3vw 3vw 2vw', background: PAPER }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 24, flexWrap: 'wrap', borderBottom: `1px solid ${LINE}`, paddingBottom: 12, marginBottom: 24 }}>
         <span style={mono()}>The Buyer View</span>
-        <span style={mono({ color: HOT })}>Draft report · assembly build · scores not yet set</span>
+        <span style={mono({ color: HOT })}>Draft report · scores not yet assigned</span>
       </div>
       <h1 style={{ fontFamily: FONT.mega, fontSize: 'clamp(40px,9vw,132px)', lineHeight: 0.92, textTransform: 'uppercase', letterSpacing: '-0.01em' }}>The core platform<br />decision</h1>
       <div style={{ ...mono({ color: HOT }), marginTop: 18 }}>For the insurance CIO evaluating a core replacement</div>
       <p style={{ fontSize: 'clamp(15px,1.5vw,21px)', color: MUTED, maxWidth: 780, marginTop: 12 }}>
-        Guidewire, Sapiens, Majesco, and Duck Creek now make the same core claim: an AI-modernized platform. What separates the four shows up before the first sales call, on surfaces the vendors do not control. This report assembles those surfaces one player at a time, and leaves the scoring to the judgment pass.
+        Guidewire, Sapiens, Majesco, and Duck Creek now make the same core claim: an AI-modernized platform. What separates them shows up before the first sales call, on surfaces they do not control. This report assembles those surfaces one vendor at a time, and holds the scoring for a separate judgment pass.
       </p>
       <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap', marginTop: 24 }}>
         <span style={{ ...mono(), color: MUTED }}>Market · P&amp;C and L&amp;A core platforms</span>
-        <span style={{ ...mono(), color: MUTED }}>Players · Sapiens · Guidewire · Majesco · Duck Creek</span>
+        <span style={{ ...mono(), color: MUTED }}>Vendors · Sapiens · Guidewire · Majesco · Duck Creek</span>
         <span style={{ ...mono(), color: MUTED }}>Compiled · {COMPILED}</span>
       </div>
     </header>
@@ -203,24 +203,24 @@ export function Situation() {
   const sub: CSSProperties = { ...mono({ color: HOT, fontSize: 11 }), marginBottom: 8, marginTop: 4 }
   return (
     <Section id="situation">
-      <SectionHead issue={formatSectionLabel('00', 'Situation')} title="Four core platforms, and why they are hard to tell apart." />
-      <div style={sub}>The customer</div>
+      <SectionHead issue={formatSectionLabel('00', 'Executive summary')} title="The four vendors now sell the same promise." />
+      <div style={sub}>The buyer</div>
       <p style={para}>
-        The customer is the CIO or transformation lead at a property and casualty or life insurer who has to replace a core policy, billing, and claims system. The replacement runs 10 to 15 years and touches underwriting, claims, finance, and every downstream report, so the choice is close to a one-way door. The shortlist is short. Guidewire, Sapiens, Majesco, and Duck Creek name each other as the alternatives, and the Clay pull confirms all four list the other three as competitors.
+        The buyer is the CIO or transformation lead at a property and casualty or life insurer replacing a core policy, billing, and claims system. The replacement runs 10 to 15 years and touches underwriting, claims, finance, and every downstream report, so the choice is close to a one-way door. The shortlist is these four. Guidewire, Sapiens, Majesco, and Duck Creek name each other as the alternatives, and the enrichment confirms all four list the other three as competitors.
       </p>
-      <div style={sub}>What is hard now</div>
+      <div style={sub}>Why the decision is hard</div>
       <p style={para}>
         The four now lead with the same claim, an AI-modernized core. Guidewire shipped ProNavigator, an embedded AI capability, in April 2026. Majesco announced a 2026 increase in AI investment and describes its platform as AI-native. Duck Creek acquired Send Technology, an AI-native vendor, in July 2026. Sapiens frames its platform around AI and automation. When every vendor says the same thing, the claim stops separating them, and the buyer is left to judge which vendor can support the claim it makes.
       </p>
-      <div style={sub}>How the buyer decides</div>
+      <div style={sub}>How the decision gets made</div>
       <p style={para}>
         A buyer forms most of a view before the first sales call, from sources the vendor does not control: what the vendor’s executives publish, what named customers report, what analysts and answer engines repeat. These sources are harder to manage than a website, so they expose the distance between what a vendor claims and what it can back up. This report reads those sources for each vendor across six channels.
       </p>
-      <div style={sub}>What this report does, and does not, do</div>
+      <div style={sub}>Scope and boundaries</div>
       <p style={para}>
-        This report assembles evidence. It does not score the vendors. Scoring is a separate judgment pass, and every score here is left as a labeled block until that pass runs. Keeping assembly and scoring apart lets a reader check the inputs before trusting a number.
+        This report assembles evidence. It does not score the vendors, with one exception now set, the transition classification. The rest of the scoring is a separate judgment pass, and every open score is left as a labeled block until that pass runs. Keeping assembly and scoring apart lets a reader check the inputs before trusting a number.
       </p>
-      <div style={sub}>What has landed, and what is still open</div>
+      <div style={sub}>Coverage and open items</div>
       <p style={{ ...para, marginBottom: 0 }}>
         The brand social activity and the LinkedIn leader activity have landed, and the Promise and Executive Voice channels below now use them. Three gaps remain before scoring. First, the engagement is a floor. Comments hidden behind the "Load more comments" links are not yet captured, and the LinkedIn window stops at 180 days, so every comment and reaction count here understates the real total. Second, the answer-engine exports and the third-party review capture from Glassdoor and G2 are not in. Third, the analyst-coverage check across Gartner, Forrester, Celent, and Datos is not done. The data ledger below tracks each one.
       </p>
@@ -231,7 +231,7 @@ export function Situation() {
 // ---------- data ledger ----------
 export function DataLedger() {
   const cells = [
-    { num: '270', label: 'Contact records ingested', note: 'Executive crawl lists across four players.' },
+    { num: '270', label: 'Contact records ingested', note: 'Executive crawl lists across four vendors.' },
     { num: '4', label: 'Company firmographic pulls', note: 'Clay, seven data points each.' },
     { num: '8', label: 'Brand social captures', note: 'X and Instagram per brand.' },
     { num: '32', label: 'LinkedIn leader feeds', note: 'Posts and comments, 180 days. Comments under-counted.' },
@@ -239,8 +239,8 @@ export function DataLedger() {
   ]
   return (
     <Section id="ledger">
-      <SectionHead issue={formatSectionLabel('01', 'Data ledger')} title="What has been gathered, and what is still out."
-        lede="The ledger counts every observation the build has pulled. Captured rows are on disk and folded into the sections below. Pending rows are named, not zeroed, so a reader can see the size of the gap before reading a verdict." />
+      <SectionHead issue={formatSectionLabel('01', 'Evidence base')} title="The evidence behind this assessment."
+        lede="This section counts every observation the assessment rests on. Captured sources are folded into the vendor sections below. Pending and access-gated sources are named, not zeroed, so a reader can weigh the coverage before trusting a verdict." />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 1, background: LINE, border: `1px solid ${LINE}` }}>
         {cells.map((c) => (
           <div key={c.label} style={{ background: PAPER, padding: '22px 18px' }}>
@@ -267,8 +267,8 @@ export function DataLedger() {
 export function Method() {
   return (
     <Section id="method" band>
-      <SectionHead issue={formatSectionLabel('02', 'Method')} title="Six channels of evidence, one verdict per player."
-        lede="Each player is assembled across six channels. The first five are the inputs a self-directed buyer or an AI agent pulls from before contact. The sixth is the verdict those inputs produce. The seismograph orders the channels from ambient noise into the most direct and most credible signal, then back out." />
+      <SectionHead issue={formatSectionLabel('02', 'Assessment model')} title="Each vendor is read across six evidence channels."
+        lede="The first five channels are the sources a self-directed buyer or an AI agent pulls from before contact. The sixth is the verdict those five produce. The seismograph orders the channels from ambient noise into the most direct and most credible signal, then back out." />
       <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', paddingTop: 16, marginTop: 18, borderTop: `1px solid ${LINE}` }}>
         <Legend swatch={PARCHMENT_DEEP} label="Ideal congruence" />
         <Legend swatch={COBALT} label="Signal reinforcing" />
@@ -294,8 +294,8 @@ function Legend({ swatch, label }: { swatch: string; label: string }) {
 export function Rollup() {
   return (
     <Section id="rollup">
-      <SectionHead issue={formatSectionLabel('03', 'Cross-player rollup')} title="The four players against the same six channels."
-        lede="Channels down the side, players across the top. Guidewire is the benchmark cell for P&C core because it is the scale leader the other three are measured against. Nothing is averaged and nothing is scored here. Each cell holds a labeled block until the judgment pass sets it." />
+      <SectionHead issue={formatSectionLabel('03', 'Vendor comparison')} title="The four vendors across the six channels."
+        lede="Channels down the side, vendors across the top. Guidewire is the benchmark cell for P&C core because it is the scale leader the other three are measured against. Nothing is averaged and nothing is scored here, except the transition classification, which is now set. Each remaining cell holds a labeled block until the judgment pass reaches it." />
       <div style={{ overflowX: 'auto', border: `1px solid ${INK}` }}>
         <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 720 }}>
           <thead>
@@ -453,7 +453,7 @@ export function PlayerSection({ player }: { player: Player }) {
   return (
     <Section id={player.slug} band={player.band === 'parchment'}>
       <div style={{ borderTop: `3px solid ${INK}`, paddingTop: 6 }}>
-        <div style={mono({ color: HOT })}>{formatSectionLabel(player.section, player.cells.some((c) => c.benchmark) ? 'Player · benchmark' : 'Player')}</div>
+        <div style={mono({ color: HOT })}>{formatSectionLabel(player.section, player.cells.some((c) => c.benchmark) ? 'Vendor · benchmark' : 'Vendor')}</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
           {player.logo && (
             <img
