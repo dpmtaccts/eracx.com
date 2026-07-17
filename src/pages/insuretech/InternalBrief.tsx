@@ -1,5 +1,8 @@
+import { useState } from 'react'
 import type { CSSProperties } from 'react'
 import { FONT } from './theme'
+
+const OPEN_KEY = 'insuretech-internal-open'
 
 /* Partner brief. Internal-only note from Justin to the ERA/Pinwheel partners.
    Gated separately from the client access code (see InsureTechBuyerView): it
@@ -25,13 +28,33 @@ function Block({ label, children }: { label: string; children: React.ReactNode }
 }
 
 export function InternalBrief() {
+  const [open, setOpen] = useState(() => {
+    try { return localStorage.getItem(OPEN_KEY) !== '0' } catch { return true }
+  })
+  const toggle = () => {
+    setOpen((v) => {
+      const next = !v
+      try { localStorage.setItem(OPEN_KEY, next ? '1' : '0') } catch { /* private mode */ }
+      return next
+    })
+  }
+
   return (
     <section id="partner-brief" style={{ background: INK, color: PAPER, padding: '4vw 3vw', borderBottom: `1px solid ${INK}` }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap', marginBottom: 22 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap', marginBottom: open ? 22 : 0 }}>
         <span style={{ ...mono({ fontSize: 11, letterSpacing: '0.16em', color: INK }), background: YELLOW, padding: '5px 10px' }}>Internal · Not for circulation</span>
         <span style={mono({ fontSize: 11, letterSpacing: '0.12em', color: DIM })}>Partner brief · from Justin</span>
+        <button
+          onClick={toggle}
+          aria-expanded={open}
+          style={{ ...mono({ fontSize: 10, letterSpacing: '0.14em', color: PAPER }), marginLeft: 'auto', background: 'transparent', border: `1px solid ${FAINT}`, padding: '6px 12px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 8 }}
+        >
+          {open ? 'Hide' : 'Show'} brief
+          <span style={{ display: 'inline-block', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 200ms ease', fontSize: 9 }}>▼</span>
+        </button>
       </div>
 
+      {!open ? null : <>
       <h2 style={{ fontFamily: FONT.display, fontSize: 'clamp(22px,3vw,38px)', lineHeight: 1.06, maxWidth: 880 }}>
         Read this before you read the rest. Then cut it before anyone outside the room does.
       </h2>
@@ -73,6 +96,7 @@ export function InternalBrief() {
           This block is keyed to your browser, not to the access code. The link you send a prospect (<span style={{ fontFamily: FONT.mono, fontSize: 13, color: PAPER }}>/buyerview/insuretech</span>) will not show it. To toggle it off on this machine, load the page with <span style={{ fontFamily: FONT.mono, fontSize: 13, color: YELLOW }}>?internal=0</span>.
         </Block>
       </div>
+      </>}
     </section>
   )
 }
