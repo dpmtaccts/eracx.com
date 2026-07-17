@@ -411,6 +411,12 @@ function ChannelBlock({ ch, people, slug }: { ch: Channel; people?: Person[]; sl
             {people.map((p) => <PersonCard key={p.name} p={p} act={findLeader(slug, p.name)} />)}
           </div>
         )}
+        {ch.analysis && (
+          <div style={{ border: `1px solid ${COBALT}`, background: 'rgba(24,69,194,0.05)', padding: '14px 16px', margin: '12px 0' }}>
+            <div style={mono({ color: COBALT, fontSize: 10, letterSpacing: '0.1em' })}>ERA analysis · the read</div>
+            <div style={{ marginTop: 8, maxWidth: 760, lineHeight: 1.55 }}>{ch.analysis}</div>
+          </div>
+        )}
         {ch.toBuild.map((tb, i) => <ToBuildBlock key={i} tb={tb} />)}
       </div>
     </div>
@@ -455,6 +461,23 @@ export function PlayerSection({ player }: { player: Player }) {
           </div>
         ))}
       </div>
+      {player.brandReport && (
+        <div style={{ border: `1px solid ${LINE}`, background: PARCHMENT, padding: '18px 20px', marginTop: 22 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', alignItems: 'baseline' }}>
+            <div style={mono({ color: MUTED, fontSize: 10, letterSpacing: '0.1em' })}>Prior view · ERA brand report</div>
+            <div style={mono({ color: INK, fontSize: 11 })}>Brand Health Index · {player.brandReport.index}</div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 18, marginTop: 14 }}>
+            {([['Positioning', player.brandReport.positioning], ['Strength', player.brandReport.strength], ['Risk', player.brandReport.risk]] as [string, string][]).map(([k, v]) => (
+              <div key={k}>
+                <div style={mono({ color: MUTED, fontSize: 9, letterSpacing: '0.1em' })}>{k}</div>
+                <div style={{ fontSize: 14, marginTop: 5, lineHeight: 1.5 }}>{v}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: 12, fontSize: 13, color: MUTED }}>{player.brandReport.notable} ERA’s own prior view, not independent evidence.</div>
+        </div>
+      )}
       <div style={{ marginTop: 6 }}>
         {player.cells.map((c) => (
           <span key={c.id} style={{ ...mono({ fontSize: 11, letterSpacing: '0.08em' }), display: 'inline-block', border: `1px solid ${INK}`, padding: '6px 10px', margin: '22px 8px 4px 0', background: c.primary ? INK : PAPER, color: c.primary ? PAPER : INK }}>Cell · {c.label}</span>

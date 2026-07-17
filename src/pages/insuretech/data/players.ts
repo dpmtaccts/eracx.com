@@ -37,6 +37,7 @@ export interface Channel {
   body?: string
   evidence: Evidence[]
   divergence?: Divergence
+  analysis?: string // ERA read / judgment layer, rendered distinctly from raw evidence
   toBuild: ToBuild[]
 }
 
@@ -85,6 +86,8 @@ export interface Player {
   namedCustomers: string[]
   competitors: string[]
   recentNews: { date: string; item: string }[]
+  // ERA's own prior brand report. Prior view, not independent evidence.
+  brandReport?: { index: string; positioning: string; strength: string; risk: string; notable: string }
   cells: Cell[]
   people: Person[]
   channels: Channel[]
@@ -127,12 +130,12 @@ const VERDICT_TB: ToBuild = {
 }
 
 const person = (
-  name: string, title: string, tenureStart: string | null, linkedin?: string, anchor?: boolean,
-): Person => ({ name, title, tenureStart, linkedin, anchor, followers: null, cadence: null, povType: null, audience: null, analysis: null })
+  name: string, title: string, tenureStart: string | null, linkedin?: string, anchor?: boolean, extra?: Partial<Person>,
+): Person => ({ name, title, tenureStart, linkedin, anchor, followers: null, cadence: null, povType: null, audience: null, analysis: null, ...extra })
 
 // ============================ SAPIENS ============================
 const sapiens: Player = {
-  slug: 'sapiens', name: 'Sapiens', domain: 'sapiens.com', logo: '/images/insuretech/sapiens.png', section: '04',
+  slug: 'sapiens', name: 'Sapiens', domain: 'sapiens.com', logo: '/images/insuretech/sapiens.svg', section: '04',
   ownership: 'Advent (PE)', ownershipNote: 'Acquired by Advent for ~2.5 billion dollars, closed Dec 2025, with leadership appointments announced 2025-12-17.',
   headcount: '5,265', growth12mo: '+2.9%', revenue: '500M–1B', funding: '$0 (acquired)',
   hq: 'London / Holon', customersClaimed: '600+ · 30+ countries', crawl: '80', resolved: '73',
@@ -142,13 +145,20 @@ const sapiens: Player = {
     { date: '2025-08-13', item: 'Agreed to be acquired by Advent at a valuation near 2.5 billion dollars.' },
     { date: '2025-12-17', item: 'Leadership appointments following the close of the Advent acquisition.' },
   ],
+  brandReport: {
+    index: '59 / 100 · Vulnerable',
+    positioning: 'The only vendor that can run a carrier’s whole business, P&C, life & annuities, and reinsurance, on one platform. The report urges Sapiens to own that "sensible simplicity" high ground rather than echo rivals’ AI-driven, future-proof language.',
+    strength: 'Genuine multi-line platform depth. One of very few vendors running P&C, L&A, and reinsurance on one strategic platform, which is why multi-line carriers shortlist it.',
+    risk: 'The "acquired, new CEO, new HQ" instability story competitors raise at renewal, compounded by a weak employer brand (Glassdoor 3.4, comp down 7%, an "old tech stack" theme) that contradicts the future-proof claim.',
+    notable: 'Report asserts 600+ customers across 30+ countries and 5,400 employees.',
+  },
   cells: [
     { id: 'p&c-core', label: 'p&c-core', primary: true },
     { id: 'life-annuity-core', label: 'life-annuity-core' },
     { id: 'reinsurance-financial-modules', label: 'reinsurance-financial-modules' },
   ],
   people: [
-    person('Roni Al-Dor', 'CEO & President', '2005-11', 'https://www.linkedin.com/in/roni-al-dor-9b42165/', true),
+    person('Roni Al-Dor', 'CEO & President', '2005-11', 'https://www.linkedin.com/in/roni-al-dor-9b42165/', true, { analysis: 'One post in 180 days, and it announced he is concluding his role as CEO after the Advent close. The founder voice is winding down, not leading the transition.' }),
     person('Raj Ghuman', 'Chief Revenue Officer, EMEA & APAC', '2023-03', 'https://www.linkedin.com/in/raj-ghuman-21b8485/', true),
     person('Gary Sherne', 'Head of North America & CRO', '2022-09', 'https://www.linkedin.com/in/garysherne/', true),
     person('Udi Matot', 'SVP, Head of P&C and Reinsurance', '2024-11', 'https://www.linkedin.com/in/udi-matot-888a084/', true),
@@ -176,7 +186,8 @@ const sapiens: Player = {
       toBuild: [{ label: 'To build · transition classification', what: 'Classify the promise as controllable lag, boat-anchor legacy, or competitive convergence, once the LinkedIn and careers scan confirm whether the AI-native claim is carried or contradicted, and how the Advent ownership reframes it.', meta: 'Needs · LinkedIn · careers · exec posts · press divergence scan' }],
     }),
     CH.exec({
-      body: 'The crawl list resolves to a leadership bench weighted toward Israel and the go-to-market side. Watch the founder-CEO, the regional revenue leaders, and the business-unit heads that map to the three cells first. Per-person social signal is below.',
+      body: 'The crawl list resolves to a leadership bench weighted toward Israel and the go-to-market side. The 180-day LinkedIn capture, below, shows who actually carries the voice.',
+      analysis: 'Sapiens has the loudest leader presence in the set, 113 posts across seven of eight captured leaders and the most external engagers, but the volume is carried by marketing and sales, not the top. Persi Kanga (74 posts) and Jennifer Gamble (28 posts, 183 comments) drive event and product promotion, the AI Customer Experience Lab, Sapiens Decision, reinsurance, under a light thought-leadership frame. The founder-CEO, Roni Al-Dor, posted once in 180 days, to announce he is concluding his role after the Advent close. The company is audible but has no owner of an original point of view at the top, and the recurring theme is the new owner, brand, and London HQ rather than a market argument.',
       toBuild: [
         { label: 'To build · social capture', what: 'Manual pass across the bench. Follower counts, posting cadence, and whether each anchor publishes original point of view or reposts.', meta: 'Per executive · pending' },
         { label: 'To build · audience taxonomy', what: 'Who follows each anchor. Buyers, employees, analysts, or press. Sort the audience before weighting the voice.', meta: 'Per executive · pending' },
@@ -205,7 +216,7 @@ const sapiens: Player = {
 
 // ============================ GUIDEWIRE ============================
 const guidewire: Player = {
-  slug: 'guidewire', name: 'Guidewire', domain: 'guidewire.com', logo: '/images/insuretech/guidewire.png', section: '05', band: 'parchment',
+  slug: 'guidewire', name: 'Guidewire', domain: 'guidewire.com', logo: '/images/insuretech/guidewire.svg', section: '05', band: 'parchment',
   ownership: 'Public', ownershipNote: 'Public (NYSE: GWRE).',
   headcount: '4,329', growth12mo: '+13.5%', revenue: '1B–10B', funding: '$0',
   hq: 'San Mateo', customersClaimed: '570+ insurers · 43 countries', crawl: '96', resolved: '91',
@@ -216,6 +227,13 @@ const guidewire: Player = {
     { date: '2026-06-09', item: 'Santam went live on Guidewire.' },
     { date: '2026-06-08', item: 'Peel Mutual expands on Guidewire Cloud.' },
   ],
+  brandReport: {
+    index: '81 / 100 · Strong',
+    positioning: 'The reference brand of the P&C core-systems category, now repositioning around AI: "The P&C Platform, Built for AI." Deep, defensible equity with no relevance or trust erosion.',
+    strength: 'Category authority. Six straight years a Gartner MQ Leader, 1,700+ implementations, and a 4.6 Gartner Peer Insights rating across 105 reviews, the deepest verified customer base in the category.',
+    risk: 'One persistent, competitor-weaponized perception: powerful but heavy, expensive, and slow to implement.',
+    notable: 'Report cites FY2025 revenue of $1,202.5M, up 23% YoY, 570+ insurers in 40+ countries, and a 10-year Liberty Mutual cloud commitment.',
+  },
   cells: [{ id: 'p&c-core', label: 'p&c-core · the benchmark', primary: true, benchmark: true }],
   people: [
     person('Brigette McInnis-Day', 'Chief People Officer', '2025-09', 'https://www.linkedin.com/in/brigettemcinnisday/', true),
@@ -238,7 +256,8 @@ const guidewire: Player = {
       toBuild: [{ label: 'To build · transition classification', what: 'Classify against the LinkedIn and careers scan. As benchmark, its congruence sets the reference the other three read against.', meta: 'Needs · owned-message divergence scan' }],
     }),
     CH.exec({
-      body: 'The crawl list resolved heavily to talent-acquisition and recruiting roles rather than the commercial bench, so the anchor set here is thin and worth widening before weighting the voice. Per-person social signal is below.',
+      body: 'The crawl list resolved heavily to talent-acquisition roles rather than the commercial bench, so the captured voice is thin and worth widening. The 180-day activity is below.',
+      analysis: 'Guidewire is the scale benchmark and the quietest leader voice in the set: 15 posts from six captured leaders, most of them recruiting posts or regional event notes, insureNXT in German, a SaaS-investing webinar. No C-suite voice was captured. The company that dominates on implementation count and analyst coverage is nearly absent on the surface where a buyer looks for a human point of view. That gap is the finding. It does not prove the leaders are silent everywhere, but on the captured evidence the benchmark’s personal advocacy is thin, the opposite of its market position.',
       toBuild: [
         { label: 'To build · widen the anchor set', what: 'The 96-record crawl skewed to recruiters. Pull the commercial and product leadership (CEO, CFO, CRO, product) before assessing executive voice.', meta: 'Needs · targeted crawl · press' },
         { label: 'To build · social capture', what: 'Follower counts and posting cadence per anchor.', meta: 'Per executive · pending' },
@@ -262,7 +281,7 @@ const guidewire: Player = {
 
 // ============================ MAJESCO ============================
 const majesco: Player = {
-  slug: 'majesco', name: 'Majesco', domain: 'majesco.com', logo: '/images/insuretech/majesco.png', section: '06',
+  slug: 'majesco', name: 'Majesco', domain: 'majesco.com', logo: '/images/insuretech/majesco.svg', section: '06',
   ownership: 'Private (Thoma Bravo)', ownershipNote: 'Thoma Bravo portfolio; A.J. Rohde, Thoma Bravo Senior Partner, appears in the crawl.',
   headcount: '2,836', growth12mo: '+19.4% (fastest)', revenue: '25M–75M', funding: '$0',
   hq: 'Morristown, NJ', customersClaimed: '375+ · 1,400+ implementations', crawl: '37', resolved: '35',
@@ -272,12 +291,19 @@ const majesco: Player = {
     { date: '2026-02-03', item: 'Record FY25. Customers process over 100 billion dollars in direct written premium on Majesco core.' },
     { date: '2025-12-02', item: 'Announced a 2026 AI investment surge to accelerate P&C leadership.' },
   ],
+  brandReport: {
+    index: '68 / 100 · Moderate',
+    positioning: 'The sharpest-positioned challenger. The only core platform spanning P&C, L&AH, and Pension & Retirement on cloud-native, AI-native architecture. A credible, momentum-rich brand with one clear liability.',
+    strength: 'An ownable "cloud-native and AI-native, widest product span" position no incumbent can claim as cleanly, backed by analyst validation (six-time Gartner MQ Leader, 4.5 Peer Insights on the P&C Intelligent Core Suite).',
+    risk: 'A weak employer brand that reaches delivery. Glassdoor 3.0, 45% recommending, senior management 2.7, surfacing as delivery-quality variability. The report calls this its single most important operational finding.',
+    notable: 'Report cites platform-processed premium growing from $36B to over $100B in roughly two years, ~$500M revenue under Thoma Bravo, and the Vitech acquisition closing January 2026.',
+  },
   cells: [
     { id: 'p&c-core', label: 'p&c-core', primary: true },
     { id: 'life-annuity-core', label: 'life-annuity-core · L&AH' },
   ],
   people: [
-    person('Adam Elster', 'CEO', '2018-09', 'https://www.linkedin.com/in/adam-elster-bb8192a/', true),
+    person('Adam Elster', 'CEO', '2018-09', 'https://www.linkedin.com/in/adam-elster-bb8192a/', true, { analysis: 'An actually present CEO, five posts on customer value, partnerships, and board roles. On-message and visible, more advocate than original theorist, but the top of the house shows up.' }),
     person('Ed Ossie', 'Chief Operating Officer', '2015-01', 'https://www.linkedin.com/in/ed-ossie-705b071/'),
     person('Denise Garth', 'Chief Strategy Officer', '2020-09', 'https://www.linkedin.com/in/denise-garth-383769/', true),
     person('Keith Palmieri', 'Chief Revenue Officer', '2025-04', 'https://www.linkedin.com/in/keith-palmieri-2105a27/', true),
@@ -304,7 +330,8 @@ const majesco: Player = {
       toBuild: [{ label: 'To build · transition classification', what: 'Classify the AI-native claim as controllable lag, boat-anchor, or convergence once the owned-message scan and proof are in.', meta: 'Needs · LinkedIn · careers · press scan' }],
     }),
     CH.exec({
-      body: 'A compact, senior, US-weighted bench with a visible strategy voice. Denise Garth is the most externally visible anchor and worth watching first. Per-person social signal is below.',
+      body: 'A compact, senior, US-weighted bench with a visible strategy voice. The 180-day activity is below.',
+      analysis: 'Majesco’s leaders track the corporate AI-native message more closely than any other player’s, and the bench is anchored by a present CEO. Adam Elster posts on customer value and partnerships, Utkarsh Raka carries a genuine point of view ("Spring 26 release, so what," pressing value over feature-shipping), and Denise Garth’s Frontier Insurer research is amplified repeatedly, including the "82% believe AI will define the industry, 14% have integrated it" stat. Brian McGushin is a heavy commenter (74) more than a poster. The read: on-message, AI-forward, CEO-present, with two or three leaders producing original argument rather than promotion. The voice supports the aggressive positioning better than the revenue band would predict.',
       toBuild: [
         { label: 'To build · social capture', what: 'Follower counts and cadence per anchor. Denise Garth first, given Garth’s external profile.', meta: 'Per executive · pending' },
         { label: 'To build · audience taxonomy', what: 'Audience mix per anchor.', meta: 'Per executive · pending' },
@@ -327,7 +354,7 @@ const majesco: Player = {
 
 // ============================ DUCK CREEK ============================
 const duckcreek: Player = {
-  slug: 'duckcreek', name: 'Duck Creek', domain: 'duckcreek.com', logo: '/images/insuretech/duckcreek.png', section: '07', band: 'parchment',
+  slug: 'duckcreek', name: 'Duck Creek', domain: 'duckcreek.com', logo: '/images/insuretech/duckcreek.svg', section: '07', band: 'parchment',
   ownership: 'Private (Vista)', ownershipNote: 'Vista Equity Partners portfolio.',
   headcount: '1,873', growth12mo: 'flat', revenue: '200M–500M', funding: '$120M',
   hq: 'Boston', customersClaimed: 'P&C / general · cloud, evergreen', crawl: '57', resolved: '54',
@@ -337,9 +364,16 @@ const duckcreek: Player = {
     { date: '2026-07-08', item: 'Acquired Send Technology Solutions, an AI-native provider.' },
     { date: '2026-04-27', item: "Formation '26 cited double-digit new customer wins and expansions." },
   ],
+  brandReport: {
+    index: '65 / 100 · Moderate, trending up',
+    positioning: 'One of the two names defining enterprise P&C core software in North America and, after the Send acquisition, owner of the only agentic underwriting-to-core platform. Moving fast on the agentic-AI narrative.',
+    strength: 'Category authority and analyst validation. Gartner Leader (2025 SaaS P&C core, NA), Everest Group Leader, plus Celent and IDC recognition on a deep enterprise base.',
+    risk: 'Employee brand health is the most acute vulnerability. Post-Vista (2023, $2.6B take-private) layoffs, a "pressure cooker" culture, and leadership-trust erosion; secondarily the subordinate "Guidewire’s closest competitor" framing in AI and third-party sources.',
+    notable: 'Report cites 370+ carriers including 33 of the top 50 North American insurers, and a SaaS-segment Gartner rating of 3.2 (17 reviews) against Guidewire’s 4.6 (105).',
+  },
   cells: [{ id: 'p&c-core', label: 'p&c-core', primary: true }],
   people: [
-    person('Hardeep Gulati', 'Chief Executive Officer', '2025-10', 'https://www.linkedin.com/in/hardeepgulati/', true),
+    person('Hardeep Gulati', 'Chief Executive Officer', '2025-10', 'https://www.linkedin.com/in/hardeepgulati/', true, { analysis: 'A genuinely active new CEO: customer meetings (California FAIR Plan), an India trip, the Send acquisition, personal notes. Customer-facing rather than promotional, the most authentic CEO voice in the set.' }),
     person('Michael Jackowski', 'Vice Chairman', '2011-08', 'https://www.linkedin.com/in/michael-jackowski-b97b2636/', true),
     person('Rajesh Raheja', 'Chief Technology Officer', '2025-11', 'https://www.linkedin.com/in/rajeshraheja/', true),
     person('Christian Erickson', 'Managing Director, APAC', '2024-05', 'https://www.linkedin.com/in/christian-erickson-b554b821/'),
@@ -361,7 +395,8 @@ const duckcreek: Player = {
       toBuild: [{ label: 'To build · transition classification', what: 'Test whether the Send acquisition is folded into the promise as capability or still sits outside it, and whether the cloud claim is carried or lagged.', meta: 'Needs · LinkedIn · careers · press scan' }],
     }),
     CH.exec({
-      body: 'A new CEO and a new CTO make the voice pattern a moving target worth dating carefully. Per-person social signal is below.',
+      body: 'A new CEO and a new CTO make the voice pattern a moving target worth dating carefully. The 180-day activity is below.',
+      analysis: 'Duck Creek has the broadest active leader bench, twelve of sixteen captured leaders posting, and the most coherent narrative: nearly every post ties to one theme, the Send acquisition, the Intelligent Core, and agentic underwriting. The new CEO, Hardeep Gulati, is genuinely active and customer-facing rather than promotional, and GTM leaders William Genard (17 posts) and Gabe Cossio carry original point of view linking AI to the core, "AI is only as powerful as the core it runs on." The read: a coordinated, CEO-led, acquisition-driven voice with the tightest message discipline in the set, consistent with the transition signal that Duck Creek is buying AI capability and building a story around it.',
       toBuild: [
         { label: 'To build · social capture', what: 'Follower counts and cadence. A new CEO and new CTO make the voice pattern a moving target. Full 57-record resolve is on disk.', meta: 'Per executive · pending' },
         { label: 'To build · audience taxonomy', what: 'Audience mix per anchor.', meta: 'Per executive · pending' },
