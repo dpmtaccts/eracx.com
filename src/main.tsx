@@ -31,6 +31,7 @@ import V4 from './pages/v4/V4.tsx'
 import GtmPlaybook from './pages/GtmPlaybook.tsx'
 import BuyerViewSystem from './pages/BuyerViewSystem.tsx'
 import RiiserSample from './pages/riiser/RiiserSample.tsx'
+import InsureTechBuyerView from './pages/InsureTechBuyerView.tsx'
 import StubAuditExample from './pages/StubAuditExample.tsx'
 import Methodology from './pages/Methodology.tsx'
 import { PersonFirstFramework } from './pages/PersonFirstFramework.tsx'
@@ -73,6 +74,9 @@ function AppRoutes() {
         <Route path="/buyerview" element={<BuyerViewSystem />} />
         {/* Public, fully fictional sample audit backing the "See a sample" CTA. */}
         <Route path="/buyerview/sample" element={<RiiserSample />} />
+        {/* Industry Buyer View for the insurance-technology core-platform market.
+            Gated by email + access code. Beta assembly, scores TO BUILD. */}
+        <Route path="/buyerview/insuretech" element={<InsureTechBuyerView />} />
         <Route path="/archive/buyer-view-system" element={<BuyerViewSystem />} />
         <Route path="/ai-mirror" element={<GtmPlaybook />} />
         <Route path="/staging/v5" element={<V5ExpandingCards />} />
