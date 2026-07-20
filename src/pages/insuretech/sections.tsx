@@ -181,7 +181,7 @@ export function Masthead() {
     <header style={{ borderBottom: `3px solid ${INK}`, padding: '3vw 3vw 2vw', background: PAPER }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 24, flexWrap: 'wrap', borderBottom: `1px solid ${LINE}`, paddingBottom: 12, marginBottom: 24 }}>
         <span style={mono()}>The Buyer View</span>
-        <span style={mono({ color: HOT })}>Draft report · scores not yet assigned</span>
+        <span style={mono({ color: HOT })}>Draft report · three channels set, three open</span>
       </div>
       <h1 style={{ fontFamily: FONT.mega, fontSize: 'clamp(40px,9vw,132px)', lineHeight: 0.92, textTransform: 'uppercase', letterSpacing: '-0.01em' }}>The core platform<br />decision</h1>
       <div style={{ ...mono({ color: HOT }), marginTop: 18 }}>For the insurance CIO evaluating a core replacement</div>
@@ -299,7 +299,7 @@ export function Rollup() {
   return (
     <Section id="rollup">
       <SectionHead issue={formatSectionLabel('03', 'Vendor comparison')} title="The four vendors across the six channels."
-        lede="Channels down the side, vendors across the top. Guidewire is the benchmark cell for P&C core because it is the scale leader the other three are measured against. Nothing is averaged here. Two rows are now set, the transition classification and the leader-brand congruence score. Each remaining cell holds a labeled block until the judgment pass reaches it." />
+        lede="Channels down the side, vendors across the top. Guidewire is the benchmark cell for P&C core because it is the scale leader the other three are measured against. Nothing is averaged here. Three rows are now set, the transition classification, the leader-brand congruence score, and the verdict. Each remaining cell holds a labeled block until the judgment pass reaches it." />
       <div style={{ overflowX: 'auto', border: `1px solid ${INK}` }}>
         <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 720 }}>
           <thead>
@@ -317,12 +317,16 @@ export function Rollup() {
                 {PLAYERS.map((p) => {
                   const cls = c.num === '01' ? p.channels.find((ch) => ch.id === 'promise')?.classification : undefined
                   const score = c.num === '02' ? p.channels.find((ch) => ch.id === 'exec')?.score : undefined
+                  const verdict = c.num === '06' ? p.channels.find((ch) => ch.id === 'verdict')?.verdictCall : undefined
                   if (cls) {
                     const col = cls.bandKey === 'boat-anchor' ? '#DD5C20' : cls.bandKey === 'convergence' ? HOT : COBALT
                     return <td key={p.slug} style={tdStyle}><span style={{ ...mono({ fontSize: 10, letterSpacing: '0.08em' }), color: col, border: `1px solid ${col}`, padding: '6px 8px', display: 'inline-block' }}>{cls.band}</span></td>
                   }
                   if (score) {
                     return <td key={p.slug} style={tdStyle}><span style={{ ...mono({ fontSize: 11, letterSpacing: '0.06em' }), color: INK, border: `1px solid ${INK}`, padding: '6px 8px', display: 'inline-block' }}>{score.value} / {score.max}</span></td>
+                  }
+                  if (verdict) {
+                    return <td key={p.slug} style={tdStyle}><span style={{ ...mono({ fontSize: 10, letterSpacing: '0.06em' }), color: PAPER, background: INK, padding: '6px 8px', display: 'inline-block', lineHeight: 1.35 }}>{verdict.stance}</span></td>
                   }
                   return <td key={p.slug} style={tdStyle}><span style={{ ...mono({ fontSize: 10, letterSpacing: '0.1em', color: MUTED }), border: `1px dashed ${LINE}`, padding: '6px 8px', display: 'inline-block' }}>To build</span></td>
                 })}
@@ -469,6 +473,27 @@ function ChannelBlock({ ch, people, slug }: { ch: Channel; people?: Person[]; sl
             </div>
           )
         })()}
+        {ch.verdictCall && (() => {
+          const vc = ch.verdictCall
+          return (
+            <div style={{ border: `3px solid ${INK}`, padding: '20px 22px', margin: '4px 0 12px' }}>
+              <div style={mono({ fontSize: 10, letterSpacing: '0.12em', color: MUTED })}>The call · set</div>
+              <div style={{ fontFamily: FONT.mega, fontSize: 'clamp(24px,3vw,34px)', lineHeight: 1.02, marginTop: 8 }}>{vc.stance}</div>
+              <div style={{ fontSize: 16, fontWeight: 600, marginTop: 12, maxWidth: 780, lineHeight: 1.4 }}>{vc.call}</div>
+              <div style={{ fontSize: 14, marginTop: 10, maxWidth: 780, lineHeight: 1.55, color: MUTED }}>{vc.rationale}</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16, marginTop: 16, paddingTop: 14, borderTop: `1px solid ${LINE}` }}>
+                <div>
+                  <div style={mono({ fontSize: 9, letterSpacing: '0.1em', color: COBALT })}>Shortlist when</div>
+                  <div style={{ fontSize: 14, marginTop: 5, lineHeight: 1.45 }}>{vc.shortlistWhen}</div>
+                </div>
+                <div>
+                  <div style={mono({ fontSize: 9, letterSpacing: '0.1em', color: '#DD5C20' })}>Reconsider when</div>
+                  <div style={{ fontSize: 14, marginTop: 5, lineHeight: 1.45 }}>{vc.reconsiderWhen}</div>
+                </div>
+              </div>
+            </div>
+          )
+        })()}
         {ch.toBuild.map((tb, i) => <ToBuildBlock key={i} tb={tb} />)}
       </div>
     </div>
@@ -546,7 +571,7 @@ export function Footer() {
   return (
     <footer style={{ padding: '4vw 3vw', background: INK, color: PAPER, display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
       <span style={mono({ fontSize: 11, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.7)' })}>The Buyer View · A Revenue Signal Instrument by ERA</span>
-      <span style={mono({ fontSize: 11, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.7)' })}>Draft · scores not yet assigned · {COMPILED}</span>
+      <span style={mono({ fontSize: 11, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.7)' })}>Draft · three channels set, three open · {COMPILED}</span>
     </footer>
   )
 }

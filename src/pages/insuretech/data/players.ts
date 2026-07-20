@@ -36,6 +36,15 @@ export interface Classification {
   reasoning: string // grounded reasoning
 }
 
+/** The capstone: one per-vendor call. Set after the evidence channels close. */
+export interface VerdictCall {
+  stance: string // display band, e.g. "Shortlist first for P&C"
+  call: string // the one-line call
+  rationale: string // grounded paragraph
+  shortlistWhen: string
+  reconsiderWhen: string
+}
+
 /** A set score for a channel, with its weighted dimensions. */
 export interface ScoreDim { name: string; weight: number; points: number }
 export interface ChannelScore {
@@ -67,6 +76,7 @@ export interface Channel {
   divergence?: Divergence
   analysis?: string // ERA read / judgment layer, rendered distinctly from raw evidence
   classification?: Classification // resolved transition classification (was a TO BUILD block)
+  verdictCall?: VerdictCall // the capstone per-vendor call (Channel 06)
   score?: ChannelScore // set channel score with weighted dimensions
   temporal?: TemporalScore // temporal congruence, brand-to-leader lag
   toBuild: ToBuild[]
@@ -152,12 +162,6 @@ const CH = {
     id: 'verdict', num: '06', name: 'Verdict', tie: '#E6195F',
     evidence: [], toBuild: [], ...o,
   }),
-}
-
-const VERDICT_TB: ToBuild = {
-  label: 'To build · verdict',
-  what: 'The whole verdict is a judgment pass. Assembled here is the evidence only. Never assembled automatically.',
-  meta: 'Set after the five channels close',
 }
 
 const person = (
@@ -270,7 +274,13 @@ const sapiens: Player = {
       body: 'No AEO export sits in enrichment/aeo/sapiens. The queries are not re-run here by rule. This channel stays empty until the export lands.',
       toBuild: [{ label: 'To build · answer-engine interpretation', what: 'Import the AEO export, then read how the answer engines describe Sapiens against its own claim. Interpretation is a judgment call.', meta: 'Needs · enrichment/aeo/sapiens export · do not re-run queries' }],
     }),
-    CH.verdict({ toBuild: [VERDICT_TB] }),
+    CH.verdict({ verdictCall: {
+      stance: 'Consider for multi-line breadth',
+      call: 'The call when one platform has to span P&C, life and annuity, and reinsurance. The breadth is real; test the proof and the transition before you weight it.',
+      rationale: 'Sapiens has the widest platform footprint in the set and the most coordinated narrative, a genuine cascade around the June rebrand and Insurance Agentification that its leaders carried within days. The caution is twofold. The proof runs thinner than the promise: the cascade is marketing-led, with few named post-go-live outcomes behind the claim. And the transition rides an older architecture through an ownership change and a CEO departure at once. Strong on both level and trajectory, weakest on the boat-anchor risk.',
+      shortlistWhen: 'You need P&C, L&A, and reinsurance on a single platform and can pressure-test delivery references.',
+      reconsiderWhen: 'The requirement is one modern P&C core, or ownership and roadmap stability is a gating criterion.',
+    } }),
   ],
 }
 
@@ -364,7 +374,13 @@ const guidewire: Player = {
     CH.agents({
       toBuild: [{ label: 'To build · answer-engine interpretation', what: 'Import AEO export for Guidewire and read the answer-engine description against the owned claim.', meta: 'Needs · enrichment/aeo/guidewire export' }],
     }),
-    CH.verdict({ body: 'As benchmark, this verdict frames the reads on the other three.', toBuild: [VERDICT_TB] }),
+    CH.verdict({ body: 'As benchmark, this call frames the reads on the other three.', verdictCall: {
+      stance: 'Shortlist first for P&C',
+      call: 'The default first call for a North American P&C core replacement. The product is the least lagged in the set; the gap is voice, not capability.',
+      rationale: 'Guidewire carries the strongest product and proof evidence of the four: ProNavigator, PricingCenter, HazardHub, and a genuine core-modernization narrative, all backed by the heaviest analyst weight. The single weakness is distribution. Its leaders rarely carry the message, so the market hears the institution rather than the people, and several corporate messages drew no visible leadership response at all. For most buyers that is a minor deduction against the strongest evidence base; for a buyer who wants a visibly convicted partner it is the one thing to test in the room.',
+      shortlistWhen: 'P&C core, and you weight proof and analyst standing over a loud leadership bench.',
+      reconsiderWhen: 'Life and annuity is in scope, or you need a partner whose named leaders publicly own the roadmap.',
+    } }),
   ],
 }
 
@@ -462,7 +478,13 @@ const majesco: Player = {
     CH.agents({
       toBuild: [{ label: 'To build · answer-engine interpretation', what: 'Import AEO export. The AI-native claim makes the answer-engine read especially load-bearing here.', meta: 'Needs · enrichment/aeo/majesco export' }],
     }),
-    CH.verdict({ toBuild: [VERDICT_TB] }),
+    CH.verdict({ verdictCall: {
+      stance: 'Revisit as the repositioning matures',
+      call: 'The fastest-moving repositioning of the four, still running ahead of its proof. Revisit when the AI-native claim carries named outcomes.',
+      rationale: 'Majesco is repositioning hardest and growing fastest, with a present CEO and quick product amplification around the Spring ’26 release. But the claim leads the evidence. The cascade is repeat-heavy, the AI-native language runs ahead of delivery, and there is one genuine customer proof, K2, against many event and award reposts. A credible challenger on trajectory, not yet on demonstrated outcomes.',
+      shortlistWhen: 'You want an aggressive, fast-moving partner and can weight growth and roadmap over current proof depth.',
+      reconsiderWhen: 'You need demonstrated post-go-live outcomes now, or the AI-native claim backed by named references.',
+    } }),
   ],
 }
 
@@ -552,7 +574,13 @@ const duckcreek: Player = {
     CH.agents({
       toBuild: [{ label: 'To build · answer-engine interpretation', what: 'Import AEO export and read the answer-engine description against the owned claim.', meta: 'Needs · enrichment/aeo/duckcreek export' }],
     }),
-    CH.verdict({ toBuild: [VERDICT_TB] }),
+    CH.verdict({ verdictCall: {
+      stance: 'Watch, strongest on momentum',
+      call: 'The rising P&C alternative to Guidewire. The Send acquisition is a real step; the open question is whether the momentum holds between events.',
+      rationale: 'Duck Creek shows the tightest cascade in the set, a same-week, CEO-led rally around the Send acquisition and underwriting orchestration. That is genuine conviction and the clearest AI-native step of the four. The caution is continuity: alignment clusters at strategic moments and thins between them, and the AI capability was acquired rather than built. The momentum is visible; the durability is what a buyer has to test.',
+      shortlistWhen: 'P&C core, you want an AI-native underwriting story, and you can evaluate a freshly integrated acquisition.',
+      reconsiderWhen: 'You need proven continuity outside launch moments, or a longer track record on the acquired underwriting stack.',
+    } }),
   ],
 }
 
