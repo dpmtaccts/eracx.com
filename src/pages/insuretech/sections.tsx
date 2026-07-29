@@ -163,7 +163,7 @@ function SectionHead({ issue, title, lede }: { issue: string; title: string; led
 // ---------- masthead + nav ----------
 export function TocBar() {
   const links = [
-    ['#situation', 'Summary'], ['#ledger', 'Evidence base'], ['#method', 'Method'], ['#rollup', 'Comparison'], ['#trajectory', 'Congruence'],
+    ['#situation', 'Summary'], ['#buyer', 'The buyer'], ['#ledger', 'Evidence base'], ['#method', 'Method'], ['#rollup', 'Comparison'], ['#trajectory', 'Congruence'],
     ...PLAYERS.map((p) => [`#${p.slug}`, p.name] as [string, string]),
   ] as [string, string][]
   return (
@@ -232,6 +232,205 @@ export function Situation() {
   )
 }
 
+// ---------- the buyer (buyer intelligence layer) ----------
+function Conf({ level }: { level: string }) {
+  const col = level.startsWith('supported') || level.startsWith('directionally') ? COBALT
+    : level.startsWith('plausible') ? MUTED
+    : '#DD5C20'
+  return <span style={{ ...mono({ fontSize: 9, letterSpacing: '0.1em' }), color: col, border: `1px solid ${col}`, padding: '2px 7px', display: 'inline-block' }}>{level}</span>
+}
+
+const BUYER_COMMITTEE: { role: string; concern: string; influence: string; note: string; flag?: boolean }[] = [
+  { role: 'CIO / CTO', concern: 'Architecture, delivery risk', influence: 'Executive sponsor', note: 'Fragments into divisional and regional CIOs at large carriers. Reinsurance is underwriting-led.' },
+  { role: 'COO / operations', concern: 'Operational continuity', influence: 'Business sponsor', note: 'Heaviest load in workers’ comp claims.' },
+  { role: 'CFO, and the board above', concern: 'Cost, capital, return', influence: 'Economic approval', note: 'The board gates transformation-scale spend. Mutuals and state funds answer to policyholders, not shareholders.' },
+  { role: 'Underwriting, claims, actuarial', concern: 'Workflow and product fit', influence: 'Functional authority', note: 'Actuarial and reinsurance carry weight the generic model omits, heaviest in life, annuity, reinsurance.' },
+  { role: 'CISO', concern: 'Security, third-party risk', influence: 'Veto authority', note: 'Distinct from the regulatory seat.' },
+  { role: 'Regulatory / compliance', concern: 'AI governance, market conduct', influence: 'Veto or delay', note: 'A seat the cross-industry model omits. NAIC AI bulletin (25 states plus DC), Colorado SB21-169, NY DFS Circular Letter 7.', flag: true },
+  { role: 'Procurement / legal', concern: 'Terms, pricing, risk', influence: 'Commercial approval', note: 'Leverage raised by the eight-figure, board-approved profile.' },
+  { role: 'Systems integrator', concern: 'Migration feasibility', influence: 'Shortlist-shaping', note: 'Often shapes the shortlist before the carrier speaks to a vendor. A known Sapiens gap versus Guidewire’s bench.', flag: true },
+]
+
+const BUYER_VENDORS: { name: string; color: string; finding: string; reaches: string; tension: string; conf: string }[] = [
+  { name: 'Guidewire', color: INK,
+    finding: 'Best fit to the buyer’s need for external proof, weakest on the burden fear.',
+    reaches: 'Both buyers, anchored on the larger P&C carrier, because its proof is what the buyer validates against.',
+    tension: 'The one persistent perception is powerful but heavy, expensive, and slow to implement, the exact fear the overloaded buyer carries.',
+    conf: 'supported' },
+  { name: 'Duck Creek', color: '#DD5C20',
+    finding: 'Momentum and analyst standing, with the buyer’s delivery-risk fear sitting inside the vendor.',
+    reaches: 'The P&C carrier evaluating an AI-native step, strongest momentum in the set after the Send acquisition.',
+    tension: 'Employee brand health is the most acute vulnerability and surfaces as delivery-quality risk. A SaaS Gartner rating of 3.2 against Guidewire’s 4.6.',
+    conf: 'directionally supported' },
+  { name: 'Majesco', color: HOT,
+    finding: 'The widest cloud-native span and the loudest claim, with proof still catching up.',
+    reaches: 'The aggressive mid-to-large carrier attracted to span and momentum.',
+    tension: 'A weak employer brand that reaches delivery, and a claim running ahead of its named proof, which the proof-hungry buyer discounts.',
+    conf: 'directionally supported' },
+  { name: 'Sapiens', color: COBALT,
+    finding: 'The product fits the proven buyer, the voice serves the aspirational buyer, and the reach lands internal.',
+    reaches: 'Neither buyer, on the observed evidence. The installed base is mid-market and mutual, but the broadcast reaches its own building.',
+    tension: 'One named customer win across 211 posts. People-news averages 172 reactions, the product and AI narrative averages 23 and under 2 comments.',
+    conf: 'directionally supported (bounded)' },
+]
+
+const SAPIENS_OWN: { title: string; body: string }[] = [
+  { title: 'Modernization without overwhelming the organization', body: 'For the proven mid-market and mutual buyer. The proof is the internal staffing required, the implementation timeline, the migration approach, the vendor-managed burden, and time to first value, not another feature list.' },
+  { title: 'Confidence to move, not fear of change', body: 'Prove that similar insurers did it and lived, that delivery can be staged and continuity protected, that value shows before the full transformation completes, and that Sapiens carries a real share of the operational burden.' },
+  { title: 'Insurance-specific peer proof', body: 'Evidence organized by carrier type, business problem, solution purchased, buyer role, and quantified outcome, so a buyer immediately finds someone like us who solved the problem we have.' },
+]
+const SAPIENS_ACTIONS: string[] = [
+  'Separate the two growth motions: distinct buyer, message, proof, and channel for the proven buyer and the aspirational buyer.',
+  'Map the full committee per deal type: champion, economic buyer, functional authorities, technical validators, veto holders, and outside influencers.',
+  'Build a peer-proof system organized by carrier type, problem, role, and quantified outcome.',
+  'Lead with implementation confidence: publish realistic resources, migration paths, timelines, and time to value.',
+  'Make committee-ready materials: separate proof for the CFO, COO, CIO, CISO, functional leaders, and board.',
+  'Address inertia directly with an independently validated cost-of-waiting, not the vendor-authored figure.',
+  'Strengthen SI influence where integrators shape target-carrier shortlists.',
+  'Earn the enterprise AI story: treat the larger-carrier position as an ambition until named, at-scale production proof exists.',
+]
+
+export function TheBuyer() {
+  const para: CSSProperties = { fontSize: 'clamp(15px,1.15vw,17px)', maxWidth: 800, marginBottom: 16, lineHeight: 1.6 }
+  const sub: CSSProperties = { ...mono({ color: HOT, fontSize: 11 }), marginBottom: 10, marginTop: 30 }
+  const th: CSSProperties = { ...mono({ fontSize: 10, letterSpacing: '0.1em' }), background: INK, color: PAPER, textAlign: 'left', padding: '11px 14px', border: `1px solid ${LINE}` }
+  const td: CSSProperties = { padding: '11px 14px', border: `1px solid ${LINE}`, verticalAlign: 'top', fontSize: 14 }
+  const band = (title: string, color: string, items: string[]) => (
+    <div style={{ border: `1px solid ${LINE}`, borderTop: `4px solid ${color}`, background: PAPER, padding: '16px 18px' }}>
+      <div style={mono({ color, fontSize: 11 })}>{title}</div>
+      <ul style={{ margin: '12px 0 0 16px', padding: 0 }}>
+        {items.map((it, i) => <li key={i} style={{ fontSize: 14, marginBottom: 9, lineHeight: 1.5 }}>{it}</li>)}
+      </ul>
+    </div>
+  )
+  return (
+    <Section id="buyer">
+      <SectionHead issue={formatSectionLabel('01', 'The buyer')} title="The buyer is a system, not a person."
+        lede="The core-platform purchase is made by a temporary coalition, not an individual. Technology, operations, finance, risk, architecture, procurement, and business stakeholders assemble for one decision and dissolve after it. Everything the rest of this report scores is measured against this buyer. Confidence is graded; vendor-authored figures are flagged." />
+
+      <div style={sub}>The caricature</div>
+      <p style={para}>
+        The proven buyer is a technology or operations leader at a mid-market or mutual carrier. Not shopping, but managing a legacy core that eats most of the budget with a team too small for the ambition on the plate. The board has read the modernization headline, so the pressure comes from above. The people who know the legacy system are retiring, and the cloud, data, and AI roles to replace them are unfilled. The inbox is a wall of vendors all saying the same three letters, so the buyer hears noise where the vendor intends signal.
+      </p>
+      <p style={para}>
+        Who does this person believe. Not the advertisement, and not the AI answer that lists ten vendors. They believe the other carrier leader who already did this and lived, the analyst report the board respects, and the reference they can call. The whole decision reduces to one instinct: who like me has done this, and can I talk to them. <Conf level="directionally supported" />
+      </p>
+
+      <div style={sub}>Two buyers, tagged</div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14 }}>
+        <div style={{ border: `2px solid ${INK}`, padding: '16px 18px' }}>
+          <div style={{ fontFamily: FONT.display, fontSize: 19 }}>The proven buyer</div>
+          <div style={{ ...mono({ fontSize: 10, color: MUTED, letterSpacing: '0.1em' }), margin: '6px 0 10px' }}>Who signs</div>
+          <p style={{ fontSize: 14.5, lineHeight: 1.55, margin: 0 }}>The mid-market and mutual technology, operations, or finance leader. Pragmatic, SaaS-favoring, builds the data foundation first, reference-driven, allergic to hype. For Sapiens this is who the installed base shows it winning. <Conf level="supported" /></p>
+        </div>
+        <div style={{ border: `2px solid ${LINE}`, padding: '16px 18px' }}>
+          <div style={{ fontFamily: FONT.display, fontSize: 19 }}>The aspirational buyer</div>
+          <div style={{ ...mono({ fontSize: 10, color: MUTED, letterSpacing: '0.1em' }), margin: '6px 0 10px' }}>Who the brand chases</div>
+          <p style={{ fontSize: 14.5, lineHeight: 1.55, margin: 0 }}>The larger carrier’s transformation office chasing AI at scale with a bigger team and budget. Who the agentic-AI brand is aimed at, and a stretch for current proof. Inferred from positioning, not won deals. <Conf level="plausible but unmeasured" /></p>
+        </div>
+      </div>
+
+      <div style={sub}>The buying committee, insurance-specific</div>
+      <p style={{ ...para, marginBottom: 14 }}>
+        The cross-industry model is the starting point. Two corrections change strategy, marked below: the systems integrator is a shortlist-maker, not an informal influence, and regulatory and compliance is a full veto seat the generic model does not carry.
+      </p>
+      <div style={{ overflowX: 'auto', border: `1px solid ${LINE}` }}>
+        <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 680 }}>
+          <thead><tr><th style={th}>Role</th><th style={th}>Concern</th><th style={th}>Influence</th><th style={th}>Insurance-specific note</th></tr></thead>
+          <tbody>
+            {BUYER_COMMITTEE.map((r) => (
+              <tr key={r.role} style={r.flag ? { background: 'rgba(244,196,48,0.18)' } : undefined}>
+                <th style={{ ...td, fontFamily: FONT.display, fontSize: 14.5, fontWeight: 400, background: r.flag ? 'transparent' : PARCHMENT, borderLeft: r.flag ? `3px solid ${YELLOW}` : `1px solid ${LINE}` }}>{r.role}</th>
+                <td style={td}>{r.concern}</td>
+                <td style={{ ...td, ...(r.flag ? mono({ fontSize: 10, letterSpacing: '0.06em', color: INK }) : {}) }}>{r.influence}</td>
+                <td style={{ ...td, color: MUTED }}>{r.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p style={{ fontSize: 13, color: MUTED, marginTop: 10, maxWidth: 800 }}>
+        Committee size holds for insurance as a large, cross-functional, conflict-prone group. A published insurance-specific headcount to rival the general benchmark of 13 internal plus 9 external was not found, so the exact number is held unknown, not imported.
+      </p>
+
+      <div style={sub}>How the vendors stack up</div>
+      <p style={{ ...para, marginBottom: 14 }}>
+        Measured against the buyer’s day-in-the-life needs. The decisive need is proof the buyer can validate off the vendor’s own domain, and the vendors separate there, on proof and reach, not on premium band. Detailed vendor by vendor below.
+      </p>
+      <div style={{ display: 'grid', gap: 12 }}>
+        {BUYER_VENDORS.map((v) => (
+          <div key={v.name} style={{ border: `1px solid ${LINE}`, borderTop: `3px solid ${v.color}`, padding: '15px 18px', background: PAPER }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, flexWrap: 'wrap' }}>
+              <div style={{ fontFamily: FONT.display, fontSize: 20, color: v.color }}>{v.name}</div>
+              <Conf level={v.conf} />
+            </div>
+            <div style={{ fontSize: 15.5, fontWeight: 600, marginTop: 8, maxWidth: 820 }}>{v.finding}</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12, marginTop: 12 }}>
+              <div><span style={mono({ fontSize: 9, letterSpacing: '0.1em', color: MUTED })}>Reaches</span><div style={{ fontSize: 14, marginTop: 4, lineHeight: 1.45 }}>{v.reaches}</div></div>
+              <div><span style={mono({ fontSize: 9, letterSpacing: '0.1em', color: MUTED })}>Tension</span><div style={{ fontSize: 14, marginTop: 4, lineHeight: 1.45 }}>{v.tension}</div></div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div style={sub}>What our research validates, builds on, or contradicts</div>
+      <p style={{ ...para, marginBottom: 14 }}>
+        Against the all-up Buyer View, the 2026 B2B Buyer myth-versus-fact evidence base of more than 35,000 buyers across nine studies.
+      </p>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+        {band('Validates', COBALT, [
+          'The buyer is a conflicted committee, not a person (Myth 4 holds).',
+          'Proof must be external and validatable, confirmed vendor-side by the Sapiens capture, whose own broadcast is claim-heavy and does not reach buyers.',
+          'The favorite is chosen before deep vendor engagement (Myth 2, first half).',
+        ])}
+        {band('Builds on', YELLOW, [
+          'Analyst reports invert in insurance. The general research shows analyst usage at an all-time low of 14 percent; in insurance core selection the Gartner MQ, Celent, and Datos evaluations are among the highest-weight trust instruments.',
+          'The systems integrator is a shortlist-making seat the general model omits.',
+          'Two buyers, not one undifferentiated buyer.',
+          'A regulatory and compliance veto seat, insurance-specific.',
+        ])}
+        {band('Contradicts or cannot confirm', '#DD5C20', [
+          'The journey is a stage-gated RFP and POC funnel, not the nonlinear loop the general research describes (breaks).',
+          'The buyer skews older, not younger; carrier leadership is Gen X and older (breaks).',
+          'Self-service does not describe an eight-figure, board-approved core replacement (not imported).',
+          'AI in the buying process is unproven for insurance and was not transferred.',
+        ])}
+      </div>
+
+      <div style={sub}>What Sapiens can own</div>
+      <div style={{ background: PARCHMENT, border: `1px solid ${INK}`, padding: '20px 22px' }}>
+        <p style={{ fontSize: 'clamp(15px,1.2vw,18px)', maxWidth: 830, margin: 0, lineHeight: 1.55 }}>
+          The category is short on capacity, confidence, and internal agreement, not ambition. The opening is not to be the loudest company on AI. It is to become the company that makes a complicated modernization decision feel achievable, defensible, and provable to the entire buying committee.
+        </p>
+        <div style={{ ...mono({ fontSize: 9, letterSpacing: '0.1em', color: MUTED }), border: `1px solid ${LINE}`, padding: '3px 8px', display: 'inline-block', marginTop: 12 }}>Recommendation · validate against Sapiens pipeline and win-loss</div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12, marginTop: 18 }}>
+          {SAPIENS_OWN.map((t) => (
+            <div key={t.title} style={{ background: PAPER, border: `1px solid ${LINE}`, padding: '14px 16px' }}>
+              <div style={{ fontFamily: FONT.display, fontSize: 16, lineHeight: 1.15 }}>{t.title}</div>
+              <div style={{ fontSize: 13.5, color: MUTED, marginTop: 8, lineHeight: 1.5 }}>{t.body}</div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ ...mono({ color: HOT, fontSize: 10 }), marginTop: 22, marginBottom: 12 }}>Recommended actions</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2px 28px' }}>
+          {SAPIENS_ACTIONS.map((a, i) => (
+            <div key={i} style={{ display: 'flex', gap: 10, marginBottom: 9, alignItems: 'baseline' }}>
+              <span style={{ fontFamily: FONT.mono, fontSize: 11, fontWeight: 700, color: HOT }}>{String(i + 1).padStart(2, '0')}</span>
+              <span style={{ fontSize: 13.5, lineHeight: 1.45 }}>{a}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p style={{ fontSize: 12.5, color: MUTED, marginTop: 22, maxWidth: 900, lineHeight: 1.55 }}>
+Reasoned from the insurance buyer research synthesis and its strategic readout, the buyer-intelligence layer (a roster of 277 carrier executives, the pressure map, and the divergence table), the six-channel vendor assessment, and the first-party Sapiens observed capture, disclosed as first-party and point-in-time. The Sapiens reach finding is bounded: commenter identity in the capture is name-only, so 16 of 628 unique commenters were resolvable, and the call rests on comment content and engagement pattern rather than resolved titles. Vendor-authored figures, including the premium-band tiering, are flagged and held insufficiently supported.
+      </p>
+    </Section>
+  )
+}
+
 // ---------- data ledger ----------
 export function DataLedger() {
   const cells = [
@@ -243,7 +442,7 @@ export function DataLedger() {
   ]
   return (
     <Section id="ledger">
-      <SectionHead issue={formatSectionLabel('01', 'Evidence base')} title="The evidence behind this assessment."
+      <SectionHead issue={formatSectionLabel('02', 'Evidence base')} title="The evidence behind this assessment."
         lede="This section counts every observation the assessment rests on. Captured sources are folded into the vendor sections below. Pending and access-gated sources are named, not zeroed, so a reader can weigh the coverage before trusting a verdict." />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 1, background: LINE, border: `1px solid ${LINE}` }}>
         {cells.map((c) => (
@@ -271,7 +470,7 @@ export function DataLedger() {
 export function Method() {
   return (
     <Section id="method" band>
-      <SectionHead issue={formatSectionLabel('02', 'Assessment model')} title="Each vendor is read across six evidence channels."
+      <SectionHead issue={formatSectionLabel('03', 'Assessment model')} title="Each vendor is read across six evidence channels."
         lede="The first five channels are the sources a self-directed buyer or an AI agent pulls from before contact. The sixth is the verdict those five produce. The seismograph orders the channels from ambient noise into the most direct and most credible signal, then back out." />
       <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', paddingTop: 16, marginTop: 18, borderTop: `1px solid ${LINE}` }}>
         <Legend swatch={PARCHMENT_DEEP} label="Ideal congruence" />
@@ -298,7 +497,7 @@ function Legend({ swatch, label }: { swatch: string; label: string }) {
 export function Rollup() {
   return (
     <Section id="rollup">
-      <SectionHead issue={formatSectionLabel('03', 'Vendor comparison')} title="The four vendors across the six channels."
+      <SectionHead issue={formatSectionLabel('04', 'Vendor comparison')} title="The four vendors across the six channels."
         lede="Channels down the side, vendors across the top. Guidewire is the benchmark cell for P&C core because it is the scale leader the other three are measured against. Nothing is averaged here. Three rows are now set, the transition classification, the leader-brand congruence score, and the verdict. Each remaining cell holds a labeled block until the judgment pass reaches it." />
       <div style={{ overflowX: 'auto', border: `1px solid ${INK}` }}>
         <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 720 }}>

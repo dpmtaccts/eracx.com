@@ -209,7 +209,7 @@ export function SignalResponse() {
   return (
     <section id="trajectory" ref={secRef} style={{ padding: '4vw 3vw', borderBottom: `1px solid ${INK}`, background: '#fff', position: 'relative' }}>
       <div style={{ maxWidth: 860, marginBottom: 22 }}>
-        <div style={mono({ color: HOT })}>▸ 04 · Congruence over time</div>
+        <div style={mono({ color: HOT })}>▸ 05 · Congruence over time</div>
         <h2 style={{ fontFamily: FONT.display, fontSize: 'clamp(22px,3vw,40px)', lineHeight: 1.06, marginTop: 10 }}>
           Brand messages create the signal. Leaders reveal whether it travels.
         </h2>

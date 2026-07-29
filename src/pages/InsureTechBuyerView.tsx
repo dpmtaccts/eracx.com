@@ -5,7 +5,7 @@ import { usePostHog } from '@posthog/react'
 import '../styles/v4-tokens.css'
 import { FONT, ThemeContext, loadFonts, useThemeState } from './insuretech/theme'
 import { PasswordGate, isAuthed } from './insuretech/PasswordGate'
-import { Masthead, TocBar, Situation, DataLedger, Method, Rollup, AllPlayers, Footer } from './insuretech/sections'
+import { Masthead, TocBar, Situation, TheBuyer, DataLedger, Method, Rollup, AllPlayers, Footer } from './insuretech/sections'
 import { SignalResponse } from './insuretech/SignalResponse'
 import { InternalBrief } from './insuretech/InternalBrief'
 
@@ -37,6 +37,7 @@ function Shell({ internal }: { internal: boolean }) {
         <Masthead />
         {internal && <InternalBrief />}
         <Situation />
+        <TheBuyer />
         <DataLedger />
         <Method />
         <Rollup />
