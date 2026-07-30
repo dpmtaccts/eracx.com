@@ -182,7 +182,7 @@ export function Masthead() {
     <header style={{ borderBottom: `3px solid ${INK}`, padding: '3vw 3vw 2vw', background: PAPER }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 24, flexWrap: 'wrap', borderBottom: `1px solid ${LINE}`, paddingBottom: 12, marginBottom: 24 }}>
         <span style={mono()}>The Buyer View</span>
-        <span style={mono({ color: HOT })}>Draft report · three channels set, three open</span>
+        <span style={mono({ color: HOT })}>Draft report · five channels set, one open</span>
       </div>
       <h1 style={{ fontFamily: FONT.mega, fontSize: 'clamp(40px,9vw,132px)', lineHeight: 0.92, textTransform: 'uppercase', letterSpacing: '-0.01em' }}>The core platform<br />decision</h1>
       <div style={{ ...mono({ color: HOT }), marginTop: 18 }}>For the insurance CIO evaluating a core replacement</div>
@@ -223,7 +223,7 @@ export function Situation() {
       </p>
       <div style={sub}>Scope and boundaries</div>
       <p style={para}>
-        This report assembles evidence. Two judgments are now set, the transition classification and the leader-brand congruence score. The rest of the scoring is a separate judgment pass, and every open score is left as a labeled block until that pass runs. Keeping assembly and scoring apart lets a reader check the inputs before trusting a number.
+        This report assembles evidence. Five channels are now scored, the transition classification, the leader-brand congruence score, customers and proof, credible sources, and the verdict. The proof and sources scores are prior reads that lean on the ERA brand report and the Clay pull, held until independent reference, review, and analyst capture runs. Only the answer-engine channel is still open. Keeping assembly and scoring apart lets a reader check the inputs before trusting a number.
       </p>
       <div style={sub}>Coverage and open items</div>
       <p style={{ ...para, marginBottom: 0 }}>
@@ -560,7 +560,7 @@ export function Rollup() {
   return (
     <Section id="rollup">
       <SectionHead issue={formatSectionLabel('04', 'Vendor comparison')} title="The four vendors across the six channels."
-        lede="Channels down the side, vendors across the top. Guidewire is the benchmark cell for P&C core because it is the scale leader the other three are measured against. Nothing is averaged here. Three rows are now set, the transition classification, the leader-brand congruence score, and the verdict. Each remaining cell holds a labeled block until the judgment pass reaches it." />
+        lede="Channels down the side, vendors across the top. Guidewire is the benchmark cell for P&C core because it is the scale leader the other three are measured against. Nothing is averaged here. Five rows are now set, the transition classification, the congruence score, customers and proof, credible sources, and the verdict. The proof and sources scores are prior reads pending independent capture. Only the answer-engine row is still to build." />
       <div style={{ overflowX: 'auto', border: `1px solid ${INK}` }}>
         <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 720 }}>
           <thead>
@@ -577,7 +577,10 @@ export function Rollup() {
                 <th style={rowHeadStyle}>{c.num} {c.name}</th>
                 {PLAYERS.map((p) => {
                   const cls = c.num === '01' ? p.channels.find((ch) => ch.id === 'promise')?.classification : undefined
-                  const score = c.num === '02' ? p.channels.find((ch) => ch.id === 'exec')?.score : undefined
+                  const score = c.num === '02' ? p.channels.find((ch) => ch.id === 'exec')?.score
+                    : c.num === '03' ? p.channels.find((ch) => ch.id === 'proof')?.score
+                    : c.num === '04' ? p.channels.find((ch) => ch.id === 'sources')?.score
+                    : undefined
                   const verdict = c.num === '06' ? p.channels.find((ch) => ch.id === 'verdict')?.verdictCall : undefined
                   if (cls) {
                     const col = cls.bandKey === 'boat-anchor' ? '#DD5C20' : cls.bandKey === 'convergence' ? HOT : COBALT
@@ -832,7 +835,7 @@ export function Footer() {
   return (
     <footer style={{ padding: '4vw 3vw', background: INK, color: PAPER, display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
       <span style={mono({ fontSize: 11, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.7)' })}>The Buyer View · A Revenue Signal Instrument by ERA</span>
-      <span style={mono({ fontSize: 11, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.7)' })}>Draft · three channels set, three open · {COMPILED}</span>
+      <span style={mono({ fontSize: 11, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.7)' })}>Draft · five channels set, one open · {COMPILED}</span>
     </footer>
   )
 }
