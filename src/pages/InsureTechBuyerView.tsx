@@ -8,6 +8,7 @@ import { PasswordGate, isAuthed } from './insuretech/PasswordGate'
 import { Masthead, TocBar, Situation, TheBuyer, DataLedger, Method, Rollup, AllPlayers, Footer } from './insuretech/sections'
 import { SignalResponse } from './insuretech/SignalResponse'
 import { InternalBrief } from './insuretech/InternalBrief'
+import { BuyerBeliefsDrawer } from './insuretech/BuyerBeliefsDrawer'
 
 /* The InsureTech Buyer View.
    An industry Buyer View for the insurance-technology core-platform market.
@@ -44,6 +45,7 @@ function Shell({ internal }: { internal: boolean }) {
         <SignalResponse />
         <AllPlayers />
         <Footer />
+        <BuyerBeliefsDrawer />
       </div>
     </ThemeContext.Provider>
   )

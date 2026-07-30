@@ -487,7 +487,7 @@ export function TheBuyer() {
       </div>
 
       <p style={{ fontSize: 12.5, color: MUTED, marginTop: 22, maxWidth: 900, lineHeight: 1.55 }}>
-Reasoned from the insurance buyer research synthesis and its strategic readout, the buyer-intelligence layer (a roster of 277 carrier executives, the pressure map, and the divergence table), the six-channel vendor assessment, and the first-party Sapiens observed capture, disclosed as first-party and point-in-time. The Sapiens reach finding is bounded: commenter identity in the capture is name-only, so 16 of 628 unique commenters were resolvable, and the call rests on comment content and engagement pattern rather than resolved titles. Vendor-authored figures, including the premium-band tiering, are flagged and held insufficiently supported.
+The study behind this, the full evidence base, sample sizes, and confidence method, lives in the Buyer beliefs drawer docked at the right through the whole report. The Sapiens reach finding is bounded: commenter identity in the capture is name-only, so 16 of 628 unique commenters were resolvable, and the call rests on comment content and engagement pattern. Vendor-authored figures, including the premium-band tiering, are flagged and held insufficiently supported.
       </p>
     </Section>
   )
