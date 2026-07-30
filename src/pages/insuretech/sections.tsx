@@ -7,6 +7,7 @@ import {
 } from './data/players'
 import { ACTIVITY, CAPTURE_CAVEAT, type LeaderActivity } from './data/activity'
 import { formatSectionLabel } from '../../lib/section-label'
+import { BuyerTruths } from './BuyerTruths'
 
 const INK = '#0A0A0A'
 const PAPER = '#FFFFFF'
@@ -305,8 +306,18 @@ export function TheBuyer() {
   )
   return (
     <Section id="buyer">
-      <SectionHead issue={formatSectionLabel('01', 'The buyer')} title="The buyer is a system, not a person."
-        lede="The core-platform purchase is made by a temporary coalition, not an individual. Technology, operations, finance, risk, architecture, procurement, and business stakeholders assemble for one decision and dissolve after it. Everything the rest of this report scores is measured against this buyer. Confidence is graded; vendor-authored figures are flagged." />
+      <SectionHead issue={formatSectionLabel('01', 'The buyer')} title="The buyer is not a committee. It is a system in motion."
+        lede="A temporary coalition is basic knowledge; every large purchase, an SI-shaped one most of all, has one. The sharper truth is that the coalition is a system that reshapes itself across a multi-year transformation, driven by the five forces below. Who holds the power, where the budget sits, and which fear dominates all shift over weeks, months, and years. Against that motion, the one thing a vendor controls is whether its narrative holds, consistent, present, and free of contradiction, a fixed point of certainty in a decision defined by risk. Confidence is graded; vendor-authored figures are flagged." />
+
+      <div style={{ borderTop: `3px solid ${INK}`, borderBottom: `1px solid ${INK}`, padding: '14px 0', margin: '6px 0 22px', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16, flexWrap: 'wrap' }}>
+        <div>
+          <div style={mono({ color: HOT })}>Part one · The buyer system</div>
+          <div style={{ fontFamily: FONT.display, fontSize: 'clamp(18px,2vw,26px)', marginTop: 6 }}>What shapes the buyer, day to day</div>
+        </div>
+        <div style={{ fontSize: 13, color: MUTED, maxWidth: 440 }}>The research. Not a committee of leaders, but a system that evolves over time under five forces.</div>
+      </div>
+
+      <div style={{ marginBottom: 20 }}><BuyerTruths /></div>
 
       <div style={sub}>The caricature</div>
       <p style={para}>
@@ -353,10 +364,61 @@ export function TheBuyer() {
         Committee size holds for insurance as a large, cross-functional, conflict-prone group. A published insurance-specific headcount to rival the general benchmark of 13 internal plus 9 external was not found, so the exact number is held unknown, not imported.
       </p>
 
-      <div style={sub}>How the vendors stack up</div>
-      <p style={{ ...para, marginBottom: 14 }}>
-        Measured against the buyer’s day-in-the-life needs. The decisive need is proof the buyer can validate off the vendor’s own domain, and the vendors separate there, on proof and reach, not on premium band. Detailed vendor by vendor below.
-      </p>
+      {/* PART TWO — the unfair advantage (the hinge from research to results) */}
+      <div style={{ background: INK, color: PAPER, padding: '30px 30px', margin: '30px 0 24px' }}>
+        <div style={mono({ fontSize: 11, letterSpacing: '0.14em', color: YELLOW })}>Part two · The unfair advantage</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0, 300px)', gap: 30, alignItems: 'center', marginTop: 14 }}>
+          <div>
+            <div style={{ fontFamily: FONT.display, fontSize: 'clamp(22px,3vw,34px)', lineHeight: 1.08, maxWidth: 720 }}>The system erodes every claim. Consistency is the only thing that survives it.</div>
+            <p style={{ fontSize: 'clamp(14px,1.15vw,17px)', color: 'rgba(255,255,255,0.72)', marginTop: 14, maxWidth: 640, lineHeight: 1.6 }}>
+              Membership shifts, the budget tightens, the team turns over, inertia pulls back, and the claim decays. A vendor controls none of it. It controls one thing: whether, from the first anonymous search to the board vote years later, the buyer meets the same conviction, the same proof, and no contradiction. The category leader’s edge is not a bigger promise. It is confidence without over-promise, stability, presence, and no contradiction, held steady while everything else moves. That consistency is the unfair advantage, and it is what the Buyer View measures.
+            </p>
+            <div style={{ ...mono({ fontSize: 10, letterSpacing: '0.1em', color: YELLOW }), marginTop: 16, border: '1px solid rgba(244,196,48,0.45)', padding: '8px 12px', display: 'inline-block' }}>Today, Guidewire comes closest to holding it. See part three.</div>
+          </div>
+          <svg viewBox="0 0 300 150" style={{ width: '100%', height: 'auto', display: 'block' }}>
+            <path d="M16 40 C 120 46, 200 112, 284 120" fill="none" stroke="rgba(255,255,255,0.32)" strokeWidth="1.5" />
+            <path d="M16 56 C 120 62, 200 120, 284 128" fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth="1.5" />
+            <path d="M16 72 C 120 78, 200 112, 284 118" fill="none" stroke="rgba(255,255,255,0.26)" strokeWidth="1.5" />
+            <path d="M16 88 C 120 94, 200 124, 284 132" fill="none" stroke="rgba(255,255,255,0.24)" strokeWidth="1.5" />
+            <path d="M16 102 C 120 106, 200 118, 284 124" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="1.5" />
+            <line x1="16" y1="66" x2="284" y2="66" stroke="#F4C430" strokeWidth="2.5" />
+            <circle cx="284" cy="66" r="3" fill="#F4C430" />
+            <text x="282" y="59" textAnchor="end" fontFamily="JetBrains Mono, monospace" fontSize="9" fill="#F4C430">THE BRAND HOLDS</text>
+            <text x="16" y="144" fontFamily="JetBrains Mono, monospace" fontSize="8" fill="rgba(255,255,255,0.5)">FIVE FORCES DECAY OVER TIME</text>
+          </svg>
+        </div>
+      </div>
+
+      {/* PART THREE — how each brand shows up (the results) */}
+      <div style={{ borderTop: `3px solid ${INK}`, borderBottom: `1px solid ${INK}`, padding: '14px 0', margin: '10px 0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16, flexWrap: 'wrap' }}>
+        <div>
+          <div style={mono({ color: HOT })}>Part three · The Buyer View</div>
+          <div style={{ fontFamily: FONT.display, fontSize: 'clamp(18px,2vw,26px)', marginTop: 6 }}>How each brand shows up through the consistency lens</div>
+        </div>
+        <div style={{ fontSize: 13, color: MUTED, maxWidth: 440 }}>The results. Read each vendor for whether it holds the constant or erodes with the system. The vendors separate on proof and reach, not on premium band.</div>
+      </div>
+
+      <div style={{ border: `1px solid ${LINE}`, background: PARCHMENT, padding: '18px 20px 12px', marginBottom: 16 }}>
+        <div style={mono({ fontSize: 10, letterSpacing: '0.1em', color: MUTED, marginBottom: 4 })}>Where each brand sits today</div>
+        <svg viewBox="0 0 900 130" style={{ width: '100%', height: 'auto', display: 'block' }}>
+          <line x1="60" y1="78" x2="836" y2="78" stroke={INK} strokeWidth="1.5" />
+          <path d="M840 78 l -9 -4.5 l 0 9 z" fill={INK} />
+          <text x="60" y="112" fontFamily="JetBrains Mono, monospace" fontSize="12" fill={MUTED} letterSpacing="1">OVER-PROMISE</text>
+          <text x="836" y="112" textAnchor="end" fontFamily="JetBrains Mono, monospace" fontSize="12" fill={INK} letterSpacing="1">CONSISTENCY AND PROOF</text>
+          {[
+            { x: 292, c: HOT, n: 'Majesco', up: false },
+            { x: 378, c: COBALT, n: 'Sapiens', up: true },
+            { x: 560, c: '#DD5C20', n: 'Duck Creek', up: false },
+            { x: 812, c: INK, n: 'Guidewire', up: true },
+          ].map((v) => (
+            <g key={v.n}>
+              <line x1={v.x} y1={78} x2={v.x} y2={v.up ? 50 : 100} stroke={v.c} strokeWidth="1" />
+              <circle cx={v.x} cy={78} r="7" fill={v.c} />
+              <text x={v.x} y={v.up ? 44 : 116} textAnchor="middle" fontFamily={FONT.display} fontSize="17" fill={v.c}>{v.n}</text>
+            </g>
+          ))}
+        </svg>
+      </div>
       <div style={{ display: 'grid', gap: 12 }}>
         {BUYER_VENDORS.map((v) => (
           <div key={v.name} style={{ border: `1px solid ${LINE}`, borderTop: `3px solid ${v.color}`, padding: '15px 18px', background: PAPER }}>
