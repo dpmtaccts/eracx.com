@@ -50,7 +50,7 @@ export default function Staging() {
         question={'"We\'re doing outbound but nothing is converting. What are we missing?"'}
         label="01 Acquisition System"
         headline="Your buyers are already in-market. You're just not finding them in time."
-        body="97% of your market isn't buying today — but the ones who will be are already sending signals. Job changes, funding events, hiring patterns, tech installs. Era captures those signals and turns them into targeted outreach before a competitor gets the first meeting. It runs continuously, without a human initiating it."
+        body="Most of your market is not buying today. The ones who will buy soon are already sending signals: job changes, funding, hiring bursts, tech installs. Era catches those signals and starts outreach before a competitor gets the first meeting. It runs on its own; your team does not have to poke it every morning."
         mechanics={[
           "Signal-based account targeting matched to ICP",
           "Multi-channel outreach triggered by behavioral data",
@@ -86,7 +86,7 @@ export default function Staging() {
         question={'"We had a great first meeting. Then it went silent for six weeks."'}
         label="02 Engagement System"
         headline="Your champion said yes. But they're not the only one deciding."
-        body="The average mid-market deal has 10+ people involved in the decision. Your rep is talking to one of them. The rest are evaluating you in conversations you're not part of. Era builds presence across the full buying committee: champions, economic buyers, influencers. Mapping every touchpoint to a stakeholder and a stage. When deals go quiet, the system re-engages. When new stakeholders appear, they get added automatically."
+        body="The average mid-market deal has 10+ people involved in the decision. Your rep is talking to one of them. The rest are evaluating you in conversations you're not part of. Era reaches champions, economic buyers, and influencers, and maps each touch to a person and a stage. When deals go quiet, the system re-engages. When new stakeholders appear, they get added automatically."
         mechanics={[
           "Behavior-triggered nurture sequences by role and stage",
           "Multi-thread engagement across the buying committee",
@@ -121,7 +121,7 @@ export default function Staging() {
         question={'"Our customers love us but we have no idea when they\'re ready to buy more."'}
         label="03 Expansion System"
         headline="Your best new pipeline source is the customers you've already closed."
-        body="You have happy customers who would expand, refer, and renew — if someone asked at the right time. But nobody has a system for knowing when that is. Era tracks post-close signals — engagement patterns, satisfaction indicators, team growth — and converts them into expansion conversations, referrals, and renewals automatically. No cold upsell calls. Every conversation is signal-triggered."
+        body="You have happy customers who would expand, refer, and renew — if someone asked at the right time. But nobody has a system for knowing when that is. Era tracks post-close signals — engagement patterns, satisfaction indicators, team growth — and turns them into expansion talks, referrals, and renewals when the signal says the timing is right. No cold upsell calls."
         mechanics={[
           "90-day post-close onboarding and expansion sequence",
           "Customer content strategy that deepens engagement and surfaces upsell opportunities",

@@ -84,7 +84,7 @@ const QUALIFIERS = [
   {
     label: "04 / DECKS DON'T SHIP",
     body:
-      'If you are tired of strategy decks and want an operating layer instead, the assessment is step one.',
+      'If you are tired of strategy decks and want a system that runs, the assessment is step one.',
   },
 ]
 

@@ -570,7 +570,7 @@ export const integrations = {
   sectionLabel: 'The stack we operate',
   headline: { before: 'Built to ', italic: 'maximize outcomes.', after: '' },
   note:
-    'These are the tools we use and integrate. ERA is the operating layer between them and your revenue.',
+    'These are the tools we use and integrate. ERA is the layer that sits between those tools and your revenue team.',
   closer: "If we don't integrate with it yet, we build the bridge.",
   // v8 delta item 8: real logos from /public/images/apps/. "Custom pipes"
   // has no logo; rendered as text. Text-only fallbacks allowed per-tool.
@@ -598,25 +598,25 @@ export const halo = {
   subtitle: 'The LinkedIn operating layer',
   tagline: 'The operating layer for executive presence on LinkedIn.',
   sideBody: [
-    'Halo plugs one executive, or a whole GTM team, into the Signal River and Signal Map. Voice discovery builds the content engine. Warmth scoring triggers the outreach. Every post and every DM is operated by ERA.',
+    'Halo plugs one executive, or a whole GTM team, into the Signal River and Signal Map. Voice discovery feeds the content engine. Warmth scoring starts the outreach. ERA runs every post and every DM.',
     'Standalone. Or the first surface of the full system.',
   ],
   features: [
     {
       num: '01',
-      heading: 'Voice-tuned, not ghostwritten.',
+      heading: 'Sounds like you, not a ghostwriter.',
       body:
-        "Your voice trained into the content engine. Not a contractor's best guess. Every post reads like you wrote it, because the model did.",
+        "Your voice is trained into the content engine. Not a contractor's best guess. Posts should read like you wrote them, because the model was built on how you write.",
     },
     {
       num: '02',
       heading: 'Plugged into the Signal River.',
       body:
-        'Every post, every DM, every comment is triggered by real buyer signals. Not a content calendar. Not a posting schedule.',
+        'Every post, DM, and comment starts from a real buyer signal. Not a content calendar.',
     },
     {
       num: '03',
-      heading: 'Operated, not advised.',
+      heading: 'We run it. We do not advise from the sideline.',
       body:
         'Output ships weekly, the system gets scored monthly, and strategy gets reviewed every quarter. You approve each delivery and we run the play. We do not sell training programs or best-practices decks.',
     },
@@ -860,22 +860,22 @@ export const ourStory = {
   manifesto: {
     eyebrow: 'On Focus',
     body: [
-      "The best leaders I've ever worked with share one trait: ruthless about what they don't do.",
+      "The best leaders I have worked with are strict about what they will not do.",
       'It\'s infuriating how they say "No," to the meeting that could be an email. "No," to the introduction that goes nowhere. "No," to the conference, the panel, the offsite that everyone else wants an invite to, unless it serves one thing: the objective. They say "No," because they\'ve raised their floor. And because they say no to almost everything, when they say, "Yes," it means something.',
       "We built Era to work alongside those people. Leaders who know exactly what they're building and who they're building it for. Executives who wake up thinking about their product, their team, their customers.",
-      'They are missional. And that focus is what makes them great.',
-      'Our job is to protect it.',
-      "If you have a good product and a strong sales team, you don't need to spend your time evaluating GTM tools, interviewing BDR candidates, managing CRM workflows, or managing agencies who report on vanity metrics. You need a system that builds and maintains the relationships that matter. One that runs without pulling you into it.",
-      "That's what Era is.",
-      'We are built on focus. Our playbook is built to connect with real people, in real companies, with real problems that your product actually solves. We build toward that relationship deliberately: from unknown to known, from known to trusted, from trusted to the kind of relationship that generates referrals, expansions, and renewals without anyone having to remember to follow up.',
+      'They care about the mission. That focus is what makes them effective.',
+      'Our job is to protect that focus.',
+      "If you have a good product and a strong sales team, you should not spend your week evaluating GTM tools, interviewing BDRs, babysitting CRM workflows, or reading agency reports on vanity metrics. You need a system that builds and keeps the relationships your product deserves. One that runs without pulling you into it.",
+      "That is Era.",
+      'We stay focused on real people in real companies with problems your product actually solves. We move the relationship on purpose: unknown, then known, then trusted, then the kind of trust that brings referrals, expansions, and renewals without a campaign forcing it.',
       'We also believe the best companies know exactly who they serve. Every system we build is designed around that principle. Who are we trying to reach? Who are we building trust with? Who do we want to still be talking to in three years?',
-      "Focus isn't a strategy. It's a discipline. And it's the hardest thing to maintain when growth feels urgent.",
-      "We use the best in AI and automation to make that discipline scalable. Growth is hard enough. We're not here to make it harder. We're here to make sure the hard work you've already done compounds into something that keeps working.",
+      "Focus is not a slide. It is a discipline, and it is hardest to keep when growth feels urgent.",
+      "We use AI and automation so that discipline can scale. Growth is hard enough. We are here so the hard work you already did keeps working.",
       "That's why we built Era.",
     ],
     pullQuotes: [
       'We built Era to work alongside those people.',
-      "Focus isn't a strategy. It's a discipline.",
+      "Focus is not a slide. It is a discipline.",
     ],
     signature: { name: 'Justin Marshall', role: 'Founder' },
   },

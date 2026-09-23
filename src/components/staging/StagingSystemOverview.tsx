@@ -52,7 +52,7 @@ export default function StagingSystemOverview() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.1 }}
         >
-          Three problems. Three systems built to fix them.
+          Three walls mid-market teams hit. Three systems built for them.
         </motion.h2>
 
         <motion.p
@@ -63,9 +63,7 @@ export default function StagingSystemOverview() {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           Every mid-market team hits one of three walls: not enough pipeline,
-          deals that stall before the close, or customers who never expand. Era
-          diagnoses which wall you're hitting, builds the system that breaks
-          through it, and runs it: outbound, content, LinkedIn, RevOps, and the
+          deals that stall before the close, or customers who never expand. Era finds which wall you are hitting, builds the system that breaks it, and runs it: outbound, content, LinkedIn, RevOps, and the
           signal infrastructure that connects them.
         </motion.p>
 
@@ -107,8 +105,7 @@ export default function StagingSystemOverview() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          Each system is designed independently and operates as part of one
-          connected infrastructure.
+          Each system stands on its own and still plugs into one infrastructure.
         </motion.p>
 
         <motion.div

@@ -743,7 +743,7 @@ export default function HowItWorksRadial() {
               className="text-4xl font-black leading-[0.95] text-[#111111] md:text-6xl lg:text-7xl"
               style={{ margin: "0 0 48px" }}
             >
-              Each loop compounds.
+              Each loop gets sharper the longer it runs.
             </h2>
 
             {/* Two-column layout */}
@@ -794,7 +794,7 @@ export default function HowItWorksRadial() {
               className="text-3xl font-black leading-[0.95] text-[#111111]"
               style={{ margin: "0 0 10px" }}
             >
-              Each loop compounds.
+              Each loop gets sharper the longer it runs.
             </h2>
             <p
               style={{
@@ -806,8 +806,7 @@ export default function HowItWorksRadial() {
                 lineHeight: 1.5,
               }}
             >
-              Each loop is designed independently and operates as part of one
-              connected system.
+              Each loop stands on its own and still plugs into one system.
             </p>
 
             {/* Loop sections */}

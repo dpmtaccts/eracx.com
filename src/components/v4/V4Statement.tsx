@@ -28,21 +28,20 @@ export function V4Statement() {
 
       <div className="v4-statement">
         <div>
-          {/* Hero headline. Each word is its own span so the layout can
-              shift between desktop (3 lines: "Cold" / "outbound" / "is over.")
-              and mobile (4 lines: "Cold" / "outbound" / "is" / "over.") via
-              CSS `display` toggles on a 768px breakpoint. */}
-          <h1 className="v4-display-mega">
-            <span className="v4-hero-word">Cold</span>
-            <span className="v4-hero-word">outbound</span>
-            <span className="v4-hero-word">is&nbsp;</span>
-            <span className="v4-hero-word"><em>over.</em></span>
+          {/* Hero headline. Each word is its own span and the --stack
+              modifier keeps all three on their own line at every width:
+              "Don't" / "pitch" / "strangers." The <em> renders in the
+              accent colour (not italic) per .v4-display-mega em. */}
+          <h1 className="v4-display-mega v4-display-mega--stack">
+            <span className="v4-hero-word">Don't</span>
+            <span className="v4-hero-word">pitch</span>
+            <span className="v4-hero-word"><em>strangers.</em></span>
           </h1>
         </div>
         <aside className="v4-statement__sidebar">
           <div className="v4-eyebrow">▸01 · A new way to grow</div>
           <p className="v4-body-large">
-            Your team is hustling while your pipeline sits still, and the buyers most likely to close aren't on your call list. ERA finds them, warms them, and hands your sellers conversations ready to close.
+            Your team is hustling and the pipeline is still flat. The buyers most likely to close are not on your call list. ERA finds them, warms them, and hands your sellers conversations that are ready to work.
           </p>
           <a href="#contact" className="v4-cta">
             Evaluate your GTM

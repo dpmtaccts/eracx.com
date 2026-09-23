@@ -238,6 +238,13 @@
 .v4-root .v4-display-mega .v4-hero-word:nth-last-child(-n+2) {
   display: inline;
 }
+/* --stack opts out of the pair-on-one-line default: every hero word gets
+   its own line at all widths. Used by the "Don't / pitch / strangers."
+   hero, whose longest word is too wide to share a line at mega size. */
+.v4-root .v4-display-mega--stack .v4-hero-word,
+.v4-root .v4-display-mega--stack .v4-hero-word:nth-last-child(-n+2) {
+  display: block;
+}
 
 .v4-root .v4-display-large {
   font-family: var(--v4-display);

@@ -56,8 +56,7 @@ export default function OurStory() {
           }}
         >
           <p style={{ marginBottom: 32 }}>
-            The best leaders I've ever worked with share one trait: ruthless
-            about what they don't do.
+            The best leaders I have worked with are strict about what they will not do.
           </p>
 
           <p style={{ marginBottom: 32 }}>
@@ -84,7 +83,7 @@ export default function OurStory() {
               fontStyle: "italic",
             }}
           >
-            They are missional. And that focus is what makes them great.
+            They care about the mission. That focus is what makes them effective.
           </p>
 
           <p
@@ -95,16 +94,11 @@ export default function OurStory() {
               fontSize: 20,
             }}
           >
-            Our job is to protect it.
+            Our job is to protect that focus.
           </p>
 
           <p style={{ marginBottom: 32 }}>
-            If you have a good product and a strong sales team, you don't need
-            to spend your time evaluating GTM tools, interviewing BDR
-            candidates, managing CRM workflows, or managing agencies who report
-            on vanity metrics. You need a system that builds and maintains the
-            relationships that matter. One that runs without pulling you into
-            it.
+            If you have a good product and a strong sales team, you should not spend your week evaluating GTM tools, interviewing BDRs, babysitting CRM workflows, or reading agency reports on vanity metrics. You need a system that builds and keeps the relationships your product deserves. One that runs without pulling you into it.
           </p>
 
           <p
@@ -115,16 +109,11 @@ export default function OurStory() {
               fontSize: 20,
             }}
           >
-            That's what ERA is.
+            That is ERA.
           </p>
 
           <p style={{ marginBottom: 32 }}>
-            We are built on focus. Our playbook is built to connect with real
-            people, in real companies, with real problems that your product
-            actually solves. We build toward that relationship deliberately:
-            from unknown to known, from known to trusted, from trusted to the
-            kind of relationship that generates referrals, expansions, and
-            renewals without anyone having to remember to follow up.
+            We stay focused on real people in real companies with problems your product actually solves. We move the relationship on purpose: unknown, then known, then trusted, then the kind of trust that brings referrals, expansions, and renewals without a campaign forcing it.
           </p>
 
           <p style={{ marginBottom: 32 }}>
@@ -135,15 +124,11 @@ export default function OurStory() {
           </p>
 
           <p style={{ marginBottom: 32 }}>
-            Focus isn't a strategy. It's a discipline. And it's the hardest
-            thing to maintain when growth feels urgent.
+            Focus is not a slide. It is a discipline, and it is hardest to keep when growth feels urgent.
           </p>
 
           <p style={{ marginBottom: 32 }}>
-            We use the best in AI and automation to make that discipline
-            scalable. Growth is hard enough. We're not here to make it harder.
-            We're here to make sure the hard work you've already done compounds
-            into something that keeps working.
+            We use AI and automation so that discipline can scale. Growth is hard enough. We are here so the hard work you already did keeps working.
           </p>
 
           <p
